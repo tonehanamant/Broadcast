@@ -7,7 +7,7 @@
         "AudienceId": 31,
         "AudienceName": "HH",
         "DeliveredImpressions": 13058.092,
-        "OrderedImpressions": 6000,
+        "OrderedImpressions": 4000,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 13058.092
       },
@@ -15,7 +15,7 @@
         "AudienceId": 33,
         "AudienceName": "A18-49",
         "DeliveredImpressions": 5213.524,
-        "OrderedImpressions": 1990,
+        "OrderedImpressions": 1800,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 5213.524
       },
@@ -23,7 +23,7 @@
         "AudienceId": 61,
         "AudienceName": "W35+",
         "DeliveredImpressions": 7832.674,
-        "OrderedImpressions": 10600,
+        "OrderedImpressions": 6400,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 7832.674
       },
@@ -36,7 +36,7 @@
         "TotalDeliveredImpressions": 1453.804
       }
     ],
-    "OrderedSpots": 3,
+    "OrderedSpots": 2,
     "ReportData": [
       {
         "Affiliate": "IND",
@@ -96,66 +96,6 @@
         "SpotClearance": 1.0,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
-      },
-      {
-        "Affiliate": "IND",
-        "AudienceImpressions": [
-          {
-            "AudienceId": 31,
-            "Delivery": 0.0,
-            "Impressions": 2000,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 33,
-            "Delivery": 0.0,
-            "Impressions": 190,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 61,
-            "Delivery": 0.0,
-            "Impressions": 4200,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 53,
-            "Delivery": 0.0,
-            "Impressions": 0,
-            "NsiDelivery": null
-          }
-        ],
-        "Cost": 0.0,
-        "DeliveredSpots": 0,
-        "DisplayDaypart": {
-          "_Code": "",
-          "_EndTime": 37799,
-          "_Friday": true,
-          "_Id": 63342,
-          "_Is24Hour": false,
-          "_LastEndTime": 0,
-          "_LastStartTime": 0,
-          "_Monday": true,
-          "_Name": "",
-          "_Saturday": false,
-          "_StartTime": 18000,
-          "_Sunday": false,
-          "_Thursday": true,
-          "_Tuesday": true,
-          "_Wednesday": true
-        },
-        "Isci": null,
-        "Market": "PHOENIX",
-        "MediaWeekId": null,
-        "OrderedSpots": 1,
-        "OutOfSpecSpots": null,
-        "ProgramName": "GOOD MORNING ARIZONA 5AM",
-        "Rank": 0,
-        "SpecStatus": null,
-        "SpotClearance": 0.0,
-        "SpotLength": 30,
-        "Station": "KTVK",
         "Status": 0
       },
       {
@@ -539,7 +479,7 @@
         "AudienceId": 31,
         "AudienceName": "HH",
         "DeliveredImpressions": 13058.092,
-        "OrderedImpressions": 6000,
+        "OrderedImpressions": 4000,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 13058.092
       },
@@ -547,7 +487,7 @@
         "AudienceId": 33,
         "AudienceName": "A18-49",
         "DeliveredImpressions": 5213.524,
-        "OrderedImpressions": 1990,
+        "OrderedImpressions": 1800,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 5213.524
       },
@@ -555,7 +495,7 @@
         "AudienceId": 61,
         "AudienceName": "W35+",
         "DeliveredImpressions": 7832.674,
-        "OrderedImpressions": 10600,
+        "OrderedImpressions": 6400,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 7832.674
       },
@@ -569,6 +509,94 @@
       }
     ],
     "ReportData": [
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 13058.092,
+            "Impressions": 1000,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 5213.524,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 7832.674,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 1453.804,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": null,
+        "Rank": 11,
+        "SpecStatus": "Match",
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 1
+      },
+      {
+        "Affiliate": "CW",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 0.0,
+            "Impressions": 3000,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 0.0,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 0.0,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 0.0,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DeliveredSpots": 2,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "ST LOUIS",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": null,
+        "Rank": 21,
+        "SpecStatus": "Match",
+        "SpotClearance": 2.0,
+        "SpotLength": 30,
+        "Station": "KPLR",
+        "Status": 1
+      },
       {
         "Affiliate": "MNTV",
         "AudienceImpressions": [
@@ -618,138 +646,6 @@
         "SpotLength": 30,
         "Station": "KPDX",
         "Status": 0
-      },
-      {
-        "Affiliate": "CW",
-        "AudienceImpressions": [
-          {
-            "AudienceId": 31,
-            "Delivery": 0.0,
-            "Impressions": 3000,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 33,
-            "Delivery": 0.0,
-            "Impressions": 900,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 61,
-            "Delivery": 0.0,
-            "Impressions": 3200,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 53,
-            "Delivery": 0.0,
-            "Impressions": 0,
-            "NsiDelivery": null
-          }
-        ],
-        "Cost": null,
-        "DeliveredSpots": 2,
-        "DisplayDaypart": null,
-        "Isci": null,
-        "Market": "ST LOUIS",
-        "MediaWeekId": null,
-        "OrderedSpots": 1,
-        "OutOfSpecSpots": null,
-        "ProgramName": null,
-        "Rank": 21,
-        "SpecStatus": "Match",
-        "SpotClearance": 2.0,
-        "SpotLength": 30,
-        "Station": "KPLR",
-        "Status": 1
-      },
-      {
-        "Affiliate": "IND",
-        "AudienceImpressions": [
-          {
-            "AudienceId": 31,
-            "Delivery": 0.0,
-            "Impressions": 2000,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 33,
-            "Delivery": 0.0,
-            "Impressions": 190,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 61,
-            "Delivery": 0.0,
-            "Impressions": 4200,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 53,
-            "Delivery": 0.0,
-            "Impressions": 0,
-            "NsiDelivery": null
-          }
-        ],
-        "Cost": null,
-        "DeliveredSpots": 0,
-        "DisplayDaypart": null,
-        "Isci": null,
-        "Market": "PHOENIX",
-        "MediaWeekId": null,
-        "OrderedSpots": 1,
-        "OutOfSpecSpots": null,
-        "ProgramName": null,
-        "Rank": 0,
-        "SpecStatus": "",
-        "SpotClearance": 0.0,
-        "SpotLength": 30,
-        "Station": "KTVK",
-        "Status": 1
-      },
-      {
-        "Affiliate": "IND",
-        "AudienceImpressions": [
-          {
-            "AudienceId": 31,
-            "Delivery": 13058.092,
-            "Impressions": 1000,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 33,
-            "Delivery": 5213.524,
-            "Impressions": 900,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 61,
-            "Delivery": 7832.674,
-            "Impressions": 3200,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 53,
-            "Delivery": 1453.804,
-            "Impressions": 0,
-            "NsiDelivery": null
-          }
-        ],
-        "Cost": null,
-        "DeliveredSpots": 1,
-        "DisplayDaypart": null,
-        "Isci": null,
-        "Market": "TAMPA",
-        "MediaWeekId": null,
-        "OrderedSpots": 1,
-        "OutOfSpecSpots": null,
-        "ProgramName": null,
-        "Rank": 11,
-        "SpecStatus": "Match",
-        "SpotClearance": 1.0,
-        "SpotLength": 30,
-        "Station": "WMOR",
-        "Status": 1
       }
     ],
     "ScheduleAudiences": [
@@ -792,7 +688,7 @@
             "AudienceId": 31,
             "AudienceName": "HH",
             "DeliveredImpressions": 13058.092,
-            "OrderedImpressions": 6000,
+            "OrderedImpressions": 4000,
             "OutOfSpecDeliveredImpressions": 0.0,
             "TotalDeliveredImpressions": 13058.092
           },
@@ -800,7 +696,7 @@
             "AudienceId": 33,
             "AudienceName": "A18-49",
             "DeliveredImpressions": 5213.524,
-            "OrderedImpressions": 1990,
+            "OrderedImpressions": 1800,
             "OutOfSpecDeliveredImpressions": 0.0,
             "TotalDeliveredImpressions": 5213.524
           },
@@ -808,7 +704,7 @@
             "AudienceId": 61,
             "AudienceName": "W35+",
             "DeliveredImpressions": 7832.674,
-            "OrderedImpressions": 10600,
+            "OrderedImpressions": 6400,
             "OutOfSpecDeliveredImpressions": 0.0,
             "TotalDeliveredImpressions": 7832.674
           },
@@ -880,66 +776,6 @@
             "SpotClearance": 1.0,
             "SpotLength": 30,
             "Station": "WMOR",
-            "Status": 1
-          },
-          {
-            "Affiliate": "IND",
-            "AudienceImpressions": [
-              {
-                "AudienceId": 31,
-                "Delivery": 0.0,
-                "Impressions": 2000,
-                "NsiDelivery": null
-              },
-              {
-                "AudienceId": 33,
-                "Delivery": 0.0,
-                "Impressions": 190,
-                "NsiDelivery": null
-              },
-              {
-                "AudienceId": 61,
-                "Delivery": 0.0,
-                "Impressions": 4200,
-                "NsiDelivery": null
-              },
-              {
-                "AudienceId": 53,
-                "Delivery": 0.0,
-                "Impressions": 0,
-                "NsiDelivery": null
-              }
-            ],
-            "Cost": 0.0,
-            "DeliveredSpots": 0,
-            "DisplayDaypart": {
-              "_Code": "",
-              "_EndTime": 37799,
-              "_Friday": true,
-              "_Id": 63342,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": false,
-              "_StartTime": 18000,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "Isci": null,
-            "Market": "PHOENIX",
-            "MediaWeekId": null,
-            "OrderedSpots": 1,
-            "OutOfSpecSpots": null,
-            "ProgramName": "GOOD MORNING ARIZONA 5AM",
-            "Rank": 0,
-            "SpecStatus": "Match",
-            "SpotClearance": 0.0,
-            "SpotLength": 30,
-            "Station": "KTVK",
             "Status": 1
           },
           {
