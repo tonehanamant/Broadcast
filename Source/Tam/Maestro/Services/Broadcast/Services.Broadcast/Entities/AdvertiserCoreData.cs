@@ -18,8 +18,7 @@ namespace Services.Broadcast.Entities
         public int MediaWeekId { get; set; }
         public DateTime DateAired { get; set; }
         public int TimeAired  { get; set; }
-        public int ScheduleDetailWeekId { get; set; }
-        public bool IsBvsDetail { get; set; }
+        public int ScheduileDetailWeekId { get; set; }
 
         public AdvertiserCoreData()
         {

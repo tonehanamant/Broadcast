@@ -127,7 +127,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             returnSchedule.inventory_source = schedule.inventory_source;
             return returnSchedule;
         }
-        [Ignore]
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GenerateReportDto_AdvertiserData()
@@ -136,7 +136,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(_NotEquivalizedScheduleReportDto.AdvertiserData));
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GenerateReportDto_WeeklyData()
@@ -145,7 +144,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(_NotEquivalizedScheduleReportDto.WeeklyData));
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GenerateReportDto_StationSummaryData()
@@ -154,7 +152,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(_NotEquivalizedScheduleReportDto.StationSummaryData));
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GenerateReportDto_SpotDetailData()
@@ -163,7 +160,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(_NotEquivalizedScheduleReportDto.SpotDetailData));
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GenerateReportDto_OutOfSpecData()
@@ -535,7 +531,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         /// <summary>
         /// This test now covers issue BB-458.  Earlier it wasn't due to _CreateBlankSchedule not being set up properly.
         /// </summary>
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_BlankSchedule_ClientReport()
@@ -574,7 +569,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyReportData(reportDto);
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_GenerateClientReportDto()
@@ -590,7 +584,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyReportData(reportDto);
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_Generate3rdPartyProviderReportDto()
@@ -608,7 +601,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyReportData(reportDto);
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_Generate3rdPartyProviderReportDto_With_Restrictions_BB554()
@@ -736,7 +728,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return mainScheduleId;
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_ClientReport_Market_Datepart_Restrictions_BB562()
@@ -756,7 +747,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_BlankSchedule_ClientReport_Additional_Audiences_BB459()
@@ -777,7 +767,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyReportData(reportDto);
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_BlankSchedule_ClientReport_Additional_Audiences_BB368_481()
@@ -799,7 +788,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         ///     Assembly Schedule For Mapping.csv
         /// It also already mapped bvs program names "JUDGE ALEX" and "CRIME WATCH DAILY WITH CHRIS HANSEN" to "VARIOUS" schedule program
         /// </summary>
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_ClientReport_Handle_Mapped_ProgramNames_BB507()

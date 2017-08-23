@@ -23,10 +23,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void ClientReport_RelatedSchedules_UsePostType_OfOriginalSchedule()
         {
             var aggregate = new SchedulesAggregate(new schedule { markets = new List<market>() }, new List<ScheduleAudience>(), null, null, null, null, new List<bvs_file_details>(), null, null,
-                SchedulePostType.NSI, RatesFile.RateSourceType.Assembly, true, DateTime.MaxValue, DateTime.MaxValue,null);
+                SchedulePostType.NSI, RatesFile.RateSourceType.Assembly, true, DateTime.MaxValue, DateTime.MaxValue);
 
             var relatedAggregate = new SchedulesAggregate(new schedule(), null, null, null, null, null, new List<bvs_file_details>(), null, null,
-                SchedulePostType.NTI, RatesFile.RateSourceType.Assembly, true, DateTime.MaxValue, DateTime.MaxValue, null);
+                SchedulePostType.NTI, RatesFile.RateSourceType.Assembly, true, DateTime.MaxValue, DateTime.MaxValue);
 
             var scheduleReportDto = new ScheduleReportDto { ScheduleId = 420 };
 
