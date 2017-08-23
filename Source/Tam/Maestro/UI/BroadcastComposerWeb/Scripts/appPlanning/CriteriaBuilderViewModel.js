@@ -284,10 +284,15 @@ function CriteriaBuilderViewModel(inventoryView) {
             $scope.Controller.apiPostOpenMarketRefine(request,
                 function (response) {
                     if (response.NewCriteriaAffectsExistingAllocations) {
-                        util.confirm('Warning', $scope.LOSE_SPOTS_WARNING, function() {
-                            request.IgnoreExistingAllocation = true;
-                            $scope.processRefineResponse(response);
-                        });
+                        util.confirm('Warning', $scope.LOSE_SPOTS_WARNING,
+                            function () {
+                                request.IgnoreExistingAllocation = true;
+                                $scope.processRefineResponse(response);
+                            },
+
+                            function() {
+                                $scope.IsProcessing(false);
+                            });
                     } else {
                         $scope.processRefineResponse(response);
                     }
