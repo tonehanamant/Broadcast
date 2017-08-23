@@ -270,7 +270,7 @@
     "PostType": 0,
     "PrimaryDemoBooked": 4973303.0,
     "PrimaryDemoDelivered": 847787.5,
-    "SpotsBooked": 0,
+    "SpotsBooked": 16,
     "SpotsDelivered": 4,
     "StartDate": "2016-03-28T00:00:00"
   },
@@ -345,7 +345,7 @@
     "PostType": 0,
     "PrimaryDemoBooked": 4973303.0,
     "PrimaryDemoDelivered": 226069.7,
-    "SpotsBooked": 3,
+    "SpotsBooked": 11,
     "SpotsDelivered": 1,
     "StartDate": "2016-03-28T00:00:00"
   },
@@ -370,7 +370,7 @@
     "PostType": 0,
     "PrimaryDemoBooked": 4973303.0,
     "PrimaryDemoDelivered": 226069.7,
-    "SpotsBooked": 3,
+    "SpotsBooked": 11,
     "SpotsDelivered": 1,
     "StartDate": "2016-03-28T00:00:00"
   },
