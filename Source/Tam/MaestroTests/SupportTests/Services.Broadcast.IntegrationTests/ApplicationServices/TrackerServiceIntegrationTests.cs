@@ -526,124 +526,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void LoadAssemblySchedule_With_Blank_Spots()
-        {// BCOP-1571
-            const int Estimate_Id = 3390;
-            using (new TransactionScopeWrapper())
-            {
-                var saveRequest = new ScheduleSaveRequest();
-                var schedule = new ScheduleDTO();
-                schedule.AdvertiserId = 39279;
-                schedule.EstimateId = Estimate_Id;
-                schedule.PostingBookId = 413;
-                schedule.ScheduleName = "Assembly Schedule Template With Blanks";
-                schedule.UserName = "User";
-                schedule.FileName = @"Assembly Schedule Template With Blanks.csv";
-                schedule.FileStream = new FileStream(@".\Files\Assembly Schedule Template With Blanks.csv", FileMode.Open,
-                    FileAccess.Read);
-                schedule.MarketRestrictions = new List<int>() { 101, 102 };
-                // restrict NYC and Binghamton just because reasons
-                schedule.DaypartRestriction = new DaypartDto()
-                {
-                    startTime = 0,
-                    endTime = 86400 - 1,
-                    mon = true,
-                    tue = true,
-                    wed = true,
-                    thu = true,
-                    fri = true,
-                    sat = true,
-                    sun = true
-                };
-                schedule.Equivalized = true;
-                schedule.ISCIs = new List<IsciDto>
-                {
-                    new IsciDto
-                    {
-                        House = "1111",
-                        Client = "2222"
-                    }
-                };
-                schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = RatesFile.RateSourceType.CNN;
-                saveRequest.Schedule = schedule;
-                _sut.SaveSchedule(saveRequest);
-                var response = _ScheduleRepository.GetScheduleTrackingDetails(Estimate_Id);
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(ScheduleDetailWeek), "ScheduleDetailWeekId");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                var json = IntegrationTestHelper.ConvertToJson(response, jsonSettings);
-                Approvals.Verify(json);
-            }
-        }
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void LoadAssemblySchedule_WithWomanAndFemaleDemos()
-        {
-            const int Estimate_Id = 3390;
-            using (new TransactionScopeWrapper())
-            {
-                var saveRequest = new ScheduleSaveRequest();
-                var schedule = new ScheduleDTO();
-
-                schedule.AdvertiserId = 39279;
-                schedule.EstimateId = Estimate_Id;
-                schedule.PostingBookId = 413;
-                schedule.ScheduleName = "Assembly Schedule Template Woman and Female Demos";
-                schedule.UserName = "User";
-                schedule.FileName = @"Assembly Schedule Template Woman and Female Demos.csv";
-                schedule.FileStream = new FileStream(@".\Files\Assembly Schedule Template Woman and Female Demos.csv",
-                    FileMode.Open,
-                    FileAccess.Read);
-
-                schedule.MarketRestrictions = new List<int>() {101, 102};
-                // restrict NYC and Binghamton just because reasons
-                schedule.DaypartRestriction = new DaypartDto()
-                {
-                    startTime = 0,
-                    endTime = 86400 - 1,
-                    mon = true,
-                    tue = true,
-                    wed = true,
-                    thu = true,
-                    fri = true,
-                    sat = true,
-                    sun = true
-                };
-                schedule.Equivalized = true;
-                schedule.ISCIs = new List<IsciDto>
-                {
-                    new IsciDto
-                    {
-                        House = "1111",
-                        Client = "2222"
-                    }
-                };
-                schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = RatesFile.RateSourceType.CNN;
-
-                saveRequest.Schedule = schedule;
-
-                _sut.SaveSchedule(saveRequest);
-
-                var response = _ScheduleRepository.GetScheduleTrackingDetails(Estimate_Id);
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(ScheduleDetailWeek), "ScheduleDetailWeekId");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                var json = IntegrationTestHelper.ConvertToJson(response, jsonSettings);
-                Approvals.Verify(json);
-            }
-        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -1204,7 +1086,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-
+        [Ignore]
         [Test]
         public void Load_SCXWithBlankSpots()
         { //BCOP-1571
@@ -1215,9 +1097,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.AdvertiserId = 39279;
                 schedule.EstimateId = 44001;
                 schedule.PostingBookId = 413;
-                schedule.ScheduleName = "Checkers 2Q16 SYN - Estimate44001 With Empty Spots";
+                schedule.ScheduleName = "Blank Cell Test IT.scx";
                 schedule.UserName = "User";
-                schedule.FileName = @"Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx";
+                schedule.FileName = @"Blank Cell Test IT.scx";
                 schedule.ISCIs = new List<IsciDto>
                 {
                     new IsciDto
@@ -1231,12 +1113,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         Client = "4400ABCD2H"
                     }
                 };
-                schedule.FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx", FileMode.Open,
+                schedule.FileStream = new FileStream(@".\Files\Blank Cell Test IT.scx", FileMode.Open,
                     FileAccess.Read);
-                schedule.InventorySource = RatesFile.RateSourceType.TVB;
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.InventorySource = RatesFile.RateSourceType.OpenMarket;
+                schedule.PostType = SchedulePostType.NSI;
                 saveRequest.Schedule = schedule;
-                _sut.SaveSchedule(saveRequest);
+                var scheduleId = _sut.SaveSchedule(saveRequest);
+
+                ISchedulesReportService reportService =
+                    IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
+
+                var report = reportService.GenerateScheduleReport(scheduleId);
+                File.WriteAllBytes(string.Format("..\\ScheduleReport{0}.xlsx",scheduleId), report.Stream.GetBuffer());
+                
+
             }
         }
         [Test]

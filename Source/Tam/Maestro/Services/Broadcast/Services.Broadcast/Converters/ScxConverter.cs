@@ -128,16 +128,19 @@ namespace Services.Broadcast.Converters
                         }
 
                         var audiences = new List<schedule_detail_audiences>();
-                        foreach (var demoValue in detailLine.demoValue)
-                        {
-                            var demoRank = int.Parse(demoValue.demoRank);
-                            audiences.Add(new schedule_detail_audiences()
+                        if (detailLine.demoValue != null)
+                        { 
+                            foreach (var demoValue in detailLine.demoValue)
                             {
-                                demo_rank = demoRank
-                                ,impressions = int.Parse(demoValue.value.Single(pVal => pVal.type == demoValueValueType.Impressions).Value)
-                                ,demo_population = systemOrder.populations.Single(pop => pop.demoRank == demoRank).Value != null ? int.Parse(systemOrder.populations.Single(pop => pop.demoRank == demoRank).Value) : 0
-                                ,audience_id = demos[demoRank]
-                            });
+                                var demoRank = int.Parse(demoValue.demoRank);
+                                audiences.Add(new schedule_detail_audiences()
+                                {
+                                    demo_rank = demoRank
+                                    ,impressions = int.Parse(demoValue.value.Single(pVal => pVal.type == demoValueValueType.Impressions).Value)
+                                    ,demo_population = systemOrder.populations.Single(pop => pop.demoRank == demoRank).Value != null ? int.Parse(systemOrder.populations.Single(pop => pop.demoRank == demoRank).Value) : 0
+                                    ,audience_id = demos[demoRank]
+                                });
+                            }
                         }
                         detail.schedule_detail_audiences = audiences;
                         details.Add(detail);
