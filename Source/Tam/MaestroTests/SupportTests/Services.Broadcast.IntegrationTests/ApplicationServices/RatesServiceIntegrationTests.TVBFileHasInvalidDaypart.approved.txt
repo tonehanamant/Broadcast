@@ -1,7 +1,0 @@
-﻿[
-  {
-    "ProblemDescription": "Error while parsing record at line 3: Invalid daypart 'MWGH 3-9' for program 'Integration Test' on Station KOED-TV 11.3.",
-    "ProgramName": "Integration Test",
-    "StationLetters": "KOED-TV 11.3"
-  }
-]

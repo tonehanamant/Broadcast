@@ -1,7 +1,0 @@
-﻿[
-  {
-    "ProblemDescription": "Error while parsing record at line 4: Invalid spot length for program 'Integration Test' on Station 'ETHI'",
-    "ProgramName": "Integration Test",
-    "StationLetters": "WTHI-TV 10.2"
-  }
-]
