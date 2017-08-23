@@ -1,0 +1,741 @@
+﻿{
+  "DisplayProposalMarketPrograms": [
+    {
+      "DisplayProposalStationPrograms": [
+        {
+          "ProposalPrograms": [
+            {
+              "AdditionalAudienceImpressions": 0.0,
+              "AdditionalAudienceSubscribers": 0.0,
+              "AdditonalAudienceCPM": 0.0,
+              "DayPart": {
+                "Display": "M-F 2PM-3PM",
+                "Id": 31193
+              },
+              "DayPartId": 31193,
+              "DemoRating": 0.01332696,
+              "EndDate": "2016-12-25T00:00:00",
+              "FlightWeeks": [
+                {
+                  "EndDate": "2016-09-11T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 663,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-05T00:00:00"
+                },
+                {
+                  "EndDate": "2016-09-18T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 664,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-12T00:00:00"
+                },
+                {
+                  "EndDate": "2016-09-25T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 665,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-19T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-02T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 666,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-26T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-09T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 667,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-03T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-16T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 668,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-10T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-23T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 669,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-17T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-30T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 670,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-24T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-06T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 671,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-31T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-13T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 672,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-07T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-20T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 673,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-14T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-27T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 674,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-21T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-04T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 675,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-28T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-11T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 676,
+                  "Rate": 20.0,
+                  "StartDate": "2016-12-05T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-18T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 677,
+                  "Rate": 20.0,
+                  "StartDate": "2016-12-12T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-25T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 678,
+                  "Rate": 20.0,
+                  "StartDate": "2016-12-19T00:00:00"
+                }
+              ],
+              "Genres": [
+                {
+                  "Display": "News",
+                  "Id": 2
+                }
+              ],
+              "GRP": 0.0,
+              "HHeCPM": 0.0,
+              "HHImpressions": 0.0,
+              "HouseHoldMarketSubscribers": 7368320.0,
+              "HouseHoldRating": 0.01332696,
+              "Id": 0,
+              "IsOverlapping": false,
+              "Market": {
+                "Display": "New York",
+                "Id": 101
+              },
+              "MarketSubscribers": 7368320.0,
+              "ProgramId": 1000,
+              "ProgramName": "Sunday Show",
+              "SpotCost": 20.0,
+              "StartDate": "2016-09-05T00:00:00",
+              "Station": {
+                "Affiliation": "ABC",
+                "CallLetters": "WABC-TV 7.1",
+                "LegacyCallLetters": "WABC",
+                "StationCode": 5015
+              },
+              "TargetCpm": 0.203671510763159000,
+              "TargetImpressions": 98.1973371,
+              "TotalCost": 20.0,
+              "TotalSpots": 0,
+              "TRP": 0.08665923
+            },
+            {
+              "AdditionalAudienceImpressions": 0.0,
+              "AdditionalAudienceSubscribers": 0.0,
+              "AdditonalAudienceCPM": 0.0,
+              "DayPart": {
+                "Display": "M-F 2PM-3PM",
+                "Id": 31193
+              },
+              "DayPartId": 31193,
+              "DemoRating": 0.01332696,
+              "EndDate": "2016-12-25T00:00:00",
+              "FlightWeeks": [
+                {
+                  "EndDate": "2016-09-11T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 663,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-05T00:00:00"
+                },
+                {
+                  "EndDate": "2016-09-18T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 664,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-12T00:00:00"
+                },
+                {
+                  "EndDate": "2016-09-25T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 665,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-19T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-02T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 666,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-26T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-09T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 667,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-03T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-16T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 668,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-10T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-23T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 669,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-17T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-30T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 670,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-24T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-06T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 671,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-31T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-13T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 672,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-07T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-20T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 673,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-14T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-27T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 674,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-21T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-04T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 675,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-28T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-11T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 676,
+                  "Rate": 20.0,
+                  "StartDate": "2016-12-05T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-18T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 677,
+                  "Rate": 20.0,
+                  "StartDate": "2016-12-12T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-25T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 678,
+                  "Rate": 20.0,
+                  "StartDate": "2016-12-19T00:00:00"
+                }
+              ],
+              "Genres": [
+                {
+                  "Display": "Comedy",
+                  "Id": 3
+                }
+              ],
+              "GRP": 0.0,
+              "HHeCPM": 0.0,
+              "HHImpressions": 0.0,
+              "HouseHoldMarketSubscribers": 7368320.0,
+              "HouseHoldRating": 0.01332696,
+              "Id": 0,
+              "IsOverlapping": false,
+              "Market": {
+                "Display": "New York",
+                "Id": 101
+              },
+              "MarketSubscribers": 7368320.0,
+              "ProgramId": 1001,
+              "ProgramName": "Monday Show",
+              "SpotCost": 20.0,
+              "StartDate": "2016-09-05T00:00:00",
+              "Station": {
+                "Affiliation": "ABC",
+                "CallLetters": "WABC-TV 7.1",
+                "LegacyCallLetters": "WABC",
+                "StationCode": 5015
+              },
+              "TargetCpm": 0.203671510763159000,
+              "TargetImpressions": 294.5920113,
+              "TotalCost": 60.0,
+              "TotalSpots": 3,
+              "TRP": 0.2599777
+            }
+          ],
+          "Station": {
+            "Affiliation": "ABC",
+            "CallLetters": "WABC-TV 7.1",
+            "LegacyCallLetters": "WABC",
+            "StationCode": 5015
+          },
+          "StationTotals": {
+            "TotalAdditionalAudienceCPM": 0.0,
+            "TotalAdditionalAudienceImpressions": 0.0,
+            "TotalCost": 60.0,
+            "TotalGRP": 0.0,
+            "TotalHHCPM": 0.0,
+            "TotalHHImpressions": 0.0,
+            "TotalSpots": 3,
+            "TotalTargetCPM": 0.2036715000,
+            "TotalTargetImpressions": 294.592,
+            "TotalTRP": 0.2599777
+          }
+        }
+      ],
+      "MarketId": 101,
+      "MarketName": "New York",
+      "MarketSubscribers": 7368320.0,
+      "MarketTotals": {
+        "TotalAdditionalAudienceCPM": 0.0,
+        "TotalAdditionalAudienceImpressions": 0.0,
+        "TotalCost": 60.0,
+        "TotalGRP": 0.0,
+        "TotalHHCPM": 0.0,
+        "TotalHHImpressions": 0.0,
+        "TotalSpots": 3,
+        "TotalTargetCPM": 0.2036715000,
+        "TotalTargetImpressions": 294.592,
+        "TotalTRP": 0.2599777
+      },
+      "Rank": 1
+    },
+    {
+      "DisplayProposalStationPrograms": [
+        {
+          "ProposalPrograms": [
+            {
+              "AdditionalAudienceImpressions": 0.0,
+              "AdditionalAudienceSubscribers": 0.0,
+              "AdditonalAudienceCPM": 0.0,
+              "DayPart": {
+                "Display": "M-F 2PM-3PM",
+                "Id": 31193
+              },
+              "DayPartId": 31193,
+              "DemoRating": 0.00174164,
+              "EndDate": "2016-12-25T00:00:00",
+              "FlightWeeks": [
+                {
+                  "EndDate": "2016-09-11T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 663,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-05T00:00:00"
+                },
+                {
+                  "EndDate": "2016-09-18T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 664,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-12T00:00:00"
+                },
+                {
+                  "EndDate": "2016-09-25T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 665,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-19T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-02T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 666,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-26T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-09T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 667,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-03T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-16T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 668,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-10T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-23T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 669,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-17T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-30T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 670,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-24T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-06T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 671,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-31T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-13T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 672,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-07T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-20T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 673,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-14T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-27T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 674,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-21T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-04T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 675,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-28T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-11T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 676,
+                  "Rate": 20.0,
+                  "StartDate": "2016-12-05T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-18T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 677,
+                  "Rate": 20.0,
+                  "StartDate": "2016-12-12T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-25T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 678,
+                  "Rate": 20.0,
+                  "StartDate": "2016-12-19T00:00:00"
+                }
+              ],
+              "Genres": [
+                {
+                  "Display": "Test",
+                  "Id": 1
+                }
+              ],
+              "GRP": 0.0,
+              "HHeCPM": 0.0,
+              "HHImpressions": 0.0,
+              "HouseHoldMarketSubscribers": 679970.0,
+              "HouseHoldRating": 0.00174164,
+              "Id": 0,
+              "IsOverlapping": false,
+              "Market": {
+                "Display": "Greensboro-H.Point-W.Salem",
+                "Id": 118
+              },
+              "MarketSubscribers": 679970.0,
+              "ProgramId": 47571,
+              "ProgramName": "Integration Test",
+              "SpotCost": 20.0,
+              "StartDate": "2016-09-05T00:00:00",
+              "Station": {
+                "Affiliation": "IND",
+                "CallLetters": "WGHP 8.2",
+                "LegacyCallLetters": "EGHP",
+                "StationCode": 1171
+              },
+              "TargetCpm": 16.8881504611175000,
+              "TargetImpressions": 3.55278692,
+              "TotalCost": 60.0,
+              "TotalSpots": 3,
+              "TRP": 0.00313534
+            },
+            {
+              "AdditionalAudienceImpressions": 0.0,
+              "AdditionalAudienceSubscribers": 0.0,
+              "AdditonalAudienceCPM": 0.0,
+              "DayPart": {
+                "Display": "M-F 2PM-3PM",
+                "Id": 31193
+              },
+              "DayPartId": 31193,
+              "DemoRating": 0.00174164,
+              "EndDate": "2016-12-25T00:00:00",
+              "FlightWeeks": [
+                {
+                  "EndDate": "2016-09-18T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 664,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-12T00:00:00"
+                },
+                {
+                  "EndDate": "2016-09-25T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 665,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-19T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-02T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 666,
+                  "Rate": 20.0,
+                  "StartDate": "2016-09-26T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-09T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 667,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-03T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-16T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 668,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-10T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-23T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 669,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-17T00:00:00"
+                },
+                {
+                  "EndDate": "2016-10-30T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 670,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-24T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-06T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 671,
+                  "Rate": 20.0,
+                  "StartDate": "2016-10-31T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-13T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 672,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-07T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-20T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 673,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-14T00:00:00"
+                },
+                {
+                  "EndDate": "2016-11-27T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 674,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-21T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-04T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 675,
+                  "Rate": 20.0,
+                  "StartDate": "2016-11-28T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-11T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 676,
+                  "Rate": 20.0,
+                  "StartDate": "2016-12-05T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-18T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 677,
+                  "Rate": 20.0,
+                  "StartDate": "2016-12-12T00:00:00"
+                },
+                {
+                  "EndDate": "2016-12-25T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 678,
+                  "Rate": 20.0,
+                  "StartDate": "2016-12-19T00:00:00"
+                }
+              ],
+              "Genres": [
+                {
+                  "Display": "Test",
+                  "Id": 1
+                }
+              ],
+              "GRP": 0.0,
+              "HHeCPM": 0.0,
+              "HHImpressions": 0.0,
+              "HouseHoldMarketSubscribers": 679970.0,
+              "HouseHoldRating": 0.00174164,
+              "Id": 0,
+              "IsOverlapping": false,
+              "Market": {
+                "Display": "Greensboro-H.Point-W.Salem",
+                "Id": 118
+              },
+              "MarketSubscribers": 679970.0,
+              "ProgramId": 48737,
+              "ProgramName": "Integration Test",
+              "SpotCost": 20.0,
+              "StartDate": "2016-09-12T00:00:00",
+              "Station": {
+                "Affiliation": "IND",
+                "CallLetters": "WGHP 8.2",
+                "LegacyCallLetters": "EGHP",
+                "StationCode": 1171
+              },
+              "TargetCpm": 16.8881504611175000,
+              "TargetImpressions": 1.18426231,
+              "TotalCost": 20.0,
+              "TotalSpots": 0,
+              "TRP": 0.00104511
+            }
+          ],
+          "Station": {
+            "Affiliation": "IND",
+            "CallLetters": "WGHP 8.2",
+            "LegacyCallLetters": "EGHP",
+            "StationCode": 1171
+          },
+          "StationTotals": {
+            "TotalAdditionalAudienceCPM": 0.0,
+            "TotalAdditionalAudienceImpressions": 0.0,
+            "TotalCost": 60.0,
+            "TotalGRP": 0.0,
+            "TotalHHCPM": 0.0,
+            "TotalHHImpressions": 0.0,
+            "TotalSpots": 3,
+            "TotalTargetCPM": 16.88815000,
+            "TotalTargetImpressions": 3.55278683,
+            "TotalTRP": 0.00313533749
+          }
+        }
+      ],
+      "MarketId": 118,
+      "MarketName": "Greensboro-H.Point-W.Salem",
+      "MarketSubscribers": 679970.0,
+      "MarketTotals": {
+        "TotalAdditionalAudienceCPM": 0.0,
+        "TotalAdditionalAudienceImpressions": 0.0,
+        "TotalCost": 60.0,
+        "TotalGRP": 0.0,
+        "TotalHHCPM": 0.0,
+        "TotalHHImpressions": 0.0,
+        "TotalSpots": 3,
+        "TotalTargetCPM": 16.88815000,
+        "TotalTargetImpressions": 3.55278683,
+        "TotalTRP": 0.00313533749
+      },
+      "Rank": 46
+    }
+  ],
+  "OverallTotals": {
+    "TotalAdditionalAudienceCPM": 0.0,
+    "TotalAdditionalAudienceImpressions": 0.0,
+    "TotalCost": 120.0,
+    "TotalGRP": 0.0,
+    "TotalHHCPM": 0.0,
+    "TotalHHImpressions": 0.0,
+    "TotalSpots": 6,
+    "TotalTargetCPM": 0.402489000,
+    "TotalTargetImpressions": 298.144775,
+    "TotalTRP": 0.263113022
+  },
+  "TargetUnitTotals": {
+    "TotalAdditionalAudienceCPM": 0.0,
+    "TotalAdditionalAudienceImpressions": 0.0,
+    "TotalCost": 40.0,
+    "TotalGRP": 0.0,
+    "TotalHHCPM": 0.0,
+    "TotalHHImpressions": 0.0,
+    "TotalSpots": 0,
+    "TotalTargetCPM": 0.402489000,
+    "TotalTargetImpressions": 298.144775,
+    "TotalTRP": 0.263113022
+  }
+}

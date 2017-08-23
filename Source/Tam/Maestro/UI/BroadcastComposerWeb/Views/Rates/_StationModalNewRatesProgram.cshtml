@@ -1,0 +1,81 @@
+﻿<div class="modal fade" tabindex="-1" role="dialog" id="station_new_rates_program_modal">
+    <div class="modal-dialog modal-med-xl" role="document">
+        <div class="modal-content">
+            <form id="new_program_form" action="#">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">New Program</h4>
+                </div>
+                <div class="modal-body modal-body-lg">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Program Name</label>
+                                <input id="new_program_name_input" name="new_program_name_input" type="text" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Air Time</label>
+                                <input id="new_program_airtime_input" name="new_program_airtime_input" type="text" class="form-control read-only-picker" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Genre</label>
+                                <select multiple id="new_program_genre_input" class="form-control select2"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Flight</label>
+                                <input id="new_program_flight_input" name="new_program_flight_input" type="text" class="form-control read-only-picker" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>15s Spot Cost</label>
+                                <input id="new_program_spot15_input" name="new_program_spot15_input" type="text" class="new-spot-cost form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>30s Spot Cost</label>
+                                <input id="new_program_spot30_input" name="new_program_spot30_input" type="text" class="new-spot-cost form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>HH Impressions</label>
+                                <input id="new_program_hhimpressions_input" name="new_program_hhimpressions_input" type="text" class="form-control">
+                                <small style="font-style: italic;">* multiplied by 1000</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label>HH Rating</label>
+                                <input id="new_program_hhrating_input" name="new_program_hhrating_input" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="program_conflict_grid" style="height: 300px; margin: 0 15px 20px 15px;"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button id="new_program_add_another_btn" type="button" class="btn btn-success">Add Another</button>
+                    <button id="new_program_add_btn" type="button" class="btn btn-success">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

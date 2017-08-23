@@ -1,0 +1,186 @@
+﻿{
+  "AdvertiserId": 0,
+  "BlackoutMarketGroup": null,
+  "BlackoutMarketGroupId": null,
+  "Details": [
+    {
+      "Adu": false,
+      "DaypartCode": "NAV",
+      "DefaultPostingBooks": {
+        "DefaultHutBook": {
+          "HasWarning": false,
+          "PostingBookId": 416,
+          "WarningMessage": null
+        },
+        "DefaultPlaybackType": 4,
+        "DefaultShareBook": {
+          "HasWarning": true,
+          "PostingBookId": 416,
+          "WarningMessage": "The share book for the current quarter is not available, the default share book is the latest available"
+        },
+        "UseShareBookOnlyId": -1
+      },
+      "FlightEdited": false,
+      "FlightEndDate": "2017-06-18T00:00:00",
+      "FlightStartDate": "2017-05-15T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2017-05-21T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 699,
+          "StartDate": "2017-05-15T00:00:00"
+        },
+        {
+          "EndDate": "2017-05-28T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 700,
+          "StartDate": "2017-05-22T00:00:00"
+        },
+        {
+          "EndDate": "2017-06-04T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 701,
+          "StartDate": "2017-05-29T00:00:00"
+        },
+        {
+          "EndDate": "2017-06-11T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 702,
+          "StartDate": "2017-06-05T00:00:00"
+        },
+        {
+          "EndDate": "2017-06-18T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 703,
+          "StartDate": "2017-06-12T00:00:00"
+        }
+      ],
+      "HutPostingBookId": -1,
+      "PlaybackType": 3,
+      "Quarters": [
+        {
+          "Cpm": 0.0,
+          "DistributeGoals": false,
+          "ImpressionGoal": 18089.0,
+          "Quarter": 2,
+          "QuarterText": "2017 Q2",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "EndDate": "2017-05-21T00:00:00",
+              "Impressions": 4500.0,
+              "IsHiatus": false,
+              "MediaWeekId": 699,
+              "StartDate": "2017-05-15T00:00:00",
+              "Units": 1,
+              "Week": "5/15/2017"
+            },
+            {
+              "Cost": 0.0,
+              "EndDate": "2017-05-28T00:00:00",
+              "Impressions": 1000.0,
+              "IsHiatus": false,
+              "MediaWeekId": 700,
+              "StartDate": "2017-05-22T00:00:00",
+              "Units": 1,
+              "Week": "5/22/2017"
+            },
+            {
+              "Cost": 0.0,
+              "EndDate": "2017-06-04T00:00:00",
+              "Impressions": 12589.0,
+              "IsHiatus": false,
+              "MediaWeekId": 701,
+              "StartDate": "2017-05-29T00:00:00",
+              "Units": 1,
+              "Week": "5/29/2017"
+            },
+            {
+              "Cost": 0.0,
+              "EndDate": "2017-06-11T00:00:00",
+              "Impressions": 0.0,
+              "IsHiatus": false,
+              "MediaWeekId": 702,
+              "StartDate": "2017-06-05T00:00:00",
+              "Units": 1,
+              "Week": "6/5/2017"
+            },
+            {
+              "Cost": 0.0,
+              "EndDate": "2017-06-18T00:00:00",
+              "Impressions": 0.0,
+              "IsHiatus": false,
+              "MediaWeekId": 703,
+              "StartDate": "2017-06-12T00:00:00",
+              "Units": 1,
+              "Week": "6/12/2017"
+            }
+          ],
+          "Year": 2017
+        }
+      ],
+      "SharePostingBookId": 413,
+      "SinglePostingBookId": 413,
+      "SpotLengthId": 1,
+      "TotalCost": 0.0,
+      "TotalImpressions": 18089.0,
+      "TotalUnits": 5
+    }
+  ],
+  "Equivalized": null,
+  "FlightEndDate": "2017-06-18T00:00:00",
+  "FlightStartDate": "2017-05-15T00:00:00",
+  "FlightWeeks": [
+    {
+      "EndDate": "2017-05-21T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 699,
+      "StartDate": "2017-05-15T00:00:00"
+    },
+    {
+      "EndDate": "2017-05-28T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 700,
+      "StartDate": "2017-05-22T00:00:00"
+    },
+    {
+      "EndDate": "2017-06-04T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 701,
+      "StartDate": "2017-05-29T00:00:00"
+    },
+    {
+      "EndDate": "2017-06-11T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 702,
+      "StartDate": "2017-06-05T00:00:00"
+    },
+    {
+      "EndDate": "2017-06-18T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 703,
+      "StartDate": "2017-06-12T00:00:00"
+    }
+  ],
+  "GuaranteedDemoId": null,
+  "Margin": null,
+  "MarketGroup": null,
+  "MarketGroupId": null,
+  "Notes": null,
+  "PostType": null,
+  "ProposalName": null,
+  "SecondaryDemos": [],
+  "SpotLengths": [
+    {
+      "Display": "30"
+    }
+  ],
+  "Status": 0,
+  "TargetBudget": 0.0,
+  "TargetCPM": 0.0,
+  "TargetImpressions": 18089.0,
+  "TargetUnits": 5,
+  "ValidationWarning": null,
+  "Version": null,
+  "VersionId": 0
+}

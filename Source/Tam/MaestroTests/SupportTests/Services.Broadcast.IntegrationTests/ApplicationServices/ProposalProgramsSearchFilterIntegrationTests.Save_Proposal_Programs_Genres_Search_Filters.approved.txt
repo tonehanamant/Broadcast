@@ -1,0 +1,37 @@
+﻿{
+  "DaypartSearchCriteria": [],
+  "GenreSearchCriteria": [
+    {
+      "Contain": 1,
+      "SearchCriteria": [
+        1
+      ]
+    },
+    {
+      "Contain": 0,
+      "SearchCriteria": [
+        5
+      ]
+    }
+  ],
+  "ProgramNameSearchCriteria": [
+    {
+      "Contain": 1,
+      "SearchCriteria": [
+        "Seinfeld"
+      ]
+    },
+    {
+      "Contain": 1,
+      "SearchCriteria": [
+        "Daily Show"
+      ]
+    },
+    {
+      "Contain": 1,
+      "SearchCriteria": [
+        "Big Bang Theory"
+      ]
+    }
+  ]
+}

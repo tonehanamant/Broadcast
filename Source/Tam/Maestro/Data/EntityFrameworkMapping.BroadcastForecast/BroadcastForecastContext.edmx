@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="broadcast_forecastModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="universes">
+          <Key>
+            <PropertyRef Name="media_month_id" />
+            <PropertyRef Name="playback_type" />
+            <PropertyRef Name="market_code" />
+            <PropertyRef Name="audience_id" />
+          </Key>
+          <Property Name="media_month_id" Type="smallint" Nullable="false" />
+          <Property Name="playback_type" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="market_code" Type="smallint" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="universe" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usages">
+          <Key>
+            <PropertyRef Name="media_month_id" />
+            <PropertyRef Name="playback_type" />
+            <PropertyRef Name="audience_id" />
+            <PropertyRef Name="start_time" />
+            <PropertyRef Name="end_time" />
+            <PropertyRef Name="market_code" />
+          </Key>
+          <Property Name="media_month_id" Type="smallint" Nullable="false" />
+          <Property Name="playback_type" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="start_time" Type="int" Nullable="false" />
+          <Property Name="end_time" Type="int" Nullable="false" />
+          <Property Name="market_code" Type="smallint" Nullable="false" />
+          <Property Name="mon_usage" Type="float" Nullable="false" />
+          <Property Name="tue_usage" Type="float" Nullable="false" />
+          <Property Name="wed_usage" Type="float" Nullable="false" />
+          <Property Name="thu_usage" Type="float" Nullable="false" />
+          <Property Name="fri_usage" Type="float" Nullable="false" />
+          <Property Name="sat_usage" Type="float" Nullable="false" />
+          <Property Name="sun_usage" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="viewer_details">
+          <Key>
+            <PropertyRef Name="media_month_id" />
+            <PropertyRef Name="viewer_id" />
+            <PropertyRef Name="audience_id" />
+            <PropertyRef Name="playback_type" />
+          </Key>
+          <Property Name="media_month_id" Type="smallint" Nullable="false" />
+          <Property Name="viewer_id" Type="bigint" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="playback_type" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="mon_viewers" Type="float" Nullable="false" />
+          <Property Name="tue_viewers" Type="float" Nullable="false" />
+          <Property Name="wed_viewers" Type="float" Nullable="false" />
+          <Property Name="thu_viewers" Type="float" Nullable="false" />
+          <Property Name="fri_viewers" Type="float" Nullable="false" />
+          <Property Name="sat_viewers" Type="float" Nullable="false" />
+          <Property Name="sun_viewers" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="viewers">
+          <Key>
+            <PropertyRef Name="media_month_id" />
+            <PropertyRef Name="station_code" />
+            <PropertyRef Name="start_time" />
+            <PropertyRef Name="end_time" />
+            <PropertyRef Name="market_code" />
+          </Key>
+          <Property Name="media_month_id" Type="smallint" Nullable="false" />
+          <Property Name="station_code" Type="smallint" Nullable="false" />
+          <Property Name="start_time" Type="int" Nullable="false" />
+          <Property Name="end_time" Type="int" Nullable="false" />
+          <Property Name="market_code" Type="smallint" Nullable="false" />
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <Function Name="usp_ForecastNsiRatingsMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="nsi">
+          <Parameter Name="media_month_id" Type="smallint" Mode="In" />
+          <Parameter Name="start_date" Type="date" Mode="In" />
+          <Parameter Name="end_date" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="broadcast_forecastModelStoreContainer">
+          <EntitySet Name="universes" EntityType="Self.universes" Schema="nsi" store:Type="Tables" />
+          <EntitySet Name="usages" EntityType="Self.usages" Schema="nsi" store:Type="Tables" />
+          <EntitySet Name="viewer_details" EntityType="Self.viewer_details" Schema="nsi" store:Type="Tables" />
+          <EntitySet Name="viewers" EntityType="Self.viewers" Schema="nsi" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="broadcast_forecastModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BroadcastForecastContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="universes" EntityType="broadcast_forecastModel.universe" />
+          <EntitySet Name="usages" EntityType="broadcast_forecastModel.usage" />
+          <EntitySet Name="viewer_details" EntityType="broadcast_forecastModel.viewer_details" />
+          <EntitySet Name="viewers" EntityType="broadcast_forecastModel.viewer" />
+          <FunctionImport Name="usp_ForecastNsiRatingsMonth">
+            <Parameter Name="media_month_id" Mode="In" Type="Int16" />
+            <Parameter Name="start_date" Mode="In" Type="DateTime" />
+            <Parameter Name="end_date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="universe">
+          <Key>
+            <PropertyRef Name="media_month_id" />
+            <PropertyRef Name="playback_type" />
+            <PropertyRef Name="market_code" />
+            <PropertyRef Name="audience_id" />
+          </Key>
+          <Property Name="media_month_id" Type="Int16" Nullable="false" />
+          <Property Name="playback_type" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="market_code" Type="Int16" Nullable="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="universe1" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usage">
+          <Key>
+            <PropertyRef Name="media_month_id" />
+            <PropertyRef Name="playback_type" />
+            <PropertyRef Name="audience_id" />
+            <PropertyRef Name="start_time" />
+            <PropertyRef Name="end_time" />
+            <PropertyRef Name="market_code" />
+          </Key>
+          <Property Name="media_month_id" Type="Int16" Nullable="false" />
+          <Property Name="playback_type" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="start_time" Type="Int32" Nullable="false" />
+          <Property Name="end_time" Type="Int32" Nullable="false" />
+          <Property Name="market_code" Type="Int16" Nullable="false" />
+          <Property Name="mon_usage" Type="Double" Nullable="false" />
+          <Property Name="tue_usage" Type="Double" Nullable="false" />
+          <Property Name="wed_usage" Type="Double" Nullable="false" />
+          <Property Name="thu_usage" Type="Double" Nullable="false" />
+          <Property Name="fri_usage" Type="Double" Nullable="false" />
+          <Property Name="sat_usage" Type="Double" Nullable="false" />
+          <Property Name="sun_usage" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="viewer_details">
+          <Key>
+            <PropertyRef Name="media_month_id" />
+            <PropertyRef Name="viewer_id" />
+            <PropertyRef Name="audience_id" />
+            <PropertyRef Name="playback_type" />
+          </Key>
+          <Property Name="media_month_id" Type="Int16" Nullable="false" />
+          <Property Name="viewer_id" Type="Int64" Nullable="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="playback_type" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="mon_viewers" Type="Double" Nullable="false" />
+          <Property Name="tue_viewers" Type="Double" Nullable="false" />
+          <Property Name="wed_viewers" Type="Double" Nullable="false" />
+          <Property Name="thu_viewers" Type="Double" Nullable="false" />
+          <Property Name="fri_viewers" Type="Double" Nullable="false" />
+          <Property Name="sat_viewers" Type="Double" Nullable="false" />
+          <Property Name="sun_viewers" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="viewer">
+          <Key>
+            <PropertyRef Name="media_month_id" />
+            <PropertyRef Name="station_code" />
+            <PropertyRef Name="start_time" />
+            <PropertyRef Name="end_time" />
+            <PropertyRef Name="market_code" />
+          </Key>
+          <Property Name="media_month_id" Type="Int16" Nullable="false" />
+          <Property Name="station_code" Type="Int16" Nullable="false" />
+          <Property Name="start_time" Type="Int32" Nullable="false" />
+          <Property Name="end_time" Type="Int32" Nullable="false" />
+          <Property Name="market_code" Type="Int16" Nullable="false" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="broadcast_forecastModelStoreContainer" CdmEntityContainer="BroadcastForecastContext">
+          <EntitySetMapping Name="universes">
+            <EntityTypeMapping TypeName="broadcast_forecastModel.universe">
+              <MappingFragment StoreEntitySet="universes">
+                <ScalarProperty Name="universe1" ColumnName="universe" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="playback_type" ColumnName="playback_type" />
+                <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usages">
+            <EntityTypeMapping TypeName="broadcast_forecastModel.usage">
+              <MappingFragment StoreEntitySet="usages">
+                <ScalarProperty Name="sun_usage" ColumnName="sun_usage" />
+                <ScalarProperty Name="sat_usage" ColumnName="sat_usage" />
+                <ScalarProperty Name="fri_usage" ColumnName="fri_usage" />
+                <ScalarProperty Name="thu_usage" ColumnName="thu_usage" />
+                <ScalarProperty Name="wed_usage" ColumnName="wed_usage" />
+                <ScalarProperty Name="tue_usage" ColumnName="tue_usage" />
+                <ScalarProperty Name="mon_usage" ColumnName="mon_usage" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="playback_type" ColumnName="playback_type" />
+                <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="viewer_details">
+            <EntityTypeMapping TypeName="broadcast_forecastModel.viewer_details">
+              <MappingFragment StoreEntitySet="viewer_details">
+                <ScalarProperty Name="sun_viewers" ColumnName="sun_viewers" />
+                <ScalarProperty Name="sat_viewers" ColumnName="sat_viewers" />
+                <ScalarProperty Name="fri_viewers" ColumnName="fri_viewers" />
+                <ScalarProperty Name="thu_viewers" ColumnName="thu_viewers" />
+                <ScalarProperty Name="wed_viewers" ColumnName="wed_viewers" />
+                <ScalarProperty Name="tue_viewers" ColumnName="tue_viewers" />
+                <ScalarProperty Name="mon_viewers" ColumnName="mon_viewers" />
+                <ScalarProperty Name="playback_type" ColumnName="playback_type" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="viewer_id" ColumnName="viewer_id" />
+                <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="viewers">
+            <EntityTypeMapping TypeName="broadcast_forecastModel.viewer">
+              <MappingFragment StoreEntitySet="viewers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="station_code" ColumnName="station_code" />
+                <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_ForecastNsiRatingsMonth" FunctionName="broadcast_forecastModel.Store.usp_ForecastNsiRatingsMonth" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

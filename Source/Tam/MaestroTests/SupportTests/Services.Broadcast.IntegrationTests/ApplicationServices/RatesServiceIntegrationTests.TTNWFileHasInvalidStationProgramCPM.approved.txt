@@ -1,0 +1,7 @@
+﻿[
+  {
+    "ProblemDescription": "Invalid station: no Demo cpm",
+    "ProgramName": "Integration Test",
+    "StationLetters": "WCWN"
+  }
+]

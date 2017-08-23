@@ -1,0 +1,21 @@
+﻿[
+  {
+    "InventoryDetailSlotId": 10206,
+    "MediaWeekId": 649,
+    "Messages": [
+      "Week 5/30/2016 TTNW AM reserved by User  for Proposal Proposal Test"
+    ],
+    "ProposalAllocations": [
+      {
+        "IsCurrentProposal": false,
+        "Order": 1,
+        "ProposalName": "Proposal Test",
+        "ProposalVersionDetailQuarterWeekId": 7,
+        "SpotLength": 30,
+        "UserName": "",
+        "WeekStartDate": "2016-05-30T00:00:00"
+      }
+    ],
+    "SlotDaypartCode": "TTNW AM"
+  }
+]

@@ -1,0 +1,172 @@
+﻿{
+  "ImpressionsAndDelivery": [
+    {
+      "AudienceId": 31,
+      "AudienceName": "HH",
+      "DeliveredImpressions": 715546.916,
+      "OrderedImpressions": 1768942,
+      "OutOfSpecDeliveredImpressions": 102394.914,
+      "TotalDeliveredImpressions": 817941.83
+    },
+    {
+      "AudienceId": 33,
+      "AudienceName": "A18-49",
+      "DeliveredImpressions": 175298.237,
+      "OrderedImpressions": 476754,
+      "OutOfSpecDeliveredImpressions": 77846.382,
+      "TotalDeliveredImpressions": 253144.619
+    }
+  ],
+  "ReportData": [
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 85906.486,
+          "Impressions": 919920,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 33,
+          "Delivery": 23418.507,
+          "Impressions": 240942,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "New York",
+      "MediaWeekId": null,
+      "OrderedSpots": 6,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 1,
+      "SpecStatus": "Match",
+      "SpotClearance": 0.16666666666666666,
+      "SpotLength": 15,
+      "Station": "WCBS-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 314269.804,
+          "Impressions": 259470,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 33,
+          "Delivery": 46938.664,
+          "Impressions": 51012,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "New York",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 1,
+      "SpecStatus": "Match",
+      "SpotClearance": 0.5,
+      "SpotLength": 60,
+      "Station": "WCBS-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 315370.626,
+          "Impressions": 589552,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 33,
+          "Delivery": 104941.066,
+          "Impressions": 184800,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "New York",
+      "MediaWeekId": null,
+      "OrderedSpots": 8,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 1,
+      "SpecStatus": "Match",
+      "SpotClearance": 0.25,
+      "SpotLength": 30,
+      "Station": "WNBC-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 102394.914,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 33,
+          "Delivery": 77846.382,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "NEW YORK",
+      "MatchAirTime": false,
+      "MatchIsci": false,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": false,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 1,
+      "SpecStatus": "Airtime,ISCI,Program Name,Station,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 30,
+      "Station": "WPIX",
+      "Status": 0
+    }
+  ],
+  "ScheduleAudiences": [
+    {
+      "AudienceId": 31,
+      "AudienceName": "HH",
+      "IsHouseHold": true,
+      "Population": 7368320,
+      "Rank": 1
+    },
+    {
+      "AudienceId": 33,
+      "AudienceName": "A18-49",
+      "IsHouseHold": false,
+      "Population": 8485887,
+      "Rank": 2
+    }
+  ]
+}

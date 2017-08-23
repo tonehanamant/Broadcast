@@ -1,0 +1,7 @@
+﻿[
+  {
+    "ProblemDescription": "Error while parsing record at line 3: Invalid spot length for program 'Integration Test' on Station 'WCWN'",
+    "ProgramName": "Integration Test",
+    "StationLetters": "WCWN 45.1"
+  }
+]

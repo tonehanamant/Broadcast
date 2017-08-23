@@ -1,0 +1,7 @@
+﻿[
+  {
+    "ProblemDescription": "Invalid demo for station WCWN 45.1",
+    "ProgramName": "Integration Test",
+    "StationLetters": "WCWN 45.1"
+  }
+]

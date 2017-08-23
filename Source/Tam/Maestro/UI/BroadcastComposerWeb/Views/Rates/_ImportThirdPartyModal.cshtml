@@ -1,0 +1,58 @@
+﻿
+<div class="modal fade" id="import_thirdparty_modal" role="dialog" data-bind="modal: { show: showModal, open: onOpenModal, hide: onHideModal}">
+    <div class=" modal-dialog modal-xlg" id="import_thirdparty_modal_view">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="modal-title" data-bind="text: 'Upload ' +  RateSource() + ' File'"></span>
+            </div>
+
+            <div class="modal-body">
+                <form id="import_thirdparty_form">
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <div class="form-group">
+                                    <label>File Name</label>
+                                    <div data-bind="text: FileName" class=""></div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xs-2">
+                                <div class="form-group">
+                                    <label>Rating Book</label>
+                                    <select class="form-control" data-bind="options: ratingBookOptions, optionsValue: 'Id', optionsText: 'Display', value: selectedRatingBook, select2: true"></select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xs-2">
+                                <div class="form-group">
+                                    <label>Playback Type</label>
+                                    <select class="form-control" data-bind="options: playbackTypeOptions, optionsValue: 'Id', optionsText: 'Display', value: selectedPlaybackType, select2: true"></select>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="form-group">
+                                    <label>Flight</label>
+                                    <input type="text" class="form-control read-only-picker" readonly style="width: 100%;" name="import_thirdparty_flights" data-bind="flightWeekPicker: { startDate: FlightStartDate, endDate: FlightEndDate, weekSelection: FlightWeeks, noMinimum: true }" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label>Block Name</label>
+                                    <input type="text" class="form-control" style="width: 100%;" name="import_thirdparty_blockname" data-bind="value: BlockName" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-success" data-bind="click: uploadFile">Upload File</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

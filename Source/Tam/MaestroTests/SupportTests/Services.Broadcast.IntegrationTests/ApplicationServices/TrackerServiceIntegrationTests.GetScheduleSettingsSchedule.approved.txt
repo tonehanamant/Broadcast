@@ -1,0 +1,31 @@
+﻿{
+  "Advertiser": null,
+  "AdvertiserId": 37441,
+  "Audiences": [
+    31,
+    42
+  ],
+  "DaypartRestriction": null,
+  "DaypartRestrictionId": 0,
+  "EndDate": "2016-06-12T00:00:00",
+  "Estimate": 3417,
+  "Id": 69,
+  "InventorySource": 1,
+  "IsBlank": false,
+  "Iscis": "17UPLC5174H(17UPLC5174H), 17UPLC5174(17UPLC5174), 17LPLC0721H(17LPLC0721H), 17LPLC0721(17LPLC0721)",
+  "IsEquivalized": false,
+  "MarketRestrictions": [
+    104,
+    106
+  ],
+  "Name": "test-mnorris-phillips",
+  "OutOfSpec": 211,
+  "PostingBook": null,
+  "PostingBookId": 413,
+  "PostType": 1,
+  "PrimaryDemoBooked": 58154635.0,
+  "PrimaryDemoDelivered": 1883781.4,
+  "SpotsBooked": 392,
+  "SpotsDelivered": 100,
+  "StartDate": "2016-05-30T00:00:00"
+}

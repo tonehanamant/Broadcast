@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>PdfSharp.MigraDoc</id>
+    <version>2.0.1</version>
+    <title>PdfSharp + MigraDoc + Stream</title>
+    <authors>Mukul Garg</authors>
+    <owners>Mukul Garg</owners>
+    <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
+    <projectUrl>https://nuget.org/packages/PdfSharpMigraDoc.NuGet.Packager</projectUrl>
+    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This is an enhancement in PDFsharp + MigraDoc project http://www.pdfsharp.net/. 
+      Enhancements: 
+      1. Ability in MigraDoc to add image from Stream. Currently only MemoryStream is supported.
+      2. Support for .Net 4.5</description>
+    <summary>This is an enhancement in PDFsharp + MigraDoc project http://www.pdfsharp.net/. This include the ability in MigraDoc to add image from Stream. Currently only MemoryStream is supported.</summary>
+    <releaseNotes />
+    <copyright>Copyright Mukul Garg 2015</copyright>
+    <language>en-US</language>
+    <tags>PdfSharp MigraDoc</tags>
+  </metadata>
+</package>

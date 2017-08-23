@@ -1,0 +1,354 @@
+﻿{
+  "AdditionalAudienceId": null,
+  "AdvertiserId": 37444,
+  "FlightEndDate": "2016-12-25T00:00:00",
+  "FlightStartDate": "2016-12-05T00:00:00",
+  "FlightWeeks": [],
+  "GuaranteedDemoId": 31,
+  "HutBookMonthId": 410,
+  "Id": 249,
+  "Market": 80,
+  "Notes": "third",
+  "PlayBackType": 3,
+  "PrimaryVersionId": 44,
+  "ProgramDisplayFilter": {
+    "Affiliations": [
+      "ABC",
+      "IND"
+    ],
+    "DayParts": [
+      {
+        "Contain": 0,
+        "DayPartId": 31193,
+        "SearchCriteria": {
+          "endTime": 54000,
+          "fri": true,
+          "mon": true,
+          "sat": false,
+          "startTime": 50400,
+          "sun": false,
+          "Text": "M-F 2PM-3PM",
+          "thu": true,
+          "tue": true,
+          "wed": true
+        }
+      }
+    ],
+    "Genres": [
+      {
+        "Display": "Comedy"
+      },
+      {
+        "Display": "News"
+      },
+      {
+        "Display": "Test"
+      }
+    ],
+    "Markets": [
+      {
+        "Display": "Greensboro-H.Point-W.Salem"
+      },
+      {
+        "Display": "New York"
+      }
+    ],
+    "ProgramNames": [
+      "Integration Test",
+      "Monday Show",
+      "Sunday Show"
+    ]
+  },
+  "ProgramFilter": null,
+  "ProposalName": "Proposal Versions Test",
+  "ProposalPrograms": {
+    "DisplayProposalMarketPrograms": [
+      {
+        "DisplayProposalStationPrograms": [
+          {
+            "ProposalPrograms": [
+              {
+                "AdditionalAudienceImpressions": 0.0,
+                "AdditionalAudienceSubscribers": 0.0,
+                "AdditonalAudienceCPM": 0.0,
+                "DayPart": {
+                  "Display": "M-F 2PM-3PM"
+                },
+                "DayPartId": 31193,
+                "DemoRating": 0.01332696,
+                "EndDate": "2016-12-25T00:00:00",
+                "Genres": [
+                  {
+                    "Display": "News"
+                  }
+                ],
+                "GRP": 0.0,
+                "HHeCPM": 0.0000,
+                "HHImpressions": 0.0,
+                "HouseHoldMarketSubscribers": 7368320.0,
+                "HouseHoldRating": 0.01332696,
+                "IsOverlapping": false,
+                "Market": {
+                  "Display": "New York"
+                },
+                "MarketSubscribers": 7368320.0,
+                "ProgramId": 1000,
+                "ProgramName": "Sunday Show",
+                "SpotCost": 20.0000,
+                "StartDate": "2016-09-05T00:00:00",
+                "Station": {
+                  "Affiliation": "ABC",
+                  "CallLetters": "WABC-TV 7.1",
+                  "LegacyCallLetters": "WABC",
+                  "StationCode": 5015
+                },
+                "TargetCpm": 0.2036,
+                "TargetImpressions": 98.1973371,
+                "TotalCost": 20.0000,
+                "TotalSpots": 0,
+                "TRP": 0.08665923
+              },
+              {
+                "AdditionalAudienceImpressions": 0.0,
+                "AdditionalAudienceSubscribers": 0.0,
+                "AdditonalAudienceCPM": 0.0,
+                "DayPart": {
+                  "Display": "M-F 2PM-3PM"
+                },
+                "DayPartId": 31193,
+                "DemoRating": 0.01332696,
+                "EndDate": "2016-12-25T00:00:00",
+                "Genres": [
+                  {
+                    "Display": "Comedy"
+                  }
+                ],
+                "GRP": 0.0,
+                "HHeCPM": 0.0000,
+                "HHImpressions": 0.0,
+                "HouseHoldMarketSubscribers": 7368320.0,
+                "HouseHoldRating": 0.01332696,
+                "IsOverlapping": false,
+                "Market": {
+                  "Display": "New York"
+                },
+                "MarketSubscribers": 7368320.0,
+                "ProgramId": 1001,
+                "ProgramName": "Monday Show",
+                "SpotCost": 20.0000,
+                "StartDate": "2016-09-05T00:00:00",
+                "Station": {
+                  "Affiliation": "ABC",
+                  "CallLetters": "WABC-TV 7.1",
+                  "LegacyCallLetters": "WABC",
+                  "StationCode": 5015
+                },
+                "TargetCpm": 0.2036,
+                "TargetImpressions": 196.3946742,
+                "TotalCost": 40.0000,
+                "TotalSpots": 2,
+                "TRP": 0.17331846
+              }
+            ],
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WABC-TV 7.1",
+              "LegacyCallLetters": "WABC",
+              "StationCode": 5015
+            },
+            "StationTotals": {
+              "TotalAdditionalAudienceCPM": 0.0,
+              "TotalAdditionalAudienceImpressions": 0.0,
+              "TotalCost": 40.0000,
+              "TotalGRP": 0.0,
+              "TotalHHCPM": 0.0000,
+              "TotalHHImpressions": 0.0,
+              "TotalSpots": 2,
+              "TotalTargetCPM": 0.2036,
+              "TotalTargetImpressions": 196.394669,
+              "TotalTRP": 0.173318461
+            }
+          }
+        ],
+        "MarketId": 101,
+        "MarketName": "New York",
+        "MarketSubscribers": 7368320.0,
+        "MarketTotals": {
+          "TotalAdditionalAudienceCPM": 0.0,
+          "TotalAdditionalAudienceImpressions": 0.0,
+          "TotalCost": 40.0000,
+          "TotalGRP": 0.0,
+          "TotalHHCPM": 0.0000,
+          "TotalHHImpressions": 0.0,
+          "TotalSpots": 2,
+          "TotalTargetCPM": 0.2036,
+          "TotalTargetImpressions": 196.394669,
+          "TotalTRP": 0.173318461
+        },
+        "Rank": 1
+      },
+      {
+        "DisplayProposalStationPrograms": [
+          {
+            "ProposalPrograms": [
+              {
+                "AdditionalAudienceImpressions": 0.0,
+                "AdditionalAudienceSubscribers": 0.0,
+                "AdditonalAudienceCPM": 0.0,
+                "DayPart": {
+                  "Display": "M-F 2PM-3PM"
+                },
+                "DayPartId": 31193,
+                "DemoRating": 0.00174164,
+                "EndDate": "2016-12-25T00:00:00",
+                "Genres": [
+                  {
+                    "Display": "Test"
+                  }
+                ],
+                "GRP": 0.0,
+                "HHeCPM": 0.0000,
+                "HHImpressions": 0.0,
+                "HouseHoldMarketSubscribers": 679970.0,
+                "HouseHoldRating": 0.00174164,
+                "IsOverlapping": false,
+                "Market": {
+                  "Display": "Greensboro-H.Point-W.Salem"
+                },
+                "MarketSubscribers": 679970.0,
+                "ProgramId": 47571,
+                "ProgramName": "Integration Test",
+                "SpotCost": 20.0000,
+                "StartDate": "2016-09-05T00:00:00",
+                "Station": {
+                  "Affiliation": "IND",
+                  "CallLetters": "WGHP 8.2",
+                  "LegacyCallLetters": "EGHP",
+                  "StationCode": 1171
+                },
+                "TargetCpm": 16.8881,
+                "TargetImpressions": 2.36852461,
+                "TotalCost": 40.0000,
+                "TotalSpots": 2,
+                "TRP": 0.00209022
+              },
+              {
+                "AdditionalAudienceImpressions": 0.0,
+                "AdditionalAudienceSubscribers": 0.0,
+                "AdditonalAudienceCPM": 0.0,
+                "DayPart": {
+                  "Display": "M-F 2PM-3PM"
+                },
+                "DayPartId": 31193,
+                "DemoRating": 0.00174164,
+                "EndDate": "2016-12-25T00:00:00",
+                "Genres": [
+                  {
+                    "Display": "Test"
+                  }
+                ],
+                "GRP": 0.0,
+                "HHeCPM": 0.0000,
+                "HHImpressions": 0.0,
+                "HouseHoldMarketSubscribers": 679970.0,
+                "HouseHoldRating": 0.00174164,
+                "IsOverlapping": false,
+                "Market": {
+                  "Display": "Greensboro-H.Point-W.Salem"
+                },
+                "MarketSubscribers": 679970.0,
+                "ProgramId": 48737,
+                "ProgramName": "Integration Test",
+                "SpotCost": 20.0000,
+                "StartDate": "2016-09-12T00:00:00",
+                "Station": {
+                  "Affiliation": "IND",
+                  "CallLetters": "WGHP 8.2",
+                  "LegacyCallLetters": "EGHP",
+                  "StationCode": 1171
+                },
+                "TargetCpm": 16.8881,
+                "TargetImpressions": 1.18426231,
+                "TotalCost": 20.0000,
+                "TotalSpots": 0,
+                "TRP": 0.00104511
+              }
+            ],
+            "Station": {
+              "Affiliation": "IND",
+              "CallLetters": "WGHP 8.2",
+              "LegacyCallLetters": "EGHP",
+              "StationCode": 1171
+            },
+            "StationTotals": {
+              "TotalAdditionalAudienceCPM": 0.0,
+              "TotalAdditionalAudienceImpressions": 0.0,
+              "TotalCost": 40.0000,
+              "TotalGRP": 0.0,
+              "TotalHHCPM": 0.0000,
+              "TotalHHImpressions": 0.0,
+              "TotalSpots": 2,
+              "TotalTargetCPM": 16.8881,
+              "TotalTargetImpressions": 2.36852455,
+              "TotalTRP": 0.002090225
+            }
+          }
+        ],
+        "MarketId": 118,
+        "MarketName": "Greensboro-H.Point-W.Salem",
+        "MarketSubscribers": 679970.0,
+        "MarketTotals": {
+          "TotalAdditionalAudienceCPM": 0.0,
+          "TotalAdditionalAudienceImpressions": 0.0,
+          "TotalCost": 40.0000,
+          "TotalGRP": 0.0,
+          "TotalHHCPM": 0.0000,
+          "TotalHHImpressions": 0.0,
+          "TotalSpots": 2,
+          "TotalTargetCPM": 16.8881,
+          "TotalTargetImpressions": 2.36852455,
+          "TotalTRP": 0.002090225
+        },
+        "Rank": 46
+      }
+    ],
+    "OverallTotals": {
+      "TotalAdditionalAudienceCPM": 0.0,
+      "TotalAdditionalAudienceImpressions": 0.0,
+      "TotalCost": 80.0000,
+      "TotalGRP": 0.0,
+      "TotalHHCPM": 0.0000,
+      "TotalHHImpressions": 0.0,
+      "TotalSpots": 4,
+      "TotalTargetCPM": 0.4024,
+      "TotalTargetImpressions": 198.7632,
+      "TotalTRP": 0.175408691
+    },
+    "TargetUnitTotals": {
+      "TotalAdditionalAudienceCPM": 0.0,
+      "TotalAdditionalAudienceImpressions": 0.0,
+      "TotalCost": 40.0000,
+      "TotalGRP": 0.0,
+      "TotalHHCPM": 0.0000,
+      "TotalHHImpressions": 0.0,
+      "TotalSpots": 0,
+      "TotalTargetCPM": 0.4024,
+      "TotalTargetImpressions": 198.7632,
+      "TotalTRP": 0.175408691
+    }
+  },
+  "ProposalProgramsCriteria": {
+    "DaypartSearchCriteria": [],
+    "GenreSearchCriteria": [],
+    "ProgramNameSearchCriteria": []
+  },
+  "ShareBookMonthId": 413,
+  "SpotLength": 1,
+  "Status": 0,
+  "SweepMonthId": 413,
+  "TargetBudget": 3000.0000,
+  "TargetImpressions": 0.3,
+  "TargetUnits": 2,
+  "UnsavedPrograms": false,
+  "Version": 3
+}

@@ -1,0 +1,114 @@
+﻿{
+  "ImpressionsAndDelivery": [
+    {
+      "AudienceId": 31,
+      "AudienceName": "HH",
+      "DeliveredImpressions": 102394.914,
+      "OrderedImpressions": 0,
+      "OutOfSpecDeliveredImpressions": 102394.914,
+      "TotalDeliveredImpressions": 204789.828
+    },
+    {
+      "AudienceId": 33,
+      "AudienceName": "A18-49",
+      "DeliveredImpressions": 77846.382,
+      "OrderedImpressions": 0,
+      "OutOfSpecDeliveredImpressions": 77846.382,
+      "TotalDeliveredImpressions": 155692.764
+    }
+  ],
+  "ReportData": [
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 42141.696,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 33,
+          "Delivery": 33120.99,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "2TWNWEST000H",
+      "Market": "NEW YORK",
+      "MatchAirTime": false,
+      "MatchIsci": false,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": false,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PIX11 MORNING NEWS 6A-7A",
+      "Rank": 1,
+      "SpecStatus": "Airtime,ISCI,Program Name,Station,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 30,
+      "Station": "WPIX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 60253.218,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 33,
+          "Delivery": 44725.392,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "2TWNWEST000H",
+      "Market": "NEW YORK",
+      "MatchAirTime": false,
+      "MatchIsci": false,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": false,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PIX11 MORNING NEWS 7A-9A",
+      "Rank": 1,
+      "SpecStatus": "Airtime,ISCI,Program Name,Station,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 30,
+      "Station": "WPIX",
+      "Status": 0
+    }
+  ],
+  "ScheduleAudiences": [
+    {
+      "AudienceId": 31,
+      "AudienceName": "HH",
+      "IsHouseHold": true,
+      "Population": 7368320,
+      "Rank": 1
+    },
+    {
+      "AudienceId": 33,
+      "AudienceName": "A18-49",
+      "IsHouseHold": false,
+      "Population": 8485887,
+      "Rank": 2
+    }
+  ]
+}

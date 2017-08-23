@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AEFDB82C-C7B8-4009-8D09-CC17EE263075}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BroadcastTest</RootNamespace>
+    <AssemblyName>BroadcastTest</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.engine">
+      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\nunit.engine.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.engine.api">
+      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\nunit.engine.api.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="NUnit3.TestAdapter">
+      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\NUnit3.TestAdapter.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Serialization" />
+    <Reference Include="TechTalk.SpecFlow">
+      <HintPath>..\packages\SpecFlow.2.1.0\lib\net45\TechTalk.SpecFlow.dll</HintPath>
+    </Reference>
+    <Reference Include="TechTalk.SpecRun">
+      <HintPath>..\packages\SpecRun.NUnit.1.5.2\lib\net40\TechTalk.SpecRun.dll</HintPath>
+    </Reference>
+    <Reference Include="Tynamix.ObjectFiller">
+      <HintPath>..\packages\Tynamix.ObjectFiller.1.5.0\lib\net45\Tynamix.ObjectFiller.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver">
+      <HintPath>..\packages\Selenium.WebDriver.2.53.1\lib\net40\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support">
+      <HintPath>..\packages\Selenium.Support.2.53.1\lib\net40\WebDriver.Support.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="Helpers\ApiTools.cs" />
+    <Compile Include="Helpers\ExcelHelper.cs" />
+    <Compile Include="Helpers\ScreenShot.cs" />
+    <Compile Include="Helpers\XmlFileHelper.cs" />
+    <Compile Include="Hooks\SeleniumHooks.cs" />
+    <Compile Include="Logging.cs" />
+    <Compile Include="Model\ContactData.cs" />
+    <Compile Include="Model\DayTime.cs" />
+    <Compile Include="Model\RatesData.cs" />
+    <Compile Include="Model\RatesXml.cs" />
+    <Compile Include="Model\RateXml.cs" />
+    <Compile Include="Model\XmlImportFiles.cs" />
+    <Compile Include="Pages\StationRateModal.cs" />
+    <Compile Include="Helpers\W2uiTools.cs" />
+    <Compile Include="Browser.cs" />
+    <Compile Include="Hooks\NUnit3Hooks.cs" />
+    <Compile Include="Model\BvsScheduleRecord.cs" />
+    <Compile Include="Model\RateDataXml.cs" />
+    <Compile Include="Model\StationRateCard.cs" />
+    <Compile Include="Pages\BasePageObject.cs" />
+    <Compile Include="Pages\BvsTrackerPage.cs" />
+    <Compile Include="Pages\RateCardPage.cs" />
+    <Compile Include="Selenium.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Selenium.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Steps\BvsTrackerSteps.cs" />
+    <Compile Include="Steps\RateCardSteps.cs" />
+    <Compile Include="Tests\AutomationInternalTest\AutomationSelfCheck.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AutomationSelfCheck.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Features\BB\BvsTrackerSmokeTest.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BvsTrackerSmokeTest.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Features\BCOP\RateCardTest.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RateCardTest.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helpers\AutoUtils.cs" />
+    <Compile Include="Helpers\JiraDriver.cs" />
+    <Compile Include="Helpers\ZephyrDriver.cs" />
+    <Compile Include="Tests\Features\BCOP\StationRateDataFieldValidation.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StationRateDataFieldValidation.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Features\BCOP\StationRateXmlImport.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StationRateXmlImport.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Features\BCOP\StationRateDataTest.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StationRateDataTest.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Features\BCOP\StationRateXmlImportExistingRates.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StationRateXmlImportExistingRates.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Features\BCOP\StationRateXmlImportSpecialCases.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StationRateXmlImportSpecialCases.feature</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\Regression\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Default.srprofile">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+    <None Include="runtests.cmd" />
+    <None Include="Selenium.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Selenium.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="SpecRunTestProfile.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Test Data\Rate Data\BCOP-52\Atlanta.WPCH.SYN 4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Birmingham.EVTM.EM.NN.4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Birmingham.EVTM.SYN.4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Birmingham.WVTM.DA.EF.LF.4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Birmingham.WVTM.EM.NN.4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Birmingham.WVTM.EN.LN.4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Lexington.EKYT.EM.NN.4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Lexington.EKYT.EN.LN.4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Lexington.EKYT.SYN.4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Lexington.WKYT.EM.NN.4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Lexington.WKYT.EN.LN.4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Lexington.WKYT.SYN.4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Tucson.KVOA.EM.NN.4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Tucson.KVOA.EN.LN.4Q16.xls" />
+    <None Include="Test Data\Rate Data\BCOP-52\Tucson.KVOA.SYN.4Q16.xls" />
+    <None Include="Testing.config" />
+    <None Include="Tests\AutomationInternalTest\AutomationSelfCheck.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>AutomationSelfCheck.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Features\BB\BvsTrackerSmokeTest.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>BvsTrackerSmokeTest.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Features\BCOP\RateCardTest.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>RateCardTest.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Features\BCOP\StationRateDataFieldValidation.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>StationRateDataFieldValidation.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Features\BCOP\StationRateXmlImport.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>StationRateXmlImport.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Features\BCOP\StationRateDataTest.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>StationRateDataTest.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Features\BCOP\StationRateXmlImportExistingRates.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>StationRateXmlImportExistingRates.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Features\BCOP\StationRateXmlImportSpecialCases.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>StationRateXmlImportSpecialCases.feature.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Test Data\Rate Data\BCOP-52\Atlanta.WPCH.SYN.avWPCHTV8317325_1.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Test Data\Rate Data\BCOP-52\Birmingham.EVTM.EM.NNavWVTMTV8317185_1.xml" />
+    <Content Include="Test Data\Rate Data\BCOP-52\Birmingham.EVTM.SYN.avWVTMTV8317185_OverlappingSpots.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Test Data\Rate Data\BCOP-52\Birmingham.WVTM.EM.NNavWVTMTV8317185_1.xml" />
+    <Content Include="Test Data\Rate Data\BCOP-52\Birmingham.WVTM.EN.LNavWVTMTV8317185_1.xml" />
+    <Content Include="Test Data\Rate Data\BCOP-52\Lexington.EKYT.EM.NN.avEKYTTV8317889_1.xml" />
+    <Content Include="Test Data\Rate Data\BCOP-52\Lexington.EKYT.EN.LN.avEKYTTV8317889_1.xml" />
+    <Content Include="Test Data\Rate Data\BCOP-52\Lexington.EKYT.SYN.avEKYTTV8317889_1.xml" />
+    <Content Include="Test Data\Rate Data\BCOP-52\Lexington.WKYT.EM.NN.avWKYTTV8317971_1.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Test Data\Rate Data\BCOP-52\Lexington.WKYT.EN.LN.avWKYTTV8317971_1.xml" />
+    <Content Include="Test Data\Rate Data\BCOP-52\Lexington.WKYT.SYN.avWKYTTV8317971_1.xml" />
+    <Content Include="Test Data\Rate Data\BCOP-52\Tucson.KVOA.EM.NN.EMPTYNULLRATESTEST.xml" />
+    <Content Include="Test Data\Rate Data\BCOP-52\Tucson.KVOA.EN.LN.avKVOATV8317399_1.xml" />
+    <Content Include="Test Data\Rate Data\BCOP-52\Tucson.KVOA.SYN.avKVOATV8317399_1.xml" />
+    <Content Include="Test Data\Rate Data\BCOP-82\InvalidStationName.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Test Data\Rate Data\BCOP-82\InvalidSchema.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Test Data\Rate Data\BCOP-82\ExistingRate.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Test Data\Rate Data\BCOP-82\InvalidRateData.xml" />
+    <Content Include="Test Data\Rate Data\BCOP-82\InvalidEndDateRate.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Test Data\Rate Data\BCOP-82\ZeroValRateForProgram.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Test Data\Rate Data\BCOP-82\NoRateForProgram.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Test Data\Rate Data\BCOP-82\NewRate.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Test Data\Rate Data\Lexington.EKYT.EM.NN.avEKYTTV8317889_1.xml" />
+    <Content Include="Test Data\Rate Data\Lexington.WKYT.EN.LN.avWKYTTV8317971_1.xml" />
+    <Content Include="Test Data\Rate Data\Tucson.KVOA.EN.LN.avKVOATV8317399_1.xml" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\packages\Selenium.WebDriver.IEDriver.2.53.1.1\build\Selenium.WebDriver.IEDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.IEDriver.2.53.1.1\build\Selenium.WebDriver.IEDriver.targets')" />
+  <Import Project="..\packages\Selenium.WebDriver.ChromeDriver.2.24.0.0\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.ChromeDriver.2.24.0.0\build\Selenium.WebDriver.ChromeDriver.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>if exist "$(TargetPath).locked" del "$(TargetPath).locked"
+if exist "$(TargetPath)" if not exist "$(TargetPath).locked" move "$(TargetPath)" "$(TargetPath).locked"</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

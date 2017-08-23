@@ -1,0 +1,7 @@
+﻿[
+  {
+    "ProblemDescription": "Error while parsing record at line 14: Invalid rate for program 'NBC NITELY NEWS' on Station 'WXIA'",
+    "ProgramName": "NBC NITELY NEWS",
+    "StationLetters": "WXIA-TV"
+  }
+]

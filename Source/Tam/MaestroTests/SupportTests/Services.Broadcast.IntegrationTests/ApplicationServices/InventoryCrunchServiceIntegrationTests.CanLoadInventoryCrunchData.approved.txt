@@ -1,0 +1,150 @@
+﻿{
+  "DaypartCode": "TTNW AM",
+  "InventoryDetailSlots": [
+    {
+      "DetailLevel": 8,
+      "InventoryDetailSlotComponents": [
+        {
+          "DaypartId": 6722,
+          "MarketCode": 410,
+          "SpotCost15": null,
+          "SpotCost30": null,
+          "StationCode": 1171
+        }
+      ],
+      "InventoryDetailSlotProposals": null,
+      "MediaWeekId": 649,
+      "RolleupDaypartId": 6722,
+      "SlotCost": 1234.0000,
+      "SpotLengthId": 3,
+      "TotalStations": 1
+    },
+    {
+      "DetailLevel": 7,
+      "InventoryDetailSlotComponents": [
+        {
+          "DaypartId": 6722,
+          "MarketCode": 410,
+          "SpotCost15": null,
+          "SpotCost30": null,
+          "StationCode": 1171
+        }
+      ],
+      "InventoryDetailSlotProposals": null,
+      "MediaWeekId": 649,
+      "RolleupDaypartId": 6722,
+      "SlotCost": 1685.0000,
+      "SpotLengthId": 3,
+      "TotalStations": 1
+    },
+    {
+      "DetailLevel": 6,
+      "InventoryDetailSlotComponents": [
+        {
+          "DaypartId": 6722,
+          "MarketCode": 410,
+          "SpotCost15": null,
+          "SpotCost30": null,
+          "StationCode": 1171
+        }
+      ],
+      "InventoryDetailSlotProposals": null,
+      "MediaWeekId": 649,
+      "RolleupDaypartId": 6722,
+      "SlotCost": 65.0000,
+      "SpotLengthId": 3,
+      "TotalStations": 1
+    },
+    {
+      "DetailLevel": 5,
+      "InventoryDetailSlotComponents": [
+        {
+          "DaypartId": 6722,
+          "MarketCode": 410,
+          "SpotCost15": null,
+          "SpotCost30": null,
+          "StationCode": 1171
+        }
+      ],
+      "InventoryDetailSlotProposals": null,
+      "MediaWeekId": 649,
+      "RolleupDaypartId": 6722,
+      "SlotCost": 98.0000,
+      "SpotLengthId": 3,
+      "TotalStations": 1
+    },
+    {
+      "DetailLevel": 4,
+      "InventoryDetailSlotComponents": [
+        {
+          "DaypartId": 6722,
+          "MarketCode": 410,
+          "SpotCost15": null,
+          "SpotCost30": null,
+          "StationCode": 1171
+        }
+      ],
+      "InventoryDetailSlotProposals": null,
+      "MediaWeekId": 649,
+      "RolleupDaypartId": 6722,
+      "SlotCost": 565.0000,
+      "SpotLengthId": 3,
+      "TotalStations": 1
+    },
+    {
+      "DetailLevel": 3,
+      "InventoryDetailSlotComponents": [
+        {
+          "DaypartId": 6722,
+          "MarketCode": 410,
+          "SpotCost15": null,
+          "SpotCost30": null,
+          "StationCode": 1171
+        }
+      ],
+      "InventoryDetailSlotProposals": null,
+      "MediaWeekId": 649,
+      "RolleupDaypartId": 6722,
+      "SlotCost": 333.0000,
+      "SpotLengthId": 3,
+      "TotalStations": 1
+    },
+    {
+      "DetailLevel": 2,
+      "InventoryDetailSlotComponents": [
+        {
+          "DaypartId": 6722,
+          "MarketCode": 410,
+          "SpotCost15": null,
+          "SpotCost30": null,
+          "StationCode": 1171
+        }
+      ],
+      "InventoryDetailSlotProposals": null,
+      "MediaWeekId": 649,
+      "RolleupDaypartId": 6722,
+      "SlotCost": 4.0000,
+      "SpotLengthId": 3,
+      "TotalStations": 1
+    },
+    {
+      "DetailLevel": 1,
+      "InventoryDetailSlotComponents": [
+        {
+          "DaypartId": 6020,
+          "MarketCode": 410,
+          "SpotCost15": null,
+          "SpotCost30": null,
+          "StationCode": 1171
+        }
+      ],
+      "InventoryDetailSlotProposals": null,
+      "MediaWeekId": 649,
+      "RolleupDaypartId": 6722,
+      "SlotCost": 1.0000,
+      "SpotLengthId": 3,
+      "TotalStations": 1
+    }
+  ],
+  "InventorySource": 4
+}

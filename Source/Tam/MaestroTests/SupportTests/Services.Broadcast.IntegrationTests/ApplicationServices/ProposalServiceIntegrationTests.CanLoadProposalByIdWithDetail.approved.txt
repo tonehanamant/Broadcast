@@ -1,0 +1,78 @@
+﻿{
+  "AdditionalAudienceId": null,
+  "AdvertiserId": 37444,
+  "Details": [
+    {
+      "Daypart": {
+        "_Code": "CUS",
+        "_EndTime": 35999,
+        "_Friday": true,
+        "_Id": 6724,
+        "_Is24Hour": false,
+        "_LastEndTime": 0,
+        "_LastStartTime": 0,
+        "_Monday": true,
+        "_Name": "Custom",
+        "_Saturday": false,
+        "_StartTime": 32400,
+        "_Sunday": false,
+        "_Thursday": true,
+        "_Tuesday": true,
+        "_Wednesday": true
+      },
+      "DaypartCode": "NAV",
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "Quarters": [
+        {
+          "Cpm": 20.0,
+          "DistributeGoals": false,
+          "ImpressionGoal": 100,
+          "Quarter": 2,
+          "QuarterText": null,
+          "Weeks": [
+            {
+              "Cost": 25.0,
+              "EndDate": "2016-06-06T00:00:00",
+              "Impressions": 100,
+              "IsHiatus": false,
+              "MediaWeekId": 649,
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 10,
+              "Week": null
+            }
+          ],
+          "Year": 2016
+        }
+      ],
+      "SpotLengthId": 1,
+      "TotalCost": 50.0,
+      "TotalImpressions": 1000,
+      "TotalUnits": 200
+    }
+  ],
+  "Equivalized": null,
+  "FlightEndDate": "2016-12-11T00:00:00",
+  "FlightStartDate": "2016-10-31T00:00:00",
+  "GuaranteedDemoId": 31,
+  "HutBookMonthId": null,
+  "Market": 80,
+  "Notes": null,
+  "PlayBackType": null,
+  "PostType": null,
+  "ProposalName": "Proposal Test",
+  "SecondaryDemos": [
+    5,
+    6
+  ],
+  "ShareBookMonthId": null,
+  "SpotLengths": [
+    30
+  ],
+  "Status": 0,
+  "SweepMonthId": 0,
+  "TargetBudget": 0.0000,
+  "TargetImpressions": 0.0,
+  "TargetUnits": 0,
+  "Version": 1
+}

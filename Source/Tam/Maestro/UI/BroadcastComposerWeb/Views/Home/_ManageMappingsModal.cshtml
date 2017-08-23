@@ -1,0 +1,37 @@
+﻿<div class="modal fade" id="manage_mappings_modal">
+    <div class="modal-dialog modal-xlg" id="manage_mappings_modal_view">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-title">Manage Mappings</div>
+            </div>
+
+            <div class="modal-body modal-body-lg">
+
+                @*//mappings tabs*@
+                <ul id="manage_mappings_tabs" class="nav nav-tabs">
+                    <li class="active" role="presentation">
+                        <a data-toggle="tab" name="program" role="tab" href="#mappings_program_view">Program</a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="tab" name="station" role="tab" href="#mappings_station_view">Station</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    @*//mappings program view*@
+                    <div id="mappings_program_view" class="tab-pane fade in active">
+                        <div id="mappings_program_grid" style="margin-top: 1px; height: 450px"></div>
+                    </div>
+                    @*//mappings station view*@
+                    <div id="mappings_station_view" class="tab-pane fade">
+                        <div id="mappings_station_grid" style="margin-top: 1px; height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer" style="padding-top: 4px;">
+                <button class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

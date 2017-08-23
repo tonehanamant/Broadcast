@@ -1,0 +1,53 @@
+﻿<div id="progress_modal" class="modal fade" tabindex="-1" role="dialog" data-backdrop='static' data-keyboard='false' aria-labelledby="progressModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>*@
+                <h4 class="modal-title cadent-blue" id="myModalLabel"><strong>Traffic Creation Progress</strong><a class="anchorjs-link" href="#progressModalLabel"><span class="anchorjs-icon"></span></a></h4>
+            </div>
+            <div class="modal-body">
+                <h5 id="default_progress_text" class="cadent-dk-blue">The Server is processing your request</h5>
+                <div class="progress">
+                    <div id="createTrafficProgresBar" class="progress-bar" role="progressbar" aria-valuenow="75"
+                         aria-valuemin="0" aria-valuemax="100" style="width:75%">
+                        75% Complete...  (Allocating Spots)
+                    </div>
+                </div>
+            </div>
+            @*<div class="modal-footer">
+                    <a class="btn btn-primary" data-dismiss="modal">Cancel</a>
+                </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="alertModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body modal-body-sm"></div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal">Ok</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="confirmModal" style="z-index: 2000;" class="modal fade" tabindex="-1" role="dialog"  aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <a class="btn btn-warning" data-dismiss="modal" id="confirmButton">Continue</a>
+                <a class="btn btn-default" data-dismiss="modal" id="confirmCancelButton">Cancel</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

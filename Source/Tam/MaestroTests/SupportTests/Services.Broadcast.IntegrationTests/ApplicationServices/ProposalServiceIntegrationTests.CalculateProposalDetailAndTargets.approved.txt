@@ -1,0 +1,227 @@
+﻿{
+  "AdditionalAudienceId": null,
+  "AdvertiserId": 0,
+  "Details": [
+    {
+      "Daypart": null,
+      "DaypartCode": null,
+      "FlightEndDate": "0001-01-01T00:00:00",
+      "FlightStartDate": "0001-01-01T00:00:00",
+      "FlightWeeks": [],
+      "Quarters": [
+        {
+          "Cpm": 49.0,
+          "DistributeGoals": true,
+          "Id": 0,
+          "ImpressionGoal": 6000,
+          "Quarter": 0,
+          "QuarterText": null,
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "EndDate": "2016-06-05T00:00:00",
+              "Impressions": 0,
+              "IsHiatus": true,
+              "MediaWeekId": 649,
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 0,
+              "Week": null
+            }
+          ],
+          "Year": 0
+        },
+        {
+          "Cpm": 800.79,
+          "DistributeGoals": false,
+          "Id": 0,
+          "ImpressionGoal": 1000,
+          "Quarter": 0,
+          "QuarterText": null,
+          "Weeks": [
+            {
+              "Cost": 800.79,
+              "EndDate": "2016-06-05T00:00:00",
+              "Impressions": 1000,
+              "IsHiatus": false,
+              "MediaWeekId": 649,
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 3,
+              "Week": null
+            }
+          ],
+          "Year": 0
+        },
+        {
+          "Cpm": 23.5,
+          "DistributeGoals": true,
+          "Id": 0,
+          "ImpressionGoal": 9000,
+          "Quarter": 0,
+          "QuarterText": null,
+          "Weeks": [
+            {
+              "Cost": 105.75,
+              "EndDate": "2016-06-05T00:00:00",
+              "Impressions": 4500,
+              "IsHiatus": false,
+              "MediaWeekId": 649,
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 9,
+              "Week": null
+            },
+            {
+              "Cost": 105.75,
+              "EndDate": "2016-06-05T00:00:00",
+              "Impressions": 4500,
+              "IsHiatus": false,
+              "MediaWeekId": 649,
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 57,
+              "Week": null
+            },
+            {
+              "Cost": 0.0,
+              "EndDate": "2016-06-05T00:00:00",
+              "Impressions": 0,
+              "IsHiatus": true,
+              "MediaWeekId": 649,
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 0,
+              "Week": null
+            }
+          ],
+          "Year": 0
+        }
+      ],
+      "SpotLengthId": 0,
+      "TotalCost": 1012.29,
+      "TotalImpressions": 10000,
+      "TotalUnits": 69
+    },
+    {
+      "Daypart": null,
+      "DaypartCode": null,
+      "FlightEndDate": "0001-01-01T00:00:00",
+      "FlightStartDate": "0001-01-01T00:00:00",
+      "FlightWeeks": [],
+      "Quarters": [
+        {
+          "Cpm": 49.0,
+          "DistributeGoals": true,
+          "Id": 0,
+          "ImpressionGoal": 6000,
+          "Quarter": 0,
+          "QuarterText": null,
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "EndDate": "2016-06-05T00:00:00",
+              "Impressions": 0,
+              "IsHiatus": true,
+              "MediaWeekId": 649,
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 0,
+              "Week": null
+            }
+          ],
+          "Year": 0
+        },
+        {
+          "Cpm": 800.79,
+          "DistributeGoals": false,
+          "Id": 0,
+          "ImpressionGoal": 1000,
+          "Quarter": 0,
+          "QuarterText": null,
+          "Weeks": [
+            {
+              "Cost": 800.79,
+              "EndDate": "2016-06-05T00:00:00",
+              "Impressions": 1000,
+              "IsHiatus": false,
+              "MediaWeekId": 649,
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 3,
+              "Week": null
+            }
+          ],
+          "Year": 0
+        },
+        {
+          "Cpm": 23.5,
+          "DistributeGoals": true,
+          "Id": 0,
+          "ImpressionGoal": 9000,
+          "Quarter": 0,
+          "QuarterText": null,
+          "Weeks": [
+            {
+              "Cost": 105.75,
+              "EndDate": "2016-06-05T00:00:00",
+              "Impressions": 4500,
+              "IsHiatus": false,
+              "MediaWeekId": 649,
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 9,
+              "Week": null
+            },
+            {
+              "Cost": 105.75,
+              "EndDate": "2016-06-05T00:00:00",
+              "Impressions": 4500,
+              "IsHiatus": false,
+              "MediaWeekId": 649,
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 57,
+              "Week": null
+            },
+            {
+              "Cost": 0.0,
+              "EndDate": "2016-06-05T00:00:00",
+              "Impressions": 0,
+              "IsHiatus": true,
+              "MediaWeekId": 649,
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 0,
+              "Week": null
+            }
+          ],
+          "Year": 0
+        }
+      ],
+      "SpotLengthId": 0,
+      "TotalCost": 1012.29,
+      "TotalImpressions": 10000,
+      "TotalUnits": 69
+    }
+  ],
+  "Equivalized": null,
+  "FlightEndDate": null,
+  "FlightStartDate": null,
+  "FlightWeeks": [
+    {
+      "EndDate": "2016-06-05T00:00:00",
+      "IsHiatus": true,
+      "MediaWeekId": 649,
+      "StartDate": "2016-05-30T00:00:00"
+    }
+  ],
+  "GuaranteedDemoId": null,
+  "HutBookMonthId": null,
+  "Id": null,
+  "Market": null,
+  "Notes": null,
+  "PlayBackType": null,
+  "PostType": null,
+  "PrimaryVersionId": null,
+  "ProposalName": null,
+  "SecondaryDemos": [],
+  "ShareBookMonthId": null,
+  "SpotLengths": [],
+  "Status": 0,
+  "SweepMonthId": 0,
+  "TargetBudget": 2024.58,
+  "TargetImpressions": 20.0,
+  "TargetUnits": 138,
+  "Version": null
+}

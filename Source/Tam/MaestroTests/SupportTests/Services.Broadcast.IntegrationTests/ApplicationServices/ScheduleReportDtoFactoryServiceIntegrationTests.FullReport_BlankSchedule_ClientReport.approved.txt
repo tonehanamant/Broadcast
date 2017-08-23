@@ -1,0 +1,2692 @@
+﻿{
+  "Advertiser": null,
+  "AdvertiserData": {
+    "DeliveredSpots": 3,
+    "ImpressionsAndDelivey": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 7128.496,
+        "OrderedImpressions": 1800,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 7128.496
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "DeliveredImpressions": 10962.582,
+        "OrderedImpressions": 6400,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 10962.582
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "DeliveredImpressions": 2053.216,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 2053.216
+      }
+    ],
+    "OrderedSpots": 2,
+    "ReportData": [
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 5213.524,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 7832.674,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 1453.804,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": 21.0,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": {
+          "_Code": "",
+          "_EndTime": 37799,
+          "_Friday": true,
+          "_Id": 63342,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 18000,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "JUDGE ALEX",
+        "Rank": 11,
+        "SpecStatus": null,
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "CW",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 1914.972,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 3129.908,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 599.412,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": 42.0,
+        "DeliveredSpots": 2,
+        "DisplayDaypart": {
+          "_Code": "",
+          "_EndTime": 37799,
+          "_Friday": true,
+          "_Id": 63342,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 18000,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "ST LOUIS",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+        "Rank": 21,
+        "SpecStatus": null,
+        "SpotClearance": 2.0,
+        "SpotLength": 30,
+        "Station": "KPLR",
+        "Status": 0
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 2
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 3
+      }
+    ]
+  },
+  "OutOfSpecToDate": {
+    "ImpressionsAndDelivery": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 0.0,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "DeliveredImpressions": 0.0,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "DeliveredImpressions": 0.0,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
+      }
+    ],
+    "ReportData": [],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 2
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 3
+      }
+    ]
+  },
+  "SpotDetailData": {
+    "ImpressionsAndDelivery": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 7128.496,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 7128.496
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "DeliveredImpressions": 10962.582,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 10962.582
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "DeliveredImpressions": 2053.216,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 2053.216
+      }
+    ],
+    "ReportData": [
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "IND",
+        "AirTime": 32932,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 13058.092,
+            "Impressions": null,
+            "NsiDelivery": 16322.615
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 5213.524,
+            "Impressions": null,
+            "NsiDelivery": 6516.905
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 1453.804,
+            "Impressions": null,
+            "NsiDelivery": 1817.255
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 7832.674,
+            "Impressions": null,
+            "NsiDelivery": 9790.8424999999988
+          }
+        ],
+        "Brand": "",
+        "Campaign": 333444,
+        "Date": "2017-03-13T00:00:00",
+        "DateAired": "03/13/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "cl_AAABBB",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "cl_AAABBB",
+            "House": "AAABBB"
+          }
+        ],
+        "Length": 30,
+        "Market": "TAMPA",
+        "ProgramName": "JUDGE ALEX",
+        "Rank": 11,
+        "Station": "WMOR",
+        "TimeAired": "9:08 AM"
+      },
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "CW",
+        "AirTime": 34617,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 1946.854,
+            "Impressions": null,
+            "NsiDelivery": 2433.5675
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 957.486,
+            "Impressions": null,
+            "NsiDelivery": 1196.8574999999998
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 299.706,
+            "Impressions": null,
+            "NsiDelivery": 374.63249999999994
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 1564.954,
+            "Impressions": null,
+            "NsiDelivery": 1956.1924999999997
+          }
+        ],
+        "Brand": "",
+        "Campaign": 333444,
+        "Date": "2017-03-13T00:00:00",
+        "DateAired": "03/13/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "cl_AAABBB",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "cl_AAABBB",
+            "House": "AAABBB"
+          }
+        ],
+        "Length": 30,
+        "Market": "ST LOUIS",
+        "ProgramName": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+        "Rank": 21,
+        "Station": "KPLR",
+        "TimeAired": "9:36 AM"
+      },
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "CW",
+        "AirTime": 34617,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 1946.854,
+            "Impressions": null,
+            "NsiDelivery": 2433.5675
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 957.486,
+            "Impressions": null,
+            "NsiDelivery": 1196.8574999999998
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 299.706,
+            "Impressions": null,
+            "NsiDelivery": 374.63249999999994
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 1564.954,
+            "Impressions": null,
+            "NsiDelivery": 1956.1924999999997
+          }
+        ],
+        "Brand": "",
+        "Campaign": 333444,
+        "Date": "2017-03-13T00:00:00",
+        "DateAired": "03/13/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "cl_AAABBB",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "cl_AAABBB",
+            "House": "AAABBB"
+          }
+        ],
+        "Length": 30,
+        "Market": "ST LOUIS",
+        "ProgramName": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+        "Rank": 21,
+        "Station": "KPLR",
+        "TimeAired": "9:36 AM"
+      }
+    ]
+  },
+  "SpotsAndImpressionsBySource": [
+    {
+      "AudienceImpressions": {
+        "33": 7128.496,
+        "61": 10962.582,
+        "53": 2053.216
+      },
+      "Source": 2,
+      "Spots": 3
+    }
+  ],
+  "SpotsAndImpressionsDeliveryByAdvertiser": [],
+  "StationSummaryData": {
+    "ImpressionsAndDelivery": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 7128.496,
+        "OrderedImpressions": 1800,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 7128.496
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "DeliveredImpressions": 10962.582,
+        "OrderedImpressions": 6400,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 10962.582
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "DeliveredImpressions": 2053.216,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 2053.216
+      }
+    ],
+    "ReportData": [
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 5213.524,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 7832.674,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 1453.804,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": null,
+        "Rank": 11,
+        "SpecStatus": "Match",
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 1
+      },
+      {
+        "Affiliate": "CW",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 1914.972,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 3129.908,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 599.412,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DeliveredSpots": 2,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "ST LOUIS",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": null,
+        "Rank": 21,
+        "SpecStatus": "Match",
+        "SpotClearance": 2.0,
+        "SpotLength": 30,
+        "Station": "KPLR",
+        "Status": 1
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 2
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 3
+      }
+    ]
+  },
+  "WeeklyData": {
+    "ImpressionsAndDelivey": [],
+    "ReportDataByWeek": [
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "1/16/2017",
+          "Id": 682
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "1/23/2017",
+          "Id": 683
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "1/30/2017",
+          "Id": 684
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "2/6/2017",
+          "Id": 685
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "2/13/2017",
+          "Id": 686
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "2/13/2017",
+          "Id": 686
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "2/20/2017",
+          "Id": 687
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "2/27/2017",
+          "Id": 688
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "3/6/2017",
+          "Id": 689
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 7128.496,
+            "OrderedImpressions": 1800,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 7128.496
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 10962.582,
+            "OrderedImpressions": 6400,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 10962.582
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 2053.216,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 2053.216
+          }
+        ],
+        "ReportData": [
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 33,
+                "Delivery": 5213.524,
+                "Impressions": 900,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 7832.674,
+                "Impressions": 3200,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 1453.804,
+                "Impressions": 0,
+                "NsiDelivery": null
+              }
+            ],
+            "Cost": 21.0,
+            "DeliveredSpots": 1,
+            "DisplayDaypart": {
+              "_Code": "",
+              "_EndTime": 37799,
+              "_Friday": true,
+              "_Id": 63342,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 18000,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "TAMPA",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "JUDGE ALEX",
+            "Rank": 11,
+            "SpecStatus": "Match",
+            "SpotClearance": 1.0,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 1
+          },
+          {
+            "Affiliate": "CW",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 33,
+                "Delivery": 1914.972,
+                "Impressions": 900,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 3129.908,
+                "Impressions": 3200,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 599.412,
+                "Impressions": 0,
+                "NsiDelivery": null
+              }
+            ],
+            "Cost": 42.0,
+            "DeliveredSpots": 2,
+            "DisplayDaypart": {
+              "_Code": "",
+              "_EndTime": 37799,
+              "_Friday": true,
+              "_Id": 63342,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 18000,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "ST LOUIS",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+            "Rank": 21,
+            "SpecStatus": "Match",
+            "SpotClearance": 2.0,
+            "SpotLength": 30,
+            "Station": "KPLR",
+            "Status": 1
+          }
+        ],
+        "Week": {
+          "Display": "3/13/2017",
+          "Id": 690
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "3/20/2017",
+          "Id": 691
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "3/27/2017",
+          "Id": 692
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "3/27/2017",
+          "Id": 692
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "4/3/2017",
+          "Id": 693
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "4/10/2017",
+          "Id": 694
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "4/17/2017",
+          "Id": 695
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "4/24/2017",
+          "Id": 696
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "5/1/2017",
+          "Id": 697
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "5/8/2017",
+          "Id": 698
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "5/8/2017",
+          "Id": 698
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "5/15/2017",
+          "Id": 699
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "5/22/2017",
+          "Id": 700
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "5/29/2017",
+          "Id": 701
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "6/5/2017",
+          "Id": 702
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "6/12/2017",
+          "Id": 703
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "6/19/2017",
+          "Id": 704
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "6/19/2017",
+          "Id": 704
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "6/26/2017",
+          "Id": 705
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "7/3/2017",
+          "Id": 706
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "7/10/2017",
+          "Id": 707
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "7/17/2017",
+          "Id": 708
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "7/24/2017",
+          "Id": 709
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "7/31/2017",
+          "Id": 710
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "7/31/2017",
+          "Id": 710
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "8/7/2017",
+          "Id": 711
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "8/14/2017",
+          "Id": 712
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "8/21/2017",
+          "Id": 713
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "8/28/2017",
+          "Id": 714
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "9/4/2017",
+          "Id": 715
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "9/11/2017",
+          "Id": 716
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "9/11/2017",
+          "Id": 716
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "9/18/2017",
+          "Id": 717
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "9/25/2017",
+          "Id": 718
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "10/2/2017",
+          "Id": 719
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "10/9/2017",
+          "Id": 720
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "10/16/2017",
+          "Id": 721
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "10/23/2017",
+          "Id": 722
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "10/23/2017",
+          "Id": 722
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "10/30/2017",
+          "Id": 723
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "11/6/2017",
+          "Id": 724
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "11/13/2017",
+          "Id": 725
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "11/20/2017",
+          "Id": 726
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "11/27/2017",
+          "Id": 727
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "12/4/2017",
+          "Id": 728
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "12/4/2017",
+          "Id": 728
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "12/11/2017",
+          "Id": 729
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "12/18/2017",
+          "Id": 730
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "12/25/2017",
+          "Id": 731
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "1/1/2018",
+          "Id": 732
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "1/8/2018",
+          "Id": 733
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [],
+        "Week": {
+          "Display": "1/15/2018",
+          "Id": 734
+        }
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 2
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 3
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+﻿[
+  {
+    "ProblemDescription": "Error while parsing record at line 3: Invalid 'daypart code' format for Station NXLT",
+    "ProgramName": "Integration Test",
+    "StationLetters": "KXLT-TV 47.2"
+  },
+  {
+    "ProblemDescription": "Error while parsing record at line 4: Invalid 'daypart code' format for Station WOWT",
+    "ProgramName": "Integration Test",
+    "StationLetters": "WOWT"
+  }
+]

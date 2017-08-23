@@ -1,0 +1,66 @@
+﻿<!-- MAIN SCRUBBING MODAL/GRID -->
+<div class="modal fade" id="scrubModal">
+    <div class="modal-dialog modal-xlg" id="scrub_modal_view">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="modal-title">Schedule Scrubbing: <strong class="cadent-dk-blue" data-bind="text: ScheduleName"></strong></span>
+            </div>
+
+            <div class="modal-body modal-body-lg">
+                <div class="header-row row">
+                    <div class="col-xs-9">
+                        <div class="form-inline" style="">
+                            <div class="form-group" data-bind="css: { 'has-warning': HasPostingBookIdChange }">
+                                <label class="control-label" for="scrub_posting_book_select">Posting Book</label>
+                                <select class="form-control input-sm" style="margin-right: 24px; width:100px;" id="scrub_posting_book_select" data-bind="options: PostingBooks, optionsValue: 'Id', optionsText: 'Display', value: ActivePostingBookId,  optionsCaption: 'Choose Posting...'"><option>Quarter</option></select>
+                                <span id="helpBlock" class="help-block">Change Posting Book Quarter</span>
+                            </div>
+                            <div class="form-group" data-bind="css: { 'has-warning': HasIscisChange }">
+                                <label class="control-label" for="scrub_valid_iscis_input">Valid ISCIs</label>
+                                <input readonly type="text" class="form-control input-sm" style="width: 500px;" id="scrub_valid_iscis_input" data-bind="value: ActiveIscis, valueUpdate: 'afterkeydown'" placeholder="valid ISCIs...">
+                                <span id="helpBlock" class="help-block">Input valid ISCIs for schedule (separate each ISCI by ",")</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <div data-bind="visible: IsGridLocked" class="alert alert-warning" role="alert" style="padding: 4px; margin: 0px 0px 10px 0px;">
+                            <strong>Changes Pending </strong><small style="color: red"> - Scrubbing Grid Locked</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6">
+
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-inline" style="text-align: right;">
+                            <label for="scrub_status_filter_input">Status Filter</label>
+                            <select id="scrub_status_filter_input" style="width:130px;" class="form-control input-sm ">
+                                <option value="all">All</option>
+                                <option value="1">In Spec</option>
+                                <option value="2">Needs Attention</option>
+                                <option value="3">Official Out of Spec</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="scrub_grid" style="height: 450px;">
+                </div>
+
+            </div>
+
+            <div class="modal-footer" style="padding-top: 4px;">
+                <div class="pull-left" data-bind="visible: ActiveOutSpecs().length > 0">
+                    <strong class="text-warning">Officialy Out of Spec - Changes Pending (<span data-bind="text: ActiveOutSpecs().length"></span>)</strong>
+                </div>
+                <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-success" data-bind="click: function(){ updateSchedule(false); }, attr: { 'disabled': !hasChanges() }">Update</button>
+                <button class="btn btn-success" data-bind="click: function(){ updateSchedule(true); }, attr: { 'disabled': !hasChanges() }">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

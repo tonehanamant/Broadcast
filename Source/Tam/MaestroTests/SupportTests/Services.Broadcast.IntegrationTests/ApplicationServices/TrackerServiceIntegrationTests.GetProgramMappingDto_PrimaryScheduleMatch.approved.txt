@@ -1,0 +1,11 @@
+﻿{
+  "BvsProgramName": "LAUREN LAKE'S PATERNITY COURT",
+  "FollowingScheduleMatches": [],
+  "PrimaryScheduleMatches": [
+    {
+      "ProgramName": "PATRNTY CRT B",
+      "ScheduleDaypart": "M-F 1PM-2PM",
+      "ScheduleDetailWeekId": 302383
+    }
+  ]
+}

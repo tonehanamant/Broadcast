@@ -1,0 +1,110 @@
+﻿{
+  "DisplayProposalMarketPrograms": [
+    {
+      "DisplayProposalStationPrograms": [
+        {
+          "ProposalPrograms": [
+            {
+              "AdditionalAudienceImpressions": 0.0,
+              "AdditionalAudienceSubscribers": 428537.0,
+              "AdditonalAudienceCPM": 0.0,
+              "DayPart": {
+                "Display": "M-F 2PM-3PM"
+              },
+              "DemoRating": 0.01332696,
+              "EndDate": "2016-12-25T00:00:00",
+              "Genres": [
+                {
+                  "Display": "Comedy"
+                }
+              ],
+              "GRP": 0.0,
+              "HHeCPM": 0.0000,
+              "HHImpressions": 0.0,
+              "HouseHoldMarketSubscribers": 7368320.0,
+              "HouseHoldRating": 0.01332696,
+              "IsOverlapping": false,
+              "Market": {
+                "Display": "New York"
+              },
+              "MarketSubscribers": 7368320.0,
+              "ProgramId": 1001,
+              "ProgramName": "Monday Show",
+              "SpotCost": 20.0000,
+              "StartDate": "2016-09-05T00:00:00",
+              "Station": {
+                "Affiliation": "ABC",
+                "CallLetters": "WABC-TV 7.1",
+                "LegacyCallLetters": "WABC",
+                "StationCode": 5015
+              },
+              "TargetCpm": 0.203671510763159000,
+              "TargetImpressions": 98.1973371,
+              "TotalCost": 20.0000,
+              "TotalSpots": 1,
+              "TRP": 0.08665923
+            }
+          ],
+          "Station": {
+            "Affiliation": "ABC",
+            "CallLetters": "WABC-TV 7.1",
+            "LegacyCallLetters": "WABC",
+            "StationCode": 5015
+          },
+          "StationTotals": {
+            "TotalAdditionalAudienceCPM": 0.0,
+            "TotalAdditionalAudienceImpressions": 0.0,
+            "TotalCost": 20.0000,
+            "TotalGRP": 0.0,
+            "TotalHHCPM": 0.0,
+            "TotalHHImpressions": 0.0,
+            "TotalSpots": 1,
+            "TotalTargetCPM": 0.2036715000,
+            "TotalTargetImpressions": 98.1973343,
+            "TotalTRP": 0.08665923
+          }
+        }
+      ],
+      "MarketId": 101,
+      "MarketName": "New York",
+      "MarketSubscribers": 7368320.0,
+      "MarketTotals": {
+        "TotalAdditionalAudienceCPM": 0.0,
+        "TotalAdditionalAudienceImpressions": 0.0,
+        "TotalCost": 20.0000,
+        "TotalGRP": 0.0,
+        "TotalHHCPM": 0.0,
+        "TotalHHImpressions": 0.0,
+        "TotalSpots": 1,
+        "TotalTargetCPM": 0.2036715000,
+        "TotalTargetImpressions": 98.1973343,
+        "TotalTRP": 0.08665923
+      },
+      "Rank": 1
+    }
+  ],
+  "OverallTotals": {
+    "TotalAdditionalAudienceCPM": 0.0,
+    "TotalAdditionalAudienceImpressions": 0.0,
+    "TotalCost": 20.0000,
+    "TotalGRP": 0.0,
+    "TotalHHCPM": 0.0,
+    "TotalHHImpressions": 0.0,
+    "TotalSpots": 1,
+    "TotalTargetCPM": 0.2036715000,
+    "TotalTargetImpressions": 98.1973343,
+    "TotalTRP": 0.08665923
+  },
+  "TargetUnitTotals": {
+    "TotalAdditionalAudienceCPM": 0.0,
+    "TotalAdditionalAudienceImpressions": 0.0,
+    "TotalCost": 20.0000,
+    "TotalGRP": 0.0,
+    "TotalHHCPM": 0.0,
+    "TotalHHImpressions": 0.0,
+    "TotalSpots": 0,
+    "TotalTargetCPM": 0.2036715000,
+    "TotalTargetImpressions": 98.1973343,
+    "TotalTRP": 0.08665923
+  }
+}

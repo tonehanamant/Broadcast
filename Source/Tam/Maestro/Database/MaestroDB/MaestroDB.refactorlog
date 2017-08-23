@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="ec2e7d01-2a4a-4cd4-8498-232b8d794b7d" ChangeDateTime="04/29/2015 17:25:43">
+    <Property Name="ElementName" Value="[dbo].[campaigns_secondary_audiences].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[campaigns_secondary_audiences]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="campaign_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d0abc709-695e-4449-ae7c-d6075f56da2c" ChangeDateTime="04/29/2015 17:29:02">
+    <Property Name="ElementName" Value="[dbo].[campaign_sub_budgets].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[campaign_sub_budgets]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d17a09d1-224a-4dd7-ac42-954bbcb204cb" ChangeDateTime="04/29/2015 17:30:44">
+    <Property Name="ElementName" Value="[dbo].[campaign_sub_budgets].[selected]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[campaign_sub_budgets]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="seleted" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7965b6fa-e970-4fa8-8857-766f9606b015" ChangeDateTime="04/29/2015 17:32:57">
+    <Property Name="ElementName" Value="[dbo].[campaign_sub_budget_flights].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[campaign_sub_budget_flights]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="campaign_sub_budget_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d08a7676-f269-40a8-ba0b-9ed099306d74" ChangeDateTime="04/29/2015 17:35:00">
+    <Property Name="ElementName" Value="[dbo].[campaign_flights].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[campaign_flights]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="campaign_id" />
+  </Operation>
+</Operations>

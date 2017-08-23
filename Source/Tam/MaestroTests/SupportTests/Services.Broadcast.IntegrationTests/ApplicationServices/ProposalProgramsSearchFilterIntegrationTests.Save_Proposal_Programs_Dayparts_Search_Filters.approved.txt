@@ -1,0 +1,57 @@
+﻿{
+  "DaypartSearchCriteria": [
+    {
+      "Contain": 1,
+      "DayPartId": 1,
+      "SearchCriteria": {
+        "endTime": 86400,
+        "fri": true,
+        "mon": true,
+        "sat": true,
+        "startTime": 21600,
+        "sun": true,
+        "Text": "M-SU 6AM-12AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    },
+    {
+      "Contain": 0,
+      "DayPartId": 2,
+      "SearchCriteria": {
+        "endTime": 64800,
+        "fri": true,
+        "mon": true,
+        "sat": true,
+        "startTime": 21600,
+        "sun": true,
+        "Text": "M-SU 6AM-6PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    }
+  ],
+  "GenreSearchCriteria": [],
+  "ProgramNameSearchCriteria": [
+    {
+      "Contain": 1,
+      "SearchCriteria": [
+        "Seinfeld"
+      ]
+    },
+    {
+      "Contain": 1,
+      "SearchCriteria": [
+        "Daily Show"
+      ]
+    },
+    {
+      "Contain": 1,
+      "SearchCriteria": [
+        "Big Bang Theory"
+      ]
+    }
+  ]
+}

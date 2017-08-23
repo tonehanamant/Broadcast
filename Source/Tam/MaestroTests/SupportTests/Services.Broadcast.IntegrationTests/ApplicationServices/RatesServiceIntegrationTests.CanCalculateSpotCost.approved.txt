@@ -1,0 +1,52 @@
+﻿[
+  {
+    "Airtime": "M-F 3PM-9PM",
+    "AudienceId": 31,
+    "Audiences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "Cpm120": null,
+        "Cpm15": null,
+        "Cpm30": 7.1500,
+        "Cpm60": null,
+        "Cpm90": null,
+        "Impressions": null,
+        "Rating": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 25-54",
+          "Id": 37
+        },
+        "Cpm120": null,
+        "Cpm15": null,
+        "Cpm30": 7.0400,
+        "Cpm60": null,
+        "Cpm90": null,
+        "Impressions": null,
+        "Rating": null
+      }
+    ],
+    "Flight": "2016/10/31 - 2016/11/06",
+    "FlightEndDate": "2016-11-06T00:00:00",
+    "Flights": [
+      {
+        "EndDate": "2016-11-06T00:00:00",
+        "Id": 671,
+        "IsHiatus": false,
+        "StartDate": "2016-10-31T00:00:00"
+      }
+    ],
+    "FlightStartDate": "2016-10-31T00:00:00",
+    "Genres": [],
+    "Impressions": null,
+    "Program": "Integration Test",
+    "Rate15": null,
+    "Rate30": 946.6886,
+    "Rating": null,
+    "Spots": 4
+  }
+]

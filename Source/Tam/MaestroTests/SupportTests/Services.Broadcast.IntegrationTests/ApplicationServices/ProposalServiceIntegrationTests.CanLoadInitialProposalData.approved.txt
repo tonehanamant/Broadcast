@@ -1,0 +1,1158 @@
+﻿{
+  "Advertisers": [
+    {
+      "Display": "Test Advertiser 1",
+      "Id": 1
+    },
+    {
+      "Display": "Test Advertiser 2",
+      "Id": 2
+    },
+    {
+      "Display": "Test Advertiser 3",
+      "Id": 3
+    },
+    {
+      "Display": "Test Advertiser 4",
+      "Id": 4
+    },
+    {
+      "Display": "Leagas Delaney",
+      "Id": 37444
+    },
+    {
+      "Display": "1 Vision",
+      "Id": 37674
+    }
+  ],
+  "Audiences": [
+    {
+      "Display": "Females 12-14",
+      "Id": 4
+    },
+    {
+      "Display": "Females 15-17",
+      "Id": 5
+    },
+    {
+      "Display": "Females 18-20",
+      "Id": 6
+    },
+    {
+      "Display": "Females 21-24",
+      "Id": 7
+    },
+    {
+      "Display": "Females 50-54",
+      "Id": 13
+    },
+    {
+      "Display": "Females 55-64",
+      "Id": 14
+    },
+    {
+      "Display": "Females 65+",
+      "Id": 15
+    },
+    {
+      "Display": "Males 12-14",
+      "Id": 19
+    },
+    {
+      "Display": "Males 15-17",
+      "Id": 20
+    },
+    {
+      "Display": "Males 18-20",
+      "Id": 21
+    },
+    {
+      "Display": "Males 21-24",
+      "Id": 22
+    },
+    {
+      "Display": "Males 50-54",
+      "Id": 28
+    },
+    {
+      "Display": "Males 55-64",
+      "Id": 29
+    },
+    {
+      "Display": "Males 65+",
+      "Id": 30
+    },
+    {
+      "Display": "House Holds",
+      "Id": 31
+    },
+    {
+      "Display": "Adults 18-34",
+      "Id": 32
+    },
+    {
+      "Display": "Adults 18-49",
+      "Id": 33
+    },
+    {
+      "Display": "Adults 18+",
+      "Id": 34
+    },
+    {
+      "Display": "Adults 25-49",
+      "Id": 36
+    },
+    {
+      "Display": "Adults 25-54",
+      "Id": 37
+    },
+    {
+      "Display": "Adults 35-54",
+      "Id": 39
+    },
+    {
+      "Display": "Adults 35-64",
+      "Id": 40
+    },
+    {
+      "Display": "Adults 35+",
+      "Id": 41
+    },
+    {
+      "Display": "Adults 50+",
+      "Id": 42
+    },
+    {
+      "Display": "Adults 55+",
+      "Id": 43
+    },
+    {
+      "Display": "Kids 6-11",
+      "Id": 46
+    },
+    {
+      "Display": "Males 35-64",
+      "Id": 53
+    },
+    {
+      "Display": "Women 18-34",
+      "Id": 55
+    },
+    {
+      "Display": "Women 18-49",
+      "Id": 56
+    },
+    {
+      "Display": "Women 25-54",
+      "Id": 58
+    },
+    {
+      "Display": "Women 35-54",
+      "Id": 59
+    },
+    {
+      "Display": "Women 35-64",
+      "Id": 60
+    },
+    {
+      "Display": "Women 35+",
+      "Id": 61
+    },
+    {
+      "Display": "Women 50+",
+      "Id": 62
+    },
+    {
+      "Display": "Adults 25-64",
+      "Id": 257
+    },
+    {
+      "Display": "Adults 25+",
+      "Id": 258
+    },
+    {
+      "Display": "Males 18+",
+      "Id": 277
+    },
+    {
+      "Display": "Males 25-34",
+      "Id": 284
+    },
+    {
+      "Display": "Males 35-49",
+      "Id": 290
+    },
+    {
+      "Display": "Women 55+",
+      "Id": 329
+    },
+    {
+      "Display": "Kids 2-5",
+      "Id": 339
+    },
+    {
+      "Display": "Females 35-49",
+      "Id": 347
+    },
+    {
+      "Display": "Females 25-34",
+      "Id": 348
+    }
+  ],
+  "ForecastDefaults": {
+    "CrunchedMonths": [
+      {
+        "Display": "May 2016",
+        "Id": 416
+      },
+      {
+        "Display": "February 2016",
+        "Id": 413
+      },
+      {
+        "Display": "July 2015",
+        "Id": 406
+      },
+      {
+        "Display": "May 2015",
+        "Id": 404
+      },
+      {
+        "Display": "February 2015",
+        "Id": 401
+      }
+    ],
+    "PlaybackTypes": [
+      {
+        "Display": "Live",
+        "Id": 1
+      },
+      {
+        "Display": "Live+Same Day",
+        "Id": 2
+      },
+      {
+        "Display": "Live+1",
+        "Id": 3
+      },
+      {
+        "Display": "Live+3",
+        "Id": 4
+      },
+      {
+        "Display": "Live+7",
+        "Id": 5
+      }
+    ]
+  },
+  "MarketGroups": [
+    {
+      "Count": 210,
+      "Display": "All",
+      "Id": 0
+    },
+    {
+      "Count": 50,
+      "Display": "Top 50",
+      "Id": 50
+    },
+    {
+      "Count": 100,
+      "Display": "Top 100",
+      "Id": 100
+    }
+  ],
+  "Markets": [
+    {
+      "Display": "Abilene-Sweetwater",
+      "Id": 262
+    },
+    {
+      "Display": "Albany, GA",
+      "Id": 125
+    },
+    {
+      "Display": "Albany-Schenectady-Troy",
+      "Id": 132
+    },
+    {
+      "Display": "Albuquerque-Santa Fe",
+      "Id": 390
+    },
+    {
+      "Display": "Alexandria, LA",
+      "Id": 244
+    },
+    {
+      "Display": "Alpena",
+      "Id": 183
+    },
+    {
+      "Display": "Amarillo",
+      "Id": 234
+    },
+    {
+      "Display": "Anchorage",
+      "Id": 343
+    },
+    {
+      "Display": "Atlanta",
+      "Id": 124
+    },
+    {
+      "Display": "Augusta-Aiken",
+      "Id": 120
+    },
+    {
+      "Display": "Austin",
+      "Id": 235
+    },
+    {
+      "Display": "Bakersfield",
+      "Id": 400
+    },
+    {
+      "Display": "Baltimore",
+      "Id": 112
+    },
+    {
+      "Display": "Bangor",
+      "Id": 137
+    },
+    {
+      "Display": "Baton Rouge",
+      "Id": 316
+    },
+    {
+      "Display": "Beaumont-Port Arthur",
+      "Id": 292
+    },
+    {
+      "Display": "Bend, OR",
+      "Id": 421
+    },
+    {
+      "Display": "Billings",
+      "Id": 356
+    },
+    {
+      "Display": "Biloxi-Gulfport",
+      "Id": 346
+    },
+    {
+      "Display": "Binghamton",
+      "Id": 102
+    },
+    {
+      "Display": "Birmingham (Ann and Tusc)",
+      "Id": 230
+    },
+    {
+      "Display": "Bluefield-Beckley-Oak Hill",
+      "Id": 159
+    },
+    {
+      "Display": "Boise",
+      "Id": 357
+    },
+    {
+      "Display": "Boston (Manchester)",
+      "Id": 106
+    },
+    {
+      "Display": "Bowling Green",
+      "Id": 336
+    },
+    {
+      "Display": "Buffalo",
+      "Id": 114
+    },
+    {
+      "Display": "Burlington-Plattsburgh",
+      "Id": 123
+    },
+    {
+      "Display": "Butte-Bozeman",
+      "Id": 354
+    },
+    {
+      "Display": "Casper-Riverton",
+      "Id": 367
+    },
+    {
+      "Display": "Cedar Rapids-Wtrlo-IWC&Dub",
+      "Id": 237
+    },
+    {
+      "Display": "Champaign&Sprngfld-Decatur",
+      "Id": 248
+    },
+    {
+      "Display": "Charleston, SC",
+      "Id": 119
+    },
+    {
+      "Display": "Charleston-Huntington",
+      "Id": 164
+    },
+    {
+      "Display": "Charlotte",
+      "Id": 117
+    },
+    {
+      "Display": "Charlottesville",
+      "Id": 184
+    },
+    {
+      "Display": "Chattanooga",
+      "Id": 175
+    },
+    {
+      "Display": "Cheyenne-Scottsbluf",
+      "Id": 359
+    },
+    {
+      "Display": "Chicago",
+      "Id": 202
+    },
+    {
+      "Display": "Chico-Redding",
+      "Id": 468
+    },
+    {
+      "Display": "Cincinnati",
+      "Id": 115
+    },
+    {
+      "Display": "Clarksburg-Weston",
+      "Id": 198
+    },
+    {
+      "Display": "Cleveland-Akron (Canton)",
+      "Id": 110
+    },
+    {
+      "Display": "Colorado Springs-Pueblo",
+      "Id": 352
+    },
+    {
+      "Display": "Columbia, SC",
+      "Id": 146
+    },
+    {
+      "Display": "Columbia-Jefferson City",
+      "Id": 204
+    },
+    {
+      "Display": "Columbus, GA (Opelika, AL)",
+      "Id": 122
+    },
+    {
+      "Display": "Columbus, OH",
+      "Id": 135
+    },
+    {
+      "Display": "Columbus-Tupelo-W Pnt-Hstn",
+      "Id": 273
+    },
+    {
+      "Display": "Corpus Christi",
+      "Id": 200
+    },
+    {
+      "Display": "Dallas-Ft. Worth",
+      "Id": 223
+    },
+    {
+      "Display": "Davenport-R.Island-Moline",
+      "Id": 282
+    },
+    {
+      "Display": "Dayton",
+      "Id": 142
+    },
+    {
+      "Display": "Denver",
+      "Id": 351
+    },
+    {
+      "Display": "Des Moines-Ames",
+      "Id": 279
+    },
+    {
+      "Display": "Detroit",
+      "Id": 105
+    },
+    {
+      "Display": "Dothan",
+      "Id": 206
+    },
+    {
+      "Display": "Duluth-Superior",
+      "Id": 276
+    },
+    {
+      "Display": "El Paso (Las Cruces)",
+      "Id": 365
+    },
+    {
+      "Display": "Elmira (Corning)",
+      "Id": 165
+    },
+    {
+      "Display": "Erie",
+      "Id": 116
+    },
+    {
+      "Display": "Eugene",
+      "Id": 401
+    },
+    {
+      "Display": "Eureka",
+      "Id": 402
+    },
+    {
+      "Display": "Evansville",
+      "Id": 249
+    },
+    {
+      "Display": "Fairbanks",
+      "Id": 345
+    },
+    {
+      "Display": "Fargo-Valley City",
+      "Id": 324
+    },
+    {
+      "Display": "Flint-Saginaw-Bay City",
+      "Id": 113
+    },
+    {
+      "Display": "Fresno-Visalia",
+      "Id": 466
+    },
+    {
+      "Display": "Ft. Myers-Naples",
+      "Id": 171
+    },
+    {
+      "Display": "Ft. Smith-Fay-Sprngdl-Rgrs",
+      "Id": 270
+    },
+    {
+      "Display": "Ft. Wayne",
+      "Id": 109
+    },
+    {
+      "Display": "Gainesville",
+      "Id": 192
+    },
+    {
+      "Display": "Glendive",
+      "Id": 398
+    },
+    {
+      "Display": "Grand Junction-Montrose",
+      "Id": 373
+    },
+    {
+      "Display": "Grand Rapids-Kalmzoo-B.Crk",
+      "Id": 163
+    },
+    {
+      "Display": "Great Falls",
+      "Id": 355
+    },
+    {
+      "Display": "Green Bay-Appleton",
+      "Id": 258
+    },
+    {
+      "Display": "Greensboro-H.Point-W.Salem",
+      "Id": 118
+    },
+    {
+      "Display": "Greenville-N.Bern-Washngtn",
+      "Id": 145
+    },
+    {
+      "Display": "Greenvll-Spart-Ashevll-And",
+      "Id": 167
+    },
+    {
+      "Display": "Greenwood-Greenville",
+      "Id": 247
+    },
+    {
+      "Display": "Harlingen-Wslco-Brnsvl-Mca",
+      "Id": 236
+    },
+    {
+      "Display": "Harrisburg-Lncstr-Leb-York",
+      "Id": 166
+    },
+    {
+      "Display": "Harrisonburg",
+      "Id": 169
+    },
+    {
+      "Display": "Hartford & New Haven",
+      "Id": 133
+    },
+    {
+      "Display": "Hattiesburg-Laurel",
+      "Id": 310
+    },
+    {
+      "Display": "Helena",
+      "Id": 366
+    },
+    {
+      "Display": "Honolulu",
+      "Id": 344
+    },
+    {
+      "Display": "Houston",
+      "Id": 218
+    },
+    {
+      "Display": "Huntsville-Decatur (Flor)",
+      "Id": 291
+    },
+    {
+      "Display": "Idaho Fals-Pocatllo(Jcksn)",
+      "Id": 358
+    },
+    {
+      "Display": "Indianapolis",
+      "Id": 127
+    },
+    {
+      "Display": "Jackson, MS",
+      "Id": 318
+    },
+    {
+      "Display": "Jackson, TN",
+      "Id": 239
+    },
+    {
+      "Display": "Jacksonville",
+      "Id": 161
+    },
+    {
+      "Display": "Johnstown-Altoona-St Colge",
+      "Id": 174
+    },
+    {
+      "Display": "Jonesboro",
+      "Id": 334
+    },
+    {
+      "Display": "Joplin-Pittsburg",
+      "Id": 203
+    },
+    {
+      "Display": "Juneau",
+      "Id": 347
+    },
+    {
+      "Display": "Kansas City",
+      "Id": 216
+    },
+    {
+      "Display": "Knoxville",
+      "Id": 157
+    },
+    {
+      "Display": "La Crosse-Eau Claire",
+      "Id": 302
+    },
+    {
+      "Display": "Lafayette, IN",
+      "Id": 182
+    },
+    {
+      "Display": "Lafayette, LA",
+      "Id": 242
+    },
+    {
+      "Display": "Lake Charles",
+      "Id": 243
+    },
+    {
+      "Display": "Lansing",
+      "Id": 151
+    },
+    {
+      "Display": "Laredo",
+      "Id": 349
+    },
+    {
+      "Display": "Las Vegas",
+      "Id": 439
+    },
+    {
+      "Display": "Lexington",
+      "Id": 141
+    },
+    {
+      "Display": "Lima",
+      "Id": 158
+    },
+    {
+      "Display": "Lincoln & Hastings-Krny",
+      "Id": 322
+    },
+    {
+      "Display": "Little Rock-Pine Bluff",
+      "Id": 293
+    },
+    {
+      "Display": "Los Angeles",
+      "Id": 403
+    },
+    {
+      "Display": "Louisville",
+      "Id": 129
+    },
+    {
+      "Display": "Lubbock",
+      "Id": 251
+    },
+    {
+      "Display": "Macon",
+      "Id": 103
+    },
+    {
+      "Display": "Madison",
+      "Id": 269
+    },
+    {
+      "Display": "Mankato",
+      "Id": 337
+    },
+    {
+      "Display": "Marquette",
+      "Id": 153
+    },
+    {
+      "Display": "Medford-Klamath Falls",
+      "Id": 413
+    },
+    {
+      "Display": "Memphis",
+      "Id": 240
+    },
+    {
+      "Display": "Meridian",
+      "Id": 311
+    },
+    {
+      "Display": "Miami-Ft. Lauderdale",
+      "Id": 128
+    },
+    {
+      "Display": "Milwaukee",
+      "Id": 217
+    },
+    {
+      "Display": "Minneapolis-St. Paul",
+      "Id": 213
+    },
+    {
+      "Display": "Minot-Bsmrck-Dcknsn(Wlstn)",
+      "Id": 287
+    },
+    {
+      "Display": "Missoula",
+      "Id": 362
+    },
+    {
+      "Display": "Mobile-Pensacola (Ft Walt)",
+      "Id": 286
+    },
+    {
+      "Display": "Monroe-El Dorado",
+      "Id": 228
+    },
+    {
+      "Display": "Monterey-Salinas",
+      "Id": 428
+    },
+    {
+      "Display": "Montgomery-Selma",
+      "Id": 298
+    },
+    {
+      "Display": "Myrtle Beach-Florence",
+      "Id": 170
+    },
+    {
+      "Display": "Nashville",
+      "Id": 259
+    },
+    {
+      "Display": "New Orleans",
+      "Id": 222
+    },
+    {
+      "Display": "New York",
+      "Id": 101
+    },
+    {
+      "Display": "Norfolk-Portsmth-Newpt Nws",
+      "Id": 144
+    },
+    {
+      "Display": "North Platte",
+      "Id": 340
+    },
+    {
+      "Display": "Odessa-Midland",
+      "Id": 233
+    },
+    {
+      "Display": "Oklahoma City",
+      "Id": 250
+    },
+    {
+      "Display": "Omaha",
+      "Id": 252
+    },
+    {
+      "Display": "Orlando-Daytona Bch-Melbrn",
+      "Id": 134
+    },
+    {
+      "Display": "Ottumwa-Kirksville",
+      "Id": 231
+    },
+    {
+      "Display": "Paducah-Cape Girard-Harsbg",
+      "Id": 232
+    },
+    {
+      "Display": "Palm Springs",
+      "Id": 404
+    },
+    {
+      "Display": "Panama City",
+      "Id": 256
+    },
+    {
+      "Display": "Parkersburg",
+      "Id": 197
+    },
+    {
+      "Display": "Peoria-Bloomington",
+      "Id": 275
+    },
+    {
+      "Display": "Philadelphia",
+      "Id": 104
+    },
+    {
+      "Display": "Phoenix (Prescott)",
+      "Id": 353
+    },
+    {
+      "Display": "Pittsburgh",
+      "Id": 108
+    },
+    {
+      "Display": "Portland, OR",
+      "Id": 420
+    },
+    {
+      "Display": "Portland-Auburn",
+      "Id": 100
+    },
+    {
+      "Display": "Presque Isle",
+      "Id": 152
+    },
+    {
+      "Display": "Providence-New Bedford",
+      "Id": 121
+    },
+    {
+      "Display": "Quincy-Hannibal-Keokuk",
+      "Id": 317
+    },
+    {
+      "Display": "Raleigh-Durham (Fayetvlle)",
+      "Id": 160
+    },
+    {
+      "Display": "Rapid City",
+      "Id": 364
+    },
+    {
+      "Display": "Reno",
+      "Id": 411
+    },
+    {
+      "Display": "Richmond-Petersburg",
+      "Id": 156
+    },
+    {
+      "Display": "Roanoke-Lynchburg",
+      "Id": 173
+    },
+    {
+      "Display": "Rochester, NY",
+      "Id": 138
+    },
+    {
+      "Display": "Rochestr-Mason City-Austin",
+      "Id": 211
+    },
+    {
+      "Display": "Rockford",
+      "Id": 210
+    },
+    {
+      "Display": "Sacramnto-Stkton-Modesto",
+      "Id": 462
+    },
+    {
+      "Display": "Salisbury",
+      "Id": 176
+    },
+    {
+      "Display": "Salt Lake City",
+      "Id": 370
+    },
+    {
+      "Display": "San Angelo",
+      "Id": 261
+    },
+    {
+      "Display": "San Antonio",
+      "Id": 241
+    },
+    {
+      "Display": "San Diego",
+      "Id": 425
+    },
+    {
+      "Display": "San Francisco-Oak-San Jose",
+      "Id": 407
+    },
+    {
+      "Display": "Santabarbra-Sanmar-Sanluob",
+      "Id": 455
+    },
+    {
+      "Display": "Savannah",
+      "Id": 107
+    },
+    {
+      "Display": "Seattle-Tacoma",
+      "Id": 419
+    },
+    {
+      "Display": "Sherman-Ada",
+      "Id": 257
+    },
+    {
+      "Display": "Shreveport",
+      "Id": 212
+    },
+    {
+      "Display": "Sioux City",
+      "Id": 224
+    },
+    {
+      "Display": "Sioux Falls(Mitchell)",
+      "Id": 325
+    },
+    {
+      "Display": "South Bend-Elkhart",
+      "Id": 188
+    },
+    {
+      "Display": "Spokane",
+      "Id": 481
+    },
+    {
+      "Display": "Springfield, MO",
+      "Id": 219
+    },
+    {
+      "Display": "Springfield-Holyoke",
+      "Id": 143
+    },
+    {
+      "Display": "St. Joseph",
+      "Id": 238
+    },
+    {
+      "Display": "St. Louis",
+      "Id": 209
+    },
+    {
+      "Display": "Syracuse",
+      "Id": 155
+    },
+    {
+      "Display": "Tallahassee-Thomasville",
+      "Id": 130
+    },
+    {
+      "Display": "Tampa-St. Pete (Sarasota)",
+      "Id": 139
+    },
+    {
+      "Display": "Terre Haute",
+      "Id": 181
+    },
+    {
+      "Display": "Toledo",
+      "Id": 147
+    },
+    {
+      "Display": "Topeka",
+      "Id": 205
+    },
+    {
+      "Display": "Traverse City-Cadillac",
+      "Id": 140
+    },
+    {
+      "Display": "Tri-Cities, TN-VA",
+      "Id": 131
+    },
+    {
+      "Display": "Tucson (Sierra Vista)",
+      "Id": 389
+    },
+    {
+      "Display": "Tulsa",
+      "Id": 271
+    },
+    {
+      "Display": "Twin Falls",
+      "Id": 360
+    },
+    {
+      "Display": "Tyler-Longview(Lfkn&Ncgd)",
+      "Id": 309
+    },
+    {
+      "Display": "Utica",
+      "Id": 126
+    },
+    {
+      "Display": "Victoria",
+      "Id": 226
+    },
+    {
+      "Display": "Waco-Temple-Bryan",
+      "Id": 225
+    },
+    {
+      "Display": "Washington, DC (Hagrstwn)",
+      "Id": 111
+    },
+    {
+      "Display": "Watertown",
+      "Id": 149
+    },
+    {
+      "Display": "Wausau-Rhinelander",
+      "Id": 305
+    },
+    {
+      "Display": "West Palm Beach-Ft. Pierce",
+      "Id": 148
+    },
+    {
+      "Display": "Wheeling-Steubenville",
+      "Id": 154
+    },
+    {
+      "Display": "Wichita Falls & Lawton",
+      "Id": 227
+    },
+    {
+      "Display": "Wichita-Hutchinson Plus",
+      "Id": 278
+    },
+    {
+      "Display": "Wilkes Barre-Scranton-Hztn",
+      "Id": 177
+    },
+    {
+      "Display": "Wilmington",
+      "Id": 150
+    },
+    {
+      "Display": "Yakima-Pasco-Rchlnd-Knnwck",
+      "Id": 410
+    },
+    {
+      "Display": "Youngstown",
+      "Id": 136
+    },
+    {
+      "Display": "Yuma-El Centro",
+      "Id": 371
+    },
+    {
+      "Display": "Zanesville",
+      "Id": 196
+    }
+  ],
+  "SchedulePostTypes": [
+    {
+      "Display": "NSI",
+      "Id": 1
+    },
+    {
+      "Display": "NTI",
+      "Id": 2
+    }
+  ],
+  "SpotLengths": [
+    {
+      "Display": "15",
+      "Id": 3
+    },
+    {
+      "Display": "30",
+      "Id": 1
+    },
+    {
+      "Display": "60",
+      "Id": 2
+    },
+    {
+      "Display": "90",
+      "Id": 7
+    },
+    {
+      "Display": "120",
+      "Id": 4
+    }
+  ],
+  "Statuses": [
+    {
+      "Display": "Proposed",
+      "Id": 1
+    },
+    {
+      "Display": "Agency on Hold",
+      "Id": 2
+    },
+    {
+      "Display": "Contracted",
+      "Id": 3
+    },
+    {
+      "Display": "Previously Contracted",
+      "Id": 4
+    }
+  ],
+  "SweepMonthId": 0
+}

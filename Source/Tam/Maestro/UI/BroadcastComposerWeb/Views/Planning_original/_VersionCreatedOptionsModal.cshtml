@@ -1,0 +1,19 @@
+﻿
+<div class="modal fade" tabindex="false" id="version_created_options_modal" role="dialog" data-bind="modal: { show: show, hide: continueWork }">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <p><span id="version_warning_sign" class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Version <span data-bind="text: newVersion"></span> was created.</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bind="click: continueWork">Continue Work</button>
+                <button type="button" class="btn" data-bind="click: closeProposal">Close Proposal</button>
+            </div>
+        </div>
+    </div>
+</div>

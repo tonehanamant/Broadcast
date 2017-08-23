@@ -1,0 +1,37 @@
+﻿[
+  {
+    "ProblemDescription": "Invalid demo for station WNBD-LD 33.1",
+    "ProgramName": "Integration Test",
+    "StationLetters": "WNBD-LD 33.1"
+  },
+  {
+    "ProblemDescription": "Invalid demo for station WESV-LD 40.1",
+    "ProgramName": "Integration Test",
+    "StationLetters": "WESV-LD 40.1"
+  },
+  {
+    "ProblemDescription": "Invalid demo for station WDAF-TV 4.2",
+    "ProgramName": "Integration Test",
+    "StationLetters": "WDAF-TV 4.2"
+  },
+  {
+    "ProblemDescription": "Invalid demo for station KSDY-LD 50.1",
+    "ProgramName": "Integration Test",
+    "StationLetters": "KSDY-LD 50.1"
+  },
+  {
+    "ProblemDescription": "Invalid demo for station KSDY-LD 50.1",
+    "ProgramName": "Integration Test",
+    "StationLetters": "KSDY-LD 50.1"
+  },
+  {
+    "ProblemDescription": "Invalid demo for station KSDY-LD 50.1",
+    "ProgramName": "Integration Test",
+    "StationLetters": "KSDY-LD 50.1"
+  },
+  {
+    "ProblemDescription": "Invalid demo for station KTFV-CD 32.1",
+    "ProgramName": "Integration Test",
+    "StationLetters": "KTFV-CD 32.1"
+  }
+]

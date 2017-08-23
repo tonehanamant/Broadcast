@@ -1,0 +1,110 @@
+﻿{
+  "DisplayProposalMarketPrograms": [
+    {
+      "DisplayProposalStationPrograms": [
+        {
+          "ProposalPrograms": [
+            {
+              "AdditionalAudienceImpressions": 0.0,
+              "AdditionalAudienceSubscribers": 33527.0,
+              "AdditonalAudienceCPM": 0.0,
+              "DayPart": {
+                "Display": "M-F 2PM-3PM"
+              },
+              "DemoRating": 0.00174164,
+              "EndDate": "2016-12-25T00:00:00",
+              "Genres": [
+                {
+                  "Display": "Test"
+                }
+              ],
+              "GRP": 0.0,
+              "HHeCPM": 0.0000,
+              "HHImpressions": 0.0,
+              "HouseHoldMarketSubscribers": 679970.0,
+              "HouseHoldRating": 0.00174164,
+              "IsOverlapping": false,
+              "Market": {
+                "Display": "Greensboro-H.Point-W.Salem"
+              },
+              "MarketSubscribers": 679970.0,
+              "ProgramId": 47571,
+              "ProgramName": "Integration Test",
+              "SpotCost": 20.0000,
+              "StartDate": "2016-09-05T00:00:00",
+              "Station": {
+                "Affiliation": "IND",
+                "CallLetters": "WGHP 8.2",
+                "LegacyCallLetters": "EGHP",
+                "StationCode": 1171
+              },
+              "TargetCpm": 16.8881504611175000,
+              "TargetImpressions": 14.21114767,
+              "TotalCost": 240.0000,
+              "TotalSpots": 12,
+              "TRP": 0.01254135
+            }
+          ],
+          "Station": {
+            "Affiliation": "IND",
+            "CallLetters": "WGHP 8.2",
+            "LegacyCallLetters": "EGHP",
+            "StationCode": 1171
+          },
+          "StationTotals": {
+            "TotalAdditionalAudienceCPM": 0.0,
+            "TotalAdditionalAudienceImpressions": 0.0,
+            "TotalCost": 260.0000,
+            "TotalGRP": 0.0,
+            "TotalHHCPM": 0.0,
+            "TotalHHImpressions": 0.0,
+            "TotalSpots": 13,
+            "TotalTargetCPM": 16.88815000,
+            "TotalTargetImpressions": 15.3954105,
+            "TotalTRP": 0.0135864625
+          }
+        }
+      ],
+      "MarketId": 118,
+      "MarketName": "Greensboro-H.Point-W.Salem",
+      "MarketSubscribers": 679970.0,
+      "MarketTotals": {
+        "TotalAdditionalAudienceCPM": 0.0,
+        "TotalAdditionalAudienceImpressions": 0.0,
+        "TotalCost": 260.0000,
+        "TotalGRP": 0.0,
+        "TotalHHCPM": 0.0,
+        "TotalHHImpressions": 0.0,
+        "TotalSpots": 13,
+        "TotalTargetCPM": 16.88815000,
+        "TotalTargetImpressions": 15.3954105,
+        "TotalTRP": 0.0135864625
+      },
+      "Rank": 46
+    }
+  ],
+  "OverallTotals": {
+    "TotalAdditionalAudienceCPM": 0.0,
+    "TotalAdditionalAudienceImpressions": 0.0,
+    "TotalCost": 260.0000,
+    "TotalGRP": 0.0,
+    "TotalHHCPM": 0.0,
+    "TotalHHImpressions": 0.0,
+    "TotalSpots": 13,
+    "TotalTargetCPM": 16.88815000,
+    "TotalTargetImpressions": 15.3954105,
+    "TotalTRP": 0.0135864625
+  },
+  "TargetUnitTotals": {
+    "TotalAdditionalAudienceCPM": 0.0,
+    "TotalAdditionalAudienceImpressions": 0.0,
+    "TotalCost": 260.0000,
+    "TotalGRP": 0.0,
+    "TotalHHCPM": 0.0,
+    "TotalHHImpressions": 0.0,
+    "TotalSpots": 0,
+    "TotalTargetCPM": 16.88815000,
+    "TotalTargetImpressions": 15.3954105,
+    "TotalTRP": 0.0135864625
+  }
+}

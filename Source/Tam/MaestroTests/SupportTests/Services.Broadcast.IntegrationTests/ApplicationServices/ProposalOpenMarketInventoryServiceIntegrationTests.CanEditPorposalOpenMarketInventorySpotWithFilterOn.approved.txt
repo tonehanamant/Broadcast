@@ -1,0 +1,156 @@
+﻿{
+  "DetailBudgetMarginAchieved": true,
+  "DetailBudgetPercent": 30000.0,
+  "DetailCpm": 0.05,
+  "DetailCpmMarginAchieved": true,
+  "DetailCpmPercent": 100.0,
+  "DetailDaypart": {
+    "endTime": 36000,
+    "fri": true,
+    "mon": true,
+    "sat": false,
+    "startTime": 32400,
+    "sun": false,
+    "Text": "M-F 9AM-10AM",
+    "thu": true,
+    "tue": true,
+    "wed": true
+  },
+  "DetailDaypartId": 6724,
+  "DetailFlightEndDate": "2016-06-06T00:00:00",
+  "DetailFlightStartDate": "2016-05-30T00:00:00",
+  "DetailId": 7,
+  "DetailImpressionsMarginAchieved": true,
+  "DetailImpressionsPercent": 31718.93,
+  "DetailSpotLength": 30,
+  "DetailSpotLengthId": 1,
+  "DetailTargetBudget": 50.0000,
+  "DetailTargetImpressions": 1000.0,
+  "DetailTotalBudget": 15000.00,
+  "DetailTotalCpm": 0.05,
+  "DetailTotalImpressions": 317189.336,
+  "Equivalized": null,
+  "Filter": {
+    "Affiliations": [],
+    "DayParts": [],
+    "Genres": [],
+    "Markets": [],
+    "ProgramNames": [],
+    "SpotFilter": 1
+  },
+  "GuaranteedAudience": 31,
+  "HutPostingBookId": 413,
+  "Margin": 20.0,
+  "NewCriteriaAffectsExistingAllocations": false,
+  "PlaybackType": 4,
+  "PostType": null,
+  "ProposalFlightEndDate": "2016-12-11T00:00:00",
+  "ProposalFlightStartDate": "2016-10-31T00:00:00",
+  "ProposalId": 248,
+  "ProposalName": "Proposal Test",
+  "ProposalVersion": 1,
+  "RefineFilterPrograms": [
+    "Open Market Program",
+    "Open Market Program 2",
+    "Open Market Program 3",
+    "Open Market Program 4",
+    "Open Market Program Too"
+  ],
+  "SharePostingBookId": 416,
+  "SinglePostingBookId": null,
+  "Weeks": [
+    {
+      "Budget": 25.0000,
+      "BudgetMarginAchieved": true,
+      "BudgetPercent": 60000.0,
+      "BudgetTotal": 15000.00,
+      "ImpressionsGoal": 100.0,
+      "ImpressionsMarginAchieved": true,
+      "ImpressionsPercent": 317189.34,
+      "ImpressionsTotal": 317189.336,
+      "IsHiatus": false,
+      "Markets": [
+        {
+          "Cost": 0.0,
+          "Impressions": 0.0,
+          "MarketId": 101,
+          "Spots": 0,
+          "Stations": [
+            {
+              "Programs": [],
+              "StationCode": 5923
+            }
+          ]
+        },
+        {
+          "Cost": 15000.0,
+          "Impressions": 317189.33652916,
+          "MarketId": 104,
+          "Spots": 500,
+          "Stations": [
+            {
+              "Programs": [
+                {
+                  "Cost": 15000.0,
+                  "EFF": 0.0,
+                  "ProgramId": 2003,
+                  "Spots": 500,
+                  "TargetCpm": 0.0,
+                  "TargetImpressions": 0.0,
+                  "TotalImpressions": 317189.33652916,
+                  "UnitCost": 30.0,
+                  "UnitImpression": 634.37867306
+                }
+              ],
+              "StationCode": 5017
+            }
+          ]
+        },
+        {
+          "Cost": 0.0,
+          "Impressions": 0.0,
+          "MarketId": 111,
+          "Spots": 0,
+          "Stations": [
+            {
+              "Programs": [
+                {
+                  "Cost": 30.0,
+                  "EFF": 0.0,
+                  "ProgramId": 2004,
+                  "Spots": 0,
+                  "TargetCpm": 0.0,
+                  "TargetImpressions": 0.0,
+                  "TotalImpressions": 3.23232215,
+                  "UnitCost": 30.0,
+                  "UnitImpression": 3.23232215
+                }
+              ],
+              "StationCode": 6852
+            },
+            {
+              "Programs": [
+                {
+                  "Cost": 30.0,
+                  "EFF": 0.0,
+                  "ProgramId": 2002,
+                  "Spots": 0,
+                  "TargetCpm": 0.0,
+                  "TargetImpressions": 0.0,
+                  "TotalImpressions": 2.53858257,
+                  "UnitCost": 30.0,
+                  "UnitImpression": 2.53858257
+                }
+              ],
+              "StationCode": 5982
+            }
+          ]
+        }
+      ],
+      "MediaWeekId": 649,
+      "ProposalVersionDetailQuarterWeekId": 7,
+      "QuarterText": "Q2",
+      "Week": "5/30/2016"
+    }
+  ]
+}

@@ -1,0 +1,1718 @@
+﻿{
+  "BvsDetails": [
+    {
+      "Affiliate": "IND",
+      "AirTime": 67506,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10465,
+      "Impressions": 7908.75,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "NEW YORK",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-30T00:00:00",
+      "Program": "MIKE & MOLLY WKND",
+      "RunTime": "2016-07-30T18:45:06",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WLNY",
+      "Status": 2
+    },
+    {
+      "Affiliate": "IND",
+      "AirTime": 2590,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10466,
+      "Impressions": 5827.875,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "NEW YORK",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-31T00:00:00",
+      "Program": "BOB'S BURGERS",
+      "RunTime": "2016-07-31T00:43:10",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WLNY",
+      "Status": 2
+    },
+    {
+      "Affiliate": "IND",
+      "AirTime": 86251,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10471,
+      "Impressions": 4515.4,
+      "Isci": "ADUBOLU081",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "LOS ANGELES",
+      "MatchAirtime": true,
+      "MatchIsci": false,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-28T00:00:00",
+      "Program": "SEINFELD",
+      "RunTime": "2016-07-28T23:57:31",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "KDOC",
+      "Status": 2
+    },
+    {
+      "Affiliate": "FOX",
+      "AirTime": 61140,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10473,
+      "Impressions": 6386.125,
+      "Isci": "ADUBOLU081",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "LOS ANGELES",
+      "MatchAirtime": true,
+      "MatchIsci": false,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-31T00:00:00",
+      "Program": "TMZ WEEKEND",
+      "RunTime": "2016-07-31T16:59:00",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "KTTV",
+      "Status": 2
+    },
+    {
+      "Affiliate": "ABC",
+      "AirTime": 84059,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10475,
+      "Impressions": 34448.0,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "CHICAGO",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-31T00:00:00",
+      "Program": "INSIDE EDITION WEEKEND",
+      "RunTime": "2016-07-31T23:20:59",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WLS",
+      "Status": 2
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 6923,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10476,
+      "Impressions": 7230.625,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "PHILADELPHIA",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-31T00:00:00",
+      "Program": "ANGER MANAGEMENT WEEKEND",
+      "RunTime": "2016-07-31T01:55:23",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WPSG",
+      "Status": 2
+    },
+    {
+      "Affiliate": "ABC",
+      "AirTime": 7125,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10477,
+      "Impressions": 9509.875,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "PHILADELPHIA",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-30T00:00:00",
+      "Program": "CASTLE",
+      "RunTime": "2016-07-30T01:58:45",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WPVI",
+      "Status": 2
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 3465,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10479,
+      "Impressions": 5462.75,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "DALLAS",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-31T00:00:00",
+      "Program": "FRIENDS WKND",
+      "RunTime": "2016-07-31T00:57:45",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "KDAF",
+      "Status": 2
+    },
+    {
+      "Affiliate": "IND",
+      "AirTime": 81908,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10480,
+      "Impressions": 10858.375,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "DALLAS",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-31T00:00:00",
+      "Program": "MIKE & MOLLY WKND",
+      "RunTime": "2016-07-31T22:45:08",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "KTXA",
+      "Status": 2
+    },
+    {
+      "Affiliate": "CBS",
+      "AirTime": 7439,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10482,
+      "Impressions": 2383.375,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "WASHINGTON,DC",
+      "MatchAirtime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-31T00:00:00",
+      "Program": "ENTERTAINMENT TNGHT WKND",
+      "RunTime": "2016-07-31T02:03:59",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WUSA",
+      "Status": 3
+    },
+    {
+      "Affiliate": "MNTV",
+      "AirTime": 6245,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10486,
+      "Impressions": 300.0,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "TAMPA",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-28T00:00:00",
+      "Program": "EVERYBODY LOVES RAYMOND",
+      "RunTime": "2016-07-28T01:44:05",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WTTA",
+      "Status": 2
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 1423,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10488,
+      "Impressions": 9337.35,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "DETROIT",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-26T00:00:00",
+      "Program": "HOW I MET YOUR MOTHER",
+      "RunTime": "2016-07-26T00:23:43",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WKBD",
+      "Status": 2
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 86345,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10489,
+      "Impressions": 10277.6,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "DETROIT",
+      "MatchAirtime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-27T00:00:00",
+      "Program": "MIKE & MOLLY",
+      "RunTime": "2016-07-27T23:59:05",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WKBD",
+      "Status": 3
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 613,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10490,
+      "Impressions": 9804.7,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "DETROIT",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-28T00:00:00",
+      "Program": "HOW I MET YOUR MOTHER",
+      "RunTime": "2016-07-28T00:10:13",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WKBD",
+      "Status": 2
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 780,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10491,
+      "Impressions": 9804.7,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "DETROIT",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-29T00:00:00",
+      "Program": "HOW I MET YOUR MOTHER",
+      "RunTime": "2016-07-29T00:13:00",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WKBD",
+      "Status": 2
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 7146,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10492,
+      "Impressions": 7482.25,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "DETROIT",
+      "MatchAirtime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-29T00:00:00",
+      "Program": "KING OF QUEENS",
+      "RunTime": "2016-07-29T01:59:06",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WKBD",
+      "Status": 3
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 1506,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10493,
+      "Impressions": 9584.75,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "DETROIT",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-31T00:00:00",
+      "Program": "HOW I MET YOUR MOTHER WEEKEND",
+      "RunTime": "2016-07-31T00:25:06",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WKBD",
+      "Status": 2
+    },
+    {
+      "Affiliate": "IND",
+      "AirTime": 62113,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10496,
+      "Impressions": 5381.0,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "MINNEAPOLIS",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-28T00:00:00",
+      "Program": "RULES OF ENGAGEMENT",
+      "RunTime": "2016-07-28T17:15:13",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "KSTC",
+      "Status": 2
+    },
+    {
+      "Affiliate": "MNTV",
+      "AirTime": 7127,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10498,
+      "Impressions": 2735.1,
+      "Isci": "ADUBOLU081",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "DENVER",
+      "MatchAirtime": true,
+      "MatchIsci": false,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-28T00:00:00",
+      "Program": "HOW I MET YOUR MOTHER",
+      "RunTime": "2016-07-28T01:58:47",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "KTVD",
+      "Status": 2
+    },
+    {
+      "Affiliate": "MNTV",
+      "AirTime": 66586,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10500,
+      "Impressions": 4003.75,
+      "Isci": "ADUBOLU081",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "CLEVELAND",
+      "MatchAirtime": true,
+      "MatchIsci": false,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-27T00:00:00",
+      "Program": "THE INSIDER",
+      "RunTime": "2016-07-27T18:29:46",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WUAB",
+      "Status": 2
+    },
+    {
+      "Affiliate": "MNTV",
+      "AirTime": 65284,
+      "Cost": 40.00,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10502,
+      "Impressions": 1772.3999999999999,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "ORLANDO",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": true,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": false,
+      "NsiDate": "2016-07-29T00:00:00",
+      "Program": "DISH NATION",
+      "RunTime": "2016-07-29T18:08:04",
+      "ScheduleDetailWeekId": 367387,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WRBW",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AirTime": 6894,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10504,
+      "Impressions": 6326.0499999999993,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "ST LOUIS",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-28T00:00:00",
+      "Program": "ACCESS HOLLYWOOD",
+      "RunTime": "2016-07-28T01:54:54",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "KTVI",
+      "Status": 2
+    },
+    {
+      "Affiliate": "FOX",
+      "AirTime": 6315,
+      "Cost": 26.00,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10510,
+      "Impressions": 6010.8,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "INDIANAPOLIS",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": true,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": false,
+      "NsiDate": "2016-07-28T00:00:00",
+      "Program": "MIKE & MOLLY",
+      "RunTime": "2016-07-28T01:45:15",
+      "ScheduleDetailWeekId": 365611,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WXIN",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 86142,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10512,
+      "Impressions": 819.6,
+      "Isci": "ADUBOLU081",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "NASHVILLE",
+      "MatchAirtime": true,
+      "MatchIsci": false,
+      "MatchProgram": true,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": false,
+      "NsiDate": "2016-07-25T00:00:00",
+      "Program": "DISH NATION",
+      "RunTime": "2016-07-25T23:55:42",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WNAB",
+      "Status": 2
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 64757,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10513,
+      "Impressions": 1973.5,
+      "Isci": "ADUBOLU081",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "NASHVILLE",
+      "MatchAirtime": true,
+      "MatchIsci": false,
+      "MatchProgram": true,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": false,
+      "NsiDate": "2016-07-30T00:00:00",
+      "Program": "MIKE & MOLLY WKND",
+      "RunTime": "2016-07-30T17:59:17",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WNAB",
+      "Status": 2
+    },
+    {
+      "Affiliate": "CBS",
+      "AirTime": 71212,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10514,
+      "Impressions": 16507.850000000002,
+      "Isci": "ADUBOLU081",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "HARTFORD",
+      "MatchAirtime": false,
+      "MatchIsci": false,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-29T00:00:00",
+      "Program": "ENTERTAINMENT TONIGHT",
+      "RunTime": "2016-07-29T19:46:52",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WFSB",
+      "Status": 3
+    },
+    {
+      "Affiliate": "ABC",
+      "AirTime": 23,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10516,
+      "Impressions": 3573.625,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "COLUMBUS,OH",
+      "MatchAirtime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-31T00:00:00",
+      "Program": "SEINFELD S/S",
+      "RunTime": "2016-07-31T00:00:23",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WSYX",
+      "Status": 3
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 80065,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10517,
+      "Impressions": 2008.7999999999997,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "COLUMBUS,OH",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-27T00:00:00",
+      "Program": "LAW & ORDER: CRIMINAL INTENT",
+      "RunTime": "2016-07-27T22:14:25",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WWHO",
+      "Status": 2
+    },
+    {
+      "Affiliate": "IND",
+      "AirTime": 61122,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10520,
+      "Impressions": 1495.1,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "KANSAS CITY",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-27T00:00:00",
+      "Program": "KING OF QUEENS",
+      "RunTime": "2016-07-27T16:58:42",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "KMCI",
+      "Status": 2
+    },
+    {
+      "Affiliate": "IND",
+      "AirTime": 61122,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10521,
+      "Impressions": 1495.1,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "KANSAS CITY",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-29T00:00:00",
+      "Program": "KING OF QUEENS",
+      "RunTime": "2016-07-29T16:58:42",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "KMCI",
+      "Status": 2
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 84287,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10522,
+      "Impressions": 891.3,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "SALT LAKE CITY",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-29T00:00:00",
+      "Program": "COUGAR TOWN",
+      "RunTime": "2016-07-29T23:24:47",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "KUCW",
+      "Status": 2
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 82341,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10527,
+      "Impressions": 864.375,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "WEST PALM BCH",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-30T00:00:00",
+      "Program": "ANGER MANAGEMENT WEEKEND",
+      "RunTime": "2016-07-30T22:52:21",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WTVX",
+      "Status": 2
+    },
+    {
+      "Affiliate": "FOX",
+      "AirTime": 66503,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10530,
+      "Impressions": 1221.875,
+      "Isci": "ADUBOLU081",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "LAS VEGAS",
+      "MatchAirtime": true,
+      "MatchIsci": false,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-31T00:00:00",
+      "Program": "TMZ WEEKEND",
+      "RunTime": "2016-07-31T18:28:23",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "KVVU",
+      "Status": 2
+    },
+    {
+      "Affiliate": "ABC",
+      "AirTime": 38076,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10531,
+      "Impressions": 704.95,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "GRAND RAPIDS",
+      "MatchAirtime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": false,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-28T00:00:00",
+      "Program": "THE WENDY WILLIAMS SHOW",
+      "RunTime": "2016-07-28T10:34:36",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WOTV",
+      "Status": 3
+    },
+    {
+      "Affiliate": "MNTV",
+      "AirTime": 3307,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10532,
+      "Impressions": 1609.75,
+      "Isci": "ADUBOLU081",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "NORFOLK",
+      "MatchAirtime": true,
+      "MatchIsci": false,
+      "MatchProgram": true,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": false,
+      "NsiDate": "2016-07-28T00:00:00",
+      "Program": "MODERN FAMILY",
+      "RunTime": "2016-07-28T00:55:07",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WTVZ",
+      "Status": 2
+    },
+    {
+      "Affiliate": "CBS",
+      "AirTime": 4420,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10533,
+      "Impressions": 3728.25,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "OKLAHOMA CITY",
+      "MatchAirtime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-31T00:00:00",
+      "Program": "PAID PROGRAM",
+      "RunTime": "2016-07-31T01:13:40",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "KWTV",
+      "Status": 3
+    },
+    {
+      "Affiliate": "CBS",
+      "AirTime": 57151,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10535,
+      "Impressions": 5376.95,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "BIRMINGHAM",
+      "MatchAirtime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-29T00:00:00",
+      "Program": "THE WENDY WILLIAMS SHOW",
+      "RunTime": "2016-07-29T15:52:31",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WIAT",
+      "Status": 3
+    },
+    {
+      "Affiliate": "CW",
+      "AirTime": 78509,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10539,
+      "Impressions": 1511.55,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "ALBUQUERQUE",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-29T00:00:00",
+      "Program": "HOW I MET YOUR MOTHER",
+      "RunTime": "2016-07-29T21:48:29",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "KWBQ",
+      "Status": 2
+    },
+    {
+      "Affiliate": "ABC",
+      "AirTime": 55711,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10541,
+      "Impressions": 2029.35,
+      "Isci": "ADUBOLU081",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "LOUISVILLE",
+      "MatchAirtime": true,
+      "MatchIsci": false,
+      "MatchProgram": true,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": false,
+      "NsiDate": "2016-07-29T00:00:00",
+      "Program": "CELEBRITY NAME GAME",
+      "RunTime": "2016-07-29T15:28:31",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WHAS",
+      "Status": 2
+    },
+    {
+      "Affiliate": "ABC",
+      "AirTime": 6998,
+      "Cost": null,
+      "EstimateId": 3416,
+      "HasLeadInScheduleMatches": false,
+      "Id": 10543,
+      "Impressions": 883.3,
+      "Isci": "ADUBOLU081H",
+      "LinkedToBlock": false,
+      "LinkedToLeadin": false,
+      "Market": "MEMPHIS",
+      "MatchAirtime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "NeedProgramMatch": true,
+      "NsiDate": "2016-07-27T00:00:00",
+      "Program": "LAW & ORDER: CRIMINAL INTENT",
+      "RunTime": "2016-07-27T01:56:38",
+      "ScheduleDetailWeekId": null,
+      "SpotLength": 30,
+      "SpotLengthId": 1,
+      "Station": "WATN",
+      "Status": 2
+    }
+  ],
+  "CurrentPostingBookId": 413,
+  "EstimateId": 3416,
+  "ISCIs": "ADUBOLU081H",
+  "PostingBooks": [
+    {
+      "Display": "0213"
+    },
+    {
+      "Display": "0513"
+    },
+    {
+      "Display": "0713"
+    },
+    {
+      "Display": "1113"
+    },
+    {
+      "Display": "0214"
+    },
+    {
+      "Display": "0514"
+    },
+    {
+      "Display": "0714"
+    },
+    {
+      "Display": "1114"
+    },
+    {
+      "Display": "0215"
+    },
+    {
+      "Display": "0515"
+    },
+    {
+      "Display": "0715"
+    },
+    {
+      "Display": "1115"
+    },
+    {
+      "Display": "0216"
+    },
+    {
+      "Display": "0516"
+    },
+    {
+      "Display": "0716"
+    },
+    {
+      "Display": "1116"
+    }
+  ],
+  "ScheduleName": "Bio Oil",
+  "ScheduleNetworks": [
+    {
+      "Display": "KABB-TV"
+    },
+    {
+      "Display": "KASW-TV"
+    },
+    {
+      "Display": "KBVO-TV"
+    },
+    {
+      "Display": "KCPQ-TV"
+    },
+    {
+      "Display": "KCWE-TV"
+    },
+    {
+      "Display": "KDAF-TV"
+    },
+    {
+      "Display": "KDFW-TV"
+    },
+    {
+      "Display": "KDOC-TV"
+    },
+    {
+      "Display": "KENS-TV"
+    },
+    {
+      "Display": "KIAH-TV"
+    },
+    {
+      "Display": "KICU-TV"
+    },
+    {
+      "Display": "KMAX-TV"
+    },
+    {
+      "Display": "KMCI-TV"
+    },
+    {
+      "Display": "KMOV-TV"
+    },
+    {
+      "Display": "KNXV-TV"
+    },
+    {
+      "Display": "KOFY-TV"
+    },
+    {
+      "Display": "KONG-TV"
+    },
+    {
+      "Display": "KPDX-TV"
+    },
+    {
+      "Display": "KRCW-TV"
+    },
+    {
+      "Display": "KSAT-TV"
+    },
+    {
+      "Display": "KSTC-TV"
+    },
+    {
+      "Display": "KSWB-TV"
+    },
+    {
+      "Display": "KTTV-TV"
+    },
+    {
+      "Display": "KTVD-TV"
+    },
+    {
+      "Display": "KTVI-TV"
+    },
+    {
+      "Display": "KTVK-TV"
+    },
+    {
+      "Display": "KTVU-TV"
+    },
+    {
+      "Display": "KTXA-TV"
+    },
+    {
+      "Display": "KTXH-TV"
+    },
+    {
+      "Display": "KUBE-TV"
+    },
+    {
+      "Display": "KUCW-TV"
+    },
+    {
+      "Display": "KVVU-TV"
+    },
+    {
+      "Display": "KWBQ+S2"
+    },
+    {
+      "Display": "KWTV-TV"
+    },
+    {
+      "Display": "KXTV-TV"
+    },
+    {
+      "Display": "KZJO-TV"
+    },
+    {
+      "Display": "WAGA-TV"
+    },
+    {
+      "Display": "WATL-TV"
+    },
+    {
+      "Display": "WATN-TV"
+    },
+    {
+      "Display": "WAXN-TV"
+    },
+    {
+      "Display": "WBBM-TV"
+    },
+    {
+      "Display": "WBFS-TV"
+    },
+    {
+      "Display": "WBRC-TV"
+    },
+    {
+      "Display": "WBTV-TV"
+    },
+    {
+      "Display": "WBZ -TV"
+    },
+    {
+      "Display": "WCGV-TV"
+    },
+    {
+      "Display": "WCWJ-TV"
+    },
+    {
+      "Display": "WDRB-TV"
+    },
+    {
+      "Display": "WFOX-TV"
+    },
+    {
+      "Display": "WFSB-TV"
+    },
+    {
+      "Display": "WFXT-TV"
+    },
+    {
+      "Display": "WGAL-TV"
+    },
+    {
+      "Display": "WGHP-TV"
+    },
+    {
+      "Display": "WHAS-TV"
+    },
+    {
+      "Display": "WHNS-TV"
+    },
+    {
+      "Display": "WIAT-TV"
+    },
+    {
+      "Display": "WJXT-TV"
+    },
+    {
+      "Display": "WJZ -TV"
+    },
+    {
+      "Display": "WJZY-TV"
+    },
+    {
+      "Display": "WKBD-TV"
+    },
+    {
+      "Display": "WLFL-TV"
+    },
+    {
+      "Display": "WLMT-TV"
+    },
+    {
+      "Display": "WLNY-TV"
+    },
+    {
+      "Display": "WLS -TV"
+    },
+    {
+      "Display": "WLVI-TV"
+    },
+    {
+      "Display": "WLWT-TV"
+    },
+    {
+      "Display": "WMAQ-TV"
+    },
+    {
+      "Display": "WMYD-TV"
+    },
+    {
+      "Display": "WMYT-TV"
+    },
+    {
+      "Display": "WMYV-TV"
+    },
+    {
+      "Display": "WNAB-TV"
+    },
+    {
+      "Display": "WNBC-TV"
+    },
+    {
+      "Display": "WPCW-TV"
+    },
+    {
+      "Display": "WPGH-TV"
+    },
+    {
+      "Display": "WPIX-TV"
+    },
+    {
+      "Display": "WPSG-TV"
+    },
+    {
+      "Display": "WPVI-TV"
+    },
+    {
+      "Display": "WRAZ-TV"
+    },
+    {
+      "Display": "WRBW-TV"
+    },
+    {
+      "Display": "WSB -TV"
+    },
+    {
+      "Display": "WSBK-TV"
+    },
+    {
+      "Display": "WSFL-TV"
+    },
+    {
+      "Display": "WSYX-TV"
+    },
+    {
+      "Display": "WTTA-TV"
+    },
+    {
+      "Display": "WTVD-TV"
+    },
+    {
+      "Display": "WTVF-TV"
+    },
+    {
+      "Display": "WTVJ-TV"
+    },
+    {
+      "Display": "WTVX-TV"
+    },
+    {
+      "Display": "WTVZ-TV"
+    },
+    {
+      "Display": "WUAB-TV"
+    },
+    {
+      "Display": "WUPA-TV"
+    },
+    {
+      "Display": "WUSA-TV"
+    },
+    {
+      "Display": "WWHO-TV"
+    },
+    {
+      "Display": "WWJ -TV"
+    },
+    {
+      "Display": "WXIN-TV"
+    },
+    {
+      "Display": "WXIX-TV"
+    },
+    {
+      "Display": "WXMI-TV"
+    },
+    {
+      "Display": "WYCW-TV"
+    }
+  ],
+  "SchedulePrograms": [
+    {
+      "Display": "2 BROKE"
+    },
+    {
+      "Display": "2 BROKE GIRLS/FRIENDS"
+    },
+    {
+      "Display": "2.5 men"
+    },
+    {
+      "Display": "2.5 MEN"
+    },
+    {
+      "Display": "ACCESS"
+    },
+    {
+      "Display": "ACCESS HOLLYWD"
+    },
+    {
+      "Display": "ACCSS HLWD W R"
+    },
+    {
+      "Display": "ACCSS HLYWD WK"
+    },
+    {
+      "Display": "ANGER MANAGEMENT"
+    },
+    {
+      "Display": "ANGR MNGMNT MF"
+    },
+    {
+      "Display": "ANGR MNGMNT WK"
+    },
+    {
+      "Display": "ANGR MNGMNT WK/ANGR MGMT WK B"
+    },
+    {
+      "Display": "AVG. ALL WKS"
+    },
+    {
+      "Display": "BG-THEORY SA B"
+    },
+    {
+      "Display": "BIG BANG"
+    },
+    {
+      "Display": "BIG BANG THEORY"
+    },
+    {
+      "Display": "BLUE BLOODS"
+    },
+    {
+      "Display": "BONES"
+    },
+    {
+      "Display": "CASTLE"
+    },
+    {
+      "Display": "CASTLE-SYN"
+    },
+    {
+      "Display": "CASTLE-SYN B"
+    },
+    {
+      "Display": "CELEB NAME"
+    },
+    {
+      "Display": "CELEB NAME-MF"
+    },
+    {
+      "Display": "DISH NATION"
+    },
+    {
+      "Display": "DISH NATION R"
+    },
+    {
+      "Display": "ENT TONIGHT 60"
+    },
+    {
+      "Display": "ENT TONITE R30"
+    },
+    {
+      "Display": "EVERBDY-RAY B"
+    },
+    {
+      "Display": "EVRBDY LVS RAY"
+    },
+    {
+      "Display": "EXTRA"
+    },
+    {
+      "Display": "EXTRA WK"
+    },
+    {
+      "Display": "FRIENDS"
+    },
+    {
+      "Display": "FRIENDS SU"
+    },
+    {
+      "Display": "FRIENDS SU B"
+    },
+    {
+      "Display": "FRIENDS WK/FRIENDS WK B"
+    },
+    {
+      "Display": "GLEE"
+    },
+    {
+      "Display": "GOOD WIFE"
+    },
+    {
+      "Display": "GOOD WIFE B"
+    },
+    {
+      "Display": "HIMYM"
+    },
+    {
+      "Display": "HOT CLEVELAND"
+    },
+    {
+      "Display": "HOT-CLEVELAND"
+    },
+    {
+      "Display": "HOT-CLVLND B"
+    },
+    {
+      "Display": "HOW I MET"
+    },
+    {
+      "Display": "HOW-MET-MOTHER"
+    },
+    {
+      "Display": "HOW-MET-MTHR B"
+    },
+    {
+      "Display": "HOW-MOTHR WK B"
+    },
+    {
+      "Display": "INSIDE EDITION"
+    },
+    {
+      "Display": "INSIDE EDITN W"
+    },
+    {
+      "Display": "INSIDE EDTION"
+    },
+    {
+      "Display": "INSIDER"
+    },
+    {
+      "Display": "INSIDER/INSIDE EDITION"
+    },
+    {
+      "Display": "KING OF QUEEN"
+    },
+    {
+      "Display": "KING OF QUEENS"
+    },
+    {
+      "Display": "KING QUEENS"
+    },
+    {
+      "Display": "KING-QNS WK B"
+    },
+    {
+      "Display": "KING-QUEENS B"
+    },
+    {
+      "Display": "L&O:SVU-MYNET1"
+    },
+    {
+      "Display": "LAW&ORD CI"
+    },
+    {
+      "Display": "LAW&ORD SVU MF"
+    },
+    {
+      "Display": "LAW&ORD: CI M-F"
+    },
+    {
+      "Display": "LAW&ORDER CI"
+    },
+    {
+      "Display": "MIKE & MOLLY"
+    },
+    {
+      "Display": "MIKE AND MOLLY"
+    },
+    {
+      "Display": "MIKE&MLLY SA B"
+    },
+    {
+      "Display": "MIKE&MLLY WK B"
+    },
+    {
+      "Display": "MIKE&MOLLY R"
+    },
+    {
+      "Display": "MIKE&MOLLY SU/MIKE&MLLY SU B"
+    },
+    {
+      "Display": "MIKE&MOLLY WK"
+    },
+    {
+      "Display": "MOD FAM"
+    },
+    {
+      "Display": "MODERN FAM"
+    },
+    {
+      "Display": "MODERN FAMILY"
+    },
+    {
+      "Display": "MODERN FMLY SA"
+    },
+    {
+      "Display": "MODERN FMLY WK/MODRN FMLY W B"
+    },
+    {
+      "Display": "RAYMOND"
+    },
+    {
+      "Display": "RULES"
+    },
+    {
+      "Display": "RULES ENGAGEMENT"
+    },
+    {
+      "Display": "RULES-ENG WK B"
+    },
+    {
+      "Display": "SCANDAL"
+    },
+    {
+      "Display": "SEINFELD"
+    },
+    {
+      "Display": "SEINFELD WK"
+    },
+    {
+      "Display": "SEINFELD WK/SEINFELD WK B"
+    },
+    {
+      "Display": "SEINFELD/SEINFELD B"
+    },
+    {
+      "Display": "TMZ"
+    },
+    {
+      "Display": "TMZ LIVE!"
+    },
+    {
+      "Display": "TMZ LIVE!&lt;"
+    },
+    {
+      "Display": "TMZ R"
+    },
+    {
+      "Display": "TMZ WK"
+    },
+    {
+      "Display": "TMZ WKND"
+    },
+    {
+      "Display": "TWO & A HALF MEN"
+    },
+    {
+      "Display": "TWO & HALF MEN"
+    },
+    {
+      "Display": "TWO AND A HALF MEN"
+    },
+    {
+      "Display": "TWO&HALF MN WK"
+    },
+    {
+      "Display": "TWO&HF MN WK B"
+    },
+    {
+      "Display": "VARIOUS"
+    }
+  ]
+}

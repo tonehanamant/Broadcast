@@ -1,0 +1,11 @@
+﻿CREATE PROCEDURE usp_proposal_proposals_select_all
+AS
+SELECT
+	id,
+	parent_proposal_id,
+	child_proposal_id,
+	ordinal,
+	cpm_percentage,
+	rotation_percentage
+FROM
+	proposal_proposals (NOLOCK)

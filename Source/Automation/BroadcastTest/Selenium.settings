@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BroadcastTest" GeneratedClassName="Selenium">
+  <Profiles />
+  <Settings>
+    <Setting Name="BaseUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://cadapps-qa1/</Value>
+    </Setting>
+    <Setting Name="BvsTracker" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/Broadcast/</Value>
+    </Setting>
+    <Setting Name="Broadcast" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/Broadcast/Rates</Value>
+    </Setting>
+    <Setting Name="Browser" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">IE</Value>
+    </Setting>
+    <Setting Name="TestDataPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\bbernstein\Documents\Visual Studio 2013\Projects\BroadcastAutoTest\BroadcastTest\TestData\</Value>
+    </Setting>
+    <Setting Name="LogFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\bbernstein\Documents\Visual Studio 2013\Projects\BroadcastAutoTest\BroadcastTest\Logs\</Value>
+    </Setting>
+    <Setting Name="TestCycle" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Unscheduled</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

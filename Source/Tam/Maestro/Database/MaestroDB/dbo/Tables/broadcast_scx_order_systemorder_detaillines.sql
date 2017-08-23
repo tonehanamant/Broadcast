@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[broadcast_scx_order_systemorder_detaillines] (
+    [id]                                 INT             IDENTITY (1, 1) NOT NULL,
+    [broadcast_scx_order_systemorder_id] INT             NOT NULL,
+    [start_time]                         TIME (7)        NULL,
+    [end_time]                           TIME (7)        NULL,
+    [start_day]                          VARCHAR (2)     NULL,
+    [monday]                             BIT             NULL,
+    [tuesday]                            BIT             NULL,
+    [wednesday]                          BIT             NULL,
+    [thursday]                           BIT             NULL,
+    [friday]                             BIT             NULL,
+    [saturday]                           BIT             NULL,
+    [sunday]                             BIT             NULL,
+    [detail_length]                      VARCHAR (15)    NULL,
+    [daypart_code]                       VARCHAR (15)    NULL,
+    [program]                            VARCHAR (127)   NULL,
+    [network]                            VARCHAR (63)    NULL,
+    [network_id]                         INT             NULL,
+    [spot_cost]                          DECIMAL (10, 2) NULL,
+    [total_cost]                         DECIMAL (10, 2) NULL,
+    [total_spots]                        INT             NULL,
+    CONSTRAINT [PK_broadcast_scx_order_systemorder_detaillines] PRIMARY KEY CLUSTERED ([id] ASC),
+    CONSTRAINT [FK_broadcast_scx_order_systemorder_detaillines_broadcast_scx_order_systemorders] FOREIGN KEY ([broadcast_scx_order_systemorder_id]) REFERENCES [dbo].[broadcast_scx_order_systemorders] ([id]) ON DELETE CASCADE
+);
+

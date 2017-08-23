@@ -1,0 +1,19 @@
+﻿{
+  "Problems": [
+    {
+      "ProblemDescription": "Program with overlapping week",
+      "ProgramName": "NEWSWTCH7 10P L(FTB S)",
+      "StationLetters": "KETV"
+    },
+    {
+      "ProblemDescription": "Program with duplicate rates",
+      "ProgramName": "DUPLICATE PROGRAM",
+      "StationLetters": "KETV"
+    },
+    {
+      "ProblemDescription": "Program with duplicate rates",
+      "ProgramName": "DUPLICATE PROGRAM",
+      "StationLetters": "KETV"
+    }
+  ]
+}

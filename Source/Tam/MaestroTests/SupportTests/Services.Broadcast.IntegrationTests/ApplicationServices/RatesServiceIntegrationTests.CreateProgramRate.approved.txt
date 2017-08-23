@@ -1,0 +1,60 @@
+﻿{
+  "Airtime": "M-SU 24HR",
+  "AudienceId": 31,
+  "Flight": "2016/10/31 - 2016/12/25",
+  "FlightEndDate": "2016-12-25T00:00:00",
+  "Flights": [
+    {
+      "EndDate": "2016-11-06T00:00:00",
+      "IsHiatus": false,
+      "StartDate": "2016-10-31T00:00:00"
+    },
+    {
+      "EndDate": "2016-11-13T00:00:00",
+      "IsHiatus": false,
+      "StartDate": "2016-11-07T00:00:00"
+    },
+    {
+      "EndDate": "2016-11-20T00:00:00",
+      "IsHiatus": false,
+      "StartDate": "2016-11-14T00:00:00"
+    },
+    {
+      "EndDate": "2016-11-27T00:00:00",
+      "IsHiatus": false,
+      "StartDate": "2016-11-21T00:00:00"
+    },
+    {
+      "EndDate": "2016-12-04T00:00:00",
+      "IsHiatus": false,
+      "StartDate": "2016-11-28T00:00:00"
+    },
+    {
+      "EndDate": "2016-12-11T00:00:00",
+      "IsHiatus": false,
+      "StartDate": "2016-12-05T00:00:00"
+    },
+    {
+      "EndDate": "2016-12-18T00:00:00",
+      "IsHiatus": false,
+      "StartDate": "2016-12-12T00:00:00"
+    },
+    {
+      "EndDate": "2016-12-25T00:00:00",
+      "IsHiatus": false,
+      "StartDate": "2016-12-19T00:00:00"
+    }
+  ],
+  "FlightStartDate": "2016-10-31T00:00:00",
+  "Genres": [
+    {
+      "Display": "Integration Test Genre"
+    }
+  ],
+  "Impressions": 11.5,
+  "Program": "Integration Tests Program",
+  "Rate15": 123.0,
+  "Rate30": 251.0,
+  "Rating": 0.54,
+  "Spots": null
+}

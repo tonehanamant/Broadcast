@@ -1,0 +1,10 @@
+﻿[
+  {
+    "AdvertiserName": "Checkers",
+    "AudienceImpressions": {
+      "31": 171812.972,
+      "33": 46837.014
+    },
+    "Spots": 1
+  }
+]

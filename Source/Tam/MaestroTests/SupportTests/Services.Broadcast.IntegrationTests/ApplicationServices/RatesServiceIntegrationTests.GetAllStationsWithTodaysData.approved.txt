@@ -1,0 +1,10 @@
+﻿[
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "WABC-TV 7.1",
+    "Code": 5015,
+    "LegacyCallLetters": "WABC",
+    "OriginMarket": "New York",
+    "RateDataThrough": "3/19/2017"
+  }
+]

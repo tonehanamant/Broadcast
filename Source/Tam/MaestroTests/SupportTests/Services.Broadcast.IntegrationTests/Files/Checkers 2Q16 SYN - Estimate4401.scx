@@ -1,0 +1,3163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<adx xsi:noNamespaceSchemaLocation="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<document>
+		<schemaVersion>1.0</schemaVersion>
+		<name>Checkers 2Q16 SYN</name>
+		<date>2016-08-24</date>
+		<mediaType>Spotcable</mediaType>
+		<documentType/>
+		<documentCode/>
+	</document>
+	<campaign>
+		<key codeOwner="NCC" codeDescription="CampaignID">
+			<id></id>
+		</key>
+		<key codeOwner="Strata" codeDescription="DMA Override">
+			<id>0</id>
+		</key>
+		<key codeOwner="Strata" codeDescription="Zone Pops">
+			<id>max</id>
+		</key>
+		<key codeOwner="VIEW32" codeDescription="CampaignName">
+			<id>Checkers 2Q16 SYN</id>
+		</key>
+		<dateRange>
+			<startDate>2016-03-28</startDate>
+			<endDate>2016-04-24</endDate>
+		</dateRange>
+		<company type="Rep">
+			<name>
+			</name>
+			<office>
+				<name>
+				</name>
+				<address>
+					<street/>
+					<city/>
+					<state code="__"/>
+					<postalCode>00000</postalCode>
+				</address>
+				<phone type="voice"></phone>
+			</office>
+			<contact role="AE">
+				<firstName/>
+				<lastName/>
+				<email/>
+				<phone type="voice"/>
+			</contact>
+		</company>
+		<company type="Agency">
+			<name>
+			</name>
+			<contact role="Buyer">
+				<firstName/>
+				<lastName/>
+				<email/>
+				<phone type="voice"></phone>
+			</contact>
+			<ID>
+				<code codeOwner="Agency"></code>
+			</ID>
+		</company>
+		<advertiser>
+			<name>Cadent Network</name>
+			<ID>
+				<code codeOwner="Agency"></code>
+			</ID>
+		</advertiser>
+		<product>
+			<name>Checkers</name>
+			<ID>
+				<code codeOwner="Agency">
+				</code>
+			</ID>
+		</product>
+		<estimate>
+			<desc>Checkers 2Q16 SYN</desc>
+			<ID>
+				<code codeOwner="Agency">3366</code>
+			</ID>
+		</estimate>
+		<makeGoodPolicy>
+			<code/>
+		</makeGoodPolicy>
+		<demo demoRank="1">
+			<group>Households</group>
+			<ageFrom>0</ageFrom>
+			<ageTo>99</ageTo>
+		</demo>
+		<demo demoRank="2">
+			<group>Adults</group>
+			<ageFrom>18</ageFrom>
+			<ageTo>49</ageTo>
+		</demo>
+		<buyType>weekly</buyType>
+		<populations demoRank="1">7368320</populations>
+		<populations demoRank="2">8485887</populations>
+		<order>
+			<key codeOwner="NCC" codeDescription="Market">
+				<id>216</id>
+			</key>
+			<key codeOwner="">
+				<id/>
+			</key>
+			<key codeOwner="Strata" codeDescription="Pops">
+				<id>dma;book</id>
+			</key>
+			<key codeOwner="Strata" codeDescription="UseBroadcastWeeks">
+				<id>0</id>
+			</key>
+			<totals>
+				<cost>1810.00</cost>
+				<spots>26</spots>
+			</totals>
+			<market nsi_id="101">
+				<name>New York</name>
+			</market>
+			<survey>
+				<ratingService/>
+				<geography/>
+				<shareBook/>
+				<PUTBook/>
+				<profile/>
+				<comment codeOwner="Spotcable">May16 Proj. (May15 HUT, Nov15 SHR) DMA Nielsen Live+3</comment>
+			</survey>
+			<populations demoRank="1">7368320</populations>
+			<populations demoRank="2">8485887</populations>
+			<comment/>
+			<systemOrder>
+				<key codeOwner="">
+					<id/>
+				</key>
+				<key codeOwner="Strata" codeDescription="UseZonePop">
+					<id>false</id>
+				</key>
+				<comment></comment>
+				<system>
+					<name/>
+					<syscode/>
+				</system>
+				<affiliateSplit/>
+				<populations demoRank="1">7368320</populations>
+				<populations demoRank="2">8485887</populations>
+				<totals>
+					<cost>1810.00</cost>
+					<spots>26</spots>
+				</totals>
+				<weeks count="4">
+					<week number="1" startDate="2016-03-28"/>
+					<week number="2" startDate="2016-04-04"/>
+					<week number="3" startDate="2016-04-11"/>
+					<week number="4" startDate="2016-04-18"/>
+				</weeks>
+				<detailLine detailLineID="0">
+					<startTime>19:30:00</startTime>
+					<endTime>20:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>1ST LOOK</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">1625.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">47178</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">13384</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>1</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>1</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>1</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>1</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>09:00:00</startTime>
+					<endTime>10:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>TODAY SHW2-NBC</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">585.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.4</value>
+						<value type="Impressions">100210</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.4</value>
+						<value type="Impressions">32816</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>1</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>1</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>1</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>1</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>23:35:00</startTime>
+					<endTime>00:37:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>TONIGHT SHOW W/ JIMMY FALLON</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-04-03</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">2275.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.9</value>
+						<value type="Impressions">141424</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.8</value>
+						<value type="Impressions">67748</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>11:00:00</startTime>
+					<endTime>12:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>ACCSS HLYWD LV</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">292.50</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">47136</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">19134</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>23:35:00</startTime>
+					<endTime>00:37:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>TONIGHT SHOW W/ JIMMY FALLON</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-04-04</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-05-29</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">1950.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.9</value>
+						<value type="Impressions">141424</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.8</value>
+						<value type="Impressions">67748</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>14:00:00</startTime>
+					<endTime>15:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>MEREDITH VIERA SHOW</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-05-29</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">260.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">47165</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">13484</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>23:35:00</startTime>
+					<endTime>00:37:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>TONIGHT SHOW W/ JIMMY FALLON</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-05-30</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">2275.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.9</value>
+						<value type="Impressions">141424</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.8</value>
+						<value type="Impressions">67748</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>16:00:00</startTime>
+					<endTime>17:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>ELLEN</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-04-04</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-05-29</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">1105.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">2.1</value>
+						<value type="Impressions">153271</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.7</value>
+						<value type="Impressions">56577</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>00:37:00</startTime>
+					<endTime>01:37:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>LATE NIGHT W/ SETH MEYERS</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">975.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.0</value>
+						<value type="Impressions">70760</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.4</value>
+						<value type="Impressions">35281</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>15:00:00</startTime>
+					<endTime>16:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>STEVE HARVEY!</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-05-29</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">422.50</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.3</value>
+						<value type="Impressions">94312</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">19824</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>01:37:00</startTime>
+					<endTime>02:07:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>CARSON DALY</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-04-03</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">487.50</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">41246</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">17974</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>19:00:00</startTime>
+					<endTime>19:30:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>EXTRA</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">1787.50</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">2.1</value>
+						<value type="Impressions">153191</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">47292</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>01:37:00</startTime>
+					<endTime>02:07:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>CARSON DALY</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-04-04</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-05-29</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">422.50</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">41246</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">17974</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>19:00:00</startTime>
+					<endTime>19:30:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>N</Monday>
+						<Tuesday>N</Tuesday>
+						<Wednesday>N</Wednesday>
+						<Thursday>N</Thursday>
+						<Friday>N</Friday>
+						<Saturday>Y</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>LIFE ACCORDING TO BEN</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">780.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.1</value>
+						<value type="Impressions">82503</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.1</value>
+						<value type="Impressions">9789</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>01:37:00</startTime>
+					<endTime>02:07:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>CARSON DALY</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-05-30</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">487.50</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">41246</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">17974</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>10:00:00</startTime>
+					<endTime>11:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>TODAY SHW3-NBC</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">520.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.0</value>
+						<value type="Impressions">76652</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.3</value>
+						<value type="Impressions">25492</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>23:30:00</startTime>
+					<endTime>01:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>N</Monday>
+						<Tuesday>N</Tuesday>
+						<Wednesday>N</Wednesday>
+						<Thursday>N</Thursday>
+						<Friday>N</Friday>
+						<Saturday>Y</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>SATURDAY NIGHT LIVE</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">4875.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">3.9</value>
+						<value type="Impressions">288840</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">2.2</value>
+						<value type="Impressions">190230</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>16:00:00</startTime>
+					<endTime>17:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>ELLEN</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-04-03</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">975.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">2.1</value>
+						<value type="Impressions">153271</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.7</value>
+						<value type="Impressions">56577</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>01:00:00</startTime>
+					<endTime>01:30:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>N</Monday>
+						<Tuesday>N</Tuesday>
+						<Wednesday>N</Wednesday>
+						<Thursday>N</Thursday>
+						<Friday>N</Friday>
+						<Saturday>Y</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>1ST LOOK</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">845.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.4</value>
+						<value type="Impressions">100225</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.5</value>
+						<value type="Impressions">44953</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>14:00:00</startTime>
+					<endTime>15:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>STEVE HARVEY!</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-05-23</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">260.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.3</value>
+						<value type="Impressions">94330</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">13484</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>19:00:00</startTime>
+					<endTime>19:30:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>N</Monday>
+						<Tuesday>N</Tuesday>
+						<Wednesday>N</Wednesday>
+						<Thursday>N</Thursday>
+						<Friday>N</Friday>
+						<Saturday>Y</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>GEORGE TO THE RESCUE</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-05-15</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">1625.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.0</value>
+						<value type="Impressions">76638</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.1</value>
+						<value type="Impressions">9789</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>13:00:00</startTime>
+					<endTime>14:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>DAYS-OUR LIVES</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">650.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.4</value>
+						<value type="Impressions">106142</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.4</value>
+						<value type="Impressions">37183</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>15:00:00</startTime>
+					<endTime>16:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>ELLEN</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-05-23</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">975.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.7</value>
+						<value type="Impressions">123809</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">19824</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>19:30:00</startTime>
+					<endTime>20:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>ACCESS HOLLYWD</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">1950.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">2.2</value>
+						<value type="Impressions">165016</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.7</value>
+						<value type="Impressions">56569</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>01:30:00</startTime>
+					<endTime>02:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>N</Monday>
+						<Tuesday>N</Tuesday>
+						<Wednesday>N</Wednesday>
+						<Thursday>N</Thursday>
+						<Friday>N</Friday>
+						<Saturday>Y</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>TALK STOOP</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">422.50</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.8</value>
+						<value type="Impressions">58946</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.3</value>
+						<value type="Impressions">24010</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>00:00:00</startTime>
+					<endTime>00:30:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>N</Monday>
+						<Tuesday>N</Tuesday>
+						<Wednesday>N</Wednesday>
+						<Thursday>N</Thursday>
+						<Friday>N</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>Y</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>SPORTS FINAL</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">975.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">41241</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">1.5</value>
+						<value type="Impressions">124914</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>00:30:00</startTime>
+					<endTime>01:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>N</Monday>
+						<Tuesday>N</Tuesday>
+						<Wednesday>N</Wednesday>
+						<Thursday>N</Thursday>
+						<Friday>N</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>Y</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>1ST LOOK</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">715.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.1</value>
+						<value type="Impressions">82558</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.9</value>
+						<value type="Impressions">73143</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>01:00:00</startTime>
+					<endTime>02:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>N</Monday>
+						<Tuesday>N</Tuesday>
+						<Wednesday>N</Wednesday>
+						<Thursday>N</Thursday>
+						<Friday>N</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>Y</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>EXTRA WK</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WNBC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5013">WNBC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WNBC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">162.50</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">41262</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.3</value>
+						<value type="Impressions">28928</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>14:00:00</startTime>
+					<endTime>15:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>The Fab Life</program>
+					<comment></comment>
+					<network>
+						<name>WABC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5015">WABC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WABC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">975.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.2</value>
+						<value type="Impressions">88420</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.3</value>
+						<value type="Impressions">22611</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>00:00:00</startTime>
+					<endTime>02:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>N</Monday>
+						<Tuesday>N</Tuesday>
+						<Wednesday>N</Wednesday>
+						<Thursday>N</Thursday>
+						<Friday>N</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>Y</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>Castle/Castle</program>
+					<comment></comment>
+					<network>
+						<name>WABC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5015">WABC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WABC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">650.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.2</value>
+						<value type="Impressions">88428</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.3</value>
+						<value type="Impressions">25858</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>11:00:00</startTime>
+					<endTime>12:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>The View</program>
+					<comment></comment>
+					<network>
+						<name>WABC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5015">WABC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WABC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">2600.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">2.4</value>
+						<value type="Impressions">176865</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.5</value>
+						<value type="Impressions">39610</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>15:00:00</startTime>
+					<endTime>16:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>General Hospital</program>
+					<comment></comment>
+					<network>
+						<name>WABC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5015">WABC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WABC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">2925.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">2.0</value>
+						<value type="Impressions">147455</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.8</value>
+						<value type="Impressions">67427</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>13:00:00</startTime>
+					<endTime>14:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>The Chew</program>
+					<comment></comment>
+					<network>
+						<name>WABC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5015">WABC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WABC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">1625.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">2.4</value>
+						<value type="Impressions">176855</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.4</value>
+						<value type="Impressions">34447</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>10:00:00</startTime>
+					<endTime>11:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>Rachael Ray</program>
+					<comment></comment>
+					<network>
+						<name>WABC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5015">WABC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WABC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">1170.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.8</value>
+						<value type="Impressions">129654</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.4</value>
+						<value type="Impressions">31759</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>09:00:00</startTime>
+					<endTime>10:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>Live with Kelly &amp; Michael</program>
+					<comment></comment>
+					<network>
+						<name>WABC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5015">WABC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WABC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">1950.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">3.2</value>
+						<value type="Impressions">235733</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.7</value>
+						<value type="Impressions">59854</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>23:35:00</startTime>
+					<endTime>00:37:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>Jimmy Kimmel</program>
+					<comment></comment>
+					<network>
+						<name>WABC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5015">WABC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WABC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">1820.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">2.0</value>
+						<value type="Impressions">147389</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">49992</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>00:37:00</startTime>
+					<endTime>01:06:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>Nightline</program>
+					<comment></comment>
+					<network>
+						<name>WABC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5015">WABC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WABC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">715.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.2</value>
+						<value type="Impressions">88463</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.4</value>
+						<value type="Impressions">30531</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>00:00:00</startTime>
+					<endTime>01:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>N</Monday>
+						<Tuesday>N</Tuesday>
+						<Wednesday>N</Wednesday>
+						<Thursday>N</Thursday>
+						<Friday>N</Friday>
+						<Saturday>Y</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>Scandal</program>
+					<comment></comment>
+					<network>
+						<name>WABC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5015">WABC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WABC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">650.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.8</value>
+						<value type="Impressions">58948</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.3</value>
+						<value type="Impressions">26926</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>01:30:00</startTime>
+					<endTime>02:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>Millionaire</program>
+					<comment></comment>
+					<network>
+						<name>WABC-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5015">WABC</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WABC-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Start Date">2016-03-28</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">260.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.7</value>
+						<value type="Impressions">53063</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">15060</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>19:00:00</startTime>
+					<endTime>20:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>N</Monday>
+						<Tuesday>N</Tuesday>
+						<Wednesday>N</Wednesday>
+						<Thursday>N</Thursday>
+						<Friday>N</Friday>
+						<Saturday>Y</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>ENT TONIGHT SAT</program>
+					<comment>[Estimate = ET Sat (09-05-15 to 01-02-16)]</comment>
+					<network>
+						<name>WCBS-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5012">WCBS</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WCBS-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">585.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.8</value>
+						<value type="Impressions">59394</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.3</value>
+						<value type="Impressions">23149</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>23:35:00</startTime>
+					<endTime>00:37:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>STEPHAN'S WEEKLY</program>
+					<comment>[Estimate = average 9-14-15 to 11-30-15]</comment>
+					<network>
+						<name>WCBS-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5012">WCBS</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WCBS-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">1300.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">2.1</value>
+						<value type="Impressions">153320</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.5</value>
+						<value type="Impressions">40157</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">2600.00</cost>
+						<spots>2</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>2</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>10:00:00</startTime>
+					<endTime>11:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>LET'S MAKE A DEAL</program>
+					<comment>[Estimate = Let's Make A Deal (10-01-15 to 01-27-16)]</comment>
+					<network>
+						<name>WCBS-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5012">WCBS</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WCBS-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">455.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.8</value>
+						<value type="Impressions">129735</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.3</value>
+						<value type="Impressions">25506</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">455.00</cost>
+						<spots>1</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>1</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>00:37:00</startTime>
+					<endTime>01:37:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>JAMES CORDEN</program>
+					<comment>[Estimate = Oct 2015]</comment>
+					<network>
+						<name>WCBS-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5012">WCBS</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WCBS-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">390.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.9</value>
+						<value type="Impressions">66430</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.3</value>
+						<value type="Impressions">22595</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>12:30:00</startTime>
+					<endTime>14:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>YOUNG RESTLESS-BOLD</program>
+					<comment>[Estimate = CBS Soaps (09-21-15 to 01-13-16)]</comment>
+					<network>
+						<name>WCBS-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5012">WCBS</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WCBS-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">520.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.7</value>
+						<value type="Impressions">124121</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.3</value>
+						<value type="Impressions">21572</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>01:37:00</startTime>
+					<endTime>02:05:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>COMICS UNLEASHED</program>
+					<comment>[Estimate = Comics Unleashed (May 2015)]</comment>
+					<network>
+						<name>WCBS-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5012">WCBS</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WCBS-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">130.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">41930</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">15325</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>15:00:00</startTime>
+					<endTime>16:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>DR PHIL</program>
+					<comment>[Estimate = Dr Phil (01-01-16 to 01-27-16)]</comment>
+					<network>
+						<name>WCBS-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5012">WCBS</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WCBS-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">520.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">2.2</value>
+						<value type="Impressions">160627</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.5</value>
+						<value type="Impressions">45037</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>09:00:00</startTime>
+					<endTime>10:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>N</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT15S</length>
+					<daypartCode>RT</daypartCode>
+					<program>HOT BENCH</program>
+					<comment>[Estimate = Hot Bench (09-21-15 to 01-27-16)]</comment>
+					<network>
+						<name>WCBS-TV</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="5012">WCBS</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WCBS-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">390.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">1.3</value>
+						<value type="Impressions">93807</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">15475</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">0.00</cost>
+						<spots>0</spots>
+					</totals>
+					<spot>
+						<weekNumber>1</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>2</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>3</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+					<spot>
+						<weekNumber>4</weekNumber>
+						<quantity>0</quantity>
+					</spot>
+				</detailLine>
+			</systemOrder>
+		</order>
+	</campaign>
+</adx>

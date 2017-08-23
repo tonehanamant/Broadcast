@@ -1,0 +1,389 @@
+﻿[
+  {
+    "Display": "EKYT-TV"
+  },
+  {
+    "Display": "KAKE+S2"
+  },
+  {
+    "Display": "KASY-TV"
+  },
+  {
+    "Display": "KATU-TV"
+  },
+  {
+    "Display": "KCEN-TV"
+  },
+  {
+    "Display": "KCWE-TV"
+  },
+  {
+    "Display": "KDBC-TV"
+  },
+  {
+    "Display": "KDOC-TV"
+  },
+  {
+    "Display": "KDSM-TV"
+  },
+  {
+    "Display": "KENS-TV"
+  },
+  {
+    "Display": "KETV-TV"
+  },
+  {
+    "Display": "KFMB-TV"
+  },
+  {
+    "Display": "KFOR-TV"
+  },
+  {
+    "Display": "KFSN-TV"
+  },
+  {
+    "Display": "KGAN-TV"
+  },
+  {
+    "Display": "KGPE-TV"
+  },
+  {
+    "Display": "KICU-TV"
+  },
+  {
+    "Display": "KJZZ-TV"
+  },
+  {
+    "Display": "KLAS-TV"
+  },
+  {
+    "Display": "KMAX-TV"
+  },
+  {
+    "Display": "KMSB-TV"
+  },
+  {
+    "Display": "KNWA-TV"
+  },
+  {
+    "Display": "KOLR-TV"
+  },
+  {
+    "Display": "KOTV-TV"
+  },
+  {
+    "Display": "KPNX+S2"
+  },
+  {
+    "Display": "KPRC-TV"
+  },
+  {
+    "Display": "KRDO-TV"
+  },
+  {
+    "Display": "KREM-TV"
+  },
+  {
+    "Display": "KSDK-TV"
+  },
+  {
+    "Display": "KSLA-TV"
+  },
+  {
+    "Display": "KSMO-TV"
+  },
+  {
+    "Display": "KSTW-TV"
+  },
+  {
+    "Display": "KSWB-TV"
+  },
+  {
+    "Display": "KTBC-TV"
+  },
+  {
+    "Display": "KTHV-TV"
+  },
+  {
+    "Display": "KTUL-TV"
+  },
+  {
+    "Display": "KTVD-TV"
+  },
+  {
+    "Display": "KTVK-TV"
+  },
+  {
+    "Display": "KTXA-TV"
+  },
+  {
+    "Display": "KTXH-TV"
+  },
+  {
+    "Display": "KVEO-TV"
+  },
+  {
+    "Display": "KVUE-TV"
+  },
+  {
+    "Display": "KVVU-TV"
+  },
+  {
+    "Display": "KZJO-TV"
+  },
+  {
+    "Display": "WAAY-TV"
+  },
+  {
+    "Display": "WACH-TV"
+  },
+  {
+    "Display": "WAND-TV"
+  },
+  {
+    "Display": "WATL-TV"
+  },
+  {
+    "Display": "WBAY-TV"
+  },
+  {
+    "Display": "WBBM-TV"
+  },
+  {
+    "Display": "WBFS-TV"
+  },
+  {
+    "Display": "WBIR-TV"
+  },
+  {
+    "Display": "WBNX-TV"
+  },
+  {
+    "Display": "WBTV-TV"
+  },
+  {
+    "Display": "WCAX-TV"
+  },
+  {
+    "Display": "WCCT-TV"
+  },
+  {
+    "Display": "WCHS-TV"
+  },
+  {
+    "Display": "WCSH-TV"
+  },
+  {
+    "Display": "WCTI-TV"
+  },
+  {
+    "Display": "WDEF-TV"
+  },
+  {
+    "Display": "WDSU-TV"
+  },
+  {
+    "Display": "WFLA-TV"
+  },
+  {
+    "Display": "WFLD-TV"
+  },
+  {
+    "Display": "WFMY-TV"
+  },
+  {
+    "Display": "WFOR-TV"
+  },
+  {
+    "Display": "WFTX-TV"
+  },
+  {
+    "Display": "WFXR-TV"
+  },
+  {
+    "Display": "WGHP-TV"
+  },
+  {
+    "Display": "WGME-TV"
+  },
+  {
+    "Display": "WHAS-TV"
+  },
+  {
+    "Display": "WHEC-TV"
+  },
+  {
+    "Display": "WHTM-TV"
+  },
+  {
+    "Display": "WICS+S2"
+  },
+  {
+    "Display": "WISN-TV"
+  },
+  {
+    "Display": "WIVB-TV"
+  },
+  {
+    "Display": "WJAR-TV"
+  },
+  {
+    "Display": "WJHL-TV"
+  },
+  {
+    "Display": "WJXT-TV"
+  },
+  {
+    "Display": "WKBD-TV"
+  },
+  {
+    "Display": "WKBW-TV"
+  },
+  {
+    "Display": "WKEF-TV"
+  },
+  {
+    "Display": "WKRG-TV"
+  },
+  {
+    "Display": "WKRN-TV"
+  },
+  {
+    "Display": "WLBT-TV"
+  },
+  {
+    "Display": "WLNY-TV"
+  },
+  {
+    "Display": "WLOS-TV"
+  },
+  {
+    "Display": "WLTX-TV"
+  },
+  {
+    "Display": "WLVI-TV"
+  },
+  {
+    "Display": "WMAR-TV"
+  },
+  {
+    "Display": "WMC -TV"
+  },
+  {
+    "Display": "WMSN-TV"
+  },
+  {
+    "Display": "WNCN-TV"
+  },
+  {
+    "Display": "WNYT-TV"
+  },
+  {
+    "Display": "WOAI-TV"
+  },
+  {
+    "Display": "WPGH-TV"
+  },
+  {
+    "Display": "WPMI-TV"
+  },
+  {
+    "Display": "WPSG-TV"
+  },
+  {
+    "Display": "WPXI-TV"
+  },
+  {
+    "Display": "WQAD-TV"
+  },
+  {
+    "Display": "WRAZ-TV"
+  },
+  {
+    "Display": "WRBW-TV"
+  },
+  {
+    "Display": "WRGT-TV"
+  },
+  {
+    "Display": "WRIC-TV"
+  },
+  {
+    "Display": "WROC-TV"
+  },
+  {
+    "Display": "WSAV-TV"
+  },
+  {
+    "Display": "WSBT-TV"
+  },
+  {
+    "Display": "WSLS-TV"
+  },
+  {
+    "Display": "WSMH-TV"
+  },
+  {
+    "Display": "WSTM-TV"
+  },
+  {
+    "Display": "WSYR-TV"
+  },
+  {
+    "Display": "WTAT-TV"
+  },
+  {
+    "Display": "WTCN-TV"
+  },
+  {
+    "Display": "WTVG-TV"
+  },
+  {
+    "Display": "WTVQ-TV"
+  },
+  {
+    "Display": "WTVT-TV"
+  },
+  {
+    "Display": "WTVZ-TV"
+  },
+  {
+    "Display": "WUCW-TV"
+  },
+  {
+    "Display": "WUPA-TV"
+  },
+  {
+    "Display": "WUPV-TV"
+  },
+  {
+    "Display": "WUPW-TV"
+  },
+  {
+    "Display": "WUSA-TV"
+  },
+  {
+    "Display": "WVTM-TV"
+  },
+  {
+    "Display": "WWHO-TV"
+  },
+  {
+    "Display": "WWJ -TV"
+  },
+  {
+    "Display": "WXIN-TV"
+  },
+  {
+    "Display": "WXIX-TV"
+  },
+  {
+    "Display": "WYCW-TV"
+  },
+  {
+    "Display": "WYOU-TV"
+  },
+  {
+    "Display": "WZZM-TV"
+  }
+]

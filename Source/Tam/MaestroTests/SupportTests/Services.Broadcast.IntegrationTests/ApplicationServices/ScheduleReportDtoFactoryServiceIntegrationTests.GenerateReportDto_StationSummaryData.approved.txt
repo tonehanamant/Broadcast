@@ -1,0 +1,8074 @@
+﻿{
+  "ImpressionsAndDelivery": [
+    {
+      "AudienceId": 31,
+      "AudienceName": "HH",
+      "DeliveredImpressions": 1017726.355,
+      "OrderedImpressions": 3301426,
+      "OutOfSpecDeliveredImpressions": 1762241.735,
+      "TotalDeliveredImpressions": 2779968.09
+    },
+    {
+      "AudienceId": 42,
+      "AudienceName": "A50+",
+      "DeliveredImpressions": 909384.7925,
+      "OrderedImpressions": 3440164,
+      "OutOfSpecDeliveredImpressions": 1518868.645,
+      "TotalDeliveredImpressions": 2428253.4375
+    }
+  ],
+  "ReportData": [
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Lexington-Fayette",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 63,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "EKYT-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Lexington-Fayette",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 63,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "EKYT-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 23734.895,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 18811.2825,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "WICHITA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 65,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KAKE",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Wichita",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 65,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KAKE+S2",
+      "Status": 1
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "ALBUQUERQUE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 48,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KASY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 27194,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 22316,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Albuquerque",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 48,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KASY-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 46492,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 38525,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Portland, OR",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 24,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KATU-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 12053.4575,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 12099.96,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "WACO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 87,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KCEN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Waco",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 87,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KCEN-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "KANSAS CITY",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 33,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KCWE",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 13043,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 15806,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Kansas City",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 33,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KCWE-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 7182.1425,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 4154.635,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "EL PASO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 92,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KDBC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "El Paso",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 92,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KDBC-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 52278.025,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 49613.085,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "LOS ANGELES",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 2,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KDOC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 52138,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 74288,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Los Angeles",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 2,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KDOC-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Des Moines",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 72,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KDSM-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 28007,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 20945,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "San Antonio",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 32,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KENS-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 22521.555,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 17855.0125,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 4,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Omaha-Council Bluffs",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 74,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "KETV-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 64364,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 66558,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "San Diego",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 28,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KFMB-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 131900.85,
+          "Impressions": 114660,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 119170.945,
+          "Impressions": 121505,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 4,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Oklahoma City",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 43,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "KFOR-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "FRESNO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 54,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KFSN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 17502,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 22619,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Fresno",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 54,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KFSN-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 19810.4925,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 21067.9125,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "CEDAR RAPIDS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 90,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KGAN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Cedar Rapids",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 90,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KGAN-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 18704.1225,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 14381.3375,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "FRESNO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 54,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KGPE",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 18172,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Fresno",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 54,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KGPE-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 43983,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 34926,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "San Francisco",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 6,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KICU-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "SALT LAKE CITY",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 34,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KJZZ",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 23220,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 23799,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Salt Lake City-Ogden",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 34,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KJZZ-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 12064,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 11138,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Salt Lake City-Ogden",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 34,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "KJZZ-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "LAS VEGAS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 40,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KLAS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 51082,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 46142,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Las Vegas",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 40,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KLAS-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 101970.7675,
+          "Impressions": 125481,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 101649.5725,
+          "Impressions": 113108,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 4,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Sacramento",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 20,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "KMAX-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Tucson",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 70,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KMSB-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 2369.395,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 1489.6,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Tucson",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 70,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "KMSB-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 6416.68,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 5645.09,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 4,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Ft. Smith, AR",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 100,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "KNWA-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 15511.41,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 16230.94,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "SPRINGFIELD,MO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 3,
+      "ProgramName": null,
+      "Rank": 75,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KOLR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Springfield, MO",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 75,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KOLR-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 18392.5225,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 16339.3825,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "TULSA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 60,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KOTV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Tulsa",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 60,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KOTV-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 4438,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 5426,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Phoenix",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 12,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KPNX+S2",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 4438,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 5247,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Phoenix",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 12,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "KPNX+S2",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 63557,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 57933,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Houston-Galveston",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 10,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KPRC-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Colorado Springs",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 89,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KRDO-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Spokane",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 73,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KREM-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 24528.8575,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 19041.61,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "ST LOUIS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 21,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSDK",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 86629,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 82138,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "St. Louis",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 21,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KSDK-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 12528.8375,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 11588.9075,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "SHREVEPORT",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 83,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSLA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 43897.5525,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 37100.255,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "SHREVEPORT",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 83,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSLA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Shreveport",
+      "MediaWeekId": null,
+      "OrderedSpots": 3,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 83,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KSLA-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Shreveport",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 83,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "KSLA-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 2345.2175,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 2070.905,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "KANSAS CITY",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 33,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSMO",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 8960,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 12345,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Kansas City",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 33,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KSMO-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 16659.295,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 15430.47,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "SEATTLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 14,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSTW",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 26728,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 16464,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Seattle-Tacoma",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 14,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KSTW-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 22015.87,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 10240.335,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "SAN DIEGO",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 28,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSWB",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 1686,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 32254,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "San Diego",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 28,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KSWB-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 36542.985,
+          "Impressions": 18153,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 30485.2625,
+          "Impressions": 28921,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Austin",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 39,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "KTBC-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 35595.5975,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 23354.7525,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "LITTLE ROCK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 57,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KTHV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Little Rock",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 57,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KTHV-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Tulsa",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 60,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KTUL-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 32640,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 40352,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Denver-Boulder",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 17,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KTVD-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 19682.29,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 19059.6125,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "PHOENIX",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 12,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KTVK",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 11677,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 21638,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Phoenix",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 12,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KTVK-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 6626.1075,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 4167.9825,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "DALLAS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 5,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KTXA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 53138,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 53853,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Dallas-Ft. Worth",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 5,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KTXA-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 21408.8675,
+          "Impressions": 18641,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 20179.9,
+          "Impressions": 32868,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Houston-Galveston",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 10,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "KTXH-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "HARLINGEN",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 86,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KVEO",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Harlingen",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 86,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KVEO-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 6480,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 5237,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Austin",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 39,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KVUE-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 6558,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 5938,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Austin",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 39,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "KVUE-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 14240,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 9434,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Las Vegas",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 40,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "KVVU-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 26056.6,
+          "Impressions": 16982,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 18321.795,
+          "Impressions": 12727,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Seattle-Tacoma",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 14,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "KZJO-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 19243.39,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 13654.825,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "HUNTSVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 3,
+      "ProgramName": null,
+      "Rank": 79,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WAAY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Huntsville",
+      "MediaWeekId": null,
+      "OrderedSpots": 3,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 79,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WAAY-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 10787.725,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 9863.1375,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Huntsville",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 79,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WAAY-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Columbia, SC",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 78,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WACH-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Champaign-Sprngfld-Dtr DMA",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 85,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WAND-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 21004.025,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 14080.2825,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "ATLANTA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 9,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WATL",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 14375,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 11653,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Atlanta",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 9,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WATL-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 13365,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 10498,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Atlanta",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 9,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WATL-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 53726.4425,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 53363.495,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 4,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Green Bay",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 68,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WBAY-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 22976.89,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 18025.4425,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "CHICAGO",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 3,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBBM",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 127918,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 89494,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Chicago",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 3,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WBBM-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 8165.9625,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 2954.5,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "MIAMI",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 16,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBFS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 38991,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 36786,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Miami-Ft. Lauderdale",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 16,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WBFS-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 36184.93,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 31321.12,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "KNOXVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 62,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBIR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Knoxville",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 62,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WBIR-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 30645.9075,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 28648.295,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Knoxville",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 62,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WBIR-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 23561.71,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 18516.64,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "CLEVELAND",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 18,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBNX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 63869,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 59939,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Cleveland",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 18,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WBNX-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 88894.825,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 80124.615,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "CHARLOTTE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 3,
+      "ProgramName": null,
+      "Rank": 22,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBTV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 96326,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 91744,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Charlotte-Gastonia-Rk Hill",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 22,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WBTV-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 20111.5,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 17450.3125,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 4,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Burlington, VT",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 98,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WCAX-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 19874,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 14409,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Hartford, CT",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 30,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WCCT-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13122.1125,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 11471.6775,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "CHARLESTON,WV",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 3,
+      "ProgramName": null,
+      "Rank": 67,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WCHS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "CHARLESTON,WV",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 67,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WCHS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Charleston, WV",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 67,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WCHS-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Portland, ME",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 80,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WCSH-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 16319.195,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 18941.48,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Portland, ME",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 80,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WCSH-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 29319.375,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 26031.805,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "GREENVILLE,NC",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 99,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WCTI",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Greenville/New Bern/Wash",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 99,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WCTI-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 7605.51,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 6908.59,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "CHATTANOOGA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 88,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WDEF",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 3592.995,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 2674.5825,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "CHATTANOOGA",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 88,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WDEF",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Chattanooga",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 88,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WDEF-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Chattanooga",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 88,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WDEF-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 19464.74,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 17626.585,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "NEW ORLEANS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 51,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WDSU",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 71062,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 56328,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "New Orleans",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 51,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WDSU-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 30718,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 28609,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Tampa-St. Petersburg",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 11,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WFLA-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 27113.0475,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 15848.47,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "CHICAGO",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 3,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WFLD",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 33304,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 290978,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Chicago",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 3,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WFLD-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 55312,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 46139,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Greensboro-Winston Salem",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 46,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WFMY-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 108292.1625,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 103070.44,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "MIAMI",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 16,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WFOR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 34665,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 41559,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Miami-Ft. Lauderdale",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 16,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WFOR-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 8756.53,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 7506.9,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "FT MYERS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 61,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WFTX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Ft. Myers-Naples-Marco Isl",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 61,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WFTX-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13641.5725,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 13954.835,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "ROANOKE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 69,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WFXR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Roanoke-Lynchburg",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 69,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WFXR-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 15041.92,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 15373.565,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Roanoke-Lynchburg",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 69,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WFXR-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 31170.925,
+          "Impressions": 12900,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 26080.1125,
+          "Impressions": 18078,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Greensboro-Winston Salem",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 46,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WGHP-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13534.8875,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 13891.3275,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "PORTLAND,ME",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 80,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WGME",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 20641.98,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 21394.4275,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "PORTLAND,ME",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 80,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WGME",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Portland, ME",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 80,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WGME-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 19805.0775,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 17777.16,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "LOUISVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 49,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WHAS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 36538,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 43013,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Louisville",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 49,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WHAS-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 26990.45,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 22069.07,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "ROCHESTER,NY",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 76,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WHEC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Rochester, NY",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 76,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WHEC-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 49233,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 46245,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 4,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Harrisburg-Lebanon",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 44,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WHTM-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "CHAMPAIGN",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 85,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WICD",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Champaign-Sprngfld-Dtr DMA",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 85,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WICS+S2",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "MILWAUKEE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 35,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WISN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 18935,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 14803,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Milwaukee-Racine",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 35,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WISN-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 42331,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 35087,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Milwaukee-Racine",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 35,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WISN-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13884.535,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 10507.8075,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "BUFFALO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 53,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WIVB",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 18592,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 14721,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Buffalo-Niagara Falls",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 53,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WIVB-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 21540.8225,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 15366.0125,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "PROVIDENCE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 52,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WJAR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 76277,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 70946,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Providence-Warwick",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 52,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WJAR-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 8392.9175,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 8290.08,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "TRI CITIES",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 97,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WJHL",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Johnsn City-Kngsprt-Bristl",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 97,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WJHL-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 15694.285,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 16265.235,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Johnsn City-Kngsprt-Bristl",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 97,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WJHL-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 44454.3475,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 40469.81,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "JACKSONVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 47,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WJXT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 44350,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 38778,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Jacksonville",
+      "MediaWeekId": null,
+      "OrderedSpots": 3,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 47,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WJXT-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 16617.6375,
+          "Impressions": 12246,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 13154.745,
+          "Impressions": 13264,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Jacksonville",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 47,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WJXT-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 70498.455,
+          "Impressions": 27440,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 65982.915,
+          "Impressions": 36768,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Detroit",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 13,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WKBD-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 25241.88,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 23671.1975,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "BUFFALO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 53,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WKBW",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 38318,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Buffalo-Niagara Falls",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 53,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WKBW-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 20354.415,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 22567.44,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "DAYTON",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 64,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WKEF",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Dayton",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 64,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WKEF-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Mobile",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 58,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WKRG-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 86637.91,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 71403.8525,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "NASHVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 29,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WKRN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 66212,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 46544,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Nashville",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 29,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WKRN-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 65896,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 46637,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Nashville",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 29,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WKRN-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "JACKSON,MS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 95,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WLBT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 7535.59,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 5537.265,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "JACKSON,MS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 95,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WLBT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Jackson, MS",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 95,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WLBT-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 32807.7275,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 32243.9025,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "NEW YORK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": true,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 1,
+      "SpecStatus": "Program Name",
+      "SpotClearance": null,
+      "SpotLength": 30,
+      "Station": "WLNY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 35110.6225,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 34098.2075,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "NEW YORK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 3,
+      "ProgramName": null,
+      "Rank": 1,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WLNY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 83786,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 72064,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "New York",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 1,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WLNY-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 17876,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 15108,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Greenville-Spartanburg",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 37,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WLOS-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 28690.9025,
+          "Impressions": 17930,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 22049.025,
+          "Impressions": 15291,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Greenville-Spartanburg",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 37,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WLOS-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 24366.3125,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 22508.54,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "COLUMBIA,SC",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 78,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WLTX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Columbia, SC",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 78,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WLTX-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 55765.4275,
+          "Impressions": 81232,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 44719.7775,
+          "Impressions": 53478,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 4,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Boston",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 8,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WLVI-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "BALTIMORE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 26,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WMAR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 33626,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 40986,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Baltimore",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 26,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WMAR-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 71463.8925,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 62854.0425,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "MEMPHIS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": false,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 3,
+      "ProgramName": null,
+      "Rank": 50,
+      "SpecStatus": "Airtime,Program Name,Station,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WMC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 65250,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 59299,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Memphis",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 50,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WMC -TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 18745.685,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 10937.445,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "MADISON",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 81,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WMSN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Madison",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 81,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WMSN-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 37473.035,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 26157.205,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "RALEIGH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 25,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WNCN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 35477,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 20129,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Raleigh-Durham",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 25,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WNCN-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 17595.9475,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 15390.8075,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "ALBANY,NY",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 59,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WNYT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 3,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Albany-Schenectady-Troy",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 59,
+      "SpecStatus": "Match",
+      "SpotClearance": 0.75,
+      "SpotLength": 60,
+      "Station": "WNYT-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13296.6275,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 10909.895,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "SAN ANTONIO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 32,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WOAI",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 31877,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 26692,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "San Antonio",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 32,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WOAI-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 6892.6775,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 6934.335,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "PITTSBURGH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 23,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WPGH",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 13544,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 9565,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Pittsburgh",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 23,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WPGH-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 18797.6975,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 16421.51,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "MOBILE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 58,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WPMI",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Mobile",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 58,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WPMI-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "PHILADELPHIA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 4,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WPSG",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 62272,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 54774,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Philadelphia",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 4,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WPSG-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 61275.57,
+          "Impressions": 53188,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 51110.665,
+          "Impressions": 46605,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Philadelphia",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 4,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WPSG-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 45945,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 40983,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Pittsburgh",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 23,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WPXI-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 9130.4975,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 7070.755,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "DAVENPORT",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 101,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WQAD",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Quad Cities (Dav-RI-Mol)",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 101,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WQAD-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 38611.1825,
+          "Impressions": 56044,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 30108.7775,
+          "Impressions": 61376,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Raleigh-Durham",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 25,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WRAZ-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 27213.225,
+          "Impressions": 60438,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 28073.26,
+          "Impressions": 50779,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 4,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Orlando",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 19,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WRBW-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "DAYTON",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 64,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WRGT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Dayton",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 64,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WRGT-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 15412.5625,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 14849.1175,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Richmond",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 56,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WRIC-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "ROCHESTER,NY",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 76,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WROC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Rochester, NY",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 76,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WROC-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 5398.9925,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 5124.0625,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Rochester, NY",
+      "MediaWeekId": null,
+      "OrderedSpots": 1,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 76,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WROC-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 42573.3475,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 36733.365,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "SAVANNAH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 91,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WSAV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Savannah",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 91,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WSAV-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13141.16,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 12095.4475,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "SOUTH BEND",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 96,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WSBT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "South Bend",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 96,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WSBT-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 25701.585,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 18326.64,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Roanoke-Lynchburg",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 69,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WSLS-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 24148.5725,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 21827.675,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "FLINT",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 71,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WSMH",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Flint",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 71,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WSMH-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 24148.5725,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 21827.675,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Flint",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 71,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WSMH-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Syracuse",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 84,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WSTM-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 55600.65,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 54545.8175,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "SYRACUSE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 84,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WSYR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Syracuse",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 84,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WSYR-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 10897.2125,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 8680.6725,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 4,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Charleston, SC",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 94,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WTAT-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "West Palm Beach-Boca Raton",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 38,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WTCN-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "TOLEDO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 77,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WTVG",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Toledo",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 77,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WTVG-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 3943.07,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 2117.0275,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "LEXINGTON",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 63,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WTVQ",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Lexington-Fayette",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 63,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WTVQ-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "TAMPA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 11,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WTVT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 104286,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 105600,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Tampa-St. Petersburg",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 11,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WTVT-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 57792.68,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 45172.5,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "NORFOLK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 42,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WTVZ",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 58251,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 67131,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Norfolk-Virginia Beach",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 42,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WTVZ-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 39028,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 35234,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Minneapolis-St. Paul",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 15,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WUCW-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 10941.15,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 6945.6875,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "ATLANTA",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 9,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WUPA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 30476,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 44504,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Atlanta",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 9,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WUPA-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 26073.0825,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 25402.4775,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "RICHMOND",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 56,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WUPV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Richmond",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 56,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WUPV-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 12863.5225,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 12043.15,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Toledo",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 77,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WUPW-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 59862.2075,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 58800.4875,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "WASHINGTON,DC",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 3,
+      "ProgramName": null,
+      "Rank": 7,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WUSA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Washington, DC",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 7,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WUSA-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 9542.2275,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 7537.775,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "BIRMINGHAM",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 45,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WVTM",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 54430,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 57920,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Birmingham",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 45,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WVTM-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 14070.8775,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 10854.5575,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "COLUMBUS,OH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 31,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WWHO",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 12903,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 10272,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Columbus, OH",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 31,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WWHO-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 9188.4,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 6241.31,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "DETROIT",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 2,
+      "ProgramName": null,
+      "Rank": 13,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WWJ",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 8314,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 16692,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Detroit",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 13,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WWJ -TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 81094,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 53830,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Indianapolis",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 27,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WXIN-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 24381.7025,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 18453.56,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "CINCINNATI",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": null,
+      "Rank": 36,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WXIX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 77051,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 60656,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Cincinnati",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 36,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WXIX-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 16168.43,
+          "Impressions": 12295,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 13094.135,
+          "Impressions": 9935,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 2,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Greenville-Spartanburg",
+      "MediaWeekId": null,
+      "OrderedSpots": 2,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 37,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WYCW-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13800.6025,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 15144.1875,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "WILKES BARRE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 4,
+      "ProgramName": null,
+      "Rank": 55,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WYOU",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 37596,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 42916,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 0,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Wilkes Barre-Scranton",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 55,
+      "SpecStatus": "",
+      "SpotClearance": 0.0,
+      "SpotLength": 30,
+      "Station": "WYOU-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 65777.4775,
+          "Impressions": 62313,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 59457.365,
+          "Impressions": 74385,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DeliveredSpots": 4,
+      "DisplayDaypart": null,
+      "Isci": null,
+      "Market": "Grand Rapids",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": null,
+      "Rank": 41,
+      "SpecStatus": "Match",
+      "SpotClearance": 1.0,
+      "SpotLength": 60,
+      "Station": "WZZM-TV",
+      "Status": 1
+    }
+  ],
+  "ScheduleAudiences": [
+    {
+      "AudienceId": 31,
+      "AudienceName": "HH",
+      "IsHouseHold": true,
+      "Population": 7368320,
+      "Rank": 1
+    },
+    {
+      "AudienceId": 42,
+      "AudienceName": "A50+",
+      "IsHouseHold": false,
+      "Population": 7099429,
+      "Rank": 2
+    }
+  ]
+}

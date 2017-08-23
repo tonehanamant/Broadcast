@@ -1,0 +1,12 @@
+﻿{
+  "TotalAdditionalAudienceCPM": 0.0,
+  "TotalAdditionalAudienceImpressions": 0.0,
+  "TotalCost": 0.0,
+  "TotalGRP": 0.0,
+  "TotalHHCPM": 0.0,
+  "TotalHHImpressions": 0.0,
+  "TotalSpots": 0,
+  "TotalTargetCPM": 0.0,
+  "TotalTargetImpressions": 0.0,
+  "TotalTRP": 0.0
+}

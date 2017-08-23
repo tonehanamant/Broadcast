@@ -1,0 +1,70 @@
+﻿<!-- SCRUB TIMESLOT -->
+<div class="modal fade" tabindex="-1" role="dialog" id="scrub_timeslot_modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Verify Timeslot</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <p class="row col-md-12 line">
+                    This spot can be attributed to two contracted timeslots. Please select the timeslot you believe the spot belongs to. If
+                    you select "original timeslot", you will need to map the program name or accept it as a block. If you select "next timeslot"
+                    you will need to verify the lead in.
+                </p>
+
+                <br />
+
+                <div class="row line">
+                    <div class="col-md-4 to-map-column">
+                        <div class="row mapping-title">
+                            <strong>BVS Program Name</strong>
+                        </div>
+
+                        <div class="row">
+                            <span data-bind="text: MappedItem() !== undefined ? MappedItem().Program : ''"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 to-map-column">
+                        <div class="row mapping-title">
+                            <strong>Contracted program for timeslot</strong>
+                        </div>
+
+                        <div class="row mapping-value" data-bind="if: !SingleProgramMapping()">
+                            <select data-bind="options:  MappedItem() !== undefined ? MappedItem().SchedulePrograms : null, optionsText: 'DisplayName', value: SelectedProgram, optionsCaption: 'Select a contracted program to use'"></select>
+                        </div>
+
+                        <div class="row mapping-value" data-bind="if: SingleProgramMapping() === true">
+                            <span data-bind="text: MappedItem() !== undefined ? MappedItem().SchedulePrograms[0].DisplayName : ''"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 to-map-column">
+                        <div class="row mapping-title">
+                            <strong>Next contracted timeslot</strong>
+                        </div>
+
+                        <div class="row mapping-value" data-bind="if: !SingleFollowingScheduleMatches()">
+                            <select data-bind="options:  MappedItem() !== undefined ? MappedItem().FollowingScheduleMatches : null, optionsText: 'DisplayName', value: SelectedNextContractedTimeslot, optionsCaption: 'Select a contracted program to use'"></select>
+                        </div>
+
+                        <div class="row mapping-value" data-bind="if: SingleFollowingScheduleMatches()">
+                            <span data-bind="text: MappedItem() !== undefined ? MappedItem().FollowingScheduleMatches[0].DisplayName : ''"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" data-bind="click: setOutOfSpec">Out of Spec</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default" data-bind="css: { disabled: !canMap() }, click: openProgramMapping">Original Timeslot...</button>
+                <button type="button" class="btn btn-default" data-bind="css: { disabled: !canVerifyLeadIn() }, click: openVerifyLeadIn">Next Timeslot...</button>
+            </div>
+        </div>
+    </div>
+</div>
+

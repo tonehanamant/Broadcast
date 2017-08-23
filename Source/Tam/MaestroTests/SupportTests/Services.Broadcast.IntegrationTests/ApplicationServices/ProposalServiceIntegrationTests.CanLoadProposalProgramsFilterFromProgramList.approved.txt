@@ -1,0 +1,38 @@
+﻿{
+  "Affiliations": [
+    "IND"
+  ],
+  "DayParts": [
+    {
+      "Contain": 0,
+      "DayPartId": 31193,
+      "SearchCriteria": {
+        "endTime": 54000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 50400,
+        "sun": false,
+        "Text": "M-F 2PM-3PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    }
+  ],
+  "Genres": [
+    {
+      "Display": "Test",
+      "Id": 1
+    }
+  ],
+  "Markets": [
+    {
+      "Display": "Greensboro-H.Point-W.Salem",
+      "Id": 118
+    }
+  ],
+  "ProgramNames": [
+    "Integration Test"
+  ]
+}

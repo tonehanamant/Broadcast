@@ -1,0 +1,40 @@
+﻿<!-- SCRUB STATION -->
+<div class="modal fade" tabindex="-1" role="dialog" id="scrub_mapping_station_modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Map Station</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 to-map-column">
+                        <div class="row mapping-title">
+                            <strong>BVS Value</strong>
+                        </div>
+
+                        <div class="row">
+                            <span data-bind="text: MappedItem() !== undefined ? MappedItem().Station : ''"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row mapping-title">
+                            <strong>Stations</strong>
+                        </div>
+
+                        <div class="row mapping-value">
+                            <select data-bind="options: StationMappingOptions, optionsValue: 'Display', optionsText: 'Display', optionsCaption: 'Please select station...', value: SelectedStation"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-bind="css: { disabled: !enableSaveStationMapping() }, click: (enableSaveStationMapping() ? saveStationMappings : null)">Map Station</button>
+            </div>
+        </div>
+    </div>
+</div>

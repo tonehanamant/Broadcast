@@ -1,0 +1,228 @@
+﻿{
+  "ImpressionsAndDelivery": [
+    {
+      "AudienceId": 31,
+      "AudienceName": "HH",
+      "DeliveredImpressions": 574900.442,
+      "OrderedImpressions": 0,
+      "OutOfSpecDeliveredImpressions": 574900.442,
+      "TotalDeliveredImpressions": 1149800.884
+    },
+    {
+      "AudienceId": 33,
+      "AudienceName": "A18-49",
+      "DeliveredImpressions": 206256.78,
+      "OrderedImpressions": 0,
+      "OutOfSpecDeliveredImpressions": 206256.78,
+      "TotalDeliveredImpressions": 412513.56
+    }
+  ],
+  "ReportData": [
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 157134.902,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 33,
+          "Delivery": 23469.332,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "4400ABCD1H",
+      "Market": "NEW YORK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": true,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LET'S MAKE A DEAL",
+      "Rank": 1,
+      "SpecStatus": "Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WCBS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 145942.572,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 33,
+          "Delivery": 43504.604,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "4400ABCD1H",
+      "Market": "NEW YORK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": true,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "TODAY SHW2-NBC",
+      "Rank": 1,
+      "SpecStatus": "Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 30,
+      "Station": "WNBC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 169428.054,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 33,
+          "Delivery": 61436.462,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "4400ABCD1H",
+      "Market": "NEW YORK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": true,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "1ST LOOK",
+      "Rank": 1,
+      "SpecStatus": "Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 30,
+      "Station": "WNBC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 42141.696,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 33,
+          "Delivery": 33120.99,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "4400ABCD2H",
+      "Market": "NEW YORK",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": false,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PIX11 MORNING NEWS 6A-7A",
+      "Rank": 1,
+      "SpecStatus": "Airtime,Program Name,Station,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 30,
+      "Station": "WPIX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 60253.218,
+          "Impressions": null,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 33,
+          "Delivery": 44725.392,
+          "Impressions": null,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "4400ABCD2H",
+      "Market": "NEW YORK",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": false,
+      "MediaWeekId": null,
+      "OrderedSpots": null,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PIX11 MORNING NEWS 7A-9A",
+      "Rank": 1,
+      "SpecStatus": "Airtime,Program Name,Station,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 30,
+      "Station": "WPIX",
+      "Status": 0
+    }
+  ],
+  "ScheduleAudiences": [
+    {
+      "AudienceId": 31,
+      "AudienceName": "HH",
+      "IsHouseHold": true,
+      "Population": 7368320,
+      "Rank": 1
+    },
+    {
+      "AudienceId": 33,
+      "AudienceName": "A18-49",
+      "IsHouseHold": false,
+      "Population": 8485887,
+      "Rank": 2
+    }
+  ]
+}

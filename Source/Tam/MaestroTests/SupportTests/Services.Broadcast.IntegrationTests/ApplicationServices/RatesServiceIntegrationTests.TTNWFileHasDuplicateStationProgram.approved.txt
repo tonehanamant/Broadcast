@@ -1,0 +1,12 @@
+﻿[
+  {
+    "ProblemDescription": "Could not find Maestro audience mapping to A21-54: Unable to find matching maestro audience A21-54.",
+    "ProgramName": "Integration Test",
+    "StationLetters": null
+  },
+  {
+    "ProblemDescription": "Invalid data for Station WHPM, duplicate entry for same spot length",
+    "ProgramName": "Integration Test",
+    "StationLetters": "WHPM"
+  }
+]

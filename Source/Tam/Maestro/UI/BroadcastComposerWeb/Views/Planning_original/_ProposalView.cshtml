@@ -1,0 +1,271 @@
+﻿<style>
+    #proposal_modal small {
+        font-style: italic;
+    }
+
+    #proposal_modal input[name=proposal_flight].read-only-picker:not([disabled]) {
+        background-color: white;
+        color: black;
+    }
+
+    /*** GRID CONTROLS ***/
+
+    #grid_controls_container {
+        margin-top: 16px;
+    }
+
+    .grid_control_btn {
+        margin: 5px 0 0 0;
+    }
+
+    #grid_controls_right {
+        width: 350px;
+    }
+
+    /* filter */
+    #filter_controls {
+        width: 255px;
+    }
+
+    #select_spot_filter {
+       width: 180px
+    }
+
+    #filter_icon {
+        float: left;
+        font-size: 25px;
+        margin-right: 10px;
+    }
+
+    #filter_controls {
+        float: left;
+        margin-left: 32px;
+    }
+
+    /* sort and additional demo */
+
+    #current_additional_demographic {
+        display: inline;
+        width: 50px;
+    }
+
+    #current_additional_demographic i {
+        float: right;
+        margin-left: 5px;
+    }
+
+    #additional_demographic {
+        margin-top: 5px;
+    }
+    
+    #additional_demographic .select2 {
+        width: 90% !important;
+        margin-left: 10px;
+        margin-bottom: 5px;
+    }
+</style>
+
+<div class="modal slide-in fade modal-attached" id="proposal_modal" role="dialog" data-bind="modal: { show: showModal}">
+    <div class="modal-dialog modal-xlg" role="document">
+        <div class="modal-content" id="proposal_view">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 data-bind="visible: viewMode() === viewModes.create" class="modal-title">Create Planning Proposal</h4>
+                <h4 data-bind="visible: viewMode() === viewModes.view, text: proposalTitle" class="modal-title"></h4>
+            </div>
+
+            <div class="modal-body">
+
+                <!-- MENU -->
+                <div class="row" style="margin-bottom: 8px;">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#proposal_header" aria-expanded="false" aria-controls="proposal_header" data-bind="visible: displayProgramsGrid">
+                            <span id="proposal_header_collapse" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="col-md-6" style="text-align: right;">
+                        <div data-bind="visible: viewMode() === viewModes.view" class="btn-group" style="margin-left:4px;">
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li data-bind="visible: hasPrograms"><a data-bind="click: openManageRatings" href="#">Manage Ratings</a></li>
+                                <li><a id="save_as_version_opt" data-bind="click: saveAsVersion">Save As Version</a></li>
+                                <li><a href="#">Make Primary Version</a></li>
+                                <li><a href="#" id="switch_version_opt" data-bind="click: switchVersion">Switch Version</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="proposal_header" class="collapse in">
+                    <!-- PROPOSAL HEADER (ROW 1) -->
+                    <div class="row">
+                        <form id="proposal_form" action="#">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Proposal Name</label>
+                                    <input type="text" class="form-control" name="proposal_name" data-bind="value: proposalName" />
+                                    <div style="padding-left: 20px;">
+                                        Proposal ID: <span data-bind="text: proposalId"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Advertiser</label>
+                                    <div>
+                                        <select class="form-control" name="proposal_advertiser" data-bind="options: advertisers, optionsValue: 'Id', optionsText: 'Display', value: selectedAdvertiser, select2: true"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Target Budget</label>
+                                    <input name="proposal_budget" type="text" class="form-control" data-bind="value: targetBudget">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Target Impressions</label>
+                                    <input name="proposal_impressions" type="text" class="form-control" autocomplete="off" data-bind="value: targetImpressions">
+                                    <small>* multiplied by 1000</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Target Units</label>
+                                    <input name="proposal_units" type="text" style="width: 100px;" class="form-control" data-bind="value: targetUnits">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- PROPOSAL HEADER (ROW 2) -->
+                    <div class="row">
+                        <form id="proposal_form_manage" action="#">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Flight</label>
+                                    <input name="proposal_flight" type="text" class="form-control read-only-picker" readonly data-bind="flightWeekPicker: { startDate: flightStartDate, endDate: flightEndDate, weekSelection: flightWeeks }">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Spot Length</label>
+                                    <div>
+                                        <select name="proposal_spot" class="form-control" data-bind="options: spotLengths, optionsValue: 'Id', optionsText: 'Display', value: selectedSpotLength"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Markets</label>
+                                    <div>
+                                        <select name="proposal_market" class="form-control" data-bind="options: markets, optionsValue: 'Id', optionsText: 'Display', value: selectedMarket"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Guaranteed Demo</label>
+                                    <div>
+                                        <select name="proposal_demo" class="form-control" data-bind="options: audiences, optionsValue: 'Id', optionsText: 'Display', value: selectedAudience, select2: { matcher: controller.proposalView.select2MatchStart }"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Notes</label>
+                                    <textarea name="proposal_notes" class="form-control" rows="2" maxlength="256" data-bind="value: notes"></textarea>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <!-- GRID CONTROLS -->
+                <div id="grid_controls_container" class="header-row row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-success btn-sm grid_control_btn" type="button" formnovalidate="formnovalidate" data-bind="click: openCriteriaBuilder">Manage Programs</button>
+                        <button class="btn btn-success btn-sm grid_control_btn" type="button" formnovalidate="formnovalidate" data-bind="click: distributeSpots, visible: enableGridUpdate, css: { disabled: !enableDistribute() }">Distribute</button>
+                    </div>
+
+                    <div class="col-xs-4">
+
+                    </div>
+
+                    <div id="grid_controls_right" class="col-xs-4 pull-right">
+                        <div id="filter_controls">
+                            <span id="filter_icon" class="glyphicon glyphicon-filter" aria-hidden="true" data-bind="visible: displayProgramsGrid, style: { color: hasFiltersApplied() ? 'orange' : '#999' }"></span>
+
+                            <div class="input-group input-group-sm" data-bind="visible: displayProgramsGrid">
+                                <span class="input-group-btn">
+                                    <button id="proposal_grid_search_btn" class="btn btn-info" role="button" data-bind="click: openCriteriaFilter, css: { disabled: !hasPrograms() && !hasFiltersApplied() }">
+                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                    </button>
+                                </span>
+
+                                <select id="select_spot_filter" class="form-control input-sm" data-bind="value: spotFilter">
+                                    <option value="">All Programs</option>
+                                    <option value="with_spots">Programs with spots</option>
+                                    <option value="without_spots">Programs without spots</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="additional_option_menu" class="btn-group btn-group-sm" data-bind="visible: displayProgramsGrid">
+                            <a class="btn btn-default dropdown-toggle" data-target="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                            </a>
+
+                            <ul id="additional_option_menu_dropdown" class="dropdown-menu dropdown-menu-right">
+                                <li data-bind="click:  toggleMarketSort.bind($data, false)"><a href="#"><i class="glyphicon glyphicon-ok sort_icon" data-bind="visible: !sortByMarketRank()"></i> Sort by Market Name</a></li>
+                                <li data-bind="click:  toggleMarketSort.bind($data, true)"><a href="#"><i class="glyphicon glyphicon-ok sort_icon" data-bind="visible: sortByMarketRank"></i> Sort by Market Rank</a></li>
+
+                                <li role="separator" class="divider"></li>
+
+                                <li id="current_additional_demographic" data-bind="click: openDemographicOptions">
+                                    <a href="#">
+                                        <span data-bind="text: additionalDemographic"></span>
+                                        <i data-bind="visible: !displayDemographicOptions()" class="glyphicon glyphicon-chevron-down"></i>
+                                        <i data-bind="visible: displayDemographicOptions" class="glyphicon glyphicon-chevron-right"></i>
+                                    </a>
+                                </li>
+
+                                <li role="separator" class="divider" data-bind="visible: displayDemographicOptions"></li>
+
+                                <li id="additional_demographic" data-bind="visible: displayDemographicOptions, stopBubble: true">
+                                    <select data-bind="options: audiences, optionsValue: 'Id', optionsText: 'Display', optionsCaption: 'None', value: selectedAdditionalDemographicId, select2: { stopPropagation: true, matcher: controller.proposalView.select2MatchStart }"></select>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRID -->
+                <div data-bind="visible: displayProgramsGrid">
+                    <div id="proposal_programs_grid" style="height: 500px"></div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-success" role="button" type="button" data-bind="click: save">Save</button>
+                <button class="btn btn-danger" role="button" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_SwitchProposalVersionModal")
+@Html.Partial("_VersionCreatedOptionsModal")
+@Html.Partial("_CriteriaBuilderModal")
+@Html.Partial("_FilterModal")
+@Html.Partial("_ManageRatings")

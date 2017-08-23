@@ -1,0 +1,7 @@
+﻿[
+  {
+    "ProblemDescription": "Invalid data for Station KCIT, duplicate entry for same spot length",
+    "ProgramName": "Integration Test",
+    "StationLetters": "KCIT"
+  }
+]

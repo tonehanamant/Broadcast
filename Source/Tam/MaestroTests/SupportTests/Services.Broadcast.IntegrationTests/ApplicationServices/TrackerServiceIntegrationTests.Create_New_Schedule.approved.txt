@@ -1,0 +1,19 @@
+﻿{
+  "Advertiser": null,
+  "AdvertiserId": 39279,
+  "EndDate": "2018-01-20T00:00:00",
+  "Estimate": null,
+  "InventorySource": 5,
+  "IsBlank": true,
+  "IsEquivalized": true,
+  "Name": "Blank Schedule",
+  "OutOfSpec": 0,
+  "PostingBook": null,
+  "PostingBookId": 413,
+  "PostType": 2,
+  "PrimaryDemoBooked": null,
+  "PrimaryDemoDelivered": 0.0,
+  "SpotsBooked": null,
+  "SpotsDelivered": 0,
+  "StartDate": "2017-01-20T00:00:00"
+}

@@ -1,0 +1,2551 @@
+﻿{
+  "Id": 2,
+  "TrackingMapType": 2,
+  "TrackingMapValues": [
+    {
+      "BvsValue": "",
+      "ScheduleValue": "KING OF HILL"
+    },
+    {
+      "BvsValue": "",
+      "ScheduleValue": "RAISING HOPE"
+    },
+    {
+      "BvsValue": "10 NEWS SUNDAY MORNING WITH THE TAMP",
+      "ScheduleValue": "SUNDAY MRN-CBS"
+    },
+    {
+      "BvsValue": "10 NEWS THIS MORNING AT 6:30AM",
+      "ScheduleValue": "10NWS-MRN-600A"
+    },
+    {
+      "BvsValue": "10NEWS THIS MORNING AT 5:00AM",
+      "ScheduleValue": "10 NEWS AT 5AM"
+    },
+    {
+      "BvsValue": "10TV NEWS AT 4:30AM",
+      "ScheduleValue": "10TV NEWS 430A"
+    },
+    {
+      "BvsValue": "10TV NEWS AT 4:30AM",
+      "ScheduleValue": "10Tv News HD @ 6P"
+    },
+    {
+      "BvsValue": "10TV NEWS AT 4:30AM",
+      "ScheduleValue": "KCTV-MRN-430AM"
+    },
+    {
+      "BvsValue": "10TV NEWS WEEKEND",
+      "ScheduleValue": "10TV NEWS WSU"
+    },
+    {
+      "BvsValue": "11 NEWS AT 6",
+      "ScheduleValue": "NEWS"
+    },
+    {
+      "BvsValue": "11 NEWS SATURDAY MORNING",
+      "ScheduleValue": "WBAL11 SA 5A"
+    },
+    {
+      "BvsValue": "11ALIVE NEWS AT 10",
+      "ScheduleValue": "11ALVE NWS@10P"
+    },
+    {
+      "BvsValue": "12 EYEWITNESS NEWS AT 6AM",
+      "ScheduleValue": "EYEWIT NWS@6AM/EYEWIT NWS@7AM"
+    },
+    {
+      "BvsValue": "12 EYEWITNESS NEWS AT 7AM",
+      "ScheduleValue": "EYEWIT NWS@6AM/EYEWIT NWS@7AM"
+    },
+    {
+      "BvsValue": "12 EYEWITNESS NEWS AT 7AM",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "12 EYEWITNESS NEWS AT 8AM",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "12 EYEWITNESS NEWS THIS MORNING",
+      "ScheduleValue": "EYWTNS-MRN-5AM"
+    },
+    {
+      "BvsValue": "12 NEWS THIS MORNING",
+      "ScheduleValue": "12NWS-MORN 430"
+    },
+    {
+      "BvsValue": "12 NEWS WEEKEND TODAY",
+      "ScheduleValue": "SUN SQUARE OFF/12 NWS WK TDAY"
+    },
+    {
+      "BvsValue": "13 EYEWITNESS NEWS AT 4:30AM",
+      "ScheduleValue": "EYWIT NWS 430A"
+    },
+    {
+      "BvsValue": "13 NEWS AT 11P",
+      "ScheduleValue": "13 NEWS @ 11P"
+    },
+    {
+      "BvsValue": "13 NEWS AT 4:00PM",
+      "ScheduleValue": "13NWS NOW-4PM"
+    },
+    {
+      "BvsValue": "13 NEWS AT 5A",
+      "ScheduleValue": "13 NEWS @ 5A"
+    },
+    {
+      "BvsValue": "13 NEWS AT 6:00PM",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "13 NEWS AT 6A",
+      "ScheduleValue": "13 NEWS @ 6A"
+    },
+    {
+      "BvsValue": "13 NEWS DAYBREAK",
+      "ScheduleValue": "13-NOW DYBREAK"
+    },
+    {
+      "BvsValue": "13 NEWS WEEKEND",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "13ABC ACTION NEWS AT 4:30AM",
+      "ScheduleValue": "13-ACT NW-430A"
+    },
+    {
+      "BvsValue": "13ABC ACTION NEWS AT 6:00AM",
+      "ScheduleValue": "13ACT NWS SU6A"
+    },
+    {
+      "BvsValue": "13ABC ACTION NEWS AT 6:00PM",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "13ABC ACTION NEWS AT 7:00AM",
+      "ScheduleValue": "13 ACT NW SU7A"
+    },
+    {
+      "BvsValue": "13ABC ACTION NEWS AT 9:00AM",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "13ABC ACTION NEWS AT 9:00AM",
+      "ScheduleValue": "13-AC NW-9A SA"
+    },
+    {
+      "BvsValue": "13WHAM NEWS AT 6:00",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "13WHAM NEWS SATURDAY",
+      "ScheduleValue": "13 WHAM News"
+    },
+    {
+      "BvsValue": "2 BROKE GIRLS",
+      "ScheduleValue": "2 BROKE/M&m"
+    },
+    {
+      "BvsValue": "2 BROKE GIRLS",
+      "ScheduleValue": "ABC-NITELINE"
+    },
+    {
+      "BvsValue": "2 BROKE GIRLS WEEKEND",
+      "ScheduleValue": "2 BROKE GIRLS"
+    },
+    {
+      "BvsValue": "24 HOUR NEWS 8 AT 6",
+      "ScheduleValue": "24HRNWS8@6P SU"
+    },
+    {
+      "BvsValue": "24 HOUR NEWS 8'S DAYBREAK",
+      "ScheduleValue": "24NW8DYBK7A SA"
+    },
+    {
+      "BvsValue": "24 HOUR NEWS 8'S DAYBREAK 7AM SATURD",
+      "ScheduleValue": "24NW8DYBK7A SA"
+    },
+    {
+      "BvsValue": "24 HOUR NEWS 8'S DAYBREAK 7AM SUNDAY",
+      "ScheduleValue": "24NW8DYBK7A SU"
+    },
+    {
+      "BvsValue": "24 HOUR NEWS 8'S DAYBREAK AT 6AM",
+      "ScheduleValue": "24NW8DYBK7A SA"
+    },
+    {
+      "BvsValue": "24 HOUR NEWS 8'S DAYBREAK AT 6AM",
+      "ScheduleValue": "24NW8DYBK7A SU"
+    },
+    {
+      "BvsValue": "27 NEWS WAKE UP WISCONSIN: EARLY EDI",
+      "ScheduleValue": "27NWS WK UP-EE"
+    },
+    {
+      "BvsValue": "2NEWS WORKS FOR YOU AT 6P",
+      "ScheduleValue": "2NEWS WORKS-6P"
+    },
+    {
+      "BvsValue": "2NEWS WORKS FOR YOU AT 6P",
+      "ScheduleValue": "THE NEWS AT 6"
+    },
+    {
+      "BvsValue": "2NEWS WORKS FOR YOU WEEKEND MORNING",
+      "ScheduleValue": "2NWS WRKS-WK8A"
+    },
+    {
+      "BvsValue": "45 NEWS MORNING",
+      "ScheduleValue": "45 NWS MRN 7AM"
+    },
+    {
+      "BvsValue": "45 NEWS MORNING",
+      "ScheduleValue": "45 NWS MRN 8AM"
+    },
+    {
+      "BvsValue": "5 EYEWITNESS NEWS AM",
+      "ScheduleValue": "5 EW NW-SU 6AM"
+    },
+    {
+      "BvsValue": "5 EYEWITNESS NEWS AT 4:30AM",
+      "ScheduleValue": "5 EW NWS 430A"
+    },
+    {
+      "BvsValue": "5 NEWS AT 5PM",
+      "ScheduleValue": "5 NEWS AT 5 PM"
+    },
+    {
+      "BvsValue": "7 ACTION NEWS AT 6PM SUNDAY",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "7 EYEWITNESS NEWS AT 11PM",
+      "ScheduleValue": "7 NEWS SAT"
+    },
+    {
+      "BvsValue": "7 NEWS AT 6PM",
+      "ScheduleValue": "7 NEWS 6PM"
+    },
+    {
+      "BvsValue": "7 NEWS AT 6PM",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "9 ON YOUR SIDE MORNING EDITION I",
+      "ScheduleValue": "9ON-SD MRN ED1"
+    },
+    {
+      "BvsValue": "9NEWS FIRST AT 4:30AM",
+      "ScheduleValue": "9NWS-FIRST430A"
+    },
+    {
+      "BvsValue": "ABC 11 EYEWITNESS NEWS AT 6:00AM",
+      "ScheduleValue": "EYEWITNSS-SU6A"
+    },
+    {
+      "BvsValue": "ABC 22 GOOD MORNING",
+      "ScheduleValue": "ABC22-GD MRN 6"
+    },
+    {
+      "BvsValue": "ABC 7 NEWS AT 4:00",
+      "ScheduleValue": "ABC 7 NWS AT 4"
+    },
+    {
+      "BvsValue": "ABC 7 NEWS AT 6:30",
+      "ScheduleValue": "ABC7 NW AT 630"
+    },
+    {
+      "BvsValue": "ABC ACTION NEWS: WEEKEND EDITION",
+      "ScheduleValue": "ABC-NW WKND-SU"
+    },
+    {
+      "BvsValue": "ABC COLUMBIA NEWS AT 11",
+      "ScheduleValue": "ABC CLMB-11 SU"
+    },
+    {
+      "BvsValue": "ABC WORLD NEWS TONIGHT WITH DAVID MU",
+      "ScheduleValue": "JEOPARDY"
+    },
+    {
+      "BvsValue": "ABC12 NEWS AT 6",
+      "ScheduleValue": "ABC12 NWS@SIX"
+    },
+    {
+      "BvsValue": "ABC12 NEWS SATURDAY MORNING",
+      "ScheduleValue": "ABC 12NW SA 6A"
+    },
+    {
+      "BvsValue": "ABC12 NEWS SATURDAY MORNING",
+      "ScheduleValue": "ABC 12NW SA 7A"
+    },
+    {
+      "BvsValue": "ABC12 NEWS SUNDAY MORNING",
+      "ScheduleValue": "ABC 12NW SU 7A"
+    },
+    {
+      "BvsValue": "ABC2 NEWS AT 5PM",
+      "ScheduleValue": "ABC 2 News At 5Pm"
+    },
+    {
+      "BvsValue": "ABC2 NEWS GOOD MORNING MARYLAND 4:30",
+      "ScheduleValue": "ABC 2 News At 6:30Pm"
+    },
+    {
+      "BvsValue": "ABC2 NEWS GOOD MORNING MARYLAND 4:30",
+      "ScheduleValue": "GD MORN MD4:30"
+    },
+    {
+      "BvsValue": "ABC7 EYEWITNESS NEWS",
+      "ScheduleValue": "ABC7 EYENW-4P"
+    },
+    {
+      "BvsValue": "ABC7 NEWS 4:30AM",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "ABC7 NEWS 4:30AM",
+      "ScheduleValue": "ABC7 MRN-430AM"
+    },
+    {
+      "BvsValue": "ABC7 NEWS 6:00AM",
+      "ScheduleValue": "NEWS"
+    },
+    {
+      "BvsValue": "ACCESS HOLLYWOOD",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "ACCESS HOLLYWOOD",
+      "ScheduleValue": "ACCESS HOLLYWD"
+    },
+    {
+      "BvsValue": "ACCESS HOLLYWOOD",
+      "ScheduleValue": "ACCSS HLYWD WK"
+    },
+    {
+      "BvsValue": "ACCESS HOLLYWOOD LIVE",
+      "ScheduleValue": "ACCESS LIVE"
+    },
+    {
+      "BvsValue": "ACCESS HOLLYWOOD WKND",
+      "ScheduleValue": "ACCSS HLYWD WK"
+    },
+    {
+      "BvsValue": "ACCESS HOLLYWOOD WKND",
+      "ScheduleValue": "CBS6 SU MRN@6A"
+    },
+    {
+      "BvsValue": "ACTION 2 NEWS SUNDAY",
+      "ScheduleValue": "ACTION 2 NEWS"
+    },
+    {
+      "BvsValue": "ACTION 2 NEWS: AT 4:00",
+      "ScheduleValue": "ACTION 2 NWS@4"
+    },
+    {
+      "BvsValue": "ACTION 2 NEWS: THIS MORNING",
+      "ScheduleValue": "ACTION 2 NEWS"
+    },
+    {
+      "BvsValue": "ACTION 3 NEWS AT 4",
+      "ScheduleValue": "ACTION 3 NWS@4"
+    },
+    {
+      "BvsValue": "ACTION 7 NEWS MORE THIS MORNING",
+      "ScheduleValue": "ACTN7 NW-EARLY"
+    },
+    {
+      "BvsValue": "ACTION NEWS AT 6:00PM",
+      "ScheduleValue": "ACTION NWS@6PM"
+    },
+    {
+      "BvsValue": "ACTION NEWS JAX AT 4:30AM",
+      "ScheduleValue": "ACTN7 NW-EARLY"
+    },
+    {
+      "BvsValue": "ACTION NEWS JAX AT 4:30AM",
+      "ScheduleValue": "ANJ-430A-FOX30"
+    },
+    {
+      "BvsValue": "ACTION NEWS LIVE AT 11",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "ACTION NEWS WEEKEND 6AM",
+      "ScheduleValue": "ACTN NWS WK 7A"
+    },
+    {
+      "BvsValue": "ACTION NEWS WEEKEND 7AM",
+      "ScheduleValue": "ACTN NWS WK 7A"
+    },
+    {
+      "BvsValue": "AM LIVE SATURDAY",
+      "ScheduleValue": "GD MRN-SAT-ABC"
+    },
+    {
+      "BvsValue": "AMERICAN DAD",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "AMERICAN DAD",
+      "ScheduleValue": "AMERICN DAD B"
+    },
+    {
+      "BvsValue": "AMERICAN DAD",
+      "ScheduleValue": "FAMILY GUY"
+    },
+    {
+      "BvsValue": "AMERICAN DAD",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "AMERICA'S COURT WITH JUDGE ROSS",
+      "ScheduleValue": "AMERS COURT B"
+    },
+    {
+      "BvsValue": "ANDY GRIFFITH",
+      "ScheduleValue": "ANDY GRFFTH B/ANDY GRIFFITH"
+    },
+    {
+      "BvsValue": "ANIMATION DOMINATION HIGH DEF",
+      "ScheduleValue": "Animation Dom"
+    },
+    {
+      "BvsValue": "BIG BANG THEORY WEEKEND",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "BIG BANG THEORY WEEKEND",
+      "ScheduleValue": "BG BNG THRY W"
+    },
+    {
+      "BvsValue": "BIG BANG THEORY WEEKEND",
+      "ScheduleValue": "BG BNG THRY W/BG-THEORY WK B"
+    },
+    {
+      "BvsValue": "BOLD AND THE BEAUTIFUL",
+      "ScheduleValue": "THE TALK"
+    },
+    {
+      "BvsValue": "CASTLE",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "CASTLE",
+      "ScheduleValue": "CASTLE"
+    },
+    {
+      "BvsValue": "CASTLE",
+      "ScheduleValue": "CASTLE-SYN"
+    },
+    {
+      "BvsValue": "CBS 11 NEWS AT 4:30AM",
+      "ScheduleValue": "CBS 11 NEWS"
+    },
+    {
+      "BvsValue": "CBS 11 NEWS SUNDAY",
+      "ScheduleValue": "CBS11NEWSSUN7A"
+    },
+    {
+      "BvsValue": "CBS 13 NEWS AT 5AM",
+      "ScheduleValue": "CBS 13 NEWS 5P (SA)"
+    },
+    {
+      "BvsValue": "CBS 2 NEWS AT 4:30",
+      "ScheduleValue": "10 NEWS MRNG EDITION - SAT"
+    },
+    {
+      "BvsValue": "CBS 2 NEWS AT 4:30",
+      "ScheduleValue": "10NWS MRN WK5A"
+    },
+    {
+      "BvsValue": "CBS 2 NEWS AT 5:00",
+      "ScheduleValue": "KCBS 2 NEWS-5"
+    },
+    {
+      "BvsValue": "CBS 2 NEWS AT 5:30PM",
+      "ScheduleValue": "CBS2 AT 530PM"
+    },
+    {
+      "BvsValue": "CBS 2 NEWS AT 6:00",
+      "ScheduleValue": "KCBS 2 NEWS-6"
+    },
+    {
+      "BvsValue": "CBS 2 NEWS AT 6:00",
+      "ScheduleValue": "NEWS"
+    },
+    {
+      "BvsValue": "CBS 2 NEWS SUNDAY",
+      "ScheduleValue": "CBS2NWS SUN 6A/CBS2NWS SUN 7A"
+    },
+    {
+      "BvsValue": "CBS 2 NEWS SUNDAY",
+      "ScheduleValue": "CBS2NWS SUN 8A"
+    },
+    {
+      "BvsValue": "CBS 2 NEWS THIS MORNING",
+      "ScheduleValue": "CBS THS MRNG 430A"
+    },
+    {
+      "BvsValue": "CBS 2 NEWS THIS MORNING",
+      "ScheduleValue": "CBS2NWS-MRN-5A"
+    },
+    {
+      "BvsValue": "CBS 2 SUNDAY MORNING NEWS",
+      "ScheduleValue": "CBS2 AT 7AM/AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "CBS 5 NEWS AT 6PM",
+      "ScheduleValue": "CBS 5 NWS AT 6"
+    },
+    {
+      "BvsValue": "CBS 58 MORNING NEWS AT 6AM",
+      "ScheduleValue": "CBS58 MRN NW6A"
+    },
+    {
+      "BvsValue": "CBS EVENING NEWS WITH SCOTT PELLEY",
+      "ScheduleValue": "CBS EVE NWS"
+    },
+    {
+      "BvsValue": "CBS EVENING NEWS WITH SCOTT PELLEY",
+      "ScheduleValue": "CBS EVENING NEWS"
+    },
+    {
+      "BvsValue": "CBS EVENING NEWS-SUN",
+      "ScheduleValue": "58NWS AT 5.30P"
+    },
+    {
+      "BvsValue": "CBS EVENING NEWS-SUN",
+      "ScheduleValue": "NWSCHNL3-630PM"
+    },
+    {
+      "BvsValue": "CBS EVENING NEWS-SUN",
+      "ScheduleValue": "WGME-13 WKD ED"
+    },
+    {
+      "BvsValue": "CBS MORNING NEWS",
+      "ScheduleValue": "CBS MORN NWS"
+    },
+    {
+      "BvsValue": "CBS MORNING NEWS",
+      "ScheduleValue": "EARLY-EYEWT NW"
+    },
+    {
+      "BvsValue": "CBS MORNING NEWS",
+      "ScheduleValue": "EYWT NEWS"
+    },
+    {
+      "BvsValue": "CBS MORNING NEWS",
+      "ScheduleValue": "KHOU 11-1ST LK"
+    },
+    {
+      "BvsValue": "CBS NEWS 8 THIS MORNING 5:00AM",
+      "ScheduleValue": "CBS NEWS 8 @5A"
+    },
+    {
+      "BvsValue": "CBS NEWS 8 THIS MORNING 5:00AM",
+      "ScheduleValue": "NEWS"
+    },
+    {
+      "BvsValue": "CBS NEWS SPECIAL",
+      "ScheduleValue": "KDKA NEWS AT 4"
+    },
+    {
+      "BvsValue": "CBS THIS MORNING-SAT",
+      "ScheduleValue": "CBS THIS MORNING"
+    },
+    {
+      "BvsValue": "CBS THIS MORNING-SAT",
+      "ScheduleValue": "CBS THS MRN:SA"
+    },
+    {
+      "BvsValue": "CBS4 NEWS 5PM",
+      "ScheduleValue": "NEWS"
+    },
+    {
+      "BvsValue": "CBS4 WKND NEWS AT 5:30",
+      "ScheduleValue": "KDBC 4 NW@530P"
+    },
+    {
+      "BvsValue": "CBS6 EARLY MORNING AT 5AM",
+      "ScheduleValue": "CBS6 ERLY MN 5"
+    },
+    {
+      "BvsValue": "CBS6 EARLY MORNING NEWS",
+      "ScheduleValue": "CBS 6 ERLY-430"
+    },
+    {
+      "BvsValue": "CBS6 EARLY MORNING NEWS",
+      "ScheduleValue": "CBS6 ERLY MN 5"
+    },
+    {
+      "BvsValue": "CBS6 NEWS AT 6:30P",
+      "ScheduleValue": "CBS6 WEEKEND"
+    },
+    {
+      "BvsValue": "CBS6 SATURDAY MORNING AT 6",
+      "ScheduleValue": "CBS6 SA MRN@6A"
+    },
+    {
+      "BvsValue": "CBS6 SATURDAY MORNING AT 6:00AM",
+      "ScheduleValue": "CBS6 SA MRN@6A"
+    },
+    {
+      "BvsValue": "CELEBRITY NAME GAME",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "CELEBRITY NAME GAME",
+      "ScheduleValue": "CELEB NAME-MF"
+    },
+    {
+      "BvsValue": "CELEBRITY NAME GAME",
+      "ScheduleValue": "JUDGE FAITH-1/JUDGE FAITH-2"
+    },
+    {
+      "BvsValue": "CHANNEL 11 NEWS",
+      "ScheduleValue": "CH 11 NWS-5AM/CH 11NWS-530AM"
+    },
+    {
+      "BvsValue": "CHANNEL 4 NEWS AT 6:30PM",
+      "ScheduleValue": "CH4 NEWS AT 630P"
+    },
+    {
+      "BvsValue": "CHANNEL 5 NEWS AT 6",
+      "ScheduleValue": "CH5 NWS@6P-SA"
+    },
+    {
+      "BvsValue": "COMICS UNLEASHED",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "COMMUNITY",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "COMMUNITY",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "COPS RELOADED",
+      "ScheduleValue": "COPS RELOAD B"
+    },
+    {
+      "BvsValue": "COPS RELOADED",
+      "ScheduleValue": "COPS RELOADED/COPS RELOAD B"
+    },
+    {
+      "BvsValue": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "DAYBREAK SATURDAY",
+      "ScheduleValue": "DAYBRK SA MRNG"
+    },
+    {
+      "BvsValue": "DAYBREAK SATURDAY",
+      "ScheduleValue": "SATURDAY TODAY"
+    },
+    {
+      "BvsValue": "DAYBREAK SUNDAY",
+      "ScheduleValue": "EARLY DYBRK SU"
+    },
+    {
+      "BvsValue": "DAYBREAK SUNDAY",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "DAYS OF OUR LIVES",
+      "ScheduleValue": "DAYS-OUR LIVES"
+    },
+    {
+      "BvsValue": "DIVORCE COURT",
+      "ScheduleValue": "JUDGE FAITH-1/JUDGE FAITH-2"
+    },
+    {
+      "BvsValue": "DIVORCE COURT",
+      "ScheduleValue": "LCL15 NWS-630P"
+    },
+    {
+      "BvsValue": "DR. PHIL",
+      "ScheduleValue": "DR PHIL"
+    },
+    {
+      "BvsValue": "EARLY EDITION OF EYEWITNESS NEWS",
+      "ScheduleValue": "EARLY-EYEWT NW"
+    },
+    {
+      "BvsValue": "EARLY MORNIN'",
+      "ScheduleValue": "WDBJ7 EARLY MN"
+    },
+    {
+      "BvsValue": "EARLY TODAY",
+      "ScheduleValue": "WXII 12NW-430A"
+    },
+    {
+      "BvsValue": "ELLEN DEGENERES SHOW",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "ELLEN DEGENERES SHOW",
+      "ScheduleValue": "ELLEN"
+    },
+    {
+      "BvsValue": "ENTERTAINMENT TNGHT WKND",
+      "ScheduleValue": "ENT TONIGHT 60"
+    },
+    {
+      "BvsValue": "ENTERTAINMENT TONIGHT",
+      "ScheduleValue": "AVG. ALL WKS/CONSPIRACY SHW"
+    },
+    {
+      "BvsValue": "ENTERTAINMENT TONIGHT",
+      "ScheduleValue": "ENT TONIGHT 30"
+    },
+    {
+      "BvsValue": "ENTERTAINMENT TONIGHT",
+      "ScheduleValue": "ENT TONITE R30"
+    },
+    {
+      "BvsValue": "EVERYBODY LOVES RAYMOND",
+      "ScheduleValue": "EVRBDY LVS RAY/EVERBDY-RAY B"
+    },
+    {
+      "BvsValue": "EVERYBODY LOVES RAYMOND WKND",
+      "ScheduleValue": "EVERBDY-RAY WK/EVRBDY-RY WK B"
+    },
+    {
+      "BvsValue": "EVERYBODY LOVES RAYMOND WKND",
+      "ScheduleValue": "RAYMOND"
+    },
+    {
+      "BvsValue": "EXTRA ENTERTAINMENT MAG",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "EXTRA ENTERTAINMENT MAG",
+      "ScheduleValue": "CBS EVE NWS"
+    },
+    {
+      "BvsValue": "EXTRA ENTERTAINMENT MAG",
+      "ScheduleValue": "EXTRA"
+    },
+    {
+      "BvsValue": "EXTRA ENTERTAINMENT MAG",
+      "ScheduleValue": "EXTRA R"
+    },
+    {
+      "BvsValue": "EXTRA ENTERTAINMENT MAG",
+      "ScheduleValue": "UP TO MIN-CBS"
+    },
+    {
+      "BvsValue": "EXTRA ENTMNT MAG WKND",
+      "ScheduleValue": "PAID PROGRM B"
+    },
+    {
+      "BvsValue": "EYE ON L.A.",
+      "ScheduleValue": "EYE ON LA SUN"
+    },
+    {
+      "BvsValue": "EYE OPENER",
+      "ScheduleValue": "EYE OPENER B"
+    },
+    {
+      "BvsValue": "EYE OPENER",
+      "ScheduleValue": "EYE OPENER-5A"
+    },
+    {
+      "BvsValue": "EYE OPENER DFW",
+      "ScheduleValue": "EYE OPENER DFW"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS 11:00AM",
+      "ScheduleValue": "CHEW-ABC"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS 4 AT 6:30",
+      "ScheduleValue": "EYEWTNS NW-630"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS AT 4",
+      "ScheduleValue": "EYEWIT NWS 4"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS AT 4:30AM",
+      "ScheduleValue": "EYWT NEWS"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS AT 5",
+      "ScheduleValue": "EYEWTNSS NW@5P/EYWTNS NW@530P"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS AT 5",
+      "ScheduleValue": "SA EYEWT NW-5"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS AT 5:30",
+      "ScheduleValue": "EYEWTNSS NW@5P/EYWTNS NW@530P"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS AT 5:30AM",
+      "ScheduleValue": "EYWT NEWS"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS AT 5AM",
+      "ScheduleValue": "EYEWTNSS-5A SA"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS AT 5AM",
+      "ScheduleValue": "EYWTNS-MRN-5AM"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS AT 6",
+      "ScheduleValue": "EYEWIT NWS"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS AT 6AM",
+      "ScheduleValue": "EYWT NEWS"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS AT 6AM",
+      "ScheduleValue": "NEWS"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS AT 6PM",
+      "ScheduleValue": "EYWT NWS 6 SAT"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS SATURDAY",
+      "ScheduleValue": "EYEWTNWS-6PM"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS SATURDAY AT 6AM",
+      "ScheduleValue": "EYWT-SA MRN-6A"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS SUNDAY",
+      "ScheduleValue": "EYEWIT SUN-6A"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS SUNDAY",
+      "ScheduleValue": "EYEWIT-NWS SUN"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS SUNDAY",
+      "ScheduleValue": "EYEWTNWS-SUN"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS SUNDAY AT 6AM",
+      "ScheduleValue": "EYWT-SU MRN-6A"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS SUNDAY AT 7:00 AM",
+      "ScheduleValue": "EYWT-SU MRN-7A/EYWT-SU MRN-8A"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS SUNDAY AT 8:00 AM",
+      "ScheduleValue": "EYWT-SU MRN-7A/EYWT-SU MRN-8A"
+    },
+    {
+      "BvsValue": "EYEWITNESS NEWS TODAY",
+      "ScheduleValue": "EYEWIT NW TDY1"
+    },
+    {
+      "BvsValue": "FABLIFE",
+      "ScheduleValue": "FAB LIFE"
+    },
+    {
+      "BvsValue": "FAMILY FEUD",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "FAMILY GUY",
+      "ScheduleValue": "FAMILY GUY B"
+    },
+    {
+      "BvsValue": "FAMILY GUY WEEKEND",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "FAMILY GUY WEEKEND",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "FAMILY GUY WEEKEND",
+      "ScheduleValue": "FAMILY GUY"
+    },
+    {
+      "BvsValue": "FIRST COAST NEWS AT 6:30",
+      "ScheduleValue": "FIRST-NWS-630"
+    },
+    {
+      "BvsValue": "FIRST COAST NEWS AT 7:00 PM",
+      "ScheduleValue": "FIRST-NWS AT 7"
+    },
+    {
+      "BvsValue": "FIRST COAST NEWS ON POINT",
+      "ScheduleValue": "FIRST-ON POINT"
+    },
+    {
+      "BvsValue": "FIRST NEWS WEEKEND",
+      "ScheduleValue": "FRST NWS 5A SU"
+    },
+    {
+      "BvsValue": "FOX 13 NEWS--4:30AM",
+      "ScheduleValue": "FOX13 NW 430AM"
+    },
+    {
+      "BvsValue": "FOX 17 NEWS AT 5PM",
+      "ScheduleValue": "FOX 17 NEWS-5"
+    },
+    {
+      "BvsValue": "FOX 4 NEWS AT 6",
+      "ScheduleValue": "FOX5NWS@600 SU"
+    },
+    {
+      "BvsValue": "FOX 40 NEWS AT 5:30PM",
+      "ScheduleValue": "FOX40NEWS@530P"
+    },
+    {
+      "BvsValue": "FOX 43 MORNING NEWS AT 7:00AM",
+      "ScheduleValue": "FOX43MRN NWS-7"
+    },
+    {
+      "BvsValue": "FOX 43 MORNING NEWS AT 8",
+      "ScheduleValue": "FOX43MRN NWS-8/FOX43MRN NW830"
+    },
+    {
+      "BvsValue": "FOX 45 NEWS AT 6:30",
+      "ScheduleValue": "FOX45 NEWS-630"
+    },
+    {
+      "BvsValue": "FOX 46 NEWS AT 10P",
+      "ScheduleValue": "FOX CHARLOTTE NEWS @ 10PM"
+    },
+    {
+      "BvsValue": "FOX 5 NEWS AT 5",
+      "ScheduleValue": "FOX5 NWS AT 5P"
+    },
+    {
+      "BvsValue": "FOX 5 NEWS AT 6",
+      "ScheduleValue": "FOX5 NWS AT 6P/INSIDE EDITN W"
+    },
+    {
+      "BvsValue": "FOX 5 NEWS AT 6:00",
+      "ScheduleValue": "FOX5NWS@600 SU"
+    },
+    {
+      "BvsValue": "FOX 59 MORNING NEWS AT EIGHT",
+      "ScheduleValue": "FOX59 AMNWS 8A"
+    },
+    {
+      "BvsValue": "FOX 59 MORNING NEWS AT FOUR",
+      "ScheduleValue": "FOX59 AMNWS 4A"
+    },
+    {
+      "BvsValue": "FOX 59 NEWS: FIRST AT FOUR",
+      "ScheduleValue": "FOX59 NEWS 4PM"
+    },
+    {
+      "BvsValue": "FOX 8 SATURDAY EARLY NEWS",
+      "ScheduleValue": "FOX8 SAT EARLY"
+    },
+    {
+      "BvsValue": "FOX 8 SATURDAY MORNING NEWS",
+      "ScheduleValue": "FOX8 SA MRN NW"
+    },
+    {
+      "BvsValue": "FOX 9 AT 5:30P",
+      "ScheduleValue": "FOX9 NWS@530P"
+    },
+    {
+      "BvsValue": "FOX 9 AT 6P",
+      "ScheduleValue": "FOX9 NWS AT 6P"
+    },
+    {
+      "BvsValue": "FOX CAROLINA 4 O'CLOCK NEWS",
+      "ScheduleValue": "FOX CAR4:00NWS"
+    },
+    {
+      "BvsValue": "FOX CT NEWS AT 4",
+      "ScheduleValue": "FOX CT NEWS-4"
+    },
+    {
+      "BvsValue": "FOX CT NEWS AT 5",
+      "ScheduleValue": "FOX CT NEWS-5"
+    },
+    {
+      "BvsValue": "FOX MORNING NEWS",
+      "ScheduleValue": "FOX MORNNG NWS"
+    },
+    {
+      "BvsValue": "FOX NEWS SPECIAL-FOX",
+      "ScheduleValue": "THE REAL"
+    },
+    {
+      "BvsValue": "FOX NEWS SUNDAY-FOX",
+      "ScheduleValue": "FOX NWS SUNDAY"
+    },
+    {
+      "BvsValue": "FOX13 NEWS: GOOD DAY UTAH 4:30AM",
+      "ScheduleValue": "FOX13 NEWS AT 9"
+    },
+    {
+      "BvsValue": "FOX13 NEWS: GOOD DAY UTAH 4:30AM",
+      "ScheduleValue": "GOOD-UTAH4:30A"
+    },
+    {
+      "BvsValue": "FOX17 NEWS AT 5:30PM",
+      "ScheduleValue": "Fox 17 News @ 530P"
+    },
+    {
+      "BvsValue": "FOX21 MORNING NEWS",
+      "ScheduleValue": "FOX21 MORN NWS"
+    },
+    {
+      "BvsValue": "FOX23 NEWS AT TEN",
+      "ScheduleValue": "NEWS13 ON FOX WEEKEND"
+    },
+    {
+      "BvsValue": "FOX23 NEWS THIS MORNING",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "FOX23 NEWS THIS MORNING",
+      "ScheduleValue": "FOX23-MRNG SA"
+    },
+    {
+      "BvsValue": "FOX5 NEWS AT 5:00PM",
+      "ScheduleValue": "AVG. ALL WKS/FOX5 NWS @ 5P"
+    },
+    {
+      "BvsValue": "FOX5 NEWS THIS MORNING",
+      "ScheduleValue": "FOX5NWS-MRN B"
+    },
+    {
+      "BvsValue": "FOX8 NEWS AT 4:30A",
+      "ScheduleValue": "FOX8-NWS-4:30A"
+    },
+    {
+      "BvsValue": "FOX8 NEWS AT 5:00P",
+      "ScheduleValue": "FOX8 NWS-5.00P"
+    },
+    {
+      "BvsValue": "FOX8 NEWS AT 6:00A",
+      "ScheduleValue": "FOX8-NWS-6.00A"
+    },
+    {
+      "BvsValue": "FOX8 NEWS AT 6:00P",
+      "ScheduleValue": "AVG. ALL WKS/FOX8 NWS-6.00P"
+    },
+    {
+      "BvsValue": "FOX8 NEWS AT 6:00P",
+      "ScheduleValue": "FOX8 NWS-6:30P"
+    },
+    {
+      "BvsValue": "FOX8 NEWS AT 8:00A",
+      "ScheduleValue": "FOX8-NWS-8.00A"
+    },
+    {
+      "BvsValue": "FRIENDS",
+      "ScheduleValue": "FAMILY GUY"
+    },
+    {
+      "BvsValue": "GENERAL HOSPITAL",
+      "ScheduleValue": "GENRL HOSPITAL"
+    },
+    {
+      "BvsValue": "GOOD DAY ATLANTA 7:00AM",
+      "ScheduleValue": "GD DAY ATL7 SU"
+    },
+    {
+      "BvsValue": "GOOD DAY ATLANTA 8:00AM",
+      "ScheduleValue": "GD DAY ATL8 SU"
+    },
+    {
+      "BvsValue": "GOOD DAY AUSTIN",
+      "ScheduleValue": "GOOD DAY-4:30A"
+    },
+    {
+      "BvsValue": "GOOD DAY PA",
+      "ScheduleValue": "CHEW-ABC"
+    },
+    {
+      "BvsValue": "GOOD DAY UTAH WEEKEND EDITION",
+      "ScheduleValue": "GOOD DAY UT-SU"
+    },
+    {
+      "BvsValue": "GOOD EVENING ARIZONA 4PM",
+      "ScheduleValue": "GEAZ  4PM"
+    },
+    {
+      "BvsValue": "GOOD EVENING ARIZONA WEEKEND",
+      "ScheduleValue": "GOOD EVE-AZ SU"
+    },
+    {
+      "BvsValue": "GOOD MORNING AMERICA",
+      "ScheduleValue": "GD MRN AMR-ABC"
+    },
+    {
+      "BvsValue": "GOOD MORNING AMERICA SUNDAY",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "GOOD MORNING AMERICA SUNDAY",
+      "ScheduleValue": "GD MRN-SUN-ABC"
+    },
+    {
+      "BvsValue": "GOOD MORNING AMERICA-SAT",
+      "ScheduleValue": "GD MRN-SAT-ABC"
+    },
+    {
+      "BvsValue": "GOOD MORNING AMERICA-SAT",
+      "ScheduleValue": "GD MRN-SAT-ABC/GD MRN-SUN-ABC"
+    },
+    {
+      "BvsValue": "GOOD MORNING ARIZONA SUNDAY",
+      "ScheduleValue": "GMAZ SUN @ 6A"
+    },
+    {
+      "BvsValue": "GOOD MORNING CHATTANOOGA",
+      "ScheduleValue": "GOOD MRN CHAT1"
+    },
+    {
+      "BvsValue": "GOOD MORNING CHATTANOOGA",
+      "ScheduleValue": "GOOD MRN-WK SA"
+    },
+    {
+      "BvsValue": "GOOD MORNING CLEVELAND - SATURDAY",
+      "ScheduleValue": "GD MRN CLE SAT"
+    },
+    {
+      "BvsValue": "GOOD MORNING CLEVELAND AT 4:30AM",
+      "ScheduleValue": "GD MRN CLE430A"
+    },
+    {
+      "BvsValue": "GOOD MORNING CLEVELAND AT 4:30AM",
+      "ScheduleValue": "WESH 2NW-430AM"
+    },
+    {
+      "BvsValue": "GOOD MORNING COLORADO: 4:30AM",
+      "ScheduleValue": "GD MRN CO-430A"
+    },
+    {
+      "BvsValue": "GOOD MORNING JACKSONVILLE",
+      "ScheduleValue": "GD MRN JAX SUN"
+    },
+    {
+      "BvsValue": "GOOD MORNING KANSAS",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "GOOD MORNING KANSAS",
+      "ScheduleValue": "GOOD MORN KS I"
+    },
+    {
+      "BvsValue": "GOOD MORNING KENTUCKIANA",
+      "ScheduleValue": "GD MORN KYANA"
+    },
+    {
+      "BvsValue": "GOOD MORNING KENTUCKIANA",
+      "ScheduleValue": "GD MRN KYNA SA"
+    },
+    {
+      "BvsValue": "GOOD MORNING LAS VEGAS AT 4:30AM",
+      "ScheduleValue": "GD MRN LV@430A"
+    },
+    {
+      "BvsValue": "GOOD MORNING LAS VEGAS AT 4:30AM",
+      "ScheduleValue": "NWS8 DBRK@430A"
+    },
+    {
+      "BvsValue": "GOOD MORNING MEMPHIS",
+      "ScheduleValue": "GD MRN MPHS 7A"
+    },
+    {
+      "BvsValue": "GOOD MORNING MEMPHIS",
+      "ScheduleValue": "GD-MPHS SUN 6A"
+    },
+    {
+      "BvsValue": "GOOD MORNING MEMPHIS",
+      "ScheduleValue": "GD-MPHS SUN 7A"
+    },
+    {
+      "BvsValue": "GOOD MORNING RENO 6A",
+      "ScheduleValue": "GMA RENO 6A"
+    },
+    {
+      "BvsValue": "GOOD MORNING TENNESSEE",
+      "ScheduleValue": "GD MRN TN-4.30"
+    },
+    {
+      "BvsValue": "GOOD MORNING TEXAS",
+      "ScheduleValue": "GOOD MORN TX"
+    },
+    {
+      "BvsValue": "GOOD MORNING TRI-STATE AT 4:30AM",
+      "ScheduleValue": "NOW CINCINNATI"
+    },
+    {
+      "BvsValue": "GOOD MORNING TRI-STATE WEEKEND",
+      "ScheduleValue": "GMTS 5A SAT/GMTS 6A SAT"
+    },
+    {
+      "BvsValue": "GOOD MORNING TRI-STATE WEEKEND",
+      "ScheduleValue": "GMTS 5A SUN/GMTS 6A SUN"
+    },
+    {
+      "BvsValue": "GREAT DAY",
+      "ScheduleValue": "GREAT DAY 6A"
+    },
+    {
+      "BvsValue": "GREAT DAY",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "HOT IN CLEVELAND",
+      "ScheduleValue": "HOT-CLEVELAND"
+    },
+    {
+      "BvsValue": "HOW I MET YOUR MOTHER",
+      "ScheduleValue": "HOW MET MOTHER"
+    },
+    {
+      "BvsValue": "HOW I MET YOUR MOTHER WEEKEND",
+      "ScheduleValue": "HOW-MET-MOTHER"
+    },
+    {
+      "BvsValue": "IN TOUCH WITH DR. CHARLES STANLEY",
+      "ScheduleValue": "GD MRN-SUN-ABC"
+    },
+    {
+      "BvsValue": "INSIDE EDITION WEEKEND",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "INSIDE EDITION WEEKEND",
+      "ScheduleValue": "FOX5 NWS AT 6P/INSIDE EDITN W"
+    },
+    {
+      "BvsValue": "INSIDER WEEKEND",
+      "ScheduleValue": "GOOD EVE-AZ SU"
+    },
+    {
+      "BvsValue": "JEOPARDY!",
+      "ScheduleValue": "JEOPARDY"
+    },
+    {
+      "BvsValue": "JIMMY KIMMEL LIVE",
+      "ScheduleValue": "JIMMY KIMMEL"
+    },
+    {
+      "BvsValue": "JOEL OSTEEN",
+      "ScheduleValue": "\t\t\t\t\t"
+    },
+    {
+      "BvsValue": "JOHN DEERE CLASSIC SUDDEN DEATH",
+      "ScheduleValue": "58NWS AT 5.30P"
+    },
+    {
+      "BvsValue": "JUDGE ALEX",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "JUDGE FAITH",
+      "ScheduleValue": "JUDGE FAITH"
+    },
+    {
+      "BvsValue": "JUDGE JUDY",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "JUDGE JUDY",
+      "ScheduleValue": "JUDGE JUDY B/JUDGE JUDY"
+    },
+    {
+      "BvsValue": "JUDGE JUDY",
+      "ScheduleValue": "JUDGE JUDY/JUDGE JUDY B"
+    },
+    {
+      "BvsValue": "JUDGE JUDY",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "JUDGE MATHIS",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "JUDGE MATHIS",
+      "ScheduleValue": "JUDGE MATHIS B"
+    },
+    {
+      "BvsValue": "KAKE NEWS AT 6PM",
+      "ScheduleValue": "KAKE NEWS-6"
+    },
+    {
+      "BvsValue": "KARK 4 NEWS AT 5",
+      "ScheduleValue": "KARK 4 @ 5PM"
+    },
+    {
+      "BvsValue": "KCAL 9 NEWS AT 4:00PM",
+      "ScheduleValue": "KCAL 9 NEWS-4"
+    },
+    {
+      "BvsValue": "KCRA 3 REPORTS AT 4:30AM",
+      "ScheduleValue": "KCRA3RPT 430AM"
+    },
+    {
+      "BvsValue": "KCTV5 NEWS AT 4",
+      "ScheduleValue": "KCTV5 NWS AT 4"
+    },
+    {
+      "BvsValue": "KDKA-TV NEWS AT FOUR",
+      "ScheduleValue": "KDKA NEWS AT 4"
+    },
+    {
+      "BvsValue": "KDKA-TV NEWS AT SIX",
+      "ScheduleValue": "KDKA NEWS AT 6"
+    },
+    {
+      "BvsValue": "KEYE 5:30P SUNDAY NEWS",
+      "ScheduleValue": "K-EYE NW-530SU"
+    },
+    {
+      "BvsValue": "KEYE TV MORNING NEWS",
+      "ScheduleValue": "KEYE-MRN NW 5A"
+    },
+    {
+      "BvsValue": "KGUN 9 NEWS AT 6:00PM",
+      "ScheduleValue": "KGUN 9 NEWS @ 6P"
+    },
+    {
+      "BvsValue": "KING 5 NEWS",
+      "ScheduleValue": "KING NEWS - 630P (SUN)"
+    },
+    {
+      "BvsValue": "KING OF THE HILL",
+      "ScheduleValue": "KING OF HILL"
+    },
+    {
+      "BvsValue": "KING OF THE HILL",
+      "ScheduleValue": "KING OF HILL/COMICS UNLSHED"
+    },
+    {
+      "BvsValue": "KMBC 9 FIRST NEWS ON KCWE",
+      "ScheduleValue": "9FNWS-KCWE 7A"
+    },
+    {
+      "BvsValue": "KMBC 9 NEWS AT 5:00",
+      "ScheduleValue": "AVG. ALL WKS/9 NWS AT 5 SUN"
+    },
+    {
+      "BvsValue": "KMBC 9 NEWS AT 5:30",
+      "ScheduleValue": "AVG. ALL WKS/9 NWS AT 5 SUN"
+    },
+    {
+      "BvsValue": "KMTV ACTION 3 NEWS THIS MORNING",
+      "ScheduleValue": "KMTV-3-MRN 5A"
+    },
+    {
+      "BvsValue": "KOLR 10 NEWS",
+      "ScheduleValue": "KOLR-10 NWS 5"
+    },
+    {
+      "BvsValue": "KPRC CHANNEL 2 NEWS SATURDAY AM",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "KPRC CHANNEL 2 NEWS WEEKEND 6AM",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "KREM 2 NEWS AT 5",
+      "ScheduleValue": "KREM2NW-5 SU"
+    },
+    {
+      "BvsValue": "KRON 4 EVENING NEWS",
+      "ScheduleValue": "KRON 4 NEWS@5P/KRON4NEWS@530P"
+    },
+    {
+      "BvsValue": "KSL 5 NEWS AT 5P",
+      "ScheduleValue": "KSL 5 NWS AT 5"
+    },
+    {
+      "BvsValue": "KTBS 3 NEWS FIRST NEWS",
+      "ScheduleValue": "KTBS3 1ST NEWS"
+    },
+    {
+      "BvsValue": "KTBS 3 NEWS SUNDAY",
+      "ScheduleValue": "AVG. ALL WKS/KTBS3 NW-FIVE"
+    },
+    {
+      "BvsValue": "KTLA 5 MORNING NEWS AT 7",
+      "ScheduleValue": "KTLA NWS@7A WK"
+    },
+    {
+      "BvsValue": "KTLA 5 NEWS AT 6:30",
+      "ScheduleValue": "KTLA NEWS@630P"
+    },
+    {
+      "BvsValue": "KWTX NEWS TEN THIS MORNING",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "KWTX NEWS TEN THIS MORNING",
+      "ScheduleValue": "KWTX-ERLY MRN1"
+    },
+    {
+      "BvsValue": "KWWL NEWS AT FIVE",
+      "ScheduleValue": "KWWL NEWS-5"
+    },
+    {
+      "BvsValue": "KWWL TODAY IN IOWA",
+      "ScheduleValue": "TODAY-IOWA-5"
+    },
+    {
+      "BvsValue": "LAUREN LAKE'S PATERNITY COURT",
+      "ScheduleValue": " SUPREME JUSTICE"
+    },
+    {
+      "BvsValue": "LAUREN LAKE'S PATERNITY COURT",
+      "ScheduleValue": "LAUREN LAKE'S PATERNITY COURT"
+    },
+    {
+      "BvsValue": "LAW & ORDER: CRIMINAL INTENT",
+      "ScheduleValue": "LAW&ORD CI"
+    },
+    {
+      "BvsValue": "LAW & ORDER: CRIMINAL INTENT",
+      "ScheduleValue": "LAW&ORD SVU MF"
+    },
+    {
+      "BvsValue": "LAW & ORDER: CRIMINAL INTENT",
+      "ScheduleValue": "LAW&ORDER"
+    },
+    {
+      "BvsValue": "LAW & ORDER: CRIMINAL INTENT",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "LIVE ON FIVE",
+      "ScheduleValue": "Live On 5"
+    },
+    {
+      "BvsValue": "LIVE WITH KELLY",
+      "ScheduleValue": "LIVE WITH KELLY"
+    },
+    {
+      "BvsValue": "LIVE! WITH KELLY AND MICHAEL",
+      "ScheduleValue": "KELLY & MICHAEL"
+    },
+    {
+      "BvsValue": "LIVE! WITH KELLY AND MICHAEL",
+      "ScheduleValue": "KELLY&MICHAEL"
+    },
+    {
+      "BvsValue": "LOCAL 10 NEWS AT 4",
+      "ScheduleValue": "LCL104PM"
+    },
+    {
+      "BvsValue": "LOCAL 10 NEWS AT 4:30AM",
+      "ScheduleValue": "LOCL 10 MG 430A"
+    },
+    {
+      "BvsValue": "LOCAL 10 NEWS AT 5",
+      "ScheduleValue": "LOCAL10 MRN-5A"
+    },
+    {
+      "BvsValue": "LOCAL 12 NEWS AT 6:30",
+      "ScheduleValue": "LOCAL12-630 SU"
+    },
+    {
+      "BvsValue": "LOCAL 22 NEWS",
+      "ScheduleValue": "ABC22LOCAL NWS"
+    },
+    {
+      "BvsValue": "LOCAL 24 NEWS AT 5",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "LOCAL 24 NEWS AT 5",
+      "ScheduleValue": "Sun Local 24 News @ 5P"
+    },
+    {
+      "BvsValue": "LOCAL 4 NEWS",
+      "ScheduleValue": "NEWS"
+    },
+    {
+      "BvsValue": "LOCAL 4 NEWS THIS MORNING AT 5AM",
+      "ScheduleValue": "LCL4NWS-MORN-6"
+    },
+    {
+      "BvsValue": "LOCAL 6 SUNDAY",
+      "ScheduleValue": "LOCAL 6@6 SUN"
+    },
+    {
+      "BvsValue": "MAURY",
+      "ScheduleValue": "MAURY POVICH"
+    },
+    {
+      "BvsValue": "MIDDLE WEEKEND",
+      "ScheduleValue": "MIDDLE WEEKEND/MIDDLE WK B"
+    },
+    {
+      "BvsValue": "MIKE & MOLLY",
+      "ScheduleValue": "2 BROKE/M&m"
+    },
+    {
+      "BvsValue": "MIKE & MOLLY",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "MIKE & MOLLY",
+      "ScheduleValue": "CLEVELAND SHOW"
+    },
+    {
+      "BvsValue": "MIKE & MOLLY",
+      "ScheduleValue": "MIKE AND MOLLY"
+    },
+    {
+      "BvsValue": "MIKE & MOLLY",
+      "ScheduleValue": "MIKE AND MOLLY 730P"
+    },
+    {
+      "BvsValue": "MIKE & MOLLY",
+      "ScheduleValue": "MIKE AND MOLLY 7P"
+    },
+    {
+      "BvsValue": "MIKE & MOLLY",
+      "ScheduleValue": "MIKE AND MOLLY/MIKE&MOLLY B"
+    },
+    {
+      "BvsValue": "MIKE & MOLLY",
+      "ScheduleValue": "MIKE&MOLLY B"
+    },
+    {
+      "BvsValue": "MIKE & MOLLY WKND",
+      "ScheduleValue": "MIKE & MOLLY"
+    },
+    {
+      "BvsValue": "MIKE & MOLLY WKND",
+      "ScheduleValue": "MIKE&MLLY SA B"
+    },
+    {
+      "BvsValue": "MIKE & MOLLY WKND",
+      "ScheduleValue": "MIKE&MOLLY SA/MIKE&MLLY SA B"
+    },
+    {
+      "BvsValue": "MIKE & MOLLY WKND",
+      "ScheduleValue": "MIKE&MOLLY WK/MIKE&MLLY WK B"
+    },
+    {
+      "BvsValue": "MODERN FAMILY",
+      "ScheduleValue": "EVRBDY LVS RAY/EVERBDY-RAY B"
+    },
+    {
+      "BvsValue": "MODERN FAMILY",
+      "ScheduleValue": "MODERN FAMLY B"
+    },
+    {
+      "BvsValue": "MODERN FAMILY WEEKEND",
+      "ScheduleValue": "MODERN FMLY WK"
+    },
+    {
+      "BvsValue": "MODERN FAMILY WEEKEND",
+      "ScheduleValue": "MODERN/RULES"
+    },
+    {
+      "BvsValue": "MORNING NEWS AT 8",
+      "ScheduleValue": "MORNG NWS@8"
+    },
+    {
+      "BvsValue": "MORNING SHOW",
+      "ScheduleValue": "6AM MORN-WK LV"
+    },
+    {
+      "BvsValue": "NASHVILLE'S NEWS 2 THIS MORNING AT 5",
+      "ScheduleValue": "NEWS2-MORN 5AM"
+    },
+    {
+      "BvsValue": "NASHVILLE'S NEWS 2 THIS MORNING AT 6",
+      "ScheduleValue": "NW2 TH MORN 6A"
+    },
+    {
+      "BvsValue": "NBC 10 NEWS AT 5:30A",
+      "ScheduleValue": "NBC10NW-W@530A"
+    },
+    {
+      "BvsValue": "NBC 10 NEWS AT 6AM",
+      "ScheduleValue": "NBC10 NW-WK@6A/NBC10 NW-WK@7A"
+    },
+    {
+      "BvsValue": "NBC 10 NEWS AT 7AM",
+      "ScheduleValue": "NBC10 NW-WK@6A/NBC10 NW-WK@7A"
+    },
+    {
+      "BvsValue": "NBC 10 NEWS AT NOON",
+      "ScheduleValue": "NBC 10 NEWS AT NOON"
+    },
+    {
+      "BvsValue": "NBC 2 NEWS AT 4",
+      "ScheduleValue": "NBC2 NW FRST-4"
+    },
+    {
+      "BvsValue": "NBC 4 AT 6",
+      "ScheduleValue": "NBC4 AT 6"
+    },
+    {
+      "BvsValue": "NBC 4 NEWS",
+      "ScheduleValue": "NBC4 NEWS AT 5P SAT"
+    },
+    {
+      "BvsValue": "NBC 4 NEWS",
+      "ScheduleValue": "WEEKEND NEWS"
+    },
+    {
+      "BvsValue": "NBC 4 NEWS AT 5PM",
+      "ScheduleValue": "NBC 4 NEWS 5P"
+    },
+    {
+      "BvsValue": "NBC 6 SOUTH FLORIDA TODAY SUNDAY AT",
+      "ScheduleValue": "NBC6 SF-SU@7AM"
+    },
+    {
+      "BvsValue": "NBC BAY AREA NEWS AT 6",
+      "ScheduleValue": "NBC11NWS-BAY-6"
+    },
+    {
+      "BvsValue": "NBC CHARLOTTE AT 6:00",
+      "ScheduleValue": "WCNC NEWS-6A"
+    },
+    {
+      "BvsValue": "NBC CHARLOTTE AT 7:00",
+      "ScheduleValue": "WCNC NEWS-7A"
+    },
+    {
+      "BvsValue": "NBC CONNECTICUT NEWS TODAY SATURDAY",
+      "ScheduleValue": "NBC30 CT-530SA"
+    },
+    {
+      "BvsValue": "NBC CONNECTICUT NEWS TODAY SUNDAY",
+      "ScheduleValue": "NBC30 CT-530SU"
+    },
+    {
+      "BvsValue": "NBC NIGHTLY NEWS WEEKEND EDITION",
+      "ScheduleValue": "NBC News Saturday"
+    },
+    {
+      "BvsValue": "NBC NIGHTLY NEWS WEEKEND EDITION",
+      "ScheduleValue": "NBC NEWS SUNDAY"
+    },
+    {
+      "BvsValue": "NBC NIGHTLY NEWS WEEKEND EDITION",
+      "ScheduleValue": "NBC NITELY NWS"
+    },
+    {
+      "BvsValue": "NBC NIGHTLY NEWS WEEKEND EDITION",
+      "ScheduleValue": "NEWS"
+    },
+    {
+      "BvsValue": "NBC NIGHTLY NEWS WITH LESTER HOLT",
+      "ScheduleValue": "EXTRA"
+    },
+    {
+      "BvsValue": "NBC33 NEWS WEEKEND EDITION",
+      "ScheduleValue": "NBC33 NWS WKND"
+    },
+    {
+      "BvsValue": "NBC4 NEWS AT NOON",
+      "ScheduleValue": "DAYS-OUR LIVES"
+    },
+    {
+      "BvsValue": "NBC5 NEWS 5:30A",
+      "ScheduleValue": "NBC5 N-TDY-5A/NBC5 N-TDY530A"
+    },
+    {
+      "BvsValue": "NBC5 NEWS 6A",
+      "ScheduleValue": "NBC5 N-TDY-6A"
+    },
+    {
+      "BvsValue": "NEWS",
+      "ScheduleValue": "10 OCLK NWS"
+    },
+    {
+      "BvsValue": "NEWS",
+      "ScheduleValue": "CBS2 NWS AT 5P"
+    },
+    {
+      "BvsValue": "NEWS",
+      "ScheduleValue": "CBS6 NWS SU 7A"
+    },
+    {
+      "BvsValue": "NEWS",
+      "ScheduleValue": "FOX5 NEWS@600"
+    },
+    {
+      "BvsValue": "NEWS",
+      "ScheduleValue": "GD MRN CLE-5AM"
+    },
+    {
+      "BvsValue": "NEWS",
+      "ScheduleValue": "GEAZ-430PM"
+    },
+    {
+      "BvsValue": "NEWS",
+      "ScheduleValue": "KGUN9 NEWS-CW"
+    },
+    {
+      "BvsValue": "NEWS",
+      "ScheduleValue": "KING 5EARLY-NW"
+    },
+    {
+      "BvsValue": "NEWS",
+      "ScheduleValue": "KREM2 NW-6 SUN"
+    },
+    {
+      "BvsValue": "NEWS 10NBC TODAY",
+      "ScheduleValue": "NWS10NBC TDAY1"
+    },
+    {
+      "BvsValue": "NEWS 11 AT 7:00PM",
+      "ScheduleValue": "NEWS 11"
+    },
+    {
+      "BvsValue": "NEWS 12 THIS MORNING",
+      "ScheduleValue": "PRIME NEWS @ 7"
+    },
+    {
+      "BvsValue": "NEWS 19 AT 6PM",
+      "ScheduleValue": "NWS 19 AT 6 SU"
+    },
+    {
+      "BvsValue": "NEWS 2 AT 7PM",
+      "ScheduleValue": "NWS 2-7 PM SAT"
+    },
+    {
+      "BvsValue": "NEWS 2 TODAY",
+      "ScheduleValue": "INFOMERCIAL"
+    },
+    {
+      "BvsValue": "NEWS 2 TODAY",
+      "ScheduleValue": "NEWS2 TD7A SUN"
+    },
+    {
+      "BvsValue": "NEWS 4 THIS MORNING AT 4:00AM",
+      "ScheduleValue": "NEWS 4-10:30P"
+    },
+    {
+      "BvsValue": "NEWS 4 WEEKEND",
+      "ScheduleValue": "NWS 4 WKND 6"
+    },
+    {
+      "BvsValue": "NEWS 5 WEEKEND",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "NEWS 6 AT 4:00P",
+      "ScheduleValue": "LCL6 NWS 5P"
+    },
+    {
+      "BvsValue": "NEWS 6 AT 5:00P",
+      "ScheduleValue": "LCL6 NWS 5P"
+    },
+    {
+      "BvsValue": "NEWS 6 AT 5:30P",
+      "ScheduleValue": "LCL6 NWS 530P"
+    },
+    {
+      "BvsValue": "NEWS 8 AT 5:00",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "NEWS 8 AT 5:30PM",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "NEWS 8 AT 5AM",
+      "ScheduleValue": "NWS8NOW-SUNRS1"
+    },
+    {
+      "BvsValue": "NEWS 8 AT 6PM",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "NEWS 8 DAYBREAK",
+      "ScheduleValue": "ABC World News"
+    },
+    {
+      "BvsValue": "NEWS 8 DAYBREAK 5:00",
+      "ScheduleValue": "NEWS"
+    },
+    {
+      "BvsValue": "NEWS 8 DAYBREAK EARLY EDITION",
+      "ScheduleValue": "NWS8-DYBRK E E"
+    },
+    {
+      "BvsValue": "NEWS 8 DAYBREAK SUNDAY EARLY EDITION",
+      "ScheduleValue": "NW8DYBK SU E E"
+    },
+    {
+      "BvsValue": "NEWS 9 FIRST AT 4:30A",
+      "ScheduleValue": "NWS9 FRST@430A"
+    },
+    {
+      "BvsValue": "NEWS 9 SUNDAY",
+      "ScheduleValue": "NEWS 9 SUN-5A"
+    },
+    {
+      "BvsValue": "NEWS 9 THIS MORNING",
+      "ScheduleValue": "NEWS9-MORN-6A"
+    },
+    {
+      "BvsValue": "NEWS CHANNEL 13 LIVE AT 5:30",
+      "ScheduleValue": "NWSCH13 LV-530"
+    },
+    {
+      "BvsValue": "NEWS CHANNEL 13 SUNDAY TODAY",
+      "ScheduleValue": "NWS-13WKTDY B"
+    },
+    {
+      "BvsValue": "NEWS CHANNEL 3 AT 6PM",
+      "ScheduleValue": "NWSCHNL3-630PM"
+    },
+    {
+      "BvsValue": "NEWS CHANNEL 9 AT 6:00PM",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "NEWS10 IN THE MORNING",
+      "ScheduleValue": "NEWS10@6AM"
+    },
+    {
+      "BvsValue": "NEWS4 TODAY",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "NEWS4 TODAY",
+      "ScheduleValue": "NWS 4 SAT 6AM"
+    },
+    {
+      "BvsValue": "NEWS4 TODAY",
+      "ScheduleValue": "NWS 4-7AM SUN"
+    },
+    {
+      "BvsValue": "NEWSCENTER 16 AT 6",
+      "ScheduleValue": "NWSCNTR16@6"
+    },
+    {
+      "BvsValue": "NEWSCENTER 5 AT 5:30",
+      "ScheduleValue": "NWSCNTR 5-5PM"
+    },
+    {
+      "BvsValue": "NEWSCENTER 5 WEEKEND EYEOPENER",
+      "ScheduleValue": "NC5 EYE WK-5A"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 20 AT 6",
+      "ScheduleValue": "NEWSCHANNL20@6"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 3 NEWS AT 6:00",
+      "ScheduleValue": "NEWS CH3 SA 6P"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 3 NEWS AT 6:30",
+      "ScheduleValue": "NEWSCH3 SU 630"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 3 SATURDAY MORNING",
+      "ScheduleValue": "NWS3 SA MORN-1/NWS3 SA MORN-2"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 3 SATURDAY MORNING",
+      "ScheduleValue": "NWS3 SA MORN-3/NWS3 SA MORN-4"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 3 SUNDAY MORNING",
+      "ScheduleValue": "NWS3 SU MORN-1/NWS3 SU MORN-2"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 3 SUNDAY MORNING",
+      "ScheduleValue": "NWS3 SU MORN-3/NWS3 SU MORN-4"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 4 AT 6PM",
+      "ScheduleValue": "SA NWCHNNL 4-6"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 5 AT 6",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 5 SUNDAY 6",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 5 WEEKEND EDITION",
+      "ScheduleValue": "NWSCH5 WKND SA"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 8 FIRST AT 4PM",
+      "ScheduleValue": "NW CH8 FIRST@4"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 8 WEEKEND MORNING EDITIO",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 8 WEEKEND MORNING EDITIO",
+      "ScheduleValue": "SATURDAY TODAY"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 9 AT 6:00P",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "NEWSCHANNEL 9 TODAY",
+      "ScheduleValue": "NWSCH9 TODAY 1"
+    },
+    {
+      "BvsValue": "NEWSFIX",
+      "ScheduleValue": "NEWSFIX-5P"
+    },
+    {
+      "BvsValue": "NEWSWATCH 16 AT 6PM",
+      "ScheduleValue": "NEWSWATCH 16 AT 6P"
+    },
+    {
+      "BvsValue": "NEWSWATCH 16 SUNDAY MORNING",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "NEWSWATCH 16 SUNDAY MORNING",
+      "ScheduleValue": "NW16SUNMORN-6A/NW16SUNMORN-7A"
+    },
+    {
+      "BvsValue": "NFL THURSDAY NIGHT KICKOFF",
+      "ScheduleValue": "JUDGE JUDY/JUDGE JUDY B"
+    },
+    {
+      "BvsValue": "OFFICE",
+      "ScheduleValue": "THE OFFICE B"
+    },
+    {
+      "BvsValue": "OFFICE WEEKEND",
+      "ScheduleValue": "THE OFFICE WK/THE OFFCE WK B"
+    },
+    {
+      "BvsValue": "ON THE MONEY WITH MARIA BARTIROMO",
+      "ScheduleValue": "ON THE MONEY"
+    },
+    {
+      "BvsValue": "OPEN HOUSE",
+      "ScheduleValue": "NBC6 SF-SU@7AM"
+    },
+    {
+      "BvsValue": "PAID PROGRAM",
+      "ScheduleValue": "\t\t\t\t\t"
+    },
+    {
+      "BvsValue": "PAID PROGRAM",
+      "ScheduleValue": "GD MRN-SUN-ABC"
+    },
+    {
+      "BvsValue": "PEOPLES COURT",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "PEOPLES COURT",
+      "ScheduleValue": "PEOPLE'S COURT"
+    },
+    {
+      "BvsValue": "PEOPLES COURT",
+      "ScheduleValue": "PEOPLE'S CRT B"
+    },
+    {
+      "BvsValue": "PRICE IS RIGHT",
+      "ScheduleValue": "PRICE-RT 1-CBS/PRICE-RT 2-CBS"
+    },
+    {
+      "BvsValue": "Q13 FOX NEWS AT 4",
+      "ScheduleValue": "Q13FOXNWS-4P"
+    },
+    {
+      "BvsValue": "Q13 FOX NEWS THIS MORNING",
+      "ScheduleValue": "Q13FOXNWS-7A"
+    },
+    {
+      "BvsValue": "Q13 FOX NEWS THIS MORNING - 9AM EDIT",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "Q13 FOX NEWS THIS MORNING - 9AM EDIT",
+      "ScheduleValue": "Q13FOXNWS-9A"
+    },
+    {
+      "BvsValue": "RACHAEL RAY",
+      "ScheduleValue": "RACHEL RAY"
+    },
+    {
+      "BvsValue": "RAISING HOPE",
+      "ScheduleValue": "RAISNG HOPE MF"
+    },
+    {
+      "BvsValue": "RIGHT THIS MINUTE",
+      "ScheduleValue": "GMTS 5A SAT/GMTS 6A SAT"
+    },
+    {
+      "BvsValue": "RTV 6 NEWS GOOD MORNING INDIANA",
+      "ScheduleValue": "RTV6-IN EARLY"
+    },
+    {
+      "BvsValue": "RULES OF ENGAGEMENT",
+      "ScheduleValue": "RULES OF ENGAG"
+    },
+    {
+      "BvsValue": "RULES OF ENGAGEMENT",
+      "ScheduleValue": "RULES-ENGAGMNT"
+    },
+    {
+      "BvsValue": "RULES OF ENGAGEMENT",
+      "ScheduleValue": "RULES-ENGMT B"
+    },
+    {
+      "BvsValue": "RULES OF ENGAGEMENT-WEEKEND",
+      "ScheduleValue": "RULES OF ENGAGEMENT"
+    },
+    {
+      "BvsValue": "SATURDAY MORNING ABC7 EYEWITNESS NEW",
+      "ScheduleValue": "ABC7 EWN SA 5A"
+    },
+    {
+      "BvsValue": "SATURDAY MORNING ABC7 EYEWITNESS NEW",
+      "ScheduleValue": "ABC7 EWN SA 6A"
+    },
+    {
+      "BvsValue": "SATURDAY TODAY",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "SATURDAY TODAY",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "SCANDAL",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "SEINFELD",
+      "ScheduleValue": "SCANDAL"
+    },
+    {
+      "BvsValue": "SEINFELD",
+      "ScheduleValue": "SEINFELD"
+    },
+    {
+      "BvsValue": "SEINFELD",
+      "ScheduleValue": "SEINFELD B"
+    },
+    {
+      "BvsValue": "SEINFELD S/S",
+      "ScheduleValue": "SEINFELD"
+    },
+    {
+      "BvsValue": "SEINFELD S/S",
+      "ScheduleValue": "SEINFELD B"
+    },
+    {
+      "BvsValue": "SEINFELD S/S",
+      "ScheduleValue": "SEINFELD WK/SEINFELD WK B"
+    },
+    {
+      "BvsValue": "SIMPSONS",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "SIMPSONS",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "SIMPSONS",
+      "ScheduleValue": "SIMPSONS WK"
+    },
+    {
+      "BvsValue": "SIMPSONS",
+      "ScheduleValue": "SIMPSONS/KING OF HILL"
+    },
+    {
+      "BvsValue": "STEVE HARVEY INTERVIEW",
+      "ScheduleValue": "STEVE HARVEY!"
+    },
+    {
+      "BvsValue": "STORM STORIES WEEKEND",
+      "ScheduleValue": "EYEWITNSS-SU6A"
+    },
+    {
+      "BvsValue": "SUNDAY MORNING",
+      "ScheduleValue": "SUNDAY MRN-CBS"
+    },
+    {
+      "BvsValue": "SUNDAY MORNING ABC7 EYEWITNESS NEWS",
+      "ScheduleValue": "ABC7 EWN SU 5A"
+    },
+    {
+      "BvsValue": "SUNDAY MORNING ABC7 EYEWITNESS NEWS",
+      "ScheduleValue": "ABC7 EWN SU 6A"
+    },
+    {
+      "BvsValue": "SUNDAY TODAY",
+      "ScheduleValue": "SUN TODAY-NBC"
+    },
+    {
+      "BvsValue": "THE BIG BANG THEORY",
+      "ScheduleValue": "BG BNG THRY B"
+    },
+    {
+      "BvsValue": "THE BILL CUNNINGHAM SHOW",
+      "ScheduleValue": "BILL CUNNINGHAM"
+    },
+    {
+      "BvsValue": "THE CHEW",
+      "ScheduleValue": "CHEW-ABC"
+    },
+    {
+      "BvsValue": "THE CLEVELAND SHOW",
+      "ScheduleValue": "AMERICAN DAD"
+    },
+    {
+      "BvsValue": "THE CLEVELAND SHOW",
+      "ScheduleValue": "CLEVELAND SHOW"
+    },
+    {
+      "BvsValue": "THE DOCTORS",
+      "ScheduleValue": "DOCTORS"
+    },
+    {
+      "BvsValue": "THE DOCTORS",
+      "ScheduleValue": "THE DOCTORS"
+    },
+    {
+      "BvsValue": "THE DR. OZ SHOW",
+      "ScheduleValue": "DR. OZ"
+    },
+    {
+      "BvsValue": "THE GOOD WIFE",
+      "ScheduleValue": "GOOD WIFE"
+    },
+    {
+      "BvsValue": "THE INSIDER",
+      "ScheduleValue": "CBS EVE NWS"
+    },
+    {
+      "BvsValue": "THE LATE LATE SHOW WITH JAMES CORDEN",
+      "ScheduleValue": "LT-CORDEN-CBS"
+    },
+    {
+      "BvsValue": "THE MEREDITH VIEIRA SHOW",
+      "ScheduleValue": "MEREDTH VIEIRA"
+    },
+    {
+      "BvsValue": "THE MEREDITH VIEIRA SHOW",
+      "ScheduleValue": "THE MEREDITH VIEIRA SHOW"
+    },
+    {
+      "BvsValue": "THE NEWS AT 6:00 ON RTV6",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "THE NOW ARIZONA",
+      "ScheduleValue": "ABC15 NEWS 4P"
+    },
+    {
+      "BvsValue": "THE QUEEN LATIFAH SHOW",
+      "ScheduleValue": "QUEEN LATIFAH"
+    },
+    {
+      "BvsValue": "THE REAL",
+      "ScheduleValue": "THE REAL 9/15"
+    },
+    {
+      "BvsValue": "THE STEVE WILKOS SHOW",
+      "ScheduleValue": "STEVE WILKOS"
+    },
+    {
+      "BvsValue": "THE TALK",
+      "ScheduleValue": "TALK-CBS"
+    },
+    {
+      "BvsValue": "THE WENDY WILLIAMS SHOW",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "THE WENDY WILLIAMS SHOW",
+      "ScheduleValue": "WENDY WILLIAMS"
+    },
+    {
+      "BvsValue": "THIS MORNING",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "THIS MORNING",
+      "ScheduleValue": "CBS THS MRNG-2"
+    },
+    {
+      "BvsValue": "THIS MORNING",
+      "ScheduleValue": "THIS MORNING"
+    },
+    {
+      "BvsValue": "THIS WEEK IN AGRIBUSINESS",
+      "ScheduleValue": "THIS-AGRI BSNS"
+    },
+    {
+      "BvsValue": "THIS WEEK WITH GEORGE STEPHANOPOULOS",
+      "ScheduleValue": "ABC7 NW SU-9AM/AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "THIS WEEK WITH GEORGE STEPHANOPOULOS",
+      "ScheduleValue": "THIS WEEK-ABC"
+    },
+    {
+      "BvsValue": "TMZ",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "TMZ",
+      "ScheduleValue": "TMZ B"
+    },
+    {
+      "BvsValue": "TMZ",
+      "ScheduleValue": "TMZ R"
+    },
+    {
+      "BvsValue": "TMZ LIVE",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "TMZ LIVE",
+      "ScheduleValue": "TMZ LIVE!"
+    },
+    {
+      "BvsValue": "TMZ LIVE",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "TMZ WEEKEND",
+      "ScheduleValue": "TMZ SU"
+    },
+    {
+      "BvsValue": "TODAY",
+      "ScheduleValue": "TODAY SHW"
+    },
+    {
+      "BvsValue": "TODAY",
+      "ScheduleValue": "TODAY SHW2-NBC"
+    },
+    {
+      "BvsValue": "TODAY ON 5 AT 4:30",
+      "ScheduleValue": "TDAY ON 5-4:30"
+    },
+    {
+      "BvsValue": "TODAY SHOW",
+      "ScheduleValue": "TODAY SHOW"
+    },
+    {
+      "BvsValue": "TODAY SHOW",
+      "ScheduleValue": "TODAY SHW2-NBC"
+    },
+    {
+      "BvsValue": "TODAY'S HOMEOWNER",
+      "ScheduleValue": "TODY HMOWNR SA"
+    },
+    {
+      "BvsValue": "TODAY'S HOMEOWNER",
+      "ScheduleValue": "WKRG NW5-6 SA"
+    },
+    {
+      "BvsValue": "TONI ON",
+      "ScheduleValue": "CBS2NWS SUN 6A/CBS2NWS SUN 7A"
+    },
+    {
+      "BvsValue": "TWO AND A HALF MEN",
+      "ScheduleValue": "2 HALF MEN"
+    },
+    {
+      "BvsValue": "TWO AND A HALF MEN",
+      "ScheduleValue": "TWO & A HALF MEN"
+    },
+    {
+      "BvsValue": "TWO AND A HALF MEN",
+      "ScheduleValue": "TWO & HALF MEN"
+    },
+    {
+      "BvsValue": "TWO AND A HALF MEN",
+      "ScheduleValue": "TWO & HALF MEN/TWO&HALF MEN B"
+    },
+    {
+      "BvsValue": "TWO AND A HALF MEN",
+      "ScheduleValue": "Two anda half men"
+    },
+    {
+      "BvsValue": "TWO AND A HALF MEN",
+      "ScheduleValue": "TWO&HALF MEN B"
+    },
+    {
+      "BvsValue": "TWO AND A HALF MEN WEEKEND",
+      "ScheduleValue": "TWO&HALF MN WK"
+    },
+    {
+      "BvsValue": "TWO AND A HALF MEN WEEKEND",
+      "ScheduleValue": "TWO&HALF MN WK/TWO&HF MN WK B"
+    },
+    {
+      "BvsValue": "TWO AND A HALF MEN WEEKEND",
+      "ScheduleValue": "TWO&HF MN WK B"
+    },
+    {
+      "BvsValue": "TYLER PERRY'S MEET THE BROWNS",
+      "ScheduleValue": "MEET BROWNS/MEET BROWNS B"
+    },
+    {
+      "BvsValue": "VETERANS JOURNEY HOME: FAITH, HOPE &",
+      "ScheduleValue": "CBS6 SA MRN@6A"
+    },
+    {
+      "BvsValue": "VIEW",
+      "ScheduleValue": "VIEW-ABC"
+    },
+    {
+      "BvsValue": "WAAY 31 HOMETOWN NEWS AT 4:30AM",
+      "ScheduleValue": "WAAY31NWS@430A"
+    },
+    {
+      "BvsValue": "WAAY 31 HOMETOWN NEWS AT 5",
+      "ScheduleValue": "WAAY31 FIRST@5"
+    },
+    {
+      "BvsValue": "WAKE UP ARIZONA AT 5AM",
+      "ScheduleValue": "CBS 5 NWS 5A"
+    },
+    {
+      "BvsValue": "WAKE UP WISCONSIN WEEKEND",
+      "ScheduleValue": "27NWS WK UP-WK"
+    },
+    {
+      "BvsValue": "WAND NEWS DAYBREAK AT 5AM",
+      "ScheduleValue": "WANDTV 17 DYBK"
+    },
+    {
+      "BvsValue": "WAPT 6AM NEWS",
+      "ScheduleValue": "16WAPT NEWS-6A"
+    },
+    {
+      "BvsValue": "WAPT 8AM NEWS",
+      "ScheduleValue": "16WAPT NEWS-8A"
+    },
+    {
+      "BvsValue": "WATE 6 NEWS AT 6",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "WCCB NEWS RISING 5AM",
+      "ScheduleValue": "WCCB NW RSG-5A"
+    },
+    {
+      "BvsValue": "WDRB NEWS AT 4:30",
+      "ScheduleValue": "WDRB NEWS@430"
+    },
+    {
+      "BvsValue": "WDSU FIRST NEWS",
+      "ScheduleValue": "WDSU 1ST EDITN"
+    },
+    {
+      "BvsValue": "WDSU NEWS SUNDAY MORNING",
+      "ScheduleValue": "NCH6 SUN MORNG/NCH6 SUN MRNG2"
+    },
+    {
+      "BvsValue": "WEEKEND TODAY IN CNY",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "WEEKEND TODAY IN CNY",
+      "ScheduleValue": "WEEKND-CNY@6A"
+    },
+    {
+      "BvsValue": "WEN HAIR - NEW SPECIAL TV OFFER!",
+      "ScheduleValue": "EYWT-SA MRN-6A"
+    },
+    {
+      "BvsValue": "WESH 2 NEWS EARLY SUNRISE",
+      "ScheduleValue": "WESH 2 NWS-5AM"
+    },
+    {
+      "BvsValue": "WESH 2 NEWS EARLY SUNRISE WEEKEND",
+      "ScheduleValue": "WESH-NW-5A WK"
+    },
+    {
+      "BvsValue": "WGME NEWS 13 WEEKEND EDITION",
+      "ScheduleValue": "WGME-13 WKD ED"
+    },
+    {
+      "BvsValue": "WGNO NEWS",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "WHAS11 NEWS AT 4P",
+      "ScheduleValue": "WHAS11 NWS@4PM/WHAS11 NWS@430"
+    },
+    {
+      "BvsValue": "WHEEL OF FORTUNE",
+      "ScheduleValue": "WHEEL OF"
+    },
+    {
+      "BvsValue": "WHO WANTS TO BE A MILLIONAIRE",
+      "ScheduleValue": "MILLIONAIRE"
+    },
+    {
+      "BvsValue": "WHP CBS 21 MORNING NEWS",
+      "ScheduleValue": "CBS 21NW-MRN6A"
+    },
+    {
+      "BvsValue": "WINK NEWS AT 6:00AM SUNDAY",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "WIS NEWS 10 SUNRISE",
+      "ScheduleValue": "WIS SUNRISE1"
+    },
+    {
+      "BvsValue": "WJCL 22 MORNING NEWS",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "WJCL 22 MORNING NEWS",
+      "ScheduleValue": "GD MN SAVNH B3"
+    },
+    {
+      "BvsValue": "WJCL 22 NEWS AT 6",
+      "ScheduleValue": "ABC 22 News"
+    },
+    {
+      "BvsValue": "WJHL 6AM NEWS",
+      "ScheduleValue": "NWSCH11 AT 6/NWSCH-7A-SAT"
+    },
+    {
+      "BvsValue": "WJHL 6P NEWS",
+      "ScheduleValue": "NEWS CHANNEL 11 @ 6P"
+    },
+    {
+      "BvsValue": "WJHL 7A NEWS SATURDAY",
+      "ScheduleValue": "NWSCH11 AT 6/NWSCH-7A-SAT"
+    },
+    {
+      "BvsValue": "WKYT NEWS AT 6:00 PM",
+      "ScheduleValue": "WKYT NEWS-6PM"
+    },
+    {
+      "BvsValue": "WKYT THIS MORNING AT 7:00 AM",
+      "ScheduleValue": "WKYT-MORN-7AM"
+    },
+    {
+      "BvsValue": "WNCN NEWS AT 7",
+      "ScheduleValue": "WNCN NEWS-7"
+    },
+    {
+      "BvsValue": "WPBF 25 NEWS MORNINGS",
+      "ScheduleValue": "WPBF 25 SUN 6A"
+    },
+    {
+      "BvsValue": "WPXI SUNDAY MORNING NEWS",
+      "ScheduleValue": "CH11NWS-SU AM"
+    },
+    {
+      "BvsValue": "WRAL-TV 5 MORNING NEWS",
+      "ScheduleValue": "MORNING NEWS"
+    },
+    {
+      "BvsValue": "WSAV COASTAL SUNRISE WEEKEND",
+      "ScheduleValue": "ON THE MONEY/EAT IT-BLANCO"
+    },
+    {
+      "BvsValue": "WSAV COASTAL SUNRISE WEEKEND",
+      "ScheduleValue": "WSAV-SUNRSE WK"
+    },
+    {
+      "BvsValue": "WSAV NEWS 3 AT 6:00",
+      "ScheduleValue": "AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "WSAV NEWS 3 AT 6:00",
+      "ScheduleValue": "WSAV-SUNRSE WK"
+    },
+    {
+      "BvsValue": "WSAV NEWS 3 AT 6:00",
+      "ScheduleValue": "WSAV-SUNRSE-6"
+    },
+    {
+      "BvsValue": "WSAV NEWS 3: COASTAL SUNRISE",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "WSAV NEWS 3: COASTAL SUNRISE",
+      "ScheduleValue": "NWSCH9 TODAY 1"
+    },
+    {
+      "BvsValue": "WSAV NEWS 3: COASTAL SUNRISE",
+      "ScheduleValue": "WSAV NW3 TODAY"
+    },
+    {
+      "BvsValue": "WSAV NEWS 3: COASTAL SUNRISE AT 5:00",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "WSAV NEWS 3: COASTAL SUNRISE AT 5:00",
+      "ScheduleValue": "NWSCH9 TODAY 1"
+    },
+    {
+      "BvsValue": "WSAV NEWS 3: COASTAL SUNRISE AT 5:00",
+      "ScheduleValue": "WSAV-SUNRSE-5"
+    },
+    {
+      "BvsValue": "WSLS 10 VIRGINIA TODAY",
+      "ScheduleValue": "WSLS SUN VATY6/WSLS SUN VATY7"
+    },
+    {
+      "BvsValue": "WSLS 10 VIRGINIA TODAY",
+      "ScheduleValue": "WSLS VA TDY 5A"
+    },
+    {
+      "BvsValue": "WVTM 13 NEWS AT 4P",
+      "ScheduleValue": "WVTM13 NWS 4PM"
+    },
+    {
+      "BvsValue": "WVTM 13 NEWS AT 530AM",
+      "ScheduleValue": "WVTM13 NWS 5AM"
+    },
+    {
+      "BvsValue": "WVTM 13 NEWS AT 6A",
+      "ScheduleValue": "WVTM-NWS 6A SU"
+    },
+    {
+      "BvsValue": "WVTM 13 NEWS AT 9A",
+      "ScheduleValue": "WVTM-NWS 9A SU"
+    },
+    {
+      "BvsValue": "WXII 12 NEWS AT 4:30",
+      "ScheduleValue": "WXII 12NW-430A"
+    },
+    {
+      "BvsValue": "WXII 12 NEWS AT 5:30AM",
+      "ScheduleValue": "WXII 12NW-530A"
+    },
+    {
+      "BvsValue": "WYFF NEWS 4 AT 5:30PM",
+      "ScheduleValue": "WYFF NWS4@530P"
+    },
+    {
+      "BvsValue": "WZZM 13 NEWS AT 6:30PM",
+      "ScheduleValue": "ABC-NWS SAT/WZZM13 NW SA"
+    }
+  ],
+  "Version": 617
+}

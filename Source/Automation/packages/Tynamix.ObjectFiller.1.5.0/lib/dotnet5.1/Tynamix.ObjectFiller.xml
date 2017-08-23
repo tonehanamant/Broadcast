@@ -1,0 +1,2574 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tynamix.ObjectFiller</name>
+    </assembly>
+    <members>
+        <member name="T:Tynamix.ObjectFiller.Filler`1">
+            <summary>
+            The ObjectFiller.NET fills the public properties of your .NET object
+            with random data
+            </summary>
+            <typeparam name="T">
+            Target dictionaryType of the object to fill
+            </typeparam>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.Filler`1.setupManager">
+            <summary>
+            The setup manager contains the setup per dictionaryType
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Filler`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.Create">
+            <summary>
+            Creates your filled object. Call this after you finished your setup with the FluentAPI and if you want
+            to create a new object. If you want to use a existing instance use the <see cref="M:Tynamix.ObjectFiller.Filler`1.Fill(`0)"/> method.
+            </summary>
+            <returns>
+            A created and filled instance of dictionaryType <see cref="!:T"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.Create(System.Int32)">
+            <summary>
+            Creates multiple filled objects. Call this after you finished your setup with the FluentAPI and if you want
+            to create several new objects. If you want to use a existing instance use the <see cref="M:Tynamix.ObjectFiller.Filler`1.Fill(`0)"/> method.
+            </summary>
+            <param name="count">
+            Count of instances to create
+            </param>
+            <returns>
+            <see cref="T:System.Collections.Generic.IEnumerable`1"/> with created and filled instances of dictionaryType <see cref="!:T"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.Fill(`0)">
+            <summary>
+            Fills your object instance. Call this after you finished your setup with the FluentAPI
+            </summary>
+            <param name="instanceToFill">
+            The instance To fill.
+            </param>
+            <returns>
+            The filled instance of dictionaryType <see cref="!:T"/>.
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.Setup">
+            <summary>
+            Call this to start the setup for the <see cref="T:Tynamix.ObjectFiller.Filler`1"/>
+            </summary>
+            <returns>Fluent API setup</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.Setup(Tynamix.ObjectFiller.FillerSetup)">
+            <summary>
+            Call this to start the setup for the <see cref="T:Tynamix.ObjectFiller.Filler`1"/> and use a setup which you created
+            before with the <see cref="T:Tynamix.ObjectFiller.IFluentApi`2"/>
+            </summary>
+            <param name="fillerSetupToUse">
+            FillerSetup to use
+            </param>
+            <returns>
+            Fluent API Setup
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.DictionaryParamTypesAreValid(System.Type,Tynamix.ObjectFiller.FillerSetupItem)">
+            <summary>
+            Checks if the dictionary parameter types are valid to use with object filler
+            </summary>
+            <param name="dictionaryType">
+            The type of the dictionary.
+            </param>
+            <param name="currentSetupItem">
+            The current setup item.
+            </param>
+            <returns>
+            True if the dictionary parameter types are valid for use with object filler
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.GetDefaultValueOfType(System.Type)">
+            <summary>
+            Creates a default value for the given <see cref="!:propertyType"/>
+            </summary>
+            <param name="propertyType">
+            The property dictionaryType.
+            </param>
+            <returns>
+            Default value for the given <see cref="!:propertyType"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.HasTypeARandomFunc(System.Type,Tynamix.ObjectFiller.FillerSetupItem)">
+            <summary>
+            Checks if there is a random function for the given <see cref="!:type"/>
+            </summary>
+            <param name="type">
+            The dictionaryType.
+            </param>
+            <param name="currentSetupItem">
+            The current setup item.
+            </param>
+            <returns>
+            True if there is a random function in the <see cref="!:currentSetupItem"/> for the given <see cref="!:type"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.ListParamTypeIsValid(System.Type,Tynamix.ObjectFiller.FillerSetupItem)">
+            <summary>
+            Checks if the list parameter type are valid to use with object filler
+            </summary>
+            <param name="listType">
+            The type of the list.
+            </param>
+            <param name="currentSetupItem">
+            The current setup item.
+            </param>
+            <returns>
+            True if the list parameter types are valid for use with object filler
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.TypeIsDictionary(System.Type)">
+            <summary>
+            Checks if the given <see cref="!:type"/> is a dictionary
+            </summary>
+            <param name="type">
+            The type to check
+            </param>
+            <returns>
+            True if the target <see cref="!:type"/>  is a dictionary
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.TypeIsList(System.Type)">
+            <summary>
+            Checks if the given <see cref="!:type"/> is a list
+            </summary>
+            <param name="type">
+            The type to check
+            </param>
+            <returns>
+            True if the target <see cref="!:type"/>  is a list
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.TypeIsCollection(System.Type)">
+            <summary>
+            Checks if the given <see cref="!:type"/> is a list
+            </summary>
+            <param name="type">
+            The type to check
+            </param>
+            <returns>
+            True if the target <see cref="!:type"/>  is a list
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.TypeIsPoco(System.Type)">
+            <summary>
+            Checks if the given <see cref="!:type"/> is a plain old class object
+            </summary>
+            <param name="type">
+            The type to check
+            </param>
+            <returns>
+            True if the target <see cref="!:type"/> is a plain old class object
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.TypeIsClrType(System.Type)">
+            <summary>
+            Check if the given type is a type from the common language library
+            </summary>
+            <param name="type">Type to check</param>
+            <returns>True if the given type is a type from the common language library</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.TypeIsValidForObjectFiller(System.Type,Tynamix.ObjectFiller.FillerSetupItem)">
+            <summary>
+            Checks if the given <see cref="!:type"/> can be used by the object filler
+            </summary>
+            <param name="type">
+            The dictionaryType which will be checked
+            </param>
+            <param name="currentSetupItem">
+            The current setup item.
+            </param>
+            <returns>
+            True when the <see cref="!:type"/> can be used with object filler
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.CheckForCircularReference(System.Type,Tynamix.ObjectFiller.HashStack{System.Type},Tynamix.ObjectFiller.FillerSetupItem)">
+            <summary>
+            Checks if the given dictionaryType was already been used in the object hierarchy
+            </summary>
+            <param name="targetType">
+            The target dictionaryType.
+            </param>
+            <param name="typeTracker">
+            The dictionaryType tracker to find circular dependencies
+            </param>
+            <param name="currentSetupItem">
+            The current setup item.
+            </param>
+            <returns>
+            True if there is a circular dependency
+            </returns>
+            <exception cref="T:System.InvalidOperationException">
+            Throws exception if a circular dependency exists and the setup is set to throw exception on circular dependency
+            </exception>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.ContainsProperty(System.Collections.Generic.IEnumerable{System.Reflection.PropertyInfo},System.Reflection.PropertyInfo)">
+            <summary>
+            Checks if a <see cref="!:property"/> exists in the given list of <see cref="!:properties"/>
+            </summary>
+            <param name="properties">
+            Source properties where to check if the <see cref="!:property"/> is contained
+            </param>
+            <param name="property">
+            The property which will be checked
+            </param>
+            <returns>
+            True if the <see cref="!:property"/> is in the list of <see cref="!:properties"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.CreateAndFillObject(System.Type,Tynamix.ObjectFiller.FillerSetupItem,Tynamix.ObjectFiller.HashStack{System.Type})">
+            <summary>
+            Creates a object of the target <see cref="!:type"/> and fills it up with data according to the given <see cref="!:currentSetupItem"/>
+            </summary>
+            <param name="type">
+            The target dictionaryType to create and fill
+            </param>
+            <param name="currentSetupItem">
+            The current setup item.
+            </param>
+            <param name="typeTracker">
+            The dictionaryType tracker to find circular dependencies
+            </param>
+            <returns>
+            The created and filled object of the given <see cref="!:type"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.GetFilledArray(System.Type,Tynamix.ObjectFiller.FillerSetupItem,Tynamix.ObjectFiller.HashStack{System.Type})">
+            <summary>
+            Creates and filles an array or jagged array
+            </summary>
+            <param name="type">Array type to create and fill</param>
+            <param name="currentSetupItem">Current ObjectFiller.NET Setup item</param>
+            <param name="typeTracker">
+            The type tracker to find circular dependencies
+            </param>
+            <returns>Created and filled array</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.CreateInstanceOfInterfaceOrAbstractClass(System.Type,Tynamix.ObjectFiller.FillerSetupItem,Tynamix.ObjectFiller.HashStack{System.Type})">
+            <summary>
+            Creates a instance of an interface or abstract class. Like an IoC-Framework
+            </summary>
+            <param name="interfaceType">
+            The dictionaryType of interface or abstract class
+            </param>
+            <param name="setupItem">
+            The setup item.
+            </param>
+            <param name="typeTracker">
+            The type tracker to find circular dependencies
+            </param>
+            <returns>
+            The created and filled instance of the <see cref="!:interfaceType"/>
+            </returns>
+            <exception cref="T:System.InvalidOperationException">
+            Throws Exception if no dictionaryType was registered for the given <see cref="!:interfaceType"/>
+            </exception>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.CreateInstanceOfType(System.Type,Tynamix.ObjectFiller.FillerSetupItem,Tynamix.ObjectFiller.HashStack{System.Type})">
+            <summary>
+            Creates a instance of the given <see cref="!:type"/>
+            </summary>
+            <param name="type">
+            The dictionaryType to create
+            </param>
+            <param name="currentSetupItem">
+            The setup for the current object dictionaryType
+            </param>
+            <param name="typeTracker">
+            The dictionaryType tracker to find circular dependencies
+            </param>
+            <returns>
+            Created instance of the given <see cref="T:System.Type"/>
+            </returns>
+            <exception cref="T:System.InvalidOperationException">
+            Throws exception if the constructor could not be created by filler setup
+            </exception>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.FillInternal(System.Object,Tynamix.ObjectFiller.HashStack{System.Type})">
+            <summary>
+            Fills the given <see cref="!:objectToFill"/> with random data
+            </summary>
+            <param name="objectToFill">
+            The object to fill.
+            </param>
+            <param name="typeTracker">
+            The dictionaryType tracker to find circular dependencies
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.GetFilledDictionary(System.Type,Tynamix.ObjectFiller.FillerSetupItem,Tynamix.ObjectFiller.HashStack{System.Type})">
+            <summary>
+            Creates and fills a dictionary of the target <see cref="!:propertyType"/>
+            </summary>
+            <param name="propertyType">
+            The dictionaryType of the dictionary
+            </param>
+            <param name="currentSetupItem">
+            The current setup item.
+            </param>
+            <param name="typeTracker">
+            The dictionaryType tracker to find circular dependencies
+            </param>
+            <returns>
+            A created and filled dictionary
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Throws exception if the setup was made in a way that the keys of the dictionary are always the same
+            </exception>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.GetFilledList(System.Type,Tynamix.ObjectFiller.FillerSetupItem,Tynamix.ObjectFiller.HashStack{System.Type})">
+            <summary>
+            Creates and fills a list of the given <see cref="!:propertyType"/>
+            </summary>
+            <param name="propertyType">
+            Type of the list
+            </param>
+            <param name="currentSetupItem">
+            The current setup item.
+            </param>
+            <param name="typeTracker">
+            The dictionaryType tracker to find circular dependencies
+            </param>
+            <returns>
+            Created and filled list of the given <see cref="!:propertyType"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.GetFilledCollection(System.Type,Tynamix.ObjectFiller.FillerSetupItem,Tynamix.ObjectFiller.HashStack{System.Type})">
+            <summary>
+            Creates and fills a list of the given <see cref="!:propertyType"/>
+            </summary>
+            <param name="propertyType">
+            Type of the list
+            </param>
+            <param name="currentSetupItem">
+            The current setup item.
+            </param>
+            <param name="typeTracker">
+            The dictionaryType tracker to find circular dependencies
+            </param>
+            <returns>
+            Created and filled list of the given <see cref="!:propertyType"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.GetFilledPoco(System.Type,Tynamix.ObjectFiller.FillerSetupItem,Tynamix.ObjectFiller.HashStack{System.Type})">
+            <summary>
+            Creates and fills a POCO class
+            </summary>
+            <param name="type">
+            The target dictionaryType.
+            </param>
+            <param name="currentSetupItem">
+            The current setup item.
+            </param>
+            <param name="typeTracker">
+            The dictionaryType tracker to find circular dependencies
+            </param>
+            <returns>
+            The created and filled POCO class
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.GetPropertyFromProperties(System.Collections.Generic.IEnumerable{System.Reflection.PropertyInfo},System.Reflection.PropertyInfo)">
+            <summary>
+            Selects the given <see cref="!:property"/> from the given list of <see cref="!:properties"/>
+            </summary>
+            <param name="properties">
+            All properties where the target <see cref="!:property"/> will be searched in
+            </param>
+            <param name="property">
+            The target property.
+            </param>
+            <returns>
+            All properties from <see cref="!:properties"/> which are the same as the target <see cref="!:property"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.GetRandomEnumValue(System.Type)">
+            <summary>
+            Gets a random value for an enumeration
+            </summary>
+            <param name="type">
+            Type of the enumeration
+            </param>
+            <returns>
+            A default value for an enumeration
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.GetRandomValue(System.Type,Tynamix.ObjectFiller.FillerSetupItem)">
+            <summary>
+            Gets a random value of the given <see cref="!:propertyType"/>
+            </summary>
+            <param name="propertyType">
+            The property dictionaryType.
+            </param>
+            <param name="setupItem">
+            The setup item.
+            </param>
+            <returns>
+            A random value of the given <see cref="!:propertyType"/>
+            </returns>
+            <exception cref="T:System.TypeInitializationException">
+            Throws exception if object filler was not able to create random data
+            </exception>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.GetSetMethodOnDeclaringType(System.Reflection.PropertyInfo)">
+            <summary>
+            Gets the setter of a <see cref="!:propInfo"/>
+            </summary>
+            <param name="propInfo">
+            The <see cref="T:System.Reflection.PropertyInfo"/> for which the setter method will be found
+            </param>
+            <returns>
+            The setter of the property as <see cref="T:System.Reflection.MethodInfo"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.IgnoreProperty(System.Reflection.PropertyInfo,Tynamix.ObjectFiller.FillerSetupItem)">
+            <summary>
+            Checks if a property is ignored by the <see cref="!:currentSetupItem"/>
+            </summary>
+            <param name="property">
+            The property to check for ignorance
+            </param>
+            <param name="currentSetupItem">
+            The current setup item.
+            </param>
+            <returns>
+            True if the <see cref="!:property"/> should be ignored
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.OrderPropertiers(Tynamix.ObjectFiller.FillerSetupItem,System.Reflection.PropertyInfo[])">
+            <summary>
+            Sorts the properties like the <see cref="!:currentSetupItem"/> wants to have it
+            </summary>
+            <param name="currentSetupItem">
+            The current setup item.
+            </param>
+            <param name="properties">
+            The properties to sort
+            </param>
+            <returns>
+            Sorted properties as a queue
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object)">
+            <summary>
+            Sets the given <see cref="!:value"/> on the given <see cref="!:property"/> for the given <see cref="!:objectToFill"/> 
+            </summary>
+            <param name="property">
+            The property to set
+            </param>
+            <param name="objectToFill">
+            The object to fill.
+            </param>
+            <param name="value">
+            The value for the <see cref="!:property"/>
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.TypeIsEnum(System.Type)">
+            <summary>
+            Checks if the given <see cref="!:type"/> is a enumeration
+            </summary>
+            <param name="type">
+            The type to check
+            </param>
+            <returns>
+            True if the target <see cref="!:type"/>  is a enumeration
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.TypeIsNullableEnum(System.Type)">
+            <summary>
+            Checks if the given <see cref="!:type"/> is a nullable enum
+            </summary>
+            <param name="type">Type to check</param>
+            <returns>True if the type is a nullable enum</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Filler`1.TypeIsArray(System.Type)">
+            <summary>
+            Checks if the given <see cref="!:type"/> is a supported array
+            </summary>
+            <param name="type">Type to check</param>
+            <returns>True if the type is a array</returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.HashStack`1">
+            <summary>
+            A stack-like collection that uses a HashSet under the covers, so elements also need to be unique.
+            </summary>
+            <typeparam name="T">
+            Type of the  Hashstack
+            </typeparam>
+            <remarks>
+            I decided to follow the HashSet more closely than the stack, 
+            which is why Push returns a boolean. I still think throwing an exception makes more
+            sense, but if HashSet does it people should be already familiar with the paradigm.
+            Pop however follows the standard stack implementation, of course.
+            </remarks>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.HashStack`1.set">
+            <summary>
+            The _set.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.HashStack`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.HashStack`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.HashStack`1.#ctor(System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.HashStack`1"/> class.
+            </summary>
+            <param name="comparer">
+            The comparer.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.HashStack`1.Push(`0)">
+            <summary>
+            Adds the specified element to the HashStack.
+            </summary>
+            <returns>True if the element is added; false if the element is already present.</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.HashStack`1.Pop">
+            <summary>
+            Removes and returns the last added element.
+            </summary>
+            <returns>
+            The item of type <see cref="!:T"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.HashStack`1.Clear">
+            <summary>
+            Clears the hash stack
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.HashStack`1.Contains(`0)">
+            <summary>
+            Checks if the <see cref="T:Tynamix.ObjectFiller.HashStack`1"/> contains the <see cref="!:item"/>
+            </summary>
+            <param name="item">
+            The item.
+            </param>
+            <returns>
+            True if the <see cref="T:Tynamix.ObjectFiller.HashStack`1"/> contains the item
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.HashStack`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            </returns>
+            <filterpriority>1</filterpriority>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.HashStack`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+            </returns>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.IInterfaceMocker">
+            <summary>
+            Implement this interface to use a mocking framework for instantiate your interfaces.
+            Register this <see cref="T:Tynamix.ObjectFiller.IInterfaceMocker"/> in the setup of the ObjectFiller
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.IInterfaceMocker.Create``1">
+            <summary>
+            Creates a mock of the interface with type <see cref="!:T"/>
+            </summary>
+            <typeparam name="T">Type of the interface</typeparam>
+            <returns>Mock of the interface</returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.Random">
+            <summary>
+            Class wraps the <see cref="T:System.Random"/> class. 
+            This is to have a static instance of the random class
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Random.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:Tynamix.ObjectFiller.Random"/> class.
+            A instance of <see cref="T:Tynamix.ObjectFiller.Random"/>
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.Random.Rnd">
+            <summary>
+            A instance of <see cref="T:Tynamix.ObjectFiller.Random"/>
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Random.Next">
+            <summary>
+            Returns a nonnegative number
+            </summary>
+            <returns>
+            A nonnegative number
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Random.Next(System.Int32)">
+            <summary>
+            Returns a nonnegative number less than specified <see cref="!:maxValue"/>
+            </summary>
+            <param name="maxValue">
+            The maximum value.
+            </param>
+            <returns>
+            A nonnegative number less than specified <see cref="!:maxValue"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Random.Next(System.Int32,System.Int32)">
+            <summary>
+            Returns a random number within the given range
+            </summary>
+            <param name="minValue">
+            The min value.
+            </param>
+            <param name="maxValue">
+            The max value.
+            </param>
+            <returns>
+            A random number within the given range
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Random.NextDouble">
+            <summary>
+            Returns a random number between 0.0 and 1.0
+            </summary>
+            <returns>
+            A random number between 0.0 and 1.0
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Random.NextByte(System.Byte[])">
+            <summary>
+            Fills the elements of a specified array of bytes  with random numbers
+            </summary>
+            <param name="buffer">
+            The buffer.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Random.NextLong(System.Int64,System.Int64)">
+            <summary>
+            Gets a random value between to source long values
+            </summary>
+            <param name="min">Min long value</param>
+            <param name="max">Max long value</param>
+            <returns>A Long between <see cref="!:min"/> and <see cref="!:max"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Random.NextLong">
+            <summary>
+            Gets a random value between to source long values
+            </summary>
+            <param name="min">Min long value</param>
+            <param name="max">Max long value</param>
+            <returns>A Long between <see cref="!:min"/> and <see cref="!:max"/></returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.Randomizer`1">
+            <summary>
+            This class is a easy way to get random values. 
+            </summary>
+            <typeparam name="T">Target type of whom the random value shall been generated</typeparam>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.Randomizer`1.Setup">
+            <summary>
+            The default setup item
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Randomizer`1.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:Tynamix.ObjectFiller.Randomizer`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Randomizer`1.Create">
+            <summary>
+            Creates a random value of type <see cref="!:T"/>.
+            </summary>
+            <returns>A value of type <see cref="!:T"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Randomizer`1.Create(System.Int32)">
+            <summary>
+            Creates a set of random items of the given type.
+            </summary>
+            <param name="amount">Amount of items created.</param>
+            <returns>Set of random items of the given type.</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Randomizer`1.Create(System.Int32,System.Func{`0})">
+            <summary>
+            Creates the specified amount of elements using the given factory.
+            </summary>
+            <param name="amount">The amount to create.</param>
+            <param name="factory">The factory which provides the instance to add.</param>
+            <returns>Set of items created by the factory.</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Randomizer`1.Create(Tynamix.ObjectFiller.IRandomizerPlugin{`0},System.Int32)">
+            <summary>
+            Creates a set of random items of the given type and will use a <see cref="T:Tynamix.ObjectFiller.IRandomizerPlugin`1"/> for that.
+            </summary>
+            <param name="randomizerPlugin">Plugin to use.</param>
+            <param name="amount">Amount of items created.</param>
+            <returns>Set of random items of the given type.</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Randomizer`1.Create(Tynamix.ObjectFiller.FillerSetup,System.Int32)">
+            <summary>
+            Creates a set of random items of the given type and will use a <see cref="T:Tynamix.ObjectFiller.FillerSetup"/> for that.
+            </summary>
+            <param name="setup">Setup to use.</param>
+            <param name="amount">Amount of items created.</param>
+            <returns>Set of random items of the given type.</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Randomizer`1.Create(Tynamix.ObjectFiller.IRandomizerPlugin{`0})">
+            <summary>
+            Creates a random value of the target type. It will use a <see cref="T:Tynamix.ObjectFiller.IRandomizerPlugin`1"/> for that
+            </summary>
+            <param name="randomizerPlugin"><see cref="T:Tynamix.ObjectFiller.IRandomizerPlugin`1"/> to use</param>
+            <returns>A random value of type <see cref="!:T"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Randomizer`1.Create(Tynamix.ObjectFiller.FillerSetup)">
+            <summary>
+            Creates a value base on a filler setup
+            </summary>
+            <param name="setup">Setup for the objectfiller</param>
+            <returns>Created value</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Randomizer`1.CreateFactoryMethod(Tynamix.ObjectFiller.FillerSetup)">
+            <summary>
+            Creates a factory method for the given type.
+            </summary>
+            <param name="setup">The setup which is used for the type.</param>
+            <returns>A function with which the given type can be instantiated.</returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.EnumeratorPlugin`1">
+            <summary>
+            Enumerator plugin is used to always select the next value of an IEnumerable.
+            </summary>
+            <typeparam name="T">Type for which the randomizer will generate data</typeparam>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.EnumeratorPlugin`1.enumerable">
+            <summary>
+            The enumerable.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.EnumeratorPlugin`1.enumerator">
+            <summary>
+            The enumerator to move thru the the <see cref="F:Tynamix.ObjectFiller.EnumeratorPlugin`1.enumerable"/>
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.EnumeratorPlugin`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.EnumeratorPlugin`1"/> class.
+            </summary>
+            <param name="enumerable">
+            The enumerable to select one value after another.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.EnumeratorPlugin`1.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.IRandomizerPlugin`1">
+            <summary>
+            Implement this interface to create a custom randomizer of type <see cref="!:T"/>
+            </summary>
+            <typeparam name="T">Type for which the randomizer will generate data</typeparam>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.IRandomizerPlugin`1.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.RandomListItem`1">
+            <summary>
+            Plugin to use a random value from a given list
+            </summary>
+            <typeparam name="T">Type of the items in the list</typeparam>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.RandomListItem`1.allAvailableValues">
+            <summary>
+            All available values which will be used to select a random value
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.RandomListItem`1.#ctor(`0[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.RandomListItem`1"/> class.
+            </summary>
+            <param name="allAvailableValues">
+            All available values from which a random value will be selected
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Throws exception if no parameter will added
+            </exception>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.RandomListItem`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.RandomListItem`1"/> class.
+            </summary>
+            <param name="allAvailableValues">
+            All available values from which a random value will be selected
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.RandomListItem`1.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorSByte.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then 0 (zero) will be used as initial value.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorSByte.To">
+            <summary>
+            The max value until which the sequence should continue before it will wrap around.
+            For example, using From=1 and To=3 will generate a sequence like [1,2,3,1,2,3,1...]<para/>
+            If this property is not set then the sequence will not wrap, unless it reaches the limit of your datatype.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorSByte.Step">
+            <summary>
+            The step value which sould be used when generating the sequence.
+            For example, using From=1 and Step=2 will generate a sequence like [1,3,5,7,...]<para/>
+            If this property is not set then a default value of 1 (one) will be used.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorSByte.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorInt16.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then 0 (zero) will be used as initial value.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorInt16.To">
+            <summary>
+            The max value until which the sequence should continue before it will wrap around.
+            For example, using From=1 and To=3 will generate a sequence like [1,2,3,1,2,3,1...]<para/>
+            If this property is not set then the sequence will not wrap, unless it reaches the limit of your datatype.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorInt16.Step">
+            <summary>
+            The step value which sould be used when generating the sequence.
+            For example, using From=1 and Step=2 will generate a sequence like [1,3,5,7,...]<para/>
+            If this property is not set then a default value of 1 (one) will be used.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorInt16.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorInt32.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then 0 (zero) will be used as initial value.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorInt32.To">
+            <summary>
+            The max value until which the sequence should continue before it will wrap around.
+            For example, using From=1 and To=3 will generate a sequence like [1,2,3,1,2,3,1...]<para/>
+            If this property is not set then the sequence will not wrap, unless it reaches the limit of your datatype.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorInt32.Step">
+            <summary>
+            The step value which sould be used when generating the sequence.
+            For example, using From=1 and Step=2 will generate a sequence like [1,3,5,7,...]<para/>
+            If this property is not set then a default value of 1 (one) will be used.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorInt32.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorInt64.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then 0 (zero) will be used as initial value.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorInt64.To">
+            <summary>
+            The max value until which the sequence should continue before it will wrap around.
+            For example, using From=1 and To=3 will generate a sequence like [1,2,3,1,2,3,1...]<para/>
+            If this property is not set then the sequence will not wrap, unless it reaches the limit of your datatype.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorInt64.Step">
+            <summary>
+            The step value which sould be used when generating the sequence.
+            For example, using From=1 and Step=2 will generate a sequence like [1,3,5,7,...]<para/>
+            If this property is not set then a default value of 1 (one) will be used.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorInt64.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorByte.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then 0 (zero) will be used as initial value.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorByte.To">
+            <summary>
+            The max value until which the sequence should continue before it will wrap around.
+            For example, using From=1 and To=3 will generate a sequence like [1,2,3,1,2,3,1...]<para/>
+            If this property is not set then the sequence will not wrap, unless it reaches the limit of your datatype.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorByte.Step">
+            <summary>
+            The step value which sould be used when generating the sequence.
+            For example, using From=1 and Step=2 will generate a sequence like [1,3,5,7,...]<para/>
+            If this property is not set then a default value of 1 (one) will be used.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorByte.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorChar.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then 0 (zero) will be used as initial value.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorChar.To">
+            <summary>
+            The max value until which the sequence should continue before it will wrap around.
+            For example, using From=1 and To=3 will generate a sequence like [1,2,3,1,2,3,1...]<para/>
+            If this property is not set then the sequence will not wrap, unless it reaches the limit of your datatype.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorChar.Step">
+            <summary>
+            The step value which sould be used when generating the sequence.
+            For example, using From=1 and Step=2 will generate a sequence like [1,3,5,7,...]<para/>
+            If this property is not set then a default value of 1 (one) will be used.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorChar.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorUInt16.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then 0 (zero) will be used as initial value.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorUInt16.To">
+            <summary>
+            The max value until which the sequence should continue before it will wrap around.
+            For example, using From=1 and To=3 will generate a sequence like [1,2,3,1,2,3,1...]<para/>
+            If this property is not set then the sequence will not wrap, unless it reaches the limit of your datatype.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorUInt16.Step">
+            <summary>
+            The step value which sould be used when generating the sequence.
+            For example, using From=1 and Step=2 will generate a sequence like [1,3,5,7,...]<para/>
+            If this property is not set then a default value of 1 (one) will be used.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorUInt16.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorUInt32.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then 0 (zero) will be used as initial value.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorUInt32.To">
+            <summary>
+            The max value until which the sequence should continue before it will wrap around.
+            For example, using From=1 and To=3 will generate a sequence like [1,2,3,1,2,3,1...]<para/>
+            If this property is not set then the sequence will not wrap, unless it reaches the limit of your datatype.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorUInt32.Step">
+            <summary>
+            The step value which sould be used when generating the sequence.
+            For example, using From=1 and Step=2 will generate a sequence like [1,3,5,7,...]<para/>
+            If this property is not set then a default value of 1 (one) will be used.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorUInt32.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorUInt64.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then 0 (zero) will be used as initial value.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorUInt64.To">
+            <summary>
+            The max value until which the sequence should continue before it will wrap around.
+            For example, using From=1 and To=3 will generate a sequence like [1,2,3,1,2,3,1...]<para/>
+            If this property is not set then the sequence will not wrap, unless it reaches the limit of your datatype.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorUInt64.Step">
+            <summary>
+            The step value which sould be used when generating the sequence.
+            For example, using From=1 and Step=2 will generate a sequence like [1,3,5,7,...]<para/>
+            If this property is not set then a default value of 1 (one) will be used.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorUInt64.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorSingle.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then 0 (zero) will be used as initial value.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorSingle.To">
+            <summary>
+            The max value until which the sequence should continue before it will wrap around.
+            For example, using From=1 and To=3 will generate a sequence like [1,2,3,1,2,3,1...]<para/>
+            If this property is not set then the sequence will not wrap, unless it reaches the limit of your datatype.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorSingle.Step">
+            <summary>
+            The step value which sould be used when generating the sequence.
+            For example, using From=1 and Step=2 will generate a sequence like [1,3,5,7,...]<para/>
+            If this property is not set then a default value of 1 (one) will be used.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorSingle.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorDouble.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then 0 (zero) will be used as initial value.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorDouble.To">
+            <summary>
+            The max value until which the sequence should continue before it will wrap around.
+            For example, using From=1 and To=3 will generate a sequence like [1,2,3,1,2,3,1...]<para/>
+            If this property is not set then the sequence will not wrap, unless it reaches the limit of your datatype.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorDouble.Step">
+            <summary>
+            The step value which sould be used when generating the sequence.
+            For example, using From=1 and Step=2 will generate a sequence like [1,3,5,7,...]<para/>
+            If this property is not set then a default value of 1 (one) will be used.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorDouble.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorDecimal.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then 0 (zero) will be used as initial value.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorDecimal.To">
+            <summary>
+            The max value until which the sequence should continue before it will wrap around.
+            For example, using From=1 and To=3 will generate a sequence like [1,2,3,1,2,3,1...]<para/>
+            If this property is not set then the sequence will not wrap, unless it reaches the limit of your datatype.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorDecimal.Step">
+            <summary>
+            The step value which sould be used when generating the sequence.
+            For example, using From=1 and Step=2 will generate a sequence like [1,3,5,7,...]<para/>
+            If this property is not set then a default value of 1 (one) will be used.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorDecimal.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorBoolean.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then 'false' will be used as initial value.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorBoolean.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorDateTime.From">
+            <summary>
+            The initial value at which a sequence should start.<para/>
+            If this property is not set then the default date will be used as initial value.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorDateTime.To">
+            <summary>
+            The max value until which the sequence should continue before it will wrap around.
+            If this property is not set then the sequence will not wrap, unless it reaches the limit of your datatype.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SequenceGeneratorDateTime.Step">
+            <summary>
+            The step value which sould be used when generating the sequence.<para/>
+            If this property is not set then a default value of 1 (one) day will be used.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SequenceGeneratorDateTime.GetValue">
+            <summary>
+            Gets the next value of the sequence.
+            </summary>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.DateTimeRange">
+            <summary>
+            The date time range plugin.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.DateTimeRange.earliestDate">
+            <summary>
+            The earliest date.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.DateTimeRange.latestDate">
+            <summary>
+            The latest date.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.DateTimeRange.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.DateTimeRange"/> class.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.DateTimeRange.#ctor(System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.DateTimeRange"/> class.
+            </summary>
+            <param name="earliestDate">
+            The earliest date.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.DateTimeRange.#ctor(System.DateTime,System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.DateTimeRange"/> class.
+            </summary>
+            <param name="earliestDate">
+            The earliest date.
+            </param>
+            <param name="latestDate">
+            The latest date.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.DateTimeRange.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.DateTimeRange.Tynamix#ObjectFiller#IRandomizerPlugin{System#DateTime?}#GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.DoubleRange">
+            <summary>
+            The double range plugin
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.DoubleRange.minValue">
+            <summary>
+            The min value.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.DoubleRange.maxValue">
+            <summary>
+            The max value.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.DoubleRange.#ctor(System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.DoubleRange"/> class. 
+            Use to define just a max value for the double randomizer. Min value will be 0!
+            </summary>
+            <param name="maxValue">
+            Maximum double value
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.DoubleRange.#ctor(System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.DoubleRange"/> class. 
+            Use to define a min and max double value for the randomizer
+            </summary>
+            <param name="minValue">
+            Min value
+            </param>
+            <param name="maxValue">
+            Max value
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.DoubleRange.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.DoubleRange"/> class. 
+            Use this to generate a double value between double.MinValue and double.MaxValue
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.DoubleRange.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.DoubleRange.Tynamix#ObjectFiller#IRandomizerPlugin{System#Double?}#GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.DoubleRange.Tynamix#ObjectFiller#IRandomizerPlugin{System#Decimal}#GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.DoubleRange.Tynamix#ObjectFiller#IRandomizerPlugin{System#Decimal?}#GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FloatRange.#ctor(System.Single)">
+            <summary>
+            Use to define just a max value for the double randomizer. Min value will be 0!
+            </summary>
+            <param name="maxValue">Maximum double value</param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FloatRange.#ctor(System.Single,System.Single)">
+            <summary>
+            Use to define a min and max double value for the randomizer
+            </summary>
+            <param name="minValue">Min value</param>
+            <param name="maxValue">Max value</param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FloatRange.#ctor">
+            <summary>
+            Use this to generate a double value between double.MinValue and double.MaxValue
+            </summary>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.IntRange">
+            <summary>
+            The integer range plugin
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.IntRange.min">
+            <summary>
+            The min value
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.IntRange.max">
+            <summary>
+            The max value
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.IntRange.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.IntRange"/> class.
+            </summary>
+            <param name="min">
+            The min value
+            </param>
+            <param name="max">
+            The max value
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.IntRange.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.IntRange"/> class.
+            </summary>
+            <param name="max">
+            The max.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.IntRange.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.IntRange"/> class.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.IntRange.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.IntRange.Tynamix#ObjectFiller#IRandomizerPlugin{System#Int32?}#GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.Collectionizer`2">
+            <summary>
+            The collectionizer can be used to create <see cref="T:System.Collections.Generic.List`1"/> based on a <see cref="T:Tynamix.ObjectFiller.IRandomizerPlugin`1"/>.
+            </summary>
+            <typeparam name="T">Typeparameter of of the target List</typeparam>
+            <typeparam name="TRandomizer">Plugin which will be used to create the List</typeparam>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Collectionizer`2.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Collectionizer`2"/> class.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Collectionizer`2.#ctor(System.UInt32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Collectionizer`2"/> class.
+            </summary>
+            <param name="minCount">Min count of list items</param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Collectionizer`2.#ctor(System.UInt32,System.UInt32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Collectionizer`2"/> class.
+            </summary>
+            <param name="minCount">Min count of list items</param>
+            <param name="maxCount">Max count of list items</param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Collectionizer`2.#ctor(`1)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Collectionizer`2"/> class.
+            </summary>
+            <param name="randomizerToUse">The randomizer which will be used. Use this if you want
+            to specifiy how the randomizer to use should work</param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Collectionizer`2.#ctor(`1,System.UInt32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Collectionizer`2"/> class.
+            </summary>
+            <param name="randomizerToUse">The randomizer which will be used. Use this if you want
+            to specifiy how the randomizer to use should work</param>
+            <param name="minCount">Min count of list items</param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Collectionizer`2.#ctor(`1,System.UInt32,System.UInt32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Collectionizer`2"/> class.
+            </summary>
+            <param name="randomizerToUse">The randomizer which will be used. Use this if you want
+            to specifiy how the randomizer to use should work</param>
+            <param name="minCount">Min count of list items</param>
+            <param name="maxCount">Max count of list items</param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Collectionizer`2.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.CityName">
+            <summary>
+            Generate city names for type <see cref="T:System.String"/>. The Top 1000 cities with the most population will be used
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.CityName.AllCityNames">
+            <summary>
+            The names.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.CityName.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:Tynamix.ObjectFiller.CityName"/> class.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.CityName.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.CountryName">
+            <summary>
+            Generate country names for type <see cref="T:System.String"/>
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.CountryName.AllCountryNames">
+            <summary>
+            The names.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.CountryName.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:Tynamix.ObjectFiller.CountryName"/> class.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.CountryName.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.EmailAddresses">
+            <summary>
+            Generates e-mail address
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.EmailAddresses.domainNameSource">
+            <summary>
+            The domain name source.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.EmailAddresses.localPartSource">
+            <summary>
+            The local part source.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.EmailAddresses.topLevelDomain">
+            <summary>
+            The domain root.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.EmailAddresses.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.EmailAddresses"/> class.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.EmailAddresses.#ctor(Tynamix.ObjectFiller.IRandomizerPlugin{System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.EmailAddresses"/> class.
+            </summary>
+            <param name="localPartSource">
+            Randomizer for the local part
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.EmailAddresses.#ctor(Tynamix.ObjectFiller.IRandomizerPlugin{System.String},Tynamix.ObjectFiller.IRandomizerPlugin{System.String},System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.EmailAddresses"/> class.
+            </summary>
+            <param name="localPartSource">
+            Randomizer for the local part
+            </param>
+            <param name="domainNameSource">
+            Randomizer for the domain part
+            </param>
+            <param name="topLevelDomain">
+            The top level domain
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.EmailAddresses.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.EmailAddresses"/> class.
+            </summary>
+            <param name="topLevelDomain">
+            The top level domain
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.EmailAddresses.#ctor(Tynamix.ObjectFiller.IRandomizerPlugin{System.String},Tynamix.ObjectFiller.IRandomizerPlugin{System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.EmailAddresses"/> class.
+            </summary>
+            <param name="localPartSource">
+            The local part source.
+            </param>
+            <param name="domainNameSource">
+            The domain name source.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.EmailAddresses.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.EmailAddresses.GetDomainName">
+            <summary>
+            Gets 
+            </summary>
+            <returns>
+            The <see cref="T:System.String"/>.
+            </returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.LipsumFlavor">
+            <summary>
+            The lipsum flavor.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.LipsumFlavor.LoremIpsum">
+            <summary>
+            Standard Lorem Ipsum words.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.LipsumFlavor.ChildHarold">
+            <summary>
+            Words from Child Harold by Lord Byron.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.LipsumFlavor.InDerFremde">
+            <summary>
+            Words from In der Fremde by Heinrich Hiene (German)
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.LipsumFlavor.LeMasque">
+            <summary>
+            Words from Le Masque by Arthur Rembaud (French)
+            </summary>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.Lipsum">
+            <summary>
+            Generates nonsensical text using preset words from one of several texts.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.Lipsum.LoremIpsum">
+            <summary>
+            Words for the standard lorem ipsum text.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.Lipsum.ChildeHarold">
+            <summary>
+            Words for the childe harold text
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.Lipsum.InderFremde">
+            <summary>
+            Words for the text: In der Fremde.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.Lipsum.LeMasque">
+            <summary>
+            Words for the text: Le Masque.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.Lipsum.map">
+            <summary>
+            The map between <see cref="T:Tynamix.ObjectFiller.LipsumFlavor"/> and the words for this flavor
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.Lipsum.random">
+            <summary>
+            The random.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Lipsum.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Lipsum"/> class.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Lipsum.#ctor(Tynamix.ObjectFiller.LipsumFlavor)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Lipsum"/> class.
+            </summary>
+            <param name="lipsumFlavor">
+            The flavor for the generated text
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Lipsum.#ctor(Tynamix.ObjectFiller.LipsumFlavor,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Lipsum"/> class.
+            </summary>
+            <param name="lipsumFlavor">
+            The flavor for the generated text
+            </param>
+            <param name="minWords">
+            The min words of the generated text.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Lipsum.#ctor(Tynamix.ObjectFiller.LipsumFlavor,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Lipsum"/> class.
+            </summary>
+            <param name="lipsumFlavor">
+            The flavor for the generated text
+            </param>
+            <param name="minWords">
+            The min words of the generated text.
+            </param>
+            <param name="maxWords">
+            The max words of the generated text.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Lipsum.#ctor(Tynamix.ObjectFiller.LipsumFlavor,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Lipsum"/> class.
+            </summary>
+            <param name="lipsumFlavor">
+            The flavor for the generated text
+            </param>
+            <param name="minWords">
+            The min words of the generated text.
+            </param>
+            <param name="maxWords">
+            The max words of the generated text.
+            </param>
+            <param name="minSentences">
+            The min sentences of the generated text
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Lipsum.#ctor(Tynamix.ObjectFiller.LipsumFlavor,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Lipsum"/> class.
+            </summary>
+            <param name="lipsumFlavor">
+            The flavor for the generated text
+            </param>
+            <param name="minWords">
+            The min words of the generated text.
+            </param>
+            <param name="maxWords">
+            The max words of the generated text.
+            </param>
+            <param name="minSentences">
+            The min sentences of the generated text
+            </param>
+            <param name="maxSentences">
+            The max sentences of the generated text
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Lipsum.#ctor(Tynamix.ObjectFiller.LipsumFlavor,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Lipsum"/> class.
+            </summary>
+            <param name="lipsumFlavor">
+            The flavor for the generated text
+            </param>
+            <param name="minWords">
+            The min words of the generated text.
+            </param>
+            <param name="maxWords">
+            The max words of the generated text.
+            </param>
+            <param name="minSentences">
+            The min sentences of the generated text
+            </param>
+            <param name="maxSentences">
+            The max sentences of the generated text
+            </param>
+            <param name="paragraphs">
+            The count of generated paragraphs.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Lipsum.#ctor(Tynamix.ObjectFiller.LipsumFlavor,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.Lipsum"/> class.
+            </summary>
+            <param name="lipsumFlavor">
+            The flavor for the generated text
+            </param>
+            <param name="minWords">
+            The min words of the generated text.
+            </param>
+            <param name="maxWords">
+            The max words of the generated text.
+            </param>
+            <param name="minSentences">
+            The min sentences of the generated text
+            </param>
+            <param name="maxSentences">
+            The max sentences of the generated text
+            </param>
+            <param name="paragraphs">
+            The count of generated paragraphs.
+            </param>
+            <param name="randomSeed">
+            The seed for randomizer to get the same result with the same seed.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.Lipsum.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.MnemonicString">
+            <summary>
+            This randomizer plugin generates words which can be talked naturally.
+            It always takes one vocal after a consonant. This follow up to words like: buwizalo
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.MnemonicString.wordCount">
+            <summary>
+            The count of words which will be generated
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.MnemonicString.wordMinLength">
+            <summary>
+            The word min length.
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.MnemonicString.wordMaxLength">
+            <summary>
+            The word max length.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.MnemonicString.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.MnemonicString"/> class.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.MnemonicString.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.MnemonicString"/> class.
+            </summary>
+            <param name="wordCount">
+            The count of words which will be generated
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.MnemonicString.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.MnemonicString"/> class.
+            </summary>
+            <param name="wordCount">
+            The count of words which will be generated
+            </param>
+            <param name="wordMinLength">
+            The word min length.
+            </param>
+            <param name="wordMaxLength">
+            The word max length.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.MnemonicString.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.PatternGenerator">
+            <summary>
+            Creates values based on a pattern. <para/>
+            <para/>
+            Character patterns:<para/>
+            <list>
+            <item><description>{CharClass} generates exactly 1 character, e.g. {a}.</description></item>
+            <item><description>{CharClass:Count} generates exactly Count characters, e.g. {A:3}.</description></item>
+            <item><description>{CharClass:MinCount-MaxCount} generates between MinCount and MaxCount character, e.g. {a:3-6}.</description></item>
+            </list>
+            The character patterns can refer to these character classes: <para/>
+            <list type="bullet">
+            <item><description>a: lower-case ascii character, range is 'a' to 'a'</description></item>
+            <item><description>A: upper-case ascii character, range is 'a' to 'a'</description></item>
+            <item><description>N: numbers from '0' to '9'</description></item>
+            <item><description>X: hexadecimal digit from '0' to 'F'</description></item>
+            </list>
+            Counter patterns:
+            <list>
+            <item><description>{C} generates numbers, starting with 1, incremented by 1</description></item>
+            <item><description>{C:StartValue} generates numbers, starting with StartValue, incremented by 1</description></item>
+            <item><description>{C:StartValue,Increment} generates numbers, starting with StartValue, incremented by Increment</description></item>
+            </list>
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.PatternGenerator.expressionGeneratorFactories">
+            <summary>
+            Static list of all known factories. 
+            Will be used to create the concrete expression handlers per instance.
+            Important - do not add the default expression handler here, will be done in code instead,
+            The _expression generator factories.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.PatternGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.PatternGenerator"/> class.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.PatternGenerator.#ctor(System.String)">
+            <summary>
+            Creates values based on a pattern. <para/>
+            <para/>
+            Character patterns:<para/>
+            <list>
+            <item><description>{CharClass} generates exactly 1 character, e.g. {a}.</description></item>
+            <item><description>{CharClass:Count} generates exactly Count characters, e.g. {A:3}.</description></item>
+            <item><description>{CharClass:MinCount-MaxCount} generates between MinCount and MaxCount character, e.g. {a:3-6}.</description></item>
+            </list>
+            The character patterns can refer to these character classes: <para/>
+            <list type="bullet">
+            <item><description>a: lower-case ascii character, range is 'a' to 'a'</description></item>
+            <item><description>A: upper-case ascii character, range is 'a' to 'a'</description></item>
+            <item><description>N: numbers from '0' to '9'</description></item>
+            <item><description>X: hexadecimal digit from '0' to 'F'</description></item>
+            </list>
+            Counter patterns:
+            <list>
+            <item><description>{C} generates numbers, starting with 1, incremented by 1</description></item>
+            <item><description>{C:StartValue} generates numbers, starting with StartValue, incremented by 1</description></item>
+            <item><description>{C:StartValue,Increment} generates numbers, starting with StartValue, incremented by Increment</description></item>
+            </list>
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.PatternGenerator.ExpressionGeneratorFactories">
+            <summary>
+            Allows integrating new pattern expression generators.
+            </summary>
+            <example>
+            <![CDATA[
+            PatternGenerator.ExpressionGeneratorFactories.Add( 
+            	(expression) => 
+            		{
+            			if (expression == "{U:fr}")
+            				return new FrenchUnicodeExpressionGenerator(expression);
+            			else 
+            				return null;
+            		});
+            ]]>
+            </example>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.PatternGenerator.GetValue">
+            <summary>
+            Gets a random string according to the specified pattern.
+            </summary>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.PatternGenerator.IExpressionGenerator">
+            <summary>
+            Interface for a concrete pattern expression generator.
+            Can be used to add custom generators.
+            See also <seealso cref="P:Tynamix.ObjectFiller.PatternGenerator.ExpressionGeneratorFactories"/>.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.PatternGenerator.CreateExpressionGenerators(System.String)">
+            <summary>
+            Parses the given pattern and returns a collection of generators.
+            </summary>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.NameStyle">
+            <summary>
+            Style of the Name
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.NameStyle.FirstName">
+            <summary>
+            Just generate first name
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.NameStyle.LastName">
+            <summary>
+            Just generate last name
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.NameStyle.FirstNameLastName">
+            <summary>
+            Generate first name and then last name
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.NameStyle.LastNameFirstName">
+            <summary>
+            Generate last name and then first name
+            </summary>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.RealNames">
+            <summary>
+            Generates real names like "Antonio Winter"
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.RealNames.nameStyle">
+            <summary>
+            The style of the name to generate
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.RealNames.firstNames">
+            <summary>
+            All first names from the resource file
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.RealNames.lastNames">
+            <summary>
+            All last names from the resource file
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.RealNames.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.RealNames"/> class.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.RealNames.#ctor(Tynamix.ObjectFiller.NameStyle)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.RealNames"/> class.
+            </summary>
+            <param name="nameStyle">
+            The style how the name shall be generated.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.RealNames.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.City">
+            <summary>
+            The city of which the street names  shall come from
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.City.Dresden">
+            <summary>
+            Dresden is a city in germany
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.City.NewYork">
+            <summary>
+            New York is a city in the USA
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.City.London">
+            <summary>
+            London is a city in Great Britain
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.City.Paris">
+            <summary>
+            Paris is a city in France
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.City.Tokyo">
+            <summary>
+            Tokyo is a city in Japan
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.City.Moscow">
+            <summary>
+            Moscow is a city in russia
+            </summary>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.StreetName">
+            <summary>
+            Generate street names for type <see cref="T:System.String"/>
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.StreetName.AllStreetNames">
+            <summary>
+            The names.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.StreetName.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.StreetName"/> class.
+            It will use streets of London by default
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.StreetName.#ctor(Tynamix.ObjectFiller.City)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.StreetName"/> class.
+            </summary>
+            <param name="targetCity">
+            The city for which the street names will be get from
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.StreetName.GetValue">
+            <summary>
+            Gets random data for type <see cref="!:T"/>
+            </summary>
+            <returns>Random data for type <see cref="!:T"/></returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.At">
+            <summary>
+            This enumeration is used for the ordering of properties
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.At.TheBegin">
+            <summary>
+            Property shall be used at the beginning
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.At.TheEnd">
+            <summary>
+            Property shall be filled at the end
+            </summary>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.FillerSetup">
+            <summary>
+            Contains the setup per type
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FillerSetup.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.FillerSetup"/> class.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetup.MainSetupItem">
+            <summary>
+            Gets the main setup item. This is always used when no type is explicitly configured
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetup.TypeToFillerSetup">
+            <summary>
+            Gets the <see cref="T:Tynamix.ObjectFiller.FillerSetupItem"/> for a specific <see cref="T:System.Type"/>
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FillerSetup.Create``1">
+            <summary>
+            Creates a setup for a specific type.
+            </summary>
+            <typeparam name="TTarget">The type which is configured.</typeparam>
+            <returns>Setup you can use for Filler and Randomizer.</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FillerSetup.Create``1(Tynamix.ObjectFiller.FillerSetup)">
+            <summary>
+            Creates a setup based uppon another setup
+            </summary>
+            <typeparam name="TTarget">The type which is configured.</typeparam>
+            <param name="baseSetup">The setup which is used as basis of the new one.</param>
+            <returns>Setup you can use for Filler and Randomizer.</returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.FillerSetupItem">
+            <summary>
+            The filler setup item contains the setup for the object filler.
+            The setup can be made per type, property and so on
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FillerSetupItem.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.FillerSetupItem"/> class.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.PropertyOrder">
+            <summary>
+            Gets the order in which the properties get handled.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.TypeToRandomFunc">
+            <summary>
+            Gets the randomizer <see cref="T:System.Func`1"/> for a specific type
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.PropertyToRandomFunc">
+            <summary>
+            Gets the randomizer <see cref="T:System.Func`1"/> for a specific property
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.InterfaceToImplementation">
+            <summary>
+            Gets the type of interface with the corresponding implementation
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.PropertiesToIgnore">
+            <summary>
+            Gets a list with all properties which will be ignored while generating test data
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.TypesToIgnore">
+            <summary>
+            Gets all types which will be ignored completely
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.ListMinCount">
+            <summary>
+            Gets or sets the minimum count of list items which will be generated 
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.ListMaxCount">
+            <summary>
+            Gets or sets the maximum count of list items which will be generated 
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.DictionaryKeyMinCount">
+            <summary>
+            Gets or sets the minimum count of key items within a dictionary which will be generated 
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.DictionaryKeyMaxCount">
+            <summary>
+            Gets or sets the maximum count of key items within a dictionary which will be generated 
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.InterfaceMocker">
+            <summary>
+            Gets or sets the interface Mocker for interface generation
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.IgnoreAllUnknownTypes">
+            <summary>
+            Gets or sets a value indicating whether all unknown types shall be ignored.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.IgnoreInheritance">
+            <summary>
+            Gets or sets a value indicating whether the properties of the base type will be filled or not.
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FillerSetupItem.ThrowExceptionOnCircularReference">
+            <summary>
+            Gets or sets a value indicating whether a e exception shall be thrown on circular reference.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FillerSetupItem.SetDefaultRandomizer">
+            <summary>
+            Sets the default randomizer for all simple types.
+            </summary>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.FluentCircularApi`1">
+            <summary>
+            This API is for setup the behavior on circular dependencies
+            </summary>
+            <typeparam name="TTargetObject">Type which will be configured for the object filler</typeparam>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.FluentCircularApi`1.callback">
+            <summary>
+            The callback function
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.FluentCircularApi`1.setupManager">
+            <summary>
+            The object filler setup manager.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentCircularApi`1.#ctor(Tynamix.ObjectFiller.FluentFillerApi{`0},Tynamix.ObjectFiller.SetupManager)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.FluentCircularApi`1"/> class.
+            </summary>
+            <param name="callback">
+            The callback.
+            </param>
+            <param name="setupManager">
+            The object filler setup manager.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentCircularApi`1.ThrowException(System.Boolean)">
+            <summary>
+            Call this when you want to get an exception in case of a circular reference in your filled model.
+            By default the ObjectFiller recognizes circular references and stop filling them without throwing an exception.
+            When you want to get an explicit exception on circular reference call this method!
+            </summary>
+            <param name="throwException">
+            True (default) when you want to get exception on a circular reference
+            </param>
+            <returns>
+            The <see cref="T:Tynamix.ObjectFiller.FluentFillerApi`1"/>.
+            </returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.FluentFillerApi`1">
+            <summary>
+            Fluent API to configure the object filler.
+            </summary>
+            <typeparam name="TTargetObject">Type which will be configured for the object filler</typeparam>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.FluentFillerApi`1.setupManager">
+            <summary>
+            The object filler setup manager.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentFillerApi`1.#ctor(Tynamix.ObjectFiller.SetupManager)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.FluentFillerApi`1"/> class.
+            </summary>
+            <param name="setupManager">
+            The object filler setup manager.
+            </param>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.FluentFillerApi`1.Result">
+            <summary>
+            Gets the current object filler setup
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentFillerApi`1.OnType``1">
+            <summary>
+            Start to configure a type for object filler. The follow up methods will be found in the <see cref="T:Tynamix.ObjectFiller.FluentTypeApi`2"/>
+            </summary>
+            <typeparam name="TTargetType">
+            Type which will be configured. For example string, integer, etc...
+            </typeparam>
+            <returns>
+            <see cref="T:Tynamix.ObjectFiller.FluentTypeApi`2"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentFillerApi`1.OnCircularReference">
+            <summary>
+            Starts to configure the behavior of the ObjectFiller when a circular reference in your model occurs
+            </summary>
+            <returns>
+            The <see cref="T:Tynamix.ObjectFiller.FluentCircularApi`1"/>.
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentFillerApi`1.OnProperty``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,``0}}[])">
+            <summary>
+            Starts to configure a property of the <see cref="!:TTargetObject"/> for object filler.
+            So you can setup a custom randomizer to a specific property within a class.
+            </summary>
+            <typeparam name="TTargetType">
+            The type of the target properties
+            </typeparam>
+            <param name="property">
+            The target property which will be configured
+            </param>
+            <param name="additionalProperties">
+            Some more properties which should be get the same configuration
+            </param>
+            <returns>
+            The <see cref="T:Tynamix.ObjectFiller.FluentPropertyApi`2"/>.
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentFillerApi`1.ListItemCount(System.Int32)">
+            <summary>
+            Setup the maximum item count for lists. The ObjectFiller will not generate more list items then this.
+            The default value is 25.
+            </summary>
+            <param name="maxCount">
+            Max items count in a list. Default: 25
+            </param>
+            <returns>
+            The <see cref="T:Tynamix.ObjectFiller.FluentFillerApi`1"/>.
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentFillerApi`1.IgnoreAllUnknownTypes">
+            <summary>
+            Call this if the ObjectFiller should ignore all unknown types which can not filled automatically by the ObjectFiller.
+            When you not call this method, the ObjectFiller raises an exception when it is not possible to generate a random value for that type!
+            </summary>
+            <returns>The <see cref="T:Tynamix.ObjectFiller.FluentFillerApi`1"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentFillerApi`1.IgnoreInheritance">
+            <summary>
+            Call this if the ObjectFiller should ignore all properties of the base class. For example you have a class
+            'Student' which derives from class 'Person' and the class Person has a property 'Name'. If you want to use ObjectFiller
+            to fill/create a student and you call this method, the name will be null because it is defined in the base class 'Person'
+            </summary>
+            <returns>The <see cref="T:Tynamix.ObjectFiller.FluentFillerApi`1"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentFillerApi`1.ListItemCount(System.Int32,System.Int32)">
+            <summary>
+            Setup the minimum and maximum item count for lists. The ObjectFiller will not generate more or less list items then this limits.
+            The default value for <see cref="!:minCount"/> is 1. The default value for <see cref="!:maxCount"/> is 25.
+            </summary>
+            <param name="minCount">
+            Minimum item in a list. Default: 1
+            </param>
+            <param name="maxCount">
+            Maximum item in a list. Default: 25
+            </param>
+            <returns>
+            The <see cref="T:Tynamix.ObjectFiller.FluentFillerApi`1"/>
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentFillerApi`1.DictionaryItemCount(System.Int32)">
+            <summary>
+            Setup the maximum count of keys in dictionaries. The ObjectFiller will not generate more list items then this.
+            The default value is 10.
+            </summary>
+            <param name="maxCount">
+            Max items count of keys in a dictionary. Default: 10
+            </param>
+            <returns>
+            The <see cref="T:Tynamix.ObjectFiller.FluentFillerApi`1"/>.
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentFillerApi`1.DictionaryItemCount(System.Int32,System.Int32)">
+            <summary>
+            Setup the minimum and maximum count of keys in dictionaries. The ObjectFiller will not generate more or less list items then this limits.
+            The default value for <see cref="!:minCount"/> is 1. The default value for <see cref="!:maxCount"/> is 25.
+            </summary>
+            <param name="minCount">
+            Minimum items count of keys in a dictionary. Default: 1
+            </param>
+            <param name="maxCount">
+            Max items count of keys in a dictionary. Default: 10
+            </param>
+            <returns>
+            The <see cref="T:Tynamix.ObjectFiller.FluentFillerApi`1"/>.
+            </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentFillerApi`1.SetInterfaceMocker(Tynamix.ObjectFiller.IInterfaceMocker)">
+            <summary>
+            Register a IInterfaceMocker which will Mock your interfaces which are not registered with the <see cref="!:IFluentFillerApi&lt;TTargetObject&gt;.RegisterInterface&lt;TInterface,TImplementation&gt;"/> method.
+            To use a Mocker like MOQ or RhinoMocks, it is necessary to implement the <see cref="T:Tynamix.ObjectFiller.IInterfaceMocker"/> for this mocking framework.
+            </summary>
+            <param name="mocker">Mocker which will be used to mock interfaces</param>
+            <returns>The <see cref="T:Tynamix.ObjectFiller.FluentFillerApi`1"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentFillerApi`1.SetupFor``1(System.Boolean)">
+            <summary>
+            Create a setup for another type
+            </summary>
+            <param name="useDefaultSettings">
+            The use Default Settings.
+            </param>
+            <typeparam name="TNewType">
+            Type for which the setup will be created
+            </typeparam>
+            <returns>
+            <see cref="T:Tynamix.ObjectFiller.FluentFillerApi`1"/>
+            </returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.FluentPropertyApi`2">
+            <summary>
+            This fluent API is responsible for the property specific configuration.
+            </summary>
+            <typeparam name="TTargetObject">Type of the object for which this setup is related to</typeparam>
+            <typeparam name="TTargetType">Type of the property which will be setup</typeparam>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.FluentPropertyApi`2.affectedProperties">
+            <summary>
+            The affected properties
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.FluentPropertyApi`2.callback">
+            <summary>
+            The callback function
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.FluentPropertyApi`2.setupManager">
+            <summary>
+            The object filler setup manager
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentPropertyApi`2.#ctor(System.Collections.Generic.IEnumerable{System.Reflection.PropertyInfo},Tynamix.ObjectFiller.FluentFillerApi{`0},Tynamix.ObjectFiller.SetupManager)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.FluentPropertyApi`2"/> class.
+            </summary>
+            <param name="affectedProperties">
+            The affected properties.
+            </param>
+            <param name="callback">
+            The callback.
+            </param>
+            <param name="setupManager">
+            The object filler setup manager
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentPropertyApi`2.DoIt(Tynamix.ObjectFiller.At)">
+            <summary>
+            Specify when the object filler will fill the property.
+            At the end or the beginning. This is useful if the properties are related to another.
+            </summary>
+            <param name="propertyOrder">Defines if the property will be filled at "TheBegin" or at "TheEnd"</param>
+            <returns>FluentPropertyAPI to define which </returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentPropertyApi`2.UseDefault">
+            <summary>
+            Use the default random generator method for the given type.
+            Its useful when you want to define the order of the property with <see cref="M:Tynamix.ObjectFiller.FluentPropertyApi`2.DoIt(Tynamix.ObjectFiller.At)"/>, but you
+            don't want to define the random generator.
+            </summary>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentPropertyApi`2.Use(`1)">
+            <summary>
+            Defines which static value will be used for the given <see cref="!:TTargetType"/>
+            </summary>
+            <param name="valueToUse">Value which will be used</param>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentPropertyApi`2.Use(System.Func{`1})">
+            <summary>
+            Defines which <see cref="T:System.Func`1"/> will be used to generate a value for the given <see cref="!:TTargetType"/>
+            </summary>
+            <param name="randomizerFunc"><see cref="T:System.Func`1"/> which will be used to generate a value of the <see cref="!:TTargetType"/></param>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentPropertyApi`2.Use(Tynamix.ObjectFiller.FillerSetup)">
+            <summary>
+            Defines which <see cref="T:Tynamix.ObjectFiller.FillerSetup"/> is used to generate a value for the given <see cref="!:TTargetType"/>
+            </summary>
+            <param name="setup">The setup which is used for configuration.</param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentPropertyApi`2.Use(Tynamix.ObjectFiller.IRandomizerPlugin{`1})">
+            <summary>
+            Defines which implementation of the <see cref="T:Tynamix.ObjectFiller.IRandomizerPlugin`1"/> interface will be used to generate a value for the given <see cref="!:TTargetType"/>
+            </summary>
+            <param name="randomizerPlugin">A <see cref="T:Tynamix.ObjectFiller.IRandomizerPlugin`1"/> which will be used to generate a value of the <see cref="!:TTargetType"/></param>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentPropertyApi`2.Use(System.Collections.Generic.IEnumerable{`1})">
+            <summary>
+            Use this function if you want to use an IEnumerable for the data generation.
+            With that you can generate random data in a specific order, with include, exclude and all the other stuff
+            what is possible with <see cref="T:System.Collections.Generic.IEnumerable`1"/> and LINQ
+            </summary>
+            <param name="enumerable">An <see cref="T:System.Collections.Generic.IEnumerable`1"/> with items of type <typeparam name="TTargetObject"/> which will be used to fill the data.</param>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentPropertyApi`2.IgnoreIt">
+            <summary>
+            Ignores the entity for which the fluent setup is made (Type, Property)
+            </summary>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.FluentTypeApi`2">
+            <summary>
+            This API is just for type configuration.
+            </summary>
+            <typeparam name="TTargetObject">Type of the object for which this setup is related to</typeparam>
+            <typeparam name="TTargetType">Type which will be setup</typeparam>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.FluentTypeApi`2.callback">
+            <summary>
+            The callback method
+            </summary>
+        </member>
+        <member name="F:Tynamix.ObjectFiller.FluentTypeApi`2.setupManager">
+            <summary>
+            The object filler setup manager.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentTypeApi`2.#ctor(Tynamix.ObjectFiller.FluentFillerApi{`0},Tynamix.ObjectFiller.SetupManager)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.FluentTypeApi`2"/> class.
+            </summary>
+            <param name="callback">
+            The callback function
+            </param>
+            <param name="setupManager">
+            The object filler setup manager.
+            </param>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentTypeApi`2.Use(`1)">
+            <summary>
+            Defines which static value will be used for the given <see cref="!:TTargetType"/>
+            </summary>
+            <param name="valueToUse">Value which will be used</param>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentTypeApi`2.Use(System.Func{`1})">
+            <summary>
+            Defines which <see cref="T:System.Func`1"/> will be used to generate a value for the given <see cref="!:TTargetType"/>
+            </summary>
+            <param name="randomizerFunc"><see cref="T:System.Func`1"/> which will be used to generate a value of the <see cref="!:TTargetType"/></param>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentTypeApi`2.Use(Tynamix.ObjectFiller.IRandomizerPlugin{`1})">
+            <summary>
+            Defines which implementation of the <see cref="T:Tynamix.ObjectFiller.IRandomizerPlugin`1"/> interface will be used to generate a value for the given <see cref="!:TTargetType"/>
+            </summary>
+            <param name="randomizerPlugin">A <see cref="T:Tynamix.ObjectFiller.IRandomizerPlugin`1"/> which will be used to generate a value of the <see cref="!:TTargetType"/></param>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentTypeApi`2.Use(System.Collections.Generic.IEnumerable{`1})">
+            <summary>
+            Use this function if you want to use an IEnumerable for the data generation.
+            With that you can generate random data in a specific order, with include, exclude and all the other stuff
+            what is possible with <see cref="T:System.Collections.Generic.IEnumerable`1"/> and LINQ
+            </summary>
+            <param name="enumerable">An <see cref="T:System.Collections.Generic.IEnumerable`1"/> with items of type <typeparam name="TTargetObject"/> which will be used to fill the data.</param>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentTypeApi`2.Use(Tynamix.ObjectFiller.FillerSetup)">
+            <summary>
+            With this method you can use a previously defined setup for specific types.
+            </summary>
+            <param name="setup">The setup for the type.</param>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentTypeApi`2.IgnoreIt">
+            <summary>
+            Ignores the entity for which the fluent setup is made (Type, Property)
+            </summary>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.FluentTypeApi`2.CreateInstanceOf``1">
+            <summary>
+            Registers a implementation  <typeparam name="TImplementation"/> of an interface <typeparam name="TTargetType"/>
+            The implementation must derive from the interface.
+            </summary>
+            <typeparam name="TImplementation">Type of the implementation which will be used to create a instance of the interface of type <typeparam name="TTargetType"/></typeparam>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.IFluentApi`2">
+            <summary>
+            This interface is implemented by the <see cref="T:Tynamix.ObjectFiller.FluentTypeApi`2"/>
+            and <see cref="T:Tynamix.ObjectFiller.FluentPropertyApi`2"/>. It provides the common methods for both.
+            </summary>
+            <typeparam name="TTargetObject">Type of the object for which this setup is related to</typeparam>
+            <typeparam name="TTargetType">Type which will be setup</typeparam>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.IFluentApi`2.Use(`1)">
+            <summary>
+            Defines which static value will be used for the given <see cref="!:TTargetType"/>
+            </summary>
+            <param name="valueToUse">Value which will be used</param>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.IFluentApi`2.Use(System.Func{`1})">
+            <summary>
+            Defines which <see cref="T:System.Func`1"/> will be used to generate a value for the given <see cref="!:TTargetType"/>
+            </summary>
+            <param name="randomizerFunc"><see cref="T:System.Func`1"/> which will be used to generate a value of the <see cref="!:TTargetType"/></param>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.IFluentApi`2.Use(Tynamix.ObjectFiller.IRandomizerPlugin{`1})">
+            <summary>
+            Defines which implementation of the <see cref="T:Tynamix.ObjectFiller.IRandomizerPlugin`1"/> interface will be used to generate a value for the given <see cref="!:TTargetType"/>
+            </summary>
+            <param name="randomizerPlugin">A <see cref="T:Tynamix.ObjectFiller.IRandomizerPlugin`1"/> which will be used to generate a value of the <see cref="!:TTargetType"/></param>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.IFluentApi`2.Use(System.Collections.Generic.IEnumerable{`1})">
+            <summary>
+            Use this function if you want to use an IEnumerable for the data generation.
+            With that you can generate random data in a specific order, with include, exclude and all the other stuff
+            what is possible with <see cref="T:System.Collections.Generic.IEnumerable`1"/> and LINQ
+            </summary>
+            <param name="enumerable">An <see cref="T:System.Collections.Generic.IEnumerable`1"/> with items of type <typeparam name="TTargetObject"/> which will be used to fill the data.</param>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.IFluentApi`2.IgnoreIt">
+            <summary>
+            Ignores the entity for which the fluent setup is made (Type, Property)
+            </summary>
+            <returns>Main FluentFiller API</returns>
+        </member>
+        <member name="T:Tynamix.ObjectFiller.SetupManager">
+            <summary>
+            Responsible to get the right <see cref="T:Tynamix.ObjectFiller.FillerSetupItem"/> for a given type.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SetupManager.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tynamix.ObjectFiller.SetupManager"/> class. 
+            </summary>
+        </member>
+        <member name="P:Tynamix.ObjectFiller.SetupManager.FillerSetup">
+            <summary>
+            Gets or sets the filler setup.
+            </summary>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SetupManager.GetFor``1">
+            <summary>
+            Gets the <see cref="T:Tynamix.ObjectFiller.FillerSetupItem"/> for a given type
+            </summary>
+            <typeparam name="TTargetObject">Type for which a <see cref="T:Tynamix.ObjectFiller.FillerSetupItem"/> will be get</typeparam>
+            <returns><see cref="T:Tynamix.ObjectFiller.FillerSetupItem"/> for type <see cref="!:TTargetObject"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SetupManager.GetFor(System.Type)">
+            <summary>
+            Gets the <see cref="T:Tynamix.ObjectFiller.FillerSetupItem"/> for a given type
+            </summary>
+            <param name="targetType">Type for which a <see cref="T:Tynamix.ObjectFiller.FillerSetupItem"/> will be get</param>
+            <returns><see cref="T:Tynamix.ObjectFiller.FillerSetupItem"/> for type <see cref="!:targetType"/></returns>
+        </member>
+        <member name="M:Tynamix.ObjectFiller.SetupManager.SetNewFor``1(System.Boolean)">
+            <summary>
+            Sets a new <see cref="T:Tynamix.ObjectFiller.FillerSetupItem"/> for the given <see cref="!:TTargetObject"/>
+            </summary>
+            <typeparam name="TTargetObject">Type of target object for which a new <see cref="T:Tynamix.ObjectFiller.FillerSetupItem"/> will be set.</typeparam>
+            <param name="useDefaultSettings">FALSE if the target object will take the settings of the parent object</param>
+        </member>
+    </members>
+</doc>

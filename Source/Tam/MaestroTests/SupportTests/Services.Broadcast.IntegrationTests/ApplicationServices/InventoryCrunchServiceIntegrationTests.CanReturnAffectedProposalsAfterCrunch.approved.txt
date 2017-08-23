@@ -1,0 +1,12 @@
+﻿{
+  "Problems": [
+    {
+      "AffectedProposals": [
+        "Proposal Test(248)"
+      ],
+      "ProblemDescription": "Import Updated Inventory reserved in the following Proposals",
+      "ProgramName": null,
+      "StationLetters": null
+    }
+  ]
+}

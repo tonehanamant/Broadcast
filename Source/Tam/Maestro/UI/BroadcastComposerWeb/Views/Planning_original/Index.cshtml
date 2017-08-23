@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Planning";
+}
+<style>
+    #planning_view {
+        margin-top: 10px;
+    }
+
+    #planning_view h4 {
+        text-align: center;
+    }
+
+
+    #proposal_grid {
+        height: 600px;
+    }
+</style>
+
+<div id="planning_view">
+    <h4 class="cadent-dk-blue"><strong>Planning</strong></h4>
+
+    <div class="header-row row" style="margin-top: 10px;">
+        <div class="col-xs-10">
+            <button class="btn btn-success" role="button" id="create_proposal_btn">Create New Proposal</button>
+        </div>
+
+        <div class="col-xs-2">
+            <div class="input-group input-group-sm pull-right" style="width: 100%;">
+                <span class="input-group-btn">
+                    <button id="proposal_grid_search_btn" style="" class="btn btn-info" role="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                </span>
+
+                <input type="text" id="proposal_grid_search_input" class="form-control" placeholder="Filter...">
+
+                <span class="input-group-btn">
+                    <button style="display:none;" class="btn btn-default" id="proposal_grid_search_clear_btn" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div id="proposal_grid"></div>
+</div>
+
+@Html.Partial("_ProposalView")
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/appPlanning/PlanningConfig.js"></script>
+
+    <!-- PLANNING MAIN -->
+    <script type="text/javascript" src="~/Scripts/appPlanning/PlanningMainController.js"></script>
+    <script type="text/javascript" src="~/Scripts/appPlanning/PlanningMainView.js"></script>
+    <script type="text/javascript" src="~/Scripts/appPlanning/PlanningSearchViewModel.js"></script>
+
+    <!-- PROPOSAL -->
+    <script type="text/javascript" src="~/Scripts/appPlanning/ProposalController.js"></script>
+    <script type="text/javascript" src="~/Scripts/appPlanning/ProposalView.js"></script>
+    <script type="text/javascript" src="~/Scripts/appPlanning/ProposalViewModel.js"></script>
+
+    <!-- VERSION -->
+    <script type="text/javascript" src="~/Scripts/appPlanning/SwitchProposalVersionView.js"></script>
+    <script type="text/javascript" src="~/Scripts/appPlanning/SwitchProposalVersionViewModel.js"></script>
+    <script type="text/javascript" src="~/Scripts/appPlanning/VersionCreatedOptionsViewModel.js"></script>
+
+    <!-- CRITERIA BUILDER -->
+    <script type="text/javascript" src="~/Scripts/appPlanning/CriteriaBuilderViewModel.js"></script>
+
+    <!-- FILTER -->
+    <script type="text/javascript" src="~/Scripts/appPlanning/FilterViewModel.js"></script>
+
+    <!-- MANAGE RATINGS -->
+    <script type="text/javascript" src="~/Scripts/appPlanning/ManageRatingsViewModel.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            (function () {
+                var pageController = new PlanningMainController();
+                var appController = new AppController();
+
+                appController.initControllerPage(pageController);
+            })();
+        });
+    </script>
+}

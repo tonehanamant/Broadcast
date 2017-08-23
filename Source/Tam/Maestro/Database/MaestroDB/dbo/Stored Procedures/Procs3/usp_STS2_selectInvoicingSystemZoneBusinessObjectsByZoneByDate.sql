@@ -1,0 +1,29 @@
+﻿-- =============================================
+-- Author:		Stephen DeFusco
+-- Create date: 6/20/2011
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[usp_STS2_selectInvoicingSystemZoneBusinessObjectsByZoneByDate]
+	@zone_id int,
+	@effective_date datetime
+AS
+BEGIN
+	SELECT
+		uvw_systemzone_universe.zone_id,
+		uvw_systemzone_universe.system_id,
+		uvw_systemzone_universe.start_date,
+		uvw_systemzone_universe.type,
+		uvw_systemzone_universe.end_date,
+		uvw_zone_universe.code,
+		uvw_zone_universe.name,
+		uvw_system_universe.code,
+		uvw_system_universe.name
+	FROM
+		uvw_systemzone_universe
+		JOIN uvw_zone_universe ON uvw_zone_universe.zone_id=uvw_systemzone_universe.zone_id			AND (uvw_zone_universe.start_date<=@effective_date AND (uvw_zone_universe.end_date>=@effective_date OR uvw_zone_universe.end_date IS NULL))
+		JOIN uvw_system_universe ON uvw_system_universe.system_id=uvw_systemzone_universe.system_id	AND (uvw_system_universe.start_date<=@effective_date AND (uvw_system_universe.end_date>=@effective_date OR uvw_system_universe.end_date IS NULL))
+	WHERE
+		uvw_systemzone_universe.zone_id=@zone_id
+		AND uvw_systemzone_universe.type='INVOICING'
+		AND (uvw_systemzone_universe.start_date<=@effective_date AND (uvw_systemzone_universe.end_date>=@effective_date OR uvw_systemzone_universe.end_date IS NULL))
+END

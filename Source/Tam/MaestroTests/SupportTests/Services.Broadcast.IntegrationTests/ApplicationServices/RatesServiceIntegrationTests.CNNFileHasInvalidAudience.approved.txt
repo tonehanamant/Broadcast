@@ -1,0 +1,17 @@
+﻿[
+  {
+    "ProblemDescription": "Could not find Maestro audience mapping to AD2554: Unable to find matching maestro audience AD2554.",
+    "ProgramName": "Integration Test",
+    "StationLetters": null
+  },
+  {
+    "ProblemDescription": "Could not find Maestro audience mapping to K6-8: Unable to find matching maestro audience K6-8.",
+    "ProgramName": "Integration Test",
+    "StationLetters": null
+  },
+  {
+    "ProblemDescription": "Could not find Maestro audience mapping to K9-14: Unable to find matching maestro audience K9-14.",
+    "ProgramName": "Integration Test",
+    "StationLetters": null
+  }
+]

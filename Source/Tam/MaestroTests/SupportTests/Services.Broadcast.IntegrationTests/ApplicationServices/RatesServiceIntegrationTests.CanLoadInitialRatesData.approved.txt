@@ -1,0 +1,91 @@
+﻿{
+  "DefaultPlaybackType": 4,
+  "PlaybackTypes": [
+    {
+      "Display": "Live",
+      "Id": 1
+    },
+    {
+      "Display": "Live+Same Day",
+      "Id": 2
+    },
+    {
+      "Display": "Live+1",
+      "Id": 3
+    },
+    {
+      "Display": "Live+3",
+      "Id": 4
+    },
+    {
+      "Display": "Live+7",
+      "Id": 5
+    }
+  ],
+  "RatingBooks": [
+    {
+      "Display": "November 2016",
+      "Id": 422
+    },
+    {
+      "Display": "July 2016",
+      "Id": 418
+    },
+    {
+      "Display": "May 2016",
+      "Id": 416
+    },
+    {
+      "Display": "February 2016",
+      "Id": 413
+    },
+    {
+      "Display": "November 2015",
+      "Id": 410
+    },
+    {
+      "Display": "July 2015",
+      "Id": 406
+    },
+    {
+      "Display": "May 2015",
+      "Id": 404
+    },
+    {
+      "Display": "February 2015",
+      "Id": 401
+    },
+    {
+      "Display": "November 2014",
+      "Id": 398
+    },
+    {
+      "Display": "July 2014",
+      "Id": 394
+    },
+    {
+      "Display": "May 2014",
+      "Id": 392
+    },
+    {
+      "Display": "February 2014",
+      "Id": 389
+    },
+    {
+      "Display": "November 2013",
+      "Id": 386
+    },
+    {
+      "Display": "July 2013",
+      "Id": 382
+    },
+    {
+      "Display": "May 2013",
+      "Id": 380
+    },
+    {
+      "Display": "February 2013",
+      "Id": 377
+    }
+  ]
+}

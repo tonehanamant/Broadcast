@@ -1,0 +1,12 @@
+﻿[
+  {
+    "ProblemDescription": "Error while parsing record at line 4: Invalid rate for program 'TODAY SHOW 2' on Station 'WNYT'",
+    "ProgramName": "TODAY SHOW 2",
+    "StationLetters": "WNYT-TV"
+  },
+  {
+    "ProblemDescription": "Error while parsing record at line 7: Invalid rate for program 'MILLIONAIRE' on Station 'WNYT'",
+    "ProgramName": "MILLIONAIRE",
+    "StationLetters": "WNYT-TV"
+  }
+]

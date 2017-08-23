@@ -1,0 +1,11 @@
+﻿[
+  {
+    "Company": "WVTM",
+    "Email": "joshj@cadent.test",
+    "Fax": "(121)212-1212",
+    "Name": "Josh J",
+    "Phone": "(001)001-0010",
+    "StationCode": 5044,
+    "Type": "Station"
+  }
+]

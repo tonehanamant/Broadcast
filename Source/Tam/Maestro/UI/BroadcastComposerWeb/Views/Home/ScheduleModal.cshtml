@@ -1,0 +1,155 @@
+﻿<div class="modal fade" id="scheduleModal">
+    <div class="modal-dialog modal-xlg" id="schedule_modal_view">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="modal-title" data-bind="text: scheduleTitle"></span>
+            </div>
+
+            <div class="modal-body modal-body-lg">
+                @*<div id="scx_upload_files" class="stitched" style="height: 65px; margin-bottom: 24px;"><span style="" class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span> Click to add more files or drop them here</div>*@
+
+                <form id="schedule_form">
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <div style="margin: 4px 0 0 8px;" data-bind="text: FileName, visible: activeFormType() == 'upload' && activeFormMode() == 'create'" class=" "></div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label for="schedule_input_name">Schedule Name</label>
+                                    <input type="text" name="schedule_input_name" class="form-control" style="width: 100%;" data-bind="value: ScheduleName">
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div data-bind="visible: activeFormType() == 'upload'">
+                                    <div class="form-group">
+                                        <label for="schedule_input_estimate">Estimate Id</label>
+                                        <input type="number" name="schedule_input_estimate" class="form-control" style="width: 100%;" min="1" step="1" data-bind="value: EstimateId, event: { change: estimateIdChange }">
+                                    </div>
+                                </div>
+                                <div class="row" data-bind="visible: activeFormType() == 'advertiser'">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label for="schedule_input_start_date">Start Date</label>
+                                            <input type="text" id="schedule_input_start_date" name="schedule_input_start_date" class="form-control read-only-picker" style="width: 100%;" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label for="schedule_input_end_date">End Date</label>
+                                            <input type="text" id="schedule_input_end_date" name="schedule_input_end_date" class="form-control read-only-picker" style="width: 100%;" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="form-group">
+                                    <label for="schedule_input_advertiser">Advertiser</label>
+                                    <select class="form-control" name="schedule_input_advertiser" style="width: 100%" data-bind="options: $root.Advertisers, optionsValue: 'Id', optionsText: 'Display', value: AdvertiserId,  optionsCaption: 'Choose Advertiser...'"></select>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <label for="schedule_input_posting">Posting Book</label>
+                                        <div>
+                                            <select class="form-control" name="schedule_input_posting" style="width: 100%;" data-bind="options: $root.PostingBooks, optionsValue: 'Id', optionsText: 'Display', value: PostingBookId,  optionsCaption: 'Choose Posting...'"></select>
+                                        </div>
+                                    </div>
+                                    @*<button class="btn btn-link btn-lg pull-right" style="padding:  3px 6px 0px 0px;" data-bind="click: $root.removeSchedule.bind($root, $data)">
+                                            <span style="color: red;" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </button>*@
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="row">
+                            <div class="col-xs-2">
+                            </div>
+                            <div class="col-xs-10">
+                                <div class="form-group">
+                                    <label for="schedule_input_iscis">Advertiser ISCIs <small style="font-weight: normal"> (separate by ",")</small></label>
+                                    <input type="text" name="schedule_input_iscis" class="form-control" style="width: 100%;" data-bind="value: ValidIscis">
+                                </div>
+                            </div>
+                        </div>*@
+                        <div class="row">
+                            <div class="col-xs-2">
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label for="schedule_input_market">Market Restrictions</label>
+                                    <select multiple="multiple" class="form-control" name="schedule_input_market" data-bind="options: $root.Markets, optionsValue: 'Id', optionsText: 'Display', selectedOptions: MarketRestrictions, select2: true"></select>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="">
+                                    <label for="schedule_input_daypart">Day Part Restriction</label>
+                                    <div class="input-group">
+                                        <input type="text" name="schedule_input_daypart" id="schedule_input_daypart" class="form-control read-only-picker" style="width: 100%;" readonly>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-link btn-lg" style="padding: 10px 4px;" type="button" data-bind="visible: DaypartRestriction, click: onDaypartRestrictionRemove"><span style="color: red;" class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                                        </span>
+                                     </div>
+                               </div>
+                            </div>
+                            <div class="col-xs-1">
+                                <div class="form-group">
+                                    <label for="schedule_input_posttype">Post Type</label>
+                                    <select name="schedule_input_posttype" class="form-control" style="width: 100%;" data-bind="options: $root.PostTypes, optionsValue: 'Id', optionsText: 'Display', value: PostTypeId,  optionsCaption: 'Type...'"></select>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="form-group" data-bind="visible: activeFormType() == 'upload'">
+                                    <label for="schedule_input_inventory">Inventory Source</label>
+                                    <select name="schedule_input_inventory" class="form-control" style="width: 100%;" data-bind="options: $root.InventorySources, optionsValue: 'Id', optionsText: 'Display', value: InventorySourceId,  optionsCaption: 'Choose Source...'"></select>
+                                </div>
+                            </div>
+                            <div class="col-xs-1">
+                                <div class="form-group" style="text-align: center;">
+                                    <label for="schedule_input_equivalized">Equivalized</label>
+                                    <div>
+                                        <label>
+                                            <input type="checkbox" style="margin-top: 8px;" name="schedule_input_equivalized" aria-label="..." data-bind="checked: Equivalized">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" data-bind="visible: activeFormType() == 'advertiser' || activeFormMode() == 'edit'">
+                            <div class="col-xs-2">
+                            </div>
+                            <div class="col-xs-5">
+                                <div class="form-group">
+                                    <label for="schedule_input_demos">Demos</label>
+                                    <div>
+                                        <select multiple="multiple" style="width:100%;" class="form-control" id="schedule_input_demos" name="schedule_input_demos" data-bind="options: $root.Demos, optionsValue: 'Id', optionsText: 'Display', selectedOptions: DemoInputs, select2: true"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2"></div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label>Advertiser ISCIs</label><br />
+                                    <span>Format each line: House ISCI,Client ISCI,Brand(optional)</span>
+                                    <textarea name="schedule_input_iscis" class="form-control" rows="5" data-bind="value: Iscis"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                @*should not dimiss
+                    <a class="btn btn-primary" data-dismiss="modal" id="submitButton">Submit</a>*@
+                <button class="btn btn-success" data-bind="visible: activeFormType() == 'upload' && activeFormMode() != 'edit', click: uploadSchedule">Upload</button>
+                <button class="btn btn-success" data-bind="visible: activeFormType() == 'advertiser' || activeFormMode() == 'edit', click: saveSchedule">Save</button>
+            </div>
+            <input id="dataField" hidden="hidden" />
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

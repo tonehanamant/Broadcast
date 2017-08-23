@@ -1,0 +1,11 @@
+﻿{
+  "BvsProgramName": "LET'S MAKE A DEAL",
+  "FollowingScheduleMatches": [
+    {
+      "ProgramName": "PRICE IS RIGHT",
+      "ScheduleDaypart": "TU-F 11AM-12PM",
+      "ScheduleDetailWeekId": 309050
+    }
+  ],
+  "PrimaryScheduleMatches": []
+}

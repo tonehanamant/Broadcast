@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[Query] (
+    [id]                  BIGINT       NOT NULL,
+    [media_month_id]      INT          NOT NULL,
+    [status_id]           TINYINT      NOT NULL,
+    [invoice_id]          INT          NOT NULL,
+    [traffic_id]          INT          NULL,
+    [material_id]         INT          NULL,
+    [zone_id]             INT          NULL,
+    [network_id]          INT          NULL,
+    [spot_length_id]      TINYINT      NULL,
+    [air_date]            DATETIME     NULL,
+    [air_time]            INT          NULL,
+    [rate]                INT          NULL,
+    [affidavit_file_line] INT          NOT NULL,
+    [affidavit_air_date]  VARCHAR (31) NOT NULL,
+    [affidavit_air_time]  VARCHAR (31) NOT NULL,
+    [affidavit_length]    VARCHAR (15) NOT NULL,
+    [affidavit_copy]      VARCHAR (63) NOT NULL,
+    [affidavit_net]       VARCHAR (15) NOT NULL,
+    [affidavit_syscode]   VARCHAR (15) NOT NULL,
+    [affidavit_rate]      VARCHAR (15) NOT NULL,
+    [hash]                CHAR (59)    NULL,
+    [subscribers]         INT          NULL,
+    [program_name]        VARCHAR (63) NOT NULL,
+    [adjusted_air_date]   DATE         NULL,
+    [adjusted_air_time]   INT          NULL
+);
+

@@ -1,0 +1,70 @@
+﻿CREATE PROCEDURE [dbo].[usp_nielsen_county_universe_estimates_insert]
+(
+	@document_id		Int,
+	@line_number		Int,
+	@effective_date		Date,
+	@dma_name		VarChar(127),
+	@dma_id		Int,
+	@state		VarChar(7),
+	@state_id		Int,
+	@nmr_county_code		Int,
+	@county_name		VarChar(127),
+	@county_size		VarChar(7),
+	@metro_indicator		VarChar(7),
+	@tv_households		Int,
+	@cable_households		Int,
+	@cable_households_percentage		Float,
+	@cable_and_or_ads_households		Int,
+	@cable_and_or_ads_percentage		Float,
+	@ads_households		Int,
+	@ads_percentage		Float,
+	@dbs_households		Int,
+	@dbs_percentage		Float
+)
+AS
+INSERT INTO nielsen_county_universe_estimates
+(
+	document_id,
+	line_number,
+	effective_date,
+	dma_name,
+	dma_id,
+	state,
+	state_id,
+	nmr_county_code,
+	county_name,
+	county_size,
+	metro_indicator,
+	tv_households,
+	cable_households,
+	cable_households_percentage,
+	cable_and_or_ads_households,
+	cable_and_or_ads_percentage,
+	ads_households,
+	ads_percentage,
+	dbs_households,
+	dbs_percentage
+)
+VALUES
+(
+	@document_id,
+	@line_number,
+	@effective_date,
+	@dma_name,
+	@dma_id,
+	@state,
+	@state_id,
+	@nmr_county_code,
+	@county_name,
+	@county_size,
+	@metro_indicator,
+	@tv_households,
+	@cable_households,
+	@cable_households_percentage,
+	@cable_and_or_ads_households,
+	@cable_and_or_ads_percentage,
+	@ads_households,
+	@ads_percentage,
+	@dbs_households,
+	@dbs_percentage
+)

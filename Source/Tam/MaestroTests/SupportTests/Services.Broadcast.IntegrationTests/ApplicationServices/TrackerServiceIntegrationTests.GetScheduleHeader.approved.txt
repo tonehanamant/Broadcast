@@ -1,0 +1,28 @@
+﻿{
+  "ISCIs": [
+    {
+      "Brand": null,
+      "Client": "17UPLC5174H",
+      "House": "17UPLC5174H",
+      "Id": 6
+    },
+    {
+      "Brand": null,
+      "Client": "17UPLC5174",
+      "House": "17UPLC5174",
+      "Id": 7
+    },
+    {
+      "Brand": null,
+      "Client": "17LPLC0721H",
+      "House": "17LPLC0721H",
+      "Id": 8
+    },
+    {
+      "Brand": null,
+      "Client": "17LPLC0721",
+      "House": "17LPLC0721",
+      "Id": 9
+    }
+  ]
+}

@@ -1,0 +1,306 @@
+﻿{
+  "Dayparts": [
+    {
+      "Details": [
+        {
+          "DetailLevel": 1,
+          "InventoryDetailId": 748,
+          "InventorySpot": "TTNW AM"
+        },
+        {
+          "DetailLevel": 2,
+          "InventoryDetailId": 748,
+          "InventorySpot": "TTNW AM"
+        },
+        {
+          "DetailLevel": 3,
+          "InventoryDetailId": 748,
+          "InventorySpot": "TTNW AM"
+        },
+        {
+          "DetailLevel": 4,
+          "InventoryDetailId": 748,
+          "InventorySpot": "TTNW AM"
+        },
+        {
+          "DetailLevel": 5,
+          "InventoryDetailId": 748,
+          "InventorySpot": "TTNW AM"
+        },
+        {
+          "DetailLevel": 6,
+          "InventoryDetailId": 748,
+          "InventorySpot": "TTNW AM"
+        },
+        {
+          "DetailLevel": 7,
+          "InventoryDetailId": 748,
+          "InventorySpot": "TTNW AM"
+        },
+        {
+          "DetailLevel": 8,
+          "InventoryDetailId": 748,
+          "InventorySpot": "TTNW AM"
+        }
+      ],
+      "Id": 4,
+      "InventorySource": "TTNW"
+    }
+  ],
+  "DetailBudgetPercent": null,
+  "DetailCpm": 50.00,
+  "DetailCpmPercent": null,
+  "DetailDaypart": {
+    "endTime": 36000,
+    "fri": true,
+    "mon": true,
+    "sat": false,
+    "startTime": 32400,
+    "sun": false,
+    "Text": "M-F 9AM-10AM",
+    "thu": true,
+    "tue": true,
+    "wed": true
+  },
+  "DetailDaypartId": 6724,
+  "DetailFlightEndDate": "2016-06-06T00:00:00",
+  "DetailFlightStartDate": "2016-05-30T00:00:00",
+  "DetailFlightWeeks": [
+    {
+      "EndDate": "2016-06-06T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 649,
+      "StartDate": "2016-05-30T00:00:00"
+    }
+  ],
+  "DetailId": 7,
+  "DetailImpressionsPercent": null,
+  "DetailSpotLength": 30,
+  "DetailSpotLengthId": 1,
+  "DetailTargetBudget": 50.0000,
+  "DetailTargetImpressions": 1000.0,
+  "DetailTotalBudget": null,
+  "DetailTotalCpm": null,
+  "DetailTotalImpressions": null,
+  "Equivalized": null,
+  "GuaranteedAudience": 31,
+  "HutPostingBookId": 410,
+  "PlaybackType": 4,
+  "PostType": null,
+  "ProposalFlightEndDate": "2016-06-06T00:00:00",
+  "ProposalFlightStartDate": "2016-05-30T00:00:00",
+  "ProposalFlightWeeks": [
+    {
+      "EndDate": "2016-06-06T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 649,
+      "StartDate": "2016-05-30T00:00:00"
+    }
+  ],
+  "ProposalId": 248,
+  "ProposalName": "Proposal Test",
+  "ProposalVersion": 1,
+  "SharePostingBookId": 413,
+  "SinglePostingBookId": null,
+  "Weeks": [
+    {
+      "Budget": 25.0000,
+      "BudgetPercent": null,
+      "BudgetTotal": null,
+      "DaypartGroups": [
+        {
+          "Key": "TTNW",
+          "Value": {
+            "DaypartSlots": [
+              {
+                "Cost": 1.0000,
+                "CPM": 0.251241863778215,
+                "DetailLevel": 1,
+                "EFF": 0.0,
+                "HasWastage": true,
+                "Impressions": 3.98022839,
+                "InventoryDetailId": 748,
+                "InventoryDetailSlotId": 10206,
+                "ProposalsAllocations": [
+                  {
+                    "IsCurrentProposal": true,
+                    "Order": 1,
+                    "ProposalName": "Proposal Test",
+                    "ProposalVersionDetailQuarterWeekId": 7,
+                    "SpotLength": 30,
+                    "UserName": "",
+                    "WeekStartDate": "2016-05-30T00:00:00"
+                  }
+                ],
+                "SpotLength": 15
+              },
+              {
+                "Cost": 4.0000,
+                "CPM": 0.310093337509708,
+                "DetailLevel": 2,
+                "EFF": 0.0,
+                "HasWastage": true,
+                "Impressions": 12.89934196,
+                "InventoryDetailId": 748,
+                "InventoryDetailSlotId": 10205,
+                "ProposalsAllocations": [
+                  {
+                    "IsCurrentProposal": true,
+                    "Order": 2,
+                    "ProposalName": "Proposal Test",
+                    "ProposalVersionDetailQuarterWeekId": 7,
+                    "SpotLength": 30,
+                    "UserName": "",
+                    "WeekStartDate": "2016-05-30T00:00:00"
+                  }
+                ],
+                "SpotLength": 15
+              },
+              {
+                "Cost": 333.0000,
+                "CPM": 25.8152703476832,
+                "DetailLevel": 3,
+                "EFF": 0.0,
+                "HasWastage": true,
+                "Impressions": 12.89934196,
+                "InventoryDetailId": 748,
+                "InventoryDetailSlotId": 10204,
+                "ProposalsAllocations": [
+                  {
+                    "IsCurrentProposal": true,
+                    "Order": 3,
+                    "ProposalName": "Proposal Test",
+                    "ProposalVersionDetailQuarterWeekId": 7,
+                    "SpotLength": 30,
+                    "UserName": "",
+                    "WeekStartDate": "2016-05-30T00:00:00"
+                  }
+                ],
+                "SpotLength": 15
+              },
+              {
+                "Cost": 565.0000,
+                "CPM": 43.8006839232463,
+                "DetailLevel": 4,
+                "EFF": 0.0,
+                "HasWastage": true,
+                "Impressions": 12.89934196,
+                "InventoryDetailId": 748,
+                "InventoryDetailSlotId": 10203,
+                "ProposalsAllocations": [
+                  {
+                    "IsCurrentProposal": true,
+                    "Order": 4,
+                    "ProposalName": "Proposal Test",
+                    "ProposalVersionDetailQuarterWeekId": 7,
+                    "SpotLength": 30,
+                    "UserName": "",
+                    "WeekStartDate": "2016-05-30T00:00:00"
+                  }
+                ],
+                "SpotLength": 15
+              },
+              {
+                "Cost": 98.0000,
+                "CPM": 7.59728676898785,
+                "DetailLevel": 5,
+                "EFF": 0.0,
+                "HasWastage": true,
+                "Impressions": 12.89934196,
+                "InventoryDetailId": 748,
+                "InventoryDetailSlotId": 10202,
+                "ProposalsAllocations": [
+                  {
+                    "IsCurrentProposal": true,
+                    "Order": 5,
+                    "ProposalName": "Proposal Test",
+                    "ProposalVersionDetailQuarterWeekId": 7,
+                    "SpotLength": 30,
+                    "UserName": "",
+                    "WeekStartDate": "2016-05-30T00:00:00"
+                  }
+                ],
+                "SpotLength": 15
+              },
+              {
+                "Cost": 65.0000,
+                "CPM": 5.03901673453276,
+                "DetailLevel": 6,
+                "EFF": 0.0,
+                "HasWastage": true,
+                "Impressions": 12.89934196,
+                "InventoryDetailId": 748,
+                "InventoryDetailSlotId": 10201,
+                "ProposalsAllocations": [
+                  {
+                    "IsCurrentProposal": true,
+                    "Order": 6,
+                    "ProposalName": "Proposal Test",
+                    "ProposalVersionDetailQuarterWeekId": 7,
+                    "SpotLength": 30,
+                    "UserName": "",
+                    "WeekStartDate": "2016-05-30T00:00:00"
+                  }
+                ],
+                "SpotLength": 15
+              },
+              {
+                "Cost": 1685.0000,
+                "CPM": 130.626818425965,
+                "DetailLevel": 7,
+                "EFF": 0.0,
+                "HasWastage": true,
+                "Impressions": 12.89934196,
+                "InventoryDetailId": 748,
+                "InventoryDetailSlotId": 10200,
+                "ProposalsAllocations": [
+                  {
+                    "IsCurrentProposal": true,
+                    "Order": 7,
+                    "ProposalName": "Proposal Test",
+                    "ProposalVersionDetailQuarterWeekId": 7,
+                    "SpotLength": 30,
+                    "UserName": "",
+                    "WeekStartDate": "2016-05-30T00:00:00"
+                  }
+                ],
+                "SpotLength": 15
+              },
+              {
+                "Cost": 1234.0000,
+                "CPM": 95.6637946217449,
+                "DetailLevel": 8,
+                "EFF": 0.0,
+                "HasWastage": true,
+                "Impressions": 12.89934196,
+                "InventoryDetailId": 748,
+                "InventoryDetailSlotId": 10199,
+                "ProposalsAllocations": [
+                  {
+                    "IsCurrentProposal": true,
+                    "Order": 8,
+                    "ProposalName": "Proposal Test",
+                    "ProposalVersionDetailQuarterWeekId": 7,
+                    "SpotLength": 30,
+                    "UserName": "",
+                    "WeekStartDate": "2016-05-30T00:00:00"
+                  }
+                ],
+                "SpotLength": 15
+              }
+            ]
+          }
+        }
+      ],
+      "ImpressionsGoal": 100.0,
+      "ImpressionsPercent": null,
+      "ImpressionsTotal": null,
+      "IsHiatus": false,
+      "MaxSlotSpotLength": 15,
+      "MediaWeekId": 649,
+      "ProposalVersionDetailQuarterWeekId": 7,
+      "QuarterText": "Q2",
+      "Week": "5/30/2016"
+    }
+  ]
+}
