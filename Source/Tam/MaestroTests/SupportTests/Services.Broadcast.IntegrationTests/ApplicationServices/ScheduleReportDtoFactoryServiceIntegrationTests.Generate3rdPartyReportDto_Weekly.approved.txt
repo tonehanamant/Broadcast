@@ -7,7 +7,7 @@
           "AudienceId": 31,
           "AudienceName": "HH",
           "DeliveredImpressions": 0.0,
-          "OrderedImpressions": 0,
+          "OrderedImpressions": 147388,
           "OutOfSpecDeliveredImpressions": 0.0,
           "TotalDeliveredImpressions": 0.0
         },
@@ -15,12 +15,109 @@
           "AudienceId": 33,
           "AudienceName": "A18-49",
           "DeliveredImpressions": 0.0,
-          "OrderedImpressions": 0,
+          "OrderedImpressions": 46200,
           "OutOfSpecDeliveredImpressions": 0.0,
           "TotalDeliveredImpressions": 0.0
         }
       ],
-      "ReportData": [],
+      "ReportData": [
+        {
+          "Affiliate": "NBC",
+          "AudienceImpressions": [
+            {
+              "AudienceId": 31,
+              "Delivery": 0.0,
+              "Impressions": 47178,
+              "NsiDelivery": null
+            },
+            {
+              "AudienceId": 33,
+              "Delivery": 0.0,
+              "Impressions": 13384,
+              "NsiDelivery": null
+            }
+          ],
+          "Cost": 0.0,
+          "DeliveredSpots": 0,
+          "DisplayDaypart": {
+            "_Code": "CUS",
+            "_EndTime": 71999,
+            "_Friday": true,
+            "_Id": 32345,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "BRDCST DP362",
+            "_Saturday": false,
+            "_StartTime": 70200,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "Isci": null,
+          "Market": "New York",
+          "MediaWeekId": null,
+          "OrderedSpots": 1,
+          "OutOfSpecSpots": null,
+          "ProgramName": "1ST LOOK",
+          "Rank": 1,
+          "SpecStatus": "Match",
+          "SpotClearance": 0.0,
+          "SpotLength": 15,
+          "Station": "WNBC-TV",
+          "Status": 1
+        },
+        {
+          "Affiliate": "NBC",
+          "AudienceImpressions": [
+            {
+              "AudienceId": 31,
+              "Delivery": 0.0,
+              "Impressions": 100210,
+              "NsiDelivery": null
+            },
+            {
+              "AudienceId": 33,
+              "Delivery": 0.0,
+              "Impressions": 32816,
+              "NsiDelivery": null
+            }
+          ],
+          "Cost": 0.0,
+          "DeliveredSpots": 0,
+          "DisplayDaypart": {
+            "_Code": "CUS",
+            "_EndTime": 35999,
+            "_Friday": true,
+            "_Id": 6724,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "Custom",
+            "_Saturday": false,
+            "_StartTime": 32400,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "Isci": null,
+          "Market": "New York",
+          "MediaWeekId": null,
+          "OrderedSpots": 1,
+          "OutOfSpecSpots": null,
+          "ProgramName": "TODAY SHW2-NBC",
+          "Rank": 1,
+          "SpecStatus": "Match",
+          "SpotClearance": 0.0,
+          "SpotLength": 15,
+          "Station": "WNBC-TV",
+          "Status": 1
+        }
+      ],
       "Week": {
         "Display": "3/28/2016",
         "Id": 640
@@ -32,7 +129,7 @@
           "AudienceId": 31,
           "AudienceName": "HH",
           "DeliveredImpressions": 0.0,
-          "OrderedImpressions": 0,
+          "OrderedImpressions": 147388,
           "OutOfSpecDeliveredImpressions": 0.0,
           "TotalDeliveredImpressions": 0.0
         },
@@ -40,12 +137,109 @@
           "AudienceId": 33,
           "AudienceName": "A18-49",
           "DeliveredImpressions": 0.0,
-          "OrderedImpressions": 0,
+          "OrderedImpressions": 46200,
           "OutOfSpecDeliveredImpressions": 0.0,
           "TotalDeliveredImpressions": 0.0
         }
       ],
-      "ReportData": [],
+      "ReportData": [
+        {
+          "Affiliate": "NBC",
+          "AudienceImpressions": [
+            {
+              "AudienceId": 31,
+              "Delivery": 0.0,
+              "Impressions": 47178,
+              "NsiDelivery": null
+            },
+            {
+              "AudienceId": 33,
+              "Delivery": 0.0,
+              "Impressions": 13384,
+              "NsiDelivery": null
+            }
+          ],
+          "Cost": 0.0,
+          "DeliveredSpots": 0,
+          "DisplayDaypart": {
+            "_Code": "CUS",
+            "_EndTime": 71999,
+            "_Friday": true,
+            "_Id": 32345,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "BRDCST DP362",
+            "_Saturday": false,
+            "_StartTime": 70200,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "Isci": null,
+          "Market": "New York",
+          "MediaWeekId": null,
+          "OrderedSpots": 1,
+          "OutOfSpecSpots": null,
+          "ProgramName": "1ST LOOK",
+          "Rank": 1,
+          "SpecStatus": "Match",
+          "SpotClearance": 0.0,
+          "SpotLength": 15,
+          "Station": "WNBC-TV",
+          "Status": 1
+        },
+        {
+          "Affiliate": "NBC",
+          "AudienceImpressions": [
+            {
+              "AudienceId": 31,
+              "Delivery": 0.0,
+              "Impressions": 100210,
+              "NsiDelivery": null
+            },
+            {
+              "AudienceId": 33,
+              "Delivery": 0.0,
+              "Impressions": 32816,
+              "NsiDelivery": null
+            }
+          ],
+          "Cost": 0.0,
+          "DeliveredSpots": 0,
+          "DisplayDaypart": {
+            "_Code": "CUS",
+            "_EndTime": 35999,
+            "_Friday": true,
+            "_Id": 6724,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "Custom",
+            "_Saturday": false,
+            "_StartTime": 32400,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "Isci": null,
+          "Market": "New York",
+          "MediaWeekId": null,
+          "OrderedSpots": 1,
+          "OutOfSpecSpots": null,
+          "ProgramName": "TODAY SHW2-NBC",
+          "Rank": 1,
+          "SpecStatus": "Match",
+          "SpotClearance": 0.0,
+          "SpotLength": 15,
+          "Station": "WNBC-TV",
+          "Status": 1
+        }
+      ],
       "Week": {
         "Display": "4/4/2016",
         "Id": 641
@@ -57,7 +251,7 @@
           "AudienceId": 31,
           "AudienceName": "HH",
           "DeliveredImpressions": 171812.972,
-          "OrderedImpressions": 306640,
+          "OrderedImpressions": 583763,
           "OutOfSpecDeliveredImpressions": 574900.442,
           "TotalDeliveredImpressions": 746713.414
         },
@@ -65,12 +259,108 @@
           "AudienceId": 33,
           "AudienceName": "A18-49",
           "DeliveredImpressions": 46837.014,
-          "OrderedImpressions": 80314,
+          "OrderedImpressions": 152020,
           "OutOfSpecDeliveredImpressions": 206256.78,
           "TotalDeliveredImpressions": 253093.794
         }
       ],
       "ReportData": [
+        {
+          "Affiliate": "NBC",
+          "AudienceImpressions": [
+            {
+              "AudienceId": 31,
+              "Delivery": 0.0,
+              "Impressions": 47178,
+              "NsiDelivery": null
+            },
+            {
+              "AudienceId": 33,
+              "Delivery": 0.0,
+              "Impressions": 13384,
+              "NsiDelivery": null
+            }
+          ],
+          "Cost": 0.0,
+          "DeliveredSpots": 0,
+          "DisplayDaypart": {
+            "_Code": "CUS",
+            "_EndTime": 71999,
+            "_Friday": true,
+            "_Id": 32345,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "BRDCST DP362",
+            "_Saturday": false,
+            "_StartTime": 70200,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "Isci": null,
+          "Market": "New York",
+          "MediaWeekId": null,
+          "OrderedSpots": 1,
+          "OutOfSpecSpots": null,
+          "ProgramName": "1ST LOOK",
+          "Rank": 1,
+          "SpecStatus": "Match",
+          "SpotClearance": 0.0,
+          "SpotLength": 15,
+          "Station": "WNBC-TV",
+          "Status": 1
+        },
+        {
+          "Affiliate": "NBC",
+          "AudienceImpressions": [
+            {
+              "AudienceId": 31,
+              "Delivery": 0.0,
+              "Impressions": 100210,
+              "NsiDelivery": null
+            },
+            {
+              "AudienceId": 33,
+              "Delivery": 0.0,
+              "Impressions": 32816,
+              "NsiDelivery": null
+            }
+          ],
+          "Cost": 0.0,
+          "DeliveredSpots": 0,
+          "DisplayDaypart": {
+            "_Code": "CUS",
+            "_EndTime": 35999,
+            "_Friday": true,
+            "_Id": 6724,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "Custom",
+            "_Saturday": false,
+            "_StartTime": 32400,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "Isci": null,
+          "Market": "New York",
+          "MediaWeekId": null,
+          "OrderedSpots": 1,
+          "OutOfSpecSpots": null,
+          "ProgramName": "TODAY SHW2-NBC",
+          "Rank": 1,
+          "SpecStatus": "Match",
+          "SpotClearance": 0.0,
+          "SpotLength": 15,
+          "Station": "WNBC-TV",
+          "Status": 1
+        },
         {
           "Affiliate": "CBS",
           "AudienceImpressions": [
@@ -107,7 +397,7 @@
             "_Wednesday": true
           },
           "Isci": null,
-          "Market": "NEW YORK",
+          "Market": "New York",
           "MediaWeekId": null,
           "OrderedSpots": 2,
           "OutOfSpecSpots": null,
@@ -116,7 +406,55 @@
           "SpecStatus": "Match",
           "SpotClearance": 0.5,
           "SpotLength": 15,
-          "Station": "WCBS",
+          "Station": "WCBS-TV",
+          "Status": 1
+        },
+        {
+          "Affiliate": "CBS",
+          "AudienceImpressions": [
+            {
+              "AudienceId": 31,
+              "Delivery": 0.0,
+              "Impressions": 129735,
+              "NsiDelivery": null
+            },
+            {
+              "AudienceId": 33,
+              "Delivery": 0.0,
+              "Impressions": 25506,
+              "NsiDelivery": null
+            }
+          ],
+          "Cost": 0.0,
+          "DeliveredSpots": 0,
+          "DisplayDaypart": {
+            "_Code": "CUS",
+            "_EndTime": 39599,
+            "_Friday": true,
+            "_Id": 6817,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "Custom",
+            "_Saturday": false,
+            "_StartTime": 36000,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "Isci": null,
+          "Market": "New York",
+          "MediaWeekId": null,
+          "OrderedSpots": 1,
+          "OutOfSpecSpots": null,
+          "ProgramName": "LET'S MAKE A DEAL",
+          "Rank": 1,
+          "SpecStatus": "Match",
+          "SpotClearance": 0.0,
+          "SpotLength": 15,
+          "Station": "WCBS-TV",
           "Status": 1
         },
         {
@@ -321,7 +659,7 @@
           "AudienceId": 31,
           "AudienceName": "HH",
           "DeliveredImpressions": 0.0,
-          "OrderedImpressions": 0,
+          "OrderedImpressions": 147388,
           "OutOfSpecDeliveredImpressions": 0.0,
           "TotalDeliveredImpressions": 0.0
         },
@@ -329,12 +667,109 @@
           "AudienceId": 33,
           "AudienceName": "A18-49",
           "DeliveredImpressions": 0.0,
-          "OrderedImpressions": 0,
+          "OrderedImpressions": 46200,
           "OutOfSpecDeliveredImpressions": 0.0,
           "TotalDeliveredImpressions": 0.0
         }
       ],
-      "ReportData": [],
+      "ReportData": [
+        {
+          "Affiliate": "NBC",
+          "AudienceImpressions": [
+            {
+              "AudienceId": 31,
+              "Delivery": 0.0,
+              "Impressions": 47178,
+              "NsiDelivery": null
+            },
+            {
+              "AudienceId": 33,
+              "Delivery": 0.0,
+              "Impressions": 13384,
+              "NsiDelivery": null
+            }
+          ],
+          "Cost": 0.0,
+          "DeliveredSpots": 0,
+          "DisplayDaypart": {
+            "_Code": "CUS",
+            "_EndTime": 71999,
+            "_Friday": true,
+            "_Id": 32345,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "BRDCST DP362",
+            "_Saturday": false,
+            "_StartTime": 70200,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "Isci": null,
+          "Market": "New York",
+          "MediaWeekId": null,
+          "OrderedSpots": 1,
+          "OutOfSpecSpots": null,
+          "ProgramName": "1ST LOOK",
+          "Rank": 1,
+          "SpecStatus": "Match",
+          "SpotClearance": 0.0,
+          "SpotLength": 15,
+          "Station": "WNBC-TV",
+          "Status": 1
+        },
+        {
+          "Affiliate": "NBC",
+          "AudienceImpressions": [
+            {
+              "AudienceId": 31,
+              "Delivery": 0.0,
+              "Impressions": 100210,
+              "NsiDelivery": null
+            },
+            {
+              "AudienceId": 33,
+              "Delivery": 0.0,
+              "Impressions": 32816,
+              "NsiDelivery": null
+            }
+          ],
+          "Cost": 0.0,
+          "DeliveredSpots": 0,
+          "DisplayDaypart": {
+            "_Code": "CUS",
+            "_EndTime": 35999,
+            "_Friday": true,
+            "_Id": 6724,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "Custom",
+            "_Saturday": false,
+            "_StartTime": 32400,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "Isci": null,
+          "Market": "New York",
+          "MediaWeekId": null,
+          "OrderedSpots": 1,
+          "OutOfSpecSpots": null,
+          "ProgramName": "TODAY SHW2-NBC",
+          "Rank": 1,
+          "SpecStatus": "Match",
+          "SpotClearance": 0.0,
+          "SpotLength": 15,
+          "Station": "WNBC-TV",
+          "Status": 1
+        }
+      ],
       "Week": {
         "Display": "4/18/2016",
         "Id": 643

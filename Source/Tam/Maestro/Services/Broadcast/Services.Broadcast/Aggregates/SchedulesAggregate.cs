@@ -29,12 +29,23 @@ namespace Services.Broadcast.Aggregates
         private schedule _Schedule;
         private List<DisplayDaypart> _RestrictedDayparts;
         private List<market> _RestrictedMarkets;
+        private Dictionary<string, string> _StationToAffiliateDict;
 
         public SchedulesAggregate(schedule schedule,
-            List<ScheduleAudience> scheduleAudiences,
-            List<schedule_details> scheduleDetails, List<schedule_iscis> scheduleIscis, List<schedule_detail_audiences> scheduleDetailAudiences, List<schedule_detail_weeks> scheduleDetailWeeks,
-            List<bvs_file_details> bvsFileDetails, List<bvs_post_details> bvsPostDetails, List<DisplayMediaWeek> mediaWeeks,
-            SchedulePostType postType, RatesFile.RateSourceType inventorySource, bool isEquivalized, DateTime startDate, DateTime endDate)
+                                    List<ScheduleAudience> scheduleAudiences,
+                                    List<schedule_details> scheduleDetails, 
+                                    List<schedule_iscis> scheduleIscis, 
+                                    List<schedule_detail_audiences> scheduleDetailAudiences, 
+                                    List<schedule_detail_weeks> scheduleDetailWeeks,
+                                    List<bvs_file_details> bvsFileDetails, 
+                                    List<bvs_post_details> bvsPostDetails, 
+                                    List<DisplayMediaWeek> mediaWeeks,
+                                    SchedulePostType postType, 
+                                    RatesFile.RateSourceType inventorySource, 
+                                    bool isEquivalized, 
+                                    DateTime startDate, 
+                                    DateTime endDate,
+                                    Dictionary<string, string> stationToAffiliateDict)
         {
             _Schedule = schedule;
             _RestrictedDayparts = _Schedule.schedule_restriction_dayparts.Select(rdp => DaypartCache.Instance.GetDisplayDaypart(rdp.daypart_id)).ToList();
@@ -49,6 +60,7 @@ namespace Services.Broadcast.Aggregates
             _MediaWeeks = mediaWeeks;
             PostType = postType;
             InventorySource = inventorySource;
+            _StationToAffiliateDict = stationToAffiliateDict;
             IsEquivalized = isEquivalized;
             _StartDate = startDate;
             _EndDate = endDate;
@@ -151,6 +163,37 @@ namespace Services.Broadcast.Aggregates
             return detail.daypart_id;
         }
 
+        public List<schedule_details> GetScheduleDetails()
+        {
+            return _ScheduleDetails;
+        }
+
+        public static string CleanStatioName(string stationName)
+        {
+            return stationName.ToLower().Replace("-tv", "").Replace("+s2", "").Trim();
+        }
+        public string GetDetailAffiliateFromScheduleDetailId(string stationName)
+        {
+            var adjName = CleanStatioName(stationName);
+
+            string affiliate;
+            if (_StationToAffiliateDict.TryGetValue(adjName, out affiliate))
+                return affiliate;
+
+            //throw new Exception(string.Format("Could not find affiliate from station named \"{0}\"",adjName));
+            return string.Empty;
+        }
+
+        public List<schedule_details> GetUndeliveredScheduleDetails()
+        {
+            var deliveredSchduleIds =
+                _ScheduleDetails.Where(s => _BvsFileDetails.Select(b => b.schedule_detail_week_id).Contains(s.id))
+                    .Select(s => s.id)
+                    .ToList();
+            var details = _ScheduleDetails.Where(s => !deliveredSchduleIds.Contains(s.id));
+            return details.ToList();
+        }
+
         public schedule_details GetScheduleDetailById(int scheduleDetailId)
         {
             var detail = _ScheduleDetails.Single(x => x.id == scheduleDetailId);
@@ -170,6 +213,13 @@ namespace Services.Broadcast.Aggregates
             return week;
         }
 
+        public List<bvs_file_details> GetBvsDetailsByScheduleId(int scheduleDetailId)
+        {
+            var scheduleWeeks = _ScheduleDetailWeeks.Where(x => x.schedule_detail_id == scheduleDetailId).Select(w => w.id).ToList();
+            // yes, this can be null
+            return _BvsFileDetails.Where(b => b.schedule_detail_week_id.HasValue 
+                                                        &&  scheduleWeeks.Contains(b.schedule_detail_week_id.Value)).ToList();
+        }
         public List<bvs_file_details> GetBvsDetails()
         {
             return _BvsFileDetails.ToList();
@@ -216,29 +266,32 @@ namespace Services.Broadcast.Aggregates
             outOfSpecRow.MediaWeekId = _MediaWeeks.First(mw => mw.WeekStartDate <= outOfSpecRow.DateAired && outOfSpecRow.DateAired <= mw.WeekEndDate).Id;
         }
 
-        public AudienceImpressionsAndDelivery GetImpressionsDetailsByScheduleDetailAndAudience(int scheduleDetailId, int audienceId, int bvsFileDetailId)
+        public AudienceImpressionsAndDelivery GetImpressionsDetailsByScheduleDetailAndAudience(int scheduleDetailId,int audienceId, int? bvsFileDetailId)
         {
-            var file = _BvsFileDetails.SingleOrDefault(fd => fd.id == bvsFileDetailId);
+            bvs_post_details post = null;
 
-            if (file == null)
-                return null;
+            if (bvsFileDetailId.HasValue)
+            {
+                var file = _BvsFileDetails.SingleOrDefault(fd => fd.id == bvsFileDetailId);
+                if (file == null)
+                    return null;
 
-            var post = file.bvs_post_details.SingleOrDefault(x => x.audience_id == audienceId);
+                post = file.bvs_post_details.SingleOrDefault(x => x.audience_id == audienceId);
 
-            if (post == null) //not found
-                return null;
+                if (post == null)
+                    return null;    //not found, but expecting
+            }
 
             var impressions = (from x in _ScheduleDetails
-                               where x.id == scheduleDetailId
-                               from sd in x.schedule_detail_audiences
-                               where sd.audience_id == audienceId
-                               select sd.impressions).SingleOrDefault();
-
+                                   where x.id == scheduleDetailId
+                                   from sd in x.schedule_detail_audiences
+                                   where sd.audience_id == audienceId
+                                   select sd.impressions).SingleOrDefault();
 
             return new AudienceImpressionsAndDelivery()
             {
                 AudienceId = audienceId,
-                Delivery = post.delivery,
+                Delivery = post == null ? 0 : post.delivery,
                 Impressions = impressions
             };
         }
@@ -305,7 +358,7 @@ namespace Services.Broadcast.Aggregates
             return _ScheduleDetailWeeks.Select(sdw => sdw.media_week_id).Distinct().ToList();
         }
 
-        public List<DateTime> GetBvsDetailMediaWeeks()
+        public List<DateTime> GetBvsDetailDateAired()
         {
             return _BvsFileDetails.Select(d => d.date_aired).ToList();
         }
