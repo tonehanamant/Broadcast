@@ -38,7 +38,7 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<ITrafficService>()
-                            .GetTrafficProposals(DateTime.Now));
+                            .GetTrafficProposals(DateTime.Now, ProposalEnums.ProposalStatusType.Contracted));
         }
 
     }

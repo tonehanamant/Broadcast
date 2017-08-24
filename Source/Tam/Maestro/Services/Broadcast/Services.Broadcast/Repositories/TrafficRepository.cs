@@ -18,7 +18,7 @@ namespace Services.Broadcast.Repositories
 
     public interface ITrafficRepository : IDataRepository
     {
-        TrafficDisplayDto GetTrafficProposals(List<int> weekIds);
+        TrafficDisplayDto GetTrafficProposals(List<int> weekIds, ProposalEnums.ProposalStatusType? proposalStatus);
     }
 
     public class TrafficRepository : BroadcastRepositoryBase, ITrafficRepository
@@ -31,13 +31,13 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public TrafficDisplayDto GetTrafficProposals(List<int> weekIds)
+        public TrafficDisplayDto GetTrafficProposals(List<int> weekIds, ProposalEnums.ProposalStatusType? proposalStatus)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
                     // get a dictionary containing a list of proprietary and openmarket that does not have an isci against it for the current quarter
-                    var trafficWeekProposals = _GetTrafficWeeks(context, weekIds);
+                    var trafficWeekProposals = _GetTrafficWeeks(context, weekIds, proposalStatus);
 
                     return new TrafficDisplayDto()
                     {
@@ -51,7 +51,7 @@ namespace Services.Broadcast.Repositories
         }
 
         private Dictionary<int, List<TrafficProposalInventory>> _GetTrafficWeeks(QueryHintBroadcastContext context,
-            List<int> weekIds)
+            List<int> weekIds, ProposalEnums.ProposalStatusType? proposalStatus)
         {
             // retrieve all proposals that have mediaweeks in the quarter_week for either inventory_detail or station_program
             var trafficWeeks = (from p in context.proposals
@@ -65,7 +65,8 @@ namespace Services.Broadcast.Repositories
                     pro.proprosal_version_detail_quarter_week_id into OpenMarketUnassignedISCI
                 where pv.proposal_id == p.id &&
                       pv.id == p.primary_version_id &&
-                      weekIds.Contains(pw.media_week_id)
+                      weekIds.Contains(pw.media_week_id) &&
+                      (!proposalStatus.HasValue || (proposalStatus.HasValue && pv.status == (byte)proposalStatus.Value))
                 select new
                 {
                     MediaWeekId = pw.media_week_id,

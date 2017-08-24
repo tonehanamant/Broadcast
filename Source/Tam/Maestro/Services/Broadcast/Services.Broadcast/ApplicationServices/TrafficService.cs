@@ -18,7 +18,7 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface ITrafficService : IApplicationService
     {
-        TrafficDisplayDto GetTrafficProposals(DateTime currentDateTime);
+        TrafficDisplayDto GetTrafficProposals(DateTime currentDateTime, ProposalEnums.ProposalStatusType? proposalStatus);
     }
 
     public class TrafficService :  ITrafficService
@@ -41,27 +41,32 @@ namespace Services.Broadcast.ApplicationServices
             _SmsClient = smsClient;
         }
 
-        public TrafficDisplayDto GetTrafficProposals(DateTime currentDateTime)
+        public TrafficDisplayDto GetTrafficProposals(DateTime currentDateTime, ProposalEnums.ProposalStatusType? proposalStatus)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                var quarterDates = _quarterCalculationEngine.GetQuarterRangeByDate(currentDateTime, 0);
-                var mediaWeeks = _MediaMonthAndWeekAggregateCache.GetMediaWeeksInRange(quarterDates.StartDate,
-                    quarterDates.EndDate);
-
-                var trafficProposals =
-                    _TrafficRepository.GetTrafficProposals(mediaWeeks.Select(m => m.Id).OrderBy(a => a).ToList());
-
-                // set weekname and advertiser
-                foreach (var week in trafficProposals.Weeks)
-                {
-                    var mediaMonth = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(week.WeekId);
-                    week.Week = mediaMonth.StartDate.ToShortDateString();
-                    week.TrafficProposalInventories.ForEach(t => t.Advertiser = _SmsClient.FindAdvertiserById(t.AdvertiserId).Display);
-                }
-
-                return trafficProposals;
+                return _GetTrafficProposalsByProposalStatus(currentDateTime, proposalStatus);
             }            
+        }
+
+        private TrafficDisplayDto _GetTrafficProposalsByProposalStatus(DateTime currentDateTime, ProposalEnums.ProposalStatusType? proposalStatus)
+        {
+            var quarterDates = _quarterCalculationEngine.GetQuarterRangeByDate(currentDateTime, 0);
+            var mediaWeeks = _MediaMonthAndWeekAggregateCache.GetMediaWeeksInRange(quarterDates.StartDate,
+                quarterDates.EndDate);
+
+            var trafficProposals =
+                _TrafficRepository.GetTrafficProposals(mediaWeeks.Select(m => m.Id).ToList(), proposalStatus);
+
+            // set weekname and advertiser
+            foreach (var week in trafficProposals.Weeks)
+            {
+                var mediaMonth = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(week.WeekId);
+                week.Week = mediaMonth.StartDate.ToShortDateString();
+                week.TrafficProposalInventories.ForEach(t => t.Advertiser = _SmsClient.FindAdvertiserById(t.AdvertiserId).Display);
+            }
+
+            return trafficProposals;
         }
 
     }

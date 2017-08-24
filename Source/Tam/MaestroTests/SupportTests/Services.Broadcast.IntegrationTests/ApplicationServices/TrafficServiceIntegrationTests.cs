@@ -20,7 +20,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var trafficData = _TrafficService.GetTrafficProposals(_CurrentDateTime);
+                var trafficData = _TrafficService.GetTrafficProposals(_CurrentDateTime, null);
 
                 Assert.IsTrue(trafficData.Weeks.Any());
             }
