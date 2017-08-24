@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
@@ -133,8 +134,9 @@ namespace Services.Broadcast.Converters
         private void _GetDemoUniverseData(ScxData data, ProposalDetailDto proposalDetailDto)
         {
             var postingBookMonthId = proposalDetailDto.HutPostingBookId ?? proposalDetailDto.SinglePostingBookId;
-            if (postingBookMonthId == null)
-                postingBookMonthId = proposalDetailDto.SharePostingBookId;
+            if (postingBookMonthId == ProposalConstants.UseShareBookOnlyId
+                || postingBookMonthId == null)
+                postingBookMonthId = proposalDetailDto.SharePostingBookId.Value;
 
             foreach (var demo in data.Demos)
             {
@@ -236,19 +238,23 @@ namespace Services.Broadcast.Converters
                         .Where(p => programIds.Contains(p.ProgramId))
                         .Select(p => new Program((short) s.StationCode, _DaypartCache.GetDisplayDaypart(p.Daypart.Id)))
                      );
-
+                var p1 = data.ProposalInventoryMarkets
+                    .SelectMany(pm => pm.Value.Stations)
+                    .SelectMany(s => s.Programs
+                        .Where(p => programIds.Contains(p.ProgramId))
+                     );
                 if (isSingleBook)
                 {
-                    _GetDemo1BookRatingData(data, demo, programs);
+                    _GetDemo1BookRatingData(data, demo, p1);
                 }
                 else
                 {
-                    _GetDemo2BookRattingData(proposalDetailDto, repo, demo, programs);
+                    _GetDemo2BookRatingData(proposalDetailDto, repo, demo, programs);
                 }
             }
         }
 
-        private void _GetDemo2BookRattingData(ProposalDetailDto proposalDetailDto, 
+        private void _GetDemo2BookRatingData(ProposalDetailDto proposalDetailDto, 
                                                 IRatingForecastRepository repo, 
                                                 DemoData demo,
                                                 IEnumerable<Program> programs)
@@ -292,25 +298,31 @@ namespace Services.Broadcast.Converters
             }
         }
 
-        private static void _GetDemo1BookRatingData(ScxData data, DemoData demo, IEnumerable<Program> programs)
+        private static void _GetDemo1BookRatingData(ScxData data, DemoData demo, IEnumerable<ProposalInventoryMarketDto.InventoryMarketStationProgram> programs)
         {
-            var marketIds = data.WeekData.Where(wd => wd.InventoryWeek != null)
-                .SelectMany(w => w.InventoryWeek.Markets)
-                .Select(m => (short) m.MarketId)
-                .Distinct();
-
             demo.Ratings = new List<Ratingdata>();
             foreach (var program in programs)
             {
-                var ratingData = new Ratingdata();
-                ratingData.DaypartId = program.DisplayDaypart.Id;
+                var marketIds = data.WeekData.Where(wd => wd.InventoryWeek != null)
+                    .SelectMany(w => w.InventoryWeek.Markets)
+                    .Where(m => m.Stations.Any(s => s.StationCode == program.StationCode))
+                    .Select(m => (short)m.MarketId).Distinct()
+                    .ToList();
+    
+                var demoRating = new Ratingdata();
+
+                demoRating.DaypartId = program.Daypart.Id;
+                demoRating.StationCode = program.StationCode;
                 var impressions = demo.Impressions
-                    .Where(i => i.station_code == program.StationCode)
+                    .Where(i => i.id == program.ProgramId)
                     .Sum(i => i.impressions);
+
                 double univSize = 0;
                 marketIds.Where(mId => demo.MarketPopulations.ContainsKey(mId))
                     .ForEach(marketId => univSize += demo.MarketPopulations[marketId]);
-                ratingData.Rating = impressions/univSize*100;
+                demoRating.Rating = impressions/univSize*100;
+
+                demo.Ratings.Add(demoRating);
             }
         }
 

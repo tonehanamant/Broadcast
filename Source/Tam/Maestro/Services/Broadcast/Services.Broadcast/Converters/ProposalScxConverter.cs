@@ -202,7 +202,7 @@ namespace Services.Broadcast.Converters
                             .Where(m => m.MarketId == marketId)
                             .SelectMany(m => m.Stations)
                             .SelectMany(s => s.Programs)
-                            .Where(p => p.Spots > 0 && p.ProgramId == program.ProgramId).ToList();
+                            .Where(p => p != null && p.Spots > 0 && p.ProgramId == program.ProgramId).ToList();
 
             totals.spots = items.Sum(i => i.Spots).ToString();
             totals.cost = new cost();
@@ -239,15 +239,6 @@ namespace Services.Broadcast.Converters
 
         private void _SetDetailLineDemoValue(detailLine detLine, ScxData data, int stationCode ,ProposalInventoryMarketDto.InventoryMarketStationProgram programInfo)
         {
-            var programImpressionInfo = data.WeekData.Where(w => w.InventoryWeek != null)
-                .SelectMany(w => w.InventoryWeek.Markets)
-                .SelectMany(m => m.Stations)
-                .Where(s => s.StationCode == stationCode)
-                .SelectMany(s => s.Programs)
-                .Where(p => p.ProgramId == programInfo.ProgramId);
-
-//            var primaryImpressionDisplay = string.Format("{0:####}", programImpressionInfo.Sum(i => i.Impressions));
-
             detLine.demoValue = new demoValue[data.Demos.Count];
             int demoValueIndex = 0;
             foreach (var demo in data.Demos)
@@ -308,7 +299,7 @@ namespace Services.Broadcast.Converters
                             .Where(m => m.MarketId == marketId)
                             .SelectMany(m => m.Stations)
                             .Where(s => s.StationCode == station.StationCode)
-                            .SelectMany(s => s.Programs.Where(p => p.ProgramId == program.ProgramId))
+                            .SelectMany(s => s.Programs.Where(p => p != null && p.ProgramId == program.ProgramId))
                             .Sum(p => p.Spots);
             return spots > 0;
         }
@@ -334,7 +325,7 @@ namespace Services.Broadcast.Converters
                         .Where(m => m.MarketId == marketId)
                         .SelectMany(m => m.Stations)
                         .Where(s => s.StationCode == station.StationCode)
-                        .SelectMany(s => s.Programs.Where(p => p.ProgramId == program.ProgramId))
+                        .SelectMany(s => s.Programs.Where(p => p != null && p.ProgramId == program.ProgramId))
                         .Sum(p => p.Spots);
                 }
                 spotWeek.quantity = spots.ToString();
@@ -396,7 +387,7 @@ namespace Services.Broadcast.Converters
                 .Where(m => m.MarketId == marketId)
                 .SelectMany(m => m.Stations)
                 .SelectMany(s => s.Programs)
-                .Where(p => p.Spots > 0).ToList();
+                .Where(p => p != null && p.Spots > 0).ToList();
 
             if (!programSpots.Any())
                 return false;
@@ -420,7 +411,7 @@ namespace Services.Broadcast.Converters
                 .Where(m => m.MarketId == marketId)
                 .SelectMany(m => m.Stations)
                 .SelectMany(s => s.Programs)
-                .Where(p => p.Spots > 0).ToList();
+                .Where(p => p != null && p.Spots > 0).ToList();
 
             if (!programSpots.Any())
                 return false;
