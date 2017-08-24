@@ -1,7 +1,7 @@
 ﻿[
   {
     "Advertiser": null,
-    "AdvertiserId": 37674,
+    "AdvertiserId" : 37674,
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
