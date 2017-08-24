@@ -26,6 +26,7 @@ namespace BroadcastComposerWeb
                 "~/Scripts/library/select2/select2.min.js",
                 "~/Scripts/library/daypart-dropdown/daypart-dropdown-broadcast.js",
                 //"~/Scripts/library/jquery.requestanimationframe.min.js",
+                "~/Scripts/library/numeral.js",
                 "~/Scripts/library/bootstrap-tagsinput/bootstrap-tagsinput.js");
 
             

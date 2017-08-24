@@ -500,8 +500,9 @@ var ProposalDetailSet = function (proposalView, id) {
                 //IF SET min vals on each then change event will be thrown ie. for 0 to the min - changing the value even if set to 0
                 //this.grid.columns[1].editable = record.isQuarter ? { type: 'money', autoFormat: false, min: 0.01, prefix: 'CPM $' } : { type: 'int', min: 1 };
                 this.grid.columns[1].editable = record.isQuarter ? { type: 'money', autoFormat: false, prefix: 'CPM $' } : { type: 'int' };
-                //editing mode: set the val as 3rd arg each time?
-                this.grid.editField(event.recid, 1, record.Units);
+                //new - need to set the editing to no decimals if .00 or blank '' if 0 value overall
+                var units = record.Units ? record.Units : '';
+                this.grid.editField(event.recid, 1, units);
                 this.isGridEditing = true;
             }
 
@@ -510,8 +511,9 @@ var ProposalDetailSet = function (proposalView, id) {
                 this.isGridEditing = false;
                 this.grid.columns[2].editable = record.isQuarter ? { type: 'float', autoFormat: true, precision: 3, prefix: 'IMP Goal </br>' } : { type: 'float', precision: 3 };
                 //editing mode
-
-                this.grid.editField(event.recid, 2, record.Impressions.toFixed(3));
+                //new - need to set the editing to no decimals if .00 or blank '' if 0 value overall - just use not to fixed and editor should handle?
+                var editImpressions = record.Impressions ? record.Impressions : '';
+                this.grid.editField(event.recid, 2, editImpressions);
                 this.isGridEditing = true;
             }
         },
@@ -540,10 +542,12 @@ var ProposalDetailSet = function (proposalView, id) {
             event.onComplete = function () {
                 var record = me.grid.get(event.recid);
                 var newVal = event.value_new;
+                //check for empty string and reset to 0 (from editing hack)
+                if (!$.isNumeric(newVal)) newVal = 0;
                 if (event.column === 1) {//CPM or Unit
                     //me.isGridEditing = true;
                     if (record.isQuarter) {//Cpm                       
-                        //console.log('onGridEditChange CPM Quarter', event, newVal);
+                       // console.log('onGridEditChange CPM Quarter', event, newVal);
                         //Quarter CPM ($)- Units represents CPM in record
                         newVal = newVal.toFixed(2);
                         if ((newVal > 0) && (newVal != record.Units)) {

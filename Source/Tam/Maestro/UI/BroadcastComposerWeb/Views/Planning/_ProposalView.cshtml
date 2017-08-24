@@ -177,19 +177,22 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Target CPM</label>
-                                            <p class="form-control-static" data-bind="text: targetCpm() ? w2utils.formatters['money'](targetCpm()) : '-'"></p>
+                                            @*<p class="form-control-static" data-bind="text: targetCpm() ? w2utils.formatters['money'](targetCpm()) : '-'"></p>*@
+                                            <p class="form-control-static" data-bind="text: targetCpm() ? numeral(targetCpm()).format('$0,0[.]00') : '-'"></p>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Target Budget</label>
-                                            <p id="proposal_target_budget" class="form-control-static" data-bind="text: targetBudget() ? w2utils.formatters['money'](targetBudget()) : '-'"></p>
+                                            @*<p id="proposal_target_budget" class="form-control-static" data-bind="text: targetBudget() ? w2utils.formatters['money'](targetBudget()) : '-'"></p>*@
+                                            <p id="proposal_target_budget" class="form-control-static" data-bind="text: targetBudget() ? numeral(targetBudget()).format('$0,0[.]00') : '-'"></p>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Target Impressions</label>
-                                            <p class="form-control-static" data-bind="text: targetImpressions() ? targetImpressions().toFixed(3) : '-'"></p>
+                                            @*<p class="form-control-static" data-bind="text: targetImpressions() ? targetImpressions().toFixed(3) : '-'"></p>*@
+                                            <p class="form-control-static" data-bind="text: targetImpressions() ? numeral(targetImpressions()).format('0,0.[000]') : '-'"></p>
                                         </div>
                                     </div>
                                     <div class="col-md-3">

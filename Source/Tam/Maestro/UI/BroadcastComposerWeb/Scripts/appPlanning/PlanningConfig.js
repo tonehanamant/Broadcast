@@ -159,14 +159,20 @@
                     size: '20%',
                     //Quarter (CPM as Units); Week (Units)
                     render: function (record, index, column_index) {
-                        if (record.w2ui && record.w2ui.summary) return record.TotalUnits ? record.TotalUnits.toFixed(0) : '-';
+                        //allow for comma 1000s
+                        if (record.w2ui && record.w2ui.summary) return record.TotalUnits ? numeral(record.TotalUnits).format('0,0') : '-';
                         var id = 'editable_units_' + record.recid;
                         //editable fields
                         if (record.isQuarter) {
                             //use Units as Cpm
-                            return '<div class="editable-cell" id="' + id + '"><span class="grid-label">CPM ' + '</span>' + config.renderers.toMoneyOrDash(record.Units, false) + '</div>';
+                            //change only show decimals if present but with alway 2 decimals ($5.70); use commas
+                            var formattedCpm = numeral(record.Units).format('$0,0[.]00');
+                            //return '<div class="editable-cell" id="' + id + '"><span class="grid-label">CPM ' + '</span>' + config.renderers.toMoneyOrDash(record.Units, false) + '</div>';
+                            return '<div class="editable-cell" id="' + id + '"><span class="grid-label">CPM ' + '</span>' + formattedCpm + '</div>';
                         } else {
-                            return '<div class="editable-cell" id="' + id + '">' + record.Units + '</div>';
+                            //allow for comma 1000s
+                            var formatUnits = numeral(record.Units).format('0,0');
+                            return '<div class="editable-cell" id="' + id + '">' + formatUnits + '</div>';
                         }
                     },
                     //default: will change based on quarter or week
@@ -179,15 +185,19 @@
                     sortable: false,
                     size: '20%',
                     render: function (record, index, column_index) {
-                        if (record.w2ui && record.w2ui.summary)
-                            return record.TotalImpressions ? record.TotalImpressions.toFixed(3) : '-';
+                        if (record.w2ui && record.w2ui.summary) {
+                            //allow for comma 1000s; only show decimal if not 000
+                            return record.TotalImpressions ? numeral(record.TotalImpressions).format('0,0.[000]') : '-';
+                        }
 
                         var id = 'editable_impressions_' + record.recid;
-                        var roundedImpressions = Math.round(Number(record.Impressions));
+                        //var roundedImpressions = Math.round(Number(record.Impressions));
+                        //no longer rounding; allow for comma 1000s; only show decimal if not 000
+                        var convertedImpressions = numeral(record.Impressions).format('0,0.[000]');
                         if (record.isQuarter) {
-                            return '<div class="editable-cell" id="' + id + '"><span class="grid-label">Imp. Goal (000) ' + '</span>' + roundedImpressions + '</div>';
+                            return '<div class="editable-cell" id="' + id + '"><span class="grid-label">Imp. Goal (000) ' + '</span>' + convertedImpressions + '</div>';
                         } else {
-                            return '<div class="editable-cell" id="' + id + '">' + roundedImpressions + '</div>';
+                            return '<div class="editable-cell" id="' + id + '">' + convertedImpressions + '</div>';
                         }
                     },
                     editable: { type: 'float', precision: 3, prefix: 'IMP Goal </br>' }
@@ -199,6 +209,7 @@
                     size: '40%',
                     //Cost
                     render: function (record, index, column_index) {
+                        //only show decimal if not 000
                         if (record.w2ui && record.w2ui.summary) return config.renderers.toMoneyOrDash(record.TotalCost, false);
                         if (record.isQuarter) {
                             return '';

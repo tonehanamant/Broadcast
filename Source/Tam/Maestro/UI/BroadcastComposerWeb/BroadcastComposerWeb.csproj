@@ -412,6 +412,7 @@
     <Content Include="Scripts\library\lodash.min.js" />
     <Content Include="Scripts\library\moment.js" />
     <Content Include="Scripts\library\moment.min.js" />
+    <Content Include="Scripts\library\numeral.js" />
     <Content Include="Scripts\library\select2\select2-bootstrap.min.css" />
     <Content Include="Scripts\library\select2\select2.min.css" />
     <Content Include="Scripts\library\select2\select2.min.js" />
@@ -623,7 +624,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61929/</IISUrl>
+          <IISUrl>http://localhost:61930/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
