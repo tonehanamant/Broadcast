@@ -66,6 +66,11 @@ namespace Services.Broadcast.Repositories
                         .Where(bfd => bfd.estimate_id == schedule.estimate_id).ToList();
 
                     var bvsPostDetails = bvsFileDetails.SelectMany(fd => fd.bvs_post_details).ToList();
+                    var stationNames = scheduleDetails.Select(d => SchedulesAggregate.CleanStatioName(d.network)).Distinct().ToList();
+                    var stationToAffiliateDict =
+                        context.stations.Where(s => stationNames.Contains(s.legacy_call_letters))
+                            .ToDictionary(k => k.legacy_call_letters.ToLower(), v => v.affiliation);
+                    
                     return new SchedulesAggregate(
                         schedule,
                         scheduleAudiences,
@@ -80,9 +85,9 @@ namespace Services.Broadcast.Repositories
                         (RatesFile.RateSourceType)schedule.inventory_source,
                         schedule.equivalized,
                         schedule.start_date,
-                        schedule.end_date);
+                        schedule.end_date,
+                        stationToAffiliateDict);
                 });
         }
-
     }
 }

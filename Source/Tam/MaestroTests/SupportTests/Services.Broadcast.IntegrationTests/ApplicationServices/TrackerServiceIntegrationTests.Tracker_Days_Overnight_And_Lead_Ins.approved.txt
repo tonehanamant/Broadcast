@@ -7,7 +7,7 @@
         "AudienceId": 33,
         "AudienceName": "A18-49",
         "DeliveredImpressions": 47555.6225,
-        "OrderedImpressions": 5590,
+        "OrderedImpressions": 6490,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 47555.6225
       },
@@ -15,7 +15,7 @@
         "AudienceId": 61,
         "AudienceName": "W35+",
         "DeliveredImpressions": 34859.775,
-        "OrderedImpressions": 23400,
+        "OrderedImpressions": 26600,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 34859.775
       },
@@ -28,7 +28,7 @@
         "TotalDeliveredImpressions": 23863.905
       }
     ],
-    "OrderedSpots": 7,
+    "OrderedSpots": 8,
     "ReportData": [
       {
         "Affiliate": "IND",
@@ -404,6 +404,60 @@
         "Rank": 11,
         "SpecStatus": null,
         "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 0.0,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 0.0,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 0.0,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": 0.0,
+        "DeliveredSpots": 0,
+        "DisplayDaypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 31179,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 82800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "Sunday Night ALEX",
+        "Rank": 0,
+        "SpecStatus": null,
+        "SpotClearance": 0.0,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -903,7 +957,7 @@
         "AudienceId": 33,
         "AudienceName": "A18-49",
         "DeliveredImpressions": 47555.6225,
-        "OrderedImpressions": 5590,
+        "OrderedImpressions": 6490,
         "OutOfSpecDeliveredImpressions": 6242.6875,
         "TotalDeliveredImpressions": 53798.31
       },
@@ -911,7 +965,7 @@
         "AudienceId": 61,
         "AudienceName": "W35+",
         "DeliveredImpressions": 34859.775,
-        "OrderedImpressions": 23400,
+        "OrderedImpressions": 26600,
         "OutOfSpecDeliveredImpressions": 4287.94375,
         "TotalDeliveredImpressions": 39147.71875
       },
@@ -925,6 +979,44 @@
       }
     ],
     "ReportData": [
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 0.0,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 0.0,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 0.0,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DeliveredSpots": 0,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": null,
+        "Rank": 0,
+        "SpecStatus": "",
+        "SpotClearance": 0.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 1
+      },
       {
         "Affiliate": "IND",
         "AudienceImpressions": [
@@ -968,6 +1060,50 @@
         "AudienceImpressions": [
           {
             "AudienceId": 33,
+            "Delivery": 6242.6875,
+            "Impressions": 0,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 4287.94375,
+            "Impressions": 0,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 2292.46875,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DateAired": "0001-01-01T00:00:00",
+        "DeliveredSpots": 0,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "TAMPA",
+        "MatchAirTime": false,
+        "MatchIsci": false,
+        "MatchProgram": false,
+        "MatchSpotLength": false,
+        "MatchStation": false,
+        "MediaWeekId": null,
+        "OrderedSpots": 0,
+        "OutOfSpecSpots": 1,
+        "ProgramName": null,
+        "Rank": 11,
+        "SpecStatus": "Airtime",
+        "SpotClearance": 0.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
             "Delivery": 6744.905,
             "Impressions": 190,
             "NsiDelivery": null
@@ -995,6 +1131,44 @@
         "OutOfSpecSpots": null,
         "ProgramName": null,
         "Rank": 12,
+        "SpecStatus": "Match",
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 1
+      },
+      {
+        "Affiliate": "CW",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 7296.95,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 3730.935,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 5811.34,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "ST LOUIS",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": null,
+        "Rank": 21,
         "SpecStatus": "Match",
         "SpotClearance": 1.0,
         "SpotLength": 30,
@@ -1076,88 +1250,6 @@
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 1
-      },
-      {
-        "Affiliate": "CW",
-        "AudienceImpressions": [
-          {
-            "AudienceId": 33,
-            "Delivery": 7296.95,
-            "Impressions": 900,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 61,
-            "Delivery": 3730.935,
-            "Impressions": 3200,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 53,
-            "Delivery": 5811.34,
-            "Impressions": 0,
-            "NsiDelivery": null
-          }
-        ],
-        "Cost": null,
-        "DeliveredSpots": 1,
-        "DisplayDaypart": null,
-        "Isci": null,
-        "Market": "ST LOUIS",
-        "MediaWeekId": null,
-        "OrderedSpots": 1,
-        "OutOfSpecSpots": null,
-        "ProgramName": null,
-        "Rank": 21,
-        "SpecStatus": "Match",
-        "SpotClearance": 1.0,
-        "SpotLength": 30,
-        "Station": "WMOR",
-        "Status": 1
-      },
-      {
-        "Affiliate": "IND",
-        "AudienceImpressions": [
-          {
-            "AudienceId": 33,
-            "Delivery": 6242.6875,
-            "Impressions": 0,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 61,
-            "Delivery": 4287.94375,
-            "Impressions": 0,
-            "NsiDelivery": null
-          },
-          {
-            "AudienceId": 53,
-            "Delivery": 2292.46875,
-            "Impressions": 0,
-            "NsiDelivery": null
-          }
-        ],
-        "Cost": null,
-        "DateAired": "0001-01-01T00:00:00",
-        "DeliveredSpots": 0,
-        "DisplayDaypart": null,
-        "Isci": null,
-        "Market": "TAMPA",
-        "MatchAirTime": false,
-        "MatchIsci": false,
-        "MatchProgram": false,
-        "MatchSpotLength": false,
-        "MatchStation": false,
-        "MediaWeekId": null,
-        "OrderedSpots": 0,
-        "OutOfSpecSpots": 1,
-        "ProgramName": null,
-        "Rank": 11,
-        "SpecStatus": "Airtime",
-        "SpotClearance": 0.0,
-        "SpotLength": 30,
-        "Station": "WMOR",
-        "Status": 0
       }
     ],
     "ScheduleAudiences": [
@@ -1193,7 +1285,7 @@
             "AudienceId": 33,
             "AudienceName": "A18-49",
             "DeliveredImpressions": 47555.6225,
-            "OrderedImpressions": 5590,
+            "OrderedImpressions": 6490,
             "OutOfSpecDeliveredImpressions": 0.0,
             "TotalDeliveredImpressions": 47555.6225
           },
@@ -1201,7 +1293,7 @@
             "AudienceId": 61,
             "AudienceName": "W35+",
             "DeliveredImpressions": 34859.775,
-            "OrderedImpressions": 23400,
+            "OrderedImpressions": 26600,
             "OutOfSpecDeliveredImpressions": 0.0,
             "TotalDeliveredImpressions": 34859.775
           },
@@ -1589,6 +1681,60 @@
             "Rank": 11,
             "SpecStatus": "Match",
             "SpotClearance": 1.0,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 1
+          },
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 33,
+                "Delivery": 0.0,
+                "Impressions": 900,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 0.0,
+                "Impressions": 3200,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 0.0,
+                "Impressions": 0,
+                "NsiDelivery": null
+              }
+            ],
+            "Cost": 0.0,
+            "DeliveredSpots": 0,
+            "DisplayDaypart": {
+              "_Code": "CUS",
+              "_EndTime": 3599,
+              "_Friday": true,
+              "_Id": 31179,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "TAMPA",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "Sunday Night ALEX",
+            "Rank": 0,
+            "SpecStatus": "Match",
+            "SpotClearance": 0.0,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 1
