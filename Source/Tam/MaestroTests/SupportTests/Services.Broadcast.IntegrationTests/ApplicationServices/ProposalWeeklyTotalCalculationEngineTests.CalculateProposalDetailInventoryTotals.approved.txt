@@ -1,0 +1,31 @@
+﻿{
+  "BudgetMarginAchieved": false,
+  "BudgetPercent": 4426.0,
+  "CpmMarginAchieved": false,
+  "CpmPercent": 2.9,
+  "ImpressionsMarginAchieved": true,
+  "ImpressionsPercent": 154.32,
+  "TotalCost": 4426.0,
+  "TotalCpm": 0.29,
+  "TotalImpressions": 15432.0,
+  "Weeks": [
+    {
+      "Budget": 55.0,
+      "BudgetMarginAchieved": false,
+      "BudgetPercent": 91.67,
+      "Impressions": 5000.0,
+      "ImpressionsMarginAchieved": false,
+      "ImpressionsPercent": 83.33,
+      "MediaWeekId": 1
+    },
+    {
+      "Budget": 50.0,
+      "BudgetMarginAchieved": false,
+      "BudgetPercent": 12.5,
+      "Impressions": 5000.0,
+      "ImpressionsMarginAchieved": true,
+      "ImpressionsPercent": 125.0,
+      "MediaWeekId": 2
+    }
+  ]
+}

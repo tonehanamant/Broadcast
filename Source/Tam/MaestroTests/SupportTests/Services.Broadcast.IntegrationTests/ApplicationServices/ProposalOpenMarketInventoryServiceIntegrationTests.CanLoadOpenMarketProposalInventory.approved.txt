@@ -1,0 +1,399 @@
+﻿{
+  "Criteria": {
+    "CpmCriteria": [],
+    "GenreSearchCriteria": [],
+    "ProgramNameSearchCriteria": [
+      {
+        "Contain": 2,
+        "ProgramName": "Open Market Program"
+      }
+    ]
+  },
+  "DetailBudgetMarginAchieved": false,
+  "DetailBudgetPercent": 80.0,
+  "DetailCpm": 0.05,
+  "DetailCpmMarginAchieved": false,
+  "DetailCpmPercent": 19160.0,
+  "DetailDaypart": {
+    "endTime": 36000,
+    "fri": true,
+    "mon": true,
+    "sat": false,
+    "startTime": 32400,
+    "sun": false,
+    "Text": "M-F 9AM-10AM",
+    "thu": true,
+    "tue": true,
+    "wed": true
+  },
+  "DetailDaypartId": 6724,
+  "DetailFlightEndDate": "2016-06-06T00:00:00",
+  "DetailFlightStartDate": "2016-05-30T00:00:00",
+  "DetailFlightWeeks": [
+    {
+      "EndDate": "2016-06-06T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 649,
+      "StartDate": "2016-05-30T00:00:00"
+    }
+  ],
+  "DetailId": 7,
+  "DetailImpressionsMarginAchieved": false,
+  "DetailImpressionsPercent": 0.42,
+  "DetailSpotLength": 30,
+  "DetailSpotLengthId": 1,
+  "DetailTargetBudget": 50.0000,
+  "DetailTargetImpressions": 1000.0,
+  "DetailTotalBudget": 40.00,
+  "DetailTotalCpm": 9.58,
+  "DetailTotalImpressions": 4.176,
+  "DisplayFilter": {
+    "Affiliations": [
+      "ABC",
+      "IND",
+      "PBS"
+    ],
+    "Genres": [],
+    "Markets": [
+      {
+        "Display": "New York",
+        "Id": 101
+      },
+      {
+        "Display": "Philadelphia",
+        "Id": 104
+      },
+      {
+        "Display": "Washington, DC (Hagrstwn)",
+        "Id": 111
+      }
+    ],
+    "ProgramNames": [
+      "Open Market Program 2",
+      "Open Market Program 3",
+      "Open Market Program 4",
+      "Open Market Program Too"
+    ]
+  },
+  "Equivalized": null,
+  "Filter": {
+    "Affiliations": [],
+    "DayParts": [],
+    "Genres": [],
+    "Markets": [],
+    "ProgramNames": []
+  },
+  "GuaranteedAudience": 31,
+  "HutPostingBookId": 413,
+  "Margin": 20.0,
+  "Markets": [
+    {
+      "MarketId": 101,
+      "MarketName": "New York",
+      "MarketRank": 1,
+      "MarketSubscribers": 7368320.0,
+      "Stations": [
+        {
+          "Affiliation": "IND",
+          "CallLetters": "WNYE-TV 25.1",
+          "LegacyCallLetters": "WNYE",
+          "Programs": [
+            {
+              "Daypart": {
+                "Display": "M-SU 6AM-12AM",
+                "Id": 1
+              },
+              "FlightWeeks": [
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 649,
+                      "Spots": 2
+                    }
+                  ],
+                  "EndDate": "0001-01-01T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 649,
+                  "Rate": 20.0,
+                  "StartDate": "0001-01-01T00:00:00"
+                }
+              ],
+              "ProgramId": 2001,
+              "ProgramName": "Open Market Program Too",
+              "Spots": 0,
+              "StationCode": 5923,
+              "TargetCpm": 9.576856196555384550260863282,
+              "TargetImpressions": 0.0,
+              "UnitImpressions": 2.088368
+            }
+          ],
+          "StationCode": 5923
+        }
+      ]
+    },
+    {
+      "MarketId": 104,
+      "MarketName": "Philadelphia",
+      "MarketRank": 4,
+      "MarketSubscribers": 2917920.0,
+      "Stations": [
+        {
+          "Affiliation": "ABC",
+          "CallLetters": "WPVI-TV 6.1",
+          "LegacyCallLetters": "WPVI",
+          "Programs": [
+            {
+              "Daypart": {
+                "Display": "M-SU 6AM-12AM",
+                "Id": 1
+              },
+              "FlightWeeks": [
+                {
+                  "Allocations": [],
+                  "EndDate": "0001-01-01T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 649,
+                  "Rate": 30.0,
+                  "StartDate": "0001-01-01T00:00:00"
+                }
+              ],
+              "ProgramId": 2003,
+              "ProgramName": "Open Market Program 3",
+              "Spots": 0,
+              "StationCode": 5017,
+              "TargetCpm": 0.0472903665808478978604292191,
+              "TargetImpressions": 0.0,
+              "UnitImpressions": 634.37867306
+            }
+          ],
+          "StationCode": 5017
+        }
+      ]
+    },
+    {
+      "MarketId": 111,
+      "MarketName": "Washington, DC (Hagrstwn)",
+      "MarketRank": 7,
+      "MarketSubscribers": 2443640.0,
+      "Stations": [
+        {
+          "Affiliation": "PBS",
+          "CallLetters": "WHUT-TV 32.1",
+          "LegacyCallLetters": "WHUT",
+          "Programs": [
+            {
+              "Daypart": {
+                "Display": "M-SU 6AM-12AM",
+                "Id": 1
+              },
+              "FlightWeeks": [
+                {
+                  "Allocations": [],
+                  "EndDate": "0001-01-01T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 649,
+                  "Rate": 30.0,
+                  "StartDate": "0001-01-01T00:00:00"
+                }
+              ],
+              "ProgramId": 2004,
+              "ProgramName": "Open Market Program 4",
+              "Spots": 0,
+              "StationCode": 6852,
+              "TargetCpm": 9.281253098684521651334219114,
+              "TargetImpressions": 0.0,
+              "UnitImpressions": 3.23232215
+            }
+          ],
+          "StationCode": 6852
+        },
+        {
+          "Affiliation": "PBS",
+          "CallLetters": "WETA-TV 26.4",
+          "LegacyCallLetters": "WETA",
+          "Programs": [
+            {
+              "Daypart": {
+                "Display": "M-SU 6AM-12AM",
+                "Id": 1
+              },
+              "FlightWeeks": [
+                {
+                  "Allocations": [],
+                  "EndDate": "0001-01-01T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 649,
+                  "Rate": 30.0,
+                  "StartDate": "0001-01-01T00:00:00"
+                }
+              ],
+              "ProgramId": 2002,
+              "ProgramName": "Open Market Program 2",
+              "Spots": 0,
+              "StationCode": 5982,
+              "TargetCpm": 11.817618353061442960959780866,
+              "TargetImpressions": 0.0,
+              "UnitImpressions": 2.53858257
+            }
+          ],
+          "StationCode": 5982
+        }
+      ]
+    }
+  ],
+  "NewCriteriaAffectsExistingAllocations": false,
+  "PlaybackType": 4,
+  "PostType": null,
+  "ProposalFlightEndDate": "2016-12-11T00:00:00",
+  "ProposalFlightStartDate": "2016-10-31T00:00:00",
+  "ProposalFlightWeeks": [
+    {
+      "EndDate": "2016-11-06T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 671,
+      "StartDate": "2016-10-31T00:00:00"
+    },
+    {
+      "EndDate": "2016-11-13T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 672,
+      "StartDate": "2016-11-07T00:00:00"
+    },
+    {
+      "EndDate": "2016-11-20T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 673,
+      "StartDate": "2016-11-14T00:00:00"
+    },
+    {
+      "EndDate": "2016-11-27T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 674,
+      "StartDate": "2016-11-21T00:00:00"
+    },
+    {
+      "EndDate": "2016-12-04T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 675,
+      "StartDate": "2016-11-28T00:00:00"
+    },
+    {
+      "EndDate": "2016-12-11T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 676,
+      "StartDate": "2016-12-05T00:00:00"
+    }
+  ],
+  "ProposalId": 248,
+  "ProposalName": "Proposal Test",
+  "ProposalVersion": 1,
+  "SharePostingBookId": 416,
+  "SinglePostingBookId": null,
+  "Weeks": [
+    {
+      "Budget": 25.0000,
+      "BudgetMarginAchieved": true,
+      "BudgetPercent": 160.0,
+      "BudgetTotal": 40.00,
+      "ImpressionsGoal": 100.0,
+      "ImpressionsMarginAchieved": false,
+      "ImpressionsPercent": 4.18,
+      "ImpressionsTotal": 4.176,
+      "IsHiatus": false,
+      "Markets": [
+        {
+          "Cost": 40.0,
+          "Impressions": 4.176736,
+          "MarketId": 101,
+          "Spots": 2,
+          "Stations": [
+            {
+              "Programs": [
+                {
+                  "Cost": 40.0,
+                  "EFF": 0.0,
+                  "ProgramId": 2001,
+                  "Spots": 2,
+                  "TargetCpm": 0.0,
+                  "TargetImpressions": 0.0,
+                  "TotalImpressions": 4.176736,
+                  "UnitCost": 20.0,
+                  "UnitImpression": 2.088368
+                }
+              ],
+              "StationCode": 5923
+            }
+          ]
+        },
+        {
+          "Cost": 0.0,
+          "Impressions": 0.0,
+          "MarketId": 104,
+          "Spots": 0,
+          "Stations": [
+            {
+              "Programs": [
+                {
+                  "Cost": 30.0,
+                  "EFF": 0.0,
+                  "ProgramId": 2003,
+                  "Spots": 0,
+                  "TargetCpm": 0.0,
+                  "TargetImpressions": 0.0,
+                  "TotalImpressions": 634.37867306,
+                  "UnitCost": 30.0,
+                  "UnitImpression": 634.37867306
+                }
+              ],
+              "StationCode": 5017
+            }
+          ]
+        },
+        {
+          "Cost": 0.0,
+          "Impressions": 0.0,
+          "MarketId": 111,
+          "Spots": 0,
+          "Stations": [
+            {
+              "Programs": [
+                {
+                  "Cost": 30.0,
+                  "EFF": 0.0,
+                  "ProgramId": 2004,
+                  "Spots": 0,
+                  "TargetCpm": 0.0,
+                  "TargetImpressions": 0.0,
+                  "TotalImpressions": 3.23232215,
+                  "UnitCost": 30.0,
+                  "UnitImpression": 3.23232215
+                }
+              ],
+              "StationCode": 6852
+            },
+            {
+              "Programs": [
+                {
+                  "Cost": 30.0,
+                  "EFF": 0.0,
+                  "ProgramId": 2002,
+                  "Spots": 0,
+                  "TargetCpm": 0.0,
+                  "TargetImpressions": 0.0,
+                  "TotalImpressions": 2.53858257,
+                  "UnitCost": 30.0,
+                  "UnitImpression": 2.53858257
+                }
+              ],
+              "StationCode": 5982
+            }
+          ]
+        }
+      ],
+      "MediaWeekId": 649,
+      "ProposalVersionDetailQuarterWeekId": 7,
+      "QuarterText": "Q2",
+      "Week": "5/30/2016"
+    }
+  ]
+}
