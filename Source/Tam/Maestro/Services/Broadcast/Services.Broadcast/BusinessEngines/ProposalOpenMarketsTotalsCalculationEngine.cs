@@ -108,9 +108,9 @@ namespace Services.Broadcast.BusinessEngines
 
         private static void _SetAchievedMarginForTotals(ProposalDetailOpenMarketInventoryDto dto)
         {
-            dto.DetailBudgetMarginAchieved = _HasMarginBeenAchieved((double)dto.DetailTotalBudget, dto.Margin, (decimal)dto.DetailTargetBudget);
-            dto.DetailImpressionsMarginAchieved = _HasMarginBeenAchieved((double)dto.DetailTotalImpressions, dto.Margin, (decimal)dto.DetailTargetImpressions);
-            dto.DetailCpmMarginAchieved = _HasMarginBeenAchieved((double)dto.DetailTotalCpm, dto.Margin, (decimal)dto.DetailCpm);
+            dto.DetailBudgetMarginAchieved = _HasMarginForBudgetBeenAchieved((double)dto.DetailTotalBudget, dto.Margin, (decimal)dto.DetailTargetBudget);
+            dto.DetailImpressionsMarginAchieved = _HasMarginForImpressionsBeenAchieved((double)dto.DetailTotalImpressions, dto.DetailTargetImpressions);
+            dto.DetailCpmMarginAchieved = _HasMarginForCPMBeenAchieved(dto.DetailTotalImpressions, (double)dto.DetailTotalBudget, dto.Margin);
         }
 
         private static void _CalculatePartialDetailTotals(ProposalDetailOpenMarketInventoryDto dto)
@@ -126,15 +126,14 @@ namespace Services.Broadcast.BusinessEngines
             inventoryWeek.BudgetPercent = inventoryWeek.Budget == 0
                 ? 0
                 : (float)(inventoryWeek.BudgetTotal * 100 / inventoryWeek.Budget);
-            inventoryWeek.BudgetMarginAchieved = _HasMarginBeenAchieved((double)inventoryWeek.BudgetTotal,
+            inventoryWeek.BudgetMarginAchieved = _HasMarginForBudgetBeenAchieved((double)inventoryWeek.BudgetTotal,
                 dto.Margin, inventoryWeek.Budget);
 
             inventoryWeek.ImpressionsTotal = inventoryWeek.Markets.Sum(a => a.Impressions);
             inventoryWeek.ImpressionsPercent = inventoryWeek.ImpressionsGoal == 0
                 ? 0
                 : (float)(inventoryWeek.ImpressionsTotal * 100 / inventoryWeek.ImpressionsGoal);
-            inventoryWeek.ImpressionsMarginAchieved = _HasMarginBeenAchieved(inventoryWeek.ImpressionsTotal,
-                dto.Margin, (decimal)inventoryWeek.ImpressionsGoal);
+            inventoryWeek.ImpressionsMarginAchieved = _HasMarginForImpressionsBeenAchieved(inventoryWeek.ImpressionsTotal, inventoryWeek.ImpressionsGoal);
         }
 
         private static void _CalculateMarketsTotals(ProposalDetailOpenMarketInventoryDto dto)
@@ -153,16 +152,43 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private static bool _HasMarginBeenAchieved(double total, double? margin, decimal goal)
+        private static bool _HasMarginForCPMBeenAchieved(double totalImpressions, double totalCost, double? margin)
         {
-            //(Total Cost + (total cost* margin)) * 100 / Target Budget 
-            //color indicator: 
-            //> 100% RED
-            //< 100% Green
+//color indicator: 
+//> 100% RED
+//< 100% Green
+//based on working cpm with margin
+//= Total Impression /  (Total Cost +(Total Cost*0.2)) * 1000
+
+            var divValue = (totalCost + (totalCost*(margin/100)))*1000;
+            if (divValue == 0) return false;
+
+            return (totalImpressions / divValue) > 100;
+        }
+
+        private static bool _HasMarginForBudgetBeenAchieved(double total, double? margin, decimal goal)
+        {
+// Budget Delivery % = (Total Cost + (total cost* margin)) * 100 / Target Budget 
+//color indicator: 
+//> 100% RED
+//< 100% Green
 
             if (goal == 0) return false;
 
             return (total + (total * (margin / 100))) * 100 / (double)goal > 100;
+        }
+
+        private static bool _HasMarginForImpressionsBeenAchieved(double total, double? goal)
+        {
+//Impression Delivery: Total Impressions Delivery  * 100 / Proposal Detail Impression Goal 
+//color indicator: 
+//< 100% RED
+//> 100% Green
+            double goalDiv = goal.HasValue ? goal.Value : 0;
+
+            if (goalDiv == 0) return false;
+
+            return ((total * 100) / goalDiv) > 100;
         }
     }
 }
