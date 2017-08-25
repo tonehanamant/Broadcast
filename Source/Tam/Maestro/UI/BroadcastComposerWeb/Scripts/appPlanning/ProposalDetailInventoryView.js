@@ -146,8 +146,8 @@ var ProposalDetailInventoryView = BaseView.extend({
 
     //for use in grid column settings and for updates
     getWeekColumnGroup: function (week) {
-        var goal = PlanningConfig.impressionRenderer(week.ImpressionsGoal);
-        var budget = config.renderers.toMoneyOrDash(week.Budget, true);
+        var goal = week.ImpressionsGoal ? numeral(week.ImpressionsGoal).format('0,0.[000]') : '-'
+        var budget = week.Budget ? numeral(week.Budget).format('$0,0[.]00') : '-';
 
         var impressionsPercent = week.impressionsPercent ? week.impressionsPercent.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0] : "-";
         var budgetPercent = week.budgetPercent ? week.budgetPercent.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0] : "-";
@@ -156,11 +156,11 @@ var ProposalDetailInventoryView = BaseView.extend({
             quarter: week.QuarterText,
             week: week.Week,
 
-            weekImpressions: week.weekImpressions ? week.weekImpressions.toFixed(3) : "-",
+            weekImpressions: week.weekImpressions ? numeral(week.weekImpressions).format('0,0.[000]') : "-",
             impressions: goal,
             impressionsPercent: impressionsPercent,
             
-            weekBudget: week.weekBudget ? config.renderers.toMoneyOrDash(week.weekBudget, true) : "-",
+            weekBudget: week.weekBudget ? numeral(week.weekBudget).format('$0,0[.]00') : "-",
             budget: budget,
             budgetPercent: budgetPercent,
             impressionsMarginClass: week.ImpressionsMarginAchieved ? "label-danger" : "label-success",
