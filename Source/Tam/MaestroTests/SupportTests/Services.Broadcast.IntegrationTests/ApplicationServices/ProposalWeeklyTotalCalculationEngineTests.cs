@@ -73,7 +73,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var result = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalWeeklyTotalCalculationEngine>().CalculateProprietaryDetailTotals(request, new ProposalDetailSingleInventoryTotalsDto() { TotalCost = 4321, TotalImpressions = 5432}, new List<ProposalDetailSingleWeekTotalsDto>());
+                var result =
+                    IntegrationTestApplicationServiceFactory
+                        .GetApplicationService<IProposalWeeklyTotalCalculationEngine>()
+                        .CalculateProprietaryDetailTotals(request,
+                            new ProposalDetailSingleInventoryTotalsDto()
+                            {
+                                TotalCost = 4321,
+                                TotalImpressions = 5432,
+                                Margin = 20
+                            }, new List<ProposalDetailSingleWeekTotalsDto>());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }

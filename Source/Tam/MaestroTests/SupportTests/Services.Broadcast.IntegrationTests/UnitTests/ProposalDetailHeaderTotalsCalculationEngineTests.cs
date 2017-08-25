@@ -27,7 +27,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             var calculationEngine = new ProposalDetailHeaderTotalsCalculationEngine();
 
             calculationEngine.CalculateTotalsForOpenMarketInventory(proposalInventory,
-                new ProposalDetailSingleInventoryTotalsDto() {TotalCost = 2000, TotalImpressions = 2000});
+                new ProposalDetailSingleInventoryTotalsDto() {TotalCost = 2000, TotalImpressions = 2000}, 20);
 
             Assert.AreEqual(2040m, proposalInventory.DetailTotalBudget);
             Assert.AreEqual(2000d, proposalInventory.DetailTotalImpressions);
@@ -100,7 +100,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                 TotalImpressions = 70000
             };
 
-            calculationEngine.CalculateTotalsForProprietaryInventory(totals, request, otherInventoryTotals);
+            calculationEngine.CalculateTotalsForProprietaryInventory(totals, request, otherInventoryTotals, 20);
 
             Assert.AreEqual(128456m, totals.TotalCost);
             Assert.AreEqual(80000.0d, totals.TotalImpressions);

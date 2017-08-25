@@ -6,20 +6,23 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IProposalDetailHeaderTotalsCalculationEngine
     {
-        void CalculateTotalsForProprietaryInventory(ProposalInventoryTotalsDto proprietaryTotals, ProposalInventoryTotalsRequestDto proprietaryTotalsRequest, ProposalDetailSingleInventoryTotalsDto otherInventoryTotals);
+        void CalculateTotalsForProprietaryInventory(ProposalInventoryTotalsDto proprietaryTotals,
+            ProposalInventoryTotalsRequestDto proprietaryTotalsRequest,
+            ProposalDetailSingleInventoryTotalsDto otherInventoryTotals, double margin);
+
         void CalculateTotalsForOpenMarketInventory(ProposalDetailOpenMarketInventoryDto openMarketTotals,
-            ProposalDetailSingleInventoryTotalsDto otherInventoryTotals);
+            ProposalDetailSingleInventoryTotalsDto otherInventoryTotals, double margin);
     }
 
     public class ProposalDetailHeaderTotalsCalculationEngine : IProposalDetailHeaderTotalsCalculationEngine
     {
         public void CalculateTotalsForProprietaryInventory(ProposalInventoryTotalsDto proprietaryTotals,
             ProposalInventoryTotalsRequestDto proprietaryTotalsRequest,
-            ProposalDetailSingleInventoryTotalsDto otherInventoryTotals)
+            ProposalDetailSingleInventoryTotalsDto otherInventoryTotals, double margin)
         {
             var totals = CalculateTotals(proprietaryTotals.TotalImpressions, proprietaryTotals.TotalCost,
                 proprietaryTotalsRequest.DetailTargetImpressions,
-                proprietaryTotalsRequest.DetailTargetBudget, proprietaryTotalsRequest.DetailCpm,
+                proprietaryTotalsRequest.DetailTargetBudget, proprietaryTotalsRequest.DetailCpm, margin,
                 otherInventoryTotals);
 
             proprietaryTotals.TotalImpressions = totals.TotalImpressions;
@@ -31,14 +34,14 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         public void CalculateTotalsForOpenMarketInventory(ProposalDetailOpenMarketInventoryDto openMarketTotals,
-            ProposalDetailSingleInventoryTotalsDto otherInventoryTotals)
+            ProposalDetailSingleInventoryTotalsDto otherInventoryTotals, double margin)
         {
             var targetImpressions = openMarketTotals.DetailTargetImpressions.HasValue ? openMarketTotals.DetailTargetImpressions.Value : 0d;
             var targetBudget = openMarketTotals.DetailTargetBudget.HasValue ? openMarketTotals.DetailTargetBudget.Value : 0m;
             var targetCpm = openMarketTotals.DetailCpm.HasValue ? openMarketTotals.DetailCpm.Value : 0m;
 
             var totals = CalculateTotals(openMarketTotals.DetailTotalImpressions, openMarketTotals.DetailTotalBudget, targetImpressions,
-                targetBudget, targetCpm, otherInventoryTotals);
+                targetBudget, targetCpm, margin, otherInventoryTotals);
 
             openMarketTotals.DetailTotalImpressions = totals.TotalImpressions;
             openMarketTotals.DetailTotalBudget = totals.TotalCost;
@@ -49,7 +52,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         private ProposalDetailHeaderTotalsDto CalculateTotals(double impressionsInThousands, decimal cost, double targetImpressionsInThousands,
-            decimal targetCost, decimal targetCpm, ProposalDetailSingleInventoryTotalsDto otherInventoryTotals)
+            decimal targetCost, decimal targetCpm, double margin, ProposalDetailSingleInventoryTotalsDto otherInventoryTotals)
         {
             var totals = new ProposalDetailHeaderTotalsDto();
             var impressions = (long)(impressionsInThousands * 1000);
@@ -63,7 +66,7 @@ namespace Services.Broadcast.BusinessEngines
                 : Math.Round(totals.TotalCost / (decimal) totals.TotalImpressions, 2);
             totals.BudgetPercent = targetCost == 0
                 ? 0
-                : (double) Math.Round(totals.TotalCost * 100 / targetCost, 2);
+                : _CalculateBudgetPercent((double)totals.TotalCost, margin, targetCost);
             totals.ImpressionsPercent = targetImpressions == 0
                 ? 0
                 : Math.Round(totals.TotalImpressions * 100 / (targetImpressions / 1000.0), 2);
@@ -71,6 +74,14 @@ namespace Services.Broadcast.BusinessEngines
 
             return totals;
         }
+
+        private double _CalculateBudgetPercent(double total, double margin, decimal goal)
+        {
+            if (goal == 0) return 0;
+
+            return Math.Round((total + (total * (margin / 100))) * 100 / (double)goal, 2);
+        }
+
     }
 
     public class ProposalDetailHeaderTotalsDto

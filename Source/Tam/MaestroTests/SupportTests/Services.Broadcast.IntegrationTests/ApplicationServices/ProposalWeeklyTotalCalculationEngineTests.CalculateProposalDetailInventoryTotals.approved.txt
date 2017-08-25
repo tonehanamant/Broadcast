@@ -1,6 +1,6 @@
 ﻿{
-  "BudgetMarginAchieved": false,
-  "BudgetPercent": 4426.0,
+  "BudgetMarginAchieved": true,
+  "BudgetPercent": 5311.2,
   "CpmMarginAchieved": false,
   "CpmPercent": 2.9,
   "ImpressionsMarginAchieved": true,
@@ -11,8 +11,8 @@
   "Weeks": [
     {
       "Budget": 55.0,
-      "BudgetMarginAchieved": false,
-      "BudgetPercent": 91.67,
+      "BudgetMarginAchieved": true,
+      "BudgetPercent": 110.0,
       "Impressions": 5000.0,
       "ImpressionsMarginAchieved": false,
       "ImpressionsPercent": 83.33,
@@ -21,7 +21,7 @@
     {
       "Budget": 50.0,
       "BudgetMarginAchieved": false,
-      "BudgetPercent": 12.5,
+      "BudgetPercent": 15.0,
       "Impressions": 5000.0,
       "ImpressionsMarginAchieved": true,
       "ImpressionsPercent": 125.0,

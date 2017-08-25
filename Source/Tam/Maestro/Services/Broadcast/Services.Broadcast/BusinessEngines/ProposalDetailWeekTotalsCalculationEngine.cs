@@ -6,18 +6,22 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IProposalDetailWeekTotalsCalculationEngine
     {
-        void CalculateWeekTotalsForOpenMarketInventory(ProposalOpenMarketInventoryWeekDto openMarketWeekTotals, ProposalDetailSingleWeekTotalsDto otherInventoryTotals);
-        void CalculateWeekTotalsForProprietary(ProposalInventoryTotalsDto.InventoryWeek proprietaryWeekTotals, ProposalInventoryTotalsRequestDto.InventoryWeek proprietaryTotalsRequest, ProposalDetailSingleWeekTotalsDto otherInventoryTotals);
+        void CalculateWeekTotalsForOpenMarketInventory(ProposalOpenMarketInventoryWeekDto openMarketWeekTotals,
+            ProposalDetailSingleWeekTotalsDto otherInventoryTotals, double margin);
+
+        void CalculateWeekTotalsForProprietary(ProposalInventoryTotalsDto.InventoryWeek proprietaryWeekTotals,
+            ProposalInventoryTotalsRequestDto.InventoryWeek proprietaryTotalsRequest,
+            ProposalDetailSingleWeekTotalsDto otherInventoryTotals, double margin);
     }
 
     public class ProposalDetailWeekTotalsCalculationEngine : IProposalDetailWeekTotalsCalculationEngine
     {
         public void CalculateWeekTotalsForProprietary(ProposalInventoryTotalsDto.InventoryWeek proprietaryWeekTotals,
             ProposalInventoryTotalsRequestDto.InventoryWeek proprietaryTotalsRequest,
-            ProposalDetailSingleWeekTotalsDto otherInventoryTotals)
+            ProposalDetailSingleWeekTotalsDto otherInventoryTotals, double margin)
         {
             var totals = CalculateTotals(proprietaryWeekTotals.Impressions, proprietaryWeekTotals.Budget,
-                proprietaryTotalsRequest.ImpressionGoal, proprietaryTotalsRequest.Budget,
+                proprietaryTotalsRequest.ImpressionGoal, proprietaryTotalsRequest.Budget, margin,
                 otherInventoryTotals);
 
             proprietaryWeekTotals.Impressions = totals.TotalImpressions;
@@ -27,10 +31,10 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         public void CalculateWeekTotalsForOpenMarketInventory(ProposalOpenMarketInventoryWeekDto openMarketWeekTotals,
-            ProposalDetailSingleWeekTotalsDto otherInventoryTotals)
+            ProposalDetailSingleWeekTotalsDto otherInventoryTotals, double margin)
         {
             var totals = CalculateTotals(openMarketWeekTotals.ImpressionsTotal, openMarketWeekTotals.BudgetTotal, openMarketWeekTotals.ImpressionsGoal,
-                openMarketWeekTotals.Budget, otherInventoryTotals);
+                openMarketWeekTotals.Budget, margin, otherInventoryTotals);
 
             openMarketWeekTotals.ImpressionsTotal = totals.TotalImpressions;
             openMarketWeekTotals.BudgetTotal = totals.TotalCost;
@@ -39,7 +43,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         private ProposalDetailWeekTotalsDto CalculateTotals(double impressionsInThousands, decimal cost,
-            double targetImpressionsInThousands, decimal targetCost,
+            double targetImpressionsInThousands, decimal targetCost, double margin,
             ProposalDetailSingleWeekTotalsDto otherInventoryTotals)
         {
             var totals = new ProposalDetailWeekTotalsDto();
@@ -51,13 +55,22 @@ namespace Services.Broadcast.BusinessEngines
             totals.TotalCost = Math.Round(cost + otherInventoryTotals.TotalCost, 2);
             totals.BudgetPercent = targetCost == 0
                 ? 0
-                : (double)Math.Round(totals.TotalCost * 100 / targetCost, 2);
+                : _CalculateBudgetPercent((double)totals.TotalCost, margin, targetCost);
             totals.ImpressionsPercent = targetImpressions == 0
                 ? 0
                 : Math.Round(totals.TotalImpressions * 100 / (targetImpressions / 1000.0), 2);
 
             return totals;
         }
+
+
+        private double _CalculateBudgetPercent(double total, double margin, decimal goal)
+        {
+            if (goal == 0) return 0;
+
+            return Math.Round((total + (total * (margin / 100))) * 100 / (double)goal, 2);
+        }
+
     }
 
     public class ProposalDetailWeekTotalsDto
