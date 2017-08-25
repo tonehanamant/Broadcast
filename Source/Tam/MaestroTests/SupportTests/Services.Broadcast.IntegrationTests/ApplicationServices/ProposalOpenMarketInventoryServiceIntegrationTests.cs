@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Transactions;
 using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services.Repositories;
-using EntityFrameworkMapping.Broadcast;
 using IntegrationTests.Common;
 using Moq;
 using Newtonsoft.Json;
@@ -86,6 +84,44 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     new CpmCriteria { MinMax = MinMaxEnum.Min, Value = 999 }
                 }
+                    }
+                };
+                var proposalInventory = _ProposalOpenMarketInventoryService.RefinePrograms(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
+                jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
+                jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
+                jsonResolver.Ignore(typeof(CpmCriteria), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(proposalInventory, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketProposalInventory_WithProgramNameRefinements()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                proposalRepository.UpdateProposalDetailSweepsBooks(7, 413, 416);
+                var request = new OpenMarketRefineProgramsRequest
+                {
+                    IgnoreExistingAllocation = true,
+                    ProposalDetailId = 7,
+                    Criteria = new OpenMarketCriterion
+                    {
+                        ProgramNameSearchCriteria = new List<ProgramCriteria>
+                        {
+                            new ProgramCriteria{Contain = ContainTypeEnum.Include, ProgramName = "Open Market Program"}
+                        }
                     }
                 };
                 var proposalInventory = _ProposalOpenMarketInventoryService.RefinePrograms(request);

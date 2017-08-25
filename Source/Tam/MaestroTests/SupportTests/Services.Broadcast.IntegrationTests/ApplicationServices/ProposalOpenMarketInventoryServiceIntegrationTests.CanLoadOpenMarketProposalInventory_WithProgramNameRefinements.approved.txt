@@ -1,13 +1,13 @@
 ﻿{
   "Criteria": {
-    "CpmCriteria": [
-      {
-        "MinMax": 1,
-        "Value": 999.0
-      }
-    ],
+    "CpmCriteria": [],
     "GenreSearchCriteria": [],
-    "ProgramNameSearchCriteria": []
+    "ProgramNameSearchCriteria": [
+      {
+        "Contain": 1,
+        "ProgramName": "Open Market Program"
+      }
+    ]
   },
   "DetailBudgetMarginAchieved": false,
   "DetailBudgetPercent": 0.0,
@@ -48,10 +48,19 @@
   "DetailTotalCpm": 0.0,
   "DetailTotalImpressions": 0.0,
   "DisplayFilter": {
-    "Affiliations": [],
+    "Affiliations": [
+      "COZ"
+    ],
     "Genres": [],
-    "Markets": [],
-    "ProgramNames": []
+    "Markets": [
+      {
+        "Display": "New York",
+        "Id": 101
+      }
+    ],
+    "ProgramNames": [
+      "Open Market Program"
+    ]
   },
   "Equivalized": null,
   "Filter": {
@@ -64,7 +73,47 @@
   "GuaranteedAudience": 31,
   "HutPostingBookId": 413,
   "Margin": 20.0,
-  "Markets": [],
+  "Markets": [
+    {
+      "MarketId": 101,
+      "MarketName": "New York",
+      "MarketRank": 1,
+      "MarketSubscribers": 7368320.0,
+      "Stations": [
+        {
+          "Affiliation": "COZ",
+          "CallLetters": "WNBC 4.2",
+          "LegacyCallLetters": "ENBC",
+          "Programs": [
+            {
+              "Daypart": {
+                "Display": "M-SU 6AM-12AM",
+                "Id": 1
+              },
+              "FlightWeeks": [
+                {
+                  "Allocations": [],
+                  "EndDate": "0001-01-01T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 649,
+                  "Rate": 10.0,
+                  "StartDate": "0001-01-01T00:00:00"
+                }
+              ],
+              "ProgramId": 2000,
+              "ProgramName": "Open Market Program",
+              "Spots": 0,
+              "StationCode": 4544,
+              "TargetCpm": 0.1887653124088105008305190293,
+              "TargetImpressions": 0.0,
+              "UnitImpressions": 52.97583477
+            }
+          ],
+          "StationCode": 4544
+        }
+      ]
+    }
+  ],
   "NewCriteriaAffectsExistingAllocations": false,
   "PlaybackType": 4,
   "PostType": null,
@@ -124,7 +173,32 @@
       "ImpressionsPercent": 0.0,
       "ImpressionsTotal": 0.0,
       "IsHiatus": false,
-      "Markets": [],
+      "Markets": [
+        {
+          "Cost": 0.0,
+          "Impressions": 0.0,
+          "MarketId": 101,
+          "Spots": 0,
+          "Stations": [
+            {
+              "Programs": [
+                {
+                  "Cost": 10.0,
+                  "EFF": 0.0,
+                  "ProgramId": 2000,
+                  "Spots": 0,
+                  "TargetCpm": 0.0,
+                  "TargetImpressions": 0.0,
+                  "TotalImpressions": 52.97583477,
+                  "UnitCost": 10.0,
+                  "UnitImpression": 52.97583477
+                }
+              ],
+              "StationCode": 4544
+            }
+          ]
+        }
+      ],
       "MediaWeekId": 649,
       "ProposalVersionDetailQuarterWeekId": 7,
       "QuarterText": "Q2",

@@ -90,21 +90,18 @@ namespace Services.Broadcast.ApplicationServices
 
         public ProposalDetailOpenMarketInventoryDto RefinePrograms(OpenMarketRefineProgramsRequest request)
         {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            if (request.Criteria.CpmCriteria.GroupBy(c => c.MinMax).Any(g => g.Count() > 1))
             {
-                if (request.Criteria.CpmCriteria.GroupBy(c => c.MinMax).Any(g => g.Count() > 1))
-                {
-                    throw new ApplicationException("Only 1 Min CPM and 1 Max CPM criteria allowed.");
-                }
-
-                var dto = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetOpenMarketProposalDetailInventory(request.ProposalDetailId);
-                UpdateCriteria(dto, request.Criteria);
-                _PopulateMarkets(dto, request.IgnoreExistingAllocation);
-                _PopulateInventoryWeeks(dto);
-                _SetProposalOpenMarketDisplayFilters(dto);
-                _CalculateOpenMarketTotals(dto);
-                return dto;
+                throw new ApplicationException("Only 1 Min CPM and 1 Max CPM criteria allowed.");
             }
+
+            var dto = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetOpenMarketProposalDetailInventory(request.ProposalDetailId);
+            UpdateCriteria(dto, request.Criteria);
+            _PopulateMarkets(dto, request.IgnoreExistingAllocation);
+            _PopulateInventoryWeeks(dto);
+            _SetProposalOpenMarketDisplayFilters(dto);
+            _CalculateOpenMarketTotals(dto);
+            return dto;
         }
 
         private void _CalculateOpenMarketTotals(ProposalDetailOpenMarketInventoryDto dto)
@@ -300,7 +297,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var programs = BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>()
                 .GetStationProgramsForProposalDetail(dto.DetailFlightStartDate.Value, dto.DetailFlightEndDate.Value,
-                    dto.DetailSpotLength, (int) RatesFile.RateSourceType.OpenMarket, proposalMarketIds, dto.DetailId);
+                    dto.DetailSpotLength, (int)RatesFile.RateSourceType.OpenMarket, proposalMarketIds, dto.DetailId);
 
             // represents the actual program names before any refine is applied
             dto.RefineFilterPrograms = programs.Where(l => l != null).Select(z => z.ProgramName)
@@ -446,7 +443,7 @@ namespace Services.Broadcast.ApplicationServices
                             weekProgram.ProgramId = program.ProgramId;
                             weekProgram.Spots = existingAllocation == null ? 0 : existingAllocation.Spots;
                             weekProgram.UnitImpression = program.UnitImpressions;
-                            weekProgram.UnitCost = (decimal) programFlightweek.Rate;
+                            weekProgram.UnitCost = (decimal)programFlightweek.Rate;
                             weekProgram.TargetImpressions = program.TargetImpressions;
                             weekProgram.TotalImpressions = weekProgram.Spots > 0 ? program.UnitImpressions * weekProgram.Spots : program.UnitImpressions;
                             weekProgram.Cost = weekProgram.Spots > 0 ? weekProgram.Spots * weekProgram.UnitCost : weekProgram.UnitCost;
@@ -472,9 +469,9 @@ namespace Services.Broadcast.ApplicationServices
             var oldProgramNameCriteria = dto.Criteria.ProgramNameSearchCriteria.Where(oc => oc.Id.HasValue && !newCriterion.ProgramNameSearchCriteria.Select(c => c.Id).Contains(oc.Id)).Select(oc => oc.Id.Value).ToList();
 
             var criteriaRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalProgramsCriteriaRepository>();
-            criteriaRepository.UpdateCriteria(dto.DetailId, newCpmCriterion, deleteCpmCriterion, newGenreCriteria, deleteGenreCriteria, newProgramNameCriteria, oldProgramNameCriteria);
+            var criteria = criteriaRepository.UpdateCriteria(dto.DetailId, newCpmCriterion, deleteCpmCriterion, newGenreCriteria, deleteGenreCriteria, newProgramNameCriteria, oldProgramNameCriteria);
 
-            dto.Criteria = newCriterion;
+            dto.Criteria = criteria;
         }
 
         private static void _ApplyDefaultSorting(ProposalDetailOpenMarketInventoryDto proposalInventory)
