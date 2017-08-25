@@ -59,11 +59,11 @@ namespace Services.Broadcast.BusinessEngines
                     new ProposalDetailSingleWeekTotalsDto();
 
                 _ProposalDetailWeekTotalsCalculationEngine.CalculateWeekTotalsForOpenMarketInventory(
-                    inventoryWeek, currentWeekTotals);
+                    inventoryWeek, currentWeekTotals, dto.Margin.Value);
             }
 
             _ProposalDetailTotalsCalculationEngine.CalculateTotalsForOpenMarketInventory(dto,
-                proposalDetailSingleInventoryTotalsDto);
+                proposalDetailSingleInventoryTotalsDto, dto.Margin.Value);
 
             _SetAchievedMarginForTotals(dto);
         }

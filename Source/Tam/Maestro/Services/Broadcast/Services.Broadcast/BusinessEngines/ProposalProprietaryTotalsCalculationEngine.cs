@@ -52,7 +52,7 @@ namespace Services.Broadcast.BusinessEngines
                     new ProposalDetailSingleWeekTotalsDto();
 
                 _ProposalDetailWeekTotalsCalculationEngine.CalculateWeekTotalsForProprietary(weekTotals, inventoryWeek,
-                    currentWeekTotals);
+                    currentWeekTotals, proposalDetailSingleInventoryTotalsDto.Margin.Value);
 
                 weekTotals.BudgetMarginAchieved = _HasMarginForBudgetBeenAchieved((double) weekTotals.Budget,
                     proposalDetailSingleInventoryTotalsDto.Margin, inventoryWeek.Budget);
@@ -61,7 +61,7 @@ namespace Services.Broadcast.BusinessEngines
                 totals.Weeks.Add(weekTotals);
             }
 
-            _ProposalDetailTotalsCalculationEngine.CalculateTotalsForProprietaryInventory(totals, request, proposalDetailSingleInventoryTotalsDto);
+            _ProposalDetailTotalsCalculationEngine.CalculateTotalsForProprietaryInventory(totals, request, proposalDetailSingleInventoryTotalsDto, proposalDetailSingleInventoryTotalsDto.Margin.Value);
 
             totals.BudgetMarginAchieved = _HasMarginForBudgetBeenAchieved((double)totals.TotalCost, proposalDetailSingleInventoryTotalsDto.Margin, request.DetailTargetBudget);
             totals.ImpressionsMarginAchieved = _HasMarginForImpressionsBeenAchieved(totals.TotalImpressions, request.DetailTargetImpressions);

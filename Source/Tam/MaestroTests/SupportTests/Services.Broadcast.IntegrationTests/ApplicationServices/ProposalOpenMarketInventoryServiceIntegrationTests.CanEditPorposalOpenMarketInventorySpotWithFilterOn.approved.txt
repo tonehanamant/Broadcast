@@ -1,6 +1,6 @@
 ﻿{
   "DetailBudgetMarginAchieved": true,
-  "DetailBudgetPercent": 30000.0,
+  "DetailBudgetPercent": 36000.0,
   "DetailCpm": 0.05,
   "DetailCpmMarginAchieved": false,
   "DetailCpmPercent": 100.0,
@@ -62,7 +62,7 @@
     {
       "Budget": 25.0000,
       "BudgetMarginAchieved": true,
-      "BudgetPercent": 60000.0,
+      "BudgetPercent": 72000.0,
       "BudgetTotal": 15000.00,
       "ImpressionsGoal": 100.0,
       "ImpressionsMarginAchieved": true,
