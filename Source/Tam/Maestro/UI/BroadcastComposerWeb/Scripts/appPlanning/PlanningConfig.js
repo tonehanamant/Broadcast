@@ -386,7 +386,7 @@
                 caption: 'Cost',
                 sortable: false,
                 resizable: false,
-                size: '1200px',
+                size: '120px',
                 render: function (record, index, column_index) {
                     //if (record.w2ui && record.w2ui.summary) return config.renderers.toMoneyOrDash(record.TotalCost, false);
                     if (record.isGroup) {
