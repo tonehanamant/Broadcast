@@ -348,6 +348,8 @@ namespace Services.Broadcast.ApplicationServices
             _ApplyProgramImpressions(programs, dto);
             _ProposalProgramsCalculationEngine.ApplyBlendedCpmForEachProgram(programs, dto.DetailSpotLength);
 
+            programs.RemoveAll(p => ShouldRemoveProgram(p, dto.Criteria));
+
             var inventoryMarkets = _GroupProgramsByMarketAndStation(programs);
 
             var postingBook = _ProposalPostingBooksEngine.GetPostingBookId(dto);

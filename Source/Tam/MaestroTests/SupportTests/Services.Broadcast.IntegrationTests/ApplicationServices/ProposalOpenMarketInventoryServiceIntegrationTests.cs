@@ -55,7 +55,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
                 jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
-                jsonResolver.Ignore(typeof (ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
+                jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
 
                 var jsonSettings = new JsonSerializerSettings()
@@ -68,6 +68,43 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketProposalInventory_WithCpmRefinements()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                proposalRepository.UpdateProposalDetailSweepsBooks(7, 413, 416);
+                var request = new OpenMarketRefineProgramsRequest
+                {
+                    IgnoreExistingAllocation = true,
+                    ProposalDetailId = 7,
+                    Criteria = new OpenMarketCriterion
+                    {
+                        CpmCriteria = new List<CpmCriteria>
+                {
+                    new CpmCriteria { MinMax = MinMaxEnum.Min, Value = 999 }
+                }
+                    }
+                };
+                var proposalInventory = _ProposalOpenMarketInventoryService.RefinePrograms(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
+                jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
+                jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
+                jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(proposalInventory, jsonSettings));
+            }
+        }
 
         [Test]
         public void CanFilterOpenMarketProposalInventoryByMarketId()
@@ -91,7 +128,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(7);
-                var dtoStationsCount = dto.Markets.SelectMany(a=>a.Stations).Count();
+                var dtoStationsCount = dto.Markets.SelectMany(a => a.Stations).Count();
                 dto.Filter.Affiliations.Add("COZ");
 
                 var filteredDto = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketInventory(dto);
@@ -107,7 +144,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(7);
-                var dtoProgramCount = dto.Markets.SelectMany(a => a.Stations.SelectMany(b=>b.Programs)).Count();
+                var dtoProgramCount = dto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs)).Count();
                 dto.Filter.ProgramNames.Add("open market program");
 
                 var filteredDto = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketInventory(dto);
@@ -126,7 +163,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(7);
                 var dtoProgramCount = dto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs)).Count();
-                
+
                 DisplayDaypart daypart;
                 DisplayDaypart.TryParse("M-SU 6AM-12AM", out daypart);
                 dto.Filter.DayParts.Add(DaypartDto.ConvertDisplayDaypart(daypart));
@@ -229,7 +266,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 proposalRepository.UpdateProposalDetailSweepsBooks(7, 413, 416);
 
                 var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(7);
-                
+
                 var program =
                     proposalInventory.Weeks.SelectMany(
                         a => a.Markets.SelectMany(b => b.Stations.SelectMany(c => c.Programs.Select(d => d)))).FirstOrDefault();
@@ -291,11 +328,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalFlightWeeks");
-                jsonResolver.Ignore(typeof (ProposalDetailInventoryBase), "DetailFlightWeeks");
+                jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "DetailFlightWeeks");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "Markets");
-                jsonResolver.Ignore(typeof (ProposalDetailOpenMarketInventoryDto), "Criteria");
-                jsonResolver.Ignore(typeof (ProposalDetailOpenMarketInventoryDto), "DisplayFilter");
-                    
+                jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "Criteria");
+                jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "DisplayFilter");
+
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
