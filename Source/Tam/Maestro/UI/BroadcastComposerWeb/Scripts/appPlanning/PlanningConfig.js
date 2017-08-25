@@ -345,19 +345,20 @@
                 caption: 'Imp (000)',
                 sortable: false,
                 resizable: false,
-                size: '80px',
+                size: '100px',
                 render: function (record, index, column_index) {
                     if (record.isGroup) {
                         return '';
                     } else {
                         if (!record.active) return '-';
 
-                        var roundedImpressions = Math.round(Number(record.Impressions));
+                        
+                        var formattedImpresions = numeral(record.Impressions).format('0,0.[000]');
 
                         if (record.HasWastage) {
-                            return '<div>' + roundedImpressions + ' <span class="glyphicon glyphicon-info-sign" title="wastage"></span></div>';
+                            return '<div>' + formattedImpresions + ' <span class="glyphicon glyphicon-info-sign" title="wastage"></span></div>';
                         } else {
-                            return '<div>' + roundedImpressions + '</div>';
+                            return '<div>' + formattedImpresions + '</div>';
                         }
                     }
                 }
@@ -367,7 +368,7 @@
                 caption: 'CPM',
                 sortable: false,
                 resizable: false,
-                size: '70px',
+                size: '80px',
                 //Cost
                 render: function (record, index, column_index) {
                     //if (record.w2ui && record.w2ui.summary) return config.renderers.toMoneyOrDash(record.TotalCost, false);
@@ -376,7 +377,7 @@
                     } else {
                         if (!record.active) return '-';
                         //todo show green if Selected?
-                        return config.renderers.toMoneyOrDash(record.CPM, false);
+                        return numeral(record.CPM).format('$0,0[.]00');
                     }
                 }
             },
@@ -385,7 +386,7 @@
                 caption: 'Cost',
                 sortable: false,
                 resizable: false,
-                size: '110px',
+                size: '1200px',
                 render: function (record, index, column_index) {
                     //if (record.w2ui && record.w2ui.summary) return config.renderers.toMoneyOrDash(record.TotalCost, false);
                     if (record.isGroup) {
@@ -393,7 +394,7 @@
                     } else {
                         if (!record.active) return '-';
                         //todo show green if Selected?
-                        return config.renderers.toMoneyOrDash(record.Cost, false);
+                        return numeral(record.Cost).format('$0,0[.]00');
                     }
                 }
             }]);
@@ -475,7 +476,8 @@
                     size: '80px',
                     render: function (record, index, column_index) {
                         if (record) {
-                            var val = config.renderers.toMoneyOrDash(record.TargetCpm, true);
+                            
+                            var val = record.TargetCpm ? numeral(record.TargetCpm).format('$0,0[.]00') : '-';
                             if (record.isProgram) {
                                 return PlanningConfig.greyRenderer(val, record.TotalSpots === 0);
                             } else {
@@ -539,10 +541,11 @@
                         if (record.isStation) return '';
                         if (record.isProgram) {//display val including 0 unless not active
                             if (!record.active) return '-'; //class will grey out
-                            var val = Math.round(Number(record.TotalImpressions));
+                            
+                            var val = numeral(record.TotalImpressions).format('0,0.[000]');
                             return PlanningConfig.greyRenderer(val, record.Spots === 0);
                         } else {//market display val or dash
-                            return record.Impressions ? Math.round(Number(record.Impressions)) : '-';
+                            return record.Impressions ? numeral(record.Impressions).format('0,0.[000]') : '-';
                         }
 
                     }
@@ -558,10 +561,11 @@
                         if (record.isStation) return '';
                         if (record.isProgram) {//display val including 0 unless not active
                             if (!record.active) return '-'; //class will grey out
-                            var val = config.renderers.toMoneyOrDash(record.Cost, true);
+                            
+                            var val = record.Cost ? numeral(record.Cost).format('$0,0[.]00') : '-';
                             return PlanningConfig.greyRenderer(val, record.Spots === 0);
                         } else {//market display val or dash
-                            return config.renderers.toMoneyOrDash(record.Cost, false);
+                            return numeral(record.Cost).format('$0,0[.]00');
                         }
                     }
                 }
