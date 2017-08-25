@@ -279,7 +279,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
             weekBudget: week.BudgetTotal ? numeral(week.BudgetTotal).format('$0,0[.]00') : "-",
             budget: budget,
             budgetPercent: budgetPercent,
-            impressionsMarginClass: week.ImpressionsMarginAchieved ? "label-danger" : "label-success",
+            impressionsMarginClass: week.ImpressionsMarginAchieved ? "label-success" : "label-danger",
             budgetMarginClass: week.BudgetMarginAchieved ? "label-danger" : "label-success"
         };
         
