@@ -266,35 +266,6 @@ namespace Services.Broadcast.Aggregates
             outOfSpecRow.MediaWeekId = _MediaWeeks.First(mw => mw.WeekStartDate <= outOfSpecRow.DateAired && outOfSpecRow.DateAired <= mw.WeekEndDate).Id;
         }
 
-        public AudienceImpressionsAndDelivery GetImpressionsDetailsByScheduleDetailAndAudience(int scheduleDetailId,int audienceId, int? bvsFileDetailId)
-        {
-            bvs_post_details post = null;
-
-            if (bvsFileDetailId.HasValue)
-            {
-                var file = _BvsFileDetails.SingleOrDefault(fd => fd.id == bvsFileDetailId);
-                if (file == null)
-                    return null;
-
-                post = file.bvs_post_details.SingleOrDefault(x => x.audience_id == audienceId);
-
-                if (post == null)
-                    return null;    //not found, but expecting
-            }
-
-            var impressions = (from x in _ScheduleDetails
-                                   where x.id == scheduleDetailId
-                                   from sd in x.schedule_detail_audiences
-                                   where sd.audience_id == audienceId
-                                   select sd.impressions).SingleOrDefault();
-
-            return new AudienceImpressionsAndDelivery()
-            {
-                AudienceId = audienceId,
-                Delivery = post == null ? 0 : post.delivery,
-                Impressions = impressions
-            };
-        }
 
         public IEnumerable<ScheduleAudience> GetScheduleAudiences()
         {
@@ -444,7 +415,7 @@ namespace Services.Broadcast.Aggregates
     }
 
     public class AudienceImpressionsAndDelivery
-    {
+    {   
         public int? Impressions { get; set; }
         public int AudienceId { get; set; }
         public double Delivery { get; set; }

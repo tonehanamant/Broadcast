@@ -1,0 +1,1851 @@
+﻿{
+  "Advertiser": null,
+  "AdvertiserData": {
+    "DeliveredSpots": 7,
+    "ImpressionsAndDelivey": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 47555.6225,
+        "OrderedImpressions": 6490,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 47555.6225
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "DeliveredImpressions": 34859.775,
+        "OrderedImpressions": 26600,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 34859.775
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "DeliveredImpressions": 23863.905,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 23863.905
+      }
+    ],
+    "OrderedSpots": 8,
+    "ReportData": [
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 6729.515,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 3354.07,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 2994.6375,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": 21.0,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 31179,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 82800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "JUDGE ALEX ON 1",
+        "Rank": 11,
+        "SpecStatus": null,
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 6744.905,
+            "Impressions": 190,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 4550.025,
+            "Impressions": 4200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 1001.2525,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": 22.0,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 31179,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 82800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "CHICAGO",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "JUDGE ALEX ON 2",
+        "Rank": 3,
+        "SpecStatus": null,
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 6868.12,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 2967.1825,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 3285.2425,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": 21.0,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 31179,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 82800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "JUDGE ALEX ON 3",
+        "Rank": 11,
+        "SpecStatus": null,
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 9474.825,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 9876.7225,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 5910.045,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": 21.0,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": {
+          "_Code": "CUS",
+          "_EndTime": 46799,
+          "_Friday": true,
+          "_Id": 4559,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 39600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "CHARLOTTE",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "COPS DAY 1",
+        "Rank": 22,
+        "SpecStatus": null,
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 8187.29,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 9675.7975,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 4253.7675,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": 21.0,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": {
+          "_Code": "CUS",
+          "_EndTime": 46799,
+          "_Friday": true,
+          "_Id": 4559,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 39600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "PORTLAND,OR",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "COPS DAY 2",
+        "Rank": 25,
+        "SpecStatus": null,
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 7296.95,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 3730.935,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 5811.34,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": 21.0,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": {
+          "_Code": "CUS",
+          "_EndTime": 46799,
+          "_Friday": true,
+          "_Id": 4559,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 39600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "ST LOUIS",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "COPS DAY 3 LEAD IN",
+        "Rank": 21,
+        "SpecStatus": null,
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 2254.0175,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 705.0425,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 607.62,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": 21.0,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": {
+          "_Code": "CUS",
+          "_EndTime": 14399,
+          "_Friday": true,
+          "_Id": 32502,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "Three AM",
+        "Rank": 11,
+        "SpecStatus": null,
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 0.0,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 0.0,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 0.0,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": 0.0,
+        "DeliveredSpots": 0,
+        "DisplayDaypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 31179,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 82800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "Sunday Night ALEX",
+        "Rank": 0,
+        "SpecStatus": null,
+        "SpotClearance": 0.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 2
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 3
+      }
+    ]
+  },
+  "OutOfSpecToDate": {
+    "ImpressionsAndDelivery": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 6242.6875,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 6242.6875,
+        "TotalDeliveredImpressions": 12485.375
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "DeliveredImpressions": 4287.94375,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 4287.94375,
+        "TotalDeliveredImpressions": 8575.8875
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "DeliveredImpressions": 2292.46875,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 2292.46875,
+        "TotalDeliveredImpressions": 4584.9375
+      }
+    ],
+    "ReportData": [
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 6242.6875,
+            "Impressions": null,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 4287.94375,
+            "Impressions": null,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 2292.46875,
+            "Impressions": null,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DateAired": "0001-01-01T00:00:00",
+        "DeliveredSpots": null,
+        "DisplayDaypart": null,
+        "Isci": "O_N_RR",
+        "Market": "TAMPA",
+        "MatchAirTime": false,
+        "MatchIsci": true,
+        "MatchProgram": true,
+        "MatchSpotLength": true,
+        "MatchStation": true,
+        "MediaWeekId": null,
+        "OrderedSpots": null,
+        "OutOfSpecSpots": 1,
+        "ProgramName": "SUNDAY NIGHT ALEX",
+        "Rank": 11,
+        "SpecStatus": "Airtime",
+        "SpotClearance": null,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 2
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 3
+      }
+    ]
+  },
+  "SpotDetailData": {
+    "ImpressionsAndDelivery": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 47555.6225,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 47555.6225
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "DeliveredImpressions": 34859.775,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 34859.775
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "DeliveredImpressions": 23863.905,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 23863.905
+      }
+    ],
+    "ReportData": [
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "IND",
+        "AirTime": 86100,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 6729.515,
+            "Impressions": null,
+            "NsiDelivery": 6729.5149999999994
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 2994.6375,
+            "Impressions": null,
+            "NsiDelivery": 2994.6375
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 3354.07,
+            "Impressions": null,
+            "NsiDelivery": 3354.0699999999997
+          }
+        ],
+        "Brand": "",
+        "Campaign": 794613,
+        "Date": "2017-03-14T00:00:00",
+        "DateAired": "03/14/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "CO_N_RR",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "CO_N_RR",
+            "House": "O_N_RR"
+          }
+        ],
+        "Length": 30,
+        "Market": "TAMPA",
+        "ProgramName": "JUDGE ALEX ON 1",
+        "Rank": 11,
+        "Station": "WMOR",
+        "TimeAired": "11:55 PM"
+      },
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "IND",
+        "AirTime": 60,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 6868.12,
+            "Impressions": null,
+            "NsiDelivery": 6868.12
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 3285.2425,
+            "Impressions": null,
+            "NsiDelivery": 3285.2425
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 2967.1825,
+            "Impressions": null,
+            "NsiDelivery": 2967.1825000000003
+          }
+        ],
+        "Brand": "",
+        "Campaign": 794613,
+        "Date": "2017-03-14T00:00:00",
+        "DateAired": "03/14/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "CO_N_RR",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "CO_N_RR",
+            "House": "O_N_RR"
+          }
+        ],
+        "Length": 30,
+        "Market": "TAMPA",
+        "ProgramName": "JUDGE ALEX ON 3",
+        "Rank": 11,
+        "Station": "WMOR",
+        "TimeAired": "12:01 AM"
+      },
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "IND",
+        "AirTime": 10800,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 2254.0175,
+            "Impressions": null,
+            "NsiDelivery": 2254.0175
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 607.62,
+            "Impressions": null,
+            "NsiDelivery": 607.62
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 705.0425,
+            "Impressions": null,
+            "NsiDelivery": 705.0425
+          }
+        ],
+        "Brand": "",
+        "Campaign": 794613,
+        "Date": "2017-03-14T00:00:00",
+        "DateAired": "03/14/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "CO_N_RR",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "CO_N_RR",
+            "House": "O_N_RR"
+          }
+        ],
+        "Length": 30,
+        "Market": "TAMPA",
+        "ProgramName": "THREE AM",
+        "Rank": 11,
+        "Station": "WMOR",
+        "TimeAired": "3:00 AM"
+      },
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "IND",
+        "AirTime": 82680,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 6744.905,
+            "Impressions": null,
+            "NsiDelivery": 6744.9050000000007
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 1001.2525,
+            "Impressions": null,
+            "NsiDelivery": 1001.2524999999999
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 4550.025,
+            "Impressions": null,
+            "NsiDelivery": 4550.025
+          }
+        ],
+        "Brand": "",
+        "Campaign": 794613,
+        "Date": "2017-03-14T00:00:00",
+        "DateAired": "03/14/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "CO_N_RR",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "CO_N_RR",
+            "House": "O_N_RR"
+          }
+        ],
+        "Length": 30,
+        "Market": "CHICAGO",
+        "ProgramName": "JUDGE ALEX ON 2",
+        "Rank": 12,
+        "Station": "WMOR",
+        "TimeAired": "10:58 PM"
+      },
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "CW",
+        "AirTime": 39540,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 7296.95,
+            "Impressions": null,
+            "NsiDelivery": 7296.95
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 5811.34,
+            "Impressions": null,
+            "NsiDelivery": 5811.3399999999992
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 3730.935,
+            "Impressions": null,
+            "NsiDelivery": 3730.9349999999995
+          }
+        ],
+        "Brand": "",
+        "Campaign": 794613,
+        "Date": "2017-03-14T00:00:00",
+        "DateAired": "03/14/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "CO_N_RR",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "CO_N_RR",
+            "House": "O_N_RR"
+          }
+        ],
+        "Length": 30,
+        "Market": "ST LOUIS",
+        "ProgramName": "COPS DAY 3 LEAD IN",
+        "Rank": 21,
+        "Station": "WMOR",
+        "TimeAired": "10:59 AM"
+      },
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "IND",
+        "AirTime": 43261,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 9474.825,
+            "Impressions": null,
+            "NsiDelivery": 9474.8249999999989
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 5910.045,
+            "Impressions": null,
+            "NsiDelivery": 5910.045
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 9876.7225,
+            "Impressions": null,
+            "NsiDelivery": 9876.722499999998
+          }
+        ],
+        "Brand": "",
+        "Campaign": 794613,
+        "Date": "2017-03-14T00:00:00",
+        "DateAired": "03/14/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "CO_N_RR",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "CO_N_RR",
+            "House": "O_N_RR"
+          }
+        ],
+        "Length": 30,
+        "Market": "CHARLOTTE",
+        "ProgramName": "COPS DAY 1",
+        "Rank": 22,
+        "Station": "WMOR",
+        "TimeAired": "12:01 PM"
+      },
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "MNTV",
+        "AirTime": 42901,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 8187.29,
+            "Impressions": null,
+            "NsiDelivery": 8187.2899999999981
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 4253.7675,
+            "Impressions": null,
+            "NsiDelivery": 4253.767499999999
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 9675.7975,
+            "Impressions": null,
+            "NsiDelivery": 9675.7974999999988
+          }
+        ],
+        "Brand": "",
+        "Campaign": 794613,
+        "Date": "2017-03-14T00:00:00",
+        "DateAired": "03/14/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "CO_N_RR",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "CO_N_RR",
+            "House": "O_N_RR"
+          }
+        ],
+        "Length": 30,
+        "Market": "PORTLAND,OR",
+        "ProgramName": "COPS DAY 2",
+        "Rank": 25,
+        "Station": "WMOR",
+        "TimeAired": "11:55 AM"
+      }
+    ]
+  },
+  "SpotsAndImpressionsBySource": [
+    {
+      "AudienceImpressions": {
+        "33": 47555.6225,
+        "61": 34859.775,
+        "53": 23863.905
+      },
+      "Source": 2,
+      "Spots": 7
+    }
+  ],
+  "SpotsAndImpressionsDeliveryByAdvertiser": [
+    {
+      "AdvertiserName": "BEIERS HERSHEY",
+      "AudienceImpressions": {
+        "33": 47555.6225,
+        "61": 34859.775,
+        "53": 23863.905
+      },
+      "Spots": 7
+    }
+  ],
+  "StationSummaryData": {
+    "ImpressionsAndDelivery": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 47555.6225,
+        "OrderedImpressions": 6490,
+        "OutOfSpecDeliveredImpressions": 6242.6875,
+        "TotalDeliveredImpressions": 53798.31
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "DeliveredImpressions": 34859.775,
+        "OrderedImpressions": 26600,
+        "OutOfSpecDeliveredImpressions": 4287.94375,
+        "TotalDeliveredImpressions": 39147.71875
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "DeliveredImpressions": 23863.905,
+        "OrderedImpressions": 0,
+        "OutOfSpecDeliveredImpressions": 2292.46875,
+        "TotalDeliveredImpressions": 26156.37375
+      }
+    ],
+    "ReportData": [
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 0.0,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 0.0,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 0.0,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DeliveredSpots": 0,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": null,
+        "Rank": 0,
+        "SpecStatus": "",
+        "SpotClearance": 0.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 1
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 6744.905,
+            "Impressions": 190,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 4550.025,
+            "Impressions": 4200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 1001.2525,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "CHICAGO",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": null,
+        "Rank": 3,
+        "SpecStatus": "Match",
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 1
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 15851.6525,
+            "Impressions": 2700,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 7026.295,
+            "Impressions": 9600,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 6887.5,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DeliveredSpots": 3,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 3,
+        "OutOfSpecSpots": null,
+        "ProgramName": null,
+        "Rank": 11,
+        "SpecStatus": "Match",
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 1
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 6242.6875,
+            "Impressions": 0,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 4287.94375,
+            "Impressions": 0,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 2292.46875,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DateAired": "0001-01-01T00:00:00",
+        "DeliveredSpots": 0,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "TAMPA",
+        "MatchAirTime": false,
+        "MatchIsci": false,
+        "MatchProgram": false,
+        "MatchSpotLength": false,
+        "MatchStation": false,
+        "MediaWeekId": null,
+        "OrderedSpots": 0,
+        "OutOfSpecSpots": 1,
+        "ProgramName": null,
+        "Rank": 11,
+        "SpecStatus": "Airtime",
+        "SpotClearance": 0.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 7296.95,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 3730.935,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 5811.34,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "ST LOUIS",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": null,
+        "Rank": 21,
+        "SpecStatus": "Match",
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 1
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 9474.825,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 9876.7225,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 5910.045,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "CHARLOTTE",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": null,
+        "Rank": 22,
+        "SpecStatus": "Match",
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 1
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 8187.29,
+            "Impressions": 900,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 9675.7975,
+            "Impressions": 3200,
+            "NsiDelivery": null
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 4253.7675,
+            "Impressions": 0,
+            "NsiDelivery": null
+          }
+        ],
+        "Cost": null,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "PORTLAND,OR",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": null,
+        "Rank": 25,
+        "SpecStatus": "Match",
+        "SpotClearance": 1.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 1
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 2
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 3
+      }
+    ]
+  },
+  "WeeklyData": {
+    "ImpressionsAndDelivey": [],
+    "ReportDataByWeek": [
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 47555.6225,
+            "OrderedImpressions": 6490,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 47555.6225
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 34859.775,
+            "OrderedImpressions": 26600,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 34859.775
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 23863.905,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 23863.905
+          }
+        ],
+        "ReportData": [
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 33,
+                "Delivery": 6729.515,
+                "Impressions": 900,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 3354.07,
+                "Impressions": 3200,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 2994.6375,
+                "Impressions": 0,
+                "NsiDelivery": null
+              }
+            ],
+            "Cost": 21.0,
+            "DeliveredSpots": 1,
+            "DisplayDaypart": {
+              "_Code": "CUS",
+              "_EndTime": 3599,
+              "_Friday": true,
+              "_Id": 31179,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "TAMPA",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "JUDGE ALEX ON 1",
+            "Rank": 11,
+            "SpecStatus": "Match",
+            "SpotClearance": 1.0,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 1
+          },
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 33,
+                "Delivery": 6744.905,
+                "Impressions": 190,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 4550.025,
+                "Impressions": 4200,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 1001.2525,
+                "Impressions": 0,
+                "NsiDelivery": null
+              }
+            ],
+            "Cost": 22.0,
+            "DeliveredSpots": 1,
+            "DisplayDaypart": {
+              "_Code": "CUS",
+              "_EndTime": 3599,
+              "_Friday": true,
+              "_Id": 31179,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "CHICAGO",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "JUDGE ALEX ON 2",
+            "Rank": 3,
+            "SpecStatus": "Match",
+            "SpotClearance": 1.0,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 1
+          },
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 33,
+                "Delivery": 6868.12,
+                "Impressions": 900,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 2967.1825,
+                "Impressions": 3200,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 3285.2425,
+                "Impressions": 0,
+                "NsiDelivery": null
+              }
+            ],
+            "Cost": 21.0,
+            "DeliveredSpots": 1,
+            "DisplayDaypart": {
+              "_Code": "CUS",
+              "_EndTime": 3599,
+              "_Friday": true,
+              "_Id": 31179,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "TAMPA",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "JUDGE ALEX ON 3",
+            "Rank": 11,
+            "SpecStatus": "Match",
+            "SpotClearance": 1.0,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 1
+          },
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 33,
+                "Delivery": 9474.825,
+                "Impressions": 900,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 9876.7225,
+                "Impressions": 3200,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 5910.045,
+                "Impressions": 0,
+                "NsiDelivery": null
+              }
+            ],
+            "Cost": 21.0,
+            "DeliveredSpots": 1,
+            "DisplayDaypart": {
+              "_Code": "CUS",
+              "_EndTime": 46799,
+              "_Friday": true,
+              "_Id": 4559,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 39600,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "CHARLOTTE",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "COPS DAY 1",
+            "Rank": 22,
+            "SpecStatus": "Match",
+            "SpotClearance": 1.0,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 1
+          },
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 33,
+                "Delivery": 8187.29,
+                "Impressions": 900,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 9675.7975,
+                "Impressions": 3200,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 4253.7675,
+                "Impressions": 0,
+                "NsiDelivery": null
+              }
+            ],
+            "Cost": 21.0,
+            "DeliveredSpots": 1,
+            "DisplayDaypart": {
+              "_Code": "CUS",
+              "_EndTime": 46799,
+              "_Friday": true,
+              "_Id": 4559,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 39600,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "PORTLAND,OR",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "COPS DAY 2",
+            "Rank": 25,
+            "SpecStatus": "Match",
+            "SpotClearance": 1.0,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 1
+          },
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 33,
+                "Delivery": 7296.95,
+                "Impressions": 900,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 3730.935,
+                "Impressions": 3200,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 5811.34,
+                "Impressions": 0,
+                "NsiDelivery": null
+              }
+            ],
+            "Cost": 21.0,
+            "DeliveredSpots": 1,
+            "DisplayDaypart": {
+              "_Code": "CUS",
+              "_EndTime": 46799,
+              "_Friday": true,
+              "_Id": 4559,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 39600,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "ST LOUIS",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "COPS DAY 3 LEAD IN",
+            "Rank": 21,
+            "SpecStatus": "Match",
+            "SpotClearance": 1.0,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 1
+          },
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 33,
+                "Delivery": 2254.0175,
+                "Impressions": 900,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 705.0425,
+                "Impressions": 3200,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 607.62,
+                "Impressions": 0,
+                "NsiDelivery": null
+              }
+            ],
+            "Cost": 21.0,
+            "DeliveredSpots": 1,
+            "DisplayDaypart": {
+              "_Code": "CUS",
+              "_EndTime": 14399,
+              "_Friday": true,
+              "_Id": 32502,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 1800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "TAMPA",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "Three AM",
+            "Rank": 11,
+            "SpecStatus": "Match",
+            "SpotClearance": 1.0,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 1
+          },
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 33,
+                "Delivery": 0.0,
+                "Impressions": 900,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 0.0,
+                "Impressions": 3200,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 0.0,
+                "Impressions": 0,
+                "NsiDelivery": null
+              }
+            ],
+            "Cost": 0.0,
+            "DeliveredSpots": 0,
+            "DisplayDaypart": {
+              "_Code": "CUS",
+              "_EndTime": 3599,
+              "_Friday": true,
+              "_Id": 31179,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "TAMPA",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "Sunday Night ALEX",
+            "Rank": 0,
+            "SpecStatus": "Match",
+            "SpotClearance": 0.0,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 1
+          }
+        ],
+        "Week": {
+          "Display": "3/13/2017",
+          "Id": 690
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 6242.6875,
+            "TotalDeliveredImpressions": 6242.6875
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 4287.94375,
+            "TotalDeliveredImpressions": 4287.94375
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 0,
+            "OutOfSpecDeliveredImpressions": 2292.46875,
+            "TotalDeliveredImpressions": 2292.46875
+          }
+        ],
+        "ReportData": [
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 33,
+                "Delivery": 6242.6875,
+                "Impressions": 0,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 4287.94375,
+                "Impressions": 0,
+                "NsiDelivery": null
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 2292.46875,
+                "Impressions": 0,
+                "NsiDelivery": null
+              }
+            ],
+            "Cost": 0.0,
+            "DateAired": "0001-01-01T00:00:00",
+            "DeliveredSpots": 0,
+            "DisplayDaypart": null,
+            "Isci": "O_N_RR",
+            "Market": "TAMPA",
+            "MatchAirTime": false,
+            "MatchIsci": false,
+            "MatchProgram": false,
+            "MatchSpotLength": false,
+            "MatchStation": false,
+            "MediaWeekId": null,
+            "OrderedSpots": 0,
+            "OutOfSpecSpots": null,
+            "ProgramName": "SUNDAY NIGHT ALEX",
+            "Rank": 11,
+            "SpecStatus": "Airtime",
+            "SpotClearance": 0.0,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 0
+          }
+        ],
+        "Week": {
+          "Display": "3/20/2017",
+          "Id": 691
+        }
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 2
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "IsHouseHold": false,
+        "Population": 0,
+        "Rank": 3
+      }
+    ]
+  }
+}

@@ -550,8 +550,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
                 reportDto = sut.GenerateClientReportDto(scheduleId);
                 // 2 commented lines below are useful for debugging full report
-                //var report = sut.GenerateClientReport(scheduleId);
-                //File.WriteAllBytes(string.Format("..\\Client_Report{0}.xlsx",scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
+                var report = sut.GenerateClientReport(scheduleId);
+                File.WriteAllBytes(string.Format("..\\Client_Report{0}.xlsx",scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
             }
             _VerifyReportData(reportDto);
         }
