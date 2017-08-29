@@ -87,8 +87,9 @@ var StationModalEditRate = function (view) {
                 // unmasking form values
                 var rate15 = $('#update_program_spot15_input').val() ? parseFloat($('#update_program_spot15_input').val().replace(/[$,]+/g, "")) : null;
                 var rate30 = $('#update_program_spot30_input').val() ? parseFloat($('#update_program_spot30_input').val().replace(/[$,]+/g, "")) : null;
-                var impressions = parseFloat($('#update_program_hhimpressions_input').val());
-                var rating = parseFloat($('#update_program_hhrating_input').val());
+
+                var impressions = parseFloat($('#update_program_hhimpressions_input').val().replace(/,/g, ''));
+                var rating = parseFloat($('#update_program_hhrating_input').val().replace(/,/g, ''));
                 var audienceId = $('#update_program_audience_id_input').val();
 
                 var getEffectiveDate = $('#update_program_effective_date_input').val();
