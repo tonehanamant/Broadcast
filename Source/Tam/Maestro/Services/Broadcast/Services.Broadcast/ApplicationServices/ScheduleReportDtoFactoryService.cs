@@ -702,6 +702,7 @@ namespace Services.Broadcast.ApplicationServices
                     if (bvsDetailGroup.Key.InSpec)
                         deliveredSpots = bvsDetailGroup.Count();
 
+                    var status = deliveredSpots > 0 ? "Match" : string.Empty;
                     var bvsReportData = new BvsReportData
                     {
                         Rank = bvsDetailGroup.Key.Rank,
@@ -716,8 +717,7 @@ namespace Services.Broadcast.ApplicationServices
                         DeliveredSpots = deliveredSpots,
                         SpotClearance = (double) deliveredSpots/(double) orderedSpots,
                         Status = 1, //in-spec
-                        //@todo Fill this out
-                        SpecStatus = "Match",
+                        SpecStatus = status,
                     };
 
                     foreach (var audience in scheduleAudiences)
