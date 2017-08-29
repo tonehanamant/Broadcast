@@ -1,6 +1,7 @@
 ﻿using Services.Broadcast.Aggregates;
 using System;
 using System.Collections.Generic;
+using EntityFrameworkMapping.Broadcast;
 
 namespace Services.Broadcast.Entities
 {
@@ -13,17 +14,9 @@ namespace Services.Broadcast.Entities
         public string ProgramName { get; set; }
         public string GroupedByName { get; set; }
         public int SpotLength { get; set; }
-        public int ScheduleDetailId { get; set; }
-        public List<AudienceImpressionsAndDelivery> AudienceImpressions { get; set; }
-        public int MediaWeekId { get; set; }
-        public DateTime DateAired { get; set; }
-        public int TimeAired  { get; set; }
-        public int ScheduleDetailWeekId { get; set; }
-        public bool IsBvsDetail { get; set; }
-
-        public AdvertiserCoreData()
-        {
-            AudienceImpressions = new List<AudienceImpressionsAndDelivery>();
-        }
+        public schedule_details ScheduleDetail { get; set; }
+        public List<bvs_file_details> BvsDetails { get; set; }
+        //public List<AudienceImpressionsAndDelivery> AudienceImpressions { get; set; }
+       
     }
 }
