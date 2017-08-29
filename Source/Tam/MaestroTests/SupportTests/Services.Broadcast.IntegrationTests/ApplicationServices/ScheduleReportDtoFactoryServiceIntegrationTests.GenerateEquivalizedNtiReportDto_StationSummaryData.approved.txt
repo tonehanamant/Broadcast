@@ -3,18 +3,18 @@
     {
       "AudienceId": 31,
       "AudienceName": "HH",
-      "DeliveredImpressions": 715546.916,
+      "DeliveredImpressions": 644318.5,
       "OrderedImpressions": 1768942,
       "OutOfSpecDeliveredImpressions": 102394.914,
-      "TotalDeliveredImpressions": 817941.83
+      "TotalDeliveredImpressions": 746713.414
     },
     {
       "AudienceId": 33,
       "AudienceName": "A18-49",
-      "DeliveredImpressions": 175298.237,
+      "DeliveredImpressions": 175247.412,
       "OrderedImpressions": 476754,
       "OutOfSpecDeliveredImpressions": 77846.382,
-      "TotalDeliveredImpressions": 253144.619
+      "TotalDeliveredImpressions": 253093.794
     }
   ],
   "ReportData": [
@@ -23,30 +23,46 @@
       "AudienceImpressions": [
         {
           "AudienceId": 31,
-          "Delivery": 85906.486,
+          "Delivery": 171812.972,
           "Impressions": 919920,
           "NsiDelivery": null
         },
         {
           "AudienceId": 33,
-          "Delivery": 23418.507,
+          "Delivery": 46837.014,
           "Impressions": 240942,
           "NsiDelivery": null
         }
       ],
-      "Cost": null,
+      "Cost": 1300.0,
       "DeliveredSpots": 1,
-      "DisplayDaypart": null,
+      "DisplayDaypart": {
+        "_Code": "",
+        "_EndTime": 2219,
+        "_Friday": true,
+        "_Id": 62652,
+        "_Is24Hour": false,
+        "_LastEndTime": 0,
+        "_LastStartTime": 0,
+        "_Monday": true,
+        "_Name": "",
+        "_Saturday": false,
+        "_StartTime": 84900,
+        "_Sunday": false,
+        "_Thursday": true,
+        "_Tuesday": true,
+        "_Wednesday": true
+      },
       "Isci": null,
       "Market": "New York",
       "MediaWeekId": null,
       "OrderedSpots": 6,
       "OutOfSpecSpots": null,
-      "ProgramName": null,
+      "ProgramName": "STEPHEN COLBERT",
       "Rank": 1,
       "SpecStatus": "Match",
       "SpotClearance": 0.16666666666666666,
-      "SpotLength": 15,
+      "SpotLength": 30,
       "Station": "WCBS-TV",
       "Status": 1
     },
@@ -55,30 +71,46 @@
       "AudienceImpressions": [
         {
           "AudienceId": 31,
-          "Delivery": 314269.804,
+          "Delivery": 157134.902,
           "Impressions": 259470,
           "NsiDelivery": null
         },
         {
           "AudienceId": 33,
-          "Delivery": 46938.664,
+          "Delivery": 23469.332,
           "Impressions": 51012,
           "NsiDelivery": null
         }
       ],
-      "Cost": null,
+      "Cost": 455.0,
       "DeliveredSpots": 1,
-      "DisplayDaypart": null,
+      "DisplayDaypart": {
+        "_Code": "CUS",
+        "_EndTime": 39599,
+        "_Friday": true,
+        "_Id": 6817,
+        "_Is24Hour": false,
+        "_LastEndTime": 0,
+        "_LastStartTime": 0,
+        "_Monday": true,
+        "_Name": "Custom",
+        "_Saturday": false,
+        "_StartTime": 36000,
+        "_Sunday": false,
+        "_Thursday": true,
+        "_Tuesday": true,
+        "_Wednesday": true
+      },
       "Isci": null,
       "Market": "New York",
       "MediaWeekId": null,
       "OrderedSpots": 2,
       "OutOfSpecSpots": null,
-      "ProgramName": null,
+      "ProgramName": "LET'S MAKE A DEAL",
       "Rank": 1,
       "SpecStatus": "Match",
       "SpotClearance": 0.5,
-      "SpotLength": 60,
+      "SpotLength": 30,
       "Station": "WCBS-TV",
       "Status": 1
     },
@@ -87,26 +119,90 @@
       "AudienceImpressions": [
         {
           "AudienceId": 31,
-          "Delivery": 315370.626,
-          "Impressions": 589552,
+          "Delivery": 169428.054,
+          "Impressions": 188712,
           "NsiDelivery": null
         },
         {
           "AudienceId": 33,
-          "Delivery": 104941.066,
-          "Impressions": 184800,
+          "Delivery": 61436.462,
+          "Impressions": 53536,
           "NsiDelivery": null
         }
       ],
-      "Cost": null,
-      "DeliveredSpots": 2,
-      "DisplayDaypart": null,
+      "Cost": 1625.0,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": {
+        "_Code": "CUS",
+        "_EndTime": 71999,
+        "_Friday": true,
+        "_Id": 32345,
+        "_Is24Hour": false,
+        "_LastEndTime": 0,
+        "_LastStartTime": 0,
+        "_Monday": true,
+        "_Name": "BRDCST DP362",
+        "_Saturday": false,
+        "_StartTime": 70200,
+        "_Sunday": false,
+        "_Thursday": true,
+        "_Tuesday": true,
+        "_Wednesday": true
+      },
       "Isci": null,
       "Market": "New York",
       "MediaWeekId": null,
-      "OrderedSpots": 8,
+      "OrderedSpots": 4,
       "OutOfSpecSpots": null,
-      "ProgramName": null,
+      "ProgramName": "1ST LOOK",
+      "Rank": 1,
+      "SpecStatus": "Match",
+      "SpotClearance": 0.25,
+      "SpotLength": 30,
+      "Station": "WNBC-TV",
+      "Status": 1
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 145942.572,
+          "Impressions": 400840,
+          "NsiDelivery": null
+        },
+        {
+          "AudienceId": 33,
+          "Delivery": 43504.604,
+          "Impressions": 131264,
+          "NsiDelivery": null
+        }
+      ],
+      "Cost": 585.0,
+      "DeliveredSpots": 1,
+      "DisplayDaypart": {
+        "_Code": "CUS",
+        "_EndTime": 35999,
+        "_Friday": true,
+        "_Id": 6724,
+        "_Is24Hour": false,
+        "_LastEndTime": 0,
+        "_LastStartTime": 0,
+        "_Monday": true,
+        "_Name": "Custom",
+        "_Saturday": false,
+        "_StartTime": 32400,
+        "_Sunday": false,
+        "_Thursday": true,
+        "_Tuesday": true,
+        "_Wednesday": true
+      },
+      "Isci": null,
+      "Market": "New York",
+      "MediaWeekId": null,
+      "OrderedSpots": 4,
+      "OutOfSpecSpots": null,
+      "ProgramName": "TODAY SHW2-NBC",
       "Rank": 1,
       "SpecStatus": "Match",
       "SpotClearance": 0.25,
