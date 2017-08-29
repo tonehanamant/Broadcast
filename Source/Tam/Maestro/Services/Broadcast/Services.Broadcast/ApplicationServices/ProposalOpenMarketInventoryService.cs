@@ -38,8 +38,8 @@ namespace Services.Broadcast.ApplicationServices
             IDaypartCache daypartCache, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
             IProposalProgramsCalculationEngine proposalProgramsCalculationEngine,
             IProposalOpenMarketsTotalsCalculationEngine proposalOpenMarketsTotalsCalculationEngine,
-            IProposalPostingBooksEngine proposalPostingBooksEngine)
-            : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine)
+            IProposalPostingBooksEngine proposalPostingBooksEngine, IImpressionAdjustmentEngine impressionAdjustmentEngine)
+            : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine, impressionAdjustmentEngine)
         {
             _ProposalProgramsCalculationEngine = proposalProgramsCalculationEngine;
             _ProposalOpenMarketsTotalsCalculationEngine = proposalOpenMarketsTotalsCalculationEngine;
@@ -639,7 +639,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private ProposalDetailSingleInventoryTotalsDto _GetProposalDetailTotals(ProposalDetailOpenMarketInventoryDto inventoryDto)
+        private static ProposalDetailSingleInventoryTotalsDto _GetProposalDetailTotals(ProposalDetailInventoryBase inventoryDto)
         {
             return new ProposalDetailSingleInventoryTotalsDto
             {

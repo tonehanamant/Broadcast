@@ -27,10 +27,8 @@ namespace Services.Broadcast.ApplicationServices
         internal static readonly string MissingGuaranteedAudienceErorMessage = "Unable to get proprietary inventory information due to null guaranteed audience";
         private readonly IProposalWeeklyTotalCalculationEngine _ProposalWeeklyTotalCalculationEngine;
 
-        public ProposalProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
-            IDaypartCache daypartCache, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
-            IProposalWeeklyTotalCalculationEngine proposalWeeklyTotalCalculationEngine)
-            : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine)
+        public ProposalProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory, IDaypartCache daypartCache, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine, IProposalWeeklyTotalCalculationEngine proposalWeeklyTotalCalculationEngine, IImpressionAdjustmentEngine impressionAdjustmentEngine)
+            : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine, impressionAdjustmentEngine)
         {
             _ProposalWeeklyTotalCalculationEngine = proposalWeeklyTotalCalculationEngine;
         }
@@ -215,7 +213,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var spotLengthRepository = BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             var spotLengthMappings = spotLengthRepository.GetSpotLengths();
-           
+
             using (var transaction = new TransactionScopeWrapper())
             {
                 var conflicts =

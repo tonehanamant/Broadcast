@@ -513,7 +513,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -539,7 +539,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -575,7 +575,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -619,7 +619,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -645,7 +645,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -680,7 +680,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -724,7 +724,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -749,7 +749,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -785,7 +785,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {

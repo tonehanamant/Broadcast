@@ -15,12 +15,14 @@ namespace Services.Broadcast.ApplicationServices
         protected readonly IDataRepositoryFactory BroadcastDataRepositoryFactory;
         protected readonly IDaypartCache DaypartCache;
         protected readonly IProposalMarketsCalculationEngine ProposalMarketsCalculationEngine;
+        private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
 
-        public BaseProposalInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory, IDaypartCache daypartCache, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine)
+        public BaseProposalInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory, IDaypartCache daypartCache, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine, IImpressionAdjustmentEngine impressionAdjustmentEngine)
         {
             BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             DaypartCache = daypartCache;
             ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
+            _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
         }
 
         protected IEnumerable<StationImpressions> GetImpressions(ProposalDetailInventoryBase proposalDetailInventory, List<int> ratingAudiences, IEnumerable<StationDetailDaypart> impressionRequests)
@@ -38,40 +40,24 @@ namespace Services.Broadcast.ApplicationServices
 
             if (impressions != null)
             {
-                var spotLengthIdsAndCostMultipliers = BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthMultiplierRepository>().GetSpotLengthIdsAndCostMultipliers();
-                var equivalizedMultiplier = proposalDetailInventory.Equivalized == true ? spotLengthIdsAndCostMultipliers[proposalDetailInventory.DetailSpotLengthId] : 1;
+                var ratingAdjustmentMonth = GetRatingAdjustmentMonth(proposalDetailInventory);
 
-                impressions.ForEach(i => i.impressions = equivalizedMultiplier * i.impressions / 1000);
-                ApplyPostTypeConversion(impressions, proposalDetailInventory);
+                impressions.ForEach(i => i.impressions = _ImpressionAdjustmentEngine.AdjustImpression(i.impressions, proposalDetailInventory.Equivalized, proposalDetailInventory.DetailSpotLength, proposalDetailInventory.PostType, ratingAdjustmentMonth, false) / 1000);
+
                 return impressions;
             }
 
             throw new ApplicationException(MissingBooksErrorMessage);
         }
 
-        internal void ApplyPostTypeConversion(List<StationImpressions> impressions, ProposalDetailInventoryBase proposalDetailInventory)
+        internal static int GetRatingAdjustmentMonth(ProposalDetailInventoryBase proposalDetailInventory)
         {
-            int? mediaMonthId = null;
-            if (proposalDetailInventory.PostType == SchedulePostType.NTI)
-            {
-                if (proposalDetailInventory.HutPostingBookId.HasValue && proposalDetailInventory.SharePostingBookId.HasValue)
-                {
-                    mediaMonthId = proposalDetailInventory.HutPostingBookId.Value;
-                }
-                else if (proposalDetailInventory.SinglePostingBookId.HasValue)
-                {
-                    mediaMonthId = proposalDetailInventory.SinglePostingBookId.Value;
-                }
-            }
-
-            if (mediaMonthId.HasValue)
-            {
-                var ratingAdjustmentsDto = BroadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>().GetRatingAdjustment(mediaMonthId.Value);
-                if (ratingAdjustmentsDto != null)
-                {
-                    impressions.ForEach(si => si.impressions = si.impressions * (double)(1 - ratingAdjustmentsDto.NtiAdjustment / 100));
-                }
-            }
+            int ratingAdjustmentMonth;
+            if (proposalDetailInventory.HutPostingBookId.HasValue && proposalDetailInventory.SharePostingBookId.HasValue)
+                ratingAdjustmentMonth = proposalDetailInventory.HutPostingBookId.Value;
+            else
+                ratingAdjustmentMonth = proposalDetailInventory.SinglePostingBookId.Value;
+            return ratingAdjustmentMonth;
         }
 
         protected void _SetProposalInventoryDetailDaypart(ProposalDetailInventoryBase proposalInventory)

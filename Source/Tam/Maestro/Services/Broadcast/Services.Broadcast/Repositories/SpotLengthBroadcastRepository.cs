@@ -14,8 +14,6 @@ namespace Services.Broadcast.Repositories
     public interface ISpotLengthRepository : IDataRepository
     {
         int GetSpotLengthById(int spotLengthId);
-        double GetDeliveryMultiplierBySpotLength(int spotLength);
-        double GetDeliveryMultiplierBySpotLengthId(int spotLengthId);
         List<LookupDto> GetSpotLengths();
         List<LookupDto> GetSpotLengthsByLength(List<int> lengthList);
         Dictionary<int, int> GetSpotLengthAndIds();
@@ -51,20 +49,6 @@ namespace Services.Broadcast.Repositories
                     return single;
                 });
             }
-        }
-
-        public double GetDeliveryMultiplierBySpotLength(int spotLength)
-        {
-            return _InReadUncommitedTransaction(context => (from x in context.spot_lengths
-                                                            where x.length == spotLength
-                                                            select x.delivery_multiplier).Single());
-        }
-
-        public double GetDeliveryMultiplierBySpotLengthId(int spotLengthId)
-        {
-            return _InReadUncommitedTransaction(context => (from x in context.spot_lengths
-                                                            where x.id == spotLengthId
-                                                            select x.delivery_multiplier).Single());
         }
 
         public List<LookupDto> GetSpotLengths()

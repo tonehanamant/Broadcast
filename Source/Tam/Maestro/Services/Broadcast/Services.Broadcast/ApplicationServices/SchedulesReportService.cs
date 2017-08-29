@@ -1,10 +1,10 @@
-﻿using Common.Services.ApplicationServices;
+﻿using System;
+using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.Aggregates;
 using Services.Broadcast.Entities;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,9 +35,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IScheduleAggregateFactoryService _ScheduleFactoryService;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
-        private readonly ISMSClient _SmsClient;
 
-        private Image _LogoImage;
+        private readonly Lazy<Image> _LogoImage;
 
         public SchedulesReportService(
             IScheduleReportDtoFactoryService scheduleReportDtoFactoryService,
@@ -46,15 +45,12 @@ namespace Services.Broadcast.ApplicationServices
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             ISMSClient smsClient)
         {
-
             _ScheduleReportDtoFactoryService = scheduleReportDtoFactoryService;
             _ScheduleFactoryService = scheduleFactoryService;
             _BroadcastDataRepositoryFactory = brodcastDataRepositoryFactory;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
-            _SmsClient = smsClient;
 
-            var logo = _SmsClient.GetLogoImage(CMWImageEnums.CMW_CADENT_LOGO);
-            _LogoImage = Image.FromStream(new MemoryStream(logo.ImageData));
+            _LogoImage = new Lazy<Image>(() => Image.FromStream(new MemoryStream(smsClient.GetLogoImage(CMWImageEnums.CMW_CADENT_LOGO).ImageData)));
         }
 
         public ScheduleReportDto GenerateScheduleReportDto(int scheduleId)
@@ -68,7 +64,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var scheduleReportDto = GenerateScheduleReportDto(scheduleId);
 
-            var excelGenerator = new BvsExcelReportGenerator(scheduleReportDto, _LogoImage);
+            var excelGenerator = new BvsExcelReportGenerator(scheduleReportDto, _LogoImage.Value);
             var result = excelGenerator.GetScheduleReport();
 
             return result;
@@ -80,7 +76,7 @@ namespace Services.Broadcast.ApplicationServices
             var schedulesAggregate = _ScheduleFactoryService.GetScheduleAggregate(scheduleId);
             var scheduleReportDto = _ScheduleReportDtoFactoryService.GenereteScheduleReportData(schedulesAggregate, ScheduleReportType.Client);
 
-            _FindAndCombineRelatedSchedules(scheduleId, schedulesAggregate,scheduleReportDto);
+            _FindAndCombineRelatedSchedules(scheduleId, schedulesAggregate, scheduleReportDto);
 
             return scheduleReportDto;
         }
@@ -88,7 +84,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var scheduleReportDto = GenerateClientReportDto(scheduleId);
 
-            var excelGenerator = new BvsExcelReportGenerator(scheduleReportDto, _LogoImage);
+            var excelGenerator = new BvsExcelReportGenerator(scheduleReportDto, _LogoImage.Value);
             var result = excelGenerator.GetClientReport();
 
             return result;
@@ -103,7 +99,7 @@ namespace Services.Broadcast.ApplicationServices
         public ReportOutput Generate3rdPartyProviderReport(int scheduleId)
         {
             var scheduleReportDto = Generate3rdPartyProviderReportDto(scheduleId);
-            var excelGenerator = new BvsExcelReportGenerator(scheduleReportDto, _LogoImage);
+            var excelGenerator = new BvsExcelReportGenerator(scheduleReportDto, _LogoImage.Value);
             var result = excelGenerator.GetProviderReport();
 
             return result;
@@ -117,7 +113,7 @@ namespace Services.Broadcast.ApplicationServices
             var relatedScheduleIds =
                 _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>()
                     .GetScheduleIdsByIscis(scheduleIscsi).Except(
-                        new List<int>()
+                        new List<int>
                         {
                             scheduleId
                         }).ToList();
@@ -156,22 +152,21 @@ namespace Services.Broadcast.ApplicationServices
             SchedulesAggregate schedulesAggregate,
             List<string> scheduleIscsi)
         {
-            List<ScheduleReportDto> relatedScheduleReportDtoList = new List<ScheduleReportDto>();
+            var relatedScheduleReportDtoList = new List<ScheduleReportDto>();
             //var scehduleAudienceIds = schedulesAggregate.GetScheduleAudiences().Select(sa => sa.AudienceId).ToList();
 
             foreach (var relatedScheduleId in relatedScheduleIds)
             {
                 var relatedScheduleAggregate = _ScheduleFactoryService.GetScheduleAggregate(relatedScheduleId);
-                //Makes sure the related impressions are calculated with the INITIAL schedule's post type
                 relatedScheduleAggregate.PostType = schedulesAggregate.PostType;
                 relatedScheduleAggregate.OverrideScheduleRestrictions(schedulesAggregate.Schedule.markets.ToList(), schedulesAggregate.Schedule.schedule_restriction_dayparts);
                 relatedScheduleAggregate.SetScheduleAudiences(schedulesAggregate.GetScheduleAudiences().ToList());
-                
+
                 relatedScheduleAggregate.ApplyBvsDetailsFilter(
                     scheduleIscsi,
                     schedulesAggregate.StartDate,
                     schedulesAggregate.EndDate,
-                    new List<TrackingStatus>() { TrackingStatus.InSpec });
+                    new List<TrackingStatus> { TrackingStatus.InSpec });
 
                 var relatedScheduleReportDto =
                     _ScheduleReportDtoFactoryService.GenereteScheduleReportData(relatedScheduleAggregate, ScheduleReportType.Client);
@@ -181,13 +176,13 @@ namespace Services.Broadcast.ApplicationServices
             return relatedScheduleReportDtoList;
         }
 
-        private void _CombineDeliveryBySource(ScheduleReportDto scheduleReportDto, List<ScheduleReportDto> relatedScheduleReportDtoList)
+        private static void _CombineDeliveryBySource(ScheduleReportDto scheduleReportDto, List<ScheduleReportDto> relatedScheduleReportDtoList)
         {
             var deliveryBySource = new List<SpotsAndImpressionsDeliveryBySource>();
             var possibleAudienceIds =
                 relatedScheduleReportDtoList.SelectMany(r => r.SpotsAndImpressionsBySource)
                     .SelectMany(r => r.AudienceImpressions.Keys).Distinct().ToList();
-            
+
             // Need to make sure possible audiences are added to related schedules SpotsAndImpressionsBySource audience impressions
             var uniqueAudienceIds =
                 scheduleReportDto.StationSummaryData.ScheduleAudiences.Where(
@@ -197,7 +192,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     relatedScheduleReportDtoList.SelectMany(r => r.SpotsAndImpressionsBySource).ForEach(sis =>
                     {
-                        sis.AudienceImpressions.Add(audienceId, scheduleReportDto.AdvertiserData.ImpressionsAndDelivey.Where(id => id.AudienceId == audienceId).Sum(id => id.DeliveredImpressions) );
+                        sis.AudienceImpressions.Add(audienceId, scheduleReportDto.AdvertiserData.ImpressionsAndDelivey.Where(id => id.AudienceId == audienceId).Sum(id => id.DeliveredImpressions));
                     });
                 });
             // add sources excluding blank sources
@@ -221,12 +216,12 @@ namespace Services.Broadcast.ApplicationServices
             scheduleReportDto.SpotsAndImpressionsBySource = combinedDeliveryBySource;
         }
 
-        private void _CombineRelatedPrePostDataForClientReport(
+        private static void _CombineRelatedPrePostDataForClientReport(
             ScheduleReportDto scheduleReportDto,
-            List<ScheduleReportDto> relatedScheduleReportDtoList)
+            IEnumerable<ScheduleReportDto> relatedScheduleReportDtoList)
         {
             var prePostData = scheduleReportDto.SpotDetailData.ReportData;
-            
+
             //SchedulesAggregate.CombineImpressionsAndDelivery(scheduleReportDto.SpotDetailData.ImpressionsAndDelivery, relatedScheduleReportDtoList.SelectMany(r => r.SpotDetailData.ImpressionsAndDelivery).ToList());
 
             foreach (var relatedScheduleDto in relatedScheduleReportDtoList)
@@ -241,16 +236,16 @@ namespace Services.Broadcast.ApplicationServices
                         .Where(ai => ai.AudienceId == impressionsAndDelivery.AudienceId)
                         .Sum(x => x.Impressions);
 
-                    impressionsAndDelivery.DeliveredImpressions =
-                        prePostData.SelectMany(r => r.AudienceImpressions)
-                            .Where(ai => ai.AudienceId == impressionsAndDelivery.AudienceId)
-                            .Sum(x => x.Delivery);                    
+                impressionsAndDelivery.DeliveredImpressions =
+                    prePostData.SelectMany(r => r.AudienceImpressions)
+                        .Where(ai => ai.AudienceId == impressionsAndDelivery.AudienceId)
+                        .Sum(x => x.Delivery);
             }
         }
 
-        private void _CombineRelatedStationSummaryDataForClientReport(
+        private static void _CombineRelatedStationSummaryDataForClientReport(
             ScheduleReportDto scheduleReportDto,
-            List<ScheduleReportDto> relatedScheduleReportDtoList,
+            IEnumerable<ScheduleReportDto> relatedScheduleReportDtoList,
             List<ScheduleAudience> scheduleAudiences)
         {
             var stationSummaryData = scheduleReportDto.StationSummaryData;
@@ -271,7 +266,7 @@ namespace Services.Broadcast.ApplicationServices
                     g.Status,
                     g.SpecStatus
                 }).Select(
-                    g => g.Key.Status == (int) TrackingStatus.InSpec ? new BvsReportData()
+                    g => g.Key.Status == (int)TrackingStatus.InSpec ? new BvsReportData
                     {
                         Rank = g.Key.Rank,
                         Market = g.Key.Market,
@@ -285,12 +280,12 @@ namespace Services.Broadcast.ApplicationServices
                         SpotClearance =
                                 g.Sum(d => d.OrderedSpots) == 0
                                     ? 0
-                                    : (double) g.Sum(d => d.DeliveredSpots) / (double) g.Sum(d => d.OrderedSpots),
+                                    : (double)g.Sum(d => d.DeliveredSpots) / (double)g.Sum(d => d.OrderedSpots),
                         AudienceImpressions = _AddUpAudienceImpressions(
                             g.ToList(),
                             scheduleAudiences)
 
-                    } : new BvsReportOutOfSpecData()
+                    } : new BvsReportOutOfSpecData
                     {
                         Rank = g.Key.Rank,
                         Market = g.Key.Market,
@@ -304,12 +299,12 @@ namespace Services.Broadcast.ApplicationServices
                         SpotClearance =
                                 g.Sum(d => d.OrderedSpots) == 0
                                     ? 0
-                                    : (double) g.Sum(d => d.DeliveredSpots) / (double) g.Sum(d => d.OrderedSpots),
+                                    : (double)g.Sum(d => d.DeliveredSpots) / (double)g.Sum(d => d.OrderedSpots),
                         OutOfSpecSpots = g.Sum(d => d.OutOfSpecSpots),
                         AudienceImpressions = _AddUpAudienceImpressions(
                             g.ToList(),
                             scheduleAudiences)
-                            
+
 
                     }).ToList();
             stationSummaryData.ReportData = consolidatedData;
@@ -324,16 +319,16 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         private List<WeeklyImpressionAndDeliveryDto> GeneratePseudoWeeklyData(SchedulesAggregate scheduleAggregate)
         {
-            DateTime dateRover = scheduleAggregate.StartDate;
+            var dateRover = scheduleAggregate.StartDate;
             var weeklyData = new List<WeeklyImpressionAndDeliveryDto>();
 
             while (dateRover < scheduleAggregate.EndDate)
             {
-                int media_week_id = _MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDate(dateRover).Id;
+                var mediaWeekID = _MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDate(dateRover).Id;
                 dateRover = dateRover.AddDays(6);
-                var weekData = new WeeklyImpressionAndDeliveryDto()
+                var weekData = new WeeklyImpressionAndDeliveryDto
                 {
-                    Week = _MediaMonthAndWeekAggregateCache.FindMediaWeekLookup(media_week_id)
+                    Week = _MediaMonthAndWeekAggregateCache.FindMediaWeekLookup(mediaWeekID)
                 };
                 weeklyData.Add(weekData);
             }
@@ -368,9 +363,9 @@ namespace Services.Broadcast.ApplicationServices
                                         .ImpressionsAndDelivery
                                         .Select(id => id.AudienceId)
                                         .ToList();
-                foreach (var scheduleAudience in  scheduleAudiences.Where(sa => !iadAudienceIds.Contains(sa.AudienceId) ))
+                foreach (var scheduleAudience in scheduleAudiences.Where(sa => !iadAudienceIds.Contains(sa.AudienceId)))
                 {
-                    weeklyImpressionAndDeliveryDto.ImpressionsAndDelivery.Add(new ImpressionAndDeliveryDto()
+                    weeklyImpressionAndDeliveryDto.ImpressionsAndDelivery.Add(new ImpressionAndDeliveryDto
                     {
                         AudienceId = scheduleAudience.AudienceId,
                         AudienceName = scheduleAudience.AudienceName
@@ -391,30 +386,30 @@ namespace Services.Broadcast.ApplicationServices
                         g.Status,
                         g.SpecStatus
                     }).Select(
-                        g => g.Key.Status == (int) TrackingStatus.InSpec ? 
+                        g => g.Key.Status == (int)TrackingStatus.InSpec ?
                             new BvsReportData
-                        {
-                            Rank = g.Key.Rank,
-                            Market = g.Key.Market,
-                            Station = g.Key.Station,
-                            Affiliate = g.Key.Affiliate,
-                            SpotLength = g.Key.SpotLength,
-                            ProgramName = g.Key.ProgramName,
-                            DisplayDaypart = g.Key.DisplayDaypart,
-                            Status = g.Key.Status,
-                            SpecStatus = g.Key.SpecStatus,
-                            Cost = g.Sum(r => r.Cost),
-                            OrderedSpots = g.Sum(r => r.OrderedSpots),
-                            DeliveredSpots = g.Sum(r => r.DeliveredSpots),
-                            SpotClearance =
+                            {
+                                Rank = g.Key.Rank,
+                                Market = g.Key.Market,
+                                Station = g.Key.Station,
+                                Affiliate = g.Key.Affiliate,
+                                SpotLength = g.Key.SpotLength,
+                                ProgramName = g.Key.ProgramName,
+                                DisplayDaypart = g.Key.DisplayDaypart,
+                                Status = g.Key.Status,
+                                SpecStatus = g.Key.SpecStatus,
+                                Cost = g.Sum(r => r.Cost),
+                                OrderedSpots = g.Sum(r => r.OrderedSpots),
+                                DeliveredSpots = g.Sum(r => r.DeliveredSpots),
+                                SpotClearance =
                                 g.Sum(a => a.OrderedSpots) == 0
                                     ? 0
-                                    : (double) g.Sum(a => a.DeliveredSpots) / (double) g.Sum(a => a.OrderedSpots),
-                            AudienceImpressions = _AddUpAudienceImpressions(
+                                    : (double)g.Sum(a => a.DeliveredSpots) / (double)g.Sum(a => a.OrderedSpots),
+                                AudienceImpressions = _AddUpAudienceImpressions(
                                 g.ToList(),
                                 scheduleAudiences)
-                        } :
-                        new BvsReportOutOfSpecData()
+                            } :
+                        new BvsReportOutOfSpecData
                         {
                             Rank = g.Key.Rank,
                             Market = g.Key.Market,
@@ -432,7 +427,7 @@ namespace Services.Broadcast.ApplicationServices
                             SpotClearance =
                                 g.Sum(a => a.OrderedSpots) == 0
                                     ? 0
-                                    : (double) g.Sum(a => a.DeliveredSpots) / (double) g.Sum(a => a.OrderedSpots),
+                                    : (double)g.Sum(a => a.DeliveredSpots) / (double)g.Sum(a => a.OrderedSpots),
                             AudienceImpressions = _AddUpAudienceImpressions(
                                 g.ToList(),
                                 scheduleAudiences)
@@ -444,7 +439,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private static void _UpdateTotalsPerAudience(
-            List<ImpressionAndDeliveryDto> impressionAndDeliveryList,
+            IEnumerable<ImpressionAndDeliveryDto> impressionAndDeliveryList,
             List<BvsReportData> detailedRecords,
             bool separateOutOfSpec)
         {
@@ -457,11 +452,11 @@ namespace Services.Broadcast.ApplicationServices
                 if (separateOutOfSpec)
                 {
                     impressionsAndDelivery.DeliveredImpressions =
-                        detailedRecords.Where(d => d.Status == (int) TrackingStatus.InSpec).SelectMany(r => r.AudienceImpressions)
+                        detailedRecords.Where(d => d.Status == (int)TrackingStatus.InSpec).SelectMany(r => r.AudienceImpressions)
                             .Where(ai => ai.AudienceId == impressionsAndDelivery.AudienceId)
                             .Sum(x => x.Delivery);
                     impressionsAndDelivery.OutOfSpecDeliveredImpressions =
-                        detailedRecords.Where(d => d.Status != (int) TrackingStatus.InSpec)
+                        detailedRecords.Where(d => d.Status != (int)TrackingStatus.InSpec)
                             .SelectMany(r => r.AudienceImpressions)
                             .Where(ai => ai.AudienceId == impressionsAndDelivery.AudienceId)
                             .Sum(x => x.Delivery);
@@ -471,18 +466,18 @@ namespace Services.Broadcast.ApplicationServices
                     impressionsAndDelivery.DeliveredImpressions =
                         detailedRecords.SelectMany(r => r.AudienceImpressions)
                             .Where(ai => ai.AudienceId == impressionsAndDelivery.AudienceId)
-                            .Sum(x => x.Delivery);                    
+                            .Sum(x => x.Delivery);
                 }
             }
         }
 
-        private void _CombineRelatedAdvertiserDataForClientReport(
+        private static void _CombineRelatedAdvertiserDataForClientReport(
             ScheduleReportDto scheduleReportDto,
-            List<ScheduleReportDto> relatedScheduleReportDtoList,
+            IEnumerable<ScheduleReportDto> relatedScheduleReportDtoList,
             List<ScheduleAudience> scheduleAudiences)
         {
             var advertisersData = scheduleReportDto.AdvertiserData;
-            List<BvsReportData> reportRows = new List<BvsReportData>();
+            var reportRows = new List<BvsReportData>();
             reportRows.AddRange(advertisersData.ReportData);
             foreach (var relatedScheduleReportDto in relatedScheduleReportDtoList)
             {
@@ -512,7 +507,7 @@ namespace Services.Broadcast.ApplicationServices
                         SpotLength = g.Key.SpotLength,
                         Cost = g.Sum(a => a.Cost),
                         OrderedSpots = g.Sum(a => a.OrderedSpots),
-                        SpotClearance = g.Sum(a => a.OrderedSpots) == 0 ? 0 : (double) g.Sum(a => a.DeliveredSpots) / (double) g.Sum(a => a.OrderedSpots),
+                        SpotClearance = g.Sum(a => a.OrderedSpots) == 0 ? 0 : (double)g.Sum(a => a.DeliveredSpots) / (double)g.Sum(a => a.OrderedSpots),
                         AudienceImpressions = _AddUpAudienceImpressions(
                             g.ToList(),
                             scheduleAudiences)
@@ -521,12 +516,12 @@ namespace Services.Broadcast.ApplicationServices
             advertisersData.ReportData = combinedRows;
         }
 
-        private List<AudienceImpressionsAndDelivery> _AddUpAudienceImpressions(
+        private static List<AudienceImpressionsAndDelivery> _AddUpAudienceImpressions(
             List<BvsReportData> rows,
-            List<ScheduleAudience> scheduleAudiences)
+            IEnumerable<ScheduleAudience> scheduleAudiences)
         {
             var result = scheduleAudiences.Select(
-                a => new AudienceImpressionsAndDelivery()
+                a => new AudienceImpressionsAndDelivery
                 {
                     AudienceId = a.AudienceId,
                     Impressions =

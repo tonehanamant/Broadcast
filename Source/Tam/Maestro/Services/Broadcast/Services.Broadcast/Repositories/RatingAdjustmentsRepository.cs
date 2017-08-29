@@ -13,7 +13,6 @@ namespace Services.Broadcast.Repositories
     {
         void SaveRatingAdjustments(List<RatingAdjustmentsDto> ratingAdjustments);
         List<RatingAdjustmentsDto> GetRatingAdjustments();
-        RatingAdjustmentsDto GetRatingAdjustment(int mediaMonthId);
     }
 
     public class RatingAdjustmentsRepository : BroadcastRepositoryBase, IRatingAdjustmentsRepository
@@ -56,23 +55,6 @@ namespace Services.Broadcast.Repositories
                     }).ToList();
 
                     return ratingAdjustments;
-                });
-        }
-
-        public RatingAdjustmentsDto GetRatingAdjustment(int mediaMonthId)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    var r = context.rating_adjustments.Find(mediaMonthId);
-                    if (r == null)
-                        return null;
-                    return new RatingAdjustmentsDto
-                    {
-                        MediaMonthId = r.media_month_id,
-                        AnnualAdjustment = r.annual_adjustment,
-                        NtiAdjustment = r.nti_adjustment
-                    };
                 });
         }
     }

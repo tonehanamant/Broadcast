@@ -30,7 +30,7 @@ namespace Services.Broadcast.ApplicationServices
                     if (_instance == null)
                     {
                         _instance = new UnityContainer();
-                        
+
                         _instance.RegisterInstance<ISMSClient>(SMSClient.Handler);
                         _instance.RegisterType<IServiceSecurityContextWrapper, ServiceSecurityContextWrapper>();
                         _instance.RegisterType<ILockingManagerApplicationService, LockingManagerApplicationService>();
@@ -92,7 +92,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostService, PostService>();
             unityContainer.RegisterType<IInventoryCrunchService, InventoryCrunchService>();
             unityContainer.RegisterType<ISpotCostCalculationEngine, SpotCostCalculationEngine>();
-            unityContainer.RegisterType<IPostingBooksService, PostingBooksService>();
+            unityContainer.RegisterType<IImpressionAdjustmentEngine, ImpressionAdjustmentEngine>();
+			unityContainer.RegisterType<IPostingBooksService, PostingBooksService>();
             unityContainer.RegisterType<IProposalDetailHeaderTotalsCalculationEngine, ProposalDetailHeaderTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalDetailWeekTotalsCalculationEngine, ProposalDetailWeekTotalsCalculationEngine>();
 

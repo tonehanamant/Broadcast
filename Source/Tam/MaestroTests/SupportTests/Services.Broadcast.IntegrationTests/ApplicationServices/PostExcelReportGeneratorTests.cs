@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Services.Broadcast.BusinessEngines;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -44,22 +45,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 files.post_file_details.Add(postUploadFileDetails2);
 
 
-                var x = new PostExcelReportGenerator(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, _RatingForecastService);
+                var x = new PostExcelReportGenerator(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>(), _RatingForecastService);
                 var report = x.Generate(files.Convert());
                 File.WriteAllBytes(report.Filename, report.Stream.GetBuffer());
                 Assert.IsNotNull(report.Stream);
             }
-        }
-
-        [TestCase(false, 0, 100, 100)]
-        [TestCase(true, 15, 100, 50)]
-        [TestCase(true, 30, 100, 100)]
-        [TestCase(true, 60, 100, 200)]
-        [TestCase(true, 90, 100, 300)]
-        [TestCase(true, 120, 100, 400)]
-        public void EquivilizationWorks(bool isEquivalized, int spotLength, double impressions, double expected)
-        {
-            Assert.That(PostExcelReportGenerator.EquivalizeImpressions(isEquivalized, spotLength, impressions), Is.EqualTo(expected));
         }
 
         [Test]
@@ -81,12 +71,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 postUploadFileDetails.post_file_detail_impressions.Add(new post_file_detail_impressions { demo = 34, impression = 12345 });
                 files.post_file_details.Add(postUploadFileDetails);
 
-                var x = new PostExcelReportGenerator(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, _RatingForecastService);
+                var x = new PostExcelReportGenerator(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>(), _RatingForecastService);
                 var report = x.GenerateExcelPackage(files.Convert());
                 var column = report.Workbook.Worksheets.First().Dimension.Columns;
                 var row = report.Workbook.Worksheets.First().Dimension.Rows;
 
-                for (int i = 2; i <= row; i++)
+                for (var i = 2; i <= row; i++)
                 {
                     var cell = report.Workbook.Worksheets.First().Cells[i, column];
                     if (cell.Value != null)

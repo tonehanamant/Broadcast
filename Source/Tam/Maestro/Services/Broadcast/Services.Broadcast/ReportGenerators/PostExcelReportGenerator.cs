@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Services.Broadcast.BusinessEngines;
 
 namespace Services.Broadcast.ReportGenerators
 {
     public class PostExcelReportGenerator : IReportGenerator<PostFile>
     {
-        static readonly HashSet<string> ExcelFileHeaders = new HashSet<string>
+        private static readonly HashSet<string> _ExcelFileHeaders = new HashSet<string>
         {
             RANK,
             MARKET,
@@ -39,34 +40,36 @@ namespace Services.Broadcast.ReportGenerators
             PLAYBACKTYPE
         };
 
-        const string MARKET = "Market";
-        const string STATION = "Station";
-        const string RANK = "Rank";
-        const string SPOT = "Spot";
-        const string DETECTEDVIA = "Detected Via";
-        const string ESTIMATE = "Estimate";
-        const string INVENTORYOUTOFSPECREASON = "Out of Spec Reason";
-        const string INVENTORYSOURCEDAYPART = "Daypart";
-        const string INVENTORYSOURCE = "Inventory Source";
-        const string ADVERTISER = "Advertiser";
-        const string CLIENTISCI = "Client ISCI";
-        const string HOUSEISCI = "House ISCI";
-        const string SPOTLENGTH = "Length";
-        const string PROGRAMNAME = "Program Name";
-        const string TIMEAIRED = "Time Aired";
-        const string DATE = "Date";
-        const string DAY = "Day";
-        const string WEEKSTART = "Weekstart";
-        const string AFFILIATE = "Affiliate";
-        const string POSTINGBOOK = "Posting Book";
-        const string PLAYBACKTYPE = "Playback type";
+        private const string MARKET = "Market";
+        private const string STATION = "Station";
+        private const string RANK = "Rank";
+        private const string SPOT = "Spot";
+        private const string DETECTEDVIA = "Detected Via";
+        private const string ESTIMATE = "Estimate";
+        private const string INVENTORYOUTOFSPECREASON = "Out of Spec Reason";
+        private const string INVENTORYSOURCEDAYPART = "Daypart";
+        private const string INVENTORYSOURCE = "Inventory Source";
+        private const string ADVERTISER = "Advertiser";
+        private const string CLIENTISCI = "Client ISCI";
+        private const string HOUSEISCI = "House ISCI";
+        private const string SPOTLENGTH = "Length";
+        private const string PROGRAMNAME = "Program Name";
+        private const string TIMEAIRED = "Time Aired";
+        private const string DATE = "Date";
+        private const string DAY = "Day";
+        private const string WEEKSTART = "Weekstart";
+        private const string AFFILIATE = "Affiliate";
+        private const string POSTINGBOOK = "Posting Book";
+        private const string PLAYBACKTYPE = "Playback type";
 
         private readonly IDataRepositoryFactory _Factory;
+        private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
         private readonly IRatingForecastService _RatingForecastService;
 
-        public PostExcelReportGenerator(IDataRepositoryFactory factory, IRatingForecastService ratingForecastService)
+        public PostExcelReportGenerator(IDataRepositoryFactory factory, IImpressionAdjustmentEngine engine, IRatingForecastService ratingForecastService)
         {
             _Factory = factory;
+            _ImpressionAdjustmentEngine = engine;
             _RatingForecastService = ratingForecastService;
         }
 
@@ -129,7 +132,7 @@ namespace Services.Broadcast.ReportGenerators
                 var imp = row.Impressions.ToDictionary(i => i.Demo);
                 foreach (var demo in file.Demos)
                 {
-                    var value = imp.ContainsKey(demo) ? EquivalizeImpressions(file.Equivalized, row.SpotLength, imp[demo].Impression)
+                    var value = imp.ContainsKey(demo) ? _ImpressionAdjustmentEngine.AdjustImpression(imp[demo].Impression, file.Equivalized, row.SpotLength)
                                                       : 0;
                     ws.Cells[rowOffset, columnOffset].Style.Numberformat.Format = "#,#";
                     ws.Cells[rowOffset, columnOffset].Value = value;
@@ -152,7 +155,7 @@ namespace Services.Broadcast.ReportGenerators
         private void _BuildCommonHeader(ExcelWorksheet ws, int rowOffset, ref int columnOffset, PostFile scheduleReportDto)
         {
             // header
-            foreach (var header in ExcelFileHeaders)
+            foreach (var header in _ExcelFileHeaders)
             {
                 ws.Cells[rowOffset, columnOffset++].Value = header;
             }
@@ -178,33 +181,10 @@ namespace Services.Broadcast.ReportGenerators
                 .First();
         }
 
-        private string _GetPlaybackTypeDescription(ProposalEnums.ProposalPlaybackType playbackType)
+        private static string _GetPlaybackTypeDescription(ProposalEnums.ProposalPlaybackType playbackType)
         {
             var playbackTypes = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalPlaybackType>();
             return playbackTypes.Where(p => p.Id == (int) playbackType).Select(p => p.Display).First();
-        }
-
-        internal static double EquivalizeImpressions(bool isEquivalized, int spotLength, double impressions)
-        {
-            if (!isEquivalized)
-                return impressions;
-
-            switch (spotLength)
-            {
-                case 15:
-                    return impressions / 2;
-                case 30:
-                    return impressions;
-                case 60:
-                    return impressions * 2;
-                case 90:
-                    return impressions * 3;
-                case 120:
-                    return impressions * 4;
-                default:
-                    return impressions;
-
-            }
         }
     }
 }
