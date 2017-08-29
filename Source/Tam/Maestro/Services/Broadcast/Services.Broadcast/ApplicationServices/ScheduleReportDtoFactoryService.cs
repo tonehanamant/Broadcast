@@ -681,7 +681,6 @@ namespace Services.Broadcast.ApplicationServices
                 };
                 weeklyData.ReportDataByWeek.Add(weeklyDto);
 
-                    
                 //In Spec
                 foreach (var detail in coreDataList)
                 {
@@ -694,6 +693,7 @@ namespace Services.Broadcast.ApplicationServices
                     if (orderedSpots == 0 && deliveredSpots == 0)
                         continue;
 
+                    var status = deliveredSpots > 0 ? "Match" : string.Empty;
                     var bvsReportData = new BvsReportData
                     {
                         Rank = detail.Rank,
@@ -709,7 +709,7 @@ namespace Services.Broadcast.ApplicationServices
                         SpotClearance = (double) deliveredSpots/(double) orderedSpots,
                         Status = 1, //in-spec
                         //@todo Fill this out
-                        SpecStatus = "Match",
+                        SpecStatus = status,
                     };
 
                     foreach (var audience in scheduleAudiences)
