@@ -31,10 +31,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Criteria = new OpenMarketCriterion
                 {
                     CpmCriteria = new List<CpmCriteria>
-                            {
-                                new CpmCriteria {MinMax = minMax},
-                                new CpmCriteria {MinMax = minMax}
-                            }
+                    {
+                        new CpmCriteria {MinMax = minMax},
+                        new CpmCriteria {MinMax = minMax}
+                    }
                 }
             };
             Assert.That(() => _ProposalOpenMarketInventoryService.RefinePrograms(request), Throws.Exception.With.Message.EqualTo("Only 1 Min CPM and 1 Max CPM criteria allowed."));
@@ -56,7 +56,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
 
-                var jsonSettings = new JsonSerializerSettings()
+                var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
@@ -68,7 +68,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CanLoadOpenMarketProposalInventory_WithCpmRefinements()
+        public void CanLoadOpenMarketProposalInventory_With_MinCpmRefinements()
         {
             using (new TransactionScopeWrapper())
             {
@@ -81,9 +81,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Criteria = new OpenMarketCriterion
                     {
                         CpmCriteria = new List<CpmCriteria>
-                {
-                    new CpmCriteria { MinMax = MinMaxEnum.Min, Value = 999 }
-                }
+                        {
+                            new CpmCriteria { MinMax = MinMaxEnum.Min, Value = 1 }
+                        }
                     }
                 };
                 var proposalInventory = _ProposalOpenMarketInventoryService.RefinePrograms(request);
@@ -94,7 +94,45 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(CpmCriteria), "Id");
 
-                var jsonSettings = new JsonSerializerSettings()
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(proposalInventory, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketProposalInventory_With_MaxCpmRefinements()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                proposalRepository.UpdateProposalDetailSweepsBooks(7, 413, 416);
+                var request = new OpenMarketRefineProgramsRequest
+                {
+                    IgnoreExistingAllocation = true,
+                    ProposalDetailId = 7,
+                    Criteria = new OpenMarketCriterion
+                    {
+                        CpmCriteria = new List<CpmCriteria>
+                        {
+                            new CpmCriteria { MinMax = MinMaxEnum.Max, Value = 1 }
+                        }
+                    }
+                };
+                var proposalInventory = _ProposalOpenMarketInventoryService.RefinePrograms(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
+                jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
+                jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
+                jsonResolver.Ignore(typeof(CpmCriteria), "Id");
+
+                var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
@@ -132,7 +170,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
 
-                var jsonSettings = new JsonSerializerSettings()
+                var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
@@ -243,7 +281,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
 
-                var jsonSettings = new JsonSerializerSettings()
+                var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
@@ -266,7 +304,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
 
-                var jsonSettings = new JsonSerializerSettings()
+                var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
@@ -353,7 +391,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketInventory(proposalInventory);
                 var program =
                     filteredProposal.Weeks.SelectMany(
-                        a => a.Markets.SelectMany(b => b.Stations.SelectMany(c => c.Programs.Select(d => d))))
+                            a => a.Markets.SelectMany(b => b.Stations.SelectMany(c => c.Programs.Select(d => d))))
                         .FirstOrDefault();
 
                 program.Spots = 500;
@@ -369,7 +407,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "Criteria");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "DisplayFilter");
 
-                var jsonSettings = new JsonSerializerSettings()
+                var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
@@ -390,9 +428,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProposalDetailId = 7,
                     Criteria = new OpenMarketCriterion
                     {
-                        ProgramNameSearchCriteria = new List<ProgramCriteria>()
+                        ProgramNameSearchCriteria = new List<ProgramCriteria>
                         {
-                            new ProgramCriteria()
+                            new ProgramCriteria
                             {
                                 Contain = ContainTypeEnum.Exclude,
                                 ProgramName = "Open Market Program Too"
@@ -417,9 +455,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IgnoreExistingAllocation = true,
                     Criteria = new OpenMarketCriterion
                     {
-                        ProgramNameSearchCriteria = new List<ProgramCriteria>()
+                        ProgramNameSearchCriteria = new List<ProgramCriteria>
                         {
-                            new ProgramCriteria()
+                            new ProgramCriteria
                             {
                                 Contain = ContainTypeEnum.Exclude,
                                 ProgramName = "Open Market Program Too"
@@ -446,10 +484,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IgnoreExistingAllocation = true,
                     Criteria = new OpenMarketCriterion
                     {
-                        ProgramNameSearchCriteria = new List<ProgramCriteria>()
-                            {
-                                new ProgramCriteria(){Contain = ContainTypeEnum.Exclude, ProgramName = proposalInventory.RefineFilterPrograms.First()}
-                            }
+                        ProgramNameSearchCriteria = new List<ProgramCriteria>
+                        {
+                            new ProgramCriteria {Contain = ContainTypeEnum.Exclude, ProgramName = proposalInventory.RefineFilterPrograms.First()}
+                        }
                     }
                 };
 
@@ -778,8 +816,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void ShouldRemoveProgram_Cpm_Min()
         {
-            var marketCriterion = new OpenMarketCriterion();
-            marketCriterion.CpmCriteria = new List<CpmCriteria>
+            var cpmCriteria = new List<CpmCriteria>
             {
                 new CpmCriteria
                 {
@@ -788,14 +825,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
             var program = new ProposalProgramDto { TargetCpm = 3 };
-            Assert.IsTrue(ProposalOpenMarketInventoryService.ShouldRemoveProgram(program, marketCriterion));
+            Assert.IsTrue(ProposalOpenMarketInventoryService.FilterByCpmCriteria(program, cpmCriteria));
         }
 
         [Test]
         public void ShouldRemoveProgram_Cpm_Max()
         {
-            var marketCriterion = new OpenMarketCriterion();
-            marketCriterion.CpmCriteria = new List<CpmCriteria>
+            var cpmCriteria = new List<CpmCriteria>
             {
                 new CpmCriteria
                 {
@@ -803,8 +839,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Value = 5
                 }
             };
+
             var program = new ProposalProgramDto { TargetCpm = 6 };
-            Assert.IsTrue(ProposalOpenMarketInventoryService.ShouldRemoveProgram(program, marketCriterion));
+            Assert.IsTrue(ProposalOpenMarketInventoryService.FilterByCpmCriteria(program, cpmCriteria));
         }
 
         [Test]
@@ -816,7 +853,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new GenreCriteria {Contain =ContainTypeEnum.Include, GenreId = 5}
             };
             var program = new ProposalProgramDto { Genres = new List<LookupDto> { new LookupDto { Id = 6 } } };
-            Assert.True(ProposalOpenMarketInventoryService.ShouldRemoveProgram(program, marketCriterion));
+            Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
         [Test]
@@ -828,7 +865,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new GenreCriteria {Contain =ContainTypeEnum.Include, GenreId = 5}
             };
             var program = new ProposalProgramDto { Genres = new List<LookupDto> { new LookupDto { Id = 5 } } };
-            Assert.False(ProposalOpenMarketInventoryService.ShouldRemoveProgram(program, marketCriterion));
+            Assert.False(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
         [Test]
@@ -840,7 +877,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new GenreCriteria {Contain =ContainTypeEnum.Exclude, GenreId = 5}
             };
             var program = new ProposalProgramDto { Genres = new List<LookupDto> { new LookupDto { Id = 5 } } };
-            Assert.True(ProposalOpenMarketInventoryService.ShouldRemoveProgram(program, marketCriterion));
+            Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
         [Test]
@@ -852,7 +889,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new GenreCriteria {Contain =ContainTypeEnum.Exclude, GenreId = 5}
             };
             var program = new ProposalProgramDto { Genres = new List<LookupDto> { new LookupDto { Id = 6 } } };
-            Assert.False(ProposalOpenMarketInventoryService.ShouldRemoveProgram(program, marketCriterion));
+            Assert.False(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
         [Test]
@@ -864,7 +901,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new ProgramCriteria {Contain = ContainTypeEnum.Include, ProgramName = "ABC"}
             };
             var program = new ProposalProgramDto { ProgramName = "ABC" };
-            Assert.False(ProposalOpenMarketInventoryService.ShouldRemoveProgram(program, marketCriterion));
+            Assert.False(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
         [Test]
@@ -876,7 +913,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new ProgramCriteria {Contain = ContainTypeEnum.Include, ProgramName = "ABC"}
             };
             var program = new ProposalProgramDto { ProgramName = "AB123C123" };
-            Assert.True(ProposalOpenMarketInventoryService.ShouldRemoveProgram(program, marketCriterion));
+            Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
         [Test]
@@ -888,7 +925,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new ProgramCriteria {Contain = ContainTypeEnum.Exclude, ProgramName = "ABC"}
             };
             var program = new ProposalProgramDto { ProgramName = "ABC" };
-            Assert.True(ProposalOpenMarketInventoryService.ShouldRemoveProgram(program, marketCriterion));
+            Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
         [Test]
@@ -900,7 +937,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new ProgramCriteria {Contain = ContainTypeEnum.Exclude, ProgramName = "ABC"}
             };
             var program = new ProposalProgramDto { ProgramName = "AB123C123" };
-            Assert.False(ProposalOpenMarketInventoryService.ShouldRemoveProgram(program, marketCriterion));
+            Assert.False(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
         [Ignore("Cannot execute because it waits for an exclusive lock forever")]
@@ -920,30 +957,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
              */
             using (var transaction = new TransactionScopeWrapper()) //do not preserve test changes
             {
-                var request = new OpenMarketAllocationSaveRequest()
+                var request = new OpenMarketAllocationSaveRequest
                 {
                     ProposalVersionDetailId = 7,
                     Username = "test-user",
-                    Weeks = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek>()
+                    Weeks = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek>
                     {
-                        new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek()
+                        new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek
                         {
                             MediaWeekId = 649,
-                            Programs = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram>()
+                            Programs = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram>
                             {
-                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram()
+                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
                                 {
                                     Impressions = 1000,
                                     ProgramId = 2000,
                                     Spots = 1
                                 },
-                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram()
+                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
                                 {
                                     Impressions = 2000,
                                     ProgramId = 2001,
                                     Spots = 0
                                 },
-                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram()
+                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
                                 {
                                     Impressions = 1234,
                                     ProgramId = 2004,

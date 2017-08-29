@@ -161,8 +161,8 @@ namespace Services.Broadcast.ApplicationServices
 
             // filter market
             var markets = dto.Markets.Where(
-                m =>
-                    filter.Markets == null || !filter.Markets.Any() || filter.Markets.Any(a => a == m.MarketId)
+                    m =>
+                        filter.Markets == null || !filter.Markets.Any() || filter.Markets.Any(a => a == m.MarketId)
                 )
                 .Select(m => new ProposalInventoryMarketDto
                 {
@@ -173,9 +173,9 @@ namespace Services.Broadcast.ApplicationServices
                     Stations =
                         // filter affiliation
                         m.Stations.Where(
-                            s =>
-                                filter.Affiliations == null || !filter.Affiliations.Any() || filter.Affiliations.Any(
-                                    a => s.Affiliation.ToLower().Contains(a.ToLower())))
+                                s =>
+                                    filter.Affiliations == null || !filter.Affiliations.Any() || filter.Affiliations.Any(
+                                        a => s.Affiliation.ToLower().Contains(a.ToLower())))
                             .Select(s1 => new ProposalInventoryMarketDto.InventoryMarketStation
                             {
                                 StationCode = s1.StationCode,
@@ -185,12 +185,12 @@ namespace Services.Broadcast.ApplicationServices
                                 Programs =
                                     // filter day parts - needs to intersect
                                     s1.Programs.Where(
-                                        a =>
-                                            filter.DayParts == null || !filter.DayParts.Any() ||
-                                            filter.DayParts.Any(
-                                                d =>
-                                                    DisplayDaypart.Intersects(DaypartDto.ConvertDaypartDto(d),
-                                                        DaypartCache.GetDisplayDaypart(a.Daypart.Id))))
+                                            a =>
+                                                filter.DayParts == null || !filter.DayParts.Any() ||
+                                                filter.DayParts.Any(
+                                                    d =>
+                                                        DisplayDaypart.Intersects(DaypartDto.ConvertDaypartDto(d),
+                                                            DaypartCache.GetDisplayDaypart(a.Daypart.Id))))
                                         // filter program names
                                         .Where(
                                             p =>
@@ -210,12 +210,12 @@ namespace Services.Broadcast.ApplicationServices
                                                 !filter.SpotFilter.HasValue || filter.SpotFilter ==
                                                 ProposalOpenMarketFilter.OpenMarketSpotFilter.AllPrograms ||
                                                 filter.SpotFilter ==
-                                                 ProposalOpenMarketFilter.OpenMarketSpotFilter.ProgramWithSpots &&
-                                                 listOfPrograms.Where(pa => pa.ProgramId == ap.ProgramId)
+                                                ProposalOpenMarketFilter.OpenMarketSpotFilter.ProgramWithSpots &&
+                                                listOfPrograms.Where(pa => pa.ProgramId == ap.ProgramId)
                                                     .Sum(s => s.Spots) > 0 ||
                                                 filter.SpotFilter ==
-                                                 ProposalOpenMarketFilter.OpenMarketSpotFilter.ProgramWithoutSpots &&
-                                                 listOfPrograms.Where(pa => pa.ProgramId == ap.ProgramId)
+                                                ProposalOpenMarketFilter.OpenMarketSpotFilter.ProgramWithoutSpots &&
+                                                listOfPrograms.Where(pa => pa.ProgramId == ap.ProgramId)
                                                     .Sum(s => s.Spots) == 0)
                                         .Select(pro => new ProposalInventoryMarketDto.InventoryMarketStationProgram
                                         {
@@ -243,7 +243,7 @@ namespace Services.Broadcast.ApplicationServices
                 .ToDictionary(m => m.Key,
                     n =>
                         n.SelectMany(
-                            y => y.Markets.SelectMany(t => t.Stations.SelectMany(o => o.Programs)))
+                                y => y.Markets.SelectMany(t => t.Stations.SelectMany(o => o.Programs)))
                             .ToList());
 
             foreach (var week in dto.Weeks)
@@ -312,7 +312,7 @@ namespace Services.Broadcast.ApplicationServices
                 if (!DaypartCache.GetDisplayDaypart(p.DayPartId).Intersects(proposalDetailDaypart))
                     return true;
 
-                if (ShouldRemoveProgram(p, dto.Criteria))
+                if (FilterByGenreAndProgramNameCriteria(p, dto.Criteria))
                 {
                     if (p.FlightWeeks.Any(fw => fw.Allocations.Any(a => a.Spots > 0)))
                     {
@@ -345,7 +345,7 @@ namespace Services.Broadcast.ApplicationServices
             _ApplyProgramImpressions(programs, dto);
             _ProposalProgramsCalculationEngine.ApplyBlendedCpmForEachProgram(programs, dto.DetailSpotLength);
 
-            programs.RemoveAll(p => ShouldRemoveProgram(p, dto.Criteria));
+            programs.RemoveAll(p => FilterByCpmCriteria(p, dto.Criteria.CpmCriteria));
 
             var inventoryMarkets = _GroupProgramsByMarketAndStation(programs);
 
@@ -358,9 +358,9 @@ namespace Services.Broadcast.ApplicationServices
             _ApplyDefaultSorting(dto);
         }
 
-        internal static bool ShouldRemoveProgram(ProposalProgramDto program, OpenMarketCriterion marketCriterion)
+        internal static bool FilterByCpmCriteria(ProposalProgramDto program, List<CpmCriteria> cpmCriteria)
         {
-            foreach (var criteria in marketCriterion.CpmCriteria)
+            foreach (var criteria in cpmCriteria)
             {
                 if (criteria.MinMax == MinMaxEnum.Min && program.TargetCpm < criteria.Value)
                 {
@@ -371,8 +371,14 @@ namespace Services.Broadcast.ApplicationServices
                     return true;
                 }
             }
+
+            return false;
+        }
+
+        internal static bool FilterByGenreAndProgramNameCriteria(ProposalProgramDto program, OpenMarketCriterion marketCriterion)
+        {
             foreach (var criteria in marketCriterion.GenreSearchCriteria.GroupBy(c => c.Contain)
-                                                                        .Select(g => new { Type = g.Key, GenreIds = g.Select(gb => gb.GenreId) }))
+                .Select(g => new { Type = g.Key, GenreIds = g.Select(gb => gb.GenreId) }))
             {
                 var includeGenre = criteria.GenreIds.Intersect(program.Genres.Select(g => g.Id)).Any();
                 if (criteria.Type == ContainTypeEnum.Include && !includeGenre)
@@ -385,7 +391,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
             foreach (var criteria in marketCriterion.ProgramNameSearchCriteria.GroupBy(c => c.Contain)
-                                                                              .Select(g => new { Type = g.Key, ProgramNames = g.Select(gb => gb.ProgramName) }))
+                .Select(g => new { Type = g.Key, ProgramNames = g.Select(gb => gb.ProgramName) }))
             {
                 var includeProgramName = criteria.ProgramNames.Any(c => string.Equals(program.ProgramName, c, StringComparison.CurrentCultureIgnoreCase));
                 if (criteria.Type == ContainTypeEnum.Include && !includeProgramName)
@@ -623,7 +629,7 @@ namespace Services.Broadcast.ApplicationServices
                     .SaveProposalDetailOpenMarketInventoryTotals(inventoryDto.DetailId, proposalDetailTotals);
 
                 BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
-                        .SaveProposalDetailOpenMarketWeekInventoryTotals(inventoryDto);
+                    .SaveProposalDetailOpenMarketWeekInventoryTotals(inventoryDto);
 
                 _CalculateOpenMarketTotals(inventoryDto);
 
@@ -725,15 +731,15 @@ namespace Services.Broadcast.ApplicationServices
 
             var allocations = (from a in existingAllocations
                                join f in programFlightsWithZeroSpots
-                                   on new
-                                   {
-                                       a.MediaWeekId,
-                                       a.StationProgramId
-                                   } equals new
-                                   {
-                                       MediaWeekId = f.Item1,
-                                       StationProgramId = f.Item2
-                                   }
+                               on new
+                               {
+                                   a.MediaWeekId,
+                                   a.StationProgramId
+                               } equals new
+                               {
+                                   MediaWeekId = f.Item1,
+                                   StationProgramId = f.Item2
+                               }
                                select a).ToList();
 
             return allocations;

@@ -2,7 +2,7 @@
   "Criteria": {
     "CpmCriteria": [
       {
-        "MinMax": 1,
+        "MinMax": 2,
         "Value": 1.0
       }
     ],
@@ -10,10 +10,10 @@
     "ProgramNameSearchCriteria": []
   },
   "DetailBudgetMarginAchieved": false,
-  "DetailBudgetPercent": 96.0,
+  "DetailBudgetPercent": 0.0,
   "DetailCpm": 0.05,
   "DetailCpmMarginAchieved": false,
-  "DetailCpmPercent": 19160.0,
+  "DetailCpmPercent": 0.0,
   "DetailDaypart": {
     "endTime": 36000,
     "fri": true,
@@ -39,18 +39,18 @@
   ],
   "DetailId": 7,
   "DetailImpressionsMarginAchieved": false,
-  "DetailImpressionsPercent": 0.42,
+  "DetailImpressionsPercent": 0.0,
   "DetailSpotLength": 30,
   "DetailSpotLengthId": 1,
   "DetailTargetBudget": 50.0000,
   "DetailTargetImpressions": 1000.0,
-  "DetailTotalBudget": 40.00,
-  "DetailTotalCpm": 9.58,
-  "DetailTotalImpressions": 4.176,
+  "DetailTotalBudget": 0.00,
+  "DetailTotalCpm": 0.0,
+  "DetailTotalImpressions": 0.0,
   "DisplayFilter": {
     "Affiliations": [
-      "IND",
-      "PBS"
+      "ABC",
+      "COZ"
     ],
     "Genres": [],
     "Markets": [
@@ -59,14 +59,13 @@
         "Id": 101
       },
       {
-        "Display": "Washington, DC (Hagrstwn)",
-        "Id": 111
+        "Display": "Philadelphia",
+        "Id": 104
       }
     ],
     "ProgramNames": [
-      "Open Market Program 2",
-      "Open Market Program 4",
-      "Open Market Program Too"
+      "Open Market Program",
+      "Open Market Program 3"
     ]
   },
   "Equivalized": null,
@@ -88,9 +87,9 @@
       "MarketSubscribers": 7368320.0,
       "Stations": [
         {
-          "Affiliation": "IND",
-          "CallLetters": "WNYE-TV 25.1",
-          "LegacyCallLetters": "WNYE",
+          "Affiliation": "COZ",
+          "CallLetters": "WNBC 4.2",
+          "LegacyCallLetters": "ENBC",
           "Programs": [
             {
               "Daypart": {
@@ -99,42 +98,37 @@
               },
               "FlightWeeks": [
                 {
-                  "Allocations": [
-                    {
-                      "MediaWeekId": 649,
-                      "Spots": 2
-                    }
-                  ],
+                  "Allocations": [],
                   "EndDate": "0001-01-01T00:00:00",
                   "IsHiatus": false,
                   "MediaWeekId": 649,
-                  "Rate": 20.0,
+                  "Rate": 10.0,
                   "StartDate": "0001-01-01T00:00:00"
                 }
               ],
-              "ProgramId": 2001,
-              "ProgramName": "Open Market Program Too",
+              "ProgramId": 2000,
+              "ProgramName": "Open Market Program",
               "Spots": 0,
-              "StationCode": 5923,
-              "TargetCpm": 9.576856196555384550260863282,
+              "StationCode": 4544,
+              "TargetCpm": 0.1887653124088105008305190293,
               "TargetImpressions": 0.0,
-              "UnitImpressions": 2.088368
+              "UnitImpressions": 52.97583477
             }
           ],
-          "StationCode": 5923
+          "StationCode": 4544
         }
       ]
     },
     {
-      "MarketId": 111,
-      "MarketName": "Washington, DC (Hagrstwn)",
-      "MarketRank": 7,
-      "MarketSubscribers": 2443640.0,
+      "MarketId": 104,
+      "MarketName": "Philadelphia",
+      "MarketRank": 4,
+      "MarketSubscribers": 2917920.0,
       "Stations": [
         {
-          "Affiliation": "PBS",
-          "CallLetters": "WHUT-TV 32.1",
-          "LegacyCallLetters": "WHUT",
+          "Affiliation": "ABC",
+          "CallLetters": "WPVI-TV 6.1",
+          "LegacyCallLetters": "WPVI",
           "Programs": [
             {
               "Daypart": {
@@ -151,47 +145,16 @@
                   "StartDate": "0001-01-01T00:00:00"
                 }
               ],
-              "ProgramId": 2004,
-              "ProgramName": "Open Market Program 4",
+              "ProgramId": 2003,
+              "ProgramName": "Open Market Program 3",
               "Spots": 0,
-              "StationCode": 6852,
-              "TargetCpm": 9.281253098684521651334219114,
+              "StationCode": 5017,
+              "TargetCpm": 0.0472903665808478978604292191,
               "TargetImpressions": 0.0,
-              "UnitImpressions": 3.23232215
+              "UnitImpressions": 634.37867306
             }
           ],
-          "StationCode": 6852
-        },
-        {
-          "Affiliation": "PBS",
-          "CallLetters": "WETA-TV 26.4",
-          "LegacyCallLetters": "WETA",
-          "Programs": [
-            {
-              "Daypart": {
-                "Display": "M-SU 6AM-12AM",
-                "Id": 1
-              },
-              "FlightWeeks": [
-                {
-                  "Allocations": [],
-                  "EndDate": "0001-01-01T00:00:00",
-                  "IsHiatus": false,
-                  "MediaWeekId": 649,
-                  "Rate": 30.0,
-                  "StartDate": "0001-01-01T00:00:00"
-                }
-              ],
-              "ProgramId": 2002,
-              "ProgramName": "Open Market Program 2",
-              "Spots": 0,
-              "StationCode": 5982,
-              "TargetCpm": 11.817618353061442960959780866,
-              "TargetImpressions": 0.0,
-              "UnitImpressions": 2.53858257
-            }
-          ],
-          "StationCode": 5982
+          "StationCode": 5017
         }
       ]
     }
@@ -247,43 +210,43 @@
   "Weeks": [
     {
       "Budget": 25.0000,
-      "BudgetMarginAchieved": true,
-      "BudgetPercent": 192.0,
-      "BudgetTotal": 40.00,
+      "BudgetMarginAchieved": false,
+      "BudgetPercent": 0.0,
+      "BudgetTotal": 0.00,
       "ImpressionsGoal": 100.0,
       "ImpressionsMarginAchieved": false,
-      "ImpressionsPercent": 4.18,
-      "ImpressionsTotal": 4.176,
+      "ImpressionsPercent": 0.0,
+      "ImpressionsTotal": 0.0,
       "IsHiatus": false,
       "Markets": [
         {
-          "Cost": 40.0,
-          "Impressions": 4.176736,
+          "Cost": 0.0,
+          "Impressions": 0.0,
           "MarketId": 101,
-          "Spots": 2,
+          "Spots": 0,
           "Stations": [
             {
               "Programs": [
                 {
-                  "Cost": 40.0,
+                  "Cost": 10.0,
                   "EFF": 0.0,
-                  "ProgramId": 2001,
-                  "Spots": 2,
+                  "ProgramId": 2000,
+                  "Spots": 0,
                   "TargetCpm": 0.0,
                   "TargetImpressions": 0.0,
-                  "TotalImpressions": 4.176736,
-                  "UnitCost": 20.0,
-                  "UnitImpression": 2.088368
+                  "TotalImpressions": 52.97583477,
+                  "UnitCost": 10.0,
+                  "UnitImpression": 52.97583477
                 }
               ],
-              "StationCode": 5923
+              "StationCode": 4544
             }
           ]
         },
         {
           "Cost": 0.0,
           "Impressions": 0.0,
-          "MarketId": 111,
+          "MarketId": 104,
           "Spots": 0,
           "Stations": [
             {
@@ -291,32 +254,16 @@
                 {
                   "Cost": 30.0,
                   "EFF": 0.0,
-                  "ProgramId": 2004,
+                  "ProgramId": 2003,
                   "Spots": 0,
                   "TargetCpm": 0.0,
                   "TargetImpressions": 0.0,
-                  "TotalImpressions": 3.23232215,
+                  "TotalImpressions": 634.37867306,
                   "UnitCost": 30.0,
-                  "UnitImpression": 3.23232215
+                  "UnitImpression": 634.37867306
                 }
               ],
-              "StationCode": 6852
-            },
-            {
-              "Programs": [
-                {
-                  "Cost": 30.0,
-                  "EFF": 0.0,
-                  "ProgramId": 2002,
-                  "Spots": 0,
-                  "TargetCpm": 0.0,
-                  "TargetImpressions": 0.0,
-                  "TotalImpressions": 2.53858257,
-                  "UnitCost": 30.0,
-                  "UnitImpression": 2.53858257
-                }
-              ],
-              "StationCode": 5982
+              "StationCode": 5017
             }
           ]
         }
