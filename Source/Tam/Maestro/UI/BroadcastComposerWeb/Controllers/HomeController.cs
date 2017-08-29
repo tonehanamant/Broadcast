@@ -6,9 +6,12 @@ namespace BroadcastComposerWeb.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "CMW Broadcast";
+            return RedirectToAction("Index", "Rates");
+        }
 
-            return View();
+        public ActionResult TrackerPrePosting()
+        {
+            return View("Index");
         }
     }
 }
