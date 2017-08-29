@@ -1733,7 +1733,7 @@
             "OutOfSpecSpots": null,
             "ProgramName": "Sunday Night ALEX",
             "Rank": 0,
-            "SpecStatus": "Match",
+            "SpecStatus": "",
             "SpotClearance": 0.0,
             "SpotLength": 30,
             "Station": "WMOR",

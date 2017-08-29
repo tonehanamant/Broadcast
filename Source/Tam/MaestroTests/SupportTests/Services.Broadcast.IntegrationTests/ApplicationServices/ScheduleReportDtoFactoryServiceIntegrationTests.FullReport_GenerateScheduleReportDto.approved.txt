@@ -1034,7 +1034,7 @@
             "OutOfSpecSpots": null,
             "ProgramName": "GOOD MORNING ARIZONA 5AM",
             "Rank": 12,
-            "SpecStatus": "Match",
+            "SpecStatus": "",
             "SpotClearance": 0.0,
             "SpotLength": 30,
             "Station": "KTVK",
