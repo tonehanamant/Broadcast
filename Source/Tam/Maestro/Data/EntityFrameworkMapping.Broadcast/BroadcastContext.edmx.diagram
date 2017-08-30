@@ -101,13 +101,11 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_proposal_versions" />
-        <EntityTypeShape EntityType="BroadcastModel.station_program_flight_proposal" Width="1.5" PointX="16.25" PointY="19.875" />
-        <AssociationConnector Association="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" />
-        <AssociationConnector Association="BroadcastModel.FK_station_program_flight_proposal_station_program_flights" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slot_component_proposal" Width="1.5" PointX="12.375" PointY="0.75" />
-        <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slot_proposal" Width="1.5" PointX="20.875" PointY="13.125" />
-        <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slot_proposal_inventory_detail_slots" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slot_proposal" Width="1.5" PointX="3.125" PointY="32.5" />
+        <EntityTypeShape EntityType="BroadcastModel.station_program_flight_proposal" Width="1.5" PointX="3.125" PointY="36.25" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slot_proposal_proposal_version_detail_quarter_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -16,8 +16,8 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public proposal_version_detail_quarter_weeks()
         {
-            this.station_program_flight_proposal = new HashSet<station_program_flight_proposal>();
             this.inventory_detail_slot_proposal = new HashSet<inventory_detail_slot_proposal>();
+            this.station_program_flight_proposal = new HashSet<station_program_flight_proposal>();
         }
     
         public int id { get; set; }
@@ -35,7 +35,7 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal proprietary_cost_total { get; set; }
     
         public virtual proposal_version_detail_quarters proposal_version_detail_quarters { get; set; }
-        public virtual ICollection<station_program_flight_proposal> station_program_flight_proposal { get; set; }
         public virtual ICollection<inventory_detail_slot_proposal> inventory_detail_slot_proposal { get; set; }
+        public virtual ICollection<station_program_flight_proposal> station_program_flight_proposal { get; set; }
     }
 }

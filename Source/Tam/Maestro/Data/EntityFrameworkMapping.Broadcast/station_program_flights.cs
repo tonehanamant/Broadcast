@@ -18,7 +18,6 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.inventory_detail_slot_components = new HashSet<inventory_detail_slot_components>();
             this.station_program_flight_audiences = new HashSet<station_program_flight_audiences>();
-            this.station_program_flight_proposal = new HashSet<station_program_flight_proposal>();
         }
     
         public int id { get; set; }
@@ -39,6 +38,5 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<inventory_detail_slot_components> inventory_detail_slot_components { get; set; }
         public virtual ICollection<station_program_flight_audiences> station_program_flight_audiences { get; set; }
         public virtual station_programs station_programs { get; set; }
-        public virtual ICollection<station_program_flight_proposal> station_program_flight_proposal { get; set; }
     }
 }

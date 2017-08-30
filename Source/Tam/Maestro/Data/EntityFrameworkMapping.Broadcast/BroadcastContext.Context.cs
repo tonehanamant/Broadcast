@@ -79,8 +79,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<proposal_versions> proposal_versions { get; set; }
         public virtual DbSet<proposal_version_details> proposal_version_details { get; set; }
-        public virtual DbSet<station_program_flight_proposal> station_program_flight_proposal { get; set; }
         public virtual DbSet<inventory_detail_slot_component_proposal> inventory_detail_slot_component_proposal { get; set; }
         public virtual DbSet<inventory_detail_slot_proposal> inventory_detail_slot_proposal { get; set; }
+        public virtual DbSet<station_program_flight_proposal> station_program_flight_proposal { get; set; }
     }
 }

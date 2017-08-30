@@ -24,7 +24,6 @@ namespace EntityFrameworkMapping.Broadcast
         public int spot_length_id { get; set; }
         public int impressions { get; set; }
     
-        public virtual inventory_detail_slots inventory_detail_slots { get; set; }
         public virtual proposal_version_detail_quarter_weeks proposal_version_detail_quarter_weeks { get; set; }
     }
 }

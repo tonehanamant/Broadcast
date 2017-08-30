@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.NetworkInformation;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
@@ -48,7 +49,6 @@ namespace Services.Broadcast.Repositories
                                                       .Where(ids => relevantMediaWeeks.Contains(ids.media_week_id) && spotLengths.Contains(ids.spot_length_id) && ids.inventory_detail_slot_components.Any())
                                                       .Include(ids => ids.inventory_detail_slot_components.Select(idsc => idsc.station_program_flights.station_programs.station))
                                                       .Where(ids => ids.inventory_detail_slot_components.Any(idsc => proposalMarketIds.Contains(idsc.station_program_flights.station_programs.station.market_code)))
-                                                      .Include(ids => ids.inventory_detail_slot_proposal.Select(idsp => idsp.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details.proposal_versions.proposal))
                                                       .GroupBy(ids => ids.inventory_details);
 
                 var relevantInventorySlots = inventoryDetailSlotGroup.Select(idsGroup =>
@@ -67,7 +67,8 @@ namespace Services.Broadcast.Repositories
                         MediaWeekId = ids.media_week_id,
                         SlotCost = ids.slot_cost,
                         InventoryDetailId = ids.inventory_detail_id,
-                        InventoryDetailSlotProposals = ids.inventory_detail_slot_proposal.Select(idsp =>
+                        InventoryDetailSlotProposals = c.inventory_detail_slot_proposal.Where(idsp => idsp.inventory_detail_slot_id == ids.id)
+                                                                                       .Select(idsp =>
                                                                                                  new InventoryDetailSlotProposal
                                                                                                  {
                                                                                                      Order = idsp.order,
@@ -516,28 +517,26 @@ namespace Services.Broadcast.Repositories
         {
             var slotIds = inventoryAllocationRequest.SlotAllocations.Select(s => s.InventoryDetailSlotId).ToList();
 
-            var relevantAllocations = c.inventory_detail_slots.Include(ids => ids.inventory_detail_slot_proposal.Select(idsp => idsp.proposal_version_detail_quarter_weeks
-                                                                                                                                    .proposal_version_detail_quarters
-                                                                                                                                    .proposal_version_details
-                                                                                                                                    .proposal_versions
-                                                                                                                                    .proposal))
-                                                              .Where(ids => slotIds.Contains(ids.id))
+            var relevantAllocations = c.inventory_detail_slots.Where(ids => slotIds.Contains(ids.id))
                                                               .Select(s => new ProprietaryInventoryAllocationConflict
                                                               {
                                                                   MediaWeekId = s.media_week_id,
                                                                   SlotDaypartCode = s.inventory_details.daypart_code,
                                                                   InventoryDetailSlotId = s.id,
-                                                                  SlotProposals = s.inventory_detail_slot_proposal.OrderBy(sp => sp.order).Select(idsp => new InventoryDetailSlotProposal
-                                                                  {
-                                                                      Order = idsp.order,
-                                                                      ProposalName = idsp.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details.proposal_versions.proposal.name,
-                                                                      ProposalDetailSpotLengthId = idsp.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details.spot_length_id,
-                                                                      ProposalDetailId = idsp.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details.id,
-                                                                      ProposalVersionDetailQuarterWeekId = idsp.proprosal_version_detail_quarter_week_id,
-                                                                      UserName = idsp.created_by,
-                                                                      WeekStartDate = idsp.proposal_version_detail_quarter_weeks.start_date,
-                                                                      idsp = idsp
-                                                                  }).ToList()
+                                                                  SlotProposals = c.inventory_detail_slot_proposal
+                                                                            .Where(idsp => idsp.inventory_detail_slot_id == s.id)
+                                                                            .OrderBy(sp => sp.order)
+                                                                            .Select(idsp => new InventoryDetailSlotProposal
+                                                                             {
+                                                                                  Order = idsp.order,
+                                                                                  ProposalName = idsp.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details.proposal_versions.proposal.name,
+                                                                                  ProposalDetailSpotLengthId = idsp.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details.spot_length_id,
+                                                                                  ProposalDetailId = idsp.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details.id,
+                                                                                  ProposalVersionDetailQuarterWeekId = idsp.proprosal_version_detail_quarter_week_id,
+                                                                                  UserName = idsp.created_by,
+                                                                                  WeekStartDate = idsp.proposal_version_detail_quarter_weeks.start_date,
+                                                                                  idsp = idsp
+                                                                             }).ToList()
                                                               });
 
             return relevantAllocations.ToDictionary(d => d.InventoryDetailSlotId, d => d);

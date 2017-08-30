@@ -26,6 +26,5 @@ namespace EntityFrameworkMapping.Broadcast
         public int station_program_id { get; set; }
     
         public virtual proposal_version_detail_quarter_weeks proposal_version_detail_quarter_weeks { get; set; }
-        public virtual station_program_flights station_program_flights { get; set; }
     }
 }

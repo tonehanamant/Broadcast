@@ -233,6 +233,22 @@ BEGIN
 	ALTER COLUMN station_program_id INT NOT NULL
 END
 
+IF EXISTS (SELECT * 
+		   FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS 
+		   WHERE CONSTRAINT_NAME ='FK_station_program_flight_proposal_station_program_flights')
+BEGIN
+	ALTER TABLE station_program_flight_proposal
+	DROP CONSTRAINT FK_station_program_flight_proposal_station_program_flights
+END
+
+IF EXISTS (SELECT * 
+		   FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS 
+		   WHERE CONSTRAINT_NAME ='FK_inventory_detail_slot_proposal_inventory_detail_slots')
+BEGIN
+	ALTER TABLE inventory_detail_slot_proposal
+	DROP CONSTRAINT FK_inventory_detail_slot_proposal_inventory_detail_slots
+END
+
 /*************************************** BCOP-1643 - END *****************************************************/
 
 

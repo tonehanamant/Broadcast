@@ -17,7 +17,6 @@ namespace EntityFrameworkMapping.Broadcast
         public inventory_detail_slots()
         {
             this.inventory_detail_slot_components = new HashSet<inventory_detail_slot_components>();
-            this.inventory_detail_slot_proposal = new HashSet<inventory_detail_slot_proposal>();
         }
     
         public int id { get; set; }
@@ -31,6 +30,5 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual inventory_details inventory_details { get; set; }
         public virtual ICollection<inventory_detail_slot_components> inventory_detail_slot_components { get; set; }
-        public virtual ICollection<inventory_detail_slot_proposal> inventory_detail_slot_proposal { get; set; }
     }
 }
