@@ -30,6 +30,8 @@ var ProposalView = BaseView.extend({
 
         this.initProposalCollapse();
         this.initModal();
+
+        $('#test_openMarket_grid_btn').on('click', $scope.ontestOpenMarkets.bind($scope));
     },
 
     //MODAL//
@@ -481,5 +483,13 @@ var ProposalView = BaseView.extend({
         }
 
         return false;
+    },
+
+    ontestOpenMarkets: function () {
+        if (!this.testGridView) {
+            this.testGridView = new Test_OpenMarketModalGrid();
+            this.testGridView.initView(this);
+        }
+        this.testGridView.setInventory(null, test_open_market_data, false);
     }
 });

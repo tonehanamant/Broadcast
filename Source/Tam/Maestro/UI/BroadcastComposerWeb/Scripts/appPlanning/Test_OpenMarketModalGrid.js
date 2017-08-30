@@ -46,7 +46,7 @@ var Test_OpenMarketModalGrid = BaseView.extend({
     },
 
     initGrid: function () {
-
+        this.openMarketsGrid = $('#test_open_market_grid').w2grid(PlanningConfig.getTestOpenMarketGridCfg(this));
     },
 
 
@@ -111,14 +111,21 @@ var Test_OpenMarketModalGrid = BaseView.extend({
            // this.initProgramGrids();
             this.isActive = true;
         }
-        this.setProgramsGrid(this.activeInventoryData.Markets);
-        this.insertWeekGrids(this.activeInventoryData.Weeks);
+        this.setGrid(this.activeInventoryData.Markets);
 
         //will only reset if recorded
         //this.scrollToLastPosition();
         if (checkEdits) {
-            this.resetEditedGridRecords();
+           // this.resetEditedGridRecords();
         }
+    },
+
+    //test
+    setGrid: function (markets) {
+        var gridData = this.prepareProgramsGridData(markets);
+        this.openMarketsGrid.clear();
+        this.openMarketsGrid.add(gridData);
+        this.openMarketsGrid.resize();
     },
 
     //SORTING strategy is to change activeInventory (markets sort in Markets and Weeks/Markets) and reset grids; store changed records separately from grids for reset states

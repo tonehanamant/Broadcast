@@ -580,6 +580,67 @@
            
         //return copy
         return util.copyData(gridCfg, null, null, true);
-    }
+    },
 
+    getTestOpenMarketGridCfg: function (view) {
+        var gridCfg = {
+            
+            show: { footer: true },
+
+            columns: [
+                {
+                    field: 'DayPart',
+                    caption: 'Airing Time',
+                    resizable: false,
+                    sortable: false,
+                    size: '20px',
+                    render: function (record, index, column_index) {
+                        if (record.w2ui && record.w2ui.summary) return '';
+                        if (record.isMarket) {
+                            //use numeral?
+                            return '<strong>' + record.MarketRank + '.  ' + record.MarketName + '</strong> (' + w2utils.formatNumber(record.MarketSubscribers.toFixed(0)) + ')';
+                        } else if (record.isStation) {
+                            return '<strong>' + record.StationName + ' (' + record.Affiliation + ')</strong>';
+                        } else {
+                            //return (record.DayPart && record.DayPart.Display) ? record.DayPart.Display : ' - ';
+                            return (record.Daypart && record.Daypart.Display) ? record.Daypart.Display : ' - ';
+                        }
+                    }
+                },
+				//should be empty for market/station
+                {
+                    field: 'ProgramName',
+                    caption: 'Program',
+                    resizable: false,
+                    sortable: false,
+                    size: '150px'
+                },
+                {
+                    field: 'TargetCpm',
+                    //TBD? toggle between w2ui-sort-up / w2ui-sort-down
+                    //caption: 'CPM <div class="sort_indicator" id="TargetCpm_sort"></div>',
+                    caption: 'CPM',
+                    sortable: false,
+                    resizable: false,
+                    size: '80px',
+                    render: function (record, index, column_index) {
+                        if (record) {
+
+                            var val = record.TargetCpm ? numeral(record.TargetCpm).format('$0,0[.]00') : '-';
+                            if (record.isProgram) {
+                                return PlanningConfig.greyRenderer(val, record.TotalSpots === 0);
+                            } else {
+                                return '';
+                            }
+                        }
+                    }
+                }
+            ],
+            onSelect: function (event) {
+                //to prevent selection (styling on grids)
+                event.preventDefault();
+            }
+        };
+        return gridCfg;
+    }
 };
