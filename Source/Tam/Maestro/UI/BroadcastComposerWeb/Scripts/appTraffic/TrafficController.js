@@ -20,7 +20,7 @@
                 $ViewElement: $('#traffic_view'),
                 ErrorMessage: 'Error Fetching Traffic Data',
                 TitleErrorMessage: 'Error Fetching Traffic Data',
-                StatusMessage: 'Error Fetching Traffic Data'
+                StatusMessage: 'Load Traffic Data'
             });
     }
 });
