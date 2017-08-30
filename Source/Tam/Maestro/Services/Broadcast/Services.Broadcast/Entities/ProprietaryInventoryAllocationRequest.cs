@@ -34,5 +34,6 @@ namespace Services.Broadcast.Entities
         public int QuarterWeekId { get; set; }
         public int Order { get; set; }
         public int SpotLength { get; set; }
+        public int Impressions { get; set; }
     }
 }

@@ -995,5 +995,58 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsNotNull(result);
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveSnapshotForOpenMarketAllocation()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new OpenMarketAllocationSaveRequest
+                {
+                    ProposalVersionDetailId = 7,
+                    Username = "test-user",
+                    Weeks = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek>
+                    {
+                        new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek
+                        {
+                            MediaWeekId = 649,
+                            Programs = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram>
+                            {
+                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
+                                {
+                                    Impressions = 1000,
+                                    ProgramId = 2000,
+                                    Spots = 1,
+                                    SpotCost = 1234
+                                },
+                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
+                                {
+                                    Impressions = 2000,
+                                    ProgramId = 2001,
+                                    Spots = 0,
+                                    SpotCost = 0
+                                },
+                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
+                                {
+                                    Impressions = 1234,
+                                    ProgramId = 2004,
+                                    Spots = 3,
+                                    SpotCost = 488
+                                }
+                            }
+                        }
+                    }
+                };
+
+                _ProposalOpenMarketInventoryService.SaveInventoryAllocations(request);
+
+                var proposalInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>();
+
+                var openMarketAllocationSnapshot = proposalInventoryRepository.GetOpenMarketInventoryAllocationSnapshot(new List<int> { 2004 }, 7);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(openMarketAllocationSnapshot));
+            }
+        }
     }
 }

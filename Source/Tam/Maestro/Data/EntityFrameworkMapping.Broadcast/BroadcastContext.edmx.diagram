@@ -22,7 +22,7 @@
         <AssociationConnector Association="BroadcastModel.FK_stations_markets" />
         <EntityTypeShape EntityType="BroadcastModel.genre" Width="1.5" PointX="8.875" PointY="4.875" FillColor="0, 192, 0" />
         <EntityTypeShape EntityType="BroadcastModel.rep_firms" Width="1.5" PointX="4.75" PointY="4.625" FillColor="0, 192, 0" />
-        <EntityTypeShape EntityType="BroadcastModel.proposal_version_flight_weeks" Width="2.875" PointX="1.125" PointY="27.75" FillColor="255, 128, 0" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_version_flight_weeks" Width="2.875" PointX="1.125" PointY="28.5" FillColor="255, 128, 0" />
         <EntityTypeShape EntityType="BroadcastModel.spot_length_cost_multipliers" Width="1.5" PointX="0.75" PointY="7.625" FillColor="0, 192, 0" />
         <EntityTypeShape EntityType="BroadcastModel.rate_files" Width="1.5" PointX="13.625" PointY="19.625" FillColor="0, 192, 0" />
         <EntityTypeShape EntityType="BroadcastModel.schedule_restriction_dayparts" Width="1.5" PointX="19.25" PointY="28.25" />
@@ -104,7 +104,8 @@
         <EntityTypeShape EntityType="BroadcastModel.station_program_flight_proposal" Width="1.5" PointX="16.25" PointY="19.875" />
         <AssociationConnector Association="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_station_program_flight_proposal_station_program_flights" />
-        <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slot_proposal" Width="1.5" PointX="20.375" PointY="14.375" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slot_component_proposal" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slot_proposal" Width="1.5" PointX="20.875" PointY="13.125" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slot_proposal_inventory_detail_slots" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slot_proposal_proposal_version_detail_quarter_weeks" />
         </Diagram>

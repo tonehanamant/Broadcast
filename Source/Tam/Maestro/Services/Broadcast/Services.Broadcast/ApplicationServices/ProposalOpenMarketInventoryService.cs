@@ -604,9 +604,8 @@ namespace Services.Broadcast.ApplicationServices
         public ProposalDetailOpenMarketInventoryDto SaveInventoryAllocations(OpenMarketAllocationSaveRequest request)
         {
             var openMarketInventoryRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>();
-
-            var existingAllocations = openMarketInventoryRepository.GetProposalDetailAllocations(request.ProposalVersionDetailId);
-
+            var existingAllocations =
+                openMarketInventoryRepository.GetProposalDetailAllocations(request.ProposalVersionDetailId);
             var allocationToRemove = _GetAllocationsToRemove(request, existingAllocations);
             var allocationsToUpdate = _GetAllocationsToUpdate(request, existingAllocations);
             var allocationToAdd = _GetAllocationsToCreate(request, existingAllocations);
@@ -650,18 +649,15 @@ namespace Services.Broadcast.ApplicationServices
 
         private ProposalDetailOpenMarketInventoryDto _GetProposalDetailOpenMarketInventoryDto(int proposalInventoryDetailId, ProposalOpenMarketFilter openMarketFilter)
         {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                var dto = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetOpenMarketProposalDetailInventory(proposalInventoryDetailId);
-                _PopulateMarkets(dto, true);
-                _PopulateInventoryWeeks(dto);
-                _SetProposalOpenMarketDisplayFilters(dto);
-                if (openMarketFilter != null)
-                    dto.Filter = openMarketFilter;
-                _ApplyProposalOpenMarketFilter(dto, true);
-                _CalculateOpenMarketTotals(dto);
-                return dto;
-            }
+            var dto = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetOpenMarketProposalDetailInventory(proposalInventoryDetailId);
+            _PopulateMarkets(dto, true);
+            _PopulateInventoryWeeks(dto);
+            _SetProposalOpenMarketDisplayFilters(dto);
+            if (openMarketFilter != null)
+                dto.Filter = openMarketFilter;
+            _ApplyProposalOpenMarketFilter(dto, true);
+            _CalculateOpenMarketTotals(dto);
+            return dto;
         }
 
         private static List<OpenMarketInventoryAllocation> _GetAllocationsToCreate(OpenMarketAllocationSaveRequest request, List<OpenMarketInventoryAllocation> existingAllocations)
@@ -674,7 +670,9 @@ namespace Services.Broadcast.ApplicationServices
                             ProposalVersionDetailId = request.ProposalVersionDetailId,
                             MediaWeekId = w.MediaWeekId,
                             StationProgramId = p.ProgramId,
-                            Spots = p.Spots
+                            Spots = p.Spots,
+                            Impressions = (int)(p.Impressions * 1000),
+                            SpotCost = p.SpotCost
                         })).ToList();
 
             var newAllocations =

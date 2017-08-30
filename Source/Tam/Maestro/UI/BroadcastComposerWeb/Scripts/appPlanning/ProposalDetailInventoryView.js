@@ -631,7 +631,8 @@ var ProposalDetailInventoryView = BaseView.extend({
             //InventoryDetailSlotId: rec.InventoryDetailSlotId,
             QuarterWeekId: quarterId,
             Order: order,
-            SpotLength: spot
+            SpotLength: spot,
+            Impressions: rec.Impressions
         };
     },
 

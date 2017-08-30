@@ -177,6 +177,7 @@
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\IHavePostingBooks.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
+    <Compile Include="Entities\OpenMarketInventoryAllocationSnapshotDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\BaseProposalInventoryWeekDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\OpenMarketAllocationSaveRequest.cs" />
     <Compile Include="Entities\OpenMarketInventory\OpenMarketInventoryAllocation.cs" />
@@ -202,6 +203,8 @@
     <Compile Include="Entities\OpenMarketInventory\ProposalInventoryMarketDto.cs" />
     <Compile Include="Entities\ProposalInventoryTotalsDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\ProposalOpenMarketInventoryWeekDto.cs" />
+    <Compile Include="Entities\ProprietaryInventoryAllocationSnapshotComponentDto.cs" />
+    <Compile Include="Entities\ProprietaryInventoryAllocationSnapshotDto.cs" />
     <Compile Include="Entities\StationDetailDaypart.cs" />
     <Compile Include="Entities\StationImpressions.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />

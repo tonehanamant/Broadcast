@@ -30,6 +30,7 @@ namespace Services.Broadcast.Repositories
         List<StationProgramFlightDto> GetOpenMarketInventoryAllocations(int proposalId);
         int GetCountOfComponentsForSlot(int slotId, List<int> relevantMediaWeeks, List<LookupDto> spotLengthMappings);
         int GetNumberOfProprietaryInventoryAllocationsForProposal(int proposalId);
+        ProprietaryInventoryAllocationSnapshotDto GetProprietaryInventoryAllocationSnapshot(int inventoryDetailSlotId);
     }
 
     public class ProposalInventoryRepository : BroadcastRepositoryBase, IProposalInventoryRepository
@@ -144,6 +145,36 @@ namespace Services.Broadcast.Repositories
                     select allocation).Count());
         }
 
+        public ProprietaryInventoryAllocationSnapshotDto GetProprietaryInventoryAllocationSnapshot(int inventoryDetailSlotId)
+        {
+            return _InReadUncommitedTransaction(context => (from p in context.inventory_detail_slot_proposal
+                where p.inventory_detail_slot_id == inventoryDetailSlotId
+                select new ProprietaryInventoryAllocationSnapshotDto
+                {
+                    CreatedBy = p.created_by,
+                    Impressions = p.impressions,
+                    InventoryDetailSlotId = p.inventory_detail_slot_id,
+                    Isci = p.isci,
+                    Order = p.order,
+                    ProprosalVersionDetailQuarterWeekId = p.proprosal_version_detail_quarter_week_id,
+                    RolledUpDaypartId = p.rolled_up_daypart_id,
+                    SlotCost = p.slot_cost,
+                    SpotLengthId = p.spot_length_id,
+                    Components = (from c in context.inventory_detail_slot_component_proposal
+                        where c.inventory_detail_slot_id == inventoryDetailSlotId
+                        select new ProprietaryInventoryAllocationSnapshotComponentDto
+                        {
+                            DaypartId = c.daypart_id,
+                            InventoryDetailSlotComponentId = c.inventory_detail_slot_component_id,
+                            InventoryDetailSlotId = c.inventory_detail_slot_id,
+                            ProprosalVersionDetailQuarterWeekId = c.proprosal_version_detail_quarter_week_id,
+                            StationCode = c.station_code,
+                            StationProgramFlightId = c.station_program_flight_id,
+                            StationProgramId = c.station_program_id
+                        }).ToList()
+                }).Single());
+        }
+
         public List<InventoryDetailSlot> GetProposalInventorySlotsByQuarterWeekIds(List<int> quarterWeeksIds)
         {
             return _InReadUncommitedTransaction(
@@ -192,6 +223,16 @@ namespace Services.Broadcast.Repositories
                 var slotProposals = (from p in context.inventory_detail_slot_proposal
                                      where excludedSlotsIds.Contains(p.inventory_detail_slot_id)
                                      select p).ToList();
+
+                foreach (var allocation in slotProposals)
+                {
+                    var slotAllocation = allocation;
+                    context.inventory_detail_slot_component_proposal.RemoveRange(
+                        context.inventory_detail_slot_component_proposal.Where(
+                            p => p.inventory_detail_slot_id == slotAllocation.inventory_detail_slot_id &&
+                                 p.proprosal_version_detail_quarter_week_id ==
+                                 slotAllocation.proprosal_version_detail_quarter_week_id));
+                }
 
                 context.inventory_detail_slot_proposal.RemoveRange(slotProposals);
 
@@ -254,7 +295,20 @@ namespace Services.Broadcast.Repositories
                                   from idsp in pdqw.inventory_detail_slot_proposal
                                   select idsp;
 
-                c.inventory_detail_slot_proposal.RemoveRange(proprietary);
+                var inventoryDetailSlotProposals = proprietary.ToList();
+
+                foreach (var inventoryDetailSlotProposal in inventoryDetailSlotProposals)
+                {
+                    var proposal = inventoryDetailSlotProposal;
+                    c.inventory_detail_slot_component_proposal.RemoveRange(
+                        c.inventory_detail_slot_component_proposal.Where(
+                            p =>
+                                p.inventory_detail_slot_id == proposal.inventory_detail_slot_id &&
+                                p.proprosal_version_detail_quarter_week_id ==
+                                proposal.proprosal_version_detail_quarter_week_id));
+                }
+
+                c.inventory_detail_slot_proposal.RemoveRange(inventoryDetailSlotProposals);
 
                 var openMarket = from pv in c.proposals.Find(proposalId).proposal_versions
                                  from pvd in pv.proposal_version_details
@@ -274,6 +328,11 @@ namespace Services.Broadcast.Repositories
             context.inventory_detail_slot_proposal.RemoveRange(
                 context.inventory_detail_slot_proposal.Where(
                     p => quarterWeeksIds.Contains(p.proprosal_version_detail_quarter_week_id)));
+
+            context.inventory_detail_slot_component_proposal.RemoveRange(
+                context.inventory_detail_slot_component_proposal.Where(
+                    p => quarterWeeksIds.Contains(p.proprosal_version_detail_quarter_week_id)));
+
             context.SaveChanges();
         }
 
@@ -287,7 +346,12 @@ namespace Services.Broadcast.Repositories
                             slotIds.Contains(p.inventory_detail_slot_id) &&
                             detailQuarterWeekIds.Contains(p.proprosal_version_detail_quarter_week_id));
 
+                var snapshotComponents = context.inventory_detail_slot_component_proposal.Where(p =>
+                    slotIds.Contains(p.inventory_detail_slot_id) &&
+                    detailQuarterWeekIds.Contains(p.proprosal_version_detail_quarter_week_id));
+
                 context.inventory_detail_slot_proposal.RemoveRange(slotAllocations);
+                context.inventory_detail_slot_component_proposal.RemoveRange(snapshotComponents);
 
                 context.SaveChanges();
             });
@@ -298,86 +362,154 @@ namespace Services.Broadcast.Repositories
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 return _InReadUncommitedTransaction(c =>
-            {
-                var allocationsBySlotId = GetRelevantAllocationsGroupedBySlotId(c, request);
-
-                var allConflicts = new List<ProprietaryInventoryAllocationConflict>();
-                foreach (var allocation in request.SlotAllocations)
                 {
-                    var allocationsForSlot = allocationsBySlotId[allocation.InventoryDetailSlotId];
+                    var allocationsBySlotId = GetRelevantAllocationsGroupedBySlotId(c, request);
+                    var allConflicts = new List<ProprietaryInventoryAllocationConflict>();
 
-                    //Remove the delete from in-memory collection and database context
-                    var deletes = new List<InventoryDetailSlotProposal>();
-                    foreach (var delete in allocation.Deletes)
+                    foreach (var allocation in request.SlotAllocations)
                     {
-                        foreach (var slotProposal in allocationsForSlot.SlotProposals)
+                        var allocationsForSlot = allocationsBySlotId[allocation.InventoryDetailSlotId];
+                        //Remove the delete from in-memory collection and database context
+                        var deletes = new List<InventoryDetailSlotProposal>();
+
+                        foreach (var delete in allocation.Deletes)
                         {
-                            if (slotProposal.ProposalVersionDetailQuarterWeekId == delete.QuarterWeekId && slotProposal.Order == delete.Order)
+                            foreach (var slotProposal in allocationsForSlot.SlotProposals)
                             {
-                                deletes.Add(slotProposal);
-                                c.inventory_detail_slot_proposal.Remove(slotProposal.idsp);
+                                if (slotProposal.ProposalVersionDetailQuarterWeekId == delete.QuarterWeekId &&
+                                    slotProposal.Order == delete.Order)
+                                {
+                                    deletes.Add(slotProposal);
+                                    c.inventory_detail_slot_proposal.Remove(slotProposal.idsp);
+                                    RemoveSnapshotOfInventorComponents(c, slotProposal.idsp.inventory_detail_slot_id, slotProposal.ProposalVersionDetailQuarterWeekId);
+                                }
                             }
                         }
-                    }
-                    deletes.ForEach(o => allocationsForSlot.SlotProposals.Remove(o));
 
-                    foreach (var save in allocation.Adds)
-                    {
-                        if (allocationsForSlot.SlotProposals.Any())
+                        deletes.ForEach(o => allocationsForSlot.SlotProposals.Remove(o));
+
+                        foreach (var save in allocation.Adds)
                         {
-                            if (save.SpotLength == 30)
+                            if (allocationsForSlot.SlotProposals.Any())
                             {
-                                //Can remove all existing allocations
-                                if (request.ForceSave)
+                                if (save.SpotLength == 30)
                                 {
-                                    c.inventory_detail_slot_proposal.RemoveRange(allocationsForSlot.SlotProposals.Select(a => a.idsp));
-                                }
-                                else
-                                {
-                                    //Add messages for all allocations since they're all conflicts
-                                    allocationsForSlot.Messages = allocationsForSlot.SlotProposals.Select(a => string.Format("Week {0} {1} reserved by User {2} for Proposal {3}", a.WeekStartDate.ToShortDateString(), allocationsForSlot.SlotDaypartCode, a.UserName, a.ProposalName)).ToList();
-                                    allConflicts.Add(allocationsForSlot);
-                                }
-                            }
-                            else if (save.SpotLength == 15)
-                            {
-                                var matchingAllocation = allocationsForSlot.SlotProposals.Where(a => a.idsp.order == save.Order).ToList();
-                                if (matchingAllocation.Any())
-                                {
-                                    //Remove the one matching the order
+                                    //Can remove all existing allocations
                                     if (request.ForceSave)
                                     {
-                                        c.inventory_detail_slot_proposal.RemoveRange(matchingAllocation.Select(a => a.idsp));
+                                        c.inventory_detail_slot_proposal.RemoveRange(
+                                            allocationsForSlot.SlotProposals.Select(a => a.idsp));
                                     }
                                     else
                                     {
-                                        //Only add messages for the specific allocations that are conflicts
-                                        allocationsForSlot.Messages = matchingAllocation.Select(a => string.Format("Week {0} {1} reserved by User {2} for Proposal {3}", a.WeekStartDate.ToShortDateString(), allocationsForSlot.SlotDaypartCode, a.UserName, a.ProposalName)).ToList();
+                                        //Add messages for all allocations since they're all conflicts
+                                        allocationsForSlot.Messages =
+                                            allocationsForSlot.SlotProposals.Select(
+                                                a =>
+                                                    string.Format("Week {0} {1} reserved by User {2} for Proposal {3}",
+                                                        a.WeekStartDate.ToShortDateString(),
+                                                        allocationsForSlot.SlotDaypartCode, a.UserName, a.ProposalName))
+                                                .ToList();
                                         allConflicts.Add(allocationsForSlot);
                                     }
                                 }
+                                else if (save.SpotLength == 15)
+                                {
+                                    var matchingAllocation =
+                                        allocationsForSlot.SlotProposals.Where(a => a.idsp.order == save.Order).ToList();
+
+                                    if (matchingAllocation.Any())
+                                    {
+                                        //Remove the one matching the order
+                                        if (request.ForceSave)
+                                        {
+                                            c.inventory_detail_slot_proposal.RemoveRange(
+                                                matchingAllocation.Select(a => a.idsp));
+                                        }
+                                        else
+                                        {
+                                            //Only add messages for the specific allocations that are conflicts
+                                            allocationsForSlot.Messages =
+                                                matchingAllocation.Select(
+                                                    a =>
+                                                        string.Format(
+                                                            "Week {0} {1} reserved by User {2} for Proposal {3}",
+                                                            a.WeekStartDate.ToShortDateString(),
+                                                            allocationsForSlot.SlotDaypartCode, a.UserName,
+                                                            a.ProposalName)).ToList();
+                                            allConflicts.Add(allocationsForSlot);
+                                        }
+                                    }
+                                }
                             }
+
+                            var inventoryDetailSlot = GetInventoryDetailSlot(c, allocation.InventoryDetailSlotId);                            
+
+                            c.inventory_detail_slot_proposal.Add(new inventory_detail_slot_proposal
+                            {
+                                inventory_detail_slot_id = allocation.InventoryDetailSlotId,
+                                proprosal_version_detail_quarter_week_id = save.QuarterWeekId,
+                                order = save.Order,
+                                rolled_up_daypart_id = inventoryDetailSlot.rolled_up_daypart_id,
+                                impressions = save.Impressions,
+                                slot_cost = inventoryDetailSlot.slot_cost ?? 0,
+                                spot_length_id = inventoryDetailSlot.spot_length_id,
+                                created_by = request.UserName
+                            });
+
+                            SaveSnapshotOfInventoryComponents(c, allocation.InventoryDetailSlotId, save.QuarterWeekId);
                         }
-
-                        c.inventory_detail_slot_proposal.Add(new inventory_detail_slot_proposal
-                        {
-                            inventory_detail_slot_id = allocation.InventoryDetailSlotId,
-                            proprosal_version_detail_quarter_week_id = save.QuarterWeekId,
-                            order = save.Order,
-                            created_by = request.UserName
-                        });
                     }
-                }
 
-                if (allConflicts.Any())
-                {
-                    return allConflicts;
-                }
+                    if (allConflicts.Any())
+                    {
+                        return allConflicts;
+                    }
 
-                c.SaveChanges();
-                return new List<ProprietaryInventoryAllocationConflict>();
-            });
+                    c.SaveChanges();
+
+                    return new List<ProprietaryInventoryAllocationConflict>();
+                });
             }
+        }
+
+        private void RemoveSnapshotOfInventorComponents(BroadcastContext broadcastContext, int inventoryDetailSlotId, int proposalVersionDetailQuarterWeekId)
+        {
+            var proposalInventoryComponents =
+                broadcastContext.inventory_detail_slot_component_proposal.Where(
+                    x => x.inventory_detail_slot_id == inventoryDetailSlotId &&
+                         x.proprosal_version_detail_quarter_week_id == proposalVersionDetailQuarterWeekId).ToList();
+
+            foreach (var inventoryDetailSlotComponentProposal in proposalInventoryComponents)
+            {
+                broadcastContext.inventory_detail_slot_component_proposal.Remove(inventoryDetailSlotComponentProposal);
+            }
+        }
+
+        private void SaveSnapshotOfInventoryComponents(BroadcastContext context, int inventoryDetailSlotId, int quarterWeekId)
+        {
+            var allSlotComponents =
+                context.inventory_detail_slot_components.Where(i => i.inventory_detail_slot_id == inventoryDetailSlotId)
+                    .ToList();
+
+            foreach (var component in allSlotComponents)
+            {
+                context.inventory_detail_slot_component_proposal.Add(new inventory_detail_slot_component_proposal()
+                {
+                    daypart_id = component.daypart_id,
+                    inventory_detail_slot_component_id = component.id,
+                    proprosal_version_detail_quarter_week_id = quarterWeekId,
+                    inventory_detail_slot_id = inventoryDetailSlotId,
+                    station_code = component.station_code,
+                    station_program_flight_id = component.station_program_flight_id,
+                    station_program_id = component.station_program_flights.station_programs.id
+                });
+            }
+        }
+
+        private inventory_detail_slots GetInventoryDetailSlot(BroadcastContext context, int inventoryDetailSlotId)
+        {
+            return context.inventory_detail_slots.First(i => i.id == inventoryDetailSlotId);
         }
 
         private static Dictionary<int, ProprietaryInventoryAllocationConflict> GetRelevantAllocationsGroupedBySlotId(BroadcastContext c, ProprietaryInventoryAllocationRequest inventoryAllocationRequest)

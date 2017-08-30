@@ -655,7 +655,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
                 $.each(items, function (ridx, rec) {
                     //should be all isChanged
                     if (rec.isChanged) {
-                        week.Programs.push({ ProgramId: rec.ProgramId, Spots: rec.Spots, Impressions: rec.TotalImpressions });
+                        week.Programs.push({ ProgramId: rec.ProgramId, Spots: rec.Spots, Impressions: rec.TotalImpressions, SpotCost: rec.Cost });
                     }
                 });
                 params.Weeks.push(week);

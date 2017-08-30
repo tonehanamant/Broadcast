@@ -292,6 +292,9 @@
     <Compile Include="inventory_detail_slot_components.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="inventory_detail_slot_component_proposal.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="inventory_detail_slot_proposal.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

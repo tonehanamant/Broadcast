@@ -9,6 +9,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.OpenMarketInventory;
+using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -179,6 +180,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var ret = sut.SaveInventoryAllocations(request);
                 Assert.That(ret, Is.Empty);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveInventoryAllocations_SaveSnapshot()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var inventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>();
+                var request = new ProprietaryInventoryAllocationRequest {ProposalDetailId = 7, UserName = "test-user"};
+
+                request.SlotAllocations.Add(new ProprietaryInventorySlotAllocations
+                {
+                    InventoryDetailSlotId = 10206,
+                    Deletes =
+                        new List<ProprietaryInventorySlotProposal>
+                        {
+                            new ProprietaryInventorySlotProposal {QuarterWeekId = 7, Order = 1, SpotLength = 30, Impressions = 30203}
+                        },
+                    Adds =
+                        new List<ProprietaryInventorySlotProposal>
+                        {
+                            new ProprietaryInventorySlotProposal {QuarterWeekId = 7, Order = 1, SpotLength = 30, Impressions = 2000}
+                        },
+                });
+
+                inventoryService.SaveInventoryAllocations(request);
+
+                var proposalInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalInventoryRepository>();
+
+                var proprietaryInventoryAllocationSnapshot = proposalInventoryRepository.GetProprietaryInventoryAllocationSnapshot(10206);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(proprietaryInventoryAllocationSnapshot));
             }
         }
     }
