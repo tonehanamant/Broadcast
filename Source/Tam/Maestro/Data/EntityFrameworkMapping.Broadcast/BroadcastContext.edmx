@@ -98,7 +98,7 @@
           </Key>
           <Property Name="bvs_file_detail_id" Type="int" Nullable="false" />
           <Property Name="audience_id" Type="int" Nullable="false" />
-          <Property Name="delivery" Type="bigint" Nullable="false" />
+          <Property Name="delivery" Type="float" Nullable="false" />
           <Property Name="audience_rank" Type="int" />
         </EntityType>
         <EntityType Name="daypart_days">
@@ -253,7 +253,7 @@
           </Key>
           <Property Name="post_file_detail_id" Type="int" Nullable="false" />
           <Property Name="demo" Type="int" Nullable="false" />
-          <Property Name="impression" Type="bigint" Nullable="false" />
+          <Property Name="impression" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="post_file_details">
           <Key>
@@ -341,7 +341,7 @@
           <Property Name="end_date" Type="date" Nullable="false" />
           <Property Name="is_hiatus" Type="bit" Nullable="false" />
           <Property Name="units" Type="int" />
-          <Property Name="impressions" Type="bigint" Nullable="false" />
+          <Property Name="impressions" Type="int" />
           <Property Name="cost" Type="money" />
           <Property Name="open_market_impressions_total" Type="bigint" Nullable="false" />
           <Property Name="open_market_cost_total" Type="money" Nullable="false" />
@@ -357,7 +357,7 @@
           <Property Name="quarter" Type="tinyint" Nullable="false" />
           <Property Name="year" Type="int" Nullable="false" />
           <Property Name="cpm" Type="money" />
-          <Property Name="impressions_goal" Type="bigint" Nullable="false" />
+          <Property Name="impressions_goal" Type="int" />
         </EntityType>
         <EntityType Name="proposal_version_details">
           <Key>
@@ -371,7 +371,7 @@
           <Property Name="start_date" Type="date" Nullable="false" />
           <Property Name="end_date" Type="date" Nullable="false" />
           <Property Name="units_total" Type="int" />
-          <Property Name="impressions_total" Type="bigint" Nullable="false" />
+          <Property Name="impressions_total" Type="int" />
           <Property Name="cost_total" Type="money" />
           <Property Name="adu" Type="bit" Nullable="false" />
           <Property Name="single_posting_book_id" Type="int" />
@@ -428,7 +428,7 @@
           <Property Name="modified_date" Type="datetime" Nullable="false" />
           <Property Name="target_budget" Type="money" />
           <Property Name="target_units" Type="int" />
-          <Property Name="target_impressions" Type="bigint" Nullable="false" />
+          <Property Name="target_impressions" Type="int" />
           <Property Name="notes" Type="varchar" MaxLength="256" />
           <Property Name="post_type" Type="tinyint" />
           <Property Name="equivalized" Type="bit" />
@@ -500,7 +500,7 @@
           <Property Name="audience_id" Type="int" Nullable="false" />
           <Property Name="demo_rank" Type="int" Nullable="false" />
           <Property Name="demo_population" Type="int" Nullable="false" />
-          <Property Name="impressions" Type="bigint" Nullable="false" />
+          <Property Name="impressions" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="schedule_detail_weeks">
           <Key>
@@ -619,7 +619,7 @@
           </Key>
           <Property Name="station_program_flight_id" Type="int" Nullable="false" />
           <Property Name="audience_id" Type="int" Nullable="false" />
-          <Property Name="impressions" Type="bigint" Nullable="false" />
+          <Property Name="impressions" Type="float" />
           <Property Name="rating" Type="float" />
           <Property Name="cpm15" Type="money" />
           <Property Name="cpm30" Type="money" />
@@ -738,7 +738,7 @@
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2639,7 +2639,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </Key>
           <Property Name="station_program_flight_id" Type="Int32" Nullable="false" />
           <Property Name="audience_id" Type="Int32" Nullable="false" />
-          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="impressions" Type="Double" />
           <Property Name="rating" Type="Double" />
           <Property Name="cpm15" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="cpm30" Type="Decimal" Precision="19" Scale="4" />
@@ -2883,7 +2883,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="is_hiatus" Type="Boolean" Nullable="false" />
           <Property Name="units" Type="Int32" />
-          <Property Name="impressions" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Int32" />
           <Property Name="cost" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="proposal_version_detail_quarters" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_proposal_version_detail_quarters" FromRole="proposal_version_detail_quarter_weeks" ToRole="proposal_version_detail_quarters" />
           <Property Name="open_market_impressions_total" Type="Int64" Nullable="false" />
@@ -2902,7 +2902,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="quarter" Type="Byte" Nullable="false" />
           <Property Name="year" Type="Int32" Nullable="false" />
           <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="impressions_goal" Type="Int32" Nullable="false" />
+          <Property Name="impressions_goal" Type="Int32" />
           <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_proposal_version_detail_quarters" FromRole="proposal_version_detail_quarters" ToRole="proposal_version_detail_quarter_weeks" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" FromRole="proposal_version_detail_quarters" ToRole="proposal_version_details" />
         </EntityType>
@@ -3077,7 +3077,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="target_budget" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="target_units" Type="Int32" />
-          <Property Name="target_impressions" Type="Int32" Nullable="false" />
+          <Property Name="target_impressions" Type="Int32" />
           <Property Name="notes" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="post_type" Type="Byte" />
           <Property Name="equivalized" Type="Boolean" />
@@ -3174,7 +3174,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="units_total" Type="Int32" />
-          <Property Name="impressions_total" Type="Int32" Nullable="false" />
+          <Property Name="impressions_total" Type="Int32" />
           <Property Name="cost_total" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="adu" Type="Boolean" Nullable="false" />
           <Property Name="single_posting_book_id" Type="Int32" />
