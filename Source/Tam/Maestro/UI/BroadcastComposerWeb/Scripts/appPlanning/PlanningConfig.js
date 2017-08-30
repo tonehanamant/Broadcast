@@ -584,7 +584,7 @@
 
     getTestOpenMarketGridCfg: function (view) {
         var gridCfg = {
-            
+            name: 'TestOpemMarketGrid',
             show: { footer: true },
 
             columns: [
@@ -593,7 +593,7 @@
                     caption: 'Airing Time',
                     resizable: false,
                     sortable: false,
-                    size: '20px',
+                    size: '200px',
                     render: function (record, index, column_index) {
                         if (record.w2ui && record.w2ui.summary) return '';
                         if (record.isMarket) {

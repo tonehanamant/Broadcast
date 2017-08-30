@@ -41,12 +41,13 @@ var Test_OpenMarketModalGrid = BaseView.extend({
 
         //self.FilterVM = new FilterViewModel(self);
         //ko.applyBindings(this.FilterVM, document.getElementById("filter_modal"));
-
+        //self.initGrid();
         self.initModal();
     },
 
     initGrid: function () {
         this.openMarketsGrid = $('#test_open_market_grid').w2grid(PlanningConfig.getTestOpenMarketGridCfg(this));
+        console.log(this.openMarketsGrid);
     },
 
 
@@ -108,7 +109,7 @@ var Test_OpenMarketModalGrid = BaseView.extend({
     onSetInventory: function (checkEdits) {
         //initial render after shown
         if (!this.isActive) {
-           // this.initProgramGrids();
+           this.initGrid();
             this.isActive = true;
         }
         this.setGrid(this.activeInventoryData.Markets);
@@ -122,6 +123,7 @@ var Test_OpenMarketModalGrid = BaseView.extend({
 
     //test
     setGrid: function (markets) {
+        console.log(this.openMarketsGrid);
         var gridData = this.prepareProgramsGridData(markets);
         this.openMarketsGrid.clear();
         this.openMarketsGrid.add(gridData);
