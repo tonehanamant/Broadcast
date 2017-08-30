@@ -130,7 +130,7 @@
                         <div class="col-md-4">
                             <span><i class="fa fa-bullhorn" aria-hidden="true"></i> Target Impressions (000)</span>&nbsp;
                             <strong><span data-bind="text: numeral(totalImpressions()).format('0,0.[000]')"></span>/<span data-bind="text: numeral(detailTargetImpressions()).format('0,0.[000]')"></span></strong>
-                            <span class="label custom-label" data-bind="text: impressionsPercent().toString().match(/^-?\d+(?:\.\d{0,2})?/)[0] + '%', css: { 'label-danger': detailImpressionsMarginAchieved, 'label-success': !detailImpressionsMarginAchieved() }"></span>
+                            <span class="label custom-label" data-bind="text: impressionsPercent().toString().match(/^-?\d+(?:\.\d{0,2})?/)[0] + '%', css: { 'label-danger': !detailImpressionsMarginAchieved(), 'label-success': detailImpressionsMarginAchieved }"></span>
                         </div>
 
                         <div class="col-md-4">
