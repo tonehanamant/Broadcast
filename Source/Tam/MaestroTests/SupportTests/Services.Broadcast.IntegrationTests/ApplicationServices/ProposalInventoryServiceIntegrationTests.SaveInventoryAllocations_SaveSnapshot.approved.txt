@@ -1,0 +1,22 @@
+﻿{
+  "Components": [
+    {
+      "DaypartId": 6020,
+      "InventoryDetailSlotComponentId": 9497,
+      "InventoryDetailSlotId": 10206,
+      "ProprosalVersionDetailQuarterWeekId": 7,
+      "StationCode": 1171,
+      "StationProgramFlightId": 115223,
+      "StationProgramId": 224764
+    }
+  ],
+  "CreatedBy": "test-user",
+  "Impressions": 2000,
+  "InventoryDetailSlotId": 10206,
+  "Isci": null,
+  "Order": 1,
+  "ProprosalVersionDetailQuarterWeekId": 7,
+  "RolledUpDaypartId": 6722,
+  "SlotCost": 1.0000,
+  "SpotLengthId": 3
+}
