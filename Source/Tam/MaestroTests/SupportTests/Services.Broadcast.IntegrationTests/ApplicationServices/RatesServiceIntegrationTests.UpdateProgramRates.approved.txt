@@ -25,6 +25,6 @@
   "Program": "CADENT NEWS AT 11:30AM",
   "Rate15": 123.1400,
   "Rate30": 200.1200,
-  "Rating": 0.18,
+  "Rating": 0.18000000715255737,
   "Spots": null
 }

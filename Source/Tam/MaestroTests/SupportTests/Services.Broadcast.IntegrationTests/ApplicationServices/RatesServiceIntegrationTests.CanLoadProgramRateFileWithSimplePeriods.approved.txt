@@ -90,7 +90,7 @@
     "Program": "Simple Period News",
     "Rate15": 900.0000,
     "Rate30": 1800.0000,
-    "Rating": 2.7,
+    "Rating": 2.7000000476837158,
     "Spots": null
   }
 ]

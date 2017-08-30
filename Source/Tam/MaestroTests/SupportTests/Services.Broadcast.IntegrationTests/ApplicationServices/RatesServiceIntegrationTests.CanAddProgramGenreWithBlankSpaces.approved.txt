@@ -17,11 +17,11 @@
           "Display": "Integration Test"
         }
       ],
-      "Impressions": 5.9,
+      "Impressions": 5.90000009536743,
       "Program": "Integration Test",
       "Rate15": 10.0000,
       "Rate30": 20.0000,
-      "Rating": 1.4,
+      "Rating": 1.39999997615814,
       "Spots": null
     },
     {
@@ -35,11 +35,11 @@
           "Display": "Test"
         }
       ],
-      "Impressions": 5.9,
+      "Impressions": 5.90000009536743,
       "Program": "Integration Test",
       "Rate15": 10.0000,
       "Rate30": 20.0000,
-      "Rating": 1.4,
+      "Rating": 1.39999997615814,
       "Spots": null
     }
   ],

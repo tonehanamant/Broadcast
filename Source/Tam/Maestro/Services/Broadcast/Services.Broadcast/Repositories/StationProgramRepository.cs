@@ -159,8 +159,8 @@ namespace Services.Broadcast.Repositories
                                 .Select(a => new StationProgramFlightWeekAudience()
                                 {
                                     Audience = new DisplayAudience() { Id = a.audience_id },
-                                    Rating = (float?)a.rating,
-                                    Impressions = (float?)a.impressions,
+                                    Rating = a.rating,
+                                    Impressions = a.impressions,
                                     Cpm120 = a.cpm120,
                                     Cpm15 = a.cpm15,
                                     Cpm30 = a.cpm30,
@@ -525,8 +525,8 @@ namespace Services.Broadcast.Repositories
                                 .Select(a => new StationProgramFlightWeekAudience()
                                 {
                                     Audience = new DisplayAudience() { Id = a.audience_id },
-                                    Rating = (float?)a.rating,
-                                    Impressions = (float?)a.impressions,
+                                    Rating = a.rating,
+                                    Impressions = a.impressions,
                                     Cpm120 = a.cpm120,
                                     Cpm15 = a.cpm15,
                                     Cpm30 = a.cpm30,
@@ -579,8 +579,8 @@ namespace Services.Broadcast.Repositories
                                 .Select(a => new StationProgramFlightWeekAudience()
                                 {
                                     Audience = new DisplayAudience() { Id = a.audience_id },
-                                    Rating = (float?)a.rating,
-                                    Impressions = (float?)a.impressions,
+                                    Rating = a.rating,
+                                    Impressions = a.impressions,
                                     Cpm120 = a.cpm120,
                                     Cpm15 = a.cpm15,
                                     Cpm30 = a.cpm30,
@@ -790,7 +790,7 @@ namespace Services.Broadcast.Repositories
                                 {
                                     MediaWeekId = fw.media_week_id,
                                     IsHiatus = !fw.active,
-                                    Rate = (float)(spotLength == 15 ? fw.C15s_rate ?? 0
+                                    Rate = (double)(spotLength == 15 ? fw.C15s_rate ?? 0
                                             : spotLength == 30 ? fw.C30s_rate ?? 0
                                             : spotLength == 60 ? fw.C60s_rate ?? 0
                                             : spotLength == 90 ? fw.C90s_rate ?? 0

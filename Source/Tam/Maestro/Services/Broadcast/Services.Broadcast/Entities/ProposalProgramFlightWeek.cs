@@ -9,7 +9,7 @@ namespace Services.Broadcast.Entities
         public DateTime EndDate { get; set; }
         public bool IsHiatus { get; set; }
         public int MediaWeekId { get; set; }
-        public float Rate { get; set; }
+        public double Rate { get; set; }
         public List<OpenMarketAllocationDto> Allocations { get; set; }
     }
 }

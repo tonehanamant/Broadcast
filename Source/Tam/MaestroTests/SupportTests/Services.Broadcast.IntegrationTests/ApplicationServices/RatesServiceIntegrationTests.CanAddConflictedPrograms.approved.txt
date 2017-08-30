@@ -25,6 +25,6 @@
   "Program": "Integration Tests Program",
   "Rate15": 123.0,
   "Rate30": 251.0,
-  "Rating": 0.54,
+  "Rating": 0.54000002145767212,
   "Spots": null
 }
