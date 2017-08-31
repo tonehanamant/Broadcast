@@ -77,7 +77,7 @@ var ProposalController = BaseController.extend({
 
     apiGenerateScx: function (proposalId) {
         var url = baseUrl + 'api/Proposals/generate_scx_archive/' + proposalId;
-        window.open(url);
+        window.location = url;
     },
 
     apiGetProposal: function (proposalId, version, callback) {
