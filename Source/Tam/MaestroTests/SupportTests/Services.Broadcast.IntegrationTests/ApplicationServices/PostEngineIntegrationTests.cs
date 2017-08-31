@@ -76,6 +76,66 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        public void Post_Friday()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
+                var files = new post_files();
+                files.equivalized = false;
+                files.file_name = "abctest";
+                files.post_file_demos = new List<post_file_demos> { new post_file_demos { demo = 33 }, new post_file_demos { demo = 34 } };
+                files.playback_type = (byte)ProposalEnums.ProposalPlaybackType.LivePlus7;
+                files.posting_book_id = 413;
+                files.modified_date = DateTime.Now;
+                files.upload_date = DateTime.Now;
+
+                var detail = GetParsedDetail();
+                detail.date = detail.date.AddDays(1);
+                files.post_file_details.Add(detail);
+
+                var fileId = postUploadRepository.SavePost(files);
+
+                var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostEngine>();
+                sut.Post(files);
+
+                var file = postUploadRepository.GetPost(fileId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(file));
+            }
+        }
+
+        [Test]
+        public void Post_Sunday()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
+                var files = new post_files();
+                files.equivalized = false;
+                files.file_name = "abctest";
+                files.post_file_demos = new List<post_file_demos> { new post_file_demos { demo = 33 }, new post_file_demos { demo = 34 } };
+                files.playback_type = (byte)ProposalEnums.ProposalPlaybackType.LivePlus7;
+                files.posting_book_id = 413;
+                files.modified_date = DateTime.Now;
+                files.upload_date = DateTime.Now;
+
+                var detail = GetParsedDetail();
+                detail.date = detail.date.AddDays(3);
+                files.post_file_details.Add(detail);
+
+                var fileId = postUploadRepository.SavePost(files);
+
+                var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostEngine>();
+                sut.Post(files);
+
+                var file = postUploadRepository.GetPost(fileId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(file));
+            }
+        }
+
         internal static post_file_details GetParsedDetail()
         {
             var detail = new post_file_details();

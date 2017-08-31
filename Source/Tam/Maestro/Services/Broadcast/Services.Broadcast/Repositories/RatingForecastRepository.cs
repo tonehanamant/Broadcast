@@ -120,7 +120,7 @@ namespace Services.Broadcast.Repositories
                         p.DayOfWeek == DayOfWeek.Thursday,
                         p.DayOfWeek == DayOfWeek.Friday,
                         p.DayOfWeek == DayOfWeek.Saturday,
-                        p.DayOfWeek == DayOfWeek.Friday,
+                        p.DayOfWeek == DayOfWeek.Sunday,
                         p.TimeAired,
                         p.TimeAired));
 
