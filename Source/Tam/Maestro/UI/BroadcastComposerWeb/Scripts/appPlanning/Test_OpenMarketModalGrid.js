@@ -134,6 +134,10 @@ var Test_OpenMarketModalGrid = BaseView.extend({
         
         this.openMarketsGrid.add(gridRecs);
         this.openMarketsGrid.resize();
+        //hack this to change the outer column background to distinguish from weeks - W2ui dom has no way to isolate alone in CSS
+        var programsColumnGroup = $("#openmarket_programs_column_inner").closest("td").addClass('openmarket-program-column-group');
+        //console.log('programsColumnGroup', programsColumnGroup);
+        
     },
 
     //SORTING strategy is to change activeInventory (markets sort in Markets and Weeks/Markets) and reset grids; store changed records separately from grids for reset states
@@ -256,7 +260,7 @@ var Test_OpenMarketModalGrid = BaseView.extend({
         //if weekGroups.length?
         //make master?
         //set as empty headet to match height of weeks: 26 px = 12px height + top7 bottom7 padding
-        var colGroups = [{ span: 3, caption: '<div style="height: 12px; padding-right: 5px; text-align: right;">' + this.weeksLength + ' WEEKS:</div>' }];
+        var colGroups = [{ span: 3, caption: '<div id="openmarket_programs_column_inner" style="height: 12px; padding-right: 5px; text-align: right;">' + this.weeksLength + ' WEEKS:</div>' }];
         //var colGroups = [{ span: 1, caption: 'Airing Time', master:true }, { span: 1, caption: 'Program', master:true }, { span: 1, caption: 'CPM', master:true }]; //this does not work
         $.each(weekGroups, function (idx, group) {
             colGroups.push({caption: group, span: 3 })
