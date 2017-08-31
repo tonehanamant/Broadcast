@@ -500,7 +500,7 @@
         var gridCfg = {
             name: group ? ('OpenMarketWeekHeaderGrid_' + id) : ('OpenMarketWeekGrid_' + id),
             fixedBody: false,
-            columnGroups: group ? [{ caption: group, span: 4 }] : [],
+            columnGroups: group ? [{ caption: group, span: 3 }] : [],
             show: { columnHeaders: group ? true : false },
             columns: [
                 {
@@ -582,18 +582,24 @@
         return util.copyData(gridCfg, null, null, true);
     },
 
-    getTestOpenMarketGridCfg: function (view) {
+    //work in column groups for weeks and column set for each week
+    getTestOpenMarketGridCfg: function (view, weeksLength) {
         var gridCfg = {
             name: 'TestOpemMarketGrid',
             show: { footer: true },
-
-            columns: [
+            onSelect: function (event) {
+                //to prevent selection (styling on grids)
+                event.preventDefault();
+            }
+        };
+        var columns = [
                 {
                     field: 'DayPart',
                     caption: 'Airing Time',
                     resizable: false,
+                    frozen: true,
                     sortable: false,
-                    size: '200px',
+                    size: '280px',
                     render: function (record, index, column_index) {
                         if (record.w2ui && record.w2ui.summary) return '';
                         if (record.isMarket) {
@@ -611,15 +617,17 @@
                 {
                     field: 'ProgramName',
                     caption: 'Program',
+                    frozen: true,
                     resizable: false,
                     sortable: false,
-                    size: '150px'
+                    size: '200px'
                 },
                 {
                     field: 'TargetCpm',
                     //TBD? toggle between w2ui-sort-up / w2ui-sort-down
                     //caption: 'CPM <div class="sort_indicator" id="TargetCpm_sort"></div>',
                     caption: 'CPM',
+                    frozen: true,
                     sortable: false,
                     resizable: false,
                     size: '80px',
@@ -635,12 +643,99 @@
                         }
                     }
                 }
-            ],
-            onSelect: function (event) {
-                //to prevent selection (styling on grids)
-                event.preventDefault();
-            }
-        };
+        ];
+
+        var me = this;
+        for (var i = 0; i < weeksLength; i++) {
+            columns = columns.concat(me.getWeekColumnsCfg(i));
+        }
+
+        gridCfg.columns = columns;
+
         return gridCfg;
-    }
+    },
+    //test getting column sets
+    //either use name + idx or use all as week object?
+    //todo editing revision
+    getWeekColumnsCfg: function (weekIdx) {
+        var getWeekData = function (record) { return record['week' + weekIdx] };
+        var columns = [
+                {
+                    field: 'week' + weekIdx,
+                    caption: 'Spots',
+                    sortable: false,
+                    resizable: false,
+                    size: '200px',
+                    render: function (record, index, column_index) {
+                        if (record.isStation) return '';
+                        var week = getWeekData(record);
+                        var spot = week.Spots ? week.Spots : '-';
+                        if (record.isProgram) {
+                            if (!week.active) return 'Unavailable'; //class will grey out
+                            //TODO - now need to deal with greying here
+                            if (week.isHiatus) return spot;
+                            //TODO change this id
+                            var cellId = 'program_week_spot_' + record.recid;
+                            var changedCls = week.isChanged ? 'w2ui-changed' : '';
+                            var cell = '<div id="' + cellId + '" class="flex-container-1 editable-cell ' + changedCls + '">';
+                            cell += '<input type="number" class="edit-input" step="1" style="display: none !important" />';
+                            cell += '<div>' + spot + '</div>';
+                            cell += '<div style="color: #bbbaba" class="glyphicon glyphicon-edit" aria-hidden="true"></div>';
+                            cell += "</div>";
+                            return cell;
+                        } else {
+                            return spot;
+                        }
+                    }
+                },
+                {
+                    field: 'week' + weekIdx,
+                    caption: 'Imp (000)',
+                    sortable: false,
+                    resizable: false,
+                    size: '150px',
+                    render: function (record, index, column_index) {
+                       
+                        //format of impressions and dash
+                        if (record.isStation) return '';
+                        var week = getWeekData(record);
+                        if (record.isProgram) {//display val including 0 unless not active
+                            if (!week.active) return '-'; //TODO needs to be set now// class will grey out
+                            //TODO hiatus neds set here
+                            var val = numeral(week.TotalImpressions).format('0,0.[000]');
+                            return PlanningConfig.greyRenderer(val, week.Spots === 0);
+                        } else {//market display val or dash
+                            return week.Impressions ? numeral(week.Impressions).format('0,0.[000]') : '-';
+                        }
+
+                    }
+                },
+
+                {
+                    field: 'week' + weekIdx,
+                    caption: 'Cost',
+                    sortable: false,
+                    resizable: false,
+                    size: '150px',
+                    render: function (record, index, column_index) {
+                        if (record.isStation) return '';
+                        var week = getWeekData(record);
+                        if (record.isProgram) {//display val including 0 unless not active
+                            if (!week.active) return '-'; //class will grey out
+
+                            var val = week.Cost ? numeral(week.Cost).format('$0,0[.]00') : '-';
+                            return PlanningConfig.greyRenderer(val, week.Spots === 0);
+                        } else {//market display val or dash
+                            return numeral(week.Cost).format('$0,0[.]00');
+                        }
+                    }
+                }
+
+        ];
+
+           
+        //return copy?
+        return util.copyData(columns, null, null, true);
+        //return columns;
+    },
 };

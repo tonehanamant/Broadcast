@@ -7,6 +7,7 @@ var Test_OpenMarketModalGrid = BaseView.extend({
     //activeDetailSet: null,
     isActive: false,
     openMarketsGrid: null,
+    weeksLength: null,
     //programsGrid: null,
     //programsHeaderGrid: null,
     //inventoryWeekGrids: [],
@@ -45,9 +46,10 @@ var Test_OpenMarketModalGrid = BaseView.extend({
         self.initModal();
     },
 
+    //set grid with dynamic columns via the weeks length
+    //TBD to recreate on open or adjust columns in current
     initGrid: function () {
-        this.openMarketsGrid = $('#test_open_market_grid').w2grid(PlanningConfig.getTestOpenMarketGridCfg(this));
-        console.log(this.openMarketsGrid);
+        this.openMarketsGrid = $('#test_open_market_grid').w2grid(PlanningConfig.getTestOpenMarketGridCfg(this, this.weeksLength));
     },
 
 
@@ -104,15 +106,16 @@ var Test_OpenMarketModalGrid = BaseView.extend({
         }
     },
 
-    //REVISE
+    //REVISE - sey active back on close?
     //after modal shown/refresh - set inventory views
     onSetInventory: function (checkEdits) {
         //initial render after shown
         if (!this.isActive) {
-           this.initGrid();
+            this.weeksLength = this.activeInventoryData.Weeks.length;
+            this.initGrid();
             this.isActive = true;
         }
-        this.setGrid(this.activeInventoryData.Markets);
+        this.setGrid();
 
         //will only reset if recorded
         //this.scrollToLastPosition();
@@ -122,11 +125,14 @@ var Test_OpenMarketModalGrid = BaseView.extend({
     },
 
     //test
-    setGrid: function (markets) {
-        console.log(this.openMarketsGrid);
-        var gridData = this.prepareProgramsGridData(markets);
+    setGrid: function () {
+        //console.log(this.openMarketsGrid);
+        //var gridData = this.prepareProgramsGridData(markets);
         this.openMarketsGrid.clear();
-        this.openMarketsGrid.add(gridData);
+        var gridRecs = this.setProgramsWeeksRecords();//test will also set column groups
+        console.log('setProgramsWeeksRecords', gridRecs);
+        
+        this.openMarketsGrid.add(gridRecs);
         this.openMarketsGrid.resize();
     },
 
@@ -243,7 +249,22 @@ var Test_OpenMarketModalGrid = BaseView.extend({
         this.programsGrid.resize();
     },
 
-    //WEEK GRIDS - multiple grouped
+    //WEEKs and Column Groups
+    //try to set each setGrid by inserting?
+    setAllColumnGroups: function (weekGroups) {
+        var $scope = this;
+        //if weekGroups.length?
+        //make master?
+        //set as empty headet to match height of weeks: 26 px = 12px height + top7 bottom7 padding
+        var colGroups = [{ span: 3, caption: '<div style="height: 12px; padding-right: 5px; text-align: right;">' + this.weeksLength + ' WEEKS:</div>' }];
+        //var colGroups = [{ span: 1, caption: 'Airing Time', master:true }, { span: 1, caption: 'Program', master:true }, { span: 1, caption: 'CPM', master:true }]; //this does not work
+        $.each(weekGroups, function (idx, group) {
+            colGroups.push({caption: group, span: 3 })
+        });
+
+        this.openMarketsGrid.columnGroups = colGroups;
+        //may need refresh?
+    },
 
     //for use in grid column settings and for updates
     getWeekColumnGroup: function (week) {
@@ -316,6 +337,76 @@ var Test_OpenMarketModalGrid = BaseView.extend({
         });
 
     },
+
+    //TBD - get the market part for a week record
+    getWeekMarketItem: function (market, isHiatus) {
+        var ret = {
+            Cost: market.Cost,
+            Spots: market.Spots,
+            //EFF: market.EFF,
+            Impressions: market.Impressions,
+            isHiatus: isHiatus
+        };
+        //need to set style color per columns - use renderer?
+        //ret.w2ui = isHiatus ? { "style": "color: #8f8f8f; background-color: #dedede;" } : { "style": "background-color: #dedede" };
+        return ret;
+    },
+
+    getWeekProgramItem: function (program, week, market, indexes) {
+        var ret;
+        if (!program) {//is null so not available throughout; 
+            ret = { active: false};//isProgram?
+        } else {
+            //pass week index or convention to identify?
+            program.isHiatus = week.IsHiatus;
+            program.active = true;//overall active
+            program.isChanged = false;//overall edited
+            program.initialSpots = program.Spots; //to determine if real change on edit/save
+
+            program.MediaWeekId = week.MediaWeekId;
+            //program.StationCode = station.StationCode;
+            program.MarketId = market.MarketId;
+            //for accessing stored data
+            program.marketDataIdx = indexes[0]; //mIdx;
+            program.stationDataIdx = indexes[1]; //sIdx;
+            program.programDataIdx = indexes[2]; //pIdx;
+            ret = program;
+        }
+
+        return ret;
+    },
+
+    setProgramsWeeksRecords: function () {
+        
+        var recs = this.prepareProgramsGridData(this.activeInventoryData.Markets);
+        var $scope = this;
+        var groups = [];  //test setting column groups
+        $.each(this.activeInventoryData.Weeks, function (weekIdx, week) {
+            var group = $scope.getWeekColumnGroup(week);
+            //append a div with Id to use for updates later          
+            groups.push('<div id="openmarket_week_column_group_' + week.MediaWeekId + '">' + group + '</div>');
+            var markets = week.Markets;
+            var recIdx = 0;
+            $.each(markets, function (mIdx, market) {
+                recs[recIdx]['week' + weekIdx] = $scope.getWeekMarketItem(market, week.IsHiatus);
+                recIdx++;
+                var stationPrograms = market.Stations;
+                $.each(stationPrograms, function (sIdx, station) {
+                    //station does not need week data?
+                    recIdx++;
+                    $.each(station.Programs, function (pIdx, program) {
+                        recs[recIdx]['week' + weekIdx] = $scope.getWeekProgramItem(program, week, market, [mIdx, sIdx, pIdx]);
+                        recIdx++
+                    });
+                });
+            });
+        });
+        this.setAllColumnGroups(groups);
+        return recs;
+    },
+
+
+    /////////////original
 
     //get week market row (contains data)
     getWeekMarketRow: function (market, isHiatus) {

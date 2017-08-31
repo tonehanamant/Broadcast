@@ -4,6 +4,10 @@
     #test_open_market_grid {
         height: 600px;
     }
+
+    /*#grid_TestOpemMarketGrid_column_0 {
+        background-image: -webkit-linear-gradient(#f9f9f9, #999);
+    }*/
     /* Open Market Header */
 
     #openmarket_header.modal-header {
@@ -46,8 +50,8 @@
 <div class="modal slide-in modal-attached" id="test_proposal_detail_openmarket_modal" role="dialog">
     <div class="modal-dialog modal-xlg">
         <div class="modal-content" id="test_proposal_openmarket_view">
-            <div id="test_openmarket_header" class="modal-header">
-                <div id="test_openmarket_main_title" class="panel-body well">
+            <div id="openmarket_header" class="modal-header">
+                <div id="openmarket_main_title" class="panel-body well">
                     <span class="cadent-dk-blue" id="test_openmarket_header_prefix">Open Market Inventory</span>&nbsp; - &nbsp;
                     @*<strong data-bind="text: inventoryPlanId"></strong>&nbsp; - &nbsp;
                     <strong class="cadent-dk-blue" data-bind="text: proposalName"></strong>&nbsp; - &nbsp; Weeks &nbsp;
@@ -89,7 +93,9 @@
             <div class="modal-body">
 
                 <div class="header-row row" style="margin-top: 10px;">
-                    <h4>Grid Header</h4>
+                    <div class="col-md-4">
+                    Grid Header: Refine | Distribute | Filters...
+                    </div>
                 </div>
 
                 <div id="test_open_market_grid"></div>
