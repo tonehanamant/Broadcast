@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities;
+﻿using System;
+using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -75,29 +76,29 @@ namespace Services.Broadcast.BusinessEngines
                 programDetails.TotalCost = spotsForCalculation * programDetails.SpotCost;
 
                 // demo specific calculation
-                var targetImpressions = programDetails.DemoRating*programDetails.MarketSubscribers*
+                var targetImpressions = programDetails.DemoRating * programDetails.MarketSubscribers *
                                         spotsForCalculation;
 
                 programDetails.TargetImpressions = targetImpressions;
                 programDetails.TargetCpm = targetImpressions != 0
-                    ? (decimal) ((float) programDetails.TotalCost/targetImpressions)*1000
+                    ? (decimal)((float)programDetails.TotalCost / targetImpressions) * 1000
                     : 0;
                 programDetails.TRP = nsiData.TotalDemoUniverse != 0
-                    ? (targetImpressions/nsiData.TotalDemoUniverse)*100
+                    ? (targetImpressions / nsiData.TotalDemoUniverse) * 100
                     : 0;
 
                 //household specific calculation (only if user didn't select HH as target)
                 if (proposal.GuaranteedDemoId.HasValue &&
                     proposal.GuaranteedDemoId.Value != BroadcastConstants.HouseHoldAudienceId)
                 {
-                    var hhImpressions = programDetails.HouseHoldRating*programDetails.HouseHoldMarketSubscribers*
+                    var hhImpressions = programDetails.HouseHoldRating * programDetails.HouseHoldMarketSubscribers *
                                         spotsForCalculation;
 
                     programDetails.HHImpressions = hhImpressions;
                     programDetails.HHeCPM = hhImpressions != 0
-                        ? (decimal) ((float) programDetails.TotalCost/hhImpressions)*1000
+                        ? (decimal)((float)programDetails.TotalCost / hhImpressions) * 1000
                         : 0;
-                    programDetails.GRP = nsiData.TotalHHUniverse != 0 ? (hhImpressions/nsiData.TotalHHUniverse)*100 : 0;
+                    programDetails.GRP = nsiData.TotalHHUniverse != 0 ? (hhImpressions / nsiData.TotalHHUniverse) * 100 : 0;
                 }
             }
 
@@ -260,9 +261,10 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var program in programs)
             {
                 var activeWeeks = program.FlightWeeks.Where(w => w.IsHiatus == false).ToList();
-                var totalCost = (decimal) activeWeeks.Sum(w => w.Rate);
+                var totalCost = (decimal)activeWeeks.Sum(w => w.Rate);
                 var totalImpressions = program.UnitImpressions * activeWeeks.Count;
-                program.TargetCpm = totalImpressions > 0 ? totalCost / (decimal)totalImpressions : 0;
+                var rawCpm = totalImpressions > 0 ? totalCost / (decimal)totalImpressions : 0;
+                program.TargetCpm = Math.Round(rawCpm, 2);
             }
         }
     }

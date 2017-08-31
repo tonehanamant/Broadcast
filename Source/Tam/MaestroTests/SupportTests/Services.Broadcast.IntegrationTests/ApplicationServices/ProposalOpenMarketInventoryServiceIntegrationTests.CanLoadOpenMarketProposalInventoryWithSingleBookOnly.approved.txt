@@ -29,7 +29,7 @@
             "ProgramName": "Open Market Program",
             "Spots": 0,
             "StationCode": 4544,
-            "TargetCpm": 0.0586254959350546756031464304,
+            "TargetCpm": 0.06,
             "TargetImpressions": 0.0,
             "UnitImpressions": 170.57425
           }
@@ -60,7 +60,7 @@
             "ProgramName": "Open Market Program Too",
             "Spots": 0,
             "StationCode": 5923,
-            "TargetCpm": 1.0818412938821874830962297831,
+            "TargetCpm": 1.08,
             "TargetImpressions": 0.0,
             "UnitImpressions": 18.487
           }
@@ -99,7 +99,7 @@
             "ProgramName": "Open Market Program 3",
             "Spots": 0,
             "StationCode": 5017,
-            "TargetCpm": 0.0121040146394022392023615739,
+            "TargetCpm": 0.01,
             "TargetImpressions": 0.0,
             "UnitImpressions": 2478.5165
           }
@@ -138,7 +138,7 @@
             "ProgramName": "Open Market Program 2",
             "Spots": 0,
             "StationCode": 5982,
-            "TargetCpm": 2.1495745633676668159426780116,
+            "TargetCpm": 2.15,
             "TargetImpressions": 0.0,
             "UnitImpressions": 13.95625
           }
@@ -169,7 +169,7 @@
             "ProgramName": "Open Market Program 4",
             "Spots": 0,
             "StationCode": 6852,
-            "TargetCpm": 3.7312272628338671061223220671,
+            "TargetCpm": 3.73,
             "TargetImpressions": 0.0,
             "UnitImpressions": 8.04025
           }
