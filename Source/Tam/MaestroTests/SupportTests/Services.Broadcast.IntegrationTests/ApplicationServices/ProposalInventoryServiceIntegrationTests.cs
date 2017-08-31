@@ -198,12 +198,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Deletes =
                         new List<ProprietaryInventorySlotProposal>
                         {
-                            new ProprietaryInventorySlotProposal {QuarterWeekId = 7, Order = 1, SpotLength = 30, Impressions = 30203}
+                            new ProprietaryInventorySlotProposal {QuarterWeekId = 7, Order = 1, SpotLength = 30, Impressions = 30203.123d}
                         },
                     Adds =
                         new List<ProprietaryInventorySlotProposal>
                         {
-                            new ProprietaryInventorySlotProposal {QuarterWeekId = 7, Order = 1, SpotLength = 30, Impressions = 2000}
+                            new ProprietaryInventorySlotProposal {QuarterWeekId = 7, Order = 1, SpotLength = 30, Impressions = 2000.12d}
                         },
                 });
 

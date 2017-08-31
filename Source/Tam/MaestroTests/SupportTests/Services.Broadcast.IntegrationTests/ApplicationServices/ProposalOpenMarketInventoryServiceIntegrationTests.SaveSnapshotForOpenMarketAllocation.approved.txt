@@ -1,7 +1,7 @@
 ﻿[
   {
     "CreatedBy": "test-user",
-    "Impressions": 1234000,
+    "Impressions": 1234.0,
     "Isci": null,
     "ProposalVersionDetailQuarterWeekId": 7,
     "SpotCost": 488.0000,

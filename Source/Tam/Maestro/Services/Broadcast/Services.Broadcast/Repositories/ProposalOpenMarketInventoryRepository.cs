@@ -192,7 +192,7 @@ namespace Services.Broadcast.Repositories
                         .Select(s => new OpenMarketInventoryAllocationSnapshotDto
                         {
                             CreatedBy = s.created_by,
-                            Impressions = s.impressions,
+                            Impressions = s.impressions / 1000d,
                             Isci = s.isci,
                             ProposalVersionDetailQuarterWeekId = s.proprosal_version_detail_quarter_week_id,
                             SpotCost = s.spot_cost,

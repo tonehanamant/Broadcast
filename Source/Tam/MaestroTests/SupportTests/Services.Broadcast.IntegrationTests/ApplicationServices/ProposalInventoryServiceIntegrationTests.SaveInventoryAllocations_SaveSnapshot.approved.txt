@@ -11,7 +11,7 @@
     }
   ],
   "CreatedBy": "test-user",
-  "Impressions": 2000,
+  "Impressions": 2000.12,
   "InventoryDetailSlotId": 10206,
   "Isci": null,
   "Order": 1,

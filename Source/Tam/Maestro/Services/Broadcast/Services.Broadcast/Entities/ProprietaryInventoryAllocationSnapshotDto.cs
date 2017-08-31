@@ -12,7 +12,7 @@ namespace Services.Broadcast.Entities
         public int RolledUpDaypartId { get; set; }
         public decimal SlotCost { get; set; }
         public int SpotLengthId { get; set; }
-        public int Impressions { get; set; }
+        public double Impressions { get; set; }
         public List<ProprietaryInventoryAllocationSnapshotComponentDto> Components { get; set; }
     }
 }
