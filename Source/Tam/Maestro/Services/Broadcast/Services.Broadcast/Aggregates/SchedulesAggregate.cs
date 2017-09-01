@@ -33,17 +33,17 @@ namespace Services.Broadcast.Aggregates
 
         public SchedulesAggregate(schedule schedule,
                                     List<ScheduleAudience> scheduleAudiences,
-                                    List<schedule_details> scheduleDetails, 
-                                    List<schedule_iscis> scheduleIscis, 
-                                    List<schedule_detail_audiences> scheduleDetailAudiences, 
+                                    List<schedule_details> scheduleDetails,
+                                    List<schedule_iscis> scheduleIscis,
+                                    List<schedule_detail_audiences> scheduleDetailAudiences,
                                     List<schedule_detail_weeks> scheduleDetailWeeks,
-                                    List<bvs_file_details> bvsFileDetails, 
-                                    List<bvs_post_details> bvsPostDetails, 
+                                    List<bvs_file_details> bvsFileDetails,
+                                    List<bvs_post_details> bvsPostDetails,
                                     List<DisplayMediaWeek> mediaWeeks,
-                                    SchedulePostType postType, 
-                                    RatesFile.RateSourceType inventorySource, 
-                                    bool isEquivalized, 
-                                    DateTime startDate, 
+                                    SchedulePostType postType,
+                                    RatesFile.RateSourceType inventorySource,
+                                    bool isEquivalized,
+                                    DateTime startDate,
                                     DateTime endDate,
                                     Dictionary<string, string> stationToAffiliateDict)
         {
@@ -217,8 +217,14 @@ namespace Services.Broadcast.Aggregates
         {
             var scheduleWeeks = _ScheduleDetailWeeks.Where(x => x.schedule_detail_id == scheduleDetailId).Select(w => w.id).ToList();
             // yes, this can be null
-            return _BvsFileDetails.Where(b => b.schedule_detail_week_id.HasValue 
-                                                        &&  scheduleWeeks.Contains(b.schedule_detail_week_id.Value)).ToList();
+            return _BvsFileDetails.Where(b => b.schedule_detail_week_id.HasValue
+                                                        && scheduleWeeks.Contains(b.schedule_detail_week_id.Value)).ToList();
+        }
+
+        public int GetDeliveredCountFromScheduleWeeks(IEnumerable<int> scheduleWeekIds)
+        {
+            return _BvsFileDetails.Count(b => b.schedule_detail_week_id.HasValue
+                                              && scheduleWeekIds.Contains(b.schedule_detail_week_id.Value));
         }
         public List<bvs_file_details> GetBvsDetails()
         {
@@ -415,7 +421,7 @@ namespace Services.Broadcast.Aggregates
     }
 
     public class AudienceImpressionsAndDelivery
-    {   
+    {
         public int? Impressions { get; set; }
         public int AudienceId { get; set; }
         public double Delivery { get; set; }
@@ -429,6 +435,6 @@ namespace Services.Broadcast.Aggregates
         public int Rank { get; set; }
         public int Population { get; set; }
 
-        public bool IsHouseHold { get { return AudienceId == BroadcastConstants.HouseHoldAudienceId; }  }
+        public bool IsHouseHold { get { return AudienceId == BroadcastConstants.HouseHoldAudienceId; } }
     }
 }
