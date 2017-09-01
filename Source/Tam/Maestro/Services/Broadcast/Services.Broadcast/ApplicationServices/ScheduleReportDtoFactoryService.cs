@@ -59,7 +59,7 @@ namespace Services.Broadcast.ApplicationServices
             var advertiserDataDto = new AdvertiserDataDto(scheduleAudiences);
             var coreDataList = new List<AdvertiserCoreData>();
 
-            var bvsDetailList = _GatherCoreDataAndBvsDetails(schedulesAggregate, scheduleAudiences,coreDataList);
+            var bvsDetailList = _GatherCoreDataAndBvsDetails(schedulesAggregate, scheduleAudiences, coreDataList);
 
             _GatherAdvertiserData(schedulesAggregate, scheduleAudiences, coreDataList, advertiserDataDto);
             //END Advertiser Data
@@ -181,7 +181,7 @@ namespace Services.Broadcast.ApplicationServices
             return result;
 
         }
-  
+
         private OutOfSpecToDateDto _GatherOutOfSpecToDateData(SchedulesAggregate schedulesAggregate,
                                                                 List<ScheduleAudience> scheduleAudiences,
                                                                 IEnumerable<bvs_file_details> outOfSpecBvsDetails)
@@ -275,18 +275,19 @@ namespace Services.Broadcast.ApplicationServices
             return outOfSpecToDate;
         }
 
-        private List<bvs_file_details> _GatherStationSummaryData(SchedulesAggregate schedulesAggregate, 
-                                                                    List<ScheduleAudience> scheduleAudiences, 
+        private List<bvs_file_details> _GatherStationSummaryData(SchedulesAggregate schedulesAggregate,
+                                                                    List<ScheduleAudience> scheduleAudiences,
                                                                     List<AdvertiserCoreData> coreDataList,
-                                                                    StationSummaryDto stationSummaryData, 
+                                                                    StationSummaryDto stationSummaryData,
                                                                     List<bvs_file_details> bvsDetailList)
         {
             foreach (var coreData in coreDataList)
             {
                 var scheduleDetail = coreData.ScheduleDetail;
-                
+
                 var orderedSpots = scheduleDetail.schedule_detail_weeks.Sum(w => w.spots);
-                int deliveredSpots = scheduleDetail.schedule_detail_weeks.Sum(w => w.filled_spots);
+                int deliveredSpots = schedulesAggregate.GetDeliveredCountFromScheduleWeeks(
+                        scheduleDetail.schedule_detail_weeks.Select(w => w.id));
 
                 if (orderedSpots == 0 && deliveredSpots == 0)
                     continue;
@@ -304,7 +305,7 @@ namespace Services.Broadcast.ApplicationServices
                     Cost = (double)scheduleDetail.spot_cost * (double)deliveredSpots,
                     OrderedSpots = orderedSpots,
                     DeliveredSpots = deliveredSpots,
-                    SpotClearance = deliveredSpots / (double)orderedSpots,
+                    SpotClearance = (double)deliveredSpots / (double)orderedSpots,
                     Status = 1,
                     SpecStatus = specStatus,
                 };
@@ -319,8 +320,8 @@ namespace Services.Broadcast.ApplicationServices
                         Impressions = 0,
                     };
 
-                    var audienceImpressions =  audienceData.Sum(a => a.impressions);
-                    audienceImpressionAndDelivery.Impressions += scheduleDetail.total_spots*audienceImpressions;
+                    var audienceImpressions = audienceData.Sum(a => a.impressions);
+                    audienceImpressionAndDelivery.Impressions += scheduleDetail.total_spots * audienceImpressions;
 
                     var audienceAndDeliver =
                         coreData.BvsDetails
@@ -430,7 +431,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             return outOfSpecBvsDetails;
         }
-        
+
 
         private List<bvs_file_details> _GatherCoreDataAndBvsDetails(SchedulesAggregate schedulesAggregate,
                                                   List<ScheduleAudience> scheduleAudiences,
@@ -471,100 +472,6 @@ namespace Services.Broadcast.ApplicationServices
             return bvsDetailList;
         }
 
-        //private List<bvs_file_details> _GatherCoreAndBvsDetailData(SchedulesAggregate schedulesAggregate,
-        //                                                    List<ScheduleAudience> scheduleAudiences,
-        //                                                    List<AdvertiserCoreData> coreDataList)
-        //{
-        //    var marketNamedRanks = GetMarketRanks(schedulesAggregate);
-
-        //    var spotLengthRepo = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
-        //    var bvsDetailList = _ApplyNtiExclusions(schedulesAggregate.GetBvsDetails(), schedulesAggregate.PostType);
-
-        //    var details = schedulesAggregate.GetScheduleDetails();
-        //    foreach (var scheduleDetail in details) //in-spec
-        //    {
-        //        AdvertiserCoreData coreReportData = null;
-        //        var bvsDetails = schedulesAggregate.GetBvsDetailsByScheduleId(scheduleDetail.id).ToList();
-        //        if (!bvsDetails.IsNullOrEmpty())
-        //        {
-        //            foreach (var bvsDetail in bvsDetails)
-        //            {
-        //                int? bvsDetailId = bvsDetail.id;
-        //                var scheduleDetailWeek = schedulesAggregate.GetScheduleDetailWeekById(bvsDetail.schedule_detail_week_id.Value);
-
-        //                var mediaWeekId = scheduleDetailWeek.media_week_id;
-        //                var scheduleDetailWeekId = scheduleDetailWeek.id;
-
-        //                coreReportData = new AdvertiserCoreData
-        //                {
-        //                    Rank = bvsDetail.rank,
-        //                    Market = scheduleDetail.market,
-        //                    Station = scheduleDetail.network,
-        //                    Affiliate = bvsDetail.affiliate,
-        //                    ProgramName = bvsDetail.program_name,
-        //                    GroupedByName = scheduleDetail.program,
-        //                    SpotLength = bvsDetail.spot_length,
-        //                    ScheduleDetailId = scheduleDetail.id,
-        //                    ScheduleDetailWeekId = scheduleDetailWeekId,
-        //                    MediaWeekId = mediaWeekId,
-        //                    DateAired = bvsDetail.date_aired,
-        //                    TimeAired = bvsDetail.time_aired,
-        //                    IsBvsDetail = true
-        //                };
-        //                foreach (var audience in scheduleAudiences)
-        //                {
-        //                    var audienceImpressionAndDelivery =
-        //                        schedulesAggregate.GetImpressionsDetailsByScheduleDetailAndAudience(scheduleDetail.id,
-        //                            audience.AudienceId, bvsDetailId);
-        //                    if (audienceImpressionAndDelivery != null)
-        //                    {
-        //                        coreReportData.AudienceImpressions.Add(audienceImpressionAndDelivery);
-        //                    }
-        //                }
-
-        //                coreDataList.Add(coreReportData);
-        //            }
-        //        }
-        //        int rank;
-        //        if (!marketNamedRanks.TryGetValue(scheduleDetail.market, out rank))
-        //            rank = 0;
-
-        //        int spotLength = spotLengthRepo.GetSpotLengthById(scheduleDetail.spot_length_id.Value);
-        //        foreach (var scheduleWeek in scheduleDetail.schedule_detail_weeks)
-        //        {
-        //            string aff = schedulesAggregate.GetDetailAffiliateFromScheduleDetailId(scheduleDetail.network);
-        //            coreReportData = new AdvertiserCoreData
-        //            {
-        //                Rank = rank,
-        //                Market = scheduleDetail.market,
-        //                Station = scheduleDetail.network,
-        //                Affiliate = aff,
-        //                ProgramName = scheduleDetail.program,
-        //                GroupedByName = scheduleDetail.program,
-        //                SpotLength = spotLength,
-        //                ScheduleDetailId = scheduleDetail.id,
-        //                ScheduleDetailWeekId = scheduleWeek.id,
-        //                MediaWeekId = scheduleWeek.media_week_id,
-        //                DateAired = new DateTime(),
-        //                TimeAired = 0
-        //            };
-        //            foreach (var audience in scheduleAudiences)
-        //            {
-        //                var audienceImpressionAndDelivery =
-        //                    schedulesAggregate.GetImpressionsDetailsByScheduleDetailAndAudience(scheduleDetail.id,
-        //                        audience.AudienceId, null);
-        //                if (audienceImpressionAndDelivery != null)
-        //                {
-        //                    coreReportData.fAudienceImpressions.Add(audienceImpressionAndDelivery);
-        //                }
-        //            }
-
-        //            coreDataList.Add(coreReportData);
-        //        }
-        //    }
-
-        //    return bvsDetailList;
-        //}
 
         private void _GatherAdvertiserData(SchedulesAggregate schedulesAggregate,
                                                             List<ScheduleAudience> scheduleAudiences,
@@ -576,7 +483,10 @@ namespace Services.Broadcast.ApplicationServices
                 var scheduleDetail = coreData.ScheduleDetail;
 
                 var orderedSpots = scheduleDetail.total_spots;
-                var deliveredSpots = scheduleDetail.schedule_detail_weeks.Sum(w => w.filled_spots);
+                var deliveredSpots =
+                    schedulesAggregate.GetDeliveredCountFromScheduleWeeks(
+                        scheduleDetail.schedule_detail_weeks.Select(w => w.id));
+                
                 if (orderedSpots == 0 && deliveredSpots == 0)
                     continue;
 
@@ -644,8 +554,8 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private WeeklyDataDto _GatherWeeklyData(SchedulesAggregate schedulesAggregate, 
-                                        List<ScheduleAudience> scheduleAudiences, 
+        private WeeklyDataDto _GatherWeeklyData(SchedulesAggregate schedulesAggregate,
+                                        List<ScheduleAudience> scheduleAudiences,
                                         List<AdvertiserCoreData> coreDataList,
                                         List<bvs_file_details> bvsDetailList)
         {
@@ -668,15 +578,15 @@ namespace Services.Broadcast.ApplicationServices
                 };
                 weeklyData.ReportDataByWeek.Add(weeklyDto);
 
-                    
+
                 //In Spec
                 foreach (var detail in coreDataList)
                 {
-                    var scheduleDetail = detail.ScheduleDetail;;
+                    var scheduleDetail = detail.ScheduleDetail; ;
 
                     var weekDetail = scheduleDetail.schedule_detail_weeks.Where(w => w.media_week_id == week.Id);
                     var orderedSpots = weekDetail.Sum(w => w.spots);
-                    var deliveredSpots = weekDetail.Sum(w => w.filled_spots);
+                    var deliveredSpots = schedulesAggregate.GetDeliveredCountFromScheduleWeeks(weekDetail.Select(w => w.id));
 
                     if (orderedSpots == 0 && deliveredSpots == 0)
                         continue;
@@ -691,10 +601,10 @@ namespace Services.Broadcast.ApplicationServices
                         ProgramName = detail.ProgramName,
                         SpotLength = detail.SpotLength,
                         DisplayDaypart = _DaypartCache.GetDisplayDaypart(scheduleDetail.daypart_id),
-                        Cost = (double)scheduleDetail.spot_cost * deliveredSpots,
+                        Cost = (double)scheduleDetail.spot_cost * (double)deliveredSpots,
                         OrderedSpots = orderedSpots,
                         DeliveredSpots = deliveredSpots,
-                        SpotClearance = deliveredSpots / (double)orderedSpots,
+                        SpotClearance = (double)deliveredSpots / (double)orderedSpots,
                         Status = 1, //in-spec
                         SpecStatus = status,
                     };
@@ -706,9 +616,9 @@ namespace Services.Broadcast.ApplicationServices
                                 x => x.schedule_detail_id == scheduleDetail.id && x.audience_id == audience.AudienceId);
                         var audienceImpressions = (audienceData == null ? 0 : audienceData.impressions);
                         var deliveries =
-                            detail.BvsDetails.Where(dg => dg.schedule_detail_weeks.media_week_id == week.Id )
+                            detail.BvsDetails.Where(dg => dg.schedule_detail_weeks.media_week_id == week.Id)
                                 .SelectMany(x => x.bvs_post_details)
-                                .Where(x => x.audience_id == audience.AudienceId )
+                                .Where(x => x.audience_id == audience.AudienceId)
                                 .ToList();
 
                         var audienceImpressionAndDelivery = new AudienceImpressionsAndDelivery
@@ -812,7 +722,7 @@ namespace Services.Broadcast.ApplicationServices
                 .ToDictionary(k => k.market_code, v => v.dma_mapped_value);
 
             var marketNamedRanks = new Dictionary<string, int>();
-            marketRanks.ForEach(mr => marketNamedRanks.Add(dmaMarkets[(short) mr.Key].ToLower(), mr.Value));
+            marketRanks.ForEach(mr => marketNamedRanks.Add(dmaMarkets[(short)mr.Key].ToLower(), mr.Value));
 
             return marketNamedRanks;
         }

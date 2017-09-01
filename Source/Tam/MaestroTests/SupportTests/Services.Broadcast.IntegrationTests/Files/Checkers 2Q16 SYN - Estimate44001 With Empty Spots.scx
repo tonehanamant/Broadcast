@@ -186,33 +186,25 @@
 						</ID>
 					</network>
 					<spotCost currency="USD">1625.00</spotCost>
-					<demoValue demoRank="1">
-						<value type="Ratings">0.6</value>
-						<value type="Impressions">47178</value>
-					</demoValue>
-					<demoValue demoRank="2">
-						<value type="Ratings">0.2</value>
-						<value type="Impressions">13384</value>
-					</demoValue>
 					<totals>
 						<cost currency="USD">0.00</cost>
 						<spots>0</spots>
 					</totals>
 					<spot>
 						<weekNumber>1</weekNumber>
-						<quantity>1</quantity>
+						<quantity>0</quantity>
 					</spot>
 					<spot>
 						<weekNumber>2</weekNumber>
-						<quantity></quantity>
+						<quantity>0</quantity>
 					</spot>
 					<spot>
 						<weekNumber>3</weekNumber>
-						<quantity>1</quantity>
+						<quantity>0</quantity>
 					</spot>
 					<spot>
 						<weekNumber>4</weekNumber>
-						<quantity>1</quantity>
+						<quantity>0</quantity>
 					</spot>
 				</detailLine>
 				<detailLine detailLineID="0">

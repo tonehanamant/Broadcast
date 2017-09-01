@@ -1081,13 +1081,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
                 var json = IntegrationTestHelper.ConvertToJson(actual, jsonSettings);
-                Console.WriteLine(json);
                 Approvals.Verify(json);
             }
         }
 
-        [Ignore]
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void Load_SCXWithBlankSpots()
         { //BCOP-1571
             using (new TransactionScopeWrapper())
@@ -1097,9 +1096,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.AdvertiserId = 39279;
                 schedule.EstimateId = 44001;
                 schedule.PostingBookId = 413;
-                schedule.ScheduleName = "Blank Cell Test IT.scx";
+                schedule.ScheduleName = "Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx";
                 schedule.UserName = "User";
-                schedule.FileName = @"Blank Cell Test IT.scx";
+                schedule.FileName = @"Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx";
                 schedule.ISCIs = new List<IsciDto>
                 {
                     new IsciDto
@@ -1113,7 +1112,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         Client = "4400ABCD2H"
                     }
                 };
-                schedule.FileStream = new FileStream(@".\Files\Blank Cell Test IT.scx", FileMode.Open,
+                schedule.FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx", FileMode.Open,
                     FileAccess.Read);
                 schedule.InventorySource = RatesFile.RateSourceType.OpenMarket;
                 schedule.PostType = SchedulePostType.NSI;
@@ -1123,10 +1122,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ISchedulesReportService reportService =
                     IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
 
-                var report = reportService.GenerateScheduleReport(scheduleId);
-//                File.WriteAllBytes(string.Format("..\\ScheduleReport{0}.xlsx",scheduleId), report.Stream.GetBuffer());
-                
+                var actual = reportService.GenerateScheduleReportDto(scheduleId);
 
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(ScheduleReportDto), "ScheduleId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(actual, jsonSettings);
+                Approvals.Verify(json);
             }
         }
         [Test]
