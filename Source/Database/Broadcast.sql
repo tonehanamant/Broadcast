@@ -251,7 +251,117 @@ END
 
 /*************************************** BCOP-1643 - END *****************************************************/
 
+/*************************************** BCOP-1823 - START *****************************************************/
+IF EXISTS(select 1
+      from sys.all_columns c
+      join sys.tables t on t.object_id = c.object_id
+      join sys.schemas s on s.schema_id = t.schema_id
+      join sys.default_constraints d on c.default_object_id = d.object_id
+    where d.name = 'DF_station_programs_spot_length_id')
+BEGIN
+	ALTER TABLE dbo.station_programs DROP CONSTRAINT DF_station_programs_spot_length_id
+END
+GO
 
+IF EXISTS(select 1
+      from sys.all_columns c
+      join sys.tables t on t.object_id = c.object_id
+      join sys.schemas s on s.schema_id = t.schema_id
+      join sys.default_constraints d on c.default_object_id = d.object_id
+    where d.name = 'DF_inventory_detail_slot_proposal_created_by')
+BEGIN
+	ALTER TABLE dbo.inventory_detail_slot_proposal DROP CONSTRAINT DF_inventory_detail_slot_proposal_created_by
+END
+GO
+
+IF EXISTS(select 1
+      from sys.all_columns c
+      join sys.tables t on t.object_id = c.object_id
+      join sys.schemas s on s.schema_id = t.schema_id
+      join sys.default_constraints d on c.default_object_id = d.object_id
+    where d.name = 'DF_proposal_version_detail_quarter_weeks_open_market_cost_total')
+BEGIN
+	ALTER TABLE dbo.proposal_version_detail_quarter_weeks DROP CONSTRAINT DF_proposal_version_detail_quarter_weeks_open_market_cost_total
+END
+GO
+
+IF EXISTS(select 1
+      from sys.all_columns c
+      join sys.tables t on t.object_id = c.object_id
+      join sys.schemas s on s.schema_id = t.schema_id
+      join sys.default_constraints d on c.default_object_id = d.object_id
+    where d.name = 'DF_proposal_version_detail_quarter_weeks_open_market_impressions_total')
+BEGIN
+	ALTER TABLE dbo.proposal_version_detail_quarter_weeks DROP CONSTRAINT DF_proposal_version_detail_quarter_weeks_open_market_impressions_total
+END
+GO
+
+IF EXISTS(select 1
+      from sys.all_columns c
+      join sys.tables t on t.object_id = c.object_id
+      join sys.schemas s on s.schema_id = t.schema_id
+      join sys.default_constraints d on c.default_object_id = d.object_id
+    where d.name = 'DF_proposal_version_detail_quarter_weeks_proprietary_cost_total')
+BEGIN
+	ALTER TABLE dbo.proposal_version_detail_quarter_weeks DROP CONSTRAINT DF_proposal_version_detail_quarter_weeks_proprietary_cost_total
+END
+GO
+
+IF EXISTS(select 1
+      from sys.all_columns c
+      join sys.tables t on t.object_id = c.object_id
+      join sys.schemas s on s.schema_id = t.schema_id
+      join sys.default_constraints d on c.default_object_id = d.object_id
+    where d.name = 'DF_proposal_version_detail_quarter_weeks_proprietary_impressions_total')
+BEGIN
+	ALTER TABLE dbo.proposal_version_detail_quarter_weeks DROP CONSTRAINT DF_proposal_version_detail_quarter_weeks_proprietary_impressions_total
+END
+GO
+
+IF EXISTS(select 1
+      from sys.all_columns c
+      join sys.tables t on t.object_id = c.object_id
+      join sys.schemas s on s.schema_id = t.schema_id
+      join sys.default_constraints d on c.default_object_id = d.object_id
+    where d.name = 'DF_schedule_detail_weeks_filled_spots')
+BEGIN
+	ALTER TABLE dbo.schedule_detail_weeks DROP CONSTRAINT DF_schedule_detail_weeks_filled_spots
+END
+GO
+
+IF EXISTS(select 1
+      from sys.all_columns c
+      join sys.tables t on t.object_id = c.object_id
+      join sys.schemas s on s.schema_id = t.schema_id
+      join sys.default_constraints d on c.default_object_id = d.object_id
+    where d.name = 'DF_schedules_inventory_source')
+BEGIN
+	ALTER TABLE dbo.schedules DROP CONSTRAINT DF_schedules_inventory_source
+END
+GO
+
+IF EXISTS(select 1
+      from sys.all_columns c
+      join sys.tables t on t.object_id = c.object_id
+      join sys.schemas s on s.schema_id = t.schema_id
+      join sys.default_constraints d on c.default_object_id = d.object_id
+    where d.name = 'DF_schedules_post_type')
+BEGIN
+	ALTER TABLE dbo.schedules DROP CONSTRAINT DF_schedules_post_type
+END
+GO
+
+IF EXISTS(select 1
+      from sys.all_columns c
+      join sys.tables t on t.object_id = c.object_id
+      join sys.schemas s on s.schema_id = t.schema_id
+      join sys.default_constraints d on c.default_object_id = d.object_id
+    where d.name = 'DF_stations_modified_date')
+BEGIN
+	ALTER TABLE dbo.stations DROP CONSTRAINT DF_stations_modified_date
+END
+GO
+/*************************************** BCOP-1823 - END *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
