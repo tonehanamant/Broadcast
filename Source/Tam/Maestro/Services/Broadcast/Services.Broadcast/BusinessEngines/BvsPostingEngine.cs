@@ -140,21 +140,5 @@ namespace Services.Broadcast.BusinessEngines
                 }
             }
         }
-
-        private static IEnumerable<BvsPostDetailAudience> _GetPostResults(IEnumerable<BvsPostDetail> bvsDetails, RatingsAggregate aggregate, Dictionary<int, int> scheduleAudiences)
-        {
-            foreach (var bvsDetail in bvsDetails)
-            {
-                foreach (var audience in scheduleAudiences)
-                {
-                    var delivery = aggregate.GetDelivery(audience.Value, bvsDetail.TimeAired, bvsDetail.Station, IsWeekEnd(bvsDetail.NsiDate) ? 1 : 0);
-                    yield return new BvsPostDetailAudience(bvsDetail.BvsDetailId, audience.Key, audience.Value, delivery);
-                }
-            }
-        }
-        private static bool IsWeekEnd(DateTime dateTime)
-        {
-            return dateTime.DayOfWeek == DayOfWeek.Saturday || dateTime.DayOfWeek == DayOfWeek.Sunday;
-        }
     }
 }
