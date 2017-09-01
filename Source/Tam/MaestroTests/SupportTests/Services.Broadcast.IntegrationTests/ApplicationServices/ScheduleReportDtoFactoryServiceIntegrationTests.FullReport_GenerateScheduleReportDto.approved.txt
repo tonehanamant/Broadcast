@@ -255,34 +255,34 @@
       {
         "AudienceId": 31,
         "AudienceName": "HH",
-        "DeliveredImpressions": 9461.506,
+        "DeliveredImpressions": 0.0,
         "OrderedImpressions": 0,
-        "OutOfSpecDeliveredImpressions": 9461.506,
-        "TotalDeliveredImpressions": 18923.012
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
       },
       {
         "AudienceId": 33,
         "AudienceName": "A18-49",
-        "DeliveredImpressions": 717.25,
+        "DeliveredImpressions": 0.0,
         "OrderedImpressions": 0,
-        "OutOfSpecDeliveredImpressions": 717.25,
-        "TotalDeliveredImpressions": 1434.5
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
       },
       {
         "AudienceId": 61,
         "AudienceName": "W35+",
-        "DeliveredImpressions": 6870.02,
+        "DeliveredImpressions": 0.0,
         "OrderedImpressions": 0,
-        "OutOfSpecDeliveredImpressions": 6870.02,
-        "TotalDeliveredImpressions": 13740.04
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
       },
       {
         "AudienceId": 53,
         "AudienceName": "M35-64",
-        "DeliveredImpressions": 3013.97,
+        "DeliveredImpressions": 0.0,
         "OrderedImpressions": 0,
-        "OutOfSpecDeliveredImpressions": 3013.97,
-        "TotalDeliveredImpressions": 6027.94
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
       }
     ],
     "ReportData": [
@@ -291,25 +291,25 @@
         "AudienceImpressions": [
           {
             "AudienceId": 31,
-            "Delivery": 9461.506,
+            "Delivery": 0.0,
             "Impressions": null,
             "NsiDelivery": null
           },
           {
             "AudienceId": 33,
-            "Delivery": 717.25,
+            "Delivery": 0.0,
             "Impressions": null,
             "NsiDelivery": null
           },
           {
             "AudienceId": 61,
-            "Delivery": 6870.02,
+            "Delivery": 0.0,
             "Impressions": null,
             "NsiDelivery": null
           },
           {
             "AudienceId": 53,
-            "Delivery": 3013.97,
+            "Delivery": 0.0,
             "Impressions": null,
             "NsiDelivery": null
           }
@@ -590,32 +590,32 @@
         "AudienceName": "HH",
         "DeliveredImpressions": 16951.8,
         "OrderedImpressions": 6000,
-        "OutOfSpecDeliveredImpressions": 9461.506,
-        "TotalDeliveredImpressions": 26413.306
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 16951.8
       },
       {
         "AudienceId": 33,
         "AudienceName": "A18-49",
         "DeliveredImpressions": 7128.496,
         "OrderedImpressions": 1990,
-        "OutOfSpecDeliveredImpressions": 717.25,
-        "TotalDeliveredImpressions": 7845.746
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 7128.496
       },
       {
         "AudienceId": 61,
         "AudienceName": "W35+",
         "DeliveredImpressions": 10962.582,
         "OrderedImpressions": 10600,
-        "OutOfSpecDeliveredImpressions": 6870.02,
-        "TotalDeliveredImpressions": 17832.602
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 10962.582
       },
       {
         "AudienceId": 53,
         "AudienceName": "M35-64",
         "DeliveredImpressions": 2053.216,
         "OrderedImpressions": 0,
-        "OutOfSpecDeliveredImpressions": 3013.97,
-        "TotalDeliveredImpressions": 5067.186
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 2053.216
       }
     ],
     "ReportData": [
@@ -624,25 +624,25 @@
         "AudienceImpressions": [
           {
             "AudienceId": 31,
-            "Delivery": 9461.506,
+            "Delivery": 0.0,
             "Impressions": null,
             "NsiDelivery": null
           },
           {
             "AudienceId": 33,
-            "Delivery": 717.25,
+            "Delivery": 0.0,
             "Impressions": null,
             "NsiDelivery": null
           },
           {
             "AudienceId": 61,
-            "Delivery": 6870.02,
+            "Delivery": 0.0,
             "Impressions": null,
             "NsiDelivery": null
           },
           {
             "AudienceId": 53,
-            "Delivery": 3013.97,
+            "Delivery": 0.0,
             "Impressions": null,
             "NsiDelivery": null
           }
@@ -891,32 +891,32 @@
             "AudienceName": "HH",
             "DeliveredImpressions": 16951.8,
             "OrderedImpressions": 6000,
-            "OutOfSpecDeliveredImpressions": 9461.506,
-            "TotalDeliveredImpressions": 26413.306
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 16951.8
           },
           {
             "AudienceId": 33,
             "AudienceName": "A18-49",
             "DeliveredImpressions": 7128.496,
             "OrderedImpressions": 1990,
-            "OutOfSpecDeliveredImpressions": 717.25,
-            "TotalDeliveredImpressions": 7845.746
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 7128.496
           },
           {
             "AudienceId": 61,
             "AudienceName": "W35+",
             "DeliveredImpressions": 10962.582,
             "OrderedImpressions": 10600,
-            "OutOfSpecDeliveredImpressions": 6870.02,
-            "TotalDeliveredImpressions": 17832.602
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 10962.582
           },
           {
             "AudienceId": 53,
             "AudienceName": "M35-64",
             "DeliveredImpressions": 2053.216,
             "OrderedImpressions": 0,
-            "OutOfSpecDeliveredImpressions": 3013.97,
-            "TotalDeliveredImpressions": 5067.186
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 2053.216
           }
         ],
         "ReportData": [
@@ -1105,25 +1105,25 @@
             "AudienceImpressions": [
               {
                 "AudienceId": 31,
-                "Delivery": 9461.506,
+                "Delivery": 0.0,
                 "Impressions": null,
                 "NsiDelivery": null
               },
               {
                 "AudienceId": 33,
-                "Delivery": 717.25,
+                "Delivery": 0.0,
                 "Impressions": null,
                 "NsiDelivery": null
               },
               {
                 "AudienceId": 61,
-                "Delivery": 6870.02,
+                "Delivery": 0.0,
                 "Impressions": null,
                 "NsiDelivery": null
               },
               {
                 "AudienceId": 53,
-                "Delivery": 3013.97,
+                "Delivery": 0.0,
                 "Impressions": null,
                 "NsiDelivery": null
               }

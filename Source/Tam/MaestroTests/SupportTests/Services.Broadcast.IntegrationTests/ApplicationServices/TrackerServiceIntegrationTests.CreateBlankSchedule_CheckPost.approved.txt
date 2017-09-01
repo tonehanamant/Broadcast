@@ -12,32 +12,32 @@
   {
     "AudienceId": 31,
     "AudienceRank": 1,
-    "Delivery": 447.4
+    "Delivery": 0.0
   },
   {
     "AudienceId": 42,
     "AudienceRank": 2,
-    "Delivery": 252.75
+    "Delivery": 0.0
   },
   {
     "AudienceId": 31,
     "AudienceRank": 1,
-    "Delivery": 447.4
+    "Delivery": 0.0
   },
   {
     "AudienceId": 42,
     "AudienceRank": 2,
-    "Delivery": 252.75
+    "Delivery": 0.0
   },
   {
     "AudienceId": 31,
     "AudienceRank": 1,
-    "Delivery": 25868.2
+    "Delivery": 0.0
   },
   {
     "AudienceId": 42,
     "AudienceRank": 2,
-    "Delivery": 24039.0
+    "Delivery": 0.0
   },
   {
     "AudienceId": 31,
@@ -102,21 +102,21 @@
   {
     "AudienceId": 31,
     "AudienceRank": 1,
-    "Delivery": 447.4
+    "Delivery": 0.0
   },
   {
     "AudienceId": 42,
     "AudienceRank": 2,
-    "Delivery": 252.75
+    "Delivery": 0.0
   },
   {
     "AudienceId": 31,
     "AudienceRank": 1,
-    "Delivery": 447.4
+    "Delivery": 0.0
   },
   {
     "AudienceId": 42,
     "AudienceRank": 2,
-    "Delivery": 252.75
+    "Delivery": 0.0
   }
 ]

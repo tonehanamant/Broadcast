@@ -492,26 +492,26 @@
       {
         "AudienceId": 33,
         "AudienceName": "A18-49",
-        "DeliveredImpressions": 6242.6875,
+        "DeliveredImpressions": 0.0,
         "OrderedImpressions": 0,
-        "OutOfSpecDeliveredImpressions": 6242.6875,
-        "TotalDeliveredImpressions": 12485.375
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
       },
       {
         "AudienceId": 61,
         "AudienceName": "W35+",
-        "DeliveredImpressions": 4287.94375,
+        "DeliveredImpressions": 0.0,
         "OrderedImpressions": 0,
-        "OutOfSpecDeliveredImpressions": 4287.94375,
-        "TotalDeliveredImpressions": 8575.8875
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
       },
       {
         "AudienceId": 53,
         "AudienceName": "M35-64",
-        "DeliveredImpressions": 2292.46875,
+        "DeliveredImpressions": 0.0,
         "OrderedImpressions": 0,
-        "OutOfSpecDeliveredImpressions": 2292.46875,
-        "TotalDeliveredImpressions": 4584.9375
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
       }
     ],
     "ReportData": [
@@ -520,19 +520,19 @@
         "AudienceImpressions": [
           {
             "AudienceId": 33,
-            "Delivery": 6242.6875,
+            "Delivery": 0.0,
             "Impressions": null,
             "NsiDelivery": null
           },
           {
             "AudienceId": 61,
-            "Delivery": 4287.94375,
+            "Delivery": 0.0,
             "Impressions": null,
             "NsiDelivery": null
           },
           {
             "AudienceId": 53,
-            "Delivery": 2292.46875,
+            "Delivery": 0.0,
             "Impressions": null,
             "NsiDelivery": null
           }
@@ -958,24 +958,24 @@
         "AudienceName": "A18-49",
         "DeliveredImpressions": 47555.6225,
         "OrderedImpressions": 6490,
-        "OutOfSpecDeliveredImpressions": 6242.6875,
-        "TotalDeliveredImpressions": 53798.31
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 47555.6225
       },
       {
         "AudienceId": 61,
         "AudienceName": "W35+",
         "DeliveredImpressions": 34859.775,
         "OrderedImpressions": 26600,
-        "OutOfSpecDeliveredImpressions": 4287.94375,
-        "TotalDeliveredImpressions": 39147.71875
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 34859.775
       },
       {
         "AudienceId": 53,
         "AudienceName": "M35-64",
         "DeliveredImpressions": 23863.905,
         "OrderedImpressions": 0,
-        "OutOfSpecDeliveredImpressions": 2292.46875,
-        "TotalDeliveredImpressions": 26156.37375
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 23863.905
       }
     ],
     "ReportData": [
@@ -1098,19 +1098,19 @@
         "AudienceImpressions": [
           {
             "AudienceId": 33,
-            "Delivery": 6242.6875,
+            "Delivery": 0.0,
             "Impressions": 0,
             "NsiDelivery": null
           },
           {
             "AudienceId": 61,
-            "Delivery": 4287.94375,
+            "Delivery": 0.0,
             "Impressions": 0,
             "NsiDelivery": null
           },
           {
             "AudienceId": 53,
-            "Delivery": 2292.46875,
+            "Delivery": 0.0,
             "Impressions": 0,
             "NsiDelivery": null
           }
@@ -1752,24 +1752,24 @@
             "AudienceName": "A18-49",
             "DeliveredImpressions": 0.0,
             "OrderedImpressions": 0,
-            "OutOfSpecDeliveredImpressions": 6242.6875,
-            "TotalDeliveredImpressions": 6242.6875
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
           },
           {
             "AudienceId": 61,
             "AudienceName": "W35+",
             "DeliveredImpressions": 0.0,
             "OrderedImpressions": 0,
-            "OutOfSpecDeliveredImpressions": 4287.94375,
-            "TotalDeliveredImpressions": 4287.94375
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
           },
           {
             "AudienceId": 53,
             "AudienceName": "M35-64",
             "DeliveredImpressions": 0.0,
             "OrderedImpressions": 0,
-            "OutOfSpecDeliveredImpressions": 2292.46875,
-            "TotalDeliveredImpressions": 2292.46875
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
           }
         ],
         "ReportData": [
@@ -1778,19 +1778,19 @@
             "AudienceImpressions": [
               {
                 "AudienceId": 33,
-                "Delivery": 6242.6875,
+                "Delivery": 0.0,
                 "Impressions": 0,
                 "NsiDelivery": null
               },
               {
                 "AudienceId": 61,
-                "Delivery": 4287.94375,
+                "Delivery": 0.0,
                 "Impressions": 0,
                 "NsiDelivery": null
               },
               {
                 "AudienceId": 53,
-                "Delivery": 2292.46875,
+                "Delivery": 0.0,
                 "Impressions": 0,
                 "NsiDelivery": null
               }

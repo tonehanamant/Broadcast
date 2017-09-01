@@ -445,7 +445,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             if (marketRestrictions != null)
             {
                 schedule.MarketRestrictions.AddRange(marketRestrictions);
-
             }
             schedule.DaypartRestriction = new DaypartDto()
             {

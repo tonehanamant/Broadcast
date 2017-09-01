@@ -1124,7 +1124,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
 
                 var report = reportService.GenerateScheduleReport(scheduleId);
-                File.WriteAllBytes(string.Format("..\\ScheduleReport{0}.xlsx",scheduleId), report.Stream.GetBuffer());
+//                File.WriteAllBytes(string.Format("..\\ScheduleReport{0}.xlsx",scheduleId), report.Stream.GetBuffer());
                 
 
             }
@@ -1382,7 +1382,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 estimates.ForEach(
                     estimateId => actual.AddRange(_BvsRepository.GetBvsPostDetailAudienceByEstimateId(estimateId)));
-
+                
                 var json = IntegrationTestHelper.ConvertToJson(actual, jsonSettings);
                 Console.WriteLine(json);
                 Approvals.Verify(json);
