@@ -21,10 +21,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(7);
             var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+            var proposalMathEngine =
+                IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalMathEngine>();
 
             proposalRepository.GetProposalDetailProprietaryInventoryTotals(7);
 
-            var calculationEngine = new ProposalDetailHeaderTotalsCalculationEngine();
+            var calculationEngine = new ProposalDetailHeaderTotalsCalculationEngine(proposalMathEngine);
 
             calculationEngine.CalculateTotalsForOpenMarketInventory(proposalInventory,
                 new ProposalDetailSingleInventoryTotalsDto() {TotalCost = 2000, TotalImpressions = 2000}, 20);
@@ -37,6 +39,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         [Test]
         public void CalculateProprietaryTotalsTest()
         {
+            var proposalMathEngine =
+                IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalMathEngine>();
+
             var request = new ProposalInventoryTotalsRequestDto
             {
                 DetailCpm = 10,
@@ -90,7 +95,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                     }
             };
 
-            var calculationEngine = new ProposalDetailHeaderTotalsCalculationEngine();
+            var calculationEngine = new ProposalDetailHeaderTotalsCalculationEngine(proposalMathEngine);
 
             var totals = new ProposalInventoryTotalsDto {TotalCost = 5000, TotalImpressions = 10000};
 

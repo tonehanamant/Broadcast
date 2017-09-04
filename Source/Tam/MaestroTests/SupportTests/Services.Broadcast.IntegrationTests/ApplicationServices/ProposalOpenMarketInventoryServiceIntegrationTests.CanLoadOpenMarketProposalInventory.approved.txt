@@ -12,8 +12,8 @@
   "DetailBudgetMarginAchieved": true,
   "DetailBudgetPercent": 2496.0,
   "DetailCpm": 0.05,
-  "DetailCpmMarginAchieved": false,
-  "DetailCpmPercent": 401860.0,
+  "DetailCpmMarginAchieved": true,
+  "DetailCpmPercent": 482232.0,
   "DetailDaypart": {
     "endTime": 36000,
     "fri": true,

@@ -12,8 +12,8 @@
   "DetailBudgetMarginAchieved": true,
   "DetailBudgetPercent": 2400.0,
   "DetailCpm": 0.05,
-  "DetailCpmMarginAchieved": false,
-  "DetailCpmPercent": 2000000.0,
+  "DetailCpmMarginAchieved": true,
+  "DetailCpmPercent": 2400000.0,
   "DetailDaypart": {
     "endTime": 36000,
     "fri": true,
@@ -45,7 +45,7 @@
   "DetailTargetBudget": 50.0000,
   "DetailTargetImpressions": 1000.0,
   "DetailTotalBudget": 1000.00,
-  "DetailTotalCpm": 1000.00,
+  "DetailTotalCpm": 1000.0,
   "DetailTotalImpressions": 1.0,
   "DisplayFilter": {
     "Affiliations": [
