@@ -3,7 +3,7 @@
     "InventoryDetailSlotId": 10206,
     "MediaWeekId": 649,
     "Messages": [
-      "Week 5/30/2016 TTNW AM reserved by User test-user for Proposal Proposal Test"
+      "Week 5/30/2016 TTNW AM reserved by User  for Proposal Proposal Test"
     ],
     "ProposalAllocations": [
       {
@@ -12,7 +12,7 @@
         "ProposalName": "Proposal Test",
         "ProposalVersionDetailQuarterWeekId": 7,
         "SpotLength": 30,
-        "UserName": "test-user",
+        "UserName": "",
         "WeekStartDate": "2016-05-30T00:00:00"
       }
     ],
