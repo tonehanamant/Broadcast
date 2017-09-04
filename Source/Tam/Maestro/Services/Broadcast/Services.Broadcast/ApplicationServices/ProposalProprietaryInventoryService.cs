@@ -27,8 +27,8 @@ namespace Services.Broadcast.ApplicationServices
         internal static readonly string MissingGuaranteedAudienceErorMessage = "Unable to get proprietary inventory information due to null guaranteed audience";
         private readonly IProposalWeeklyTotalCalculationEngine _ProposalWeeklyTotalCalculationEngine;
 
-        public ProposalProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory, IDaypartCache daypartCache, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine, IProposalWeeklyTotalCalculationEngine proposalWeeklyTotalCalculationEngine, IImpressionAdjustmentEngine impressionAdjustmentEngine)
-            : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine, impressionAdjustmentEngine)
+        public ProposalProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory, IDaypartCache daypartCache, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine, IProposalWeeklyTotalCalculationEngine proposalWeeklyTotalCalculationEngine, IImpressionAdjustmentEngine impressionAdjustmentEngine, IProposalHeaderTotalsCalculationEngine proposalHeaderTotalsCalculationEngine)
+            : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine, impressionAdjustmentEngine, proposalHeaderTotalsCalculationEngine)
         {
             _ProposalWeeklyTotalCalculationEngine = proposalWeeklyTotalCalculationEngine;
         }
@@ -228,6 +228,7 @@ namespace Services.Broadcast.ApplicationServices
                         .SaveProposalDetailProprietaryInventoryTotals(actualRequest.ProposalDetailId, totals);
                     BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
                         .SaveProposalDetailProprietaryWeekInventoryTotals(actualRequest.ProposalDetailId, totals);
+                    _CalculateProposalVersionTotals(inventoryDto.ProposalVersionId);
                 }
 
                 conflicts.ForEach(c =>

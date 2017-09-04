@@ -363,6 +363,39 @@ END
 GO
 /*************************************** BCOP-1823 - END *****************************************************/
 
+/*************************************** BCOP-1738 - END *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'cost_total'
+              AND object_id = object_id('proposal_versions'))
+BEGIN
+	ALTER TABLE proposal_versions
+	ADD cost_total MONEY NULL
+
+	EXEC('UPDATE proposal_versions
+		  SET cost_total = 0')
+	
+	ALTER TABLE proposal_versions
+	ALTER COLUMN cost_total MONEY NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'impressions_total'
+              AND object_id = object_id('proposal_versions'))
+BEGIN
+	ALTER TABLE proposal_versions
+	ADD impressions_total BIGINT NULL
+
+	EXEC('UPDATE proposal_versions
+		  SET impressions_total = 0')
+
+	ALTER TABLE proposal_versions
+	ALTER COLUMN impressions_total BIGINT NOT NULL
+END
+
+/*************************************** BCOP-1738 - END *****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

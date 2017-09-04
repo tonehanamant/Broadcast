@@ -9,11 +9,11 @@
       }
     ]
   },
-  "DetailBudgetMarginAchieved": false,
-  "DetailBudgetPercent": 0.0,
+  "DetailBudgetMarginAchieved": true,
+  "DetailBudgetPercent": 2400.0,
   "DetailCpm": 0.05,
   "DetailCpmMarginAchieved": false,
-  "DetailCpmPercent": 0.0,
+  "DetailCpmPercent": 2000000.0,
   "DetailDaypart": {
     "endTime": 36000,
     "fri": true,
@@ -39,14 +39,14 @@
   ],
   "DetailId": 7,
   "DetailImpressionsMarginAchieved": false,
-  "DetailImpressionsPercent": 0.0,
+  "DetailImpressionsPercent": 0.1,
   "DetailSpotLength": 30,
   "DetailSpotLengthId": 1,
   "DetailTargetBudget": 50.0000,
   "DetailTargetImpressions": 1000.0,
-  "DetailTotalBudget": 0.00,
-  "DetailTotalCpm": 0.0,
-  "DetailTotalImpressions": 0.0,
+  "DetailTotalBudget": 1000.00,
+  "DetailTotalCpm": 1000.00,
+  "DetailTotalImpressions": 1.0,
   "DisplayFilter": {
     "Affiliations": [
       "COZ"

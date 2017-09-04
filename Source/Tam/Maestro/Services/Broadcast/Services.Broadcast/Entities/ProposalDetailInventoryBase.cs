@@ -15,6 +15,7 @@ namespace Services.Broadcast.Entities
         public string ProposalName { get; set; }
         public int ProposalId { get; set; }
         public int ProposalVersion { get; set; }
+        public int ProposalVersionId { get; set; }
 
         public DateTime? ProposalFlightStartDate { get; set; }
         public DateTime? ProposalFlightEndDate { get; set; }

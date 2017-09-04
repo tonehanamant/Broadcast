@@ -16,13 +16,18 @@ namespace Services.Broadcast.ApplicationServices
         protected readonly IDaypartCache DaypartCache;
         protected readonly IProposalMarketsCalculationEngine ProposalMarketsCalculationEngine;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
+        private readonly IProposalHeaderTotalsCalculationEngine _ProposalHeaderTotalsCalculationEngine;
 
-        public BaseProposalInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory, IDaypartCache daypartCache, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine, IImpressionAdjustmentEngine impressionAdjustmentEngine)
+        public BaseProposalInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
+            IDaypartCache daypartCache, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
+            IImpressionAdjustmentEngine impressionAdjustmentEngine,
+            IProposalHeaderTotalsCalculationEngine proposalHeaderTotalsCalculationEngine)
         {
             BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             DaypartCache = daypartCache;
             ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
+            _ProposalHeaderTotalsCalculationEngine = proposalHeaderTotalsCalculationEngine;
         }
 
         protected IEnumerable<StationImpressions> GetImpressions(ProposalDetailInventoryBase proposalDetailInventory, List<int> ratingAudiences, IEnumerable<StationDetailDaypart> impressionRequests)
@@ -71,6 +76,15 @@ namespace Services.Broadcast.ApplicationServices
             if (proposalInventory == null) return;
             proposalInventory.DetailSpotLength =
                 BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthById(proposalInventory.DetailSpotLengthId);
+        }
+
+        protected void _CalculateProposalVersionTotals(int proposalVersionId)
+        {
+            var allProposalDetailsTotals = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
+                        .GetAllProposalDetailsTotals(proposalVersionId);
+            var proposalTotals = _ProposalHeaderTotalsCalculationEngine.CalculateProposalHeaderTotals(allProposalDetailsTotals);
+            BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
+                .SaveProposalTotals(proposalVersionId, proposalTotals);
         }
     }
 }

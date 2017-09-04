@@ -136,6 +136,9 @@
   "TargetCPM": 0.0,
   "TargetImpressions": 13589.0,
   "TargetUnits": 2,
+  "TotalCost": 0.0,
+  "TotalCPM": 0.0,
+  "TotalImpressions": 0,
   "ValidationWarning": null,
   "Version": null,
   "VersionId": 0

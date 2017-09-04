@@ -31,11 +31,13 @@
         }
       ],
       "HutPostingBookId": 410,
+      "Id": 7,
       "PlaybackType": 4,
       "Quarters": [
         {
           "Cpm": 20.0000,
           "DistributeGoals": false,
+          "Id": 7,
           "ImpressionGoal": 100.0,
           "Quarter": 2,
           "QuarterText": "2016 Q2",
@@ -43,6 +45,7 @@
             {
               "Cost": 25.0000,
               "EndDate": "2016-06-06T00:00:00",
+              "Id": 7,
               "Impressions": 100.0,
               "IsHiatus": false,
               "MediaWeekId": 649,
@@ -89,11 +92,13 @@
         }
       ],
       "HutPostingBookId": 410,
+      "Id": 20,
       "PlaybackType": 4,
       "Quarters": [
         {
           "Cpm": 20.0000,
           "DistributeGoals": false,
+          "Id": 20,
           "ImpressionGoal": 100.0,
           "Quarter": 2,
           "QuarterText": "2016 Q2",
@@ -101,6 +106,7 @@
             {
               "Cost": 25.0000,
               "EndDate": "2016-06-06T00:00:00",
+              "Id": 20,
               "Impressions": 100.0,
               "IsHiatus": false,
               "MediaWeekId": 649,
@@ -123,7 +129,17 @@
   "Equivalized": null,
   "FlightEndDate": "2016-06-06T00:00:00",
   "FlightStartDate": "2016-05-30T00:00:00",
+  "FlightWeeks": [
+    {
+      "EndDate": "2016-06-06T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 649,
+      "StartDate": "2016-05-30T00:00:00"
+    }
+  ],
+  "ForceSave": false,
   "GuaranteedDemoId": 31,
+  "Id": 248,
   "Margin": 20.0,
   "MarketGroup": {
     "Count": 100,
@@ -134,6 +150,7 @@
   "Markets": [],
   "Notes": null,
   "PostType": null,
+  "PrimaryVersionId": 41,
   "ProposalName": "Proposal Test",
   "SecondaryDemos": [
     5,
@@ -141,7 +158,8 @@
   ],
   "SpotLengths": [
     {
-      "Display": "30"
+      "Display": "30",
+      "Id": 1
     }
   ],
   "Status": 1,
@@ -149,9 +167,9 @@
   "TargetCPM": 0.0000,
   "TargetImpressions": 0.0,
   "TargetUnits": 0,
-  "TotalCost": 0.0000,
-  "TotalCPM": 0.0,
-  "TotalImpressions": 0,
+  "TotalCost": 8300.0000,
+  "TotalCPM": 235.05,
+  "TotalImpressions": 35311,
   "ValidationWarning": null,
   "Version": 1,
   "VersionId": 41

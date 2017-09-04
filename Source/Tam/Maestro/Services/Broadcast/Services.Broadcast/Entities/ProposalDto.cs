@@ -81,5 +81,8 @@ namespace Services.Broadcast.Entities
         public bool ForceSave { get; set; }
 
         public ValidationWarningDto ValidationWarning { get; set; }
+        public decimal TotalCost { get; set; }
+        public long TotalImpressions { get; set; }
+        public decimal TotalCPM { get; set; }
     }
 }

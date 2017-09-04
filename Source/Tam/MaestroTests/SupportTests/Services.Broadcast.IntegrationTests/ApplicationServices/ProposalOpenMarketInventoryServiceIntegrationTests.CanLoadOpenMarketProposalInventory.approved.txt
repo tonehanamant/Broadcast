@@ -9,11 +9,11 @@
       }
     ]
   },
-  "DetailBudgetMarginAchieved": false,
-  "DetailBudgetPercent": 96.0,
+  "DetailBudgetMarginAchieved": true,
+  "DetailBudgetPercent": 2496.0,
   "DetailCpm": 0.05,
   "DetailCpmMarginAchieved": false,
-  "DetailCpmPercent": 19160.0,
+  "DetailCpmPercent": 401860.0,
   "DetailDaypart": {
     "endTime": 36000,
     "fri": true,
@@ -39,14 +39,14 @@
   ],
   "DetailId": 7,
   "DetailImpressionsMarginAchieved": false,
-  "DetailImpressionsPercent": 0.42,
+  "DetailImpressionsPercent": 0.52,
   "DetailSpotLength": 30,
   "DetailSpotLengthId": 1,
   "DetailTargetBudget": 50.0000,
   "DetailTargetImpressions": 1000.0,
-  "DetailTotalBudget": 40.00,
-  "DetailTotalCpm": 9.58,
-  "DetailTotalImpressions": 4.176,
+  "DetailTotalBudget": 1040.00,
+  "DetailTotalCpm": 200.93,
+  "DetailTotalImpressions": 5.176,
   "DisplayFilter": {
     "Affiliations": [
       "ABC",

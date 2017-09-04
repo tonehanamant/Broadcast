@@ -29,9 +29,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             calculationEngine.CalculateTotalsForOpenMarketInventory(proposalInventory,
                 new ProposalDetailSingleInventoryTotalsDto() {TotalCost = 2000, TotalImpressions = 2000}, 20);
 
-            Assert.AreEqual(2040m, proposalInventory.DetailTotalBudget);
-            Assert.AreEqual(2000d, proposalInventory.DetailTotalImpressions);
-            Assert.AreEqual(1.02m, proposalInventory.DetailTotalCpm);
+            Assert.AreEqual(3040m, proposalInventory.DetailTotalBudget);
+            Assert.AreEqual(2001d, proposalInventory.DetailTotalImpressions);
+            Assert.AreEqual(1.52m, proposalInventory.DetailTotalCpm);
         }
 
         [Test]

@@ -44,6 +44,8 @@ namespace EntityFrameworkMapping.Broadcast
         public byte status { get; set; }
         public decimal target_cpm { get; set; }
         public double margin { get; set; }
+        public decimal cost_total { get; set; }
+        public long impressions_total { get; set; }
     
         public virtual ICollection<proposal_version_audiences> proposal_version_audiences { get; set; }
         public virtual ICollection<proposal_version_flight_weeks> proposal_version_flight_weeks { get; set; }

@@ -64,6 +64,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "DetailTotalBudget");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "DetailTotalCpm");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "DetailTotalImpressions");
+                jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
                 jsonResolver.Ignore(typeof(BaseProposalInventoryWeekDto), "BudgetTotal");
                 jsonResolver.Ignore(typeof(BaseProposalInventoryWeekDto), "ImpressionsTotal");
 
@@ -130,6 +131,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "DetailTotalBudget");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "DetailTotalCpm");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "DetailTotalImpressions");
+                jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
                 jsonResolver.Ignore(typeof(BaseProposalInventoryWeekDto), "BudgetTotal");
                 jsonResolver.Ignore(typeof(BaseProposalInventoryWeekDto), "ImpressionsTotal");
 
@@ -214,6 +216,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proprietaryInventoryAllocationSnapshot = proposalInventoryRepository.GetProprietaryInventoryAllocationSnapshot(10206);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(proprietaryInventoryAllocationSnapshot));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveInventoryAllocations_CalculateHeaderTotals()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var inventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>();
+                var request = new ProprietaryInventoryAllocationRequest { ProposalDetailId = 7, UserName = "test-user" };
+
+                request.SlotAllocations.Add(new ProprietaryInventorySlotAllocations
+                {
+                    InventoryDetailSlotId = 10206,
+                    Deletes =
+                        new List<ProprietaryInventorySlotProposal>
+                        {
+                            new ProprietaryInventorySlotProposal {QuarterWeekId = 7, Order = 1, SpotLength = 30, Impressions = 30203.123d}
+                        },
+                    Adds =
+                        new List<ProprietaryInventorySlotProposal>
+                        {
+                            new ProprietaryInventorySlotProposal {QuarterWeekId = 7, Order = 1, SpotLength = 30, Impressions = 2000.12d}
+                        },
+                });
+
+                inventoryService.SaveInventoryAllocations(request);
+
+                var proposal = _ProposalService.GetProposalById(248);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(proposal));
             }
         }
     }

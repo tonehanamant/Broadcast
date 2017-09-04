@@ -51,6 +51,7 @@
   "ProposalId": 248,
   "ProposalName": "Proposal Test",
   "ProposalVersion": 1,
+  "ProposalVersionId": 41,
   "SharePostingBookId": 413,
   "SinglePostingBookId": null,
   "Weeks": [

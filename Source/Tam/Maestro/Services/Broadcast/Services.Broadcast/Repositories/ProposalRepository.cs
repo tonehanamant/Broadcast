@@ -1,6 +1,7 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,8 @@ namespace Services.Broadcast.Repositories
         List<ProposalDetailSingleWeekTotalsDto> GetProposalDetailProprietaryWeekInventoryTotals(int proposalDetailId);
         void UpdateProposalDetailSweepsBooks(int proposalDetailId, int hutBook, int shareBook);
         void UpdateProposalDetailSweepsBook(int proposalDetailId, int book);
+        List<ProposalDetailTotalsDto> GetAllProposalDetailsTotals(int proposalVersionId);
+        void SaveProposalTotals(int proposalVersionId, ProposalHeaderTotalsDto proposalTotals);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -623,6 +626,9 @@ namespace Services.Broadcast.Repositories
             proposalDto.TargetBudget = proposalVersion.target_budget;
             proposalDto.TargetImpressions = proposalVersion.target_impressions.HasValue ? (double?)proposalVersion.target_impressions / 1000 : null;
             proposalDto.TargetCPM = proposalVersion.target_cpm;
+            proposalDto.TotalCost = proposalVersion.cost_total;
+            proposalDto.TotalImpressions = proposalVersion.impressions_total;
+            proposalDto.TotalCPM = GetCpm(proposalVersion.impressions_total, proposalVersion.cost_total);
             proposalDto.Margin = proposalVersion.margin;
             proposalDto.Notes = proposalVersion.notes;
             proposalDto.Version = proposalVersion.proposal_version;
@@ -1043,6 +1049,31 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        public List<ProposalDetailTotalsDto> GetAllProposalDetailsTotals(int proposalVersionId)
+        {
+            return _InReadUncommitedTransaction(
+                c =>
+                    c.proposal_version_details.Where(p => p.proposal_version_id == proposalVersionId)
+                        .Select(p => new ProposalDetailTotalsDto
+                        {
+                            OpenMarketImpressionsTotal = p.open_market_impressions_total,
+                            OpenMarketCostTotal = p.open_market_cost_total,
+                            ProprietaryImpressionsTotal = p.proprietary_impressions_total,
+                            ProprietaryCostTotal = p.proprietary_cost_total
+                        }).ToList());
+        }
+
+        public void SaveProposalTotals(int proposalVersionId, ProposalHeaderTotalsDto proposalTotals)
+        {
+            _InReadUncommitedTransaction(c =>
+            {
+                var proposalVersion = c.proposal_versions.Find(proposalVersionId);
+                proposalVersion.impressions_total = proposalTotals.ImpressionsTotal;
+                proposalVersion.cost_total = proposalTotals.CostTotal;
+                c.SaveChanges();
+            });
+        }
+
         public ProposalDetailProprietaryInventoryDto GetProprietaryProposalDetailInventory(int proposalDetailId)
         {
             return _InReadUncommitedTransaction(context =>
@@ -1076,6 +1107,7 @@ namespace Services.Broadcast.Repositories
         private static void SetBaseFields(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
         {
             var pv = pvd.proposal_versions;
+            baseDto.ProposalVersionId = pv.id;
             baseDto.DetailId = pvd.id;
             baseDto.PostType = (SchedulePostType?)pv.post_type;
             baseDto.GuaranteedAudience = pv.guaranteed_audience_id;
@@ -1098,7 +1130,7 @@ namespace Services.Broadcast.Repositories
             baseDto.DetailSpotLengthId = pvd.spot_length_id;
             baseDto.DetailTargetImpressions = pvd.impressions_total.HasValue ? (double)pvd.impressions_total / 1000 : 0;
             baseDto.DetailTargetBudget = pvd.cost_total;
-            baseDto.DetailCpm = GetDetailCpm(pvd);
+            baseDto.DetailCpm = GetCpm(pvd.impressions_total, pvd.cost_total);
             baseDto.DetailFlightEndDate = pvd.end_date;
             baseDto.DetailFlightStartDate = pvd.start_date;
             baseDto.DetailFlightWeeks = pvd.proposal_version_detail_quarters.SelectMany(quarter => quarter.proposal_version_detail_quarter_weeks.Select(week =>
@@ -1115,10 +1147,10 @@ namespace Services.Broadcast.Repositories
             baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.playback_type;
         }
 
-        private static decimal? GetDetailCpm(proposal_version_details proposalVersionDetails)
+        private static decimal GetCpm(long? totalImpressions, decimal? totalCost)
         {
-            var impressions = (decimal)(proposalVersionDetails.impressions_total ?? 0) / 1000;
-            var cost = proposalVersionDetails.cost_total ?? 0;
+            var impressions = (decimal)(totalImpressions ?? 0) / 1000;
+            var cost = totalCost ?? 0;
 
             return impressions == 0 ? 0 : Math.Round(cost / impressions, 2);
         }

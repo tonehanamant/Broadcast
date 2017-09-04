@@ -166,6 +166,7 @@
     <Compile Include="BusinessEngines\ProposalDetailHeaderTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailWeekTotalsCalculationEngine.cs" />
     <Compile Include="ApplicationServices\TrafficService.cs" />
+    <Compile Include="BusinessEngines\ProposalHeaderTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalMarketsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalOpenMarketsTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalPostingBooksEngine.cs" />
@@ -189,6 +190,8 @@
     <Compile Include="Entities\ProposalAudienceDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleInventoryTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />
+    <Compile Include="Entities\ProposalDetailTotalsDto.cs" />
+    <Compile Include="Entities\ProposalHeaderTotalsDto.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationConflict.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationRequest.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposal.cs" />

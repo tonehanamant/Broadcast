@@ -436,6 +436,8 @@
           <Property Name="status" Type="tinyint" Nullable="false" />
           <Property Name="target_cpm" Type="money" Nullable="false" />
           <Property Name="margin" Type="float" Nullable="false" />
+          <Property Name="cost_total" Type="money" Nullable="false" />
+          <Property Name="impressions_total" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="proposals">
           <Key>
@@ -738,7 +740,7 @@
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -3047,6 +3049,8 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <NavigationProperty Name="proposal_version_spot_length" Relationship="BroadcastModel.FK_proposal_version_spot_length_proposal_versions" FromRole="proposal_versions" ToRole="proposal_version_spot_length" />
           <NavigationProperty Name="proposal" Relationship="BroadcastModel.FK_proposal_versions_proposals" FromRole="proposal_versions" ToRole="proposal" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_proposal_versions" FromRole="proposal_versions" ToRole="proposal_version_details" />
+          <Property Name="cost_total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="impressions_total" Type="Int64" Nullable="false" />
         </EntityType>
         <Association Name="FK_proposal_version_audiences_proposal_versions">
           <End Type="BroadcastModel.proposal_versions" Role="proposal_versions" Multiplicity="1">
@@ -4000,6 +4004,8 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <EntitySetMapping Name="proposal_versions">
             <EntityTypeMapping TypeName="BroadcastModel.proposal_versions">
               <MappingFragment StoreEntitySet="proposal_versions">
+                <ScalarProperty Name="impressions_total" ColumnName="impressions_total" />
+                <ScalarProperty Name="cost_total" ColumnName="cost_total" />
                 <ScalarProperty Name="margin" ColumnName="margin" />
                 <ScalarProperty Name="target_cpm" ColumnName="target_cpm" />
                 <ScalarProperty Name="status" ColumnName="status" />
