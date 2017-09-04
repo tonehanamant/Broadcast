@@ -1,0 +1,443 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BA718C31-1F25-4DF1-A2AF-EEA92DA4DAB6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Services.Broadcast</RootNamespace>
+    <AssemblyName>Services.Broadcast</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\..\..\Solutions\MaestroComplete\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'IntegrationTests|AnyCPU'">
+    <OutputPath>bin\IntegrationTests\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QARelease|AnyCPU'">
+    <OutputPath>bin\QARelease\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReportingWebQA|AnyCPU'">
+    <OutputPath>bin\ReportingWebQA\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'TrafficComposerWebQA|AnyCPU'">
+    <OutputPath>bin\TrafficComposerWebQA\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseComposerWebQA|AnyCPU'">
+    <OutputPath>bin\ReleaseComposerWebQA\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CableTrackQA|AnyCPU'">
+    <OutputPath>bin\CableTrackQA\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BroadcastComposerWeb|AnyCPU'">
+    <OutputPath>bin\BroadcastComposerWeb\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Unity.2.0\lib\20\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Unity.2.0\lib\20\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Unity.2.0\lib\20\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Unity.2.0\lib\20\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Unity.2.0\lib\20\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\..\..\..\..\Libraries\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\System.Management.Automation.dll.10.0.10586.0\lib\net40\System.Management.Automation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tam.Maestro.Common.Clients, Version=5.8.8.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Clients.5.8.8.2\lib\net45\Tam.Maestro.Common.Clients.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Tam.Maestro.Common.DataLayer, Version=5.8.8.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.DataLayer.5.8.8.1\lib\net45\Tam.Maestro.Common.DataLayer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Tam.Maestro.Common.Logging, Version=5.8.8.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Logging.5.8.8.1\lib\net45\Tam.Maestro.Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Tam.Maestro.Common.Systems, Version=5.8.9.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.5.8.9.2\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
+    </Reference>
+    <Reference Include="Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating, Version=5.8.8.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.5.8.8.1\lib\net45\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Aggregates\RatingsAggregate.cs" />
+    <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="ApplicationServices\BaseProposalInventoryService.cs" />
+    <Compile Include="ApplicationServices\PostingBooksService.cs" />
+    <Compile Include="ApplicationServices\InventoryCrunchService.cs" />
+    <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
+    <Compile Include="BusinessEngines\ProposalDetailHeaderTotalsCalculationEngine.cs" />
+    <Compile Include="BusinessEngines\ProposalDetailWeekTotalsCalculationEngine.cs" />
+    <Compile Include="ApplicationServices\TrafficService.cs" />
+    <Compile Include="BusinessEngines\ProposalMarketsCalculationEngine.cs" />
+    <Compile Include="BusinessEngines\ProposalMathEngine.cs" />
+    <Compile Include="BusinessEngines\ProposalOpenMarketsTotalsCalculationEngine.cs" />
+    <Compile Include="BusinessEngines\ProposalPostingBooksEngine.cs" />
+    <Compile Include="BusinessEngines\ProposalProprietaryTotalsCalculationEngine.cs" />
+    <Compile Include="Converters\PlaybackTypeConverter.cs" />
+    <Compile Include="Converters\ProposalScxDataPrep.cs" />
+    <Compile Include="Converters\ProposalScxConverter.cs" />
+    <Compile Include="DaypartCache.cs" />
+    <Compile Include="Entities\BroadcastAudience.cs" />
+    <Compile Include="Entities\IHavePostingBooks.cs" />
+    <Compile Include="Entities\MarketPlaybackTypes.cs" />
+    <Compile Include="Entities\OpenMarketInventory\BaseProposalInventoryWeekDto.cs" />
+    <Compile Include="Entities\OpenMarketInventory\OpenMarketAllocationSaveRequest.cs" />
+    <Compile Include="Entities\OpenMarketInventory\OpenMarketInventoryAllocation.cs" />
+    <Compile Include="Entities\OpenMarketInventory\ProposalOpenMarketDisplayFilter.cs" />
+    <Compile Include="Entities\OpenMarketInventory\ProposalOpenMarketFilter.cs" />
+    <Compile Include="Entities\OpenMarketRefineProgramsRequest.cs" />
+    <Compile Include="Entities\DefaultPostingBooksDto.cs" />
+    <Compile Include="Entities\PostingBookResultDto.cs" />
+    <Compile Include="Entities\ProposalAudienceDto.cs" />
+    <Compile Include="Entities\ProposalDetailSingleInventoryTotalsDto.cs" />
+    <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />
+    <Compile Include="Entities\ProprietaryInventoryAllocationConflict.cs" />
+    <Compile Include="Entities\ProprietaryInventoryAllocationRequest.cs" />
+    <Compile Include="Entities\InventoryDetailSlotProposal.cs" />
+    <Compile Include="Entities\PostDto.cs" />
+    <Compile Include="ApplicationServices\PostService.cs" />
+    <Compile Include="ApplicationServices\ProposalProprietaryInventoryService.cs" />
+    <Compile Include="BusinessEngines\SpotCostCalculationEngine.cs" />
+    <Compile Include="Entities\BvsFileDetailKey.cs" />
+    <Compile Include="Entities\ProposalDetailInventoryBase.cs" />
+    <Compile Include="Entities\OpenMarketInventory\ProposalDetailOpenMarketInventoryDto.cs" />
+    <Compile Include="Entities\ProposalProprietaryInventoryWeekDto.cs" />
+    <Compile Include="Entities\OpenMarketInventory\ProposalInventoryMarketDto.cs" />
+    <Compile Include="Entities\ProposalInventoryTotalsDto.cs" />
+    <Compile Include="Entities\OpenMarketInventory\ProposalOpenMarketInventoryWeekDto.cs" />
+    <Compile Include="Entities\StationDetailDaypart.cs" />
+    <Compile Include="Entities\StationImpressions.cs" />
+    <Compile Include="Entities\TrafficDisplayDto.cs" />
+    <Compile Include="Entities\ValidationWarningDto.cs" />
+    <Compile Include="Extensions\Bvs.cs" />
+    <Compile Include="ReportGenerators\IReportGenerator.cs" />
+    <Compile Include="ReportGenerators\PostExcelReportGenerator.cs" />
+    <Compile Include="Entities\InventoryDetail.cs" />
+    <Compile Include="Entities\InventoryDetailSlot.cs" />
+    <Compile Include="Entities\InventoryDetailSlotComponents.cs" />
+    <Compile Include="Entities\StationDetailPointInTime.cs" />
+    <Compile Include="Entities\PostFile.cs" />
+    <Compile Include="BusinessEngines\PostEngine.cs" />
+    <Compile Include="BusinessEngines\ProposalCalculationEngine.cs" />
+    <Compile Include="Converters\AssemblyImportHelper.cs" />
+    <Compile Include="ReportGenerators\BvsExcelReportGenerator.cs" />
+    <Compile Include="Converters\PostFileParser.cs" />
+    <Compile Include="Converters\RateImport\AssemblyRateImporter.cs" />
+    <Compile Include="Converters\RateImport\CNNFileImporter.cs" />
+    <Compile Include="Converters\RateImport\OpenMarketFileImporter.cs" />
+    <Compile Include="Converters\RateImport\RateFileImporterBase.cs" />
+    <Compile Include="Converters\RateImport\RateFileImporterFactory.cs" />
+    <Compile Include="Converters\RateImport\TTNWFileImporter.cs" />
+    <Compile Include="Converters\RateImport\TVBFileImporter.cs" />
+    <Compile Include="Converters\ScheduleConverterBase.cs" />
+    <Compile Include="Converters\DefaultScheduleConverter.cs" />
+    <Compile Include="Converters\StationContactMasterFileImporter.cs" />
+    <Compile Include="Entities\ProposalInventoryDaypartDetailDto.cs" />
+    <Compile Include="Entities\ProposalInventoryDaypartDto.cs" />
+    <Compile Include="Entities\ProposalInventoryWeekDaypartDto.cs" />
+    <Compile Include="Entities\ProposalInventoryWeekDaypartDetailDto.cs" />
+    <Compile Include="Entities\RatesInitialDataDto.cs" />
+    <Compile Include="Entities\ReportOutput.cs" />
+    <Compile Include="Entities\FilterDaypart.cs" />
+    <Compile Include="Converters\AssemblyScheduleConverter.cs" />
+    <Compile Include="Entities\ForecastRatingsDefaultsDto.cs" />
+    <Compile Include="Entities\MarketGroupDto.cs" />
+    <Compile Include="Entities\PlaybackType.cs" />
+    <Compile Include="Entities\IsciDto.cs" />
+    <Compile Include="Entities\PostFileDetailImpression.cs" />
+    <Compile Include="Entities\PostRequest.cs" />
+    <Compile Include="Entities\ProposalConstants.cs" />
+    <Compile Include="Entities\ProposalDetailDto.cs" />
+    <Compile Include="Entities\ProposalDetailRequestDto.cs" />
+    <Compile Include="Entities\ProposalDetailProprietaryInventoryDto.cs" />
+    <Compile Include="Entities\ProposalMarketDto.cs" />
+    <Compile Include="Entities\ProposalQuarterTotals.cs" />
+    <Compile Include="Entities\ProposalTargets.cs" />
+    <Compile Include="Entities\ProposalMediaWeek.cs" />
+    <Compile Include="Entities\ProposalWeekDto.cs" />
+    <Compile Include="Entities\ProposalQuarterDto.cs" />
+    <Compile Include="Entities\RatingAdjustmentsResponse.cs" />
+    <Compile Include="Entities\RatingAdjustmentsDto.cs" />
+    <Compile Include="Entities\StationImpressionsWithAudience.cs" />
+    <Compile Include="Entities\SchedulePostType.cs" />
+    <Compile Include="Entities\ScheduleHeaderDto.cs" />
+    <Compile Include="Entities\RatingForecastResponse.cs" />
+    <Compile Include="Entities\ProgramRating.cs" />
+    <Compile Include="Entities\RatingForecastRequest.cs" />
+    <Compile Include="Entities\Program.cs" />
+    <Compile Include="Entities\OutOfSpecToDateDto.cs" />
+    <Compile Include="Entities\SpotsAndImpressionsDeliveryByAdvertiser.cs" />
+    <Compile Include="Entities\SpotsAndImpressionsDeliveryBySource.cs" />
+    <Compile Include="Exceptions\DuplicateProgramsException.cs" />
+    <Compile Include="Exceptions\IdenticalHutAndShareException.cs" />
+    <Compile Include="Exceptions\NoProgramsException.cs" />
+    <Compile Include="Exceptions\HutGreaterThanShareException.cs" />
+    <Compile Include="Exceptions\NoSelectedDaysException.cs" />
+    <Compile Include="Entities\CrunchStatus.cs" />
+    <Compile Include="ApplicationServices\NsiUniverseService.cs" />
+    <Compile Include="ApplicationServices\ProposalService.cs" />
+    <Compile Include="ApplicationServices\RatesService.cs" />
+    <Compile Include="Entities\MediaMonthCrunchStatus.cs" />
+    <Compile Include="ApplicationServices\RatingForecastService.cs" />
+    <Compile Include="ApplicationServices\ScheduleAggregateFactoryService.cs" />
+    <Compile Include="ApplicationServices\ScheduleReportDtoFactoryService.cs" />
+    <Compile Include="ApplicationServices\SchedulesReportService.cs" />
+    <Compile Include="ApplicationServices\TrackerService.cs" />
+    <Compile Include="ApplicationServices\BroadcastApplicationServiceFactory.cs" />
+    <Compile Include="BroadcastAudiencesCache.cs" />
+    <Compile Include="BroadcastConstants.cs" />
+    <Compile Include="BusinessEngines\BvsPostingEngine.cs" />
+    <Compile Include="BusinessEngines\ProposalProgramsCalculationEngine.cs" />
+    <Compile Include="BusinessEngines\ProposalSpotDistributionEngine.cs" />
+    <Compile Include="BusinessEngines\QuarterCalculationEngine.cs" />
+    <Compile Include="BusinessEngines\TrackingEngine.cs" />
+    <Compile Include="Converters\BvsConverter.cs" />
+    <Compile Include="Converters\ScxConverter.cs" />
+    <Compile Include="Entities\AcceptScheduleLeadinRequest.cs" />
+    <Compile Include="Entities\AcceptScheduleBlockRequest.cs" />
+    <Compile Include="Entities\AdvertiserCoreData.cs" />
+    <Compile Include="Entities\AdvertiserDataDto.cs" />
+    <Compile Include="Entities\BvsReportData.cs" />
+    <Compile Include="Entities\DisplayProposal.cs" />
+    <Compile Include="Entities\DisplayScheduleStation.cs" />
+    <Compile Include="Entities\DistributeProposalSpotsRequest.cs" />
+    <Compile Include="Entities\GroupedDisplayProposalStationPrograms.cs" />
+    <Compile Include="Entities\GroupedDisplayProposalMarketPrograms.cs" />
+    <Compile Include="Entities\DisplayProposalVersion.cs" />
+    <Compile Include="Entities\ImpressionAndDeliveryDto.cs" />
+    <Compile Include="Entities\MappingDetailDto.cs" />
+    <Compile Include="Entities\NsiUniverseData.cs" />
+    <Compile Include="Entities\ProgramMappingDto.cs" />
+    <Compile Include="Entities\ProposalDto.cs" />
+    <Compile Include="Entities\ProposalEnums.cs" />
+    <Compile Include="Entities\ProposalFlightWeek.cs" />
+    <Compile Include="Entities\ProposalLoadDto.cs" />
+    <Compile Include="Entities\GroupedProposalPrograms.cs" />
+    <Compile Include="Entities\OpenMarketCriterion.cs" />
+    <Compile Include="Entities\ProposalProgramFlightWeek.cs" />
+    <Compile Include="Entities\EditProposalProgramSpotsRequest.cs" />
+    <Compile Include="Entities\ProposalTotalFields.cs" />
+    <Compile Include="Entities\QuarterDetailDto.cs" />
+    <Compile Include="Entities\RatesFileValidatorResult.cs" />
+    <Compile Include="Entities\ProposalProgramDto.cs" />
+    <Compile Include="Entities\RatesFile.cs" />
+    <Compile Include="Entities\RatesFileProblem.cs" />
+    <Compile Include="Entities\RatesFileSaveResult.cs" />
+    <Compile Include="Entities\RatesFileXml.cs" />
+    <Compile Include="Entities\RatesSaveRequest.cs" />
+    <Compile Include="Entities\DisplayBroadcastStation.cs" />
+    <Compile Include="Entities\BvsMap.cs" />
+    <Compile Include="Entities\BvsPostDetail.cs" />
+    <Compile Include="Entities\BvsPostDetailAudience.cs" />
+    <Compile Include="Entities\BvsSaveRequest.cs" />
+    <Compile Include="Entities\BvsTrackingDetail.cs" />
+    <Compile Include="Entities\BvsScrubbingDto.cs" />
+    <Compile Include="Entities\DisplaySchedule.cs" />
+    <Compile Include="Entities\LoadSchedulesDto.cs" />
+    <Compile Include="Entities\ScheduleDetail.cs" />
+    <Compile Include="Entities\ScheduleSaveRequest.cs" />
+    <Compile Include="Entities\ScheduleScrubbing.cs" />
+    <Compile Include="Entities\ScrubbingMap.cs" />
+    <Compile Include="Entities\spotcableOrder_101.designer.cs" />
+    <Compile Include="Entities\StationContact.cs" />
+    <Compile Include="Entities\FlightWeekDto.cs" />
+    <Compile Include="Entities\StationDetailDto.cs" />
+    <Compile Include="Entities\NewStationProgramDto.cs" />
+    <Compile Include="Entities\StationProgramConflict.cs" />
+    <Compile Include="Entities\StationProgram.cs" />
+    <Compile Include="Entities\StationProgramFlightWeek.cs" />
+    <Compile Include="Entities\StationProgramFlightWeekAudience.cs" />
+    <Compile Include="Entities\StationProgramAudienceRateDto.cs" />
+    <Compile Include="Entities\StationSummaryDto.cs" />
+    <Compile Include="Entities\WeeklyDataDto.cs" />
+    <Compile Include="Exceptions\BroadcastDuplicateRatesFileException.cs" />
+    <Compile Include="Exceptions\BroadcastProgramFlightException.cs" />
+    <Compile Include="Exceptions\BroadcastProposalException.cs" />
+    <Compile Include="Exceptions\BroadcastRateDataException.cs" />
+    <Compile Include="Exceptions\BroadcastRatesFileValidationException.cs" />
+    <Compile Include="MediaMonthAndWeekAggregate.cs" />
+    <Compile Include="MediaMonthAndWeekAggregateCache.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProposalCache.cs" />
+    <Compile Include="Repositories\AudienceRepository.cs" />
+    <Compile Include="Repositories\BroadcastAudienceRepository.cs" />
+    <Compile Include="Repositories\BroadcastForecastRepositoryBase.cs" />
+    <Compile Include="Entities\BvsFileDetailFilterResult.cs" />
+    <Compile Include="Repositories\BroadcastRepositoryBase.cs" />
+    <Compile Include="Entities\BvsFileSummary.cs" />
+    <Compile Include="Repositories\BvsPostDetailsRepository.cs" />
+    <Compile Include="Repositories\BvsRepository.cs" />
+    <Compile Include="Repositories\BvsTestDataGeneratorRepository.cs" />
+    <Compile Include="Repositories\DisplayDaypartBroadcastRepository.cs" />
+    <Compile Include="Entities\OpenMarketAllocationDto.cs" />
+    <Compile Include="Repositories\ExternalRatingRepositoryBase.cs" />
+    <Compile Include="Entities\InventoryDetailSlotProposalDto.cs" />
+    <Compile Include="Repositories\InventoryRepository.cs" />
+    <Compile Include="Repositories\MarketDmaMapRepository.cs" />
+    <Compile Include="Repositories\PostRepository.cs" />
+    <Compile Include="Repositories\MarketRepository.cs" />
+    <Compile Include="Repositories\MediaMonthAndWeekAggregateRepository.cs" />
+    <Compile Include="Repositories\NsiMarketRepository.cs" />
+    <Compile Include="Repositories\NsiUniverseRepository.cs" />
+    <Compile Include="Repositories\PostingBookRepository.cs" />
+    <Compile Include="Repositories\GenreRepository.cs" />
+    <Compile Include="Entities\ProposalCriteriasDto.cs" />
+    <Compile Include="Entities\PostFileDetail.cs" />
+    <Compile Include="Repositories\ProposalInventoryRepository.cs" />
+    <Compile Include="Repositories\ProposalOpenMarketInventoryRepository.cs" />
+    <Compile Include="Repositories\ProposalProgramsFilterRepository.cs" />
+    <Compile Include="Repositories\ProposalRepository.cs" />
+    <Compile Include="Entities\ProposalVersion.cs" />
+    <Compile Include="Repositories\RatingAdjustmentsRepository.cs" />
+    <Compile Include="Repositories\RatesRepository.cs" />
+    <Compile Include="Repositories\RatingForecastRepository.cs" />
+    <Compile Include="Entities\RatingsForecastStatus.cs" />
+    <Compile Include="Repositories\RatingsRepository.cs" />
+    <Compile Include="Entities\RatingsResult.cs" />
+    <Compile Include="Repositories\ScheduleAggregateRepository.cs" />
+    <Compile Include="Repositories\ScheduleRepository.cs" />
+    <Compile Include="Repositories\BroadcastDataRepositoryFactory.cs" />
+    <Compile Include="Repositories\SpotLengthBroadcastRepository.cs" />
+    <Compile Include="Repositories\SpotLengthMultiplierRepository.cs" />
+    <Compile Include="Repositories\StationContactsRepository.cs" />
+    <Compile Include="Entities\StationProgramFlightDto.cs" />
+    <Compile Include="Repositories\StationProgramRepository.cs" />
+    <Compile Include="Repositories\StationRepository.cs" />
+    <Compile Include="Repositories\TrackerMappingRepository.cs" />
+    <Compile Include="Repositories\TrafficRepository.cs" />
+    <Compile Include="Validators\RatesFileValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Schemas\SpotTVCableProposalSample.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Data\EntityFrameworkMapping.BroadcastForecast\EntityFrameworkMapping.BroadcastForecast.csproj">
+      <Project>{2503840a-848e-4b7a-adbb-f89430c1b45b}</Project>
+      <Name>EntityFrameworkMapping.BroadcastForecast</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Data\EntityFrameworkMapping.Broadcast\EntityFrameworkMapping.Broadcast.csproj">
+      <Project>{9c9e22bd-7cf0-4095-bb1c-e8dcf7b678f7}</Project>
+      <Name>EntityFrameworkMapping.Broadcast</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Entities\spotcableOrder_101.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ServiceCommonAppSettings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

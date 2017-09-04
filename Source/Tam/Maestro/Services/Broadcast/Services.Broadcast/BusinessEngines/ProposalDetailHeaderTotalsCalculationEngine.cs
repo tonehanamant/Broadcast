@@ -16,6 +16,13 @@ namespace Services.Broadcast.BusinessEngines
 
     public class ProposalDetailHeaderTotalsCalculationEngine : IProposalDetailHeaderTotalsCalculationEngine
     {
+        private readonly IProposalMathEngine _proposalMathEngine;
+
+        public ProposalDetailHeaderTotalsCalculationEngine(IProposalMathEngine proposalMathEngine)
+        {
+            _proposalMathEngine = proposalMathEngine;
+        }
+
         public void CalculateTotalsForProprietaryInventory(ProposalInventoryTotalsDto proprietaryTotals,
             ProposalInventoryTotalsRequestDto proprietaryTotalsRequest,
             ProposalDetailSingleInventoryTotalsDto otherInventoryTotals, double margin)
@@ -59,29 +66,18 @@ namespace Services.Broadcast.BusinessEngines
             var roundedImpressions = impressions / 1000.0;
             var targetImpressions = (long)(targetImpressionsInThousands * 1000);
 
+            // totals
             totals.TotalImpressions = Math.Round(roundedImpressions + otherInventoryTotals.TotalImpressions, 3);
             totals.TotalCost = Math.Round(cost + otherInventoryTotals.TotalCost, 2);
-            totals.TotalCpm = (decimal) totals.TotalImpressions == 0
-                ? 0
-                : Math.Round(totals.TotalCost / (decimal) totals.TotalImpressions, 2);
-            totals.BudgetPercent = targetCost == 0
-                ? 0
-                : _CalculateBudgetPercent((double)totals.TotalCost, margin, targetCost);
-            totals.ImpressionsPercent = targetImpressions == 0
-                ? 0
-                : Math.Round(totals.TotalImpressions * 100 / (targetImpressions / 1000.0), 2);
-            totals.CpmPercent = targetCpm == 0 ? 0 : (double) Math.Round(totals.TotalCpm * 100 / targetCpm, 2);
+            totals.TotalCpm = _proposalMathEngine.CalculateTotalCpm((double)totals.TotalCost, totals.TotalImpressions);
+
+            // percent
+            totals.BudgetPercent = _proposalMathEngine.CalculateBudgetPercent((double)totals.TotalCost, margin, (double)targetCost);
+            totals.ImpressionsPercent = _proposalMathEngine.CalculateImpressionsPercent(totals.TotalImpressions, targetImpressions);
+            totals.CpmPercent = _proposalMathEngine.CalculateCpmPercent((double)totals.TotalCpm, margin, (double)targetCpm);
 
             return totals;
         }
-
-        private double _CalculateBudgetPercent(double total, double margin, decimal goal)
-        {
-            if (goal == 0) return 0;
-
-            return Math.Round((total + (total * (margin / 100))) * 100 / (double)goal, 2);
-        }
-
     }
 
     public class ProposalDetailHeaderTotalsDto
