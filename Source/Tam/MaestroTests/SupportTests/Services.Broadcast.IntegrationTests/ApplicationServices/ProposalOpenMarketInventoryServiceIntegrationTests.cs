@@ -1061,8 +1061,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var inventory = _ProposalOpenMarketInventoryService.GetInventory(10);
-
                 var request = new OpenMarketAllocationSaveRequest
                 {
                     ProposalVersionDetailId = 7,

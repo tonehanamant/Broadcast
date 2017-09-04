@@ -39,8 +39,8 @@ namespace Services.Broadcast.ApplicationServices
             IProposalProgramsCalculationEngine proposalProgramsCalculationEngine,
             IProposalOpenMarketsTotalsCalculationEngine proposalOpenMarketsTotalsCalculationEngine,
             IProposalPostingBooksEngine proposalPostingBooksEngine, IImpressionAdjustmentEngine impressionAdjustmentEngine,
-            IProposalHeaderTotalsCalculationEngine proposalHeaderTotalsCalculationEngine)
-            : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine, impressionAdjustmentEngine, proposalHeaderTotalsCalculationEngine)
+            IProposalTotalsCalculationEngine proposalTotalsCalculationEngine)
+            : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine, impressionAdjustmentEngine, proposalTotalsCalculationEngine)
         {
             _ProposalProgramsCalculationEngine = proposalProgramsCalculationEngine;
             _ProposalOpenMarketsTotalsCalculationEngine = proposalOpenMarketsTotalsCalculationEngine;
@@ -631,7 +631,7 @@ namespace Services.Broadcast.ApplicationServices
                 BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
                     .SaveProposalDetailOpenMarketWeekInventoryTotals(inventoryDto);
 
-                _CalculateProposalVersionTotals(inventoryDto.ProposalVersionId);
+                _CalculateProposalTotals(inventoryDto.ProposalVersionId);
 
                 _CalculateOpenMarketTotals(inventoryDto);
 

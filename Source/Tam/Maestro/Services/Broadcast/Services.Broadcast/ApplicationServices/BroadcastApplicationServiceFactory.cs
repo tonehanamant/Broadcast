@@ -96,7 +96,7 @@ namespace Services.Broadcast.ApplicationServices
 			unityContainer.RegisterType<IPostingBooksService, PostingBooksService>();
             unityContainer.RegisterType<IProposalDetailHeaderTotalsCalculationEngine, ProposalDetailHeaderTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalDetailWeekTotalsCalculationEngine, ProposalDetailWeekTotalsCalculationEngine>();
-            unityContainer.RegisterType<IProposalHeaderTotalsCalculationEngine, ProposalHeaderTotalsCalculationEngine>();
+            unityContainer.RegisterType<IProposalTotalsCalculationEngine, ProposalTotalsCalculationEngine>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

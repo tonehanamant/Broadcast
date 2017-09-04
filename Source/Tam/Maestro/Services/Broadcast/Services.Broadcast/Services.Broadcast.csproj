@@ -166,7 +166,7 @@
     <Compile Include="BusinessEngines\ProposalDetailHeaderTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailWeekTotalsCalculationEngine.cs" />
     <Compile Include="ApplicationServices\TrafficService.cs" />
-    <Compile Include="BusinessEngines\ProposalHeaderTotalsCalculationEngine.cs" />
+    <Compile Include="BusinessEngines\ProposalTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalMarketsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalOpenMarketsTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalPostingBooksEngine.cs" />

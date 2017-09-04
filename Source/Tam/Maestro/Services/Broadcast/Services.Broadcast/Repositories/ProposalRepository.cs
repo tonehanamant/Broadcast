@@ -627,7 +627,7 @@ namespace Services.Broadcast.Repositories
             proposalDto.TargetImpressions = proposalVersion.target_impressions.HasValue ? (double?)proposalVersion.target_impressions / 1000 : null;
             proposalDto.TargetCPM = proposalVersion.target_cpm;
             proposalDto.TotalCost = proposalVersion.cost_total;
-            proposalDto.TotalImpressions = proposalVersion.impressions_total;
+            proposalDto.TotalImpressions = proposalVersion.impressions_total / 1000d;
             proposalDto.TotalCPM = GetCpm(proposalVersion.impressions_total, proposalVersion.cost_total);
             proposalDto.Margin = proposalVersion.margin;
             proposalDto.Notes = proposalVersion.notes;

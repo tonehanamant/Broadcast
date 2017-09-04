@@ -82,7 +82,13 @@ namespace Services.Broadcast.Entities
 
         public ValidationWarningDto ValidationWarning { get; set; }
         public decimal TotalCost { get; set; }
-        public long TotalImpressions { get; set; }
+        public double TotalCostPercent { get; set; }
+        public bool TotalCostMarginAchieved { get; set; }
+        public double TotalImpressions { get; set; }
+        public double TotalImpressionsPercent { get; set; }
+        public bool TotalImpressionsMarginAchieved { get; set; }
         public decimal TotalCPM { get; set; }
+        public double TotalCPMPercent { get; set; }
+        public bool TotalCPMMarginAchieved { get; set; }
     }
 }

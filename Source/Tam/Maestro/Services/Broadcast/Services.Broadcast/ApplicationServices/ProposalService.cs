@@ -54,6 +54,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalScxConverter _ProposalScxConverter;
         private readonly IPostingBooksService _PostingBooksService;
         private readonly IRatingForecastService _RatingForecastService;
+        private readonly IProposalTotalsCalculationEngine _ProposalTotalsCalculationEngine;
 
         public ProposalService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
@@ -64,7 +65,8 @@ namespace Services.Broadcast.ApplicationServices
             IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
             IProposalScxConverter proposalScxConverter,
             IPostingBooksService postingBooksService,
-            IRatingForecastService ratingForecastService)
+            IRatingForecastService ratingForecastService,
+            IProposalTotalsCalculationEngine proposalTotalsCalculationEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AudiencesCache = audiencesCache;
@@ -81,6 +83,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalScxConverter = proposalScxConverter;
             _PostingBooksService = postingBooksService;
             _RatingForecastService = ratingForecastService;
+            _ProposalTotalsCalculationEngine = proposalTotalsCalculationEngine;
         }
 
         public List<DisplayProposal> GetAllProposals()
@@ -637,6 +640,7 @@ namespace Services.Broadcast.ApplicationServices
                 _SetProposalFlightWeeksAndIds(proposal);
                 _SetProposalMarketGroups(proposal);
                 _SetProposalRatingBooks(proposal);
+                _SetProposalMargins(proposal);
                 return proposal;
             }
         }
@@ -670,8 +674,14 @@ namespace Services.Broadcast.ApplicationServices
                 _SetProposalFlightWeeksAndIds(proposal);
                 _SetProposalMarketGroups(proposal);
                 _SetProposalRatingBooks(proposal);
+                _SetProposalMargins(proposal);
                 return proposal;
             }
+        }
+
+        private void _SetProposalMargins(ProposalDto proposal)
+        {
+            _ProposalTotalsCalculationEngine.CalculateProposalTotalsMargins(proposal);
         }
 
         private void _SetProposalDetailFlightWeeks(ProposalDto proposal)

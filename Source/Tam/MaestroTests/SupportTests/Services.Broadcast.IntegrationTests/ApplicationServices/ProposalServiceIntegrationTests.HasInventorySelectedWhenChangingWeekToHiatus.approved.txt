@@ -168,8 +168,14 @@
   "TargetImpressions": 0.0,
   "TargetUnits": 0,
   "TotalCost": 0.0000,
+  "TotalCostMarginAchieved": false,
+  "TotalCostPercent": 0.0,
   "TotalCPM": 0.0,
-  "TotalImpressions": 0,
+  "TotalCPMMarginAchieved": false,
+  "TotalCPMPercent": 0.0,
+  "TotalImpressions": 0.0,
+  "TotalImpressionsMarginAchieved": false,
+  "TotalImpressionsPercent": 0.0,
   "ValidationWarning": {
     "HasWarning": true,
     "Message": "Inventory has been reserved for this Proposal, changes may effect delivery and costs."
