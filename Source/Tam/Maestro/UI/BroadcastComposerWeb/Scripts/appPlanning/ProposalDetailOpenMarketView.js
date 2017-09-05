@@ -84,6 +84,14 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     initGrid: function () {
         if (!this.openMarketsGrid) {
             this.openMarketsGrid = $('#openmarkets_grid').w2grid(PlanningConfig.getOpenMarketGridCfg(this, this.weeksLength));
+            //set up spot events dynamic reuse - do not bind as need the context of the jq el
+            // $('#openmarkets_grid').on('click', '.program_week_spot_click', this.onSpotsProgramWeekClick);
+            var $scope = this;
+            $('#openmarkets_grid').on('click', '.program_week_spot_click', function(evt) {
+                var recid = $(this).data('recid');
+                var weekIdx = $(this).data('weekidx');
+                $scope.onClickEditSpot(recid, weekIdx, evt)
+            });
         } else {
             var columns = PlanningConfig.getOpenMarketGridCfg(this, this.weeksLength).columns;
             this.openMarketsGrid.columns = columns;
@@ -382,10 +390,23 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     },
 
 
-    /////////////original
+    //EDITING SPOTS
 
+    //from program_week_spot_click class on the rendered element - see initGrid
 
+    onClickEditSpot: function (recid, weekIdx, evt) {
+        console.log('onClickEditSpot', weekIdx, recid, evt);
+        //get record and process
+        //if (record && record.isProgram && record.active && !record.isHiatus) {
+            
+        //    console.log('edit grid click', record, event);
+        //    this.setEditSpot(record, event, grid);
+        //} else {
+        //    return;
+        //}
+    }, 
 
+  
 
 
 
@@ -393,6 +414,8 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
     /*
     //tbd- editing etc
+
+    //ORIGINAL
     setWeekGridEvents: function (grid) {
         grid.on('click', this.onSpotsGridClick.bind(this, grid));
     },
@@ -402,6 +425,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
     //user clicks grid: enable edit if spots column and not active/already editing
     onSpotsGridClick: function (grid, event) {
+            //use this with modulus  columns to get sets of 3 OR set specific click event?
 
         if (event.column === null || this.activeEditingRecord) {
             return;

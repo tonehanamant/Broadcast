@@ -525,10 +525,10 @@
                             //now need to deal with greying here
                             if (!week.active) return PlanningConfig.greyRenderer('Unavailable', true);
                             if (week.isHiatus) return PlanningConfig.greyRenderer(spot, true);
-                            //TODO change this id
-                            var cellId = 'program_week_spot_' + record.recid;
+                            //TODO change to get id and weekIdx; use class assignment for click event?
+                            var cellId = 'program_week_spot_' + record.recid + '_' + weekIdx;
                             var changedCls = week.isChanged ? 'w2ui-changed' : '';
-                            var cell = '<div id="' + cellId + '" class="flex-container-1 editable-cell ' + changedCls + '">';
+                            var cell = '<div id="' + cellId + '" data-weekidx="' + weekIdx + '" data-recid="' + record.recid + '" class="flex-container-1 editable-cell program_week_spot_click ' + changedCls + '">';
                             cell += '<input type="number" class="edit-input" step="1" style="display: none !important" />';
                             cell += '<div>' + spot + '</div>';
                             cell += '<div style="color: #bbbaba" class="glyphicon glyphicon-edit" aria-hidden="true"></div>';
