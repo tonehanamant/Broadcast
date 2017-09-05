@@ -1,12 +1,18 @@
 ﻿
 <style>
 
-    #test_open_market_grid {
+    #openmarkets_grid {
         height: 600px;
     }
 
     .openmarket-program-column-group {
         background-image: -webkit-linear-gradient(#f9f9f9, #cacaca) !important;
+    }
+
+    #openmarkets_grid .w2ui-grid-fcolumns, #openmarkets_grid .w2ui-grid-frecords {
+        border-right: 1px solid #949494;
+        box-shadow: 1px 0px 0px 0px rgba(0,0,0,0.1), 2px 0px 0px 0px rgba(0,0,0,0.1);
+        z-index: 1;
     }
     /* Open Market Header */
 
@@ -15,9 +21,9 @@
         border-bottom: none;
     }
 
-        #openmarket_header.modal-header .panel-default {
-            margin-bottom: 0 !important;
-        }
+    #openmarket_header.modal-header .panel-default {
+        margin-bottom: 0 !important;
+    }
 
     #openmarket_header #openmarket_main_title {
         font-size: 16px;
@@ -98,7 +104,7 @@
                     </div>
                 </div>
 
-                <div id="test_open_market_grid"></div>
+                <div id="openmarkets_grid"></div>
                 @*<div class="well">
                     <div class="openmarket-container-supporting">
                         <div style="height: 62px" class="openmarket-programs-wrapper header openmarket-scroll-divider">

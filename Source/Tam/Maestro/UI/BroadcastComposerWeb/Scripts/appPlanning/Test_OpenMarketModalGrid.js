@@ -3,9 +3,9 @@
 var Test_OpenMarketModalGrid = BaseView.extend({
     activeInventoryData: null,
     //separate storage of edited records so can reset grid record state after changes (sort, filter); use for saving independent of what is displayed in grids
-    //activeEditWeekRecords: [], //flat array all weeks
+    activeEditWeekRecords: [], //flat array all weeks
     //activeDetailSet: null,
-    isActive: false,
+    //isActive: false,
     openMarketsGrid: null,
     weeksLength: null,
     //programsGrid: null,
@@ -33,7 +33,7 @@ var Test_OpenMarketModalGrid = BaseView.extend({
         var self = this;
 
         self.ProposalView = view;
-
+        //todo enable
         //self.OpenMarketVM = new ProposalDetailOpenMarketViewModel(this);
         //ko.applyBindings(this.OpenMarketVM, document.getElementById("proposal_openmarket_view"));
 
@@ -42,17 +42,8 @@ var Test_OpenMarketModalGrid = BaseView.extend({
 
         //self.FilterVM = new FilterViewModel(self);
         //ko.applyBindings(this.FilterVM, document.getElementById("filter_modal"));
-        //self.initGrid();
         self.initModal();
     },
-
-    //set grid with dynamic columns via the weeks length
-    //TBD to recreate on open or adjust columns in current
-    initGrid: function () {
-        this.openMarketsGrid = $('#test_open_market_grid').w2grid(PlanningConfig.getTestOpenMarketGridCfg(this, this.weeksLength));
-    },
-
-
 
     //MODAL//
     initModal: function () {
@@ -83,19 +74,44 @@ var Test_OpenMarketModalGrid = BaseView.extend({
         //this.activeEditWeekRecords = [];
     },
 
+    //set grid with dynamic columns via the weeks length
+    //TBD to recreate on open or adjust columns in current
+    //on load
+    initGrid: function () {
+        if (!this.openMarketsGrid) {
+            this.openMarketsGrid = $('#openmarkets_grid').w2grid(PlanningConfig.getTestOpenMarketGridCfg(this, this.weeksLength));
+        } else {
+            var columns = PlanningConfig.getTestOpenMarketGridCfg(this, this.weeksLength).columns;
+            this.openMarketsGrid.columns = columns;
+            //normally would refresh but wait for setGrid to handle
+        }
+    },
+
+    //separate mechanism for initial loads - init/reset Grid columns with weeks each time
+    loadInventory: function (detailSet, inventory, readOnly) {
+        this.activeDetailSet = detailSet;
+        this.isReadOnly = readOnly;
+        this.weeksLength = inventory.Weeks.length;
+        this.initGrid();
+        //todo enable
+        //this.FilterVM.clearFilters();
+        //this.OpenMarketVM.selectedSpotFilterOption(1);
+
+        //this.activeEditWeekRecords = [];
+        this.setInventory(inventory);
+    },
+
     //TBD
-    refreshInventory: function (inventory, reset, checkEdits, keepActiveSet) {
-        this.onClearInventory(reset, keepActiveSet);
-        this.setInventory(this.activeDetailSet, inventory, this.isReadOnly, true, checkEdits);
+    refreshInventory: function (inventory, reset, checkEdits) {
+        this.onClearInventory(reset);
+        this.setInventory(inventory, true, checkEdits);
     },
 
     //REVISE
     //set allinitial inventory data
-    setInventory: function (detailSet, inventory, readOnly, isRefresh, checkEdits) {
+    setInventory: function (inventory, isRefresh, checkEdits) {
         this.activeInventoryData = util.copyData(inventory, null, null, true);
-        this.activeDetailSet = detailSet;
-        this.isReadOnly = readOnly;
-        //this.OpenMarketVM.setInventory(inventory, readOnly);
+        //this.OpenMarketVM.setInventory(inventory, this.isReadOnly);
         //this.FilterVM.setAvailableValues(inventory.DisplayFilter);
         //this.CriteriaBuilderVM.ProgramNamesOptions(inventory.RefineFilterPrograms);
 
@@ -110,11 +126,10 @@ var Test_OpenMarketModalGrid = BaseView.extend({
     //after modal shown/refresh - set inventory views
     onSetInventory: function (checkEdits) {
         //initial render after shown
-        if (!this.isActive) {
-            this.weeksLength = this.activeInventoryData.Weeks.length;
-            this.initGrid();
-            this.isActive = true;
-        }
+        //if (!this.isActive) {
+        //    this.initGrid();
+        //    this.isActive = true;
+        //}
         this.setGrid();
 
         //will only reset if recorded
@@ -129,7 +144,7 @@ var Test_OpenMarketModalGrid = BaseView.extend({
         //console.log(this.openMarketsGrid);
         //var gridData = this.prepareProgramsGridData(markets);
         this.openMarketsGrid.clear();
-        var gridRecs = this.setProgramsWeeksRecords();//test will also set column groups
+        var gridRecs = this.setProgramsWeeksRecords();//will also set column groups
         console.log('setProgramsWeeksRecords', gridRecs);
         
         this.openMarketsGrid.add(gridRecs);
@@ -220,7 +235,7 @@ var Test_OpenMarketModalGrid = BaseView.extend({
         return ret;
     },
 
-    //prepare programs data for records by groupings - will need to handle sorting in future (no totals here)
+    //prepare programs data for initial records by groupings
     prepareProgramsGridData: function (markets) {
         var $scope = this;
         var ret = [];
@@ -245,20 +260,11 @@ var Test_OpenMarketModalGrid = BaseView.extend({
         return ret;
     },
 
-    //Programs grid data at left - grouped structure - market/station - tbd - handle states/sorting/reset etc for future
-    setProgramsGrid: function (markets) {
-        var gridData = this.prepareProgramsGridData(markets);
-        this.programsGrid.clear();
-        this.programsGrid.add(gridData);
-        this.programsGrid.resize();
-    },
-
     //WEEKs and Column Groups
     //try to set each setGrid by inserting?
     setAllColumnGroups: function (weekGroups) {
         var $scope = this;
         //if weekGroups.length?
-        //make master?
         //set as empty headet to match height of weeks: 26 px = 12px height + top7 bottom7 padding
         var colGroups = [{ span: 3, caption: '<div id="openmarket_programs_column_inner" style="height: 12px; padding-right: 5px; text-align: right;">' + this.weeksLength + ' WEEKS:</div>' }];
         //var colGroups = [{ span: 1, caption: 'Airing Time', master:true }, { span: 1, caption: 'Program', master:true }, { span: 1, caption: 'CPM', master:true }]; //this does not work
@@ -300,47 +306,7 @@ var Test_OpenMarketModalGrid = BaseView.extend({
         if (el) el.html(summary);
     },
 
-    //insert multiple grids for scrolling structure - headers and data
-    //handle 1 or 2 contact columns
-    insertWeekGrids: function (weeks) {
-        var $scope = this;
-        $.each(weeks, function (idx, week) {
-            var id = idx + 1;
-            var group = $scope.getWeekColumnGroup(week);
-            //append a div with Id to use for updates later
-            group = '<div id="openmarket_week_column_group_' + week.MediaWeekId + '">' + group + '</div>';
-
-            //elements
-            var el = 'openmarket_week_grid_' + id;
-            var el2 = 'openmarket_week_header_grid_' + id; //header
-            $('#openmarket_weeks').append('<div class="openmarket-week-item"><div id="' + el + '"></div></div>');
-            $('#openmarket_weeks_headers').append('<div class="openmarket-week-item"><div id="' + el2 + '"></div></div>');
-            //set bottom scroller
-            $('#openmarket_weeks_bottom').append('<div class="openmarket-week-item"></div>');
-            //data grid
-            var grid = $('#' + el).w2grid(PlanningConfig.getOpenMarketWeekGridCfg(id, null, this));
-
-            if (grid) {
-                //header grid with grouping
-                var grid2 = $('#' + el2).w2grid(PlanningConfig.getOpenMarketWeekGridCfg(id, group, this));//header with group
-                //set properties on grid for access
-                grid.weekGridId = id;
-                grid.weekGridIndex = idx;
-                grid.mediaWeekId = week.MediaWeekId;
-                grid.isHiatus = week.IsHiatus;
-                grid.checkChanges = false;
-                //set week grid
-                $scope.setWeekGrid(grid, week, week.Markets);//need overall week as is nested structure
-                //set week grid events
-                $scope.setWeekGridEvents(grid);
-                //store grids
-                $scope.inventoryWeekGrids.push(grid);
-                $scope.inventoryWeekHeaderGrids.push(grid2);
-            }
-
-        });
-
-    },
+   
 
     //TBD - get the market part for a week record
     getWeekMarketItem: function (market, isHiatus) {
@@ -412,85 +378,11 @@ var Test_OpenMarketModalGrid = BaseView.extend({
 
     /////////////original
 
-    //get week market row (contains data)
-    getWeekMarketRow: function (market, isHiatus) {
-        var ret = {
-            recid: 'market_week_' + market.MarketId,
-            isMarket: true,
-            // w2ui: { "style": "background-color: #dedede" },
-            //TBD BE
-            Cost: market.Cost,
-            Spots: market.Spots,
-            EFF: market.EFF,
-            Impressions: market.Impressions
-        };
-        ret.w2ui = isHiatus ? { "style": "color: #8f8f8f; background-color: #dedede;" } : { "style": "background-color: #dedede" };
-        return ret;
-    },
+   
 
-    //get week station row
-    getWeekStationRow: function (station) {
-        var ret = {
-            recid: 'station_Week_' + station.StationCode,
-            isStation: true,
-            w2ui: { "style": "background-color: #E9E9E9" }
-        };
-        return ret;
-    },
+  
 
-    prepareWeekGridData: function (markets, week, grid) {
-        markets = util.copyArray(markets);//needed?
-        var $scope = this;
-        var ret = [];
-        $.each(markets, function (mIdx, market) {
-            ret.push($scope.getWeekMarketRow(market, week.IsHiatus));
-            //intercept this data if activeField sorting is on
-            //var stationPrograms = $scope.checkStationsSortData(market.DisplayProposalStationPrograms);
-            var stationPrograms = market.Stations;
-            $.each(stationPrograms, function (sIdx, station) {
-                ret.push($scope.getWeekStationRow(station));
-                $.each(station.Programs, function (pIdx, program) {
-                    var style = week.IsHiatus ? { "style": "color: #8f8f8f;" } : {};
-                    if (!program) {//is null so not available throughout; no ProgramId so use index hybrid ID
-                        var uniqueId = station.StationCode + pIdx;
-                        var slotId = 'program_week_' + week.MediaWeekId + '_notavailable_' + uniqueId;
-                        ret.push({ recid: slotId, active: false, isProgram: true, w2ui: style });//isProgram?
-                    } else {
-                        //TBD - this may effect spot editing
-                        //programId should be unique now but could be same in another week
-                        program.recid = 'program_week_' + week.MediaWeekId + '_' + program.ProgramId;
-                        //state
-                        program.isProgram = true;
-                        program.isHiatus = week.IsHiatus;
-                        program.active = true;//overall active
-                        program.isChanged = false;//overall edited
-                        program.initialSpots = program.Spots; //to determine if real change on edit/save
-                        //grid identifiers
-                        program.weekGridId = grid.weekGridId;
-                        program.weekGridIndex = grid.weekGridIndex;
-                        program.MediaWeekId = week.MediaWeekId;
-                        program.StationCode = station.StationCode;
-                        program.MarketId = market.MarketId;
-                        //for accessing stored data
-                        program.marketDataIdx = mIdx;
-                        program.stationDataIdx = sIdx;
-                        program.programDataIdx = pIdx;
-                        program.w2ui = style;
-                        ret.push(program);
-                    }
-                });
-            });
-        });
-        return ret;
-    },
-
-    //set a week from nested structure to grouped and spacer
-    setWeekGrid: function (grid, week, markets) {
-        var gridData = this.prepareWeekGridData(markets, week, grid);
-        //grid.clear();
-        grid.add(gridData);
-        grid.resize();
-    },
+    
 
 
     /*
@@ -797,39 +689,18 @@ var Test_OpenMarketModalGrid = BaseView.extend({
     */
 
 
-    //REVISE - either clear/update columns on load OR  remove altogehter
-    //clear inventory at modal hidden and destroy week grids, etc
-    onClearInventory: function (reset, clearActiveDetailSet) {
-        //destroy or clear?
-
-        /*
-        this.programsGrid.clear(); //clear programs
-
-        $.each(this.inventoryWeekGrids, function (idx, grid) {
-            grid.destroy();
-        });
-
-        $('#openmarket_weeks').empty();
-        $.each(this.inventoryWeekHeaderGrids, function (idx, grid) {
-            grid.destroy();
-        });
-
-        $('#openmarket_weeks_headers').empty();
-        $('#openmarket_weeks_bottom').empty();
-
-        if (clearActiveDetailSet)
-            this.activeDetailSet = null;
+    //REVISE
+    //clear inventory ; reset
+    onClearInventory: function (reset) {
 
         this.activeInventoryData = null;
-        this.inventoryWeekGrids = [];
-        this.inventoryWeekHeaderGrids = [];
         this.bypassCheckSave = false;
         if (reset) {
             this.isMarketSortName = false;
             this.marketSortIndexMap = [];
-            this.OpenMarketVM.setSortByMarketName(false);
+            //todo enable
+            //this.OpenMarketVM.setSortByMarketName(false);
         }
-        */
     },
 
     //modal hide event - check unsaved if not read only

@@ -490,6 +490,6 @@ var ProposalView = BaseView.extend({
             this.testGridView = new Test_OpenMarketModalGrid();
             this.testGridView.initView(this);
         }
-        this.testGridView.setInventory(null, test_open_market_data, false);
+        this.testGridView.loadInventory(null, test_open_market_data, false);
     }
 });

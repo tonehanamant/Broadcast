@@ -671,9 +671,9 @@
                         var week = getWeekData(record);
                         var spot = week.Spots ? week.Spots : '-';
                         if (record.isProgram) {
-                            if (!week.active) return 'Unavailable'; //class will grey out
-                            //TODO - now need to deal with greying here
-                            if (week.isHiatus) return spot;
+                            //now need to deal with greying here
+                            if (!week.active) return PlanningConfig.greyRenderer('Unavailable', true);
+                            if (week.isHiatus) return PlanningConfig.greyRenderer(spot, true);
                             //TODO change this id
                             var cellId = 'program_week_spot_' + record.recid;
                             var changedCls = week.isChanged ? 'w2ui-changed' : '';
@@ -693,17 +693,19 @@
                     caption: 'Imp (000)',
                     sortable: false,
                     resizable: false,
-                    size: '150px',
+                    size: '180px',
                     render: function (record, index, column_index) {
                        
                         //format of impressions and dash
                         if (record.isStation) return '';
                         var week = getWeekData(record);
                         if (record.isProgram) {//display val including 0 unless not active
-                            if (!week.active) return '-'; //TODO needs to be set now// class will grey out
-                            //TODO hiatus neds set here
+                            if (!week.active) return PlanningConfig.greyRenderer('-', true);
+                            //TODO hiatus needs set here
                             var val = numeral(week.TotalImpressions).format('0,0.[000]');
-                            return PlanningConfig.greyRenderer(val, week.Spots === 0);
+                            //return grey for 0 or hiatus
+                            var grey = week.Spots === 0 || week.isHiatus;
+                            return PlanningConfig.greyRenderer(val, grey);
                         } else {//market display val or dash
                             return week.Impressions ? numeral(week.Impressions).format('0,0.[000]') : '-';
                         }
@@ -716,15 +718,16 @@
                     caption: 'Cost',
                     sortable: false,
                     resizable: false,
-                    size: '150px',
+                    size: '180px',
                     render: function (record, index, column_index) {
                         if (record.isStation) return '';
                         var week = getWeekData(record);
                         if (record.isProgram) {//display val including 0 unless not active
-                            if (!week.active) return '-'; //class will grey out
-
+                            if (!week.active) return PlanningConfig.greyRenderer('-', true);
                             var val = week.Cost ? numeral(week.Cost).format('$0,0[.]00') : '-';
-                            return PlanningConfig.greyRenderer(val, week.Spots === 0);
+                            //return grey for 0 or hiatus
+                            var grey = week.Spots === 0 || week.isHiatus;
+                            return PlanningConfig.greyRenderer(val, grey);
                         } else {//market display val or dash
                             return numeral(week.Cost).format('$0,0[.]00');
                         }
