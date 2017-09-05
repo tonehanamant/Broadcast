@@ -79,7 +79,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     },
 
     //set grid with dynamic columns via the weeks length
-    //TBD to recreate on open or adjust columns in current
+    //recreate on open or adjust columns in reload
     //on load
     initGrid: function () {
         if (!this.openMarketsGrid) {
@@ -104,7 +104,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         this.setInventory(inventory);
     },
 
-    //TBD
+    //reset inventory - filter, refine, etc
     refreshInventory: function (inventory, reset, checkEdits) {
         this.onClearInventory(reset);
         this.setInventory(inventory, true, checkEdits);
@@ -209,9 +209,9 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     */
 
 
-    //REVISE combine
+    //REVISE combined grid
 
-    //PROGRAMS GRID - grouped
+    //PROGRAMS section - grouped
 
     //get a market row
     getProgramsMarketRow: function (market) {
@@ -657,42 +657,44 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         }, true);
     },
 
+    */
+    //TODO REVISE
     //save from apply or save context - 
     //if apply - record scroll positions, call api to refresh, and reset
     //apply sorting; revise to handle future filtering/post processing
     saveInventory: function (isApply) {
         var $scope = this;
 
-        var continueSaveFn = function () {
-            var request = $scope.getParamsForSave();
+        //var continueSaveFn = function () {
+        //    var request = $scope.getParamsForSave();
 
-            $scope.ProposalView.controller.apiSaveInventoryOpenMarket(request, function (inventory) {
-                $scope.activeEditWeekRecords = [];
+        //    $scope.ProposalView.controller.apiSaveInventoryOpenMarket(request, function (inventory) {
+        //        $scope.activeEditWeekRecords = [];
 
-                if (isApply) {
-                    $scope.recordLastScrollPosition();
+        //        if (isApply) {
+        //            $scope.recordLastScrollPosition();
 
-                    if ($scope.isMarketSortName) {
-                        inventory = $scope.changeInventoryDataForSort(inventory, true);
-                    }
+        //            if ($scope.isMarketSortName) {
+        //                inventory = $scope.changeInventoryDataForSort(inventory, true);
+        //            }
 
-                    $scope.refreshInventory(inventory, true, false, true);
-                } else {
-                    $scope.showModal(true); //close open market modal
-                }
+        //            $scope.refreshInventory(inventory, true, false);
+        //        } else {
+        //            $scope.showModal(true); //close open market modal
+        //        }
 
-                util.notify('Inventory saved successfully', 'success');
-            });
-        };
+        //        util.notify('Inventory saved successfully', 'success');
+        //    });
+        //};
 
-        if ($scope.OpenMarketVM.hasFiltersApplied()) {
-            util.confirm('Filters are set', 'You have filtered your Proposal. The totals displayed are for the filtered items only. Are you sure you would like to save?', continueSaveFn, null, 'Save');
-        } else {
-            continueSaveFn();
-        }
+        //if ($scope.OpenMarketVM.hasFiltersApplied()) {
+        //    util.confirm('Filters are set', 'You have filtered your Proposal. The totals displayed are for the filtered items only. Are you sure you would like to save?', continueSaveFn, null, 'Save');
+        //} else {
+        //    continueSaveFn();
+        //}
     },
 
-    */
+    
 
 
     //REVISE
