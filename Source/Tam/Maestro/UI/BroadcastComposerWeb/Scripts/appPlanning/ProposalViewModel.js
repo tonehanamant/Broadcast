@@ -331,12 +331,12 @@ var ProposalViewModel = function (controller) {
         $scope.selectedAdvertiser(null);
         $scope.totalCost(null);
         $scope.targetBudget(null);
-        $scope.totalCostPercent(null);
-        $scope.totalCostMarginAchieved(null);
+        $scope.totalCostPercent(0);
+        $scope.totalCostMarginAchieved(false);
         $scope.totalImpressions(null);
         $scope.targetImpressions(null);
-        $scope.totalImpressionsPercent(null);
-        $scope.totalImpressionsMarginAchieved(null);
+        $scope.totalImpressionsPercent(0);
+        $scope.totalImpressionsMarginAchieved(false);
         $scope.targetUnits(null);
         $scope.flightStartDate(null);
         $scope.flightEndDate(null);
@@ -353,8 +353,8 @@ var ProposalViewModel = function (controller) {
         $scope.isReadOnly(false);
         $scope.totalCpm(null);
         $scope.targetCpm(null);
-        $scope.totalCPMPercent(null);
-        $scope.totalCPMMarginAchieved(null);
+        $scope.totalCPMPercent(0);
+        $scope.totalCPMMarginAchieved(false);
 
         $scope.controller.customMarketsViewModel.clear();
     };
