@@ -284,6 +284,7 @@
     <Content Include="Scripts\appPlanning\ProposalDetailInventoryViewModel.js" />
     <Content Include="Scripts\appPlanning\ProposalDetailOpenMarketView.js" />
     <Content Include="Scripts\appPlanning\ProposalDetailOpenMarketViewModel.js" />
+    <Content Include="Scripts\appPlanning\ProposalDetailOpenMarketView_multiple_original.js" />
     <Content Include="Scripts\appPlanning\ProposalDetailSet.js" />
     <Content Include="Scripts\appPlanning\CustomMarketsViewModel.js" />
     <Content Include="Scripts\appPlanning\test_data_open_market.js" />
@@ -553,6 +554,7 @@
     <Content Include="Views\Planning\_FilterModal.cshtml" />
     <Content Include="Views\Traffic\Index.cshtml" />
     <Content Include="Views\Planning\_TestOpenMarketModalGrid.cshtml" />
+    <Content Include="Views\Planning\__ProposalDetailOpenMarketModal_multiple_original.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Services\Broadcast\Services.Broadcast\Services.Broadcast.csproj">

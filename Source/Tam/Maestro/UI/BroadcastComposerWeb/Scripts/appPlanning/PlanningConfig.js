@@ -583,9 +583,9 @@
     },
 
     //work in column groups for weeks and column set for each week
-    getTestOpenMarketGridCfg: function (view, weeksLength) {
+    getOpenMarketGridCfg: function (view, weeksLength) {
         var gridCfg = {
-            name: 'TestOpemMarketGrid',
+            name: 'OpemMarketGrid',
             show: { footer: true },
             onSelect: function (event) {
                 //to prevent selection (styling on grids)
@@ -647,7 +647,7 @@
 
         var me = this;
         for (var i = 0; i < weeksLength; i++) {
-            columns = columns.concat(me.getWeekColumnsCfg(i));
+            columns = columns.concat(me.getOpenMarketsWeekColumnsCfg(i));
         }
 
         gridCfg.columns = columns;
@@ -657,7 +657,7 @@
     //test getting column sets
     //either use name + idx or use all as week object?
     //todo editing revision
-    getWeekColumnsCfg: function (weekIdx) {
+    getOpenMarketsWeekColumnsCfg: function (weekIdx) {
         var getWeekData = function (record) { return record['week' + weekIdx] };
         var columns = [
                 {
