@@ -36,14 +36,14 @@
         {
           "Cpm": 20.0000,
           "DistributeGoals": false,
-          "ImpressionGoal": 100.0,
+          "ImpressionGoal": 100000.0,
           "Quarter": 2,
           "QuarterText": "2016 Q2",
           "Weeks": [
             {
               "Cost": 25.0000,
               "EndDate": "2016-06-06T00:00:00",
-              "Impressions": 100.0,
+              "Impressions": 100000.0,
               "IsHiatus": false,
               "MediaWeekId": 649,
               "StartDate": "2016-05-30T00:00:00",
@@ -58,7 +58,7 @@
       "SinglePostingBookId": null,
       "SpotLengthId": 1,
       "TotalCost": 50.0000,
-      "TotalImpressions": 1000.0,
+      "TotalImpressions": 1000000.0,
       "TotalUnits": 200
     },
     {
@@ -94,14 +94,14 @@
         {
           "Cpm": 20.0000,
           "DistributeGoals": false,
-          "ImpressionGoal": 100.0,
+          "ImpressionGoal": 100000.0,
           "Quarter": 2,
           "QuarterText": "2016 Q2",
           "Weeks": [
             {
               "Cost": 25.0000,
               "EndDate": "2016-06-06T00:00:00",
-              "Impressions": 100.0,
+              "Impressions": 100000.0,
               "IsHiatus": false,
               "MediaWeekId": 649,
               "StartDate": "2016-05-30T00:00:00",
@@ -116,7 +116,7 @@
       "SinglePostingBookId": null,
       "SpotLengthId": 1,
       "TotalCost": 50.0000,
-      "TotalImpressions": 1000.0,
+      "TotalImpressions": 1000000.0,
       "TotalUnits": 200
     }
   ],

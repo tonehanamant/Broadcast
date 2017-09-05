@@ -55,7 +55,7 @@ namespace Services.Broadcast.BusinessEngines
                 float multiplier;
                 if (_SpotLengthMultipliers.Value.TryGetValue(spotLength, out multiplier))
                 {
-                    return result * multiplier;
+                    return (result * multiplier);
                 }
 
                 throw new ApplicationException(string.Format("Unknown spot length {0} found while adjusting impression", spotLength));
@@ -71,7 +71,7 @@ namespace Services.Broadcast.BusinessEngines
                 float multiplier;
                 if (_SpotLengthMultipliers.Value.TryGetValue(spotLength, out multiplier))
                 {
-                    return impression * multiplier;
+                    return (impression * multiplier);
                 }
 
                 throw new ApplicationException(string.Format("Unknown spot length {0} found while adjusting impression", spotLength));

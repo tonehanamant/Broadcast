@@ -790,7 +790,7 @@ namespace Services.Broadcast.Repositories
                                 {
                                     MediaWeekId = fw.media_week_id,
                                     IsHiatus = !fw.active,
-                                    Rate = (double)(spotLength == 15 ? fw.C15s_rate ?? 0
+                                    Rate = (spotLength == 15 ? fw.C15s_rate ?? 0
                                             : spotLength == 30 ? fw.C30s_rate ?? 0
                                             : spotLength == 60 ? fw.C60s_rate ?? 0
                                             : spotLength == 90 ? fw.C90s_rate ?? 0

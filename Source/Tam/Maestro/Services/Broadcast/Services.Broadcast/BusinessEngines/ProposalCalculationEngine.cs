@@ -1,12 +1,11 @@
 ﻿using Services.Broadcast.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Services.Broadcast.BusinessEngines
 {
     public interface IProposalCalculationEngine
-    {        
+    {
         void UpdateProposal(ProposalDto proposalDto);
     }
 
@@ -29,7 +28,7 @@ namespace Services.Broadcast.BusinessEngines
             _SetProposalTargets(proposalDto);
         }
 
-        private void _UpdateQuarterValues(ProposalQuarterDto proposalQuarterDto, bool adu)
+        internal static void _UpdateQuarterValues(ProposalQuarterDto proposalQuarterDto, bool adu)
         {
             if (adu)
             {
@@ -44,51 +43,51 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private void _SetProposalTargets(ProposalDto proposalDto)
+        private static void _SetProposalTargets(ProposalDto proposalDto)
         {
-            var targets = _CalculateTargetsForProposal(proposalDto.Details);
-
-            proposalDto.TargetBudget = targets.TargetBudget;
-            proposalDto.TargetImpressions = targets.TargetImpressions;
-            proposalDto.TargetUnits = targets.TargetUnits;
-            proposalDto.TargetCPM = targets.TargetCPM;
+            proposalDto.TargetBudget = proposalDto.Details.Sum(detail => detail.TotalCost);
+            proposalDto.TargetImpressions = proposalDto.Details.Sum(detail => detail.TotalImpressions);
+            proposalDto.TargetUnits = proposalDto.Details.Sum(detail => detail.TotalUnits);
+            proposalDto.TargetCPM = proposalDto.TargetImpressions == 0 ? 0 : proposalDto.TargetBudget / (decimal)proposalDto.TargetImpressions;
         }
 
-        private void _SetQuarterTotals(ProposalDetailDto proposalDetailDto)
+        internal static void _SetQuarterTotals(ProposalDetailDto proposalDetailDto)
         {
-            var totals = _CalculateTotalsForQuarter(proposalDetailDto.Quarters);
+            var proposalQuarterTotalsDto = new ProposalQuarterTotals();
 
-            proposalDetailDto.TotalCost = totals.TotalCost;
-            proposalDetailDto.TotalImpressions = totals.TotalImpressions;
-            proposalDetailDto.TotalUnits = totals.TotalUnits;
+            foreach (var proposalQuarterDto in proposalDetailDto.Quarters)
+            {
+                proposalQuarterTotalsDto.TotalCost += proposalQuarterDto.Weeks.Sum(week => week.Cost);
+                proposalQuarterTotalsDto.TotalUnits += proposalQuarterDto.Weeks.Sum(week => week.Units);
+                proposalQuarterTotalsDto.TotalImpressions += proposalQuarterDto.Weeks.Sum(week => week.Impressions);
+            }
+
+            proposalDetailDto.TotalCost = proposalQuarterTotalsDto.TotalCost;
+            proposalDetailDto.TotalImpressions = proposalQuarterTotalsDto.TotalImpressions;
+            proposalDetailDto.TotalUnits = proposalQuarterTotalsDto.TotalUnits;
         }
 
-        private void _UpdateProposalWeekValues(ProposalQuarterDto proposalQuarterDto, bool adu)
+        internal static void _UpdateProposalWeekValues(ProposalQuarterDto proposalQuarterDto, bool adu)
         {
             var countOfNonHiatusWeeks = proposalQuarterDto.Weeks.Count(week => !week.IsHiatus);
-            var impressionGoalInThousands = Math.Truncate(proposalQuarterDto.ImpressionGoal * 1000);
-            var truncatedDistributedImpressions = Math.Truncate(impressionGoalInThousands / countOfNonHiatusWeeks);
-            var impressionsForLastWeek = truncatedDistributedImpressions +
-                                         (impressionGoalInThousands % countOfNonHiatusWeeks);
-            var lastNonHiatusMediaWeekDto = proposalQuarterDto.Weeks.LastOrDefault(week => !week.IsHiatus);
-
+            var truncatedDistributedImpressions = countOfNonHiatusWeeks == 0 ? 0 : proposalQuarterDto.ImpressionGoal / countOfNonHiatusWeeks;
             foreach (var proposalMediaWeekDto in proposalQuarterDto.Weeks)
             {
                 _CalculateProposalWeekValues(proposalQuarterDto, adu, proposalMediaWeekDto, truncatedDistributedImpressions);
             }
 
-            _CalculateProposalWeekValues(proposalQuarterDto, adu, lastNonHiatusMediaWeekDto, impressionsForLastWeek);
+            var lastWeekImpressions = truncatedDistributedImpressions + (countOfNonHiatusWeeks == 0 ? 0 : proposalQuarterDto.ImpressionGoal % countOfNonHiatusWeeks);
+            _CalculateProposalWeekValues(proposalQuarterDto, adu, proposalQuarterDto.Weeks.LastOrDefault(week => !week.IsHiatus), lastWeekImpressions);
         }
 
-        private void _CalculateProposalWeekValues(ProposalQuarterDto proposalQuarterDto, bool adu,
-            ProposalWeekDto proposalMediaWeekDto, double impressions)
+        private static void _CalculateProposalWeekValues(ProposalQuarterDto proposalQuarterDto, bool adu, ProposalWeekDto proposalMediaWeekDto, double impressions)
         {
             if (proposalMediaWeekDto == null)
                 return;
 
             if (proposalQuarterDto.DistributeGoals && !proposalMediaWeekDto.IsHiatus)
             {
-                proposalMediaWeekDto.Impressions = impressions / 1000;
+                proposalMediaWeekDto.Impressions = impressions;
             }
 
             if (proposalMediaWeekDto.IsHiatus)
@@ -103,38 +102,8 @@ namespace Services.Broadcast.BusinessEngines
             }
             else
             {
-                proposalMediaWeekDto.Cost =
-                    Math.Round(proposalQuarterDto.Cpm * (decimal) proposalMediaWeekDto.Impressions, 2);
+                proposalMediaWeekDto.Cost = Math.Round(proposalQuarterDto.Cpm * (decimal) proposalMediaWeekDto.Impressions / 1000, 2);
             }
-        }
-
-        private ProposalTargets _CalculateTargetsForProposal(List<ProposalDetailDto> proposalDetailDtos)
-        {
-            var proposalTargets = new ProposalTargets
-            {
-                TargetBudget = proposalDetailDtos.Sum(detail => detail.TotalCost),
-                TargetImpressions = proposalDetailDtos.Sum(detail => detail.TotalImpressions),
-                TargetUnits = proposalDetailDtos.Sum(detail => detail.TotalUnits)
-            };
-
-            proposalTargets.TargetCPM = proposalTargets.TargetImpressions == 0 ? 0
-                : proposalTargets.TargetBudget/(decimal)proposalTargets.TargetImpressions;
-
-            return proposalTargets;
-        }
-
-        private ProposalQuarterTotals _CalculateTotalsForQuarter(IEnumerable<ProposalQuarterDto> quarters)
-        {
-            var proposalQuarterTotalsDto = new ProposalQuarterTotals();
-
-            foreach (var proposalQuarterDto in quarters)
-            {
-                proposalQuarterTotalsDto.TotalCost += proposalQuarterDto.Weeks.Sum(week => week.Cost);
-                proposalQuarterTotalsDto.TotalUnits += proposalQuarterDto.Weeks.Sum(week => week.Units);
-                proposalQuarterTotalsDto.TotalImpressions += proposalQuarterDto.Weeks.Sum(week => week.Impressions);
-            }
-
-            return proposalQuarterTotalsDto;
         }
     }
 }

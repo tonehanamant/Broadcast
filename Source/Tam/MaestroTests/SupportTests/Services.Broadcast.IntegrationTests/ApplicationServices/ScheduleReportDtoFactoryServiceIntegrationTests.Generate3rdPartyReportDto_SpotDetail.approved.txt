@@ -4,7 +4,7 @@
       "AudienceId": 31,
       "AudienceName": "HH",
       "DeliveredImpressions": 381907.068,
-      "OrderedImpressions": 0,
+      "OrderedImpressions": 0.0,
       "OutOfSpecDeliveredImpressions": 0.0,
       "TotalDeliveredImpressions": 381907.068
     },
@@ -12,7 +12,7 @@
       "AudienceId": 33,
       "AudienceName": "A18-49",
       "DeliveredImpressions": 381907.068,
-      "OrderedImpressions": 0,
+      "OrderedImpressions": 0.0,
       "OutOfSpecDeliveredImpressions": 0.0,
       "TotalDeliveredImpressions": 381907.068
     }
@@ -26,20 +26,20 @@
         {
           "AudienceId": 31,
           "Delivery": 171812.972,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 214766.215
         },
         {
           "AudienceId": 33,
           "Delivery": 46837.014,
-          "Impressions": null,
-          "NsiDelivery": 58546.267499999994
+          "Impressions": 0.0,
+          "NsiDelivery": 58546.2675
         },
         {
           "AudienceId": 42,
           "Delivery": 163257.082,
-          "Impressions": null,
-          "NsiDelivery": 204071.35249999998
+          "Impressions": 0.0,
+          "NsiDelivery": 204071.3525
         }
       ],
       "Brand": "Brand A+Brand C",

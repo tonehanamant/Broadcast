@@ -22,12 +22,12 @@ namespace EntityFrameworkMapping.Broadcast
     
         public int id { get; set; }
         public int schedule_id { get; set; }
+        public string market { get; set; }
         public string network { get; set; }
         public string program { get; set; }
+        public int daypart_id { get; set; }
         public decimal total_cost { get; set; }
         public int total_spots { get; set; }
-        public string market { get; set; }
-        public int daypart_id { get; set; }
         public decimal spot_cost { get; set; }
         public string spot_length { get; set; }
         public Nullable<int> spot_length_id { get; set; }

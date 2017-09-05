@@ -196,14 +196,14 @@
       {
         "AudienceId": 31,
         "Delivery": 22535.65,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 21242.0,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -290,14 +290,14 @@
       {
         "AudienceId": 31,
         "Delivery": 37104.45,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 34727.85,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -330,14 +330,14 @@
       {
         "AudienceId": 31,
         "Delivery": 37104.45,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 34727.85,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -370,14 +370,14 @@
       {
         "AudienceId": 31,
         "Delivery": 13714.0,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 9643.05,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -410,14 +410,14 @@
       {
         "AudienceId": 31,
         "Delivery": 13714.0,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 9643.05,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -450,14 +450,14 @@
       {
         "AudienceId": 31,
         "Delivery": 18399.75,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 19831.8,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -490,14 +490,14 @@
       {
         "AudienceId": 31,
         "Delivery": 10245.75,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 9719.0,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -584,14 +584,14 @@
       {
         "AudienceId": 31,
         "Delivery": 36805.75,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 36785.2,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -624,14 +624,14 @@
       {
         "AudienceId": 31,
         "Delivery": 36282.25,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 36108.65,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -691,14 +691,14 @@
       {
         "AudienceId": 31,
         "Delivery": 34249.65,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 34105.7,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -731,14 +731,14 @@
       {
         "AudienceId": 31,
         "Delivery": 40643.35,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 31693.45,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -960,14 +960,14 @@
       {
         "AudienceId": 31,
         "Delivery": 30200.95,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 23209.5,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1000,14 +1000,14 @@
       {
         "AudienceId": 31,
         "Delivery": 7925.8,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 6372.95,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1040,14 +1040,14 @@
       {
         "AudienceId": 31,
         "Delivery": 9093.6,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 7410.35,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1080,14 +1080,14 @@
       {
         "AudienceId": 31,
         "Delivery": 18829.55,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 15812.35,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1120,14 +1120,14 @@
       {
         "AudienceId": 31,
         "Delivery": 19636.75,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 16277.4,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1295,14 +1295,14 @@
       {
         "AudienceId": 31,
         "Delivery": 32355.05,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 27369.55,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1335,14 +1335,14 @@
       {
         "AudienceId": 31,
         "Delivery": 37066.45,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 35352.0,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1375,14 +1375,14 @@
       {
         "AudienceId": 31,
         "Delivery": 37066.45,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 35352.0,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1415,14 +1415,14 @@
       {
         "AudienceId": 31,
         "Delivery": 32355.05,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 27369.55,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1617,14 +1617,14 @@
       {
         "AudienceId": 31,
         "Delivery": 15616.7,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 13550.9,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1657,14 +1657,14 @@
       {
         "AudienceId": 31,
         "Delivery": 17194.8,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 13901.85,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1697,14 +1697,14 @@
       {
         "AudienceId": 31,
         "Delivery": 17492.25,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 13847.1,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1737,14 +1737,14 @@
       {
         "AudienceId": 31,
         "Delivery": 16223.75,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 15630.65,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1885,14 +1885,14 @@
       {
         "AudienceId": 31,
         "Delivery": 32258.85,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 30156.1,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -1979,14 +1979,14 @@
       {
         "AudienceId": 31,
         "Delivery": 19702.55,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 19162.2,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2019,14 +2019,14 @@
       {
         "AudienceId": 31,
         "Delivery": 18425.8,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 18504.95,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2086,14 +2086,14 @@
       {
         "AudienceId": 31,
         "Delivery": 18425.8,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 18504.95,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2126,14 +2126,14 @@
       {
         "AudienceId": 31,
         "Delivery": 15833.6,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 16182.7,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2166,14 +2166,14 @@
       {
         "AudienceId": 31,
         "Delivery": 13527.15,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 9645.6,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2206,14 +2206,14 @@
       {
         "AudienceId": 31,
         "Delivery": 13527.15,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 9645.6,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2246,14 +2246,14 @@
       {
         "AudienceId": 31,
         "Delivery": 2494.1,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 1568.0,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2313,14 +2313,14 @@
       {
         "AudienceId": 31,
         "Delivery": 12345.9,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 11081.25,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2353,14 +2353,14 @@
       {
         "AudienceId": 31,
         "Delivery": 13073.65,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 11895.25,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2420,14 +2420,14 @@
       {
         "AudienceId": 31,
         "Delivery": 11930.0,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 9501.05,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2487,14 +2487,14 @@
       {
         "AudienceId": 31,
         "Delivery": 11776.9,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 9293.7,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2527,14 +2527,14 @@
       {
         "AudienceId": 31,
         "Delivery": 5683.15,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 5393.75,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2567,14 +2567,14 @@
       {
         "AudienceId": 31,
         "Delivery": 6860.3,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 6423.7,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2607,14 +2607,14 @@
       {
         "AudienceId": 31,
         "Delivery": 6680.25,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 6253.3,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2647,14 +2647,14 @@
       {
         "AudienceId": 31,
         "Delivery": 11355.5,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 10382.25,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2687,14 +2687,14 @@
       {
         "AudienceId": 31,
         "Delivery": 17178.1,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 19938.4,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2862,14 +2862,14 @@
       {
         "AudienceId": 31,
         "Delivery": 5539.75,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 4322.0,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2902,14 +2902,14 @@
       {
         "AudienceId": 31,
         "Delivery": 5931.0,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 4815.55,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -2996,14 +2996,14 @@
       {
         "AudienceId": 31,
         "Delivery": 8260.15,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 8560.65,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -3036,14 +3036,14 @@
       {
         "AudienceId": 31,
         "Delivery": 8260.15,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 8560.65,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -3076,14 +3076,14 @@
       {
         "AudienceId": 31,
         "Delivery": 11614.25,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 10064.7,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -3116,14 +3116,14 @@
       {
         "AudienceId": 31,
         "Delivery": 9555.75,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 8304.05,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",
@@ -3237,14 +3237,14 @@
       {
         "AudienceId": 31,
         "Delivery": 6754.4,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       },
       {
         "AudienceId": 42,
         "Delivery": 5942.2,
-        "Impressions": null,
-        "NsiDelivery": null
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
       }
     ],
     "Brand": "",

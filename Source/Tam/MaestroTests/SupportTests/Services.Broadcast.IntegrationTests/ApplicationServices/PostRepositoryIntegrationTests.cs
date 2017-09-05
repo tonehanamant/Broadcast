@@ -31,7 +31,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var detail = PostEngineIntegrationTests.GetParsedDetail();
                 files.post_file_details.Add(detail);
 
-                files.post_file_details.First().post_file_detail_impressions.Add(new post_file_detail_impressions { demo = 33, impression = 123.123 });
+                files.post_file_details.First().post_file_detail_impressions.Add(new post_file_detail_impressions { demo = 33, impression = 123 });
 
                 var fileId = postUploadRepository.SavePost(files);
 
@@ -68,7 +68,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var detail = PostEngineIntegrationTests.GetParsedDetail();
                 files.post_file_details.Add(detail);
 
-                files.post_file_details.First().post_file_detail_impressions.Add(new post_file_detail_impressions { demo = 33, impression = 123.123 });
+                files.post_file_details.First().post_file_detail_impressions.Add(new post_file_detail_impressions { demo = 33, impression = 123 });
 
                 var fileId = postUploadRepository.SavePost(files);
 
@@ -101,7 +101,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var detail = PostEngineIntegrationTests.GetParsedDetail();
                 files.post_file_details.Add(detail);
 
-                files.post_file_details.First().post_file_detail_impressions.Add(new post_file_detail_impressions { demo = 33, impression = 123.123 });
+                files.post_file_details.First().post_file_detail_impressions.Add(new post_file_detail_impressions { demo = 33, impression = 123 });
 
                 var fileId = postUploadRepository.SavePost(files);
 
@@ -141,7 +141,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var detail = PostEngineIntegrationTests.GetParsedDetail();
                 files.post_file_details.Add(detail);
 
-                files.post_file_details.First().post_file_detail_impressions.Add(new post_file_detail_impressions { demo = 33, impression = 123.123 });
+                files.post_file_details.First().post_file_detail_impressions.Add(new post_file_detail_impressions { demo = 33, impression = 123 });
 
                 var fileId = postUploadRepository.SavePost(files);
 

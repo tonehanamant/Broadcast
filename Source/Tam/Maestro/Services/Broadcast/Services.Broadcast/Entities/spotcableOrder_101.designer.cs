@@ -7584,7 +7584,7 @@ namespace Services.Broadcast.Entities.spotcableXML
 
         public systemOrder()
         {
-            this.affiliateSplitField = ((decimal)(0m));
+            this.affiliateSplitField = 0m;
         }
 
         [XmlElement("key", Order = 0)]

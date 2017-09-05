@@ -7,7 +7,7 @@
         public string Contract { get; set; }
         public float Eff { get; set; }
         public float EffVariation { get; set; }
-        public float Impressions { get; set; }
+        public double Impressions { get; set; }
         public decimal Cpm { get; set; }
         public decimal Cost { get; set; }
         public bool IsHiatus { get; set; }

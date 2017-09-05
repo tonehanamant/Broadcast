@@ -396,6 +396,95 @@ END
 /*************************************** BCOP-1738 - END *****************************************************/
 
 
+-- BEGIN BCOP-1767 --
+
+-- BEGIN BCOP-1767 --
+IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'bvs_post_details' AND COLUMN_NAME = 'delivery') != 'float')
+BEGIN
+	ALTER TABLE bvs_post_details ALTER COLUMN delivery float NOT NULL;
+END
+GO
+
+IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'post_file_detail_impressions' AND COLUMN_NAME = 'impression') != 'float')
+BEGIN
+	ALTER TABLE post_file_detail_impressions ALTER COLUMN impression float NOT NULL;
+END
+GO
+
+IF EXISTS(select name from sys.objects where type_desc = 'DEFAULT_CONSTRAINT' and name = 'DF_proposal_version_detail_quarter_weeks_open_market_impressions_total')
+BEGIN
+	ALTER TABLE proposal_version_detail_quarter_weeks DROP CONSTRAINT DF_proposal_version_detail_quarter_weeks_open_market_impressions_total;
+END
+GO
+
+IF EXISTS(select name from sys.objects where type_desc = 'DEFAULT_CONSTRAINT' and name = 'DF_proposal_version_detail_quarter_weeks_proprietary_impressions_total')
+BEGIN
+	ALTER TABLE proposal_version_detail_quarter_weeks DROP CONSTRAINT DF_proposal_version_detail_quarter_weeks_proprietary_impressions_total;
+END
+GO
+
+IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_detail_quarter_weeks' AND COLUMN_NAME = 'impressions') != 'float'
+	OR (SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_detail_quarter_weeks' AND COLUMN_NAME = 'open_market_impressions_total') != 'float'
+	OR (SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_detail_quarter_weeks' AND COLUMN_NAME = 'proprietary_impressions_total') != 'float')
+BEGIN
+	UPDATE proposal_version_detail_quarter_weeks SET impressions = 0 where impressions is null;
+	ALTER TABLE proposal_version_detail_quarter_weeks ALTER COLUMN impressions float NOT NULL;
+	ALTER TABLE proposal_version_detail_quarter_weeks ALTER COLUMN open_market_impressions_total float NOT NULL;
+	ALTER TABLE proposal_version_detail_quarter_weeks ALTER COLUMN proprietary_impressions_total float NOT NULL;
+END
+GO
+
+IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_detail_quarters' AND COLUMN_NAME = 'impressions_goal') != 'float')
+BEGIN
+	UPDATE proposal_version_detail_quarters SET impressions_goal = 0 where impressions_goal is null;
+	ALTER TABLE proposal_version_detail_quarters ALTER COLUMN impressions_goal float NOT NULL;
+END
+GO
+
+IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_details' AND COLUMN_NAME = 'impressions_total') != 'float'
+	OR (SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_details' AND COLUMN_NAME = 'open_market_impressions_total') != 'float'
+	OR (SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_details' AND COLUMN_NAME = 'proprietary_impressions_total') != 'float')
+BEGIN
+	UPDATE proposal_version_details SET impressions_total = 0 where impressions_total is null;
+	ALTER TABLE proposal_version_details ALTER COLUMN impressions_total float NOT NULL;
+	ALTER TABLE proposal_version_details ALTER COLUMN open_market_impressions_total float NOT NULL;
+	ALTER TABLE proposal_version_details ALTER COLUMN proprietary_impressions_total float NOT NULL;
+END
+GO
+
+IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_versions' AND COLUMN_NAME = 'target_impressions') != 'float')
+BEGIN
+	UPDATE proposal_versions SET target_impressions = 0 where target_impressions is null;
+	ALTER TABLE proposal_versions ALTER COLUMN target_impressions float NOT NULL;
+END
+GO
+
+IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'schedule_detail_audiences' AND COLUMN_NAME = 'impressions') != 'float')
+BEGIN
+	ALTER TABLE schedule_detail_audiences ALTER COLUMN impressions float NOT NULL;
+END
+GO
+
+IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'station_program_flight_audiences' AND COLUMN_NAME = 'impressions') != 'float')
+BEGIN
+	UPDATE station_program_flight_audiences SET impressions = 0 where impressions is null;
+	ALTER TABLE station_program_flight_audiences ALTER COLUMN impressions float NOT NULL;
+END
+GO
+
+IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'station_program_flight_proposal' AND COLUMN_NAME = 'impressions') != 'float')
+BEGIN
+	ALTER TABLE station_program_flight_proposal ALTER COLUMN impressions float NOT NULL;
+END
+GO
+
+IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'inventory_detail_slot_proposal' AND COLUMN_NAME = 'impressions') != 'float')
+BEGIN
+	ALTER TABLE inventory_detail_slot_proposal ALTER COLUMN impressions float NOT NULL;
+END
+GO
+-- END BCOP-1767 --
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

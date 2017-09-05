@@ -16,8 +16,8 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public station()
         {
-            this.station_contacts = new HashSet<station_contacts>();
             this.inventory_detail_slot_components = new HashSet<inventory_detail_slot_components>();
+            this.station_contacts = new HashSet<station_contacts>();
             this.station_programs = new HashSet<station_programs>();
         }
     
@@ -26,12 +26,12 @@ namespace EntityFrameworkMapping.Broadcast
         public string affiliation { get; set; }
         public short market_code { get; set; }
         public string legacy_call_letters { get; set; }
-        public System.DateTime modified_date { get; set; }
         public string modified_by { get; set; }
+        public System.DateTime modified_date { get; set; }
     
+        public virtual ICollection<inventory_detail_slot_components> inventory_detail_slot_components { get; set; }
         public virtual market market { get; set; }
         public virtual ICollection<station_contacts> station_contacts { get; set; }
-        public virtual ICollection<inventory_detail_slot_components> inventory_detail_slot_components { get; set; }
         public virtual ICollection<station_programs> station_programs { get; set; }
     }
 }

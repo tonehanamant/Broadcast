@@ -15,7 +15,7 @@ namespace Services.Broadcast.Entities
         public int? SweepMonthId { get; set; }
         public decimal? Budget { get; set; }
         public int? TargetUnits { get; set; }
-        public double? TargetImpressions { get; set; }
+        public double TargetImpressions { get; set; }
         public DateTime LastModifiedDate { get; set; }
         public string LastModifiedBy { get; set; }
         public string Notes { get; set; }

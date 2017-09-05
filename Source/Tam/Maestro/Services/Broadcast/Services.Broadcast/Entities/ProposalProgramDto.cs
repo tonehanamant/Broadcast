@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -18,18 +17,10 @@ namespace Services.Broadcast.Entities
         public int TotalSpots { get; set; }
         public decimal TotalCost { get; set; }
         public double TargetImpressions { get; set; }
-        public double TargetImpressionsInThousands
-        {
-            get { return TargetImpressions / 1000; }
-        }
         public decimal TargetCpm { get; set; }
         public double TRP { get; set; }
         public decimal HHeCPM { get; set; }
         public double HHImpressions { get; set; }
-        public double HHImpressionsInThousands
-        {
-            get { return HHImpressions / 1000; }
-        }
         public double GRP { get; set; }
         public decimal SpotCost { get; set; }
         public List<ProposalProgramFlightWeek> FlightWeeks { get; set; }
@@ -41,10 +32,6 @@ namespace Services.Broadcast.Entities
         public DateTime EndDate { get; set; }
         public double AdditionalAudienceImpressions { get; set; }
         public double AdditionalDemoRating { get; set; }
-        public double AdditionalAudienceImpressionsInThousands
-        {
-            get { return AdditionalAudienceImpressions / 1000; }
-        }
         public decimal AdditonalAudienceCPM { get; set; }
         public double AdditionalAudienceSubscribers { get; set; }
         public bool IsOverlapping { get; set; }

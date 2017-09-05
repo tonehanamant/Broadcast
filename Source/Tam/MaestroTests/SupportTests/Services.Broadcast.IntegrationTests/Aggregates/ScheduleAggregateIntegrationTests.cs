@@ -38,8 +38,8 @@ namespace Services.Broadcast.IntegrationTests.Aggregates
         [Test]
         public void GetDeliveredImpressionsByAudience()
         {
-            var actual = Math.Round(_Sut.GetDeliveredImpressionsByAudience(31), 2, MidpointRounding.AwayFromZero);
-            Assert.AreEqual(actual, 1883781.40);
+            var actual = _Sut.GetDeliveredImpressionsByAudience(31);
+            Assert.AreEqual(1883781.4000000001d, actual);
         }
 
         [Test]

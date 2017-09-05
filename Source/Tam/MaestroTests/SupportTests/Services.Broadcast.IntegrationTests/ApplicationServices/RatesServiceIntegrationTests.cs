@@ -233,6 +233,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
                 request.RateSource = "Assembly";
+
+
+
+
+
+
+
+
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(RatesFileProblem), "AffectedProposals");

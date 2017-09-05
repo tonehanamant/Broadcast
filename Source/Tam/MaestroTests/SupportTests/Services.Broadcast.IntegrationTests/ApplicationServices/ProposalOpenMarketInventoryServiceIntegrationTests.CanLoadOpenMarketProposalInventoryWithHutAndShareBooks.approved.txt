@@ -21,7 +21,7 @@
                 "EndDate": "0001-01-01T00:00:00",
                 "IsHiatus": false,
                 "MediaWeekId": 649,
-                "Rate": 5.0,
+                "Rate": 5.0000,
                 "StartDate": "0001-01-01T00:00:00"
               }
             ],
@@ -52,7 +52,7 @@
                 "EndDate": "0001-01-01T00:00:00",
                 "IsHiatus": false,
                 "MediaWeekId": 649,
-                "Rate": 10.0,
+                "Rate": 10.0000,
                 "StartDate": "0001-01-01T00:00:00"
               }
             ],
@@ -91,7 +91,7 @@
                 "EndDate": "0001-01-01T00:00:00",
                 "IsHiatus": false,
                 "MediaWeekId": 649,
-                "Rate": 15.0,
+                "Rate": 15.0000,
                 "StartDate": "0001-01-01T00:00:00"
               }
             ],
@@ -130,7 +130,7 @@
                 "EndDate": "0001-01-01T00:00:00",
                 "IsHiatus": false,
                 "MediaWeekId": 649,
-                "Rate": 15.0,
+                "Rate": 15.0000,
                 "StartDate": "0001-01-01T00:00:00"
               }
             ],
@@ -161,7 +161,7 @@
                 "EndDate": "0001-01-01T00:00:00",
                 "IsHiatus": false,
                 "MediaWeekId": 649,
-                "Rate": 15.0,
+                "Rate": 15.0000,
                 "StartDate": "0001-01-01T00:00:00"
               }
             ],

@@ -90,7 +90,7 @@
     "Program": "Q3 CADENT NEWS AT 11:30AM",
     "Rate15": 65.0000,
     "Rate30": 130.0000,
-    "Rating": 3.7999999523162842,
+    "Rating": 3.8,
     "Spots": null
   }
 ]

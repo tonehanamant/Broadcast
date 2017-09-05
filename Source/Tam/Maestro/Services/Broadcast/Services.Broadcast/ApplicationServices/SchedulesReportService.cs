@@ -280,7 +280,7 @@ namespace Services.Broadcast.ApplicationServices
                         SpotClearance =
                                 g.Sum(d => d.OrderedSpots) == 0
                                     ? 0
-                                    : (double)g.Sum(d => d.DeliveredSpots) / (double)g.Sum(d => d.OrderedSpots),
+                                    : (double)g.Sum(d => d.DeliveredSpots) / g.Sum(d => d.OrderedSpots),
                         AudienceImpressions = _AddUpAudienceImpressions(
                             g.ToList(),
                             scheduleAudiences)
@@ -299,7 +299,7 @@ namespace Services.Broadcast.ApplicationServices
                         SpotClearance =
                                 g.Sum(d => d.OrderedSpots) == 0
                                     ? 0
-                                    : (double)g.Sum(d => d.DeliveredSpots) / (double)g.Sum(d => d.OrderedSpots),
+                                    : (double)g.Sum(d => d.DeliveredSpots) / g.Sum(d => d.OrderedSpots),
                         OutOfSpecSpots = g.Sum(d => d.OutOfSpecSpots),
                         AudienceImpressions = _AddUpAudienceImpressions(
                             g.ToList(),
@@ -404,7 +404,7 @@ namespace Services.Broadcast.ApplicationServices
                                 SpotClearance =
                                 g.Sum(a => a.OrderedSpots) == 0
                                     ? 0
-                                    : (double)g.Sum(a => a.DeliveredSpots) / (double)g.Sum(a => a.OrderedSpots),
+                                    : (double)g.Sum(a => a.DeliveredSpots) / g.Sum(a => a.OrderedSpots),
                                 AudienceImpressions = _AddUpAudienceImpressions(
                                 g.ToList(),
                                 scheduleAudiences)
@@ -427,7 +427,7 @@ namespace Services.Broadcast.ApplicationServices
                             SpotClearance =
                                 g.Sum(a => a.OrderedSpots) == 0
                                     ? 0
-                                    : (double)g.Sum(a => a.DeliveredSpots) / (double)g.Sum(a => a.OrderedSpots),
+                                    : (double)g.Sum(a => a.DeliveredSpots) / g.Sum(a => a.OrderedSpots),
                             AudienceImpressions = _AddUpAudienceImpressions(
                                 g.ToList(),
                                 scheduleAudiences)
@@ -507,7 +507,7 @@ namespace Services.Broadcast.ApplicationServices
                         SpotLength = g.Key.SpotLength,
                         Cost = g.Sum(a => a.Cost),
                         OrderedSpots = g.Sum(a => a.OrderedSpots),
-                        SpotClearance = g.Sum(a => a.OrderedSpots) == 0 ? 0 : (double)g.Sum(a => a.DeliveredSpots) / (double)g.Sum(a => a.OrderedSpots),
+                        SpotClearance = g.Sum(a => a.OrderedSpots) == 0 ? 0 : (double)g.Sum(a => a.DeliveredSpots) / g.Sum(a => a.OrderedSpots),
                         AudienceImpressions = _AddUpAudienceImpressions(
                             g.ToList(),
                             scheduleAudiences)

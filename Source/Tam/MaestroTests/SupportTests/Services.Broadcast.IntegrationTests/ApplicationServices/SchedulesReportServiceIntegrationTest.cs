@@ -77,8 +77,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var outOfSpecData = new List<BvsTestData>
                 {
-                    new BvsTestData{ Rank = 3, Market = "Chicago", Station = "WBBM-TV", Affiliate = "CBS", ProgramName = "Milioanaire", DisplayDaypart = null, Cost = null, OrderedSpots = null, DeliveredSpots = null, OrderedImpressions = null, DeliveredImpressions = 200 },
-                    new BvsTestData{ Rank = 1, Market = "New York", Station = "WCBS-TV", Affiliate = "CBS", ProgramName = "Milioanaire", DisplayDaypart = null, Cost = null, OrderedSpots = null, DeliveredSpots = null, OrderedImpressions = null, DeliveredImpressions = 250 }
+                    new BvsTestData{ Rank = 3, Market = "Chicago", Station = "WBBM-TV", Affiliate = "CBS", ProgramName = "Milioanaire", DisplayDaypart = null, Cost = null, OrderedSpots = null, DeliveredSpots = null, OrderedImpressions = 0, DeliveredImpressions = 200 },
+                    new BvsTestData{ Rank = 1, Market = "New York", Station = "WCBS-TV", Affiliate = "CBS", ProgramName = "Milioanaire", DisplayDaypart = null, Cost = null, OrderedSpots = null, DeliveredSpots = null, OrderedImpressions = 0, DeliveredImpressions = 250 }
                 };
             var reportData = inSpecData.Concat(outOfSpecData).ToList();
 
@@ -144,8 +144,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             public double? Cost { get; set; }
             public int? OrderedSpots { get; set; }
             public int? DeliveredSpots { get; set; }
-            public int? OrderedImpressions { get; set; }
-            public double? DeliveredImpressions { get; set; }
+            public double OrderedImpressions { get; set; }
+            public double DeliveredImpressions { get; set; }
         }
     }
 }

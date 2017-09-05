@@ -47,7 +47,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var ratingAdjustmentMonth = GetRatingAdjustmentMonth(proposalDetailInventory);
 
-                impressions.ForEach(i => i.impressions = _ImpressionAdjustmentEngine.AdjustImpression(i.impressions, proposalDetailInventory.Equivalized, proposalDetailInventory.DetailSpotLength, proposalDetailInventory.PostType, ratingAdjustmentMonth, false) / 1000);
+                impressions.ForEach(i => i.impressions = _ImpressionAdjustmentEngine.AdjustImpression(i.impressions, proposalDetailInventory.Equivalized, proposalDetailInventory.DetailSpotLength, proposalDetailInventory.PostType, ratingAdjustmentMonth, false));
 
                 return impressions;
             }

@@ -16,8 +16,8 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public station_programs()
         {
-            this.genres = new HashSet<genre>();
             this.station_program_flights = new HashSet<station_program_flights>();
+            this.genres = new HashSet<genre>();
         }
     
         public int id { get; set; }
@@ -38,8 +38,8 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<decimal> fixed_price { get; set; }
     
         public virtual rate_files rate_files { get; set; }
+        public virtual ICollection<station_program_flights> station_program_flights { get; set; }
         public virtual station station { get; set; }
         public virtual ICollection<genre> genres { get; set; }
-        public virtual ICollection<station_program_flights> station_program_flights { get; set; }
     }
 }

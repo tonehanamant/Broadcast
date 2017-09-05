@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 
@@ -20,7 +19,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                 TargetCPM = 10000 / 10000
             };
 
-            var proposalCalculationEngine = new ProposalTotalsCalculationEngine(new ProposalMathEngine());
+            var proposalCalculationEngine = new ProposalTotalsCalculationEngine();
 
             proposalCalculationEngine.CalculateProposalTotalsMargins(proposalDto);
 
@@ -45,7 +44,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                 TargetCPM = 10000 / 5000
             };
 
-            var proposalCalculationEngine = new ProposalTotalsCalculationEngine(new ProposalMathEngine());
+            var proposalCalculationEngine = new ProposalTotalsCalculationEngine();
 
             proposalCalculationEngine.CalculateProposalTotalsMargins(proposalDto);
 
@@ -67,7 +66,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                 TotalCPM = 10000 / 5000
             };
 
-            var proposalCalculationEngine = new ProposalTotalsCalculationEngine(new ProposalMathEngine());
+            var proposalCalculationEngine = new ProposalTotalsCalculationEngine();
 
             proposalCalculationEngine.CalculateProposalTotalsMargins(proposalDto);
 
@@ -84,7 +83,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             var proposalDto = new ProposalDto();
 
-            var proposalCalculationEngine = new ProposalTotalsCalculationEngine(new ProposalMathEngine());
+            var proposalCalculationEngine = new ProposalTotalsCalculationEngine();
 
             proposalCalculationEngine.CalculateProposalTotalsMargins(proposalDto);
 

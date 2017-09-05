@@ -256,7 +256,6 @@
     <Compile Include="Entities\ProposalDetailProprietaryInventoryDto.cs" />
     <Compile Include="Entities\ProposalMarketDto.cs" />
     <Compile Include="Entities\ProposalQuarterTotals.cs" />
-    <Compile Include="Entities\ProposalTargets.cs" />
     <Compile Include="Entities\ProposalMediaWeek.cs" />
     <Compile Include="Entities\ProposalWeekDto.cs" />
     <Compile Include="Entities\ProposalQuarterDto.cs" />

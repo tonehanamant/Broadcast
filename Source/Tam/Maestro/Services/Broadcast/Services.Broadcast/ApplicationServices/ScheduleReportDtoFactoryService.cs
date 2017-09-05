@@ -302,10 +302,10 @@ namespace Services.Broadcast.ApplicationServices
                     SpotLength = coreData.SpotLength,
                     ProgramName = scheduleDetail.program,
                     DisplayDaypart = _DaypartCache.GetDisplayDaypart(scheduleDetail.daypart_id),
-                    Cost = (double)scheduleDetail.spot_cost * (double)deliveredSpots,
+                    Cost = (double)scheduleDetail.spot_cost * deliveredSpots,
                     OrderedSpots = orderedSpots,
                     DeliveredSpots = deliveredSpots,
-                    SpotClearance = (double)deliveredSpots / (double)orderedSpots,
+                    SpotClearance = (double)deliveredSpots / orderedSpots,
                     Status = 1,
                     SpecStatus = specStatus,
                 };
@@ -512,7 +512,7 @@ namespace Services.Broadcast.ApplicationServices
                         scheduleDetail.schedule_detail_audiences.SingleOrDefault(
                             a => a.audience_id == audience.AudienceId);
 
-                    double delivery =
+                    var delivery =
                         coreData.BvsDetails.SelectMany(b => b.bvs_post_details)
                             .Where(p => p.audience_id == audience.AudienceId)
                             .Sum(p => p.delivery);
@@ -601,10 +601,10 @@ namespace Services.Broadcast.ApplicationServices
                         ProgramName = detail.ProgramName,
                         SpotLength = detail.SpotLength,
                         DisplayDaypart = _DaypartCache.GetDisplayDaypart(scheduleDetail.daypart_id),
-                        Cost = (double)scheduleDetail.spot_cost * (double)deliveredSpots,
+                        Cost = (double)scheduleDetail.spot_cost * deliveredSpots,
                         OrderedSpots = orderedSpots,
                         DeliveredSpots = deliveredSpots,
-                        SpotClearance = (double)deliveredSpots / (double)orderedSpots,
+                        SpotClearance = (double)deliveredSpots / orderedSpots,
                         Status = 1, //in-spec
                         SpecStatus = status,
                     };
@@ -772,7 +772,7 @@ namespace Services.Broadcast.ApplicationServices
                 var bpd = bfd.bvs_post_details.ElementAt(j);
                 if (bpd.audience_id != audienceId)
                     continue;
-                list.Add(new AudienceImpressionsAndDelivery { Impressions = null, Delivery = bpd.delivery, AudienceId = audienceId });
+                list.Add(new AudienceImpressionsAndDelivery { Impressions = 0, Delivery = bpd.delivery, AudienceId = audienceId });
                 delivery += bpd.delivery;
             }
 

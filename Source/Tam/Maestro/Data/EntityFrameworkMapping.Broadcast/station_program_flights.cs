@@ -36,7 +36,7 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime modified_date { get; set; }
     
         public virtual ICollection<inventory_detail_slot_components> inventory_detail_slot_components { get; set; }
-        public virtual ICollection<station_program_flight_audiences> station_program_flight_audiences { get; set; }
         public virtual station_programs station_programs { get; set; }
+        public virtual ICollection<station_program_flight_audiences> station_program_flight_audiences { get; set; }
     }
 }

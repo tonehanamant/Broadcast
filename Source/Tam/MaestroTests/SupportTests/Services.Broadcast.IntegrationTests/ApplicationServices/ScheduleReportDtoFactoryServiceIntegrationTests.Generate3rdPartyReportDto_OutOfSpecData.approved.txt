@@ -4,7 +4,7 @@
       "AudienceId": 31,
       "AudienceName": "HH",
       "DeliveredImpressions": 574900.442,
-      "OrderedImpressions": 0,
+      "OrderedImpressions": 0.0,
       "OutOfSpecDeliveredImpressions": 574900.442,
       "TotalDeliveredImpressions": 1149800.884
     },
@@ -12,7 +12,7 @@
       "AudienceId": 33,
       "AudienceName": "A18-49",
       "DeliveredImpressions": 206256.78,
-      "OrderedImpressions": 0,
+      "OrderedImpressions": 0.0,
       "OutOfSpecDeliveredImpressions": 206256.78,
       "TotalDeliveredImpressions": 412513.56
     }
@@ -24,14 +24,14 @@
         {
           "AudienceId": 31,
           "Delivery": 157134.902,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 33,
           "Delivery": 23469.332,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -46,7 +46,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LET'S MAKE A DEAL",
       "Rank": 1,
@@ -62,14 +62,14 @@
         {
           "AudienceId": 31,
           "Delivery": 145942.572,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 33,
           "Delivery": 43504.604,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -84,7 +84,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "TODAY SHW2-NBC",
       "Rank": 1,
@@ -100,14 +100,14 @@
         {
           "AudienceId": 31,
           "Delivery": 169428.054,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 33,
           "Delivery": 61436.462,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -122,7 +122,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "1ST LOOK",
       "Rank": 1,
@@ -138,14 +138,14 @@
         {
           "AudienceId": 31,
           "Delivery": 42141.696,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 33,
           "Delivery": 33120.99,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -160,7 +160,7 @@
       "MatchSpotLength": false,
       "MatchStation": false,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PIX11 MORNING NEWS 6A-7A",
       "Rank": 1,
@@ -176,14 +176,14 @@
         {
           "AudienceId": 31,
           "Delivery": 60253.218,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 33,
           "Delivery": 44725.392,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -198,7 +198,7 @@
       "MatchSpotLength": false,
       "MatchStation": false,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PIX11 MORNING NEWS 7A-9A",
       "Rank": 1,

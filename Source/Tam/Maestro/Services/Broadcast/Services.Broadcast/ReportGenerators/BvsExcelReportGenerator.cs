@@ -694,7 +694,7 @@ namespace Services.Broadcast.ReportGenerators
         {
             _SetSummaryData(ws, summaryName, audienceName, impressionAndDeliveryDto.TotalDeliveredImpressions, impressionAndDeliveryDto.OutOfSpecDeliveredImpressions, ref summaryIndexRowCell);
         }
-        private void _SetSummaryData(ExcelWorksheet ws, string summaryName, string audienceName, double? totalOrderedImpressions, double totalDeliveredImpressions, ref int summaryIndexRowCell)
+        private void _SetSummaryData(ExcelWorksheet ws, string summaryName, string audienceName, double totalOrderedImpressions, double totalDeliveredImpressions, ref int summaryIndexRowCell)
         {
             ws.Cells[summaryIndexRowCell, 11].Value = string.Format("{0} ({1})", summaryName, audienceName);
             ws.Cells[summaryIndexRowCell, 12].Value = totalOrderedImpressions == 0 ? 0 : totalDeliveredImpressions / totalOrderedImpressions;

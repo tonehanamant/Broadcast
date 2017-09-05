@@ -17,7 +17,7 @@ namespace Services.Broadcast.Entities
         public List<LookupDto> Genres { get; set; }
         public decimal? Rate15 { get; set; }
         public decimal? Rate30 { get; set; }
-        public float Impressions { get; set; }
+        public double Impressions { get; set; }
         public float Rating { get; set; }
         public List<FlightWeekDto> Flights { get; set; }
         public string Flight { get; set; }

@@ -7,7 +7,7 @@
         "AudienceId": 31,
         "AudienceName": "HH",
         "DeliveredImpressions": 0.0,
-        "OrderedImpressions": 436375,
+        "OrderedImpressions": 436375.0,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 0.0
       },
@@ -15,7 +15,7 @@
         "AudienceId": 33,
         "AudienceName": "A18-49",
         "DeliveredImpressions": 0.0,
-        "OrderedImpressions": 105820,
+        "OrderedImpressions": 105820.0,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 0.0
       }
@@ -28,14 +28,14 @@
           {
             "AudienceId": 31,
             "Delivery": 0.0,
-            "Impressions": 306640,
-            "NsiDelivery": null
+            "Impressions": 306640.0,
+            "NsiDelivery": 0.0
           },
           {
             "AudienceId": 33,
             "Delivery": 0.0,
-            "Impressions": 80314,
-            "NsiDelivery": null
+            "Impressions": 80314.0,
+            "NsiDelivery": 0.0
           }
         ],
         "Cost": 0.0,
@@ -76,14 +76,14 @@
           {
             "AudienceId": 31,
             "Delivery": 0.0,
-            "Impressions": 129735,
-            "NsiDelivery": null
+            "Impressions": 129735.0,
+            "NsiDelivery": 0.0
           },
           {
             "AudienceId": 33,
             "Delivery": 0.0,
-            "Impressions": 25506,
-            "NsiDelivery": null
+            "Impressions": 25506.0,
+            "NsiDelivery": 0.0
           }
         ],
         "Cost": 0.0,
@@ -142,7 +142,7 @@
         "AudienceId": 31,
         "AudienceName": "HH",
         "DeliveredImpressions": 0.0,
-        "OrderedImpressions": 0,
+        "OrderedImpressions": 0.0,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 0.0
       },
@@ -150,7 +150,7 @@
         "AudienceId": 33,
         "AudienceName": "A18-49",
         "DeliveredImpressions": 0.0,
-        "OrderedImpressions": 0,
+        "OrderedImpressions": 0.0,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 0.0
       }
@@ -179,7 +179,7 @@
         "AudienceId": 31,
         "AudienceName": "HH",
         "DeliveredImpressions": 0.0,
-        "OrderedImpressions": 0,
+        "OrderedImpressions": 0.0,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 0.0
       },
@@ -187,7 +187,7 @@
         "AudienceId": 33,
         "AudienceName": "A18-49",
         "DeliveredImpressions": 0.0,
-        "OrderedImpressions": 0,
+        "OrderedImpressions": 0.0,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 0.0
       }
@@ -211,7 +211,7 @@
         "AudienceId": 31,
         "AudienceName": "HH",
         "DeliveredImpressions": 0.0,
-        "OrderedImpressions": 436375,
+        "OrderedImpressions": 436375.0,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 0.0
       },
@@ -219,7 +219,7 @@
         "AudienceId": 33,
         "AudienceName": "A18-49",
         "DeliveredImpressions": 0.0,
-        "OrderedImpressions": 105820,
+        "OrderedImpressions": 105820.0,
         "OutOfSpecDeliveredImpressions": 0.0,
         "TotalDeliveredImpressions": 0.0
       }
@@ -231,14 +231,14 @@
           {
             "AudienceId": 31,
             "Delivery": 0.0,
-            "Impressions": 306640,
-            "NsiDelivery": null
+            "Impressions": 306640.0,
+            "NsiDelivery": 0.0
           },
           {
             "AudienceId": 33,
             "Delivery": 0.0,
-            "Impressions": 80314,
-            "NsiDelivery": null
+            "Impressions": 80314.0,
+            "NsiDelivery": 0.0
           }
         ],
         "Cost": 0.0,
@@ -279,14 +279,14 @@
           {
             "AudienceId": 31,
             "Delivery": 0.0,
-            "Impressions": 129735,
-            "NsiDelivery": null
+            "Impressions": 129735.0,
+            "NsiDelivery": 0.0
           },
           {
             "AudienceId": 33,
             "Delivery": 0.0,
-            "Impressions": 25506,
-            "NsiDelivery": null
+            "Impressions": 25506.0,
+            "NsiDelivery": 0.0
           }
         ],
         "Cost": 0.0,
@@ -327,14 +327,14 @@
           {
             "AudienceId": 31,
             "Delivery": 0.0,
-            "Impressions": 0,
-            "NsiDelivery": null
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
           },
           {
             "AudienceId": 33,
             "Delivery": 0.0,
-            "Impressions": 0,
-            "NsiDelivery": null
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
           }
         ],
         "Cost": 0.0,
@@ -396,7 +396,7 @@
             "AudienceId": 31,
             "AudienceName": "HH",
             "DeliveredImpressions": 0.0,
-            "OrderedImpressions": 100210,
+            "OrderedImpressions": 100210.0,
             "OutOfSpecDeliveredImpressions": 0.0,
             "TotalDeliveredImpressions": 0.0
           },
@@ -404,7 +404,7 @@
             "AudienceId": 33,
             "AudienceName": "A18-49",
             "DeliveredImpressions": 0.0,
-            "OrderedImpressions": 32816,
+            "OrderedImpressions": 32816.0,
             "OutOfSpecDeliveredImpressions": 0.0,
             "TotalDeliveredImpressions": 0.0
           }
@@ -416,14 +416,14 @@
               {
                 "AudienceId": 31,
                 "Delivery": 0.0,
-                "Impressions": 100210,
-                "NsiDelivery": null
+                "Impressions": 100210.0,
+                "NsiDelivery": 0.0
               },
               {
                 "AudienceId": 33,
                 "Delivery": 0.0,
-                "Impressions": 32816,
-                "NsiDelivery": null
+                "Impressions": 32816.0,
+                "NsiDelivery": 0.0
               }
             ],
             "Cost": 0.0,
@@ -470,7 +470,7 @@
             "AudienceId": 31,
             "AudienceName": "HH",
             "DeliveredImpressions": 0.0,
-            "OrderedImpressions": 100210,
+            "OrderedImpressions": 100210.0,
             "OutOfSpecDeliveredImpressions": 0.0,
             "TotalDeliveredImpressions": 0.0
           },
@@ -478,7 +478,7 @@
             "AudienceId": 33,
             "AudienceName": "A18-49",
             "DeliveredImpressions": 0.0,
-            "OrderedImpressions": 32816,
+            "OrderedImpressions": 32816.0,
             "OutOfSpecDeliveredImpressions": 0.0,
             "TotalDeliveredImpressions": 0.0
           }
@@ -490,14 +490,14 @@
               {
                 "AudienceId": 31,
                 "Delivery": 0.0,
-                "Impressions": 100210,
-                "NsiDelivery": null
+                "Impressions": 100210.0,
+                "NsiDelivery": 0.0
               },
               {
                 "AudienceId": 33,
                 "Delivery": 0.0,
-                "Impressions": 32816,
-                "NsiDelivery": null
+                "Impressions": 32816.0,
+                "NsiDelivery": 0.0
               }
             ],
             "Cost": 0.0,
@@ -544,7 +544,7 @@
             "AudienceId": 31,
             "AudienceName": "HH",
             "DeliveredImpressions": 0.0,
-            "OrderedImpressions": 536585,
+            "OrderedImpressions": 536585.0,
             "OutOfSpecDeliveredImpressions": 0.0,
             "TotalDeliveredImpressions": 0.0
           },
@@ -552,7 +552,7 @@
             "AudienceId": 33,
             "AudienceName": "A18-49",
             "DeliveredImpressions": 0.0,
-            "OrderedImpressions": 138636,
+            "OrderedImpressions": 138636.0,
             "OutOfSpecDeliveredImpressions": 0.0,
             "TotalDeliveredImpressions": 0.0
           }
@@ -564,14 +564,14 @@
               {
                 "AudienceId": 31,
                 "Delivery": 0.0,
-                "Impressions": 100210,
-                "NsiDelivery": null
+                "Impressions": 100210.0,
+                "NsiDelivery": 0.0
               },
               {
                 "AudienceId": 33,
                 "Delivery": 0.0,
-                "Impressions": 32816,
-                "NsiDelivery": null
+                "Impressions": 32816.0,
+                "NsiDelivery": 0.0
               }
             ],
             "Cost": 0.0,
@@ -612,14 +612,14 @@
               {
                 "AudienceId": 31,
                 "Delivery": 0.0,
-                "Impressions": 306640,
-                "NsiDelivery": null
+                "Impressions": 306640.0,
+                "NsiDelivery": 0.0
               },
               {
                 "AudienceId": 33,
                 "Delivery": 0.0,
-                "Impressions": 80314,
-                "NsiDelivery": null
+                "Impressions": 80314.0,
+                "NsiDelivery": 0.0
               }
             ],
             "Cost": 0.0,
@@ -660,14 +660,14 @@
               {
                 "AudienceId": 31,
                 "Delivery": 0.0,
-                "Impressions": 129735,
-                "NsiDelivery": null
+                "Impressions": 129735.0,
+                "NsiDelivery": 0.0
               },
               {
                 "AudienceId": 33,
                 "Delivery": 0.0,
-                "Impressions": 25506,
-                "NsiDelivery": null
+                "Impressions": 25506.0,
+                "NsiDelivery": 0.0
               }
             ],
             "Cost": 0.0,
@@ -714,7 +714,7 @@
             "AudienceId": 31,
             "AudienceName": "HH",
             "DeliveredImpressions": 0.0,
-            "OrderedImpressions": 100210,
+            "OrderedImpressions": 100210.0,
             "OutOfSpecDeliveredImpressions": 0.0,
             "TotalDeliveredImpressions": 0.0
           },
@@ -722,7 +722,7 @@
             "AudienceId": 33,
             "AudienceName": "A18-49",
             "DeliveredImpressions": 0.0,
-            "OrderedImpressions": 32816,
+            "OrderedImpressions": 32816.0,
             "OutOfSpecDeliveredImpressions": 0.0,
             "TotalDeliveredImpressions": 0.0
           }
@@ -734,14 +734,14 @@
               {
                 "AudienceId": 31,
                 "Delivery": 0.0,
-                "Impressions": 100210,
-                "NsiDelivery": null
+                "Impressions": 100210.0,
+                "NsiDelivery": 0.0
               },
               {
                 "AudienceId": 33,
                 "Delivery": 0.0,
-                "Impressions": 32816,
-                "NsiDelivery": null
+                "Impressions": 32816.0,
+                "NsiDelivery": 0.0
               }
             ],
             "Cost": 0.0,

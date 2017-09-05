@@ -19,7 +19,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int spots { get; set; }
         public string created_by { get; set; }
         public string isci { get; set; }
-        public int impressions { get; set; }
+        public double impressions { get; set; }
         public decimal spot_cost { get; set; }
         public int spot_length_id { get; set; }
         public short station_code { get; set; }

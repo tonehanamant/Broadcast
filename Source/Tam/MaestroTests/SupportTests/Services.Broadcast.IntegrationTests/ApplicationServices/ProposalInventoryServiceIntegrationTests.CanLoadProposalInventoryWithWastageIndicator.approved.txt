@@ -71,7 +71,7 @@
   "DetailSpotLength": 30,
   "DetailSpotLengthId": 1,
   "DetailTargetBudget": 1230000.0000,
-  "DetailTargetImpressions": 10000.0,
+  "DetailTargetImpressions": 10000000.0,
   "Equivalized": true,
   "GuaranteedAudience": 31,
   "HutPostingBookId": 418,
@@ -164,7 +164,7 @@
           }
         }
       ],
-      "ImpressionsGoal": 2500.0,
+      "ImpressionsGoal": 2500000.0,
       "ImpressionsMarginAchieved": false,
       "IsHiatus": false,
       "MaxSlotSpotLength": 30,
@@ -225,7 +225,7 @@
           }
         }
       ],
-      "ImpressionsGoal": 2500.0,
+      "ImpressionsGoal": 2500000.0,
       "ImpressionsMarginAchieved": false,
       "IsHiatus": false,
       "MaxSlotSpotLength": 30,
@@ -286,7 +286,7 @@
           }
         }
       ],
-      "ImpressionsGoal": 2500.0,
+      "ImpressionsGoal": 2500000.0,
       "ImpressionsMarginAchieved": false,
       "IsHiatus": false,
       "MaxSlotSpotLength": 30,
@@ -347,7 +347,7 @@
           }
         }
       ],
-      "ImpressionsGoal": 2500.0,
+      "ImpressionsGoal": 2500000.0,
       "ImpressionsMarginAchieved": false,
       "IsHiatus": false,
       "MaxSlotSpotLength": 30,

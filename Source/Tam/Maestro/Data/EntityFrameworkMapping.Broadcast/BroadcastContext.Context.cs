@@ -25,62 +25,62 @@ namespace EntityFrameworkMapping.Broadcast
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<system_component_parameters> system_component_parameters { get; set; }
-        public virtual DbSet<schedule_detail_audiences> schedule_detail_audiences { get; set; }
-        public virtual DbSet<schedule_details> schedule_details { get; set; }
-        public virtual DbSet<bvs_files> bvs_files { get; set; }
-        public virtual DbSet<schedule_detail_weeks> schedule_detail_weeks { get; set; }
-        public virtual DbSet<schedule_audiences> schedule_audiences { get; set; }
-        public virtual DbSet<bvs_post_details> bvs_post_details { get; set; }
-        public virtual DbSet<bvs_map_types> bvs_map_types { get; set; }
-        public virtual DbSet<bvs_maps> bvs_maps { get; set; }
-        public virtual DbSet<market> markets { get; set; }
-        public virtual DbSet<station> stations { get; set; }
-        public virtual DbSet<genre> genres { get; set; }
-        public virtual DbSet<rep_firms> rep_firms { get; set; }
-        public virtual DbSet<proposal_version_flight_weeks> proposal_version_flight_weeks { get; set; }
-        public virtual DbSet<spot_length_cost_multipliers> spot_length_cost_multipliers { get; set; }
-        public virtual DbSet<rate_files> rate_files { get; set; }
-        public virtual DbSet<schedule_restriction_dayparts> schedule_restriction_dayparts { get; set; }
-        public virtual DbSet<schedule> schedules { get; set; }
-        public virtual DbSet<schedule_iscis> schedule_iscis { get; set; }
-        public virtual DbSet<station_contacts> station_contacts { get; set; }
-        public virtual DbSet<proposal_version_audiences> proposal_version_audiences { get; set; }
-        public virtual DbSet<rating_adjustments> rating_adjustments { get; set; }
-        public virtual DbSet<bvs_file_details> bvs_file_details { get; set; }
-        public virtual DbSet<proposal_version_spot_length> proposal_version_spot_length { get; set; }
-        public virtual DbSet<proposal_version_markets> proposal_version_markets { get; set; }
-        public virtual DbSet<daypart> dayparts { get; set; }
-        public virtual DbSet<day> days { get; set; }
-        public virtual DbSet<timespan> timespans { get; set; }
-        public virtual DbSet<vw_ccc_daypart> vw_ccc_daypart { get; set; }
-        public virtual DbSet<spot_lengths> spot_lengths { get; set; }
-        public virtual DbSet<media_months> media_months { get; set; }
-        public virtual DbSet<media_weeks> media_weeks { get; set; }
-        public virtual DbSet<inventory_detail_slots> inventory_detail_slots { get; set; }
-        public virtual DbSet<inventory_details> inventory_details { get; set; }
-        public virtual DbSet<inventory_detail_slot_components> inventory_detail_slot_components { get; set; }
-        public virtual DbSet<station_program_flight_audiences> station_program_flight_audiences { get; set; }
-        public virtual DbSet<station_programs> station_programs { get; set; }
-        public virtual DbSet<station_program_flights> station_program_flights { get; set; }
         public virtual DbSet<audience_audiences> audience_audiences { get; set; }
         public virtual DbSet<audience> audiences { get; set; }
+        public virtual DbSet<bvs_file_details> bvs_file_details { get; set; }
+        public virtual DbSet<bvs_files> bvs_files { get; set; }
+        public virtual DbSet<bvs_map_types> bvs_map_types { get; set; }
+        public virtual DbSet<bvs_maps> bvs_maps { get; set; }
+        public virtual DbSet<bvs_post_details> bvs_post_details { get; set; }
+        public virtual DbSet<daypart> dayparts { get; set; }
+        public virtual DbSet<day> days { get; set; }
+        public virtual DbSet<genre> genres { get; set; }
+        public virtual DbSet<inventory_detail_slot_component_proposal> inventory_detail_slot_component_proposal { get; set; }
+        public virtual DbSet<inventory_detail_slot_components> inventory_detail_slot_components { get; set; }
+        public virtual DbSet<inventory_detail_slot_proposal> inventory_detail_slot_proposal { get; set; }
+        public virtual DbSet<inventory_detail_slots> inventory_detail_slots { get; set; }
+        public virtual DbSet<inventory_details> inventory_details { get; set; }
+        public virtual DbSet<market_dma_map> market_dma_map { get; set; }
+        public virtual DbSet<market> markets { get; set; }
+        public virtual DbSet<media_months> media_months { get; set; }
+        public virtual DbSet<media_weeks> media_weeks { get; set; }
+        public virtual DbSet<post_file_demos> post_file_demos { get; set; }
         public virtual DbSet<post_file_detail_impressions> post_file_detail_impressions { get; set; }
         public virtual DbSet<post_file_details> post_file_details { get; set; }
-        public virtual DbSet<proposal_version_detail_quarter_weeks> proposal_version_detail_quarter_weeks { get; set; }
-        public virtual DbSet<proposal_version_detail_quarters> proposal_version_detail_quarters { get; set; }
-        public virtual DbSet<post_file_demos> post_file_demos { get; set; }
         public virtual DbSet<post_files> post_files { get; set; }
-        public virtual DbSet<proposal> proposals { get; set; }
+        public virtual DbSet<proposal_version_audiences> proposal_version_audiences { get; set; }
         public virtual DbSet<proposal_version_detail_criteria_cpm> proposal_version_detail_criteria_cpm { get; set; }
         public virtual DbSet<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
         public virtual DbSet<proposal_version_detail_criteria_programs> proposal_version_detail_criteria_programs { get; set; }
-        public virtual DbSet<market_dma_map> market_dma_map { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<proposal_versions> proposal_versions { get; set; }
+        public virtual DbSet<proposal_version_detail_quarter_weeks> proposal_version_detail_quarter_weeks { get; set; }
+        public virtual DbSet<proposal_version_detail_quarters> proposal_version_detail_quarters { get; set; }
         public virtual DbSet<proposal_version_details> proposal_version_details { get; set; }
-        public virtual DbSet<inventory_detail_slot_component_proposal> inventory_detail_slot_component_proposal { get; set; }
-        public virtual DbSet<inventory_detail_slot_proposal> inventory_detail_slot_proposal { get; set; }
+        public virtual DbSet<proposal_version_flight_weeks> proposal_version_flight_weeks { get; set; }
+        public virtual DbSet<proposal_version_markets> proposal_version_markets { get; set; }
+        public virtual DbSet<proposal_version_spot_length> proposal_version_spot_length { get; set; }
+        public virtual DbSet<proposal> proposals { get; set; }
+        public virtual DbSet<rate_files> rate_files { get; set; }
+        public virtual DbSet<rating_adjustments> rating_adjustments { get; set; }
+        public virtual DbSet<rep_firms> rep_firms { get; set; }
+        public virtual DbSet<schedule_audiences> schedule_audiences { get; set; }
+        public virtual DbSet<schedule_detail_audiences> schedule_detail_audiences { get; set; }
+        public virtual DbSet<schedule_detail_weeks> schedule_detail_weeks { get; set; }
+        public virtual DbSet<schedule_details> schedule_details { get; set; }
+        public virtual DbSet<schedule_iscis> schedule_iscis { get; set; }
+        public virtual DbSet<schedule_restriction_dayparts> schedule_restriction_dayparts { get; set; }
+        public virtual DbSet<schedule> schedules { get; set; }
+        public virtual DbSet<spot_length_cost_multipliers> spot_length_cost_multipliers { get; set; }
+        public virtual DbSet<spot_lengths> spot_lengths { get; set; }
+        public virtual DbSet<station_contacts> station_contacts { get; set; }
         public virtual DbSet<station_program_flight_proposal> station_program_flight_proposal { get; set; }
+        public virtual DbSet<station_program_flights> station_program_flights { get; set; }
+        public virtual DbSet<station_programs> station_programs { get; set; }
+        public virtual DbSet<station> stations { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<system_component_parameters> system_component_parameters { get; set; }
+        public virtual DbSet<timespan> timespans { get; set; }
+        public virtual DbSet<vw_ccc_daypart> vw_ccc_daypart { get; set; }
+        public virtual DbSet<proposal_versions> proposal_versions { get; set; }
+        public virtual DbSet<station_program_flight_audiences> station_program_flight_audiences { get; set; }
     }
 }

@@ -17,10 +17,10 @@ namespace EntityFrameworkMapping.Broadcast
         public proposal_versions()
         {
             this.proposal_version_audiences = new HashSet<proposal_version_audiences>();
+            this.proposal_version_details = new HashSet<proposal_version_details>();
             this.proposal_version_flight_weeks = new HashSet<proposal_version_flight_weeks>();
             this.proposal_version_markets = new HashSet<proposal_version_markets>();
             this.proposal_version_spot_length = new HashSet<proposal_version_spot_length>();
-            this.proposal_version_details = new HashSet<proposal_version_details>();
         }
     
         public int id { get; set; }
@@ -36,7 +36,7 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime modified_date { get; set; }
         public Nullable<decimal> target_budget { get; set; }
         public Nullable<int> target_units { get; set; }
-        public Nullable<int> target_impressions { get; set; }
+        public double target_impressions { get; set; }
         public string notes { get; set; }
         public Nullable<byte> post_type { get; set; }
         public Nullable<bool> equivalized { get; set; }
@@ -45,13 +45,13 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal target_cpm { get; set; }
         public double margin { get; set; }
         public decimal cost_total { get; set; }
-        public long impressions_total { get; set; }
+        public double impressions_total { get; set; }
     
         public virtual ICollection<proposal_version_audiences> proposal_version_audiences { get; set; }
+        public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
         public virtual ICollection<proposal_version_flight_weeks> proposal_version_flight_weeks { get; set; }
         public virtual ICollection<proposal_version_markets> proposal_version_markets { get; set; }
         public virtual ICollection<proposal_version_spot_length> proposal_version_spot_length { get; set; }
         public virtual proposal proposal { get; set; }
-        public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
     }
 }

@@ -13,13 +13,6 @@ namespace Services.Broadcast.BusinessEngines
 
     public class ProposalTotalsCalculationEngine : IProposalTotalsCalculationEngine
     {
-        private readonly IProposalMathEngine _ProposalMathEngine;
-
-        public ProposalTotalsCalculationEngine(IProposalMathEngine proposalMathEngine)
-        {
-            _ProposalMathEngine = proposalMathEngine;
-        }
-
         public ProposalHeaderTotalsDto SumAllDetailsTotals(List<ProposalDetailTotalsDto> allTotals)
         {
             return new ProposalHeaderTotalsDto
@@ -31,16 +24,13 @@ namespace Services.Broadcast.BusinessEngines
 
         public void CalculateProposalTotalsMargins(ProposalDto proposal)
         {
-            var targetImpressions = (long)((proposal.TargetImpressions ?? 0) * 1000);
             var targetCost = proposal.TargetBudget ?? 0;
             var targetCpm = proposal.TargetCPM ?? 0;
             var margin = proposal.Margin ?? ProposalConstants.ProposalDefaultMargin;
 
-            proposal.TotalImpressionsPercent = _ProposalMathEngine.CalculateImpressionsPercent(
-                proposal.TotalImpressions, targetImpressions);
-            proposal.TotalCostPercent = _ProposalMathEngine.CalculateBudgetPercent((double) proposal.TotalCost, margin,
-                (double)targetCost);
-            proposal.TotalCPMPercent = _ProposalMathEngine.CalculateCpmPercent((double)proposal.TotalCPM, margin, (double)targetCpm);
+            proposal.TotalImpressionsPercent = ProposalMathEngine.CalculateImpressionsPercent(proposal.TotalImpressions, proposal.TargetImpressions);
+            proposal.TotalCostPercent = ProposalMathEngine.CalculateBudgetPercent(proposal.TotalCost, margin, targetCost);
+            proposal.TotalCPMPercent = ProposalMathEngine.CalculateCpmPercent(proposal.TotalCPM, margin, targetCpm);
 
             proposal.TotalImpressionsMarginAchieved = proposal.TotalImpressionsPercent > 100;
             proposal.TotalCostMarginAchieved = proposal.TotalCostPercent > 100;

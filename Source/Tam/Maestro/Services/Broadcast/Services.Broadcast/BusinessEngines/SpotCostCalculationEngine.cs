@@ -82,7 +82,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private decimal CalculateSpotCostValue(double viewers, decimal cpm)
+        private static decimal CalculateSpotCostValue(double viewers, decimal cpm)
         {
             return (decimal)viewers * cpm / 1000;
         }

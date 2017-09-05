@@ -450,7 +450,7 @@ namespace Services.Broadcast.ApplicationServices
                             weekProgram.ProgramId = program.ProgramId;
                             weekProgram.Spots = existingAllocation == null ? 0 : existingAllocation.Spots;
                             weekProgram.UnitImpression = program.UnitImpressions;
-                            weekProgram.UnitCost = (decimal)programFlightweek.Rate;
+                            weekProgram.UnitCost = programFlightweek.Rate;
                             weekProgram.TargetImpressions = program.TargetImpressions;
                             weekProgram.TotalImpressions = weekProgram.Spots > 0 ? program.UnitImpressions * weekProgram.Spots : program.UnitImpressions;
                             weekProgram.Cost = weekProgram.Spots > 0 ? weekProgram.Spots * weekProgram.UnitCost : weekProgram.UnitCost;
@@ -674,7 +674,7 @@ namespace Services.Broadcast.ApplicationServices
                             MediaWeekId = w.MediaWeekId,
                             StationProgramId = p.ProgramId,
                             Spots = p.Spots,
-                            Impressions = (int)(p.Impressions * 1000),
+                            Impressions = p.Impressions,
                             SpotCost = p.SpotCost
                         })).ToList();
 

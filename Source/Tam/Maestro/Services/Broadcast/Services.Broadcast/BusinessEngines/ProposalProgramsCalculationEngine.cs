@@ -48,7 +48,7 @@ namespace Services.Broadcast.BusinessEngines
             /*
                 Total Cost = Rate of program * spot(s) allocated per program 
                 Target Impressions per Spot. = RATING of the program by the demographic chosen * market coverage universe (provided by Nielsen)
-                Target CPM = ( Cost of the program / target impressions ) * 1000             
+                Target CPM = ( Cost of the program / (target impressions / 1000) )
                 TRP = (Total Demo Impressions / Total US Demo Universe) * 100
              * 
              HH Impressions will ONLY appear, if the user has NOT selected "Household" as their target demographic.
@@ -81,10 +81,10 @@ namespace Services.Broadcast.BusinessEngines
 
                 programDetails.TargetImpressions = targetImpressions;
                 programDetails.TargetCpm = targetImpressions != 0
-                    ? (decimal)((float)programDetails.TotalCost / targetImpressions) * 1000
+                    ? programDetails.TotalCost / ((decimal)targetImpressions / 1000)
                     : 0;
                 programDetails.TRP = nsiData.TotalDemoUniverse != 0
-                    ? (targetImpressions / nsiData.TotalDemoUniverse) * 100
+                    ? targetImpressions / nsiData.TotalDemoUniverse * 100
                     : 0;
 
                 //household specific calculation (only if user didn't select HH as target)
@@ -96,7 +96,7 @@ namespace Services.Broadcast.BusinessEngines
 
                     programDetails.HHImpressions = hhImpressions;
                     programDetails.HHeCPM = hhImpressions != 0
-                        ? (decimal)((float)programDetails.TotalCost / hhImpressions) * 1000
+                        ? (programDetails.TotalCost / (decimal)hhImpressions / 1000)
                         : 0;
                     programDetails.GRP = nsiData.TotalHHUniverse != 0 ? (hhImpressions / nsiData.TotalHHUniverse) * 100 : 0;
                 }
@@ -116,17 +116,17 @@ namespace Services.Broadcast.BusinessEngines
                 TotalSpots = listOfTotals.Sum(q => q.TotalSpots),
                 TotalCost = totalCost,
                 TotalTargetImpressions = targetImpressions,
-                TotalTargetCPM = targetImpressions != 0 ? (decimal)((float)totalCost / targetImpressions) * 1000 : 0,
+                TotalTargetCPM = targetImpressions != 0 ? totalCost / (decimal)(targetImpressions / 1000) : 0,
                 TotalTRP = nsiData.TotalDemoUniverse != 0 ? (float)(targetImpressions / nsiData.TotalDemoUniverse) * 100 : 0,
                 TotalGRP = nsiData.TotalHHUniverse != 0 ? (float)(hhImpressions / nsiData.TotalHHUniverse) * 100 : 0,
-                TotalHHCPM = hhImpressions != 0 ? (decimal)((float)totalCost / hhImpressions) * 1000 : 0,
+                TotalHHCPM = hhImpressions != 0 ? totalCost / ((decimal)hhImpressions / 1000) : 0,
                 TotalHHImpressions = hhImpressions,
                 //additional audience
                 TotalAdditionalAudienceImpressions =
-                        (float)stationSubtotalAdditionalAudienceImpressions,
+                        stationSubtotalAdditionalAudienceImpressions,
                 TotalAdditionalAudienceCPM =
                         stationSubtotalAdditionalAudienceImpressions != 0
-                            ? (totalCost / (decimal)stationSubtotalAdditionalAudienceImpressions) * 1000
+                            ? totalCost / ((decimal)stationSubtotalAdditionalAudienceImpressions / 1000)
                             : 0
             };
 
@@ -156,15 +156,15 @@ namespace Services.Broadcast.BusinessEngines
                         var listOfValues = programs.Select(q => new ProposalTotalFields()
                         {
                             TotalAdditionalAudienceCPM = q.AdditonalAudienceCPM,
-                            TotalAdditionalAudienceImpressions = (float)q.AdditionalAudienceImpressions,
+                            TotalAdditionalAudienceImpressions = q.AdditionalAudienceImpressions,
                             TotalCost = q.TotalCost,
                             TotalGRP = (float)q.GRP,
                             TotalHHCPM = q.HHeCPM,
-                            TotalHHImpressions = (float)q.HHImpressions,
+                            TotalHHImpressions = q.HHImpressions,
                             TotalSpots = q.TotalSpots,
                             TotalTRP = (float)q.TRP,
                             TotalTargetCPM = q.TargetCpm,
-                            TotalTargetImpressions = (float)q.TargetImpressions
+                            TotalTargetImpressions = q.TargetImpressions
                         }).ToList();
                         var total = CalculateProposalTotalFieldsFromListOfTotals(listOfValues, nsiData);
                         return total;
@@ -261,9 +261,9 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var program in programs)
             {
                 var activeWeeks = program.FlightWeeks.Where(w => w.IsHiatus == false).ToList();
-                var totalCost = (decimal)activeWeeks.Sum(w => w.Rate);
+                var totalCost = activeWeeks.Sum(w => w.Rate);
                 var totalImpressions = program.UnitImpressions * activeWeeks.Count;
-                var rawCpm = totalImpressions > 0 ? totalCost / (decimal)totalImpressions : 0;
+                var rawCpm = totalImpressions > 0 ? totalCost / ((decimal)totalImpressions / 1000) : 0;
                 program.TargetCpm = Math.Round(rawCpm, 2);
             }
         }

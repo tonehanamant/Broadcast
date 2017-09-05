@@ -2,7 +2,7 @@
 {
     public class ProposalHeaderTotalsDto
     {
-        public long ImpressionsTotal { get; set; }
+        public double ImpressionsTotal { get; set; }
         public decimal CostTotal { get; set; }
     }
 }

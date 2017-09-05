@@ -16,8 +16,8 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public genre()
         {
-            this.station_programs = new HashSet<station_programs>();
             this.proposal_version_detail_criteria_genres = new HashSet<proposal_version_detail_criteria_genres>();
+            this.station_programs = new HashSet<station_programs>();
         }
     
         public int id { get; set; }
@@ -27,7 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
     
-        public virtual ICollection<station_programs> station_programs { get; set; }
         public virtual ICollection<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
+        public virtual ICollection<station_programs> station_programs { get; set; }
     }
 }

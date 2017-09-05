@@ -26,7 +26,7 @@
   "Status": 1,
   "TargetBudget": 2000.0000,
   "TargetCPM": 0.0000,
-  "TargetImpressions": 200.0,
+  "TargetImpressions": 200000.0,
   "TargetUnits": 20,
   "TotalCost": 0.0000,
   "TotalCostMarginAchieved": false,

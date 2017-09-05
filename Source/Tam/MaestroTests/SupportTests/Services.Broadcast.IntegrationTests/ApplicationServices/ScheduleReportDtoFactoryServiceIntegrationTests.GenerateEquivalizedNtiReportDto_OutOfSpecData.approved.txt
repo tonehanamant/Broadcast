@@ -4,7 +4,7 @@
       "AudienceId": 31,
       "AudienceName": "HH",
       "DeliveredImpressions": 102394.914,
-      "OrderedImpressions": 0,
+      "OrderedImpressions": 0.0,
       "OutOfSpecDeliveredImpressions": 102394.914,
       "TotalDeliveredImpressions": 204789.828
     },
@@ -12,7 +12,7 @@
       "AudienceId": 33,
       "AudienceName": "A18-49",
       "DeliveredImpressions": 77846.382,
-      "OrderedImpressions": 0,
+      "OrderedImpressions": 0.0,
       "OutOfSpecDeliveredImpressions": 77846.382,
       "TotalDeliveredImpressions": 155692.764
     }
@@ -24,14 +24,14 @@
         {
           "AudienceId": 31,
           "Delivery": 42141.696,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 33,
           "Delivery": 33120.99,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -46,7 +46,7 @@
       "MatchSpotLength": false,
       "MatchStation": false,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PIX11 MORNING NEWS 6A-7A",
       "Rank": 1,
@@ -62,14 +62,14 @@
         {
           "AudienceId": 31,
           "Delivery": 60253.218,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 33,
           "Delivery": 44725.392,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -84,7 +84,7 @@
       "MatchSpotLength": false,
       "MatchStation": false,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PIX11 MORNING NEWS 7A-9A",
       "Rank": 1,

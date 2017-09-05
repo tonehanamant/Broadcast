@@ -19,7 +19,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int audience_id { get; set; }
         public int demo_rank { get; set; }
         public int demo_population { get; set; }
-        public int impressions { get; set; }
+        public double impressions { get; set; }
     
         public virtual schedule_details schedule_details { get; set; }
     }

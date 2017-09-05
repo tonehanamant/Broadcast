@@ -49,7 +49,7 @@
         {
           "Cpm": 0.0,
           "DistributeGoals": false,
-          "ImpressionGoal": 13589.0,
+          "ImpressionGoal": 13589000.0,
           "Quarter": 2,
           "QuarterText": "2017 Q2",
           "Weeks": [
@@ -66,7 +66,7 @@
             {
               "Cost": 0.0,
               "EndDate": "2017-05-28T00:00:00",
-              "Impressions": 1000.0,
+              "Impressions": 1000000.0,
               "IsHiatus": false,
               "MediaWeekId": 700,
               "StartDate": "2017-05-22T00:00:00",
@@ -76,7 +76,7 @@
             {
               "Cost": 0.0,
               "EndDate": "2017-06-04T00:00:00",
-              "Impressions": 12589.0,
+              "Impressions": 12589000.0,
               "IsHiatus": false,
               "MediaWeekId": 701,
               "StartDate": "2017-05-29T00:00:00",
@@ -91,7 +91,7 @@
       "SinglePostingBookId": 413,
       "SpotLengthId": 1,
       "TotalCost": 0.0,
-      "TotalImpressions": 13589.0,
+      "TotalImpressions": 13589000.0,
       "TotalUnits": 2
     }
   ],
@@ -134,7 +134,7 @@
   "Status": 0,
   "TargetBudget": 0.0,
   "TargetCPM": 0.0,
-  "TargetImpressions": 13589.0,
+  "TargetImpressions": 13589000.0,
   "TargetUnits": 2,
   "TotalCost": 0.0,
   "TotalCostMarginAchieved": false,

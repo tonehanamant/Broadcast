@@ -16,17 +16,17 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public market()
         {
+            this.proposal_version_markets = new HashSet<proposal_version_markets>();
             this.stations = new HashSet<station>();
             this.schedules = new HashSet<schedule>();
-            this.proposal_version_markets = new HashSet<proposal_version_markets>();
         }
     
         public short market_code { get; set; }
         public string geography_name { get; set; }
     
+        public virtual market_dma_map market_dma_map { get; set; }
+        public virtual ICollection<proposal_version_markets> proposal_version_markets { get; set; }
         public virtual ICollection<station> stations { get; set; }
         public virtual ICollection<schedule> schedules { get; set; }
-        public virtual ICollection<proposal_version_markets> proposal_version_markets { get; set; }
-        public virtual market_dma_map market_dma_map { get; set; }
     }
 }

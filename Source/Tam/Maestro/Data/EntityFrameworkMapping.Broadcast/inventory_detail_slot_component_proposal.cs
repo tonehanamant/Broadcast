@@ -16,10 +16,10 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public int inventory_detail_slot_component_id { get; set; }
         public int proprosal_version_detail_quarter_week_id { get; set; }
+        public int inventory_detail_slot_id { get; set; }
         public int daypart_id { get; set; }
         public short station_code { get; set; }
         public int station_program_id { get; set; }
         public int station_program_flight_id { get; set; }
-        public int inventory_detail_slot_id { get; set; }
     }
 }

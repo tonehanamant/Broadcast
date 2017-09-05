@@ -13,7 +13,7 @@
         "Cpm30": null,
         "Cpm60": null,
         "Cpm90": null,
-        "Impressions": null,
+        "Impressions": 0.0,
         "Rating": null
       },
       {
@@ -26,7 +26,7 @@
         "Cpm30": null,
         "Cpm60": null,
         "Cpm90": null,
-        "Impressions": null,
+        "Impressions": 0.0,
         "Rating": null
       },
       {
@@ -39,7 +39,7 @@
         "Cpm30": null,
         "Cpm60": null,
         "Cpm90": null,
-        "Impressions": null,
+        "Impressions": 0.0,
         "Rating": null
       },
       {
@@ -52,7 +52,7 @@
         "Cpm30": null,
         "Cpm60": null,
         "Cpm90": null,
-        "Impressions": null,
+        "Impressions": 0.0,
         "Rating": null
       },
       {
@@ -65,7 +65,7 @@
         "Cpm30": null,
         "Cpm60": null,
         "Cpm90": null,
-        "Impressions": null,
+        "Impressions": 0.0,
         "Rating": null
       }
     ],
@@ -80,7 +80,7 @@
     ],
     "FlightStartDate": "2016-10-31T00:00:00",
     "Genres": [],
-    "Impressions": null,
+    "Impressions": 0.0,
     "Program": "Integration Test",
     "Rate15": null,
     "Rate30": null,

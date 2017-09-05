@@ -35,8 +35,8 @@ namespace Services.Broadcast.Entities
         public List<ProposalFlightWeek> DetailFlightWeeks { get; set; }
 
         public decimal? DetailTargetBudget { get; set; }
-        public double? DetailTargetImpressions { get; set; }
-        public decimal? DetailCpm { get; set; }
+        public double DetailTargetImpressions { get; set; }
+        public decimal DetailCpm { get; set; }
         public int DetailId { get; set; }
 
         public double DetailBudgetPercent { get; set; }

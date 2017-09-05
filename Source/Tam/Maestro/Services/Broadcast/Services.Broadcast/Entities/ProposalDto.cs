@@ -48,7 +48,7 @@ namespace Services.Broadcast.Entities
         }
         public decimal? TargetBudget { get; set; }
         public int? TargetUnits { get; set; }
-        public double? TargetImpressions { get; set; }
+        public double TargetImpressions { get; set; }
         public decimal? TargetCPM { get; set; }
         public double? Margin { get; set; }
         public string Notes { get; set; }

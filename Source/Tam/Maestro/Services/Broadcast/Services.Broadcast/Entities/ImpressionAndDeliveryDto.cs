@@ -5,7 +5,7 @@
         public int AudienceId { get; set; }
         public string AudienceName { get; set; }
 
-        public int? OrderedImpressions { get; set; }
+        public double OrderedImpressions { get; set; }
         public double DeliveredImpressions { get; set; }
 
         public double OutOfSpecDeliveredImpressions { get; set; }

@@ -185,7 +185,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var week in proposalDetailInventory.Weeks)
                 foreach (var daypartGroup in week.DaypartGroups)
                     foreach (var daypartSlot in daypartGroup.Value.DaypartSlots.Where(dps => dps != null))
-                        daypartSlot.CPM = daypartSlot.Impressions > 0 ? (decimal)((double)daypartSlot.Cost / daypartSlot.Impressions) : 0;
+                        daypartSlot.CPM = daypartSlot.Impressions > 0 ? daypartSlot.Cost / (decimal)daypartSlot.Impressions : 0;
 
             proposalDetailInventory.Dayparts = daypartGroupings.OrderBy(r => r.Key).Select(r => r.Value).ToList();
 

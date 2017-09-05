@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Common.Services.ApplicationServices;
-using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.spotcableXML;
-using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -21,16 +17,13 @@ namespace Services.Broadcast.BusinessEngines
     {
         private readonly IProposalDetailHeaderTotalsCalculationEngine _ProposalDetailTotalsCalculationEngine;
         private readonly IProposalDetailWeekTotalsCalculationEngine _ProposalDetailWeekTotalsCalculationEngine;
-        private readonly IProposalMathEngine _proposalMathEngine;
 
         public ProposalProprietaryTotalsCalculationEngine(
             IProposalDetailHeaderTotalsCalculationEngine proposalDetailTotalsCalculationEngine,
-            IProposalDetailWeekTotalsCalculationEngine proposalDetailWeekTotalsCalculationEngine,
-            IProposalMathEngine proposalMathEngine)
+            IProposalDetailWeekTotalsCalculationEngine proposalDetailWeekTotalsCalculationEngine)
         {
             _ProposalDetailTotalsCalculationEngine = proposalDetailTotalsCalculationEngine;
             _ProposalDetailWeekTotalsCalculationEngine = proposalDetailWeekTotalsCalculationEngine;
-            _proposalMathEngine = proposalMathEngine;
         }
 
         public ProposalInventoryTotalsDto CalculateProprietaryDetailTotals(ProposalInventoryTotalsRequestDto request,
@@ -96,8 +89,8 @@ namespace Services.Broadcast.BusinessEngines
                     }
                 }
 
-                weekTotals.BudgetPercent = _proposalMathEngine.CalculateBudgetPercent((double)weekTotals.Budget, request.Margin.Value, (double)inventoryWeek.Budget);
-                weekTotals.ImpressionsPercent = _proposalMathEngine.CalculateImpressionsPercent(weekTotals.Impressions, inventoryWeek.ImpressionsGoal);
+                weekTotals.BudgetPercent = ProposalMathEngine.CalculateBudgetPercent(weekTotals.Budget, request.Margin.Value, inventoryWeek.Budget);
+                weekTotals.ImpressionsPercent = ProposalMathEngine.CalculateImpressionsPercent(weekTotals.Impressions, inventoryWeek.ImpressionsGoal);
 
                 weekTotals.BudgetMarginAchieved = weekTotals.BudgetPercent > 100;
                 weekTotals.ImpressionsMarginAchieved = weekTotals.ImpressionsPercent > 100;
@@ -108,12 +101,12 @@ namespace Services.Broadcast.BusinessEngines
             // totals
             totals.TotalImpressions = totals.Weeks.Sum(w => w.Impressions);
             totals.TotalCost = totals.Weeks.Sum(w => w.Budget);
-            totals.TotalCpm = _proposalMathEngine.CalculateTotalCpm((double)totals.TotalCost, totals.TotalImpressions); 
+            totals.TotalCpm = ProposalMathEngine.CalculateTotalCpm(totals.TotalCost, totals.TotalImpressions); 
 
             // percent
-            totals.ImpressionsPercent = _proposalMathEngine.CalculateImpressionsPercent(totals.TotalImpressions, request.DetailTargetImpressions.Value);
-            totals.BudgetPercent = _proposalMathEngine.CalculateBudgetPercent((double)totals.TotalCost, request.Margin.Value, (double)request.DetailTargetBudget.Value);
-            totals.CpmPercent = _proposalMathEngine.CalculateCpmPercent((double)totals.TotalCpm, request.Margin.Value, (double)request.DetailCpm.Value); 
+            totals.ImpressionsPercent = ProposalMathEngine.CalculateImpressionsPercent(totals.TotalImpressions, request.DetailTargetImpressions);
+            totals.BudgetPercent = ProposalMathEngine.CalculateBudgetPercent(totals.TotalCost, request.Margin.Value, request.DetailTargetBudget.Value);
+            totals.CpmPercent = ProposalMathEngine.CalculateCpmPercent(totals.TotalCpm, request.Margin.Value, request.DetailCpm); 
             
             
             // margin

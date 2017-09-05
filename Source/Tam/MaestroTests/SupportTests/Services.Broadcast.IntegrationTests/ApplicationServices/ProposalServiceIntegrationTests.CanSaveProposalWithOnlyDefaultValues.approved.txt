@@ -20,7 +20,7 @@
   "Status": 0,
   "TargetBudget": null,
   "TargetCPM": 0.0000,
-  "TargetImpressions": null,
+  "TargetImpressions": 0.0,
   "TargetUnits": null,
   "TotalCost": 0.0000,
   "TotalCostMarginAchieved": false,

@@ -153,7 +153,7 @@ namespace Services.Broadcast.Repositories
                 select new ProprietaryInventoryAllocationSnapshotDto
                 {
                     CreatedBy = p.created_by,
-                    Impressions = p.impressions / 1000d,
+                    Impressions = p.impressions,
                     InventoryDetailSlotId = p.inventory_detail_slot_id,
                     Isci = p.isci,
                     Order = p.order,
@@ -452,7 +452,7 @@ namespace Services.Broadcast.Repositories
                                 proprosal_version_detail_quarter_week_id = save.QuarterWeekId,
                                 order = save.Order,
                                 rolled_up_daypart_id = inventoryDetailSlot.rolled_up_daypart_id,
-                                impressions = (int)(save.Impressions * 1000),
+                                impressions = save.Impressions,
                                 slot_cost = inventoryDetailSlot.slot_cost ?? 0,
                                 spot_length_id = inventoryDetailSlot.spot_length_id,
                                 created_by = request.UserName

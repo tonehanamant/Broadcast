@@ -13,7 +13,7 @@
   "DetailBudgetPercent": 2496.0,
   "DetailCpm": 0.05,
   "DetailCpmMarginAchieved": true,
-  "DetailCpmPercent": 482232.0,
+  "DetailCpmPercent": 482160.0,
   "DetailDaypart": {
     "endTime": 36000,
     "fri": true,
@@ -43,10 +43,10 @@
   "DetailSpotLength": 30,
   "DetailSpotLengthId": 1,
   "DetailTargetBudget": 50.0000,
-  "DetailTargetImpressions": 1000.0,
+  "DetailTargetImpressions": 1000000.0,
   "DetailTotalBudget": 1040.00,
-  "DetailTotalCpm": 200.93,
-  "DetailTotalImpressions": 5.176,
+  "DetailTotalCpm": 200.90,
+  "DetailTotalImpressions": 5176.736,
   "DisplayFilter": {
     "Affiliations": [
       "IND",
@@ -108,7 +108,7 @@
                   "EndDate": "0001-01-01T00:00:00",
                   "IsHiatus": false,
                   "MediaWeekId": 649,
-                  "Rate": 20.0,
+                  "Rate": 20.0000,
                   "StartDate": "0001-01-01T00:00:00"
                 }
               ],
@@ -118,7 +118,7 @@
               "StationCode": 5923,
               "TargetCpm": 9.58,
               "TargetImpressions": 0.0,
-              "UnitImpressions": 2.088368
+              "UnitImpressions": 2088.36799776
             }
           ],
           "StationCode": 5923
@@ -147,7 +147,7 @@
                   "EndDate": "0001-01-01T00:00:00",
                   "IsHiatus": false,
                   "MediaWeekId": 649,
-                  "Rate": 30.0,
+                  "Rate": 30.0000,
                   "StartDate": "0001-01-01T00:00:00"
                 }
               ],
@@ -157,7 +157,7 @@
               "StationCode": 6852,
               "TargetCpm": 9.28,
               "TargetImpressions": 0.0,
-              "UnitImpressions": 3.23232215
+              "UnitImpressions": 3232.32215316
             }
           ],
           "StationCode": 6852
@@ -178,7 +178,7 @@
                   "EndDate": "0001-01-01T00:00:00",
                   "IsHiatus": false,
                   "MediaWeekId": 649,
-                  "Rate": 30.0,
+                  "Rate": 30.0000,
                   "StartDate": "0001-01-01T00:00:00"
                 }
               ],
@@ -188,7 +188,7 @@
               "StationCode": 5982,
               "TargetCpm": 11.82,
               "TargetImpressions": 0.0,
-              "UnitImpressions": 2.53858257
+              "UnitImpressions": 2538.58257254
             }
           ],
           "StationCode": 5982
@@ -250,30 +250,30 @@
       "BudgetMarginAchieved": true,
       "BudgetPercent": 192.0,
       "BudgetTotal": 40.00,
-      "ImpressionsGoal": 100.0,
+      "ImpressionsGoal": 100000.0,
       "ImpressionsMarginAchieved": false,
       "ImpressionsPercent": 4.18,
-      "ImpressionsTotal": 4.176,
+      "ImpressionsTotal": 4176.73599551,
       "IsHiatus": false,
       "Markets": [
         {
-          "Cost": 40.0,
-          "Impressions": 4.176736,
+          "Cost": 40.0000,
+          "Impressions": 4176.73599551,
           "MarketId": 101,
           "Spots": 2,
           "Stations": [
             {
               "Programs": [
                 {
-                  "Cost": 40.0,
+                  "Cost": 40.0000,
                   "EFF": 0.0,
                   "ProgramId": 2001,
                   "Spots": 2,
                   "TargetCpm": 0.0,
                   "TargetImpressions": 0.0,
-                  "TotalImpressions": 4.176736,
-                  "UnitCost": 20.0,
-                  "UnitImpression": 2.088368
+                  "TotalImpressions": 4176.73599551,
+                  "UnitCost": 20.0000,
+                  "UnitImpression": 2088.36799776
                 }
               ],
               "StationCode": 5923
@@ -289,15 +289,15 @@
             {
               "Programs": [
                 {
-                  "Cost": 30.0,
+                  "Cost": 30.0000,
                   "EFF": 0.0,
                   "ProgramId": 2004,
                   "Spots": 0,
                   "TargetCpm": 0.0,
                   "TargetImpressions": 0.0,
-                  "TotalImpressions": 3.23232215,
-                  "UnitCost": 30.0,
-                  "UnitImpression": 3.23232215
+                  "TotalImpressions": 3232.32215316,
+                  "UnitCost": 30.0000,
+                  "UnitImpression": 3232.32215316
                 }
               ],
               "StationCode": 6852
@@ -305,15 +305,15 @@
             {
               "Programs": [
                 {
-                  "Cost": 30.0,
+                  "Cost": 30.0000,
                   "EFF": 0.0,
                   "ProgramId": 2002,
                   "Spots": 0,
                   "TargetCpm": 0.0,
                   "TargetImpressions": 0.0,
-                  "TotalImpressions": 2.53858257,
-                  "UnitCost": 30.0,
-                  "UnitImpression": 2.53858257
+                  "TotalImpressions": 2538.58257254,
+                  "UnitCost": 30.0000,
+                  "UnitImpression": 2538.58257254
                 }
               ],
               "StationCode": 5982

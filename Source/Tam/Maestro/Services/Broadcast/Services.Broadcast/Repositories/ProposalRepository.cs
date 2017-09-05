@@ -136,7 +136,7 @@ namespace Services.Broadcast.Repositories
                 modified_by = userName,
                 modified_date = timestamp,
                 target_budget = proposalDto.TargetBudget,
-                target_impressions = proposalDto.TargetImpressions.HasValue ? (int?)(proposalDto.TargetImpressions * 1000) : null,
+                target_impressions = proposalDto.TargetImpressions,
                 target_cpm = proposalDto.TargetCPM.Value,
                 margin = proposalDto.Margin.Value,
                 target_units = proposalDto.TargetUnits,
@@ -233,7 +233,7 @@ namespace Services.Broadcast.Repositories
             dbProposalVersion.modified_by = userName;
             dbProposalVersion.modified_date = timestamp;
             dbProposalVersion.target_budget = proposalDto.TargetBudget;
-            dbProposalVersion.target_impressions = proposalDto.TargetImpressions.HasValue ? (int?)(proposalDto.TargetImpressions * 1000) : null;
+            dbProposalVersion.target_impressions = proposalDto.TargetImpressions;
             dbProposalVersion.target_cpm = proposalDto.TargetCPM.Value;
             dbProposalVersion.margin = proposalDto.Margin.Value;
             dbProposalVersion.target_units = proposalDto.TargetUnits;
@@ -297,7 +297,7 @@ namespace Services.Broadcast.Repositories
                     proposal_version_id = proposalVersionId,
                     spot_length_id = proposalDetail.SpotLengthId,
                     units_total = proposalDetail.TotalUnits,
-                    impressions_total = (int)(proposalDetail.TotalImpressions * 1000),
+                    impressions_total = (proposalDetail.TotalImpressions),
                     start_date = proposalDetail.FlightStartDate,
                     end_date = proposalDetail.FlightEndDate,
                     daypart_id = proposalDetail.DaypartId,
@@ -310,7 +310,7 @@ namespace Services.Broadcast.Repositories
                         proposalDetail.Quarters.Select(quarter => new proposal_version_detail_quarters
                         {
                             cpm = quarter.Cpm,
-                            impressions_goal = (int)(quarter.ImpressionGoal * 1000),
+                            impressions_goal = (quarter.ImpressionGoal),
                             quarter = quarter.Quarter,
                             year = quarter.Year,
                             proposal_version_detail_quarter_weeks =
@@ -319,7 +319,7 @@ namespace Services.Broadcast.Repositories
                                     {
                                         is_hiatus = quarterWeek.IsHiatus,
                                         cost = quarterWeek.Cost,
-                                        impressions = (int)(quarterWeek.Impressions * 1000),
+                                        impressions = quarterWeek.Impressions,
                                         units = quarterWeek.Units,
                                         media_week_id = quarterWeek.MediaWeekId,
                                         end_date = quarterWeek.EndDate,
@@ -371,7 +371,7 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.daypart_code = detail.DaypartCode;
                     updatedDetail.spot_length_id = detail.SpotLengthId;
                     updatedDetail.units_total = detail.TotalUnits;
-                    updatedDetail.impressions_total = (int)(detail.TotalImpressions * 1000);
+                    updatedDetail.impressions_total = (detail.TotalImpressions);
                     updatedDetail.start_date = detail.FlightStartDate;
                     updatedDetail.end_date = detail.FlightEndDate;
                     updatedDetail.daypart_id = detail.DaypartId;
@@ -404,7 +404,7 @@ namespace Services.Broadcast.Repositories
                         if (updatedQuarter != null)
                         {
                             updatedQuarter.cpm = detailQuarter.Cpm;
-                            updatedQuarter.impressions_goal = (int)(detailQuarter.ImpressionGoal * 1000);
+                            updatedQuarter.impressions_goal = (detailQuarter.ImpressionGoal);
                             updatedQuarter.quarter = detailQuarter.Quarter;
                             updatedQuarter.year = detailQuarter.Year;
 
@@ -435,7 +435,7 @@ namespace Services.Broadcast.Repositories
                                     quarterWeek.end_date = detatilQuarterWeek.EndDate;
                                     quarterWeek.is_hiatus = detatilQuarterWeek.IsHiatus;
                                     quarterWeek.units = detatilQuarterWeek.Units;
-                                    quarterWeek.impressions = (int)(detatilQuarterWeek.Impressions * 1000);
+                                    quarterWeek.impressions = detatilQuarterWeek.Impressions;
                                     quarterWeek.cost = detatilQuarterWeek.Cost;
                                 }
                             });
@@ -456,7 +456,7 @@ namespace Services.Broadcast.Repositories
                 proposalQuarterDtos.Select(quarter => new proposal_version_detail_quarters
                 {
                     cpm = quarter.Cpm,
-                    impressions_goal = (int)(quarter.ImpressionGoal * 1000),
+                    impressions_goal = (quarter.ImpressionGoal),
                     quarter = quarter.Quarter,
                     year = quarter.Year,
                     proposal_version_detail_quarter_weeks =
@@ -465,7 +465,7 @@ namespace Services.Broadcast.Repositories
                             {
                                 is_hiatus = quarterWeek.IsHiatus,
                                 cost = quarterWeek.Cost,
-                                impressions = (int)(quarterWeek.Impressions * 1000),
+                                impressions = (quarterWeek.Impressions),
                                 units = quarterWeek.Units,
                                 media_week_id = quarterWeek.MediaWeekId,
                                 end_date = quarterWeek.EndDate,
@@ -487,7 +487,7 @@ namespace Services.Broadcast.Repositories
                 {
                     is_hiatus = quarterWeek.IsHiatus,
                     cost = quarterWeek.Cost,
-                    impressions = (int)(quarterWeek.Impressions * 1000),
+                    impressions = (quarterWeek.Impressions),
                     units = quarterWeek.Units,
                     media_week_id = quarterWeek.MediaWeekId,
                     end_date = quarterWeek.EndDate,
@@ -624,10 +624,10 @@ namespace Services.Broadcast.Repositories
             proposalDto.Status = (ProposalEnums.ProposalStatusType)proposalVersion.status;
             proposalDto.TargetUnits = proposalVersion.target_units;
             proposalDto.TargetBudget = proposalVersion.target_budget;
-            proposalDto.TargetImpressions = proposalVersion.target_impressions.HasValue ? (double?)proposalVersion.target_impressions / 1000 : null;
+            proposalDto.TargetImpressions = proposalVersion.target_impressions;
             proposalDto.TargetCPM = proposalVersion.target_cpm;
             proposalDto.TotalCost = proposalVersion.cost_total;
-            proposalDto.TotalImpressions = proposalVersion.impressions_total / 1000d;
+            proposalDto.TotalImpressions = proposalVersion.impressions_total;
             proposalDto.TotalCPM = GetCpm(proposalVersion.impressions_total, proposalVersion.cost_total);
             proposalDto.Margin = proposalVersion.margin;
             proposalDto.Notes = proposalVersion.notes;
@@ -656,7 +656,7 @@ namespace Services.Broadcast.Repositories
                 DaypartCode = version.daypart_code,
                 SpotLengthId = version.spot_length_id,
                 TotalCost = version.cost_total.GetValueOrDefault(),
-                TotalImpressions = (double)(version.impressions_total ?? 0) / 1000,
+                TotalImpressions = version.impressions_total,
                 TotalUnits = version.units_total.GetValueOrDefault(),
                 FlightEndDate = version.end_date,
                 FlightStartDate = version.start_date,
@@ -669,7 +669,7 @@ namespace Services.Broadcast.Repositories
                 Quarters = version.proposal_version_detail_quarters.Select(quarter => new ProposalQuarterDto
                 {
                     Cpm = quarter.cpm.GetValueOrDefault(),
-                    ImpressionGoal = (double)(quarter.impressions_goal ?? 0) / 1000,
+                    ImpressionGoal = quarter.impressions_goal,
                     Id = quarter.id,
                     Year = quarter.year,
                     Quarter = quarter.quarter,
@@ -680,7 +680,7 @@ namespace Services.Broadcast.Repositories
                         Cost = week.cost.GetValueOrDefault(),
                         EndDate = week.end_date,
                         StartDate = week.start_date,
-                        Impressions = (double)(week.impressions ?? 0) / 1000,
+                        Impressions = week.impressions,
                         IsHiatus = week.is_hiatus,
                         Units = week.units.GetValueOrDefault(),
                         MediaWeekId = week.media_week_id,
@@ -716,7 +716,7 @@ namespace Services.Broadcast.Repositories
             proposalVersion.LastModifiedDate = x.modified_date;
             proposalVersion.Markets = (ProposalEnums.ProposalMarketGroups?)x.markets;
             proposalVersion.TargetUnits = x.target_units;
-            proposalVersion.TargetImpressions = x.target_impressions.HasValue ? (double?)x.target_impressions / 1000 : null;
+            proposalVersion.TargetImpressions = x.target_impressions;
             proposalVersion.Notes = x.notes;
             proposalVersion.Primary = x.id == x.proposal.primary_version_id;
             proposalVersion.Status = (ProposalEnums.ProposalStatusType)x.status;
@@ -761,7 +761,7 @@ namespace Services.Broadcast.Repositories
                     {
                         proposal_version_detail_id = proposalDetailId,
                         cpm = quarter.Cpm,
-                        impressions_goal = (int)(quarter.ImpressionGoal * 1000),
+                        impressions_goal = quarter.ImpressionGoal,
                         quarter = quarter.Quarter,
                         year = quarter.Year
                     };
@@ -783,7 +783,7 @@ namespace Services.Broadcast.Repositories
                         proposal_version_quarter_id = quarterId,
                         is_hiatus = quarterWeek.IsHiatus,
                         cost = quarterWeek.Cost,
-                        impressions = (int)(quarterWeek.Impressions * 1000),
+                        impressions = quarterWeek.Impressions,
                         units = quarterWeek.Units,
                         media_week_id = quarterWeek.MediaWeekId,
                         end_date = quarterWeek.EndDate,
@@ -823,7 +823,7 @@ namespace Services.Broadcast.Repositories
                                  select new ProposalOpenMarketInventoryWeekDto
                                  {
                                      ProposalVersionDetailQuarterWeekId = week.id,
-                                     ImpressionsGoal = (double)((week.impressions ?? 0) / 1000),
+                                     ImpressionsGoal = week.impressions,
                                      Budget = week.cost ?? 0,
                                      QuarterText = string.Format("Q{0}", quarter.quarter),
                                      Week = week.start_date.ToShortDateString(),
@@ -850,7 +850,7 @@ namespace Services.Broadcast.Repositories
                     DaypartCode = proposalDetail.daypart_code,
                     SpotLengthId = proposalDetail.spot_length_id,
                     TotalCost = proposalDetail.cost_total.GetValueOrDefault(),
-                    TotalImpressions = (double)(proposalDetail.impressions_total ?? 0) / 1000,
+                    TotalImpressions = proposalDetail.impressions_total,
                     TotalUnits = proposalDetail.units_total.GetValueOrDefault(),
                     FlightEndDate = proposalDetail.end_date,
                     FlightStartDate = proposalDetail.start_date,
@@ -872,7 +872,7 @@ namespace Services.Broadcast.Repositories
             {
                 var proposalDetail = context.proposal_version_details.First(p => p.id == proposalDetailId);
 
-                proposalDetail.open_market_impressions_total = (long)(proposalDetailSingleInventoryTotalsDto.TotalImpressions * 1000);
+                proposalDetail.open_market_impressions_total = proposalDetailSingleInventoryTotalsDto.TotalImpressions;
                 proposalDetail.open_market_cost_total = proposalDetailSingleInventoryTotalsDto.TotalCost;
 
                 context.SaveChanges();
@@ -885,7 +885,7 @@ namespace Services.Broadcast.Repositories
             {
                 var proposalDetail = context.proposal_version_details.First(p => p.id == proposalDetailId);
 
-                proposalDetail.proprietary_impressions_total = (long)(proposalDetailSingleInventoryTotalsDto.TotalImpressions * 1000);
+                proposalDetail.proprietary_impressions_total = proposalDetailSingleInventoryTotalsDto.TotalImpressions;
                 proposalDetail.proprietary_cost_total = proposalDetailSingleInventoryTotalsDto.TotalCost;
 
                 context.SaveChanges();
@@ -906,7 +906,7 @@ namespace Services.Broadcast.Repositories
                 {
                     Margin = proposalDetail.proposal_versions.margin,
                     TotalCost = proposalDetail.open_market_cost_total,
-                    TotalImpressions = proposalDetail.open_market_impressions_total / 1000.0
+                    TotalImpressions = proposalDetail.open_market_impressions_total
                 };
             });
         }
@@ -923,7 +923,7 @@ namespace Services.Broadcast.Repositories
                 return new ProposalDetailSingleInventoryTotalsDto
                 {
                     TotalCost = proposalDetail.proprietary_cost_total,
-                    TotalImpressions = proposalDetail.proprietary_impressions_total / 1000.0
+                    TotalImpressions = proposalDetail.proprietary_impressions_total
                 };
             });
         }
@@ -936,7 +936,7 @@ namespace Services.Broadcast.Repositories
                 {
                     var week = context.proposal_version_detail_quarter_weeks.First(p => p.id == proposalWeekDto.ProposalVersionDetailQuarterWeekId);
 
-                    week.open_market_impressions_total = (long)(proposalWeekDto.ImpressionsTotal * 1000);
+                    week.open_market_impressions_total = (proposalWeekDto.ImpressionsTotal);
                     week.open_market_cost_total = proposalWeekDto.BudgetTotal;
                 }
 
@@ -962,7 +962,7 @@ namespace Services.Broadcast.Repositories
                                         q => q.proposal_version_detail_quarter_weeks))
                             .First(w => w.media_week_id == localProposalWeekDto.MediaWeekId);
 
-                    week.proprietary_impressions_total = (long)(proposalWeekDto.Impressions * 1000);
+                    week.proprietary_impressions_total = (proposalWeekDto.Impressions);
                     week.proprietary_cost_total = proposalWeekDto.Budget;
                 }
 
@@ -992,7 +992,7 @@ namespace Services.Broadcast.Repositories
                 {
                     MediaWeekId = w.media_week_id,
                     TotalCost = w.open_market_cost_total,
-                    TotalImpressions = w.open_market_impressions_total / 1000.0
+                    TotalImpressions = w.open_market_impressions_total
                 }));
 
                 return weeksTotals;
@@ -1021,7 +1021,7 @@ namespace Services.Broadcast.Repositories
                 {
                     MediaWeekId = w.media_week_id,
                     TotalCost = w.proprietary_cost_total,
-                    TotalImpressions = w.proprietary_impressions_total / 1000.0
+                    TotalImpressions = w.proprietary_impressions_total
                 }));
 
                 return weeksTotals;
@@ -1044,7 +1044,7 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(c =>
             {
                 var detail = c.proposal_version_details.Find(proposalDetailId);
-                detail.single_posting_book_id= book;
+                detail.single_posting_book_id = book;
                 c.SaveChanges();
             });
         }
@@ -1093,7 +1093,7 @@ namespace Services.Broadcast.Repositories
                                  select new ProposalProprietaryInventoryWeekDto
                                  {
                                      QuarterText = string.Format("Q{0}", quarter.quarter),
-                                     ImpressionsGoal = (double)(week.impressions ?? 0) / 1000,
+                                     ImpressionsGoal = week.impressions,
                                      Budget = week.cost ?? 0,
                                      Week = week.start_date.ToShortDateString(),
                                      IsHiatus = week.is_hiatus,
@@ -1128,7 +1128,7 @@ namespace Services.Broadcast.Repositories
 
             baseDto.DetailDaypartId = pvd.daypart_id;
             baseDto.DetailSpotLengthId = pvd.spot_length_id;
-            baseDto.DetailTargetImpressions = pvd.impressions_total.HasValue ? (double)pvd.impressions_total / 1000 : 0;
+            baseDto.DetailTargetImpressions = pvd.impressions_total;
             baseDto.DetailTargetBudget = pvd.cost_total;
             baseDto.DetailCpm = GetCpm(pvd.impressions_total, pvd.cost_total);
             baseDto.DetailFlightEndDate = pvd.end_date;
@@ -1147,12 +1147,11 @@ namespace Services.Broadcast.Repositories
             baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.playback_type;
         }
 
-        private static decimal GetCpm(long? totalImpressions, decimal? totalCost)
+        private static decimal GetCpm(double totalImpressions, decimal? totalCost)
         {
-            var impressions = (decimal)(totalImpressions ?? 0) / 1000;
             var cost = totalCost ?? 0;
 
-            return impressions == 0 ? 0 : Math.Round(cost / impressions, 2);
+            return totalImpressions == 0 ? 0 : Math.Round(cost / (decimal) (totalImpressions / 1000), 2);
         }
     }
 }

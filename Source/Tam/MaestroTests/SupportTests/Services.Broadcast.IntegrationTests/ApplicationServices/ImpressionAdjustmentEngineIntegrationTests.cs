@@ -19,7 +19,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new RepositoryMock<IRatingAdjustmentsRepository>(repo))
             {
                 var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>();
-                const double impression = 100;
+                const long impression = 100;
 
                 var result = sut.AdjustImpression(impression, SchedulePostType.NTI, 420);
 
@@ -39,7 +39,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new RepositoryMock<IRatingAdjustmentsRepository>(repo))
             {
                 var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>();
-                const double impression = 100;
+                const long impression = 100;
 
                 var result = sut.AdjustImpression(impression, SchedulePostType.NTI, dto.MediaMonthId);
 
@@ -59,7 +59,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new RepositoryMock<IRatingAdjustmentsRepository>(repo))
             {
                 var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>();
-                const double impression = 100;
+                const long impression = 100;
 
                 var result = sut.AdjustImpression(impression, SchedulePostType.NTI, dto.MediaMonthId, false);
 
@@ -79,13 +79,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new RepositoryMock<IRatingAdjustmentsRepository>(repo))
             {
                 var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>();
-                const double impression = 100;
+                const long impression = 100;
 
                 var result = sut.AdjustImpression(impression, SchedulePostType.NTI, dto.MediaMonthId);
 
-                var annual = impression * (double)(1 - dto.AnnualAdjustment / 100);
-                var nti = annual * (double)(1 - dto.NtiAdjustment / 100);
-                Assert.That(result, Is.EqualTo(nti));
+                Assert.That(result, Is.EqualTo(50.050000000000004d));
             }
         }
 
@@ -101,7 +99,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new RepositoryMock<ISpotLengthRepository>(repo))
             {
                 var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>();
-                const double impression = 100;
+                const long impression = 100;
 
                 var result = sut.AdjustImpression(impression, true, spotLength, null, 420);
 
@@ -121,7 +119,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new RepositoryMock<ISpotLengthRepository>(repo))
             {
                 var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>();
-                const double impression = 100;
+                const long impression = 100;
 
                 var result = sut.AdjustImpression(impression, false, spotLength, null, 420);
 

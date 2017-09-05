@@ -33,7 +33,7 @@
       ],
       "FlightStartDate": "2016-10-31T00:00:00",
       "Genres": [],
-      "Impressions": null,
+      "Impressions": 0.0,
       "Program": "Integration Test",
       "Rate15": null,
       "Rate30": null,

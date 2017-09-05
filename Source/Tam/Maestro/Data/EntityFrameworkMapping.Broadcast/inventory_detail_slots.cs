@@ -28,7 +28,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int rolled_up_daypart_id { get; set; }
         public Nullable<decimal> slot_cost { get; set; }
     
-        public virtual inventory_details inventory_details { get; set; }
         public virtual ICollection<inventory_detail_slot_components> inventory_detail_slot_components { get; set; }
+        public virtual inventory_details inventory_details { get; set; }
     }
 }

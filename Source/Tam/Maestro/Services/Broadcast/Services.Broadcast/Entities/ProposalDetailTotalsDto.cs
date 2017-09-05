@@ -2,9 +2,9 @@
 {
     public class ProposalDetailTotalsDto
     {
-        public long OpenMarketImpressionsTotal { get; set; }
+        public double OpenMarketImpressionsTotal { get; set; }
         public decimal OpenMarketCostTotal { get; set; }
-        public long ProprietaryImpressionsTotal { get; set; }
+        public double ProprietaryImpressionsTotal { get; set; }
         public decimal ProprietaryCostTotal { get; set; }
     }
 }

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
@@ -15,33 +10,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
     {
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService =
             IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
-        
+
         [Test]
         public void CalculateOpenMarketsTotalsTest()
         {
             var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(7);
-            var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
-            var proposalMathEngine =
-                IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalMathEngine>();
-
-            proposalRepository.GetProposalDetailProprietaryInventoryTotals(7);
-
-            var calculationEngine = new ProposalDetailHeaderTotalsCalculationEngine(proposalMathEngine);
-
-            calculationEngine.CalculateTotalsForOpenMarketInventory(proposalInventory,
-                new ProposalDetailSingleInventoryTotalsDto() {TotalCost = 2000, TotalImpressions = 2000}, 20);
+            var calculationEngine = new ProposalDetailHeaderTotalsCalculationEngine();
+            calculationEngine.CalculateTotalsForOpenMarketInventory(proposalInventory, new ProposalDetailSingleInventoryTotalsDto { TotalCost = 2000, TotalImpressions = 2000 }, 20);
 
             Assert.AreEqual(3040m, proposalInventory.DetailTotalBudget);
-            Assert.AreEqual(2001d, proposalInventory.DetailTotalImpressions);
-            Assert.AreEqual(1.52m, proposalInventory.DetailTotalCpm);
+            Assert.AreEqual(3000d, proposalInventory.DetailTotalImpressions);
+            Assert.AreEqual(1013.33m, proposalInventory.DetailTotalCpm);
         }
 
         [Test]
         public void CalculateProprietaryTotalsTest()
         {
-            var proposalMathEngine =
-                IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalMathEngine>();
-
             var request = new ProposalInventoryTotalsRequestDto
             {
                 DetailCpm = 10,
@@ -95,9 +79,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                     }
             };
 
-            var calculationEngine = new ProposalDetailHeaderTotalsCalculationEngine(proposalMathEngine);
+            var calculationEngine = new ProposalDetailHeaderTotalsCalculationEngine();
 
-            var totals = new ProposalInventoryTotalsDto {TotalCost = 5000, TotalImpressions = 10000};
+            var totals = new ProposalInventoryTotalsDto { TotalCost = 5000, TotalImpressions = 10000 };
 
             var otherInventoryTotals = new ProposalDetailSingleInventoryTotalsDto
             {
@@ -109,7 +93,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
 
             Assert.AreEqual(128456m, totals.TotalCost);
             Assert.AreEqual(80000.0d, totals.TotalImpressions);
-            Assert.AreEqual(1.61m, totals.TotalCpm);
+            Assert.AreEqual(1605.7m, totals.TotalCpm);
         }
     }
 }

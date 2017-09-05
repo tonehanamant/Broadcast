@@ -16,7 +16,7 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public int station_program_flight_id { get; set; }
         public int audience_id { get; set; }
-        public Nullable<double> impressions { get; set; }
+        public double impressions { get; set; }
         public Nullable<double> rating { get; set; }
         public Nullable<decimal> cpm15 { get; set; }
         public Nullable<decimal> cpm30 { get; set; }

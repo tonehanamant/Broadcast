@@ -147,7 +147,7 @@ namespace Services.Broadcast.Converters.RateImport
                         program.EndDate = availLine.Periods.OrderBy(p => p.endDate).Last().endDate;
                         program.SpotLength = availLine.SpotLength.Minute * SecondsPerMinute +
                                              availLine.SpotLength.Second;
-                        var rate = string.IsNullOrEmpty(availLine.Rate) ? (decimal)0 : decimal.Parse(availLine.Rate);
+                        var rate = string.IsNullOrEmpty(availLine.Rate) ? 0 : decimal.Parse(availLine.Rate);
                         program.FlightWeeks = BuildFlightWeeksFromPeriods(
                             availLine.Periods,
                             rate,
@@ -212,7 +212,7 @@ namespace Services.Broadcast.Converters.RateImport
             List<StationProgramFlightWeek> flightWeeks = new List<StationProgramFlightWeek>();
             foreach (var detailPeriod in detailedPeriods)
             {
-                var rate = string.IsNullOrEmpty(detailPeriod.Rate) ? (decimal)0 : decimal.Parse(detailPeriod.Rate);
+                var rate = string.IsNullOrEmpty(detailPeriod.Rate) ? 0 : decimal.Parse(detailPeriod.Rate);
                 var periodFlightWeeks = BuildFlightWeeks(detailPeriod.startDate, detailPeriod.endDate, rate,
                                                         ToDemoValueDict(detailPeriod.DemoValues), spotLength, proposal, audienceMap,
                                                         program, fileProblems);
@@ -322,10 +322,10 @@ namespace Services.Broadcast.Converters.RateImport
                 switch (demo.DemoType)
                 {
                     case "Impression":
-                        flightWeekAudience.Impressions = (float)demoValue.Value;
+                        flightWeekAudience.Impressions = (double) demoValue.Value;
                         break;
                     case "Rating":
-                        flightWeekAudience.Rating = (float)demoValue.Value;
+                        flightWeekAudience.Rating = (double?) demoValue.Value;
                         break;
                     default:
                         throw new Exception("Unknown DemoType [" + demo.DemoType + "] in rate file.");

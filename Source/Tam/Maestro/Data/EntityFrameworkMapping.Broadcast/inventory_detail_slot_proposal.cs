@@ -22,7 +22,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int rolled_up_daypart_id { get; set; }
         public decimal slot_cost { get; set; }
         public int spot_length_id { get; set; }
-        public int impressions { get; set; }
+        public double impressions { get; set; }
     
         public virtual proposal_version_detail_quarter_weeks proposal_version_detail_quarter_weeks { get; set; }
     }

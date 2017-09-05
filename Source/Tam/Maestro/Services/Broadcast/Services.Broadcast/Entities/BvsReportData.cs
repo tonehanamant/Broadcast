@@ -22,7 +22,7 @@ namespace Services.Broadcast.Entities
         public DisplayDaypart DisplayDaypart { get; set; }
         public string Isci { get; set; }
         public double? Cost { get; set; }
-        public int? OrderedSpots { get; set; }
+        public int OrderedSpots { get; set; }
         public int? DeliveredSpots { get; set; }
         public double? SpotClearance { get; set; }
         public string SpecStatus { get; set; }
@@ -34,12 +34,10 @@ namespace Services.Broadcast.Entities
         {
             return AudienceImpressions.Where(ai => ai.AudienceId == audienceId).Sum(ai => ai.Delivery);
         }
-        public int? GetOrderedImpressions(int audienceId)
+        public double GetOrderedImpressions(int audienceId)
         {
             var impressionData = AudienceImpressions.Where(ai => ai.AudienceId == audienceId).ToList();
-            return impressionData.Any(x => x.Impressions.HasValue)
-                        ? impressionData.Where(x => x.Impressions.HasValue).Sum(x => x.Impressions)
-                        : null;
+            return impressionData.Sum(x => x.Impressions);
         }
     }
 

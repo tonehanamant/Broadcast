@@ -43,10 +43,10 @@
   "DetailSpotLength": 30,
   "DetailSpotLengthId": 1,
   "DetailTargetBudget": 50.0000,
-  "DetailTargetImpressions": 1000.0,
+  "DetailTargetImpressions": 1000000.0,
   "DetailTotalBudget": 1000.00,
-  "DetailTotalCpm": 1000.0,
-  "DetailTotalImpressions": 1.0,
+  "DetailTotalCpm": 1000.00,
+  "DetailTotalImpressions": 1000.0,
   "DisplayFilter": {
     "Affiliations": [
       "COZ"
@@ -96,7 +96,7 @@
                   "EndDate": "0001-01-01T00:00:00",
                   "IsHiatus": false,
                   "MediaWeekId": 649,
-                  "Rate": 10.0,
+                  "Rate": 10.0000,
                   "StartDate": "0001-01-01T00:00:00"
                 }
               ],
@@ -106,7 +106,7 @@
               "StationCode": 4544,
               "TargetCpm": 0.19,
               "TargetImpressions": 0.0,
-              "UnitImpressions": 52.97583477
+              "UnitImpressions": 52975.83476748
             }
           ],
           "StationCode": 4544
@@ -168,7 +168,7 @@
       "BudgetMarginAchieved": false,
       "BudgetPercent": 0.0,
       "BudgetTotal": 0.00,
-      "ImpressionsGoal": 100.0,
+      "ImpressionsGoal": 100000.0,
       "ImpressionsMarginAchieved": false,
       "ImpressionsPercent": 0.0,
       "ImpressionsTotal": 0.0,
@@ -183,15 +183,15 @@
             {
               "Programs": [
                 {
-                  "Cost": 10.0,
+                  "Cost": 10.0000,
                   "EFF": 0.0,
                   "ProgramId": 2000,
                   "Spots": 0,
                   "TargetCpm": 0.0,
                   "TargetImpressions": 0.0,
-                  "TotalImpressions": 52.97583477,
-                  "UnitCost": 10.0,
-                  "UnitImpression": 52.97583477
+                  "TotalImpressions": 52975.83476748,
+                  "UnitCost": 10.0000,
+                  "UnitImpression": 52975.83476748
                 }
               ],
               "StationCode": 4544

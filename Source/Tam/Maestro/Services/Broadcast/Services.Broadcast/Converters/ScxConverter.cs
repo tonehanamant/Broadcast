@@ -136,7 +136,7 @@ namespace Services.Broadcast.Converters
                                 audiences.Add(new schedule_detail_audiences()
                                 {
                                     demo_rank = demoRank
-                                    ,impressions = int.Parse(demoValue.value.Single(pVal => pVal.type == demoValueValueType.Impressions).Value)
+                                    ,impressions = double.Parse(demoValue.value.Single(pVal => pVal.type == demoValueValueType.Impressions).Value)
                                     ,demo_population = systemOrder.populations.Single(pop => pop.demoRank == demoRank).Value != null ? int.Parse(systemOrder.populations.Single(pop => pop.demoRank == demoRank).Value) : 0
                                     ,audience_id = demos[demoRank]
                                 });

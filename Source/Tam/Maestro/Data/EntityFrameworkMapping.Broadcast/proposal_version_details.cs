@@ -30,16 +30,16 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime start_date { get; set; }
         public System.DateTime end_date { get; set; }
         public Nullable<int> units_total { get; set; }
-        public Nullable<int> impressions_total { get; set; }
+        public double impressions_total { get; set; }
         public Nullable<decimal> cost_total { get; set; }
         public bool adu { get; set; }
         public Nullable<int> single_posting_book_id { get; set; }
         public Nullable<int> hut_posting_book_id { get; set; }
         public Nullable<int> share_posting_book_id { get; set; }
         public Nullable<byte> playback_type { get; set; }
-        public long open_market_impressions_total { get; set; }
+        public double open_market_impressions_total { get; set; }
         public decimal open_market_cost_total { get; set; }
-        public long proprietary_impressions_total { get; set; }
+        public double proprietary_impressions_total { get; set; }
         public decimal proprietary_cost_total { get; set; }
     
         public virtual ICollection<proposal_version_detail_criteria_cpm> proposal_version_detail_criteria_cpm { get; set; }

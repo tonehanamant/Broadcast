@@ -2,37 +2,20 @@
 {
     public class BvsPostDetailAudience
     {
-        private readonly int _BvsDetailId;
-        private readonly int _AudienceRank;
-        private readonly int _AudienceId;
-        private readonly double _Delivery;
+        public int BvsDetailId { get; }
 
-        public int BvsDetailId
-        {
-            get { return _BvsDetailId; }
-        }
+        public int AudienceRank { get; }
 
-        public int AudienceRank
-        {
-            get { return _AudienceRank; }
-        }
+        public int AudienceId { get; }
 
-        public int AudienceId
-        {
-            get { return _AudienceId; }
-        }
-
-        public double Delivery
-        {
-            get { return _Delivery; }
-        }
+        public double Delivery { get; }
 
         public BvsPostDetailAudience(int bvsDetailId, int audienceRank, int audienceId, double delivery)
         {
-            _BvsDetailId = bvsDetailId;
-            _AudienceRank = audienceRank;
-            _AudienceId = audienceId;
-            _Delivery = delivery;
+            BvsDetailId = bvsDetailId;
+            AudienceRank = audienceRank;
+            AudienceId = audienceId;
+            Delivery = delivery;
         }
     }
 }
