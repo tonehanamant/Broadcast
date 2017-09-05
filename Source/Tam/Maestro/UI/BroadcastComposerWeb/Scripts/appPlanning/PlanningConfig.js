@@ -430,159 +430,10 @@
         return gridCfg;
     },
 
-    //Open Market Grids
+    
+    //OPEN MARKETS
 
-    getOpenMarketProgramsGridCfg: function (view, isHeader) {
-        var gridCfg = {
-            name: isHeader ? 'OpenMarketProgramsHeaderGrid' : 'OpenMarketProgramsGrid',
-            //multiSelect: false,
-            fixedBody: false,
-            show: { columnHeaders: isHeader ? true : false },
-
-            columns: [
-                {
-                    field: 'DayPart',
-                    caption: 'Airing Time',
-                    resizable: false,
-                    sortable: false,
-                    size: '60%',
-                    render: function (record, index, column_index) {
-                        if (record.w2ui && record.w2ui.summary) return '';
-                        if (record.isMarket) {
-                            return '<strong>' + record.MarketRank + '.  ' + record.MarketName + '</strong> (' + w2utils.formatNumber(record.MarketSubscribers.toFixed(0)) + ')';
-                        } else if (record.isStation) {
-                            return '<strong>' + record.StationName + ' (' + record.Affiliation + ')</strong>';
-                        } else {
-                            //return (record.DayPart && record.DayPart.Display) ? record.DayPart.Display : ' - ';
-                            return (record.Daypart && record.Daypart.Display) ? record.Daypart.Display : ' - ';
-                        }
-                    }
-                },
-				//should be empty for market/station
-                {
-                    field: 'ProgramName',
-                    caption: 'Program',
-                    resizable: false,
-                    sortable: false,
-                    size: '40%'
-                },
-                {
-                    field: 'TargetCpm',
-                    //TBD? toggle between w2ui-sort-up / w2ui-sort-down
-                    //caption: 'CPM <div class="sort_indicator" id="TargetCpm_sort"></div>',
-                    caption: 'CPM',
-                    sortable: false,
-                    resizable: false,
-                    size: '80px',
-                    render: function (record, index, column_index) {
-                        if (record) {
-                            
-                            var val = record.TargetCpm ? numeral(record.TargetCpm).format('$0,0[.]00') : '-';
-                            if (record.isProgram) {
-                                return PlanningConfig.greyRenderer(val, record.TotalSpots === 0);
-                            } else {
-                                return '';
-                            }
-                        }
-                    }
-                }
-            ],
-            onSelect: function (event) {
-                //to prevent selection (styling on grids)
-                event.preventDefault();
-            }
-        };
-
-        return gridCfg;
-    },
-
-    getOpenMarketWeekGridCfg: function (id, group, view) {
-        var gridCfg = {
-            name: group ? ('OpenMarketWeekHeaderGrid_' + id) : ('OpenMarketWeekGrid_' + id),
-            fixedBody: false,
-            columnGroups: group ? [{ caption: group, span: 3 }] : [],
-            show: { columnHeaders: group ? true : false },
-            columns: [
-                {
-                    field: 'Spots',
-                    caption: 'Spots',
-                    sortable: false,
-                    resizable: false,
-                    size: '25%',
-                    render: function (record, index, column_index) {
-                        if (record.isStation) return '';
-
-                        var spot = record.Spots ? record.Spots : '-';
-                        if (record.isProgram) {
-                            if (!record.active) return 'Unavailable'; //class will grey out
-                            if (record.isHiatus) return spot;
-
-                            var cellId = 'program_week_spot_' + record.recid;
-                            var changedCls = record.isChanged ? 'w2ui-changed' : '';
-                            var cell = '<div id="' + cellId + '" class="flex-container-1 editable-cell ' + changedCls + '">';
-                            cell += '<input type="number" class="edit-input" step="1" style="display: none !important" />';
-                            cell += '<div>' + spot + '</div>';
-                            cell += '<div style="color: #bbbaba" class="glyphicon glyphicon-edit" aria-hidden="true"></div>';
-                            cell += "</div>";
-                            return cell;
-                        } else {
-                            return spot;
-                        }
-                    }
-                },
-                {
-                    field: 'Impressions',
-                    caption: 'Imp (000)',
-                    sortable: false,
-                    resizable: false,
-                    size: '25%',
-                    render: function (record, index, column_index) {
-                        //tbd format of impressions and dash
-                        if (record.isStation) return '';
-                        if (record.isProgram) {//display val including 0 unless not active
-                            if (!record.active) return '-'; //class will grey out
-                            
-                            var val = numeral(record.TotalImpressions).format('0,0.[000]');
-                            return PlanningConfig.greyRenderer(val, record.Spots === 0);
-                        } else {//market display val or dash
-                            return record.Impressions ? numeral(record.Impressions).format('0,0.[000]') : '-';
-                        }
-
-                    }
-                },
-
-                {
-                    field: 'Cost',
-                    caption: 'Cost',
-                    sortable: false,
-                    resizable: false,
-                    size: '25%',
-                    render: function (record, index, column_index) {
-                        if (record.isStation) return '';
-                        if (record.isProgram) {//display val including 0 unless not active
-                            if (!record.active) return '-'; //class will grey out
-                            
-                            var val = record.Cost ? numeral(record.Cost).format('$0,0[.]00') : '-';
-                            return PlanningConfig.greyRenderer(val, record.Spots === 0);
-                        } else {//market display val or dash
-                            return numeral(record.Cost).format('$0,0[.]00');
-                        }
-                    }
-                }
-
-            ],
-            onSelect: function (event) {
-                //to prevent selection (styling on grids)
-                event.preventDefault();
-            }
-        };
-
-           
-        //return copy
-        return util.copyData(gridCfg, null, null, true);
-    },
-
-    //work in column groups for weeks and column set for each week
+    //get open market grid cfg (or columns) - sets dynamic week column sets based on  weeksLength
     getOpenMarketGridCfg: function (view, weeksLength) {
         var gridCfg = {
             name: 'OpemMarketGrid',
@@ -654,8 +505,8 @@
 
         return gridCfg;
     },
-    //test getting column sets
-    //either use name + idx or use all as week object?
+
+    //dynamic week  column sets
     //todo editing revision
     getOpenMarketsWeekColumnsCfg: function (weekIdx) {
         var getWeekData = function (record) { return record['week' + weekIdx] };
@@ -736,9 +587,7 @@
 
         ];
 
-           
-        //return copy?
+        //return copy
         return util.copyData(columns, null, null, true);
-        //return columns;
     },
 };
