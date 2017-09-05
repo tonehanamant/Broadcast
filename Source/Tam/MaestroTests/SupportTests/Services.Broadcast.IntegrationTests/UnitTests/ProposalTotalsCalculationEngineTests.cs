@@ -20,14 +20,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                 TargetCPM = 10000 / 10000
             };
 
-            var proposalCalculationEngine = new ProposalTotalsCalculationEngine();
+            var proposalCalculationEngine = new ProposalTotalsCalculationEngine(new ProposalMathEngine());
 
             proposalCalculationEngine.CalculateProposalTotalsMargins(proposalDto);
 
-            Assert.IsFalse(proposalDto.TotalCPMMarginAchieved);
-            Assert.AreEqual(200.0d, proposalDto.TotalCPMPercent);
+            Assert.IsTrue(proposalDto.TotalCPMMarginAchieved);
+            Assert.AreEqual(240.0d, proposalDto.TotalCPMPercent);
             Assert.IsTrue(proposalDto.TotalCostMarginAchieved);
-            Assert.AreEqual(100.0d, proposalDto.TotalCostPercent);
+            Assert.AreEqual(120.0d, proposalDto.TotalCostPercent);
             Assert.IsFalse(proposalDto.TotalImpressionsMarginAchieved);
             Assert.AreEqual(50.0d, proposalDto.TotalImpressionsPercent);
         }
@@ -45,14 +45,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                 TargetCPM = 10000 / 5000
             };
 
-            var proposalCalculationEngine = new ProposalTotalsCalculationEngine();
+            var proposalCalculationEngine = new ProposalTotalsCalculationEngine(new ProposalMathEngine());
 
             proposalCalculationEngine.CalculateProposalTotalsMargins(proposalDto);
 
-            Assert.IsFalse(proposalDto.TotalCPMMarginAchieved);
-            Assert.AreEqual(100.0d, proposalDto.TotalCPMPercent);
+            Assert.IsTrue(proposalDto.TotalCPMMarginAchieved);
+            Assert.AreEqual(120.0d, proposalDto.TotalCPMPercent);
             Assert.IsTrue(proposalDto.TotalCostMarginAchieved);
-            Assert.AreEqual(100.0d, proposalDto.TotalCostPercent);
+            Assert.AreEqual(120.0d, proposalDto.TotalCostPercent);
             Assert.IsFalse(proposalDto.TotalImpressionsMarginAchieved);
             Assert.AreEqual(100.0d, proposalDto.TotalImpressionsPercent);
         }
@@ -67,7 +67,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                 TotalCPM = 10000 / 5000
             };
 
-            var proposalCalculationEngine = new ProposalTotalsCalculationEngine();
+            var proposalCalculationEngine = new ProposalTotalsCalculationEngine(new ProposalMathEngine());
 
             proposalCalculationEngine.CalculateProposalTotalsMargins(proposalDto);
 
@@ -84,7 +84,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             var proposalDto = new ProposalDto();
 
-            var proposalCalculationEngine = new ProposalTotalsCalculationEngine();
+            var proposalCalculationEngine = new ProposalTotalsCalculationEngine(new ProposalMathEngine());
 
             proposalCalculationEngine.CalculateProposalTotalsMargins(proposalDto);
 
