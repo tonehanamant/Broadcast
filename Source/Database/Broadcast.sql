@@ -397,8 +397,6 @@ END
 
 
 -- BEGIN BCOP-1767 --
-
--- BEGIN BCOP-1767 --
 IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'bvs_post_details' AND COLUMN_NAME = 'delivery') != 'float')
 BEGIN
 	ALTER TABLE bvs_post_details ALTER COLUMN delivery float NOT NULL;
@@ -452,10 +450,12 @@ BEGIN
 END
 GO
 
-IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_versions' AND COLUMN_NAME = 'target_impressions') != 'float')
+IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_versions' AND COLUMN_NAME = 'target_impressions') != 'float'
+OR (SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_versions' AND COLUMN_NAME = 'impressions_total') != 'float')
 BEGIN
 	UPDATE proposal_versions SET target_impressions = 0 where target_impressions is null;
 	ALTER TABLE proposal_versions ALTER COLUMN target_impressions float NOT NULL;
+	ALTER TABLE proposal_versions ALTER COLUMN impressions_total float NOT NULL;
 END
 GO
 
@@ -465,7 +465,8 @@ BEGIN
 END
 GO
 
-IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'station_program_flight_audiences' AND COLUMN_NAME = 'impressions') != 'float')
+IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'station_program_flight_audiences' AND COLUMN_NAME = 'impressions') != 'float'
+OR (SELECT IS_NULLABLE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'station_program_flight_audiences' AND COLUMN_NAME = 'impressions') != 'FALSE')
 BEGIN
 	UPDATE station_program_flight_audiences SET impressions = 0 where impressions is null;
 	ALTER TABLE station_program_flight_audiences ALTER COLUMN impressions float NOT NULL;
