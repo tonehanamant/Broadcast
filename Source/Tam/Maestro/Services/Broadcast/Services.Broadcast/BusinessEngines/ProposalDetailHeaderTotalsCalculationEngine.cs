@@ -38,6 +38,10 @@ namespace Services.Broadcast.BusinessEngines
             proprietaryTotals.ImpressionsPercent = totals.ImpressionsPercent;
             proprietaryTotals.BudgetPercent = totals.BudgetPercent;
             proprietaryTotals.CpmPercent = totals.CpmPercent;
+
+            proprietaryTotals.ImpressionsMarginAchieved = proprietaryTotals.ImpressionsPercent > 100;
+            proprietaryTotals.BudgetMarginAchieved = proprietaryTotals.BudgetPercent > 100;
+            proprietaryTotals.CpmMarginAchieved = proprietaryTotals.CpmPercent > 100;
         }
 
         public void CalculateTotalsForOpenMarketInventory(ProposalDetailOpenMarketInventoryDto openMarketTotals,
@@ -56,6 +60,10 @@ namespace Services.Broadcast.BusinessEngines
             openMarketTotals.DetailImpressionsPercent = totals.ImpressionsPercent;
             openMarketTotals.DetailBudgetPercent = totals.BudgetPercent;
             openMarketTotals.DetailCpmPercent = totals.CpmPercent;
+
+            openMarketTotals.DetailBudgetMarginAchieved = openMarketTotals.DetailBudgetPercent > 100;
+            openMarketTotals.DetailCpmMarginAchieved = openMarketTotals.DetailCpmPercent > 100;
+            openMarketTotals.DetailImpressionsMarginAchieved = openMarketTotals.DetailImpressionsPercent > 100;
         }
 
         private ProposalDetailHeaderTotalsDto CalculateTotals(double impressionsInThousands, decimal cost, double targetImpressionsInThousands,
