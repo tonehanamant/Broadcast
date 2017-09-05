@@ -2,13 +2,13 @@
 {
     public class BvsPostDetailAudience
     {
-        public int BvsDetailId { get; }
+        public int BvsDetailId { get; set; }
 
-        public int AudienceRank { get; }
+        public int AudienceRank { get; set; }
 
-        public int AudienceId { get; }
+        public int AudienceId { get; set; }
 
-        public double Delivery { get; }
+        public double Delivery { get; set; }
 
         public BvsPostDetailAudience(int bvsDetailId, int audienceRank, int audienceId, double delivery)
         {
