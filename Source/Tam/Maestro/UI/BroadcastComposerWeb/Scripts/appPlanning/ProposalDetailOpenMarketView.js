@@ -100,16 +100,20 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     },
 
     showModal: function (isHide) {
+        var $scope = this;
+
         if (isHide) {
-            this.$Modal.modal('hide');
+            $scope.ProposalView.controller.planningController.apiGetPrimaryProposal($scope.activeInventoryData.ProposalId, function (proposal) {
+                $scope.ProposalView.controller.proposalViewModel.load(proposal);
+                $scope.$Modal.modal('hide');
+            });
         } else {
-            this.$Modal.modal('show');
+            $scope.$Modal.modal('show');
         }
 
-        this.FilterVM.clearFilters();
-        this.OpenMarketVM.selectedSpotFilterOption(1);
-
-        this.activeEditWeekRecords = [];
+        $scope.FilterVM.clearFilters();
+        $scope.OpenMarketVM.selectedSpotFilterOption(1);
+        $scope.activeEditWeekRecords = [];
     },
 
     refreshInventory: function (inventory, reset, checkEdits, keepActiveSet) {

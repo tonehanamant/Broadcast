@@ -11,16 +11,12 @@ var MARKET_GROUP_ID_OFFSET = 10000;
 
 var ProposalViewModel = function (controller) {
     var $scope = this;
-
     var selectedAudienceSubscribe = null;  //subcription reference
-
     var storedAudiences = [];  //stored audiences to reset on changes
-
     $scope.controller = controller;
 
     /*** DISPLAY ***/
 
-    //REVISE
     $scope.viewMode = ko.observable();
     $scope.viewMode.subscribe(function (viewMode) {
         if (viewMode == viewModes.create) {
@@ -32,8 +28,6 @@ var ProposalViewModel = function (controller) {
 
     /*** PROPOSAL ***/
 
-    //general - DETERMINE IF STILL NEEDED
-
     $scope.proposalId = ko.observable();
     $scope.version = ko.observable();
     $scope.primaryVersionId = ko.observable();
@@ -43,32 +37,36 @@ var ProposalViewModel = function (controller) {
     $scope.statusOptions = ko.observableArray();
     $scope.status = ko.observable();
     $scope.isReadOnly = ko.observable(false);
-
     $scope.advertisers = ko.observableArray();
     $scope.markets = ko.observableArray();
     $scope.audiences = ko.observableArray();
-
-    //new
-    //TODO:  need to use copy of Audiences without the selected from there
     $scope.secondaryAudiences = ko.observableArray();
     $scope.postTypes = ko.observableArray();
     $scope.spotLengths = ko.observableArray();
-    //preset values
     $scope.equivalizedOptions = ko.observableArray([{ Display: 'Yes', Val: true }, { Display: 'No', Val: false }]);
-
     $scope.selectedMarket = ko.observable();
     $scope.forceSave = ko.observable(false);
 
     /*** FORM ***/
 
-    //read only
+    // read only
+    $scope.totalCpm = ko.observable();
     $scope.targetCpm = ko.observable();
+    $scope.totalCPMPercent = ko.observable(0);
+    $scope.totalCPMMarginAchieved = ko.observable(false);
+
+    $scope.totalCost = ko.observable();
     $scope.targetBudget = ko.observable();
+    $scope.totalCostPercent = ko.observable(0);
+    $scope.totalCostMarginAchieved = ko.observable(false);
+
+    $scope.totalImpressions = ko.observable();
     $scope.targetImpressions = ko.observable();
+    $scope.totalImpressionsPercent = ko.observable(0);
+    $scope.totalImpressionsMarginAchieved = ko.observable(false);
+
     $scope.targetUnits = ko.observable();
-
     $scope.spotLength = ko.observable();
-
     $scope.spotLengthDisplays = ko.computed(function () {
         if (_.isEmpty($scope.spotLength())) {
             return "-";
@@ -84,12 +82,10 @@ var ProposalViewModel = function (controller) {
 
         return result.join(",");
     });
-
     $scope.flightStartDate = ko.observable();
     $scope.flightEndDate = ko.observable();
     $scope.flightWeeks = ko.observable();
     $scope.flightIcon = ko.observable();
-
     $scope.formatDate = function (dateString) {
         if (!dateString)
             return "";
@@ -97,7 +93,6 @@ var ProposalViewModel = function (controller) {
         dateString = dateString.replace(/-/g, '\/').replace(/T.+/, '');
         return moment(new Date(dateString)).format('MM/DD/YY');
     }
-
     $scope.flight = ko.computed(function () {
         // hiatus icon
         var hiatusWeeks = [];
@@ -126,24 +121,22 @@ var ProposalViewModel = function (controller) {
 
         return startDate + " - " + endDate;
     });
-
     $scope.notes = ko.observable();
 
-    //form inputs
+    // form inputs
     $scope.proposalName = ko.observable();
     $scope.selectedAdvertiser = ko.observable();
     $scope.selectedAudience = ko.observable();
 
-    //new
-    //TODO:  need to use copy of Audiences without the selected from there
+    // TODO:  need to use copy of Audiences without the selected from there
     $scope.selectedSecondaryAudiences = ko.observableArray([]);
     $scope.selectedPostType = ko.observable();
     $scope.equivalized = ko.observable();
 
-    //PROPOSAL DETAIL
+    // PROPOSAL DETAIL
     $scope.proposalDetails = ko.observableArray();
 
-    //using version now?
+    // using version now?
     $scope.proposalTitle = ko.computed(function () {
         if ($scope.version()) {
             return $scope.proposalName() + " - Version: " + $scope.version();
@@ -156,7 +149,7 @@ var ProposalViewModel = function (controller) {
         return $scope.controller.proposalView.isValid();
     };
 
-    //DIRTY handling - needs save checks
+    // DIRTY handling - needs save checks
 
     $scope.checkDirty = ko.observable(false);
     $scope.isDirty = ko.observable(false);
@@ -167,7 +160,8 @@ var ProposalViewModel = function (controller) {
             $scope.isDirty(true);
         }
     };
-    //from view check if header needs save
+
+    // from view check if header needs save
     $scope.proposalHeaderDirty = function () {
         if ($scope.viewMode() == viewModes.create) return true;
         return $scope.checkDirty() ? $scope.isDirty() : false;
@@ -265,7 +259,6 @@ var ProposalViewModel = function (controller) {
     };
 
     //load proposal either after save or loading existing
-    //tbd detailset items
     $scope.load = function (proposal) {
         $scope.checkDirty(false);
         $scope.proposalId(proposal.Id);
@@ -308,13 +301,23 @@ var ProposalViewModel = function (controller) {
     };
 
     $scope.loadStaticFields = function (proposal) {
+        $scope.totalCpm(proposal.TotalCPM);
         $scope.targetCpm(proposal.TargetCPM);
+        $scope.totalCPMPercent(proposal.TotalCPMPercent);
+        $scope.totalCPMMarginAchieved(proposal.TotalCPMMarginAchieved);
+
+        $scope.totalCost(proposal.TotalCost);
         $scope.targetBudget(proposal.TargetBudget);
+        $scope.totalCostPercent(proposal.TotalCostPercent);
+        $scope.totalCostMarginAchieved(proposal.TotalCostMarginAchieved);
+
+        $scope.totalImpressions(proposal.TotalImpressions);
         $scope.targetImpressions(proposal.TargetImpressions);
+        $scope.totalImpressionsPercent(proposal.TotalImpressionsPercent);
+        $scope.totalImpressionsMarginAchieved(proposal.TotalImpressionsMarginAchieved);
+
         $scope.targetUnits(proposal.TargetUnits);
-
         $scope.spotLength(proposal.SpotLengths);
-
         $scope.flightStartDate(proposal.FlightStartDate);
         $scope.flightEndDate(proposal.FlightEndDate);
         $scope.flightWeeks(proposal.FlightWeeks);
@@ -326,8 +329,14 @@ var ProposalViewModel = function (controller) {
         $scope.primaryVersionId(null);
         $scope.proposalName(null);
         $scope.selectedAdvertiser(null);
+        $scope.totalCost(null);
         $scope.targetBudget(null);
+        $scope.totalCostPercent(null);
+        $scope.totalCostMarginAchieved(null);
+        $scope.totalImpressions(null);
         $scope.targetImpressions(null);
+        $scope.totalImpressionsPercent(null);
+        $scope.totalImpressionsMarginAchieved(null);
         $scope.targetUnits(null);
         $scope.flightStartDate(null);
         $scope.flightEndDate(null);
@@ -342,7 +351,10 @@ var ProposalViewModel = function (controller) {
         $scope.status(null);
         $scope.forceSave(false);
         $scope.isReadOnly(false);
+        $scope.totalCpm(null);
         $scope.targetCpm(null);
+        $scope.totalCPMPercent(null);
+        $scope.totalCPMMarginAchieved(null);
 
         $scope.controller.customMarketsViewModel.clear();
     };
