@@ -2,7 +2,7 @@
   "BudgetMarginAchieved": true,
   "BudgetPercent": 5311.2,
   "CpmMarginAchieved": true,
-  "CpmPercent": 3441.72,
+  "CpmPercent": 3441.68,
   "ImpressionsMarginAchieved": true,
   "ImpressionsPercent": 154.32,
   "TotalCost": 4426.0,

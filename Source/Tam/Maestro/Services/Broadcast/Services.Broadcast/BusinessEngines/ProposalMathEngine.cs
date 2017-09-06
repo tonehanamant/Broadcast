@@ -5,7 +5,7 @@ namespace Services.Broadcast.BusinessEngines
     public static class ProposalMathEngine 
     {
         public static double CalculateBudgetPercent(decimal total, double margin, decimal goal)
-        {
+    {
             return (double)(goal == 0 ? 0 : Math.Round((total + total * (decimal)(margin / 100)) * 100 / goal, 2));
         }
 
@@ -14,9 +14,15 @@ namespace Services.Broadcast.BusinessEngines
             return targetImpressions == 0 ? 0 : Math.Round(totalImpressions * 100 / targetImpressions, 2);
         }
 
-        public static double CalculateCpmPercent(decimal totalCpm, double margin, decimal targetCpm)
+        public static double CalculateCpmPercent(decimal totalCost, double totalImpression, decimal targetBudget, double targetImpression, double margin)
         {
-            return (double)(targetCpm == 0 ? 0 : Math.Round((totalCpm + totalCpm * (decimal)(margin / 100)) * 100 / targetCpm, 2));
+            if (totalImpression == 0 || targetImpression == 0) return 0;
+
+            // working cpm with margin
+            var workingCpm = (totalCost + (totalCost * ((decimal)margin / 100))) / (decimal)(totalImpression);
+            var proposalCpm = targetBudget / (decimal)targetImpression;
+
+            return (double)Math.Round((workingCpm / proposalCpm) * 100, 2);
         }
 
         public static decimal CalculateTotalCpm(decimal totalCost, double totalImpressions)

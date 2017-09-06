@@ -68,7 +68,7 @@ namespace Services.Broadcast.BusinessEngines
             // percent
             totals.BudgetPercent = ProposalMathEngine.CalculateBudgetPercent(totals.TotalCost, margin, targetCost);
             totals.ImpressionsPercent = ProposalMathEngine.CalculateImpressionsPercent(totals.TotalImpressions, targetImpressions);
-            totals.CpmPercent = ProposalMathEngine.CalculateCpmPercent(totals.TotalCpm, margin, targetCpm);
+            totals.CpmPercent = ProposalMathEngine.CalculateCpmPercent(totals.TotalCost, totals.TotalImpressions, targetCost, targetImpressions, margin);
 
             return totals;
         }

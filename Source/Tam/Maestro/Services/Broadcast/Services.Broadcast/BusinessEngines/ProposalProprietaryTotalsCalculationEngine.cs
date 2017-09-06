@@ -97,9 +97,10 @@ namespace Services.Broadcast.BusinessEngines
             totals.TotalCpm = ProposalMathEngine.CalculateTotalCpm(totals.TotalCost, totals.TotalImpressions); 
 
             // percent
+            var requestTargetBudget = request.DetailTargetBudget ?? 0;
             totals.ImpressionsPercent = ProposalMathEngine.CalculateImpressionsPercent(totals.TotalImpressions, request.DetailTargetImpressions);
             totals.BudgetPercent = ProposalMathEngine.CalculateBudgetPercent(totals.TotalCost, request.Margin.Value, request.DetailTargetBudget.Value);
-            totals.CpmPercent = ProposalMathEngine.CalculateCpmPercent(totals.TotalCpm, request.Margin.Value, request.DetailCpm); 
+            totals.CpmPercent = ProposalMathEngine.CalculateCpmPercent(totals.TotalCost, totals.TotalImpressions, requestTargetBudget, request.DetailTargetImpressions, request.Margin.Value);
             
             
             // margin
