@@ -61,14 +61,15 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDefaultScheduleConverter _DefaultScheduleConverter;
         private readonly IDaypartCache _DayPartCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
-		private readonly ISMSClient _SmsClient;
+        private readonly ISMSClient _SmsClient;
+        private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
 
         public TrackerService(IDataRepositoryFactory broadcastDataRepositoryFactory, IBvsPostingEngine bvsPostingEngine,
             ITrackingEngine trackingEngine, IScxConverter scxConverter, IBvsConverter bvsConverter,
             IAssemblyScheduleConverter assemblyFileConverter,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, IBroadcastAudiencesCache audiencesCache,
             IDefaultScheduleConverter defaultScheduleConverter, IDaypartCache dayPartCache,
-			IQuarterCalculationEngine quarterCalculationEngine, ISMSClient smsClient)
+            IQuarterCalculationEngine quarterCalculationEngine, ISMSClient smsClient, IImpressionAdjustmentEngine impressionAdjustmentEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _BvsPostingEngine = bvsPostingEngine;
@@ -80,23 +81,19 @@ namespace Services.Broadcast.ApplicationServices
             _AudiencesCache = audiencesCache;
             _DefaultScheduleConverter = defaultScheduleConverter;
             _DayPartCache = dayPartCache;
-			_QuarterCalculationEngine = quarterCalculationEngine;
-			_SmsClient = smsClient;
+            _QuarterCalculationEngine = quarterCalculationEngine;
+            _SmsClient = smsClient;
+            _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
         }
 
         public LoadSchedulesDto GetSchedulesByDate(DateTime? startDate, DateTime? endDate)
         {
             var ret = new LoadSchedulesDto();
 
-            ret.Schedules =
-                _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>()
-                    .GetDisplaySchedules(startDate, endDate);
+            ret.Schedules = GetDisplaySchedulesWithAdjustedImpressions(startDate, endDate);
+
             var scheduleAdvertisers = ret.Schedules.Select(x => x.AdvertiserId).ToList();
-            ret.Advertisers =
-                _SmsClient
-                    .GetActiveAdvertisers()
-                    .Where(a => scheduleAdvertisers.Contains(a.Id))
-                    .ToList();
+            ret.Advertisers = _SmsClient.GetActiveAdvertisers().Where(a => scheduleAdvertisers.Contains(a.Id)).ToList();
             ret.PostingBooks = GetNsiPostingBookMonths();
             foreach (var schedule in ret.Schedules)
             {
@@ -108,6 +105,19 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return ret;
+        }
+
+        internal List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate)
+        {
+            var displaySchedules = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetDisplaySchedules(startDate, endDate);
+            foreach (var schedule in displaySchedules)
+            {
+                if (schedule.PrimaryDemoBooked.HasValue)
+                    schedule.PrimaryDemoBooked = _ImpressionAdjustmentEngine.AdjustImpression(schedule.PrimaryDemoBooked.Value, schedule.PostType, schedule.PostingBookId, false);
+
+                schedule.PrimaryDemoDelivered = _ImpressionAdjustmentEngine.AdjustImpression(schedule.PrimaryDemoDelivered, schedule.PostType, schedule.PostingBookId, false);
+            }
+            return displaySchedules;
         }
 
         public BvsLoadDto GetBvsLoadData(DateTime currentDateTime)
@@ -151,9 +161,9 @@ namespace Services.Broadcast.ApplicationServices
         public List<Quarter> GetQuarters()
         {
             var years = new List<int>();
-            
+
             var maxEndDate = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetMaxEndDate();
-            int startYear = 2014;
+            var startYear = 2014;
             if (maxEndDate.Year < startYear)
             {
                 startYear = maxEndDate.Year;
@@ -164,21 +174,21 @@ namespace Services.Broadcast.ApplicationServices
                 years.Add(startYear);
             }
 
-            int qtrCtr = 0;
-            DateTime baseDateTime = DateTime.Parse("1/1/2014");
+            var qtrCtr = 0;
+            var baseDateTime = DateTime.Parse("1/1/2014");
             var qtrRange = _QuarterCalculationEngine.GetQuarterRangeByDate(baseDateTime, qtrCtr);
 
             var ret = new List<Quarter>();
-            foreach (int year in years)
+            foreach (var year in years)
             {
-                for (int qtr = 1; qtr <= 4; qtr++)
+                for (var qtr = 1; qtr <= 4; qtr++)
                 {
-                    Quarter quarter = new Quarter()
+                    var quarter = new Quarter
                     {
                         Id = qtrCtr + 1,
                         EndDate = qtrRange.EndDate,
                         StartDate = qtrRange.StartDate,
-                        Display = year + "Q" + qtr ,
+                        Display = year + "Q" + qtr,
                     };
                     ret.Add(quarter);
                     qtrCtr++;
@@ -197,7 +207,7 @@ namespace Services.Broadcast.ApplicationServices
             var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(postingBooks);
 
             return (from x in mediaMonths
-                    select new LookupDto()
+                    select new LookupDto
                     {
                         Id = x.Id
                     ,
@@ -257,7 +267,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var efSchedule = converter.Convert(scheduleDto);
 
-            var scheduleId = -1;
+            int scheduleId;
             var broadcastRepo = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>();
 
             var creating = scheduleDto.EstimateId != null && scheduleDto.FileStream != null || scheduleDto.IsBlank;
@@ -305,12 +315,12 @@ namespace Services.Broadcast.ApplicationServices
                 throw new ApplicationException("No ISCIs informed");
             }
 
-            if (iscis.Any(i => String.IsNullOrEmpty(i.House)))
+            if (iscis.Any(i => string.IsNullOrEmpty(i.House)))
             {
                 throw new ApplicationException("All ISCIs must have a house ISCI");
             }
 
-            if (iscis.Any(i => String.IsNullOrEmpty(i.Client)))
+            if (iscis.Any(i => string.IsNullOrEmpty(i.Client)))
             {
                 throw new ApplicationException("All ISCIs must have a client ISCI");
             }
@@ -367,8 +377,8 @@ namespace Services.Broadcast.ApplicationServices
 
             var bvsIds = new List<int>();
             var bvsRepo = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
-            string errorMessage = string.Empty;
-            bool hasErrors = false;
+            var errorMessage = string.Empty;
+            var hasErrors = false;
 
             foreach (var requestBvsFile in request.BvsFiles)
             {
@@ -454,8 +464,8 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         private static MemoryStream CreateStreamCopy(Stream source)
         {
-            MemoryStream target = new MemoryStream();
-            byte[] buffer = new byte[8 * 1024];
+            var target = new MemoryStream();
+            var buffer = new byte[8 * 1024];
 
             int size;
             do
@@ -470,11 +480,11 @@ namespace Services.Broadcast.ApplicationServices
 
         public string SaveBvsViaFtp(string userName)
         {
-            string successFiles = string.Empty;
-            string failMessages = string.Empty;
-            string cableTvMessage = string.Empty;
-            int ftpFailures = 0;
-            IEnumerable<string> fileList = null;
+            var successFiles = string.Empty;
+            var failMessages = string.Empty;
+            var cableTvMessage = string.Empty;
+            var ftpFailures = 0;
+            IEnumerable<string> fileList;
             try
             {
                 fileList = _GetFtpFilesAndNames();
@@ -511,7 +521,7 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             var request = new BvsSaveRequest();
                             request.UserName = userName;
-                            request.BvsFiles.Add(new BvsFile() { BvsFileName = fileName, BvsStream = stream });
+                            request.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
 
                             //Requirements are to ignore this for FTP for now
                             SaveBvsFiles(request);
@@ -553,7 +563,7 @@ namespace Services.Broadcast.ApplicationServices
             if (string.IsNullOrEmpty(successFiles))
                 successFiles = "No files downloaded";
 
-            string fullMessage = string.Format("<strong>Successful Files loaded:</strong><br />{0}<br />", successFiles);
+            var fullMessage = string.Format("<strong>Successful Files loaded:</strong><br />{0}<br />", successFiles);
 
             if (string.IsNullOrEmpty(failMessages))
                 fullMessage += Environment.NewLine + "No errors";
@@ -567,27 +577,27 @@ namespace Services.Broadcast.ApplicationServices
             return fullMessage;
         }
 
-        private NetworkCredential _GetCredentials()
+        private static NetworkCredential _GetCredentials()
         {
-            string pwd = EncryptionHelper.DecryptString(TrackerServiceSystemParameter.FtpPassword, EncryptionHelper.EncryptionKey);
+            var pwd = EncryptionHelper.DecryptString(TrackerServiceSystemParameter.FtpPassword, EncryptionHelper.EncryptionKey);
             return new NetworkCredential(TrackerServiceSystemParameter.FtpUserName, pwd);
         }
 
-        private IEnumerable<string> _GetFtpFilesAndNames()
+        private static IEnumerable<string> _GetFtpFilesAndNames()
         {
-            List<string> fileList = new List<string>();
+            var fileList = new List<string>();
 
             // Get the object used to communicate with the server.
-            FtpWebRequest ftp = (FtpWebRequest)WebRequest.Create(TrackerServiceSystemParameter.FtpUrl + "/" +
+            var ftp = (FtpWebRequest)WebRequest.Create(TrackerServiceSystemParameter.FtpUrl + "/" +
                                   TrackerServiceSystemParameter.FtpDirectory);
 
             ftp.Method = WebRequestMethods.Ftp.ListDirectory;
             ftp.Credentials = _GetCredentials();
 
-            FtpWebResponse response = (FtpWebResponse)ftp.GetResponse();
-            Stream responseStream = response.GetResponseStream();
+            var response = (FtpWebResponse)ftp.GetResponse();
+            var responseStream = response.GetResponseStream();
 
-            StreamReader reader = new StreamReader(responseStream);
+            var reader = new StreamReader(responseStream);
             while (!reader.EndOfStream)
             {
                 var fileName = reader.ReadLine();
@@ -600,35 +610,35 @@ namespace Services.Broadcast.ApplicationServices
             return fileList;
         }
 
-        private MemoryStream _GetFileStream(string fileName)
+        private static MemoryStream _GetFileStream(string fileName)
         {
-            string path = TrackerServiceSystemParameter.FtpUrl + "/" + TrackerServiceSystemParameter.FtpDirectory + "/" + fileName;
-            using (WebClient ftpClient = new WebClient())
+            var path = TrackerServiceSystemParameter.FtpUrl + "/" + TrackerServiceSystemParameter.FtpDirectory + "/" + fileName;
+            using (var ftpClient = new WebClient())
             {
                 ftpClient.Credentials = _GetCredentials();
-                MemoryStream stream = new MemoryStream(ftpClient.DownloadData(path));
+                var stream = new MemoryStream(ftpClient.DownloadData(path));
                 return stream;
             }
         }
 
         public void _CleanupFile(MemoryStream memoryStream, string fileName)
         {
-            string path = TrackerServiceSystemParameter.FtpSaveFolder + "\\" + fileName;
-            FileStream fileStream = File.OpenWrite(path);
+            var path = TrackerServiceSystemParameter.FtpSaveFolder + "\\" + fileName;
+            var fileStream = File.OpenWrite(path);
             memoryStream.WriteTo(fileStream);
 
-            string fileUrl = TrackerServiceSystemParameter.FtpUrl + "/" + TrackerServiceSystemParameter.FtpDirectory + "/" + fileName;
+            var fileUrl = TrackerServiceSystemParameter.FtpUrl + "/" + TrackerServiceSystemParameter.FtpDirectory + "/" + fileName;
             _DeleteFtpFile(fileUrl);
         }
 
-        private void _DeleteFtpFile(string fileUrl)
+        private static void _DeleteFtpFile(string fileUrl)
         {
-            FtpWebRequest ftp = (FtpWebRequest)WebRequest.Create(fileUrl);
+            var ftp = (FtpWebRequest)WebRequest.Create(fileUrl);
 
             ftp.Method = WebRequestMethods.Ftp.DeleteFile;
             ftp.Credentials = _GetCredentials();
 
-            FtpWebResponse response = (FtpWebResponse)ftp.GetResponse();
+            var response = (FtpWebResponse)ftp.GetResponse();
             response.Close();
         }
 
@@ -648,11 +658,22 @@ namespace Services.Broadcast.ApplicationServices
             scrubbingDto.ScheduleName = schedule.ScheduleName;
             scrubbingDto.ISCIs = string.Join(",", schedule.ISCIs.Select(i => i.House));
             scrubbingDto.PostingBooks = GetNsiPostingBookMonths();
-            scrubbingDto.BvsDetails = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailsByEstimateId(estimateId);
+            scrubbingDto.BvsDetails = GetBvsDetailsWithAdjustedImpressions(estimateId, schedule);
             scrubbingDto.SchedulePrograms = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleLookupPrograms(schedule.Id);
             scrubbingDto.ScheduleNetworks = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleLookupStations(schedule.Id);
 
             return scrubbingDto;
+        }
+
+        internal List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule)
+        {
+            var details = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailsByEstimateId(estimateId);
+            foreach (var detail in details)
+            {
+                if (detail.Impressions.HasValue)
+                    detail.Impressions = _ImpressionAdjustmentEngine.AdjustImpression(detail.Impressions.Value, schedule.PostType, schedule.PostingBookId, false);
+            }
+            return details;
         }
 
         public List<LookupDto> GetSchedulePrograms(int scheduleId)
@@ -718,7 +739,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public bool DeleteMapping(string mappingTypeString, TrackingMapValue mapping)
         {
-            TrackingMapType mappingType = _ParseTrackingMapType(mappingTypeString);
+            var mappingType = _ParseTrackingMapType(mappingTypeString);
             _BroadcastDataRepositoryFactory.GetDataRepository<ITrackerMappingRepository>()
                 .DeleteMapping(mapping.BvsValue, mapping.ScheduleValue, mappingType);
             return true;
@@ -791,7 +812,7 @@ namespace Services.Broadcast.ApplicationServices
             var scheduleDto = scheduleRepo.GetById(scheduleId);
             if (scheduleDto == null || scheduleDto.estimate_id == null)
                 throw new Exception("Could not load schedule from Id=" + scheduleId);
-                
+
             _TrackingEngine.TrackBvsByEstimateId(scheduleDto.estimate_id.Value);
 
             return true;

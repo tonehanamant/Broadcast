@@ -5,7 +5,6 @@ using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
@@ -81,9 +80,7 @@ namespace Services.Broadcast.Repositories
 
         public List<DisplaySchedule> GetDisplaySchedules(DateTime? startDate, DateTime? endDate)
         {
-            var ret = new List<DisplaySchedule>();
-
-            ret = _InReadUncommitedTransaction(
+            var ret = _InReadUncommitedTransaction(
                 context =>
                 {
                     if (startDate == null && endDate == null)
@@ -98,7 +95,7 @@ namespace Services.Broadcast.Repositories
                     if (endDate.HasValue)
                         query = query.Where(s => s.start_date <= endDate);
 
-                    return query.Select(s => new DisplaySchedule()
+                    return query.Select(s => new DisplaySchedule
                     {
                         Id = s.id,
                         Name = s.name,
@@ -106,34 +103,35 @@ namespace Services.Broadcast.Repositories
                         Estimate = s.estimate_id,
                         StartDate = s.start_date,
                         EndDate = s.end_date,
+                        PostType = (SchedulePostType)s.post_type,
                         SpotsBooked = (from sd in context.schedule_details
-                            where sd.schedule_id == s.id
-                            select sd.total_spots).Sum(),
+                                       where sd.schedule_id == s.id
+                                       select sd.total_spots).Sum(),
                         SpotsDelivered = (from x in context.bvs_file_details
-                            where x.estimate_id == s.estimate_id
-                                  && x.status == (int) TrackingStatus.InSpec
-                            select x).Count(),
+                                          where x.estimate_id == s.estimate_id
+                                                && x.status == (int)TrackingStatus.InSpec
+                                          select x).Count(),
                         OutOfSpec = (from x in context.bvs_file_details
-                            where x.estimate_id == s.estimate_id
-                                  && x.status != (int) TrackingStatus.InSpec
-                            select x).Count(),
+                                     where x.estimate_id == s.estimate_id
+                                           && x.status != (int)TrackingStatus.InSpec
+                                     select x).Count(),
                         PostingBookId = s.posting_book_id,
                         PrimaryDemoBooked = (from sda in context.schedule_detail_audiences
-                            join sd in context.schedule_details on sda.schedule_detail_id equals sd.id
-                            where sd.schedule_id == s.id
-                                  && sda.demo_rank == 1
-                            select sda.impressions).Sum(),
+                                             join sd in context.schedule_details on sda.schedule_detail_id equals sd.id
+                                             where sd.schedule_id == s.id
+                                                   && sda.demo_rank == 1
+                                             select sda.impressions).Sum(),
                         PrimaryDemoDelivered = (from bfd in context.bvs_file_details
-                                                   join pd in context.bvs_post_details on bfd.id equals
-                                                   pd.bvs_file_detail_id
-                                                   where bfd.estimate_id == s.estimate_id
-                                                         && bfd.status == (int) TrackingStatus.InSpec
-                                                         && pd.audience_rank == 1
-                                                   select (double?) pd.delivery).Sum() ?? 0
+                                                join pd in context.bvs_post_details on bfd.id equals
+                                                pd.bvs_file_detail_id
+                                                where bfd.estimate_id == s.estimate_id
+                                                      && bfd.status == (int)TrackingStatus.InSpec
+                                                      && pd.audience_rank == 1
+                                                select (double?)pd.delivery).Sum() ?? 0
 
                     }).ToList();
                 });
-                    
+
             return ret;
         }
 
@@ -146,7 +144,7 @@ namespace Services.Broadcast.Repositories
 
                     if (efSchedule.markets != null)
                     {
-                        foreach (market market in efSchedule.markets)
+                        foreach (var market in efSchedule.markets)
                         {
                             context.markets.Attach(market);
                         }
@@ -204,7 +202,7 @@ namespace Services.Broadcast.Repositories
                         return null;
                     }
 
-                    var scheduleDto = new ScheduleDTO()
+                    var scheduleDto = new ScheduleDTO
                     {
                         ScheduleName = efSchedule.name,
                         AdvertiserId = efSchedule.advertiser_id,
@@ -219,9 +217,9 @@ namespace Services.Broadcast.Repositories
                                          where i.schedule_id == scheduleDto.Id
                                          select new IsciDto
                                          {
-                                            Id = i.id,
-                                            Client = i.client_isci,
-                                            House = i.house_isci
+                                             Id = i.id,
+                                             Client = i.client_isci,
+                                             House = i.house_isci
                                          }).ToList();
 
                     return scheduleDto;
@@ -234,16 +232,16 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var efSchedule = (from s in context.schedules
-                                    where s.estimate_id == estimateId
-                                    select s).SingleOrDefault();
+                                      where s.estimate_id == estimateId
+                                      select s).SingleOrDefault();
 
                     if (efSchedule == null)
                     {
-                        throw new Exception(String.Format("Cannot load the Schedule data for Estimate Id: {0}", estimateId));
+                        throw new Exception(string.Format("Cannot load the Schedule data for Estimate Id: {0}", estimateId));
                     }
 
                     // FileName
-                    var scheduleDto = new ScheduleDTO()
+                    var scheduleDto = new ScheduleDTO
                     {
                         ScheduleName = efSchedule.name,
                         AdvertiserId = efSchedule.advertiser_id,
@@ -251,36 +249,29 @@ namespace Services.Broadcast.Repositories
                         PostingBookId = efSchedule.posting_book_id,
                         Id = efSchedule.id,
                         StartDate = efSchedule.start_date,
-                        EndDate = efSchedule.end_date
+                        EndDate = efSchedule.end_date,
+                        PostType = (SchedulePostType)efSchedule.post_type
                     };
 
                     scheduleDto.ISCIs = (from i in context.schedule_iscis
                                          where i.schedule_id == scheduleDto.Id
                                          select new IsciDto
                                          {
-                                            Id = i.id,
-                                            Client = i.client_isci,
-                                            House = i.house_isci
+                                             Id = i.id,
+                                             Client = i.client_isci,
+                                             House = i.house_isci
                                          }).ToList();
 
                     return scheduleDto;
                 });
         }
 
-        private static string _GetScheduleIscisAsString(List<schedule_iscis> iscis )
-        {
-            return string.Join(", ", iscis.Select(i => string.Format("{0}({1})", i.house_isci, i.client_isci)).ToList());
-        }
-
         public List<int> GetScheduleEstimateIdsByBvsFile(int bvsFileId)
         {
-            return _InReadUncommitedTransaction(context =>
-            {
-                return (from bvs in context.bvs_file_details
-                        join s in context.schedules on bvs.estimate_id equals s.estimate_id
-                        where s.estimate_id != null &&  bvs.bvs_file_id == bvsFileId
-                        select (int) s.estimate_id).Distinct().ToList();
-            });
+            return _InReadUncommitedTransaction(context => (from bvs in context.bvs_file_details
+                                                            join s in context.schedules on bvs.estimate_id equals s.estimate_id
+                                                            where s.estimate_id != null && bvs.bvs_file_id == bvsFileId
+                                                            select (int)s.estimate_id).Distinct().ToList());
         }
 
         public Dictionary<int, int> GetDictionaryOfScheduleAudiencesByRank(int estimateId)
@@ -328,7 +319,7 @@ namespace Services.Broadcast.Repositories
                 {
                     var ret = (from x in context.schedule_detail_weeks
                                where x.id == scheduleDetailWeekId
-                               select new ScheduleDetailWeek()
+                               select new ScheduleDetailWeek
                                {
                                    StartDate = x.start_date,
                                    EndDate = x.end_date,
@@ -339,7 +330,7 @@ namespace Services.Broadcast.Repositories
 
                     if (ret == null)
                     {
-                        throw new Exception(String.Format("The Schedule Detail Week with id: {0} does not exist.", scheduleDetailWeekId));
+                        throw new Exception(string.Format("The Schedule Detail Week with id: {0} does not exist.", scheduleDetailWeekId));
                     }
 
                     return ret;
@@ -351,27 +342,27 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var results = (from sd in context.schedule_details
-                        join s in context.schedules on sd.schedule_id equals s.id
-                        where s.estimate_id == estimateId
-                        select new ScheduleDetail()
-                        {
-                            Market = sd.market,
-                            Station = sd.network,
-                            Program = sd.program,
-                            SpotLength = sd.spot_length,
-                            SpotLengthId = sd.spot_length_id,
-                            DaypartId = sd.daypart_id,
-                            DetailWeeks = (from x in context.schedule_detail_weeks
-                                           where x.schedule_detail_id == sd.id && x.spots > 0
-                                           select new ScheduleDetailWeek()
-                                           {
-                                               StartDate = x.start_date,
-                                               EndDate = x.end_date,
-                                               ScheduleDetailWeekId = x.id,
-                                               Spots = x.spots,
-                                               FilledSpots = x.filled_spots,
-                                           }).ToList()
-                        }).ToList();
+                               join s in context.schedules on sd.schedule_id equals s.id
+                               where s.estimate_id == estimateId
+                               select new ScheduleDetail
+                               {
+                                   Market = sd.market,
+                                   Station = sd.network,
+                                   Program = sd.program,
+                                   SpotLength = sd.spot_length,
+                                   SpotLengthId = sd.spot_length_id,
+                                   DaypartId = sd.daypart_id,
+                                   DetailWeeks = (from x in context.schedule_detail_weeks
+                                                  where x.schedule_detail_id == sd.id && x.spots > 0
+                                                  select new ScheduleDetailWeek
+                                                  {
+                                                      StartDate = x.start_date,
+                                                      EndDate = x.end_date,
+                                                      ScheduleDetailWeekId = x.id,
+                                                      Spots = x.spots,
+                                                      FilledSpots = x.filled_spots,
+                                                  }).ToList()
+                               }).ToList();
 
                 results.ForEach(r => r.DetailWeeks = r.DetailWeeks.OrderBy(dw => dw.StartDate).ToList());
                 return results;
@@ -386,7 +377,7 @@ namespace Services.Broadcast.Repositories
                     var ret = (from s in context.schedule_details
                                where s.schedule_id == scheduleId
                                && s.total_spots > 0
-                               select new LookupDto()
+                               select new LookupDto
                                {
                                    Display = s.program,
                                    Id = s.id
@@ -403,7 +394,7 @@ namespace Services.Broadcast.Repositories
                     var ret = (from s in context.schedule_details
                                where s.schedule_id == scheduleId
                                && s.total_spots > 0
-                               select new LookupDto()
+                               select new LookupDto
                                {
                                    Display = s.network,
                                    Id = s.id
@@ -537,7 +528,7 @@ namespace Services.Broadcast.Repositories
 
         public DisplaySchedule GetDisplayScheduleById(int scheduleId)
         {
-            DisplaySchedule ret = _InReadUncommitedTransaction(
+            var ret = _InReadUncommitedTransaction(
                 context =>
                 {
                     var displaySchedule =
@@ -579,14 +570,14 @@ namespace Services.Broadcast.Repositories
                                                     where bfd.estimate_id == s.estimate_id && bfd.status == (int)TrackingStatus.InSpec && pd.audience_rank == 1
                                                     select (double?)pd.delivery).Sum() ?? 0,
 
-                            MarketRestrictions = (from m in s.markets 
+                            MarketRestrictions = (from m in s.markets
                                                   select m.market_code).ToList(),
 
                             DaypartRestrictionId = (from d in s.schedule_restriction_dayparts
                                                     select d.daypart_id).FirstOrDefault(),
 
-                            Audiences =  (from a in s.schedule_audiences
-                                          select a.audience_id).ToList()
+                            Audiences = (from a in s.schedule_audiences
+                                         select a.audience_id).ToList()
                         }).First();
 
                     var efIscis = (from si in context.schedule_iscis
