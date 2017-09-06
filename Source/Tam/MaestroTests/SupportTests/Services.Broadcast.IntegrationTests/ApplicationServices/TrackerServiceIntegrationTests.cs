@@ -197,7 +197,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var repo = new Mock<IBvsRepository>();
                 repo.Setup(r => r.GetBvsTrackingDetailsByEstimateId(dto.EstimateId.Value)).Returns(new List<BvsTrackingDetail> { bvsTrackingDetail });
-                var oldRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>();
+                var oldRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(repo.Object);
 
                 var engine = new Mock<IImpressionAdjustmentEngine>();
