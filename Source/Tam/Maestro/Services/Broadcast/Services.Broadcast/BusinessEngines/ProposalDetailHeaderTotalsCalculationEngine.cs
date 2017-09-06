@@ -77,12 +77,12 @@ namespace Services.Broadcast.BusinessEngines
             // totals
             totals.TotalImpressions = Math.Round(roundedImpressions + otherInventoryTotals.TotalImpressions, 3);
             totals.TotalCost = Math.Round(cost + otherInventoryTotals.TotalCost, 2);
-            totals.TotalCpm = _proposalMathEngine.CalculateTotalCpm((double)totals.TotalCost, totals.TotalImpressions);
+            totals.TotalCpm = _proposalMathEngine.CalculateTotalCpm(totals.TotalCost, totals.TotalImpressions);
 
             // percent
             totals.BudgetPercent = _proposalMathEngine.CalculateBudgetPercent((double)totals.TotalCost, margin, (double)targetCost);
             totals.ImpressionsPercent = _proposalMathEngine.CalculateImpressionsPercent(totals.TotalImpressions, targetImpressions);
-            totals.CpmPercent = _proposalMathEngine.CalculateCpmPercent((double)totals.TotalCpm, margin, (double)targetCpm);
+            totals.CpmPercent = _proposalMathEngine.CalculateCpmPercent(totals.TotalCost, totals.TotalImpressions, targetCost, targetImpressionsInThousands, margin);
 
             return totals;
         }

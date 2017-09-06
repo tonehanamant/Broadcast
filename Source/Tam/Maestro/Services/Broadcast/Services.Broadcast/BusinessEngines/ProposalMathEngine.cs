@@ -11,8 +11,8 @@ namespace Services.Broadcast.BusinessEngines
     {
         double CalculateBudgetPercent(double total, double margin, double goal);
         double CalculateImpressionsPercent(double totalImpressions, double targetImpressions);
-        double CalculateCpmPercent(double totalCpm, double margin, double targetCpm);
-        decimal CalculateTotalCpm(double totalCost, double totalImpressions);
+        decimal CalculateTotalCpm(decimal totalCost, double totalImpressions);
+        double CalculateCpmPercent(decimal totalCost, double totalImpression, decimal targetBudget, double targetImpression, double margin);
     }
 
     public class ProposalMathEngine : IProposalMathEngine
@@ -27,15 +27,21 @@ namespace Services.Broadcast.BusinessEngines
             return targetImpressions == 0 ? 0 : Math.Round(totalImpressions * 100 / (targetImpressions / 1000.0), 2);
         }
 
-        public double CalculateCpmPercent(double totalCpm, double margin, double targetCpm)
+        public double CalculateCpmPercent(decimal totalCost, double totalImpression, decimal targetBudget, double targetImpression, double margin)
         {
-            return targetCpm == 0 ? 0 : Math.Round((totalCpm + (totalCpm * (margin / 100))) * 100 / targetCpm, 2);
+            if (totalImpression == 0 || targetImpression == 0) return 0;
+
+            // working cpm with margin
+            var workingCpm = (totalCost + (totalCost * ((decimal)margin / 100))) / (decimal)(totalImpression);
+            var proposalCpm = targetBudget / (decimal)targetImpression;
+
+            return (double)Math.Round((workingCpm / proposalCpm) * 100, 2);
         }
 
-        public decimal CalculateTotalCpm(double totalCost, double totalImpressions)
+        public decimal CalculateTotalCpm(decimal totalCost, double totalImpressions)
         {
             if (totalImpressions == 0) return 0;
-            return  (decimal) Math.Round(totalCost / totalImpressions, 2);
+            return  Math.Round(totalCost / (decimal)totalImpressions, 2);
         }
     }
 }
