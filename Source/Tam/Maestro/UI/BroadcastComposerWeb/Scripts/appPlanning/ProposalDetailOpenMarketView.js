@@ -225,6 +225,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     getProgramsMarketRow: function (market) {
         var ret = {
             recid: 'market_' + market.MarketId,
+            MarketId: market.MarketId,
             isMarket: true,
             w2ui: { "style": "background-color: #dedede" },
             MarketName: market.MarketName,
@@ -259,9 +260,10 @@ var ProposalDetailOpenMarketView = BaseView.extend({
                 ret.push($scope.getProgramsStationRow(station));
                 $.each(station.Programs, function (pIdx, program) {
                     //this should now be unique ProgramId
-                    //program.recid = program.ProgramId;
-                    program.recid = 'program_' + program.ProgramId;
+                    program.recid = program.ProgramId;
+                    //program.recid = 'program_' + program.ProgramId;
                     program.isProgram = true;
+                    program.MarketId = market.MarketId;
                     ret.push(program);
                 });
             });
@@ -336,6 +338,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         return ret;
     },
 
+    //program with indexes: [mIdx, sIdx, pIdx, weekIdx]
     getWeekProgramItem: function (program, week, market, indexes) {
         var ret;
         if (!program) {//is null so not available throughout; 
@@ -354,6 +357,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
             program.marketDataIdx = indexes[0]; //mIdx;
             program.stationDataIdx = indexes[1]; //sIdx;
             program.programDataIdx = indexes[2]; //pIdx;
+            program.weekIdx = indexes[3]; //weekIdx
             ret = program;
         }
 
@@ -379,7 +383,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
                     //station does not need week data?
                     recIdx++;
                     $.each(station.Programs, function (pIdx, program) {
-                        recs[recIdx]['week' + weekIdx] = $scope.getWeekProgramItem(program, week, market, [mIdx, sIdx, pIdx]);
+                        recs[recIdx]['week' + weekIdx] = $scope.getWeekProgramItem(program, week, market, [mIdx, sIdx, pIdx, weekIdx]);
                         recIdx++
                     });
                 });
@@ -395,21 +399,166 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     //from program_week_spot_click class on the rendered element - see initGrid
 
     onClickEditSpot: function (recid, weekIdx, evt) {
-        console.log('onClickEditSpot', weekIdx, recid, evt);
+        
         //get record and process
-        //if (record && record.isProgram && record.active && !record.isHiatus) {
+        var record = this.openMarketsGrid.get(recid);
+        if (record && record.isProgram) {
+            var week = record['week' + weekIdx];
+            if (week && week.active && !week.isHiatus) {
+                console.log('onClickEditSpot', week, record, evt);
+                this.setEditSpot(record, week, evt);
+            } 
             
-        //    console.log('edit grid click', record, event);
-        //    this.setEditSpot(record, event, grid);
-        //} else {
-        //    return;
-        //}
+        } else {
+            return;
+        }
     }, 
 
   
+    //set spot in row for inline editing; handle eveents
+    setEditSpot: function (record, week, evt) {
+        
+        var editTarget = $('#program_week_spot_' + record.recid + '_' + week.weekIdx);
 
+        if (editTarget.length && !editTarget.hasClass('is-editing')) {
+            this.activeEditingRecord = record;
+            editTarget.addClass("is-editing");
+            var $scope = this;
+            //timeout to prevent blur event call initially
+            //TODO change this out to new w2ui format used elsewhere?
+            setTimeout(function () {
+                var input = editTarget.find(".edit-input");
+                input.show();
+                var spotval = week.Spots || 0;
+                input.val(spotval);
+                input.focus();
 
+                input.keypress(function (event) {
+                    return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
+                    //return (event.keyCode == 8 || event.keyCode == 0) ? null : event.keyCode >= 48 && event.keyCode <= 57;
+                });
+                input.keydown(function (event) {
+                    if (event.keyCode === 9) {//TAB
+                        event.preventDefault();
+                        //var nextCell = $("#rate-" + record.recid);
+                        //nextCell.click();
+                        //nextCell.find("input").focus();
+                        input.blur();
+                    } else if (event.keyCode === 13) { //ENTER
+                        event.preventDefault();
+                        //use blur event so not called twice
+                        input.blur();
 
+                    }
+                });
+                input.blur(function (event) {
+                    // setTimeout(function () {
+                    this.onEditSpot(editTarget, input, record, week);
+                    //input.off("keyup");
+                    input.off("keypress");
+                    input.off("keydown");
+                    input.off("blur");
+                    // }.bind($scope), 50);
+                }.bind($scope));
+
+            }, 300);
+
+            //input.focus();//focus here else cause issues calling event too soon - but only works chrome
+        }
+
+    },
+
+    //after a spot is edited send to api; handle return to update row and states
+    //set back if user sets no value
+    onEditSpot: function (editTarget, input, record, week) {
+        var spotVal = parseInt(input.val());
+        var currentVal = week.Spots;
+        // console.log('onEditSpot', spotVal);
+        //if val is same as record or empty then end the edit - no API call//else make the api call and end the edit after success/failure
+        //check initialSpots here?
+        if ((spotVal || (spotVal === 0)) && (spotVal !== currentVal)) {
+            var $scope = this;
+            this.updateEditSpot(record, spotVal, week);
+            this.endEditSpot(editTarget, input);
+
+        } else {
+            this.endEditSpot(editTarget, input);
+        }
+    },
+
+    updateEditSpot: function (rec, spotVal, week) {
+        var $scope = this;
+
+        var weekDataItem = $scope.activeInventoryData.Weeks[week.weekIdx];
+        var marketDataItem = weekDataItem.Markets[week.marketDataIdx];
+        var stationDataItem = marketDataItem.Stations[week.stationDataIdx];
+        var programDataItem = stationDataItem.Programs[week.programDataIdx];
+
+        if (programDataItem) {
+            programDataItem.Spots = spotVal;
+            var isChanged = (spotVal != week.initialSpots);
+            var changes = {};
+            changes['week' + week.weekIdx] = { Spots: spotVal, isChanged: isChanged };
+
+            $scope.openMarketsGrid.set(rec.recid, changes);
+            console.log('updateEditSpot', rec, changes);
+            //TBD
+            //separated storage with check if changed
+            //this.storeEditedSpotRecord(rec);
+
+            // update entry on original inventory
+            var originalWeek = _.find($scope.ProposalView.openMarketInventory.Weeks, ['MediaWeekId', weekDataItem.MediaWeekId]);
+            $.each(originalWeek.Markets, function (mIdx, market) {
+                $.each(market.Stations, function (sIdx, station) {
+                    $.each(station.Programs, function (pIdx, program) {
+                        if (program) {
+                            if (program.ProgramId == programDataItem.ProgramId) {
+                                program.Spots = week.Spots;
+                            }
+                        }
+                    });
+                });
+            });
+
+            var params = $scope.activeInventoryData;
+            this.ProposalView.controller.apiUpdateInventoryOpenMarketTotals(params, function (response) {
+                $scope.onUpdateEditSpot(response, rec, week);
+            });
+        }
+    },
+
+    //update totals, rows etc - set new activeInventoryData
+    onUpdateEditSpot: function (inventoryData, rec, week) {
+        var weekDataItem = inventoryData.Weeks[week.weekIdx];
+        var marketDataItem = weekDataItem.Markets[week.marketDataIdx];
+        var programDataItem = marketDataItem.Stations[week.stationDataIdx].Programs[week.programDataIdx];
+
+        //update header totals
+        this.OpenMarketVM.setInventory(inventoryData, this.isReadOnly);
+
+        //update grid week header
+        this.updateWeekColumnGroups(weekDataItem);
+
+        //update market row
+        var marketChanges = {};
+        marketChanges['week' + week.weekIdx] = { Spots: marketDataItem.Spots, Cost: marketDataItem.Cost, Impressions: marketDataItem.Impressions };
+        this.openMarketsGrid.set('market_' + rec.MarketId, marketChanges);
+
+        //update program row (spots already set)
+        var weekProgramChanges = {};
+        weekProgramChanges['week' + week.weekIdx] = { Cost: programDataItem.Cost, TotalImpressions: programDataItem.TotalImpressions };
+        this.openMarketsGrid.set(rec.recid, weekProgramChanges);
+
+        //reset with new data
+        this.activeInventoryData = inventoryData;
+    },
+
+    //end spot editing; hide input; remove class and allow editing again
+    endEditSpot: function (editTarget, input) {
+        input.hide();
+        editTarget.removeClass("is-editing");
+        this.activeEditingRecord = null;
+    },
 
 
     /*
