@@ -161,6 +161,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var repo = new Mock<IScheduleRepository>();
                 repo.Setup(r => r.GetDisplaySchedules(startDate, dateTime)).Returns(new List<DisplaySchedule> { displaySchedule });
+                var oldRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>();
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(repo.Object);
 
                 var engine = new Mock<IImpressionAdjustmentEngine>();
@@ -168,9 +169,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 engine.Setup(e => e.AdjustImpression(displaySchedule.PrimaryDemoDelivered, displaySchedule.PostType, displaySchedule.PostingBookId, false)).Returns(99999);
 
                 var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, engine.Object);
-
+                
                 var actual = sut.GetDisplaySchedulesWithAdjustedImpressions(startDate, dateTime);
-
+                IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
                 Assert.That(actual.Single().PrimaryDemoBooked, Is.EqualTo(9999));
                 Assert.That(actual.Single().PrimaryDemoDelivered, Is.EqualTo(99999));
             }
@@ -196,6 +197,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var repo = new Mock<IBvsRepository>();
                 repo.Setup(r => r.GetBvsTrackingDetailsByEstimateId(dto.EstimateId.Value)).Returns(new List<BvsTrackingDetail> { bvsTrackingDetail });
+                var oldRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>();
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(repo.Object);
 
                 var engine = new Mock<IImpressionAdjustmentEngine>();
@@ -203,6 +205,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, engine.Object);
                 var actual = sut.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);
+                IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
 
                 Assert.That(actual.Single().Impressions, Is.EqualTo(9999));
             }
