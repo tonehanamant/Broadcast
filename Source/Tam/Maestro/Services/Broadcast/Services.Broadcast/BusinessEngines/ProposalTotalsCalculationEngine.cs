@@ -31,7 +31,7 @@ namespace Services.Broadcast.BusinessEngines
             proposal.TotalImpressionsPercent = ProposalMathEngine.CalculateImpressionsPercent(proposal.TotalImpressions, proposal.TargetImpressions);
             proposal.TotalCostPercent = ProposalMathEngine.CalculateBudgetPercent(proposal.TotalCost, margin, targetCost);
             proposal.TotalCPMPercent = ProposalMathEngine.CalculateCpmPercent(proposal.TotalCost,
-                proposal.TotalImpressions, targetCost, proposal.TargetImpressions, proposal.Margin.Value);
+                proposal.TotalImpressions, targetCost, proposal.TargetImpressions, margin);
 
             proposal.TotalImpressionsMarginAchieved = proposal.TotalImpressionsPercent > 100;
             proposal.TotalCostMarginAchieved = proposal.TotalCostPercent > 100;
