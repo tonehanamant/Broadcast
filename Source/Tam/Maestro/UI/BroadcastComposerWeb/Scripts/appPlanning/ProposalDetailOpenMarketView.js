@@ -3,7 +3,7 @@
 var ProposalDetailOpenMarketView = BaseView.extend({
     activeInventoryData: null,
     //separate storage of edited records so can reset grid record state after changes (sort, filter); use for saving independent of what is displayed in grids
-    activeEditWeekRecords: [], //flat array all weeks
+    activeProgramEditItems: [], //array of pending edit items
     //activeDetailSet: null,
     //isActive: false,
     openMarketsGrid: null,
@@ -17,10 +17,10 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     //CriteriaBuilderVM: null,
     //FilterVM: null,
     isReadOnly: false,
-    //bypassCheckSave: false,
+    bypassCheckSave: false,
     $Modal: null,
     //isScrollSet: false,
-    //scrollPositions: null, //stored positions for resetting user poistion after refresh
+    scrollPositions: null, //stored positions for resetting user poistion after refresh
     weekColumnGroupTpl: _.template('<div class="openmarket-column-group"><div>${ quarter } Week of ${ week }</div>' +
                                    '<div class="cadent-dk-blue goals">' +
                                         '<i class="fa fa-bullhorn" aria-hidden="true"></i> ${ weekImpressions }/${ impressions } <span class="label ${ impressionsMarginClass } custom-label">${ impressionsPercent }%</span>&nbsp;&nbsp;&nbsp;&nbsp;' +
@@ -75,7 +75,30 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
         //$scope.FilterVM.clearFilters();
         // $scope.OpenMarketVM.selectedSpotFilterOption(1);
-        //$scope.activeEditWeekRecords = [];
+        //$scope.activeProgramEditItems = [];
+    },
+
+    //TBD try this way instaed of recvord scrool to
+    //store positions
+    recordLastScrollPosition: function () {
+        this.scrollPositions = {
+            lastScrollTop: $("#grid_OpemMarketGrid_records").scrollTop(),
+            lastScrollLeft: $("#grid_OpemMarketGrid_records").scrollLeft(),
+        };
+
+    },
+
+    //scroll vertically and horizontally based on the last position (i.e. after a refresh)
+    scrollToLastPosition: function () {
+        var positions = this.scrollPositions;
+        
+        if (positions) {
+            //console.log('scrollToLastPosition', positions);
+            if (positions.lastScrollTop) $("#grid_OpemMarketGrid_records").scrollTop(positions.lastScrollTop);
+            if (positions.lastScrollLeft) $("#grid_OpemMarketGrid_records").scrollLeft(positions.lastScrollLeft);
+            this.scrollPositions = null;
+        }
+
     },
 
     //set grid with dynamic columns via the weeks length
@@ -108,7 +131,8 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
         this.FilterVM.clearFilters();
         this.OpenMarketVM.selectedSpotFilterOption(1);
-        this.activeEditWeekRecords = [];
+        this.activeProgramEditItems = [];
+        this.scrollPositions = null;
         this.setInventory(inventory);
     },
 
@@ -142,11 +166,11 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         //    this.isActive = true;
         //}
         this.setGrid();
-
+        //TODO
         //will only reset if recorded
-        //this.scrollToLastPosition();
+        this.scrollToLastPosition();
         if (checkEdits) {
-            // this.resetEditedGridRecords();
+            this.resetEditedGridRecords();
         }
     },
 
@@ -399,7 +423,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     //from program_week_spot_click class on the rendered element - see initGrid
 
     onClickEditSpot: function (recid, weekIdx, evt) {
-        
+        if (this.activeEditingRecord) return; //prevent further editing while processing?
         //get record and process
         var record = this.openMarketsGrid.get(recid);
         if (record && record.isProgram) {
@@ -501,11 +525,11 @@ var ProposalDetailOpenMarketView = BaseView.extend({
             changes['week' + week.weekIdx] = { Spots: spotVal, isChanged: isChanged };
 
             $scope.openMarketsGrid.set(rec.recid, changes);
-            console.log('updateEditSpot', rec, changes);
+            
             //TBD
             //separated storage with check if changed
-            //this.storeEditedSpotRecord(rec);
-
+            this.storeEditedSpotWeek(rec, week);
+            console.log('updateEditSpot', rec, this.activeProgramEditItems);
             // update entry on original inventory
             var originalWeek = _.find($scope.ProposalView.openMarketInventory.Weeks, ['MediaWeekId', weekDataItem.MediaWeekId]);
             $.each(originalWeek.Markets, function (mIdx, market) {
@@ -560,6 +584,138 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         this.activeEditingRecord = null;
     },
 
+    // change to more specific item with weeks (not overall record)
+    storeEditedSpotWeek: function (rec, week) {
+        var matchItem = _.find(this.activeProgramEditItems, ['recid', rec.recid]);
+        var change = week.isChanged;
+
+        if (matchItem) {
+            var matchWeek = matchItem.weeks['week' + week.weekIdx];
+            //if matchWeek and new week is changed - update; else delete; if not matchWeek add it to matchItem
+            if (matchWeek && change) {
+                matchWeek = week;
+            } else if (matchWeek) {
+                delete matchItem.weeks['week' + week.weekIdx];
+                //now check matchItem overall for size - if empty remove from array
+                if (_.size(matchItem.weeks) === 0) {
+                    _.pull(this.activeProgramEditItems, matchItem);
+                }
+            } else {
+                matchItem.weeks['week' + week.weekIdx] = week;
+            }
+
+        //new so add to activeProgramEditItems
+        } else {
+            var editItem = {
+                recid: rec.recid,
+                weeks: {}
+            };
+            editItem.weeks['week' + week.weekIdx] = week;
+            this.activeProgramEditItems.push(editItem);
+        }
+    },
+
+    //on grid refreshes (sort, onClearInventoryfilter, etc) set back the states of edited records - if filtered out of grid will not change
+    resetEditedGridRecords: function () {
+        if (this.checkUnsavedSpots) {
+            var $scope = this;
+            $.each(this.activeProgramEditItems, function (idx, programItem) {
+                var gridRec = this.openMarketsGrid.get(programItem.recid);
+                if (gridRec) {
+                    //restore initialSpots, isChanged
+                    //get all changes from programItem weeks
+                    var changes = {};
+                    $.each(programItem.weeks, function (key, wk) {
+                        changes[key] = { initialSpots: wk.initialSpots, isChanged: wk.isChanged }; //force isChanged True?
+                    });
+                    $scope.openMarketsGrid.set(gridRec.recid, changes);
+                }
+            });
+        }
+    },
+
+    ///////////// SAVE INVENTORY
+
+    checkUnsavedSpots: function () {
+        return this.activeProgramEditItems.length >= 1;
+    },
+
+    //tbd = how to get from new structure?
+    getParamsForSave: function () {
+        var params = {
+            ProposalVersionDetailId: this.activeInventoryData.DetailId,
+            Weeks: []
+        };
+
+        if (this.checkUnsavedSpots) {
+            //possibly partition - break down all items flat then partition by MediaWeekId?
+            var programWeeks = [];
+            $.each(this.activeProgramEditItems, function (idx, programItem) {
+                $.each(programItem.weeks, function (key, wk) {
+                    programWeeks.push(wk);
+                });
+            });
+
+            //partitions: breaks into week groups map and then values to arrays [[program, program], [program]]
+            //use values array or each on the groupBy?
+            var partitionedByWeek = _.values(_.groupBy(programWeeks, 'MediaWeekId'));
+            $.each(partitionedByWeek, function (pidx, items) {
+                var week = {
+                    MediaWeekId: items[0].MediaWeekId,
+                    Programs: []
+                };
+                $.each(items, function (didx, data) {
+                    //should be all isChanged
+                    if (data.isChanged) {
+                        week.Programs.push({ ProgramId: data.ProgramId, Spots: data.Spots, Impressions: data.TotalImpressions });
+                    }
+                });
+                params.Weeks.push(week);
+            });
+        }
+        //why stored on this higher object?
+        params.Filter = this.ProposalView.openMarketInventory.Filter;
+        return params;
+    },
+
+    //TODO REVISE
+    //save from apply or save context - 
+    //if apply - record scroll positions, call api to refresh, and reset
+    //apply sorting; revise to handle future filtering/post processing
+    saveInventory: function (isApply) {
+        var $scope = this;
+        
+        //if request.length etc?
+        var continueSaveFn = function () {
+            var request = $scope.getParamsForSave();
+            console.log('saveInventory', request);
+            //if request.Weeks.length etc?
+            $scope.ProposalView.controller.apiSaveInventoryOpenMarket(request, function (inventory) {
+                $scope.activeProgramEditItems = [];
+
+                if (isApply) {
+                    //TBD - scroll, sorting
+                   $scope.recordLastScrollPosition();
+
+                    //if ($scope.isMarketSortName) {
+                    //    inventory = $scope.changeInventoryDataForSort(inventory, true);
+                    //}
+
+                    $scope.refreshInventory(inventory, true, false);
+                } else {
+                    $scope.showModal(true); //close open market modal
+                }
+
+                util.notify('Inventory saved successfully', 'success');
+            });
+        };
+
+        if ($scope.OpenMarketVM.hasFiltersApplied()) {
+            util.confirm('Filters are set', 'You have filtered your Proposal. The totals displayed are for the filtered items only. Are you sure you would like to save?', continueSaveFn, null, 'Save');
+        } else {
+            continueSaveFn();
+        }
+    },
 
     /*
     //tbd- editing etc
@@ -784,7 +940,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     ///////////// SAVE INVENTORY
     /*
     checkUnsavedSpots: function () {
-        return this.activeEditWeekRecords.length >= 1;
+        return this.activeProgramEditItems.length >= 1;
     },
 
     getParamsForSave: function () {
@@ -825,47 +981,13 @@ var ProposalDetailOpenMarketView = BaseView.extend({
             if ($scope.isMarketSortName) {
                 inventory = $scope.changeInventoryDataForSort(inventory, true);
             }
-            this.activeEditWeekRecords = [];//clear
+            this.activeProgramEditItems = [];//clear
             $scope.refreshInventory(inventory, false, false);
         }, true);
     },
 
     */
-    //TODO REVISE
-    //save from apply or save context - 
-    //if apply - record scroll positions, call api to refresh, and reset
-    //apply sorting; revise to handle future filtering/post processing
-    saveInventory: function (isApply) {
-        var $scope = this;
 
-        //var continueSaveFn = function () {
-        //    var request = $scope.getParamsForSave();
-
-        //    $scope.ProposalView.controller.apiSaveInventoryOpenMarket(request, function (inventory) {
-        //        $scope.activeEditWeekRecords = [];
-
-        //        if (isApply) {
-        //            $scope.recordLastScrollPosition();
-
-        //            if ($scope.isMarketSortName) {
-        //                inventory = $scope.changeInventoryDataForSort(inventory, true);
-        //            }
-
-        //            $scope.refreshInventory(inventory, true, false);
-        //        } else {
-        //            $scope.showModal(true); //close open market modal
-        //        }
-
-        //        util.notify('Inventory saved successfully', 'success');
-        //    });
-        //};
-
-        //if ($scope.OpenMarketVM.hasFiltersApplied()) {
-        //    util.confirm('Filters are set', 'You have filtered your Proposal. The totals displayed are for the filtered items only. Are you sure you would like to save?', continueSaveFn, null, 'Save');
-        //} else {
-        //    continueSaveFn();
-        //}
-    },
 
     
 
@@ -880,12 +1002,13 @@ var ProposalDetailOpenMarketView = BaseView.extend({
             this.isMarketSortName = false;
             this.marketSortIndexMap = [];
             this.OpenMarketVM.setSortByMarketName(false);
+            //this.scrollPositions = null;
         }
     },
 
     //modal hide event - check unsaved if not read only
     onCheckInventoryCancel: function (e) {
-        /*
+        
         if (!this.isReadOnly && !this.bypassCheckSave && this.checkUnsavedSpots()) {
             var $scope = this;
             e.preventDefault();
@@ -899,7 +1022,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         }
 
         this.bypassCheckSave = false;
-        */
+        
 
     },
 
