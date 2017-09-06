@@ -12,7 +12,7 @@ namespace Services.Broadcast.Entities
 
     public class BvsTrackingDetail
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string Market { get; set; }
         public string Station { get; set; }
         public string Affiliate { get; set; }

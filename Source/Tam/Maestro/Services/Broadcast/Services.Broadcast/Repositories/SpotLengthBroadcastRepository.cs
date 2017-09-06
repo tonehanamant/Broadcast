@@ -17,7 +17,7 @@ namespace Services.Broadcast.Repositories
         List<LookupDto> GetSpotLengths();
         List<LookupDto> GetSpotLengthsByLength(List<int> lengthList);
         Dictionary<int, int> GetSpotLengthAndIds();
-        Dictionary<int, float> GetSpotLengthMultipliers();
+        Dictionary<int, double> GetSpotLengthMultipliers();
     }
 
     public class SpotLengthBroadcastRepository : BroadcastRepositoryBase, ISpotLengthRepository
@@ -93,13 +93,13 @@ namespace Services.Broadcast.Repositories
             }
         }
 
-        public Dictionary<int, float> GetSpotLengthMultipliers()
+        public Dictionary<int, double> GetSpotLengthMultipliers()
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 return _InReadUncommitedTransaction(
                     context => (from s in context.spot_lengths
-                                select s).ToDictionary(a => a.length, a => (float)a.delivery_multiplier));
+                                select s).ToDictionary(a => a.length, a => a.delivery_multiplier));
             }
         }
     }

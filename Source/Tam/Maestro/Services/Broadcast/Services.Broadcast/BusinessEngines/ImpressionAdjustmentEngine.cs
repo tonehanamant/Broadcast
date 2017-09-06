@@ -17,12 +17,12 @@ namespace Services.Broadcast.BusinessEngines
 
     public class ImpressionAdjustmentEngine : IImpressionAdjustmentEngine
     {
-        private readonly Lazy<Dictionary<int, float>> _SpotLengthMultipliers;
+        private readonly Lazy<Dictionary<int, double>> _SpotLengthMultipliers;
         private readonly Lazy<Dictionary<int, RatingAdjustmentsDto>> _RatingAdjustments;
 
         public ImpressionAdjustmentEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
-            _SpotLengthMultipliers = new Lazy<Dictionary<int, float>>(() => broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthMultipliers());
+            _SpotLengthMultipliers = new Lazy<Dictionary<int, double>>(() => broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthMultipliers());
             _RatingAdjustments = new Lazy<Dictionary<int, RatingAdjustmentsDto>>(() => broadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>().GetRatingAdjustments().ToDictionary(ra => ra.MediaMonthId));
         }
 
@@ -52,10 +52,10 @@ namespace Services.Broadcast.BusinessEngines
 
             if (isEquivilized == true)
             {
-                float multiplier;
+                double multiplier;
                 if (_SpotLengthMultipliers.Value.TryGetValue(spotLength, out multiplier))
                 {
-                    return (result * multiplier);
+                    return result * multiplier;
                 }
 
                 throw new ApplicationException(string.Format("Unknown spot length {0} found while adjusting impression", spotLength));
@@ -68,10 +68,10 @@ namespace Services.Broadcast.BusinessEngines
         {
             if (isEquivalized == true)
             {
-                float multiplier;
+                double multiplier;
                 if (_SpotLengthMultipliers.Value.TryGetValue(spotLength, out multiplier))
                 {
-                    return (impression * multiplier);
+                    return impression * multiplier;
                 }
 
                 throw new ApplicationException(string.Format("Unknown spot length {0} found while adjusting impression", spotLength));

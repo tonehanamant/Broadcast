@@ -87,7 +87,7 @@ namespace Services.Broadcast.Repositories
                             a => new {a.daypart_code, a.media_week_id, a.station_code}).ToList();
                     
                     return programsMatch.Any()
-                        ? programsMatch.Select(z => z.ToList().Max(a => (int?) a.spots ?? 0)).Max()
+                        ? programsMatch.Select(z => z.ToList().Max(a => a.spots ?? 0)).Max()
                         : 0;
                 });
         }
@@ -216,7 +216,7 @@ namespace Services.Broadcast.Repositories
                 component => new inventory_detail_slot_components()
                 {
                     station_program_flight_id = component.StationProgramFlightId,
-                    station_code = (short) component.StationCode,
+                    station_code = component.StationCode,
                     daypart_id = component.DaypartId
                 }).ToList();
         }

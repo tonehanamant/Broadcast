@@ -83,9 +83,9 @@ namespace Services.Broadcast.BusinessEngines
                 programDetails.TargetCpm = targetImpressions != 0
                     ? programDetails.TotalCost / ((decimal)targetImpressions / 1000)
                     : 0;
-                programDetails.TRP = nsiData.TotalDemoUniverse != 0
+                programDetails.TRP = (float) (nsiData.TotalDemoUniverse != 0
                     ? targetImpressions / nsiData.TotalDemoUniverse * 100
-                    : 0;
+                    : 0);
 
                 //household specific calculation (only if user didn't select HH as target)
                 if (proposal.GuaranteedDemoId.HasValue &&
@@ -98,7 +98,7 @@ namespace Services.Broadcast.BusinessEngines
                     programDetails.HHeCPM = hhImpressions != 0
                         ? (programDetails.TotalCost / (decimal)hhImpressions / 1000)
                         : 0;
-                    programDetails.GRP = nsiData.TotalHHUniverse != 0 ? (hhImpressions / nsiData.TotalHHUniverse) * 100 : 0;
+                    programDetails.GRP = (float) (nsiData.TotalHHUniverse != 0 ? (hhImpressions / nsiData.TotalHHUniverse) * 100 : 0);
                 }
             }
 
@@ -117,9 +117,9 @@ namespace Services.Broadcast.BusinessEngines
                 TotalCost = totalCost,
                 TotalTargetImpressions = targetImpressions,
                 TotalTargetCPM = targetImpressions != 0 ? totalCost / (decimal)(targetImpressions / 1000) : 0,
-                TotalTRP = nsiData.TotalDemoUniverse != 0 ? (float)(targetImpressions / nsiData.TotalDemoUniverse) * 100 : 0,
-                TotalGRP = nsiData.TotalHHUniverse != 0 ? (float)(hhImpressions / nsiData.TotalHHUniverse) * 100 : 0,
-                TotalHHCPM = hhImpressions != 0 ? totalCost / ((decimal)hhImpressions / 1000) : 0,
+                TotalTRP = (float)(nsiData.TotalDemoUniverse != 0 ? targetImpressions / nsiData.TotalDemoUniverse * 100 : 0),
+                TotalGRP = (float)(nsiData.TotalHHUniverse != 0 ? hhImpressions / nsiData.TotalHHUniverse * 100 : 0),
+                TotalHHCPM = hhImpressions != 0 ? totalCost / (decimal)(hhImpressions / 1000) : 0,
                 TotalHHImpressions = hhImpressions,
                 //additional audience
                 TotalAdditionalAudienceImpressions =
@@ -158,11 +158,11 @@ namespace Services.Broadcast.BusinessEngines
                             TotalAdditionalAudienceCPM = q.AdditonalAudienceCPM,
                             TotalAdditionalAudienceImpressions = q.AdditionalAudienceImpressions,
                             TotalCost = q.TotalCost,
-                            TotalGRP = (float)q.GRP,
+                            TotalGRP = q.GRP,
                             TotalHHCPM = q.HHeCPM,
                             TotalHHImpressions = q.HHImpressions,
                             TotalSpots = q.TotalSpots,
-                            TotalTRP = (float)q.TRP,
+                            TotalTRP = q.TRP,
                             TotalTargetCPM = q.TargetCpm,
                             TotalTargetImpressions = q.TargetImpressions
                         }).ToList();

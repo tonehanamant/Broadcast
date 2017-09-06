@@ -18,7 +18,7 @@ namespace Services.Broadcast.Entities
         public decimal? Rate15 { get; set; }
         public decimal? Rate30 { get; set; }
         public double Impressions { get; set; }
-        public float Rating { get; set; }
+        public double Rating { get; set; }
         public List<FlightWeekDto> Flights { get; set; }
         public string Flight { get; set; }
         public DateTime FlightStartDate { get; set; }

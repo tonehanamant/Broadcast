@@ -11,7 +11,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface ISpotLengthMultiplierRepository : IDataRepository
     {
-        Dictionary<int, float> GetSpotLengthIdsAndCostMultipliers();
+        Dictionary<int, double> GetSpotLengthIdsAndCostMultipliers();
     }
 
     public class SpotLengthMultiplierRepository : BroadcastRepositoryBase, ISpotLengthMultiplierRepository
@@ -24,12 +24,12 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public Dictionary<int, float> GetSpotLengthIdsAndCostMultipliers()
+        public Dictionary<int, double> GetSpotLengthIdsAndCostMultipliers()
         {
             return _InReadUncommitedTransaction(
                 context => 
                 {
-                    return context.spot_length_cost_multipliers.ToDictionary(x => x.spot_length_id, y => (float) y.cost_multiplier);
+                    return context.spot_length_cost_multipliers.ToDictionary(x => x.spot_length_id, y =>  y.cost_multiplier);
                 });
         }
     }

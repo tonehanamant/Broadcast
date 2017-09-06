@@ -94,7 +94,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             const int multiplier = 30;
             const int spotLength = 15;
-            repo.Setup(r => r.GetSpotLengthMultipliers()).Returns(new Dictionary<int, float> { { spotLength, multiplier } });
+            repo.Setup(r => r.GetSpotLengthMultipliers()).Returns(new Dictionary<int, double> { { spotLength, multiplier } });
 
             using (new RepositoryMock<ISpotLengthRepository>(repo))
             {
@@ -114,7 +114,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             const int multiplier = 30;
             const int spotLength = 15;
-            repo.Setup(r => r.GetSpotLengthMultipliers()).Returns(new Dictionary<int, float> { { spotLength, multiplier } });
+            repo.Setup(r => r.GetSpotLengthMultipliers()).Returns(new Dictionary<int, double> { { spotLength, multiplier } });
 
             using (new RepositoryMock<ISpotLengthRepository>(repo))
             {

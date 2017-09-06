@@ -66,7 +66,7 @@
             "NsiDelivery": 0.0
           }
         ],
-        "Cost": 21.0,
+        "Cost": 21.00,
         "DeliveredSpots": 1,
         "DisplayDaypart": {
           "_Code": "",
@@ -126,7 +126,7 @@
             "NsiDelivery": 0.0
           }
         ],
-        "Cost": 0.0,
+        "Cost": 0.00,
         "DeliveredSpots": 0,
         "DisplayDaypart": {
           "_Code": "",
@@ -186,7 +186,7 @@
             "NsiDelivery": 0.0
           }
         ],
-        "Cost": 42.0,
+        "Cost": 42.00,
         "DeliveredSpots": 2,
         "DisplayDaypart": {
           "_Code": "",
@@ -647,7 +647,7 @@
             "NsiDelivery": 0.0
           }
         ],
-        "Cost": 42.0,
+        "Cost": 42.00,
         "DeliveredSpots": 2,
         "DisplayDaypart": {
           "_Code": "",
@@ -707,7 +707,7 @@
             "NsiDelivery": 0.0
           }
         ],
-        "Cost": 0.0,
+        "Cost": 0.00,
         "DeliveredSpots": 0,
         "DisplayDaypart": {
           "_Code": "",
@@ -767,7 +767,7 @@
             "NsiDelivery": 0.0
           }
         ],
-        "Cost": 21.0,
+        "Cost": 21.00,
         "DeliveredSpots": 1,
         "DisplayDaypart": {
           "_Code": "",
@@ -898,7 +898,7 @@
                 "NsiDelivery": 0.0
               }
             ],
-            "Cost": 21.0,
+            "Cost": 21.00,
             "DeliveredSpots": 1,
             "DisplayDaypart": {
               "_Code": "",
@@ -958,7 +958,7 @@
                 "NsiDelivery": 0.0
               }
             ],
-            "Cost": 0.0,
+            "Cost": 0.00,
             "DeliveredSpots": 0,
             "DisplayDaypart": {
               "_Code": "",
@@ -1018,7 +1018,7 @@
                 "NsiDelivery": 0.0
               }
             ],
-            "Cost": 42.0,
+            "Cost": 42.00,
             "DeliveredSpots": 2,
             "DisplayDaypart": {
               "_Code": "",

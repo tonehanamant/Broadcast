@@ -20,7 +20,7 @@ namespace Services.Broadcast.Converters.RateImport
         protected IDaypartCache _DaypartCache;
         protected IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         protected IBroadcastAudiencesCache _AudiencesCache;
-        protected Dictionary<int, float> _SpotLengthMultipliers;
+        protected Dictionary<int, double> _SpotLengthMultipliers;
 
         private string _fileHash;
 
@@ -94,7 +94,7 @@ namespace Services.Broadcast.Converters.RateImport
             RatesFile ratesFile,
             System.Collections.Generic.List<RatesFileProblem> fileProblems);
 
-        private Dictionary<int, float> GetSpotLengthAndMultipliers()
+        private Dictionary<int, double> GetSpotLengthAndMultipliers()
         {
             // load the list of spots and ids
             var spotLengthIds = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
@@ -110,11 +110,11 @@ namespace Services.Broadcast.Converters.RateImport
 
         protected void _ApplySpotLengthRateMultipliers(StationProgramFlightWeek flightWeek, decimal periodRate)
         {
-            flightWeek.Rate15s = periodRate * (decimal)_SpotLengthMultipliers[15];
+            flightWeek.Rate15s = periodRate * (decimal) _SpotLengthMultipliers[15];
             flightWeek.Rate30s = periodRate;
-            flightWeek.Rate60s = periodRate * (decimal)_SpotLengthMultipliers[60];
-            flightWeek.Rate90s = periodRate * (decimal)_SpotLengthMultipliers[90];
-            flightWeek.Rate120s = periodRate * (decimal)_SpotLengthMultipliers[120];
+            flightWeek.Rate60s = periodRate * (decimal) _SpotLengthMultipliers[60];
+            flightWeek.Rate90s = periodRate * (decimal) _SpotLengthMultipliers[90];
+            flightWeek.Rate120s = periodRate * (decimal) _SpotLengthMultipliers[120];
         }
 
         protected DisplayDaypart ParseStringToDaypart(string dayPartText, string station)

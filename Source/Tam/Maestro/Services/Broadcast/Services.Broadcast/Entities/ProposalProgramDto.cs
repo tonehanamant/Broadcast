@@ -18,10 +18,10 @@ namespace Services.Broadcast.Entities
         public decimal TotalCost { get; set; }
         public double TargetImpressions { get; set; }
         public decimal TargetCpm { get; set; }
-        public double TRP { get; set; }
+        public float TRP { get; set; }
         public decimal HHeCPM { get; set; }
         public double HHImpressions { get; set; }
-        public double GRP { get; set; }
+        public float GRP { get; set; }
         public decimal SpotCost { get; set; }
         public List<ProposalProgramFlightWeek> FlightWeeks { get; set; }
         public double MarketSubscribers { get; set; }

@@ -37,7 +37,7 @@
               "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -85,7 +85,7 @@
               "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -159,7 +159,7 @@
               "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -207,7 +207,7 @@
               "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -281,7 +281,7 @@
               "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -329,7 +329,7 @@
               "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -377,7 +377,7 @@
               "NsiDelivery": 0.0
             }
           ],
-          "Cost": 1300.0,
+          "Cost": 1300.00,
           "DeliveredSpots": 1,
           "DisplayDaypart": {
             "_Code": "",
@@ -425,7 +425,7 @@
               "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -689,7 +689,7 @@
               "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -737,7 +737,7 @@
               "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
