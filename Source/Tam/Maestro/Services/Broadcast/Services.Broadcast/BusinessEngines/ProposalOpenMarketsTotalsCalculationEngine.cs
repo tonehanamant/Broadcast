@@ -63,8 +63,6 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             _ProposalDetailTotalsCalculationEngine.CalculateTotalsForOpenMarketInventory(dto, proposalDetailSingleInventoryTotalsDto, dto.Margin.Value);
-
-            _SetAchievedMarginForTotals(dto);
         }
 
         private void _ClearTotals(ProposalDetailOpenMarketInventoryDto dto)
@@ -103,13 +101,6 @@ namespace Services.Broadcast.BusinessEngines
                 program.TotalImpressions = program.Spots == 0 ? program.UnitImpression : program.Spots * program.UnitImpression;
                 program.Cost = program.Spots == 0 ? program.UnitCost : program.Spots * program.UnitCost;
             }
-        }
-
-        private void _SetAchievedMarginForTotals(ProposalDetailOpenMarketInventoryDto dto)
-        {
-            dto.DetailBudgetMarginAchieved = dto.DetailBudgetPercent > 100; 
-            dto.DetailImpressionsMarginAchieved = dto.DetailImpressionsPercent > 100; 
-            dto.DetailCpmMarginAchieved = dto.DetailCpmPercent > 100; 
         }
 
         private void _CalculatePartialDetailTotals(ProposalDetailOpenMarketInventoryDto dto)

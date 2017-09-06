@@ -50,17 +50,10 @@ namespace Services.Broadcast.BusinessEngines
 
                 _ProposalDetailWeekTotalsCalculationEngine.CalculateWeekTotalsForProprietary(weekTotals, inventoryWeek, currentWeekTotals, proposalDetailSingleInventoryTotalsDto.Margin.Value);
 
-                weekTotals.BudgetMarginAchieved = weekTotals.BudgetPercent > 100;
-                weekTotals.ImpressionsMarginAchieved = weekTotals.ImpressionsPercent > 100;
-
                 totals.Weeks.Add(weekTotals);
             }
 
             _ProposalDetailTotalsCalculationEngine.CalculateTotalsForProprietaryInventory(totals, request, proposalDetailSingleInventoryTotalsDto, proposalDetailSingleInventoryTotalsDto.Margin.Value);
-
-            totals.BudgetMarginAchieved = totals.BudgetPercent > 100;
-            totals.ImpressionsMarginAchieved = totals.ImpressionsPercent > 100;
-            totals.CpmMarginAchieved = totals.CpmPercent > 100;
 
             return totals;
         }

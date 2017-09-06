@@ -28,6 +28,9 @@ namespace Services.Broadcast.BusinessEngines
             proprietaryWeekTotals.Budget = totals.TotalCost;
             proprietaryWeekTotals.ImpressionsPercent = totals.ImpressionsPercent;
             proprietaryWeekTotals.BudgetPercent = totals.BudgetPercent;
+
+            proprietaryWeekTotals.BudgetMarginAchieved = proprietaryWeekTotals.BudgetPercent > 100;
+            proprietaryWeekTotals.ImpressionsMarginAchieved = proprietaryWeekTotals.ImpressionsPercent > 100;
         }
 
         public void CalculateWeekTotalsForOpenMarketInventory(ProposalOpenMarketInventoryWeekDto openMarketWeekTotals,
@@ -40,6 +43,9 @@ namespace Services.Broadcast.BusinessEngines
             openMarketWeekTotals.BudgetTotal = totals.TotalCost;
             openMarketWeekTotals.ImpressionsPercent = totals.ImpressionsPercent;
             openMarketWeekTotals.BudgetPercent = totals.BudgetPercent;
+
+            openMarketWeekTotals.BudgetMarginAchieved = openMarketWeekTotals.BudgetPercent > 100;
+            openMarketWeekTotals.ImpressionsMarginAchieved = openMarketWeekTotals.ImpressionsPercent > 100;
         }
 
         private ProposalDetailWeekTotalsDto CalculateTotals(double impressions, decimal cost, double targetImpressions, decimal targetCost, double margin, ProposalDetailSingleWeekTotalsDto otherInventoryTotals)
