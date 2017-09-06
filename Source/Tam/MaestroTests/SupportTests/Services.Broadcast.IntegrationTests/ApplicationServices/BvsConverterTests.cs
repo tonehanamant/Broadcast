@@ -50,7 +50,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Should_Convert_To_NTI_Time()
         {
             var date = new DateTime(2016, 11, 7);
-            var airTime = new TimeSpan(3, 30, 0);
+            var airTime = new TimeSpan(2, 30, 0);
 
             var result = _Sut.ConvertToNTITime(date, airTime);
 
@@ -62,7 +62,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Should_Not_Convert_To_NTI_Time()
         {
             var date = new DateTime(2016, 11, 7);
-            var airTime = new TimeSpan(7, 30, 0);
+            var airTime = new TimeSpan(3, 30, 0);
 
             var result = _Sut.ConvertToNTITime(date, airTime);
 

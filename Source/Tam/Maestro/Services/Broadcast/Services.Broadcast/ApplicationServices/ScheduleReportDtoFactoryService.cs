@@ -440,7 +440,7 @@ namespace Services.Broadcast.ApplicationServices
             var marketNamedRanks = GetMarketRanks(schedulesAggregate);
 
             var spotLengthRepo = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
-            var bvsDetailList = _ApplyNtiExclusions(schedulesAggregate.GetBvsDetails(), schedulesAggregate.PostType);
+            var bvsDetailList = schedulesAggregate.GetBvsDetails();
 
             var details = schedulesAggregate.GetScheduleDetails();
             foreach (var scheduleDetail in details) //in-spec
@@ -577,7 +577,6 @@ namespace Services.Broadcast.ApplicationServices
                     Week = week,
                 };
                 weeklyData.ReportDataByWeek.Add(weeklyDto);
-
 
                 //In Spec
                 foreach (var detail in coreDataList)
@@ -732,35 +731,6 @@ namespace Services.Broadcast.ApplicationServices
             return string.Join(" / ", names);
         }
 
-        private static List<bvs_file_details> _ApplyNtiExclusions(List<bvs_file_details> inputBvsDetailList, SchedulePostType schedulePostType)
-        {
-            //do nothing if not NTI
-            if (schedulePostType != SchedulePostType.NTI)
-            {
-                return inputBvsDetailList;
-            }
-
-            //exclude anything aired on mondays between 3am and 6am
-            const DayOfWeek ntiExclusionDay = DayOfWeek.Monday;
-            var ntiExclusionStartTime = new TimeSpan(3, 0, 0);
-            var ntiExclusionEndTime = new TimeSpan(5, 59, 59);
-
-            var ntiOnlyList = new List<bvs_file_details>();
-            foreach (var detail in inputBvsDetailList)
-            {
-                if (detail.date_aired.DayOfWeek == ntiExclusionDay &&
-                    TimeSpan.FromSeconds(detail.time_aired) >= ntiExclusionStartTime &&
-                    TimeSpan.FromSeconds(detail.time_aired) <= ntiExclusionEndTime)
-                {
-                    //skip
-                }
-                else
-                {
-                    ntiOnlyList.Add(detail);
-                }
-            }
-            return ntiOnlyList;
-        }
 
         private static Tuple<List<AudienceImpressionsAndDelivery>, double> GetOutOfScopeTotalDeliveryDetailsByAudienceId(bvs_file_details bfd, int audienceId)
         {

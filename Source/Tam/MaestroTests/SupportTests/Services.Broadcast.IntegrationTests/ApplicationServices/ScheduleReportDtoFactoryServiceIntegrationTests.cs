@@ -573,6 +573,73 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyReportData(reportDto);
         }
 
+        /// <summary>
+        /// This test tests the removal logic of NTI's monday between 3/6 exclusion and NTI date adjustments between 3/6.
+        /// 
+        /// The bvs Records effected are the second JUDGE ALEX 
+        /// (which would have had date adjusted w/ old logic)  and first "CRIME WATCH..." 
+        /// (which would have been excluded with old logic) bvs records.
+        /// </summary>
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void FullReport_GenerateScheduleReportDto_NTI_ClockDateAdjustment()
+        {
+            ScheduleReportDto reportDto = null;
+            const int estimateId = 333444;
+
+            using (new TransactionScopeWrapper())
+            {
+                var stream = new FileStream(@".\Files\BVS Load For Various Tests NTI NSI Adjustments.xlsx", FileMode.Open, FileAccess.Read);
+                var fileName = "BVS Load For Various Tests NTI NSI Adjustments.xlsx";
+
+                var bvsRequest = new BvsSaveRequest();
+                bvsRequest.UserName = "LoadBvsFile User";
+                bvsRequest.BvsFiles.Add(new BvsFile() { BvsFileName = fileName, BvsStream = stream });
+                ITrackerService trackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
+
+                trackerService.SaveBvsFiles(bvsRequest);
+
+                ITrackerService sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
+
+                var saveRequest = new ScheduleSaveRequest();
+                var schedule = new ScheduleDTO();
+
+                schedule.AdvertiserId = 39279;
+                schedule.EstimateId = estimateId;
+                schedule.PostingBookId = 413;
+                schedule.ScheduleName = "SCX File For Various tests NTI NSI.scx";
+                schedule.UserName = "SCX User";
+                schedule.FileName = @"SCX File For Various tests NTI NSI.scx";
+                schedule.FileStream = new FileStream(@".\Files\SCX File For Various tests NTI NSI.scx", FileMode.Open,FileAccess.Read);
+
+                schedule.MarketRestrictions = new List<int>();
+                schedule.DaypartRestriction = new DaypartDto()
+                {
+                    startTime = 0,endTime = 86400 - 1,
+                    mon = true,tue = true,wed = true,thu = true,fri = true,sat = true,sun = true
+                };
+                schedule.Equivalized = true;
+                schedule.ISCIs = new List<IsciDto>
+                {
+                    new IsciDto {House = "AAABBB", Client = "cl_AAABBB"},
+                    new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}
+                };
+
+                schedule.PostType = SchedulePostType.NTI;
+                schedule.InventorySource = RatesFile.RateSourceType.OpenMarket;
+                saveRequest.Schedule = schedule;
+                int scheduleId = sut.SaveSchedule(saveRequest);
+
+                ISchedulesReportService reportService =
+                    IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
+
+                reportDto = reportService.GenerateScheduleReportDto(scheduleId);
+                var report = reportService.GenerateScheduleReport(scheduleId);
+                File.WriteAllBytes(string.Format("..\\Report{0}.xlsx",scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
+            }
+            _VerifyReportData(reportDto);
+        }
+
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]

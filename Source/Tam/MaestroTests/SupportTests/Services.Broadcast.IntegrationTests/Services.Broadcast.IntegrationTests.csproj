@@ -265,6 +265,9 @@
     <None Include="Files\BVS Beiersdorf_Hersheys Week of 3_6 BVS Test FIle2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\BVS Load For Various Tests NTI NSI Adjustments.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\BVS Load For Various TestsNoDuplicates.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -299,9 +302,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\Checkers 2Q16 SYN - Estimate3909.scx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\Checkers 2Q16 SYN - Scheduler %28tv%29.scx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\Checkers BVS Report - Estimate4401.DAT">
@@ -390,6 +390,10 @@
     </None>
     <None Include="Files\proposal_basic_allocations.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\SCX File For Various tests NTI NSI.scx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Files\ThirdPartyFileMultipleDaypartsWithFixedPriceColumn.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -515,6 +519,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ApplicationServices\ScheduleReportDtoFactoryServiceIntegrationTests.FullReport_GenerateScheduleReportDto_NTI_ClockDateAdjustment.approved.txt" />
     <Content Include="appsettings_integration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

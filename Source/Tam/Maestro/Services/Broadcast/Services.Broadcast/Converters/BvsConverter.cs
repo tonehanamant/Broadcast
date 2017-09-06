@@ -458,19 +458,14 @@ namespace Services.Broadcast.Converters
         }
 
         /// <summary>
-        /// 6a-6a Rule
+        /// Uses ConvertToNSITime
         /// </summary>
         /// <param name="date"></param>
         /// <param name="airTime"></param>
         /// <returns></returns>
         public DateTime ConvertToNTITime(DateTime date, TimeSpan airTime)
         {
-            if (airTime.TotalSeconds <= new TimeSpan(6, 0, 0).TotalSeconds)
-            {
-                return date.AddDays(-1);
-            }
-
-            return date;
+            return ConvertToNSITime(date, airTime);
         }
     }
 }
