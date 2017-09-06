@@ -281,25 +281,24 @@ function CriteriaBuilderViewModel(inventoryView) {
                 $scope.InventoryView.refreshInventory(response, true, true);
             };
 
+            $scope.confirmRefine = function() {
+                request.IgnoreExistingAllocation = true;
+                $scope.Controller.apiPostOpenMarketRefine(request, $scope.processRefineResponse);
+            };
+
             $scope.Controller.apiPostOpenMarketRefine(request,
                 function (response) {
                     if (response.NewCriteriaAffectsExistingAllocations) {
-                        util.confirm('Warning', $scope.LOSE_SPOTS_WARNING,
-                            function () {
-                                request.IgnoreExistingAllocation = true;
-                                $scope.processRefineResponse(response);
-                            },
-
-                            function() {
-                                $scope.IsProcessing(false);
-                            });
+                        util.confirm('Warning', $scope.LOSE_SPOTS_WARNING, $scope.confirmRefine, function () { $scope.IsProcessing(false); });
                     } else {
                         $scope.processRefineResponse(response);
                     }
                 },
                 function() {
                     $scope.IsProcessing(false);
-                });   
+                });
+
+            
         }
     };
 }
