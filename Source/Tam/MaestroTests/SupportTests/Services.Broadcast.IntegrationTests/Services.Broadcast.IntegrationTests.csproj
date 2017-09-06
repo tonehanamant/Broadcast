@@ -304,7 +304,9 @@
     <None Include="Files\Checkers 2Q16 SYN - Estimate3909.scx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\Checkers 2Q16 SYN - Scheduler %28tv%29.scx" />
+    <None Include="Files\Checkers 2Q16 SYN - Scheduler %28tv%29.scx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\Checkers BVS Report - Estimate4401.DAT">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
