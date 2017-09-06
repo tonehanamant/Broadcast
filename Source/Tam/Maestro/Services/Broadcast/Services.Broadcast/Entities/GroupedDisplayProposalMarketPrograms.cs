@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Services.Broadcast.Entities
+﻿namespace Services.Broadcast.Entities
 {
     public class GroupedDisplayProposalMarketPrograms
     {
@@ -9,6 +7,5 @@ namespace Services.Broadcast.Entities
         public double MarketSubscribers { get; set; }
         public int Rank { get; set; }
         public ProposalTotalFields MarketTotals { get; set; }
-        public List<GroupedDisplayProposalStationPrograms> DisplayProposalStationPrograms { get; set; }
     }
 }

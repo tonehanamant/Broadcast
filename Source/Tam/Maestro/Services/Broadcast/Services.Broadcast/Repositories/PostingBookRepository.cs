@@ -11,7 +11,6 @@ namespace Services.Broadcast.Repositories
     public interface IPostingBookRepository : IDataRepository
     {
         List<int> GetPostableMediaMonths(int marketThreshold);
-        int GetLatestPostableMediaMonth(int marketThreshold);
     }
 
     public class PostingBookRepository : ExternalRatingRepositoryBase, IPostingBookRepository
@@ -24,23 +23,9 @@ namespace Services.Broadcast.Repositories
         public List<int> GetPostableMediaMonths(int marketThreshold)
         {
             return _InReadUncommitedTransaction(
-                context =>
-                {
-                    return (from x in context.post_months
+                context => (from x in context.post_months
                             where x.num_markets > marketThreshold
-                            select x.media_month_id).ToList();
-                });
-        }
-
-        public int GetLatestPostableMediaMonth(int marketThreshold)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    return (from x in context.post_months
-                            where x.num_markets > marketThreshold
-                            select x.media_month_id).OrderByDescending(m => m).First();
-                });
+                            select x.media_month_id).ToList());
         }
     }
 }

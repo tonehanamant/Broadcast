@@ -14,7 +14,6 @@ namespace Services.Broadcast.Repositories
     public interface INsiMarketRepository : IDataRepository
     {
         Dictionary<int, int> GetMarketRankingsByMediaMonth(int mediaMonthId);
-        List<int> GetTopMarketByMediaMonth(int mediaMonthId, int countOfMarketsToTake);
     }
 
     public class NsiMarketRepository : ExternalRatingRepositoryBase, INsiMarketRepository
@@ -41,20 +40,6 @@ namespace Services.Broadcast.Repositories
 
                         return marketRankings;
                     });
-            }
-        }
-
-        public List<int> GetTopMarketByMediaMonth(int mediaMonthId, int countOfMarketsToTake)
-        {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                return _InReadUncommitedTransaction(
-                    context => context.market_headers.Where(mh => mh.media_month_id == mediaMonthId)
-                        .DistinctBy(m => m.market_code)
-                        .OrderBy(m => m.market_rank)
-                        .Take(countOfMarketsToTake)
-                        .Select(m => Convert.ToInt32(m.market_code))
-                        .ToList());
             }
         }
     }

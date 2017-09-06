@@ -1,11 +1,9 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using Services.Broadcast.Aggregates;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations.Model;
 using System.Linq;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -86,19 +84,13 @@ namespace Services.Broadcast.BusinessEngines
             var ratingsAudienceMappings = _DataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>().GetRatingsAudiencesByMaestroAudience(scheduleAudiences.Select(x => x.Value).ToList());
             var uniqueRatingsAudiences = ratingsAudienceMappings.Select(x => x.rating_audience_id).Distinct().ToList();
 
-            //ratings are retrieved by media month for weekday or weekend
-            //split up the details further
-            var ratingsRepository = _DataRepositoryFactory.GetDataRepository<IRatingsRepository>();
-            //the last dimension of the ratings call is the station
-            var stations = bvsData.Select(x => x.Station).Distinct().ToList();
-
             var postUploadRepository = _DataRepositoryFactory.GetDataRepository<IPostRepository>();
-            var stationDetails = bvsData.Select(b => new StationDetailPointInTime()
+            var stationDetails = bvsData.Select(b => new StationDetailPointInTime
             {
                 Code = postUploadRepository.GetStationCode(b.Station).Value,
                 Id = b.BvsDetailId,
                 DayOfWeek = b.NsiDate.DayOfWeek,
-                TimeAired = b.TimeAired 
+                TimeAired = b.TimeAired
             }).ToList();
 
             var forecastRepo = _DataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
@@ -113,10 +105,10 @@ namespace Services.Broadcast.BusinessEngines
             //persist post results
             _DataRepositoryFactory.GetDataRepository<IBvsPostDetailsRepository>().SavePostDetails(postResults);
         }
-        private static IEnumerable<BvsPostDetailAudience> _GetPostResults(List<StationImpressionsWithAudience> ratings,
+        private static IEnumerable<BvsPostDetailAudience> _GetPostResults(IEnumerable<StationImpressionsWithAudience> ratings,
                                                                             IEnumerable<BvsPostDetail> bvsDetails,
                                                                             Dictionary<int, int> scheduleAudiences,
-                                                                            Dictionary<int, List<int>> customAudienceMappings)
+                                                                            IReadOnlyDictionary<int, List<int>> customAudienceMappings)
         {
             var ratingsDict = ratings.GroupBy(g => g.id)
                 .ToDictionary(k => k.Key,
