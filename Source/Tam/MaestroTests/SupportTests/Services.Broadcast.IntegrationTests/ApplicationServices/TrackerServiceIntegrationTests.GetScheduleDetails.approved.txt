@@ -14587,7 +14587,7 @@
     "Station": "WKMG-TV"
   },
   {
-    "DaypartId": 63343,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Orlando",
     "Program": "LATE LATE SHOW",
@@ -14605,7 +14605,7 @@
     "Station": "WKMG-TV"
   },
   {
-    "DaypartId": 63344,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Orlando",
     "Program": "THE INSIDER",
@@ -14695,7 +14695,7 @@
     "Station": "WKMG-TV"
   },
   {
-    "DaypartId": 63345,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Orlando",
     "Program": "HERE'S LUCY",
@@ -17755,7 +17755,7 @@
     "Station": "WPGH-TV"
   },
   {
-    "DaypartId": 63346,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Pittsburgh",
     "Program": "FOX NASCAR Sprint Series",
@@ -18601,7 +18601,7 @@
     "Station": "WPNT-TV"
   },
   {
-    "DaypartId": 63347,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Pittsburgh",
     "Program": "WBS Penquins Hockey: AHL Hockey - Bridgeport @ Wilkes Barre Penguins",
@@ -18610,7 +18610,7 @@
     "Station": "WPNT-TV"
   },
   {
-    "DaypartId": 63347,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Pittsburgh",
     "Program": "WBS Penquins Hockey: AHL Hockey - Providence @ Wilkes Barre Penguins",
@@ -19060,7 +19060,7 @@
     "Station": "KPTV-TV"
   },
   {
-    "DaypartId": 63348,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Portland, OR",
     "Program": "ACCESS HOLLYWOOD",
@@ -19069,7 +19069,7 @@
     "Station": "KRCW-TV"
   },
   {
-    "DaypartId": 63349,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Portland, OR",
     "Program": "HOW I MET YR MOTHER",
@@ -19087,7 +19087,7 @@
     "Station": "KRCW-TV"
   },
   {
-    "DaypartId": 63350,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Portland, OR",
     "Program": "HOW I MET YR MOTHER",
@@ -19105,7 +19105,7 @@
     "Station": "KRCW-TV"
   },
   {
-    "DaypartId": 63351,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Portland, OR",
     "Program": "FRIENDS",
@@ -19123,7 +19123,7 @@
     "Station": "KRCW-TV"
   },
   {
-    "DaypartId": 63352,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Portland, OR",
     "Program": "FRIENDS",
@@ -25303,7 +25303,7 @@
     "Station": "WMYA-TV"
   },
   {
-    "DaypartId": 63353,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Greenville-Spartanburg",
     "Program": "VARIOUS",
@@ -30028,7 +30028,7 @@
     "Station": "WBRC-TV"
   },
   {
-    "DaypartId": 63354,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Birmingham",
     "Program": "COPS RELOADED",
@@ -30082,7 +30082,7 @@
     "Station": "WBRC-TV"
   },
   {
-    "DaypartId": 63355,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Birmingham",
     "Program": "COPS RELOADED",
@@ -30181,7 +30181,7 @@
     "Station": "WBRC-TV"
   },
   {
-    "DaypartId": 63356,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Birmingham",
     "Program": "ABSOLUTELY AL",
@@ -32728,7 +32728,7 @@
     "Station": "WFOX-TV"
   },
   {
-    "DaypartId": 63357,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Jacksonville",
     "Program": "CELEBRITY NAME GAME",
@@ -32953,7 +32953,7 @@
     "Station": "WJXX-TV"
   },
   {
-    "DaypartId": 63358,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Jacksonville",
     "Program": "DIVORCE COURT",
@@ -33178,7 +33178,7 @@
     "Station": "ECWJ-TV"
   },
   {
-    "DaypartId": 63359,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Jacksonville",
     "Program": "Movie",
@@ -33187,7 +33187,7 @@
     "Station": "ECWJ-TV"
   },
   {
-    "DaypartId": 63360,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Jacksonville",
     "Program": "Movie",
@@ -33637,7 +33637,7 @@
     "Station": "WCWJ-TV"
   },
   {
-    "DaypartId": 63361,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Jacksonville",
     "Program": "1010XL Sports Update",
@@ -38200,7 +38200,7 @@
     "Station": "WEAR-TV"
   },
   {
-    "DaypartId": 63362,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Mobile",
     "Program": "NBA Playoffs Day",
@@ -38218,7 +38218,7 @@
     "Station": "WEAR-TV"
   },
   {
-    "DaypartId": 63363,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Mobile",
     "Program": "Rizzoli & Isles",
@@ -38263,7 +38263,7 @@
     "Station": "WEAR-TV"
   },
   {
-    "DaypartId": 63364,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Mobile",
     "Program": "NBA Finals",
@@ -39235,7 +39235,7 @@
     "Station": "WPMI-TV"
   },
   {
-    "DaypartId": 63365,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Mobile",
     "Program": "French Open",
@@ -44679,7 +44679,7 @@
     "Station": "GFXR-TV"
   },
   {
-    "DaypartId": 63366,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Roanoke-Lynchburg",
     "Program": "",
@@ -44715,7 +44715,7 @@
     "Station": "GFXR-TV"
   },
   {
-    "DaypartId": 63367,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Roanoke-Lynchburg",
     "Program": "",
@@ -44769,7 +44769,7 @@
     "Station": "GFXR-TV"
   },
   {
-    "DaypartId": 63368,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Roanoke-Lynchburg",
     "Program": "",
@@ -44778,7 +44778,7 @@
     "Station": "GFXR-TV"
   },
   {
-    "DaypartId": 63369,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Roanoke-Lynchburg",
     "Program": "",
@@ -44787,7 +44787,7 @@
     "Station": "GFXR-TV"
   },
   {
-    "DaypartId": 63370,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Roanoke-Lynchburg",
     "Program": "",
@@ -48646,7 +48646,7 @@
     "Station": "WGME-TV"
   },
   {
-    "DaypartId": 63371,
+    "DaypartId": 1,
     "DetailWeeks": [
       {
         "EndDate": "2016-06-05T00:00:00",
@@ -55251,7 +55251,7 @@
     "Station": "WJHL-TV"
   },
   {
-    "DaypartId": 63372,
+    "DaypartId": 1,
     "DetailWeeks": [],
     "Market": "Johnsn City-Kngsprt-Bristl",
     "Program": "SPORTS CONNECTION",

@@ -35,6 +35,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FileAccess.Read);
             request.UserName = "IntegrationTestUser";
             request.FileName = testName;
+            request.RatingBook = 416;
 
             var result = _ratesService.SaveRatesFile(request);
             return result.FileId;

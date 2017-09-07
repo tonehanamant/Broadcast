@@ -36,6 +36,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
 
                 _ratesService.SaveRatesFile(request);
             }
@@ -86,6 +87,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
                 request.RateSource = "Assembly";
+                request.RatingBook = 416;
+
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(RatesFileProblem), "AffectedProposals");
@@ -111,6 +114,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
                 request.RateSource = "Assembly";
+                request.RatingBook = 416;
+
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(RatesFileProblem), "AffectedProposals");
@@ -156,6 +161,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
                 request.RateSource = "Assembly";
+                request.RatingBook = 416;
+
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(RatesFileProblem), "AffectedProposals");
@@ -181,6 +188,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
                 request.RateSource = "Assembly";
+                request.RatingBook = 416;
+
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(RatesFileProblem), "AffectedProposals");
@@ -207,6 +216,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
                 request.RateSource = "Assembly";
+                request.RatingBook = 416;
+
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(RatesFileProblem), "AffectedProposals");
@@ -233,13 +244,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
                 request.RateSource = "Assembly";
-
-
-
-
-
-
-
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -268,6 +273,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
+
                 _ratesService.SaveRatesFile(request);
 
                 request2.RatesStream = new FileStream(
@@ -357,6 +364,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
 
                 _ratesService.SaveRatesFile(request);
                 var response = _ratesService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
@@ -390,6 +398,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
                 request.RateSource = "OpenMarket";
+                request.RatingBook = 416;
+
                 _ratesService.SaveRatesFile(request);
 
                 var stationDetails = _ratesService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
@@ -474,6 +484,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
                 request.RateSource = "OpenMarket";
+                request.RatingBook = 416;
+
                 _ratesService.SaveRatesFile(request);
 
                 var stationDetails = _ratesService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
@@ -642,6 +654,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
 
                 _ratesService.SaveRatesFile(request);
 
@@ -670,6 +683,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
                 _ratesService.SaveRatesFile(request);
 
                 var stationDetails = _ratesService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
@@ -789,6 +803,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
+
                 _ratesService.SaveRatesFile(request);
 
                 //then confirm the contacts are added
@@ -819,6 +835,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
+
                 _ratesService.SaveRatesFile(request);
                 request.RatesStream = new FileStream(
                     @".\Files\station_contact_update_rate_file_wvtm.xml",
@@ -972,6 +990,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
                 request.FileName = "unknown_station_rate_file_zyxw.xml";
+                request.RatingBook = 416;
+
                 _ratesService.SaveRatesFile(request);
 
             }
@@ -991,6 +1011,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
                 request.FileName = "known_and_unknown_station_rate_file_zyxw.xml";
+                request.RatingBook = 416;
+
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(RatesFileSaveResult), "FileId");
@@ -1019,6 +1041,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
                 request.FileName = "unknown_spot_length_rate_file_wvtm.xml";
+                request.RatingBook = 416;
+
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(RatesFileSaveResult), "FileId");
@@ -1046,6 +1070,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
                 request.FileName = "programs_without_rates_or_flights_wvtm.xml";
+                request.RatingBook = 416;
+
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(RatesFileSaveResult), "FileId");
@@ -1074,6 +1100,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 request.UserName = "ThrowsExceptionWhenLoadingBadXmlFile";
                 request.FileName = "rate-file-invalid-schema.xml";
+                request.RatingBook = 416;
+
                 _ratesService.SaveRatesFile(request);
             }
         }
@@ -1092,6 +1120,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
+
                 _ratesService.SaveRatesFile(request);
 
                 var stationDetails = _ratesService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
@@ -1153,6 +1183,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
+
                 _ratesService.SaveRatesFile(request);
 
                 var stationDetails = _ratesService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
@@ -1209,7 +1241,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         @".\Files\end_program_flight_file_wvtm.xml",
                         FileMode.Open,
                         FileAccess.Read),
-                    UserName = "IntegrationTestUser"
+                    UserName = "IntegrationTestUser",
+                    RatingBook = 416
                 };
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1263,8 +1296,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         @".\Files\end_program_flight_file_wvtm.xml",
                         FileMode.Open,
                         FileAccess.Read),
-                    UserName = "IntegrationTestUser"
-                };
+                    UserName = "IntegrationTestUser",
+                    RatingBook = 416
+            };
 
                 _ratesService.SaveRatesFile(request);
                 var stationCodeWVTM = 1027;
@@ -1287,8 +1321,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         @".\Files\end_program_flight_file_wvtm.xml",
                         FileMode.Open,
                         FileAccess.Read),
-                    UserName = "IntegrationTestUser"
-                };
+                    UserName = "IntegrationTestUser",
+                    RatingBook = 416
+            };
 
                 _ratesService.SaveRatesFile(request);
                 var stationCodeWVTM = 1027;
@@ -1320,7 +1355,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         @".\Files\program_rate_over24h_wvtm.xml",
                         FileMode.Open,
                         FileAccess.Read),
-                    UserName = "IntegrationTestUser"
+                    UserName = "IntegrationTestUser",
+                    RatingBook = 416
                 };
 
                 _ratesService.SaveRatesFile(request);
@@ -1347,8 +1383,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         FileMode.Open,
                         FileAccess.Read),
                     UserName = "IntegrationTestUser",
-                    FileName = "simple_period_rate_file_wvtm.xml"
-                };
+                    FileName = "simple_period_rate_file_wvtm.xml",
+                    RatingBook = 416
+            };
 
                 _ratesService.SaveRatesFile(request);
                 var result = _ratesService.GetStationDetailByCode("OpenMarket", stationCodeWVTM).Rates.Where(p => p.Program == "Simple Period News").ToList();
@@ -1379,8 +1416,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         @".\Files\station_program_overlapping_flights_wvtm.xml", 
                         FileMode.Open, 
                         FileAccess.Read),
-                    UserName = "IntegrationTestUser"
-                };
+                    UserName = "IntegrationTestUser",
+                    RatingBook = 416
+            };
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(RatesFileSaveResult), "FileId");
@@ -1411,6 +1449,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
+
                 _ratesService.SaveRatesFile(request);
 
                 var stationDetails = _ratesService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
@@ -1481,6 +1521,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
 
                 _ratesService.SaveRatesFile(request);
 
@@ -1516,6 +1557,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
 
                 _ratesService.SaveRatesFile(request);
 
@@ -1578,6 +1620,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 10, 31);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 Assert.IsEmpty(result.Problems);
@@ -1609,6 +1652,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1647,6 +1691,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 _ratesService.SaveRatesFile(request);
 
@@ -1689,6 +1734,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1727,6 +1773,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1766,6 +1813,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1844,6 +1892,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1882,6 +1931,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 _ratesService.SaveRatesFile(request);
 
@@ -1933,6 +1983,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 _ratesService.SaveRatesFile(request);
 
@@ -2023,6 +2074,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 Assert.IsEmpty(result.Problems);
@@ -2175,6 +2227,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 Assert.IsEmpty(result.Problems);
@@ -2206,6 +2259,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
 
@@ -2245,6 +2299,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2282,6 +2337,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2319,6 +2375,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
             }
@@ -2348,6 +2405,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
             }
@@ -2407,6 +2465,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2445,6 +2504,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2521,6 +2581,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
             }
@@ -2580,6 +2641,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
             }
@@ -2610,6 +2672,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
             }
@@ -2639,6 +2702,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
             }
@@ -2728,6 +2792,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
             }
@@ -2757,6 +2822,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
             }
@@ -2786,6 +2852,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2863,6 +2930,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2900,6 +2968,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2937,6 +3006,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -3070,6 +3140,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 10, 31);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
+
                 _ratesService.SaveRatesFile(request);
                 var stationRates = _ratesService.GetStationDetailByCode("CNN", 1039);
 
@@ -3153,6 +3225,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -3192,6 +3265,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -3229,6 +3303,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 Assert.IsEmpty(result.Problems);
@@ -3292,6 +3367,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 Assert.IsEmpty(result.Problems);
@@ -3382,6 +3458,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2017, 11, 06);
                 request.FlightStartDate = new DateTime(2017, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
 
@@ -3455,6 +3532,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
                 
@@ -3492,6 +3570,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2017, 11, 06);
                 request.FlightStartDate = new DateTime(2017, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
 
@@ -3567,6 +3646,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
 
@@ -3598,7 +3678,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
-
+                request.RatingBook = 416;
+                
                 var result = _ratesService.SaveRatesFile(request);
 
                 Assert.IsEmpty(result.Problems);
@@ -3629,6 +3710,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var result = _ratesService.SaveRatesFile(request);
 
@@ -3697,6 +3779,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2017, 04, 02);
                 request.FlightStartDate = new DateTime(2017, 04, 08);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var stationBeforeUpdate = _stationProgramRepository.GetStationProgramById(320136);
 
