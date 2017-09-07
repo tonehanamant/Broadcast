@@ -4,18 +4,14 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     activeInventoryData: null,
     //separate storage of edited records so can reset grid record state after changes (sort, filter); use for saving independent of what is displayed in grids
     activeProgramEditItems: [], //array of pending edit items
-    //activeDetailSet: null,
+    activeDetailSet: null,
     //isActive: false,
     openMarketsGrid: null,
     weeksLength: null,
-    //programsGrid: null,
-    //programsHeaderGrid: null,
-    //inventoryWeekGrids: [],
-    //inventoryWeekHeaderGrids: [],
-    //ProposalView: null,
-    //OpenMarketVM: null,
-    //CriteriaBuilderVM: null,
-    //FilterVM: null,
+    ProposalView: null,
+    OpenMarketVM: null,
+    CriteriaBuilderVM: null,
+    FilterVM: null,
     isReadOnly: false,
     bypassCheckSave: false,
     $Modal: null,
@@ -27,7 +23,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
                                         '<i class="fa fa-money" aria-hidden="true"></i> ${ weekBudget }/${ budget } <span class="label ${ budgetMarginClass } custom-label">${budgetPercent} %</span>' +
                                    '</div>'),
     isMarketSortName: false,
-    //marketSortIndexMap: [], //index of active markets sort - determined from programs market data; used for sorting weeks (name or rank)
+    marketSortIndexMap: [], //index of active markets sort - determined from programs market data; used for sorting weeks (name or rank)
 
     initView: function (view) {
         var self = this;
@@ -191,9 +187,9 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     },
 
     //SORTING strategy is to change activeInventory (markets sort in Markets and Weeks/Markets) and reset grids; store changed records separately from grids for reset states
-    /*
+
     setMarketSort: function (isName) {
-        this.isMarketSortName = isName;//need? just check vm?
+        this.isMarketSortName = isName;
 
         //check to see needs sorting if more than 1 market
         if (this.activeInventoryData.Markets.length > 1) {
@@ -206,7 +202,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
     
     //to change inventory Markets - Weeks Markets sorted
-    //will need top process as filteredInventoryData or as activeInventoryData in the future; rank or name?
+   
     changeInventoryDataForSort: function (inventory, isName) {
 
         var sortedProgramMarkets = this.getProgramsMarketsSort(inventory.Markets, isName);//also creates map
@@ -237,9 +233,6 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         }
         return sortedMarkets;
     },
-
-    */
-
 
     //REVISE combined grid
 
@@ -277,8 +270,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         var ret = [];
         $.each(markets, function (mIdx, market) {
             ret.push($scope.getProgramsMarketRow(market));
-            //intercept this data if activeField sorting is on
-            //var stationPrograms = $scope.checkStationsSortData(market.DisplayProposalStationPrograms);
+         
             var stationPrograms = market.Stations;
             $.each(stationPrograms, function (sIdx, station) {
                 ret.push($scope.getProgramsStationRow(station));
@@ -348,7 +340,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
 
 
-    //TBD - get the market part for a week record
+    //get the market part for a week record
     getWeekMarketItem: function (market, isHiatus) {
         var ret = {
             Cost: market.Cost,
@@ -620,7 +612,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         if (this.checkUnsavedSpots) {
             var $scope = this;
             $.each(this.activeProgramEditItems, function (idx, programItem) {
-                var gridRec = this.openMarketsGrid.get(programItem.recid);
+                var gridRec = $scope.openMarketsGrid.get(programItem.recid);
                 if (gridRec) {
                     //restore initialSpots, isChanged
                     //get all changes from programItem weeks
@@ -697,9 +689,9 @@ var ProposalDetailOpenMarketView = BaseView.extend({
                     //TBD - scroll, sorting
                    $scope.recordLastScrollPosition();
 
-                    //if ($scope.isMarketSortName) {
-                    //    inventory = $scope.changeInventoryDataForSort(inventory, true);
-                    //}
+                    if ($scope.isMarketSortName) {
+                        inventory = $scope.changeInventoryDataForSort(inventory, true);
+                    }
 
                     $scope.refreshInventory(inventory, true, false);
                 } else {
@@ -717,282 +709,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         }
     },
 
-    /*
-    //tbd- editing etc
-
-    //ORIGINAL
-    setWeekGridEvents: function (grid) {
-        grid.on('click', this.onSpotsGridClick.bind(this, grid));
-    },
-
-    //SPOT EDITING RELATED - adapt from original implementation
-    //Need to separate storage of changes on grid records as may be reset on sort/filter; store separately and reset as needed (grid records now primarilly set for display state)
-
-    //user clicks grid: enable edit if spots column and not active/already editing
-    onSpotsGridClick: function (grid, event) {
-            //use this with modulus  columns to get sets of 3 OR set specific click event?
-
-        if (event.column === null || this.activeEditingRecord) {
-            return;
-        }
-
-        if (event.column == 0) {//spots column
-            var record = grid.get(event.recid);
-            //record needs to be program with a Id (saved)
-            if (record && record.isProgram && record.active && !record.isHiatus) {
-                console.log('edit grid click', record, event);
-                this.setEditSpot(record, event, grid);
-            } else {
-                return;
-            }
-
-        } else {
-            return;
-        }
-    },
-
-    //set spot in row for inline editing; handle eveents
-    setEditSpot: function (record, clickevent, grid) {
-        //make selector specific to grid?
-        var editTarget = $('#program_week_spot_' + record.recid);
-
-        if (editTarget.length && !editTarget.hasClass('is-editing')) {
-            this.activeEditingRecord = record;
-            editTarget.addClass("is-editing");
-            var $scope = this;
-            //timeout to prevent blur event call initially
-            //TODO change this out to new w2ui format used elsewhere
-            setTimeout(function () {
-                var input = editTarget.find(".edit-input");
-                input.show();
-                var spotval = record.Spots || 0;
-                input.val(spotval);
-                input.focus();
-
-                input.keypress(function (event) {
-                    // value = this.value.replace(/[^0-9\.]/g, '');
-                    //value = value >= 999 ? 999 : value < 0 ? 0 : value;
-                    // (this.value != value) {
-                    // this.value = value;
-                    //}
-                    //console.log('press', event);
-                    //some browsers use keyCode - deprecating charCode?
-                    return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
-                    //return (event.keyCode == 8 || event.keyCode == 0) ? null : event.keyCode >= 48 && event.keyCode <= 57;
-                });
-                input.keydown(function (event) {
-                    if (event.keyCode === 9) {//TAB
-                        event.preventDefault();
-                        //var nextCell = $("#rate-" + record.recid);
-                        //nextCell.click();
-                        //nextCell.find("input").focus();
-                        input.blur();
-                    } else if (event.keyCode === 13) { //ENTER
-                        event.preventDefault();
-                        //use blur event so not called twice
-                        input.blur();
-
-                    }
-                });
-                input.blur(function (event) {
-                    // setTimeout(function () {
-                    this.onEditSpot(editTarget, input, record, grid);
-                    //input.off("keyup");
-                    input.off("keypress");
-                    input.off("keydown");
-                    input.off("blur");
-                    // }.bind($scope), 50);
-                }.bind($scope));
-
-            }, 300);
-
-            //input.focus();//focus here else cause issues calling event too soon - but only works chrome
-        }
-
-    },
-
-    //after a spot is edited send to api; handle return to update row and states
-    //set back if user sets no value
-    onEditSpot: function (editTarget, input, record, grid) {
-        var spotVal = parseInt(input.val());
-        var currentVal = record.Spots;
-        // console.log('onEditSpot', spotVal);
-        //if val is same as record or empty then end the edit - no API call//else make the api call and end the edit after success/failure
-        if ((spotVal || (spotVal === 0)) && (spotVal !== currentVal)) {
-            //console.log('call api');
-            var $scope = this;
-            //temporary
-            this.updateEditSpot(record, spotVal, grid);
-            this.endEditSpot(editTarget, input);
-
-        } else {
-            this.endEditSpot(editTarget, input);
-        }
-    },
-
-
-    //set active data with change, record with changes - call update totals
-    //check of actual change versus initial spot
-    updateEditSpot: function (rec, spotVal, grid) {
-        var $scope = this;
-
-        var weekDataItem = $scope.activeInventoryData.Weeks[rec.weekGridIndex];
-        var marketDataItem = weekDataItem.Markets[rec.marketDataIdx];
-        var stationDataItem = marketDataItem.Stations[rec.stationDataIdx];
-        var programDataItem = stationDataItem.Programs[rec.programDataIdx];
-
-        if (programDataItem) {
-            programDataItem.Spots = spotVal;
-            var changes = { Spots: spotVal, isChanged: true };
-
-            if (spotVal == rec.initialSpots) {
-                changes.isChanged = false;
-            }
-
-            grid.set(rec.recid, changes);
-
-            //separated storage with check if changed
-            this.storeEditedSpotRecord(rec);
-
-            // update entry on original inventory
-            var originalWeek = _.find($scope.ProposalView.openMarketInventory.Weeks, ['MediaWeekId', weekDataItem.MediaWeekId]);
-            $.each(originalWeek.Markets, function (mIdx, market) {
-                $.each(market.Stations, function (sIdx, station) {
-                    $.each(station.Programs, function (pIdx, program) {
-                        if (program) {
-                            if (program.ProgramId == programDataItem.ProgramId) {
-                                program.Spots = rec.Spots;
-                            }
-                        }
-                    });
-                });
-            });
-
-            //general flag to look for changes
-            grid.checkChanges = true;
-            var params = $scope.activeInventoryData;
-            this.ProposalView.controller.apiUpdateInventoryOpenMarketTotals(params, function (response) {
-                $scope.onUpdateEditSpot(response, rec, grid);
-            });
-        }
-    },
-
-    //update totals, rows etc - set new activeInventoryData
-    onUpdateEditSpot: function (inventoryData, rec, grid) {
-        var week = inventoryData.Weeks[rec.weekGridIndex];
-        var marketDataItem = week.Markets[rec.marketDataIdx];
-        var programDataItem = marketDataItem.Stations[rec.stationDataIdx].Programs[rec.programDataIdx];
-
-        //update header totals
-        this.OpenMarketVM.setInventory(inventoryData, this.isReadOnly);
-
-        //update grid week header
-        this.updateWeekColumnGroups(week);
-
-        //update market row
-        grid.set('market_week_' + rec.MarketId, { Spots: marketDataItem.Spots, Cost: marketDataItem.Cost, Impressions: marketDataItem.Impressions });
-
-        //update program row (spots already set)
-        grid.set(rec.recid, { Cost: programDataItem.Cost, TotalImpressions: programDataItem.TotalImpressions });
-
-        //reset with new data
-        this.activeInventoryData = inventoryData;
-    },
-
-    //end spot editing; hide input; remove class and allow editing again
-    endEditSpot: function (editTarget, input) {
-        input.hide();
-        editTarget.removeClass("is-editing");
-        this.activeEditingRecord = null;
-    },
-
-    ///////////// EDITNG STORAGE/CHECK/RESET
-
-    // update 'activeEditWeekRecords' array
-    storeEditedSpotRecord: function (rec) {
-        var match = _.find(this.activeEditWeekRecords, ['recid', rec.recid]);
-
-        if (match) {
-            if (match.isChanged) {
-                var index = _.indexOf(this.activeEditWeekRecords, match);
-                this.activeEditWeekRecords.splice(index, 1, rec);
-            }
-        } else {
-            this.activeEditWeekRecords.push(rec);
-        }
-    },
-
-    //on grid refreshes (sort, onClearInventoryfilter, etc) set back the states of edited records - if filtered out of grids will not change
-    resetEditedGridRecords: function () {
-        if (this.checkUnsavedSpots) {
-            var $scope = this;
-            $.each(this.activeEditWeekRecords, function (idx, programRec) {
-                var grid = $scope.inventoryWeekGrids[programRec.weekGridIndex];
-                var gridRec = grid.get(programRec.recid);
-                if (gridRec) {
-                    //restore initialSpots, isChanged
-                    grid.set(gridRec.recid, { initialSpots: programRec.initialSpots, isChanged: programRec.isChanged }); //force true?
-                }
-            });
-        }
-    },
-    */
-    ///////////// SAVE INVENTORY
-    /*
-    checkUnsavedSpots: function () {
-        return this.activeProgramEditItems.length >= 1;
-    },
-
-    getParamsForSave: function () {
-        var params = {
-            ProposalVersionDetailId: this.activeInventoryData.DetailId,
-            Weeks: []
-        };
-
-        if (this.checkUnsavedSpots) {
-            //partitions: breaks into week groups map and then values to arrays [[program, program], [program]]
-            //use values array or each on the groupBy?
-            var partitionedByWeek = _.values(_.groupBy(this.activeEditWeekRecords, 'MediaWeekId'));
-            $.each(partitionedByWeek, function (pidx, items) {
-                var week = {
-                    MediaWeekId: items[0].MediaWeekId,
-                    Programs: []
-                };
-                $.each(items, function (ridx, rec) {
-                    //should be all isChanged
-                    if (rec.isChanged) {
-                        week.Programs.push({ ProgramId: rec.ProgramId, Spots: rec.Spots, Impressions: rec.TotalImpressions });
-                    }
-                });
-                params.Weeks.push(week);
-            });
-        }
-
-        params.Filter = this.ProposalView.openMarketInventory.Filter;
-        return params;
-    },
-
-    //handle after save apply - refresh based on potential sorting; clear activeEditWeekRecords, filtering etc
-    onAfterSaveApply: function (detailId) {
-        var $scope = this;
-        $scope.recordLastScrollPosition();
-        $scope.ProposalView.controller.apiGetProposalOpenMarketInventory(detailId, function (inventory) {
-            //check if needs sorting (filtering future)
-            if ($scope.isMarketSortName) {
-                inventory = $scope.changeInventoryDataForSort(inventory, true);
-            }
-            this.activeProgramEditItems = [];//clear
-            $scope.refreshInventory(inventory, false, false);
-        }, true);
-    },
-
-    */
-
-
     
-
-
-    //REVISE
     //clear inventory ; reset
     onClearInventory: function (reset) {
 
@@ -1026,7 +743,6 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
     },
 
-    /*
     hasFiltersApplied: function () {
         return this.FilterVM.criteriaList().length > 0 || this.OpenMarketVM.selectedSpotFilterOption() != 1;
     },
@@ -1057,5 +773,4 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         });
     }
 
-    */
 });

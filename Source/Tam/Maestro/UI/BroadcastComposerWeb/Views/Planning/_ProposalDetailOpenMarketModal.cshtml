@@ -109,46 +109,41 @@
             </div>
 
             <div class="modal-body">
+                <div style="width: 560px;">
+                    <div class="header-row row">
+                        <div class="col-xs-5">
+                            <button id="refine_programs" class="btn btn-success btn-sm" type="button" formnovalidate="formnovalidate" data-bind="click: openCriteriaBuilder">Refine Programs</button>
+                            <button class="btn btn-success btn-sm" type="button" formnovalidate="formnovalidate">Distribute</button>
+                        </div>
 
-                <div class="header-row row" style="margin-top: 10px;">
-                    <div class="col-md-4">
-                        Grid Header: Refine | Distribute | Filters...
-                    </div>
-                </div>
-                @*//TODO revise for new structure
-                <div class="header-row row">
-                    <div class="col-xs-5">
-                        <button id="refine_programs" class="btn btn-success btn-sm" type="button" formnovalidate="formnovalidate" data-bind="click: openCriteriaBuilder">Refine Programs</button>
-                        <button class="btn btn-success btn-sm" type="button" formnovalidate="formnovalidate">Distribute</button>
-                    </div>
+                        <div class="col-xs-7">
+                            <div id="filter_controls">
+                                <span id="filter_icon" class="glyphicon glyphicon-filter" aria-hidden="true" data-bind="style: { color: hasFiltersApplied() ? 'orange' : '#999' }"></span>
 
-                    <div class="col-xs-7">
-                        <div id="filter_controls">
-                            <span id="filter_icon" class="glyphicon glyphicon-filter" aria-hidden="true" data-bind="style: { color: hasFiltersApplied() ? 'orange' : '#999' }"></span>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-btn">
+                                        <button id="proposal_grid_search_btn" class="btn btn-info" role="button" data-bind="click: openFilter">
+                                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                        </button>
+                                    </span>
 
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-btn">
-                                    <button id="proposal_grid_search_btn" class="btn btn-info" role="button" data-bind="click: openFilter">
-                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                    </button>
-                                </span>
+                                    <select id="select_spot_filter" class="form-control input-sm" data-bind="options: spotFilterOptions, optionsText: 'Display', optionsValue: 'Id', value: selectedSpotFilterOption"></select>
 
-                                <select id="select_spot_filter" class="form-control input-sm" data-bind="options: spotFilterOptions, optionsText: 'Display', optionsValue: 'Id', value: selectedSpotFilterOption"></select>
+                                    <div id="additional_option_menu" style="margin-right: 6px;" class="btn-group btn-group-sm">
+                                        <a class="btn btn-default btn-xs dropdown-toggle" data-target="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                                        </a>
 
-                                <div id="additional_option_menu" style="margin-right: 6px;" class="btn-group btn-group-sm">
-                                    <a class="btn btn-default btn-xs dropdown-toggle" data-target="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
-                                    </a>
-
-                                    <ul id="additional_option_menu_dropdown" class="dropdown-menu dropdown-menu-right">
-                                        <li data-bind="click:  toggleMarketSort.bind($data, true)"><a href="#"><i class="glyphicon glyphicon-ok sort_icon" data-bind="visible: isMarketSortName()"></i> Sort by Market Name</a></li>
-                                        <li data-bind="click:  toggleMarketSort.bind($data, false)"><a href="#"><i class="glyphicon glyphicon-ok sort_icon" data-bind="visible: !isMarketSortName()"></i> Sort by Market Rank</a></li>
-                                    </ul>
+                                        <ul id="additional_option_menu_dropdown" class="dropdown-menu dropdown-menu-right">
+                                            <li data-bind="click:  toggleMarketSort.bind($data, true)"><a href="#"><i class="glyphicon glyphicon-ok sort_icon" data-bind="visible: isMarketSortName()"></i> Sort by Market Name</a></li>
+                                            <li data-bind="click:  toggleMarketSort.bind($data, false)"><a href="#"><i class="glyphicon glyphicon-ok sort_icon" data-bind="visible: !isMarketSortName()"></i> Sort by Market Rank</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>*@
+                </div>
 
                 <div id="openmarkets_grid"></div>
             </div>
