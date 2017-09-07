@@ -147,7 +147,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var file = postUploadRepository.GetPostEF(fileId);
                 file.equivalized = true;
-                file.posting_book_id = 123;
+                file.posting_book_id = 416;
                 file.post_file_demos = new List<post_file_demos> { new post_file_demos { demo = 1 } };
                 file.playback_type = (byte)ProposalEnums.ProposalPlaybackType.Live;
                 file.modified_date = DateTime.Today;

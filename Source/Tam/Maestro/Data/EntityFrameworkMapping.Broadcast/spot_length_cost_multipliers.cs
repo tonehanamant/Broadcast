@@ -17,5 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public int spot_length_id { get; set; }
         public double cost_multiplier { get; set; }
+    
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }

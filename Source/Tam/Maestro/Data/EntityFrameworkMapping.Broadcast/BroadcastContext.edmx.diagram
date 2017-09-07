@@ -106,6 +106,40 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_versions_proposals" />
         <EntityTypeShape EntityType="BroadcastModel.station_program_flight_audiences" Width="1.5" PointX="18" PointY="12.125" />
         <AssociationConnector Association="BroadcastModel.FK_station_program_flight_audiences_station_program_flights" />
+        <AssociationConnector Association="BroadcastModel.FK_audience_audiences_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_bvs_post_details_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_post_file_detail_impressions_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_audiences_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_schedule_audiences_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_schedule_detail_audiences_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_station_program_flight_audiences_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_bvs_file_details_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slot_components_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slots_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_schedule_details_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_station_programs_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slots_media_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slots_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_media_weeks_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_post_files_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_hut_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_share_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_single_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_rate_files_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_rating_adjustments_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_schedules_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_media_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_flight_weeks_media_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_schedule_detail_weeks_media_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_station_program_flights_media_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_post_file_details_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_spot_length_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_proposals_proposal_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_schedule_details_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_length_cost_multipliers_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_station_programs_spot_lengths" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

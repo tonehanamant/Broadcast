@@ -20,5 +20,6 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<byte> rank { get; set; }
     
         public virtual proposal_versions proposal_versions { get; set; }
+        public virtual audience audience { get; set; }
     }
 }

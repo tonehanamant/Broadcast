@@ -17,5 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public byte rating_category_group_id { get; set; }
         public int custom_audience_id { get; set; }
         public int rating_audience_id { get; set; }
+    
+        public virtual audience audience { get; set; }
     }
 }

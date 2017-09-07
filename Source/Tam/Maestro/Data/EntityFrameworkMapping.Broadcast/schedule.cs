@@ -43,5 +43,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<schedule_iscis> schedule_iscis { get; set; }
         public virtual ICollection<schedule_restriction_dayparts> schedule_restriction_dayparts { get; set; }
         public virtual ICollection<market> markets { get; set; }
+        public virtual media_months media_months { get; set; }
     }
 }

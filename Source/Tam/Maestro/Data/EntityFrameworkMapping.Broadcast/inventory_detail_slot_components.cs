@@ -23,5 +23,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual inventory_detail_slots inventory_detail_slots { get; set; }
         public virtual station_program_flights station_program_flights { get; set; }
         public virtual station station { get; set; }
+        public virtual daypart daypart { get; set; }
     }
 }

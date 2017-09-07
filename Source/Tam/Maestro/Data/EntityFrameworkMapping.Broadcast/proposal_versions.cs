@@ -21,6 +21,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_flight_weeks = new HashSet<proposal_version_flight_weeks>();
             this.proposal_version_markets = new HashSet<proposal_version_markets>();
             this.proposal_version_spot_length = new HashSet<proposal_version_spot_length>();
+            this.proposals = new HashSet<proposal>();
         }
     
         public int id { get; set; }
@@ -53,5 +54,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_version_markets> proposal_version_markets { get; set; }
         public virtual ICollection<proposal_version_spot_length> proposal_version_spot_length { get; set; }
         public virtual proposal proposal { get; set; }
+        public virtual ICollection<proposal> proposals { get; set; }
     }
 }

@@ -19,5 +19,6 @@ namespace EntityFrameworkMapping.Broadcast
         public double impression { get; set; }
     
         public virtual post_file_details post_file_details { get; set; }
+        public virtual audience audience { get; set; }
     }
 }

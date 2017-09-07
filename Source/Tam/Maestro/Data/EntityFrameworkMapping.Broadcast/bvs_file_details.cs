@@ -49,5 +49,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual bvs_files bvs_files { get; set; }
         public virtual schedule_detail_weeks schedule_detail_weeks { get; set; }
         public virtual ICollection<bvs_post_details> bvs_post_details { get; set; }
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }

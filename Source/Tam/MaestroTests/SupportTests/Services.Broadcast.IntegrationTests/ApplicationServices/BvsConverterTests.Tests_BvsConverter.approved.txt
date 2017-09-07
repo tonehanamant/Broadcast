@@ -27,6 +27,7 @@
       "schedule_detail_weeks": null,
       "spot_length": 30,
       "spot_length_id": 1,
+      "spot_lengths": null,
       "station": "WMOR",
       "status": 0,
       "time_aired": 32932
@@ -58,6 +59,7 @@
       "schedule_detail_weeks": null,
       "spot_length": 30,
       "spot_length_id": 1,
+      "spot_lengths": null,
       "station": "KTVK",
       "status": 0,
       "time_aired": 33702
@@ -89,6 +91,7 @@
       "schedule_detail_weeks": null,
       "spot_length": 30,
       "spot_length_id": 1,
+      "spot_lengths": null,
       "station": "KPLR",
       "status": 0,
       "time_aired": 34617
@@ -120,6 +123,7 @@
       "schedule_detail_weeks": null,
       "spot_length": 30,
       "spot_length_id": 1,
+      "spot_lengths": null,
       "station": "WAXN",
       "status": 0,
       "time_aired": 34170
@@ -151,6 +155,7 @@
       "schedule_detail_weeks": null,
       "spot_length": 30,
       "spot_length_id": 1,
+      "spot_lengths": null,
       "station": "KPDX",
       "status": 0,
       "time_aired": 35918
@@ -182,6 +187,7 @@
       "schedule_detail_weeks": null,
       "spot_length": 30,
       "spot_length_id": 1,
+      "spot_lengths": null,
       "station": "KPLR",
       "status": 0,
       "time_aired": 34617

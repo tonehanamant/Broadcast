@@ -35,5 +35,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<schedule_detail_audiences> schedule_detail_audiences { get; set; }
         public virtual ICollection<schedule_detail_weeks> schedule_detail_weeks { get; set; }
         public virtual schedule schedule { get; set; }
+        public virtual daypart daypart { get; set; }
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }

@@ -20,5 +20,6 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> audience_rank { get; set; }
     
         public virtual bvs_file_details bvs_file_details { get; set; }
+        public virtual audience audience { get; set; }
     }
 }

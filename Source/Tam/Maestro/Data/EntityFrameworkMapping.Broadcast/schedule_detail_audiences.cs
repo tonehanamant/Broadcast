@@ -22,5 +22,6 @@ namespace EntityFrameworkMapping.Broadcast
         public double impressions { get; set; }
     
         public virtual schedule_details schedule_details { get; set; }
+        public virtual audience audience { get; set; }
     }
 }

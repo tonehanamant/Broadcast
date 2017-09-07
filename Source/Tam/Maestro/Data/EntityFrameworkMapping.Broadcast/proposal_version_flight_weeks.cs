@@ -22,5 +22,6 @@ namespace EntityFrameworkMapping.Broadcast
         public bool active { get; set; }
     
         public virtual proposal_versions proposal_versions { get; set; }
+        public virtual media_weeks media_weeks { get; set; }
     }
 }

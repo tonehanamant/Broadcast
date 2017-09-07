@@ -29,5 +29,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<bvs_file_details> bvs_file_details { get; set; }
         public virtual schedule_details schedule_details { get; set; }
+        public virtual media_weeks media_weeks { get; set; }
     }
 }

@@ -21,5 +21,6 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> rank { get; set; }
     
         public virtual schedule schedule { get; set; }
+        public virtual audience audience { get; set; }
     }
 }

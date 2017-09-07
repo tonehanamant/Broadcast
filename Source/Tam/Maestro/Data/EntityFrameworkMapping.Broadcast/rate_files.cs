@@ -35,5 +35,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_contacts> station_contacts { get; set; }
         public virtual ICollection<station_contacts> station_contacts1 { get; set; }
         public virtual ICollection<station_programs> station_programs { get; set; }
+        public virtual media_months media_months { get; set; }
     }
 }

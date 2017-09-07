@@ -486,6 +486,325 @@ END
 GO
 -- END BCOP-1767 --
 
+/*************************************** BCOP-1693 - START ***************************************************/
+
+IF (OBJECT_ID('FK_post_files_media_months', 'F') IS NULL)
+BEGIN
+    ALTER TABLE post_files   
+	ADD CONSTRAINT FK_post_files_media_months 
+	FOREIGN KEY (posting_book_id)     
+    REFERENCES media_months (id) 
+END
+
+IF (OBJECT_ID('FK_proposal_version_audiences_audiences', 'F') IS NULL)
+BEGIN
+    ALTER TABLE proposal_version_audiences   
+	ADD CONSTRAINT FK_proposal_version_audiences_audiences
+	FOREIGN KEY (audience_id)     
+    REFERENCES audiences (id) 
+END
+
+IF (OBJECT_ID('FK_proposal_version_detail_quarter_weeks_media_weeks', 'F') IS NULL)
+BEGIN
+    ALTER TABLE proposal_version_detail_quarter_weeks   
+	ADD CONSTRAINT FK_proposal_version_detail_quarter_weeks_media_weeks
+	FOREIGN KEY (media_week_id)     
+    REFERENCES media_weeks (id) 
+END   
+
+IF (OBJECT_ID('FK_proposal_version_details_spot_lengths', 'F') IS NULL)
+BEGIN
+    ALTER TABLE proposal_version_details   
+	ADD CONSTRAINT FK_proposal_version_details_spot_lengths
+	FOREIGN KEY (spot_length_id)     
+    REFERENCES dbo.spot_lengths (id) 
+END   
+
+IF (OBJECT_ID('FK_proposal_version_details_dayparts', 'F') IS NULL)
+BEGIN
+    ALTER TABLE proposal_version_details   
+	ADD CONSTRAINT FK_proposal_version_details_dayparts
+	FOREIGN KEY (daypart_id)     
+    REFERENCES dbo.dayparts (id) 
+END   
+
+--early development of single/hut/share books was using -1 as a placeholder for hut book instead of null
+--this fixes that
+UPDATE dbo.proposal_version_details
+SET hut_posting_book_id = NULL, share_posting_book_id = NULL
+WHERE single_posting_book_id IS NOT NULL
+
+IF (OBJECT_ID('FK_proposal_version_details_single_media_months', 'F') IS NULL)
+BEGIN
+    ALTER TABLE proposal_version_details   
+	ADD CONSTRAINT FK_proposal_version_details_single_media_months
+	FOREIGN KEY (single_posting_book_id)     
+    REFERENCES dbo.media_months (id) 
+END   
+
+IF (OBJECT_ID('FK_proposal_version_details_hut_media_months', 'F') IS NULL)
+BEGIN
+    ALTER TABLE proposal_version_details   
+	ADD CONSTRAINT FK_proposal_version_details_hut_media_months
+	FOREIGN KEY (hut_posting_book_id)     
+    REFERENCES dbo.media_months (id) 
+END  
+
+IF (OBJECT_ID('FK_proposal_version_details_share_media_months', 'F') IS NULL)
+BEGIN
+    ALTER TABLE proposal_version_details   
+	ADD CONSTRAINT FK_proposal_version_details_share_media_months
+	FOREIGN KEY (share_posting_book_id)     
+    REFERENCES dbo.media_months (id) 
+END  
+
+IF (OBJECT_ID('FK_proposal_version_flight_weeks_media_weeks', 'F') IS NULL)
+BEGIN
+    ALTER TABLE proposal_version_flight_weeks   
+	ADD CONSTRAINT FK_proposal_version_flight_weeks_media_weeks
+	FOREIGN KEY (media_week_id)     
+    REFERENCES dbo.media_weeks (id) 
+END 
+
+IF (OBJECT_ID('FK_proposal_version_spot_length_spot_lengths', 'F') IS NULL)
+BEGIN
+    ALTER TABLE proposal_version_spot_length   
+	ADD CONSTRAINT FK_proposal_version_spot_length_spot_lengths
+	FOREIGN KEY (spot_length_id)     
+    REFERENCES dbo.spot_lengths (id) 
+END 
+
+IF (OBJECT_ID('FK_proposals_proposal_versions', 'F') IS NOT NULL)
+BEGIN
+    ALTER TABLE proposals   
+	DROP CONSTRAINT FK_proposals_proposal_versions
+END 
+
+--data cleanup of invalid sweep book id values
+UPDATE dbo.rate_files
+SET sweep_book_id = NULL
+WHERE sweep_book_id = 0
+
+IF (OBJECT_ID('FK_rate_files_media_months', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.rate_files   
+	ADD CONSTRAINT FK_rate_files_media_months
+	FOREIGN KEY (sweep_book_id)     
+    REFERENCES dbo.media_months (id) 
+END
+
+IF (OBJECT_ID('FK_rating_adjustments_media_months', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.rating_adjustments   
+	ADD CONSTRAINT FK_rating_adjustments_media_months
+	FOREIGN KEY (media_month_id)     
+    REFERENCES dbo.media_months (id) 
+END
+
+IF (OBJECT_ID('FK_schedule_audiences_audiences', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.schedule_audiences   
+	ADD CONSTRAINT FK_schedule_audiences_audiences
+	FOREIGN KEY (audience_id)     
+    REFERENCES dbo.audiences (id) 
+END
+
+IF (OBJECT_ID('FK_schedule_detail_audiences_audiences', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.schedule_detail_audiences
+	ADD CONSTRAINT FK_schedule_detail_audiences_audiences
+	FOREIGN KEY (audience_id)     
+    REFERENCES dbo.audiences (id) 
+END
+
+IF (OBJECT_ID('FK_schedule_detail_weeks_media_weeks', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.schedule_detail_weeks
+	ADD CONSTRAINT FK_schedule_detail_weeks_media_weeks
+	FOREIGN KEY (media_week_id)     
+    REFERENCES dbo.media_weeks (id) 
+END
+
+IF (OBJECT_ID('FK_schedule_details_spot_lengths', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.schedule_details
+	ADD CONSTRAINT FK_schedule_details_spot_lengths
+	FOREIGN KEY (spot_length_id)     
+    REFERENCES dbo.spot_lengths (id) 
+END
+
+UPDATE schedule_details
+SET daypart_id = 1
+WHERE daypart_id IN (SELECT DISTINCT sd.daypart_id 
+						FROM dbo.schedule_details sd
+						LEFT OUTER JOIN dbo.dayparts d ON sd.daypart_id = d.id
+						WHERE d.id IS NULL
+						AND sd.daypart_id IS NOT NULL)
+
+IF (OBJECT_ID('FK_schedule_details_dayparts', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.schedule_details
+	ADD CONSTRAINT FK_schedule_details_dayparts
+	FOREIGN KEY (daypart_id)     
+    REFERENCES dbo.dayparts (id) 
+END
+
+IF (OBJECT_ID('FK_schedule_restriction_dayparts_dayparts', 'F') IS NOT NULL)
+BEGIN
+    ALTER TABLE dbo.schedule_restriction_dayparts
+	DROP CONSTRAINT FK_schedule_restriction_dayparts_dayparts
+END
+
+IF (OBJECT_ID('FK_schedules_media_months', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.schedules
+	ADD CONSTRAINT FK_schedules_media_months
+	FOREIGN KEY (posting_book_id)     
+    REFERENCES dbo.media_months (id) 
+END
+
+IF (OBJECT_ID('FK_spot_length_cost_multipliers_spot_lengths', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.spot_length_cost_multipliers
+	ADD CONSTRAINT FK_spot_length_cost_multipliers_spot_lengths
+	FOREIGN KEY (spot_length_id)     
+    REFERENCES dbo.spot_lengths (id) 
+END
+
+IF (OBJECT_ID('FK_station_program_flight_audiences_audiences', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.station_program_flight_audiences
+	ADD CONSTRAINT FK_station_program_flight_audiences_audiences
+	FOREIGN KEY (audience_id)     
+    REFERENCES dbo.audiences (id) 
+END
+
+IF (OBJECT_ID('FK_station_program_flights_media_weeks', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.station_program_flights
+	ADD CONSTRAINT FK_station_program_flights_media_weeks
+	FOREIGN KEY (media_week_id)     
+    REFERENCES dbo.media_weeks (id) 
+END
+
+IF (OBJECT_ID('FK_station_programs_dayparts', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.station_programs
+	ADD CONSTRAINT FK_station_programs_dayparts
+	FOREIGN KEY (daypart_id)     
+    REFERENCES dbo.dayparts (id) 
+END
+
+--UPDATE dbo.station_programs
+--SET spot_length_id = 1
+--WHERE spot_length_id = 0
+
+IF (OBJECT_ID('FK_station_programs_spot_lengths', 'F') IS NOT NULL)
+BEGIN
+    ALTER TABLE dbo.station_programs
+	DROP CONSTRAINT FK_station_programs_spot_lengths
+END
+
+IF (OBJECT_ID('FK_audience_audiences_audiences', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.audience_audiences
+	ADD CONSTRAINT FK_audience_audiences_audiences
+	FOREIGN KEY (custom_audience_id)     
+    REFERENCES dbo.audiences (id) 
+END
+
+IF (OBJECT_ID('FK_bvs_file_details_spot_lengths', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.bvs_file_details
+	ADD CONSTRAINT FK_bvs_file_details_spot_lengths
+	FOREIGN KEY (spot_length_id)     
+    REFERENCES dbo.spot_lengths (id) 
+END
+
+IF (OBJECT_ID('FK_bvs_post_details_audiences', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.bvs_post_details
+	ADD CONSTRAINT FK_bvs_post_details_audiences
+	FOREIGN KEY (audience_id)     
+    REFERENCES dbo.audiences (id) 
+END
+
+IF (OBJECT_ID('FK_inventory_detail_slot_components_dayparts', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.inventory_detail_slot_components
+	ADD CONSTRAINT FK_inventory_detail_slot_components_dayparts
+	FOREIGN KEY (daypart_id)     
+    REFERENCES dbo.dayparts (id) 
+END
+
+IF (OBJECT_ID('FK_inventory_detail_slot_components_stations', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.inventory_detail_slot_components
+	ADD CONSTRAINT FK_inventory_detail_slot_components_stations
+	FOREIGN KEY (station_code)     
+    REFERENCES dbo.stations (station_code) 
+END
+
+IF (OBJECT_ID('FK_inventory_detail_slots_spot_lengths', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.inventory_detail_slots
+	ADD CONSTRAINT FK_inventory_detail_slots_spot_lengths
+	FOREIGN KEY (spot_length_id)     
+    REFERENCES dbo.spot_lengths (id) 
+END
+
+
+IF (OBJECT_ID('FK_inventory_detail_slots_media_weeks', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.inventory_detail_slots
+	ADD CONSTRAINT FK_inventory_detail_slots_media_weeks
+	FOREIGN KEY (media_week_id)     
+    REFERENCES dbo.media_weeks (id) 
+END
+
+UPDATE dbo.inventory_detail_slots
+SET rolled_up_daypart_id = 6
+WHERE rolled_up_daypart_id = 0
+
+IF (OBJECT_ID('FK_inventory_detail_slots_dayparts', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.inventory_detail_slots
+	ADD CONSTRAINT FK_inventory_detail_slots_dayparts
+	FOREIGN KEY (rolled_up_daypart_id)     
+    REFERENCES dbo.dayparts (id) 
+END
+
+IF (OBJECT_ID('FK_media_weeks_media_months', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.media_weeks
+	ADD CONSTRAINT FK_media_weeks_media_months
+	FOREIGN KEY (media_month_id)     
+    REFERENCES dbo.media_months (id) 
+END
+
+IF (OBJECT_ID('FK_post_file_demos_audiences', 'F') IS NOT NULL)
+BEGIN
+    ALTER TABLE dbo.post_file_demos
+	DROP CONSTRAINT FK_post_file_demos_audiences
+END
+
+IF (OBJECT_ID('FK_post_file_detail_impressions_audiences', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.post_file_detail_impressions
+	ADD CONSTRAINT FK_post_file_detail_impressions_audiences
+	FOREIGN KEY (demo)     
+    REFERENCES dbo.audiences (id) 
+END
+
+IF (OBJECT_ID('FK_post_file_details_spot_lengths', 'F') IS NULL)
+BEGIN
+    ALTER TABLE dbo.post_file_details
+	ADD CONSTRAINT FK_post_file_details_spot_lengths
+	FOREIGN KEY (spot_length_id)     
+    REFERENCES dbo.spot_lengths (id) 
+END
+/*************************************** BCOP-1693 - END *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

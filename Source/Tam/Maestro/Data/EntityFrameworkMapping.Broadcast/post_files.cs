@@ -30,5 +30,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<post_file_demos> post_file_demos { get; set; }
         public virtual ICollection<post_file_details> post_file_details { get; set; }
+        public virtual media_months media_months { get; set; }
     }
 }

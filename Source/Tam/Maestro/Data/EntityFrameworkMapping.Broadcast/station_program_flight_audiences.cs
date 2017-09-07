@@ -29,5 +29,6 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime modified_date { get; set; }
     
         public virtual station_program_flights station_program_flights { get; set; }
+        public virtual audience audience { get; set; }
     }
 }

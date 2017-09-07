@@ -41,5 +41,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_program_flights> station_program_flights { get; set; }
         public virtual station station { get; set; }
         public virtual ICollection<genre> genres { get; set; }
+        public virtual daypart daypart { get; set; }
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }

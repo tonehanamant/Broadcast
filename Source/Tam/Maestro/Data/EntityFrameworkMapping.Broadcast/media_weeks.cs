@@ -14,10 +14,26 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class media_weeks
     {
+        public media_weeks()
+        {
+            this.inventory_detail_slots = new HashSet<inventory_detail_slots>();
+            this.proposal_version_detail_quarter_weeks = new HashSet<proposal_version_detail_quarter_weeks>();
+            this.proposal_version_flight_weeks = new HashSet<proposal_version_flight_weeks>();
+            this.schedule_detail_weeks = new HashSet<schedule_detail_weeks>();
+            this.station_program_flights = new HashSet<station_program_flights>();
+        }
+    
         public int id { get; set; }
         public int media_month_id { get; set; }
         public int week_number { get; set; }
         public System.DateTime start_date { get; set; }
         public System.DateTime end_date { get; set; }
+    
+        public virtual ICollection<inventory_detail_slots> inventory_detail_slots { get; set; }
+        public virtual media_months media_months { get; set; }
+        public virtual ICollection<proposal_version_detail_quarter_weeks> proposal_version_detail_quarter_weeks { get; set; }
+        public virtual ICollection<proposal_version_flight_weeks> proposal_version_flight_weeks { get; set; }
+        public virtual ICollection<schedule_detail_weeks> schedule_detail_weeks { get; set; }
+        public virtual ICollection<station_program_flights> station_program_flights { get; set; }
     }
 }

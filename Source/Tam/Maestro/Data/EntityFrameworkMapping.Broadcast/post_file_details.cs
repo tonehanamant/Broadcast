@@ -44,5 +44,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<post_file_detail_impressions> post_file_detail_impressions { get; set; }
         public virtual post_files post_files { get; set; }
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }

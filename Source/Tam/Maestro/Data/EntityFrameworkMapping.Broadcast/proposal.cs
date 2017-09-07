@@ -29,5 +29,6 @@ namespace EntityFrameworkMapping.Broadcast
         public int primary_version_id { get; set; }
     
         public virtual ICollection<proposal_versions> proposal_versions { get; set; }
+        public virtual proposal_versions proposal_versions1 { get; set; }
     }
 }

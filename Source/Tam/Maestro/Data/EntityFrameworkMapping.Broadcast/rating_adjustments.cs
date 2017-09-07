@@ -17,5 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int media_month_id { get; set; }
         public decimal annual_adjustment { get; set; }
         public decimal nti_adjustment { get; set; }
+    
+        public virtual media_months media_months { get; set; }
     }
 }

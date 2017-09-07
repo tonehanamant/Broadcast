@@ -147,6 +147,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 05, 30);
                 request.FlightStartDate = new DateTime(2016, 06, 05);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 _ratesService.SaveRatesFile(request);
 
@@ -184,6 +185,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 05, 30);
                 request.FlightStartDate = new DateTime(2016, 06, 05);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 var res = _ratesService.SaveRatesFile(request);
 
@@ -231,6 +233,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 IntegrationTestApplicationServiceFactory.GetApplicationService<IRatesService>().SaveRatesFile(request);
 
@@ -337,6 +340,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 05, 30);
                 request.FlightStartDate = new DateTime(2016, 06, 05);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 // load saved crunched data
                 var inventory = _inventoryCrunchService.GetInventoryDetailByDaypartCodeAndRateSource("TTNW AM",
@@ -381,6 +385,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightEndDate = new DateTime(2016, 11, 06);
                 request.FlightStartDate = new DateTime(2016, 11, 27);
                 request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
 
                 IntegrationTestApplicationServiceFactory.GetApplicationService<IRatesService>().SaveRatesFile(request);
 

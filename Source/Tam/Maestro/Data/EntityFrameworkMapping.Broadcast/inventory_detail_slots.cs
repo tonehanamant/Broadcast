@@ -30,5 +30,8 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<inventory_detail_slot_components> inventory_detail_slot_components { get; set; }
         public virtual inventory_details inventory_details { get; set; }
+        public virtual daypart daypart { get; set; }
+        public virtual media_weeks media_weeks { get; set; }
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }
