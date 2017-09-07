@@ -15,7 +15,7 @@
       "InventoryDetailSlotProposals": null,
       "MediaWeekId": 671,
       "RolleupDaypartId": 6722,
-      "SlotCost": 3425.2910,
+      "SlotCost": 3425.2900,
       "SpotLengthId": 1,
       "TotalStations": 1
     },
@@ -33,7 +33,7 @@
       "InventoryDetailSlotProposals": null,
       "MediaWeekId": 671,
       "RolleupDaypartId": 6722,
-      "SlotCost": 3425.2910,
+      "SlotCost": 3425.2900,
       "SpotLengthId": 1,
       "TotalStations": 1
     },
@@ -51,7 +51,7 @@
       "InventoryDetailSlotProposals": null,
       "MediaWeekId": 671,
       "RolleupDaypartId": 6722,
-      "SlotCost": 3425.2910,
+      "SlotCost": 3425.2900,
       "SpotLengthId": 1,
       "TotalStations": 1
     }

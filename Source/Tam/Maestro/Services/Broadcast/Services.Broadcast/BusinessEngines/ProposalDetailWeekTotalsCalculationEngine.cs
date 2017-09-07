@@ -57,8 +57,8 @@ namespace Services.Broadcast.BusinessEngines
             totals.TotalCost = Math.Round(cost + otherInventoryTotals.TotalCost, 2);
 
             // percent
-            totals.BudgetPercent = ProposalMathEngine.CalculateBudgetPercent(totals.TotalCost, margin, targetCost);
-            totals.ImpressionsPercent = ProposalMathEngine.CalculateImpressionsPercent(totals.TotalImpressions, targetImpressions);
+            totals.BudgetPercent = ProposalMath.CalculateBudgetPercent(totals.TotalCost, margin, targetCost);
+            totals.ImpressionsPercent = ProposalMath.CalculateImpressionsPercent(totals.TotalImpressions, targetImpressions);
 
             return totals;
         }

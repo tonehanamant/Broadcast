@@ -56,19 +56,19 @@ namespace Services.Broadcast.BusinessEngines
             openMarketTotals.DetailImpressionsMarginAchieved = openMarketTotals.DetailImpressionsPercent > 100;
         }
 
-        private ProposalDetailHeaderTotalsDto CalculateTotals(double impressions, decimal cost, double targetImpressions, decimal targetCost, decimal targetCpm, double margin, ProposalDetailSingleInventoryTotalsDto otherInventoryTotals)
+        private static ProposalDetailHeaderTotalsDto CalculateTotals(double impressions, decimal cost, double targetImpressions, decimal targetCost, decimal targetCpm, double margin, ProposalDetailSingleInventoryTotalsDto otherInventoryTotals)
         {
             var totals = new ProposalDetailHeaderTotalsDto();
 
             // totals
             totals.TotalImpressions = Math.Round(impressions + otherInventoryTotals.TotalImpressions, 3);
             totals.TotalCost = Math.Round(cost + otherInventoryTotals.TotalCost, 2);
-            totals.TotalCpm = ProposalMathEngine.CalculateTotalCpm(totals.TotalCost, totals.TotalImpressions);
+            totals.TotalCpm = ProposalMath.CalculateCpm(totals.TotalCost, totals.TotalImpressions);
 
             // percent
-            totals.BudgetPercent = ProposalMathEngine.CalculateBudgetPercent(totals.TotalCost, margin, targetCost);
-            totals.ImpressionsPercent = ProposalMathEngine.CalculateImpressionsPercent(totals.TotalImpressions, targetImpressions);
-            totals.CpmPercent = ProposalMathEngine.CalculateCpmPercent(totals.TotalCost, totals.TotalImpressions, targetCost, targetImpressions, margin);
+            totals.BudgetPercent = ProposalMath.CalculateBudgetPercent(totals.TotalCost, margin, targetCost);
+            totals.ImpressionsPercent = ProposalMath.CalculateImpressionsPercent(totals.TotalImpressions, targetImpressions);
+            totals.CpmPercent = ProposalMath.CalculateCpmPercent(totals.TotalCost, totals.TotalImpressions, targetCost, targetImpressions, margin);
 
             return totals;
         }

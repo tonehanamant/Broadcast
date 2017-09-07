@@ -102,7 +102,7 @@ namespace Services.Broadcast.BusinessEngines
             }
             else
             {
-                proposalMediaWeekDto.Cost = Math.Round(proposalQuarterDto.Cpm * (decimal) proposalMediaWeekDto.Impressions / 1000, 2);
+                proposalMediaWeekDto.Cost = ProposalMath.CalculateCost(proposalQuarterDto.Cpm, proposalMediaWeekDto.Impressions);
             }
         }
     }

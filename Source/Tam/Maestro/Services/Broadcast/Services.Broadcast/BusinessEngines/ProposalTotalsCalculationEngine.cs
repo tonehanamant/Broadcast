@@ -25,13 +25,11 @@ namespace Services.Broadcast.BusinessEngines
         public void CalculateProposalTotalsMargins(ProposalDto proposal)
         {
             var targetCost = proposal.TargetBudget ?? 0;
-            var targetCpm = proposal.TargetCPM ?? 0;
             var margin = proposal.Margin ?? ProposalConstants.ProposalDefaultMargin;
 
-            proposal.TotalImpressionsPercent = ProposalMathEngine.CalculateImpressionsPercent(proposal.TotalImpressions, proposal.TargetImpressions);
-            proposal.TotalCostPercent = ProposalMathEngine.CalculateBudgetPercent(proposal.TotalCost, margin, targetCost);
-            proposal.TotalCPMPercent = ProposalMathEngine.CalculateCpmPercent(proposal.TotalCost,
-                proposal.TotalImpressions, targetCost, proposal.TargetImpressions, margin);
+            proposal.TotalImpressionsPercent = ProposalMath.CalculateImpressionsPercent(proposal.TotalImpressions, proposal.TargetImpressions);
+            proposal.TotalCostPercent = ProposalMath.CalculateBudgetPercent(proposal.TotalCost, margin, targetCost);
+            proposal.TotalCPMPercent = ProposalMath.CalculateCpmPercent(proposal.TotalCost, proposal.TotalImpressions, targetCost, proposal.TargetImpressions, margin);
 
             proposal.TotalImpressionsMarginAchieved = proposal.TotalImpressionsPercent > 100;
             proposal.TotalCostMarginAchieved = proposal.TotalCostPercent > 100;

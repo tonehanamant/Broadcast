@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
@@ -292,7 +293,7 @@ namespace Services.Broadcast.Repositories
             context.proposal_version_details.AddRange(
                 proposalDetails.Select(proposalDetail => new proposal_version_details
                 {
-                    cost_total = (decimal?)proposalDetail.TotalCost,
+                    cost_total = proposalDetail.TotalCost,
                     daypart_code = proposalDetail.DaypartCode,
                     proposal_version_id = proposalVersionId,
                     spot_length_id = proposalDetail.SpotLengthId,
@@ -305,7 +306,7 @@ namespace Services.Broadcast.Repositories
                     single_posting_book_id = proposalDetail.SinglePostingBookId,
                     hut_posting_book_id = proposalDetail.HutPostingBookId,
                     share_posting_book_id = proposalDetail.SharePostingBookId,
-                    playback_type = (byte?)proposalDetail.PlaybackType,
+                    playback_type = (byte?) proposalDetail.PlaybackType,
                     proposal_version_detail_quarters =
                         proposalDetail.Quarters.Select(quarter => new proposal_version_detail_quarters
                         {
@@ -628,7 +629,7 @@ namespace Services.Broadcast.Repositories
             proposalDto.TargetCPM = proposalVersion.target_cpm;
             proposalDto.TotalCost = proposalVersion.cost_total;
             proposalDto.TotalImpressions = proposalVersion.impressions_total;
-            proposalDto.TotalCPM = GetCpm(proposalVersion.impressions_total, proposalVersion.cost_total);
+            proposalDto.TotalCPM = ProposalMath.CalculateCpm(proposalVersion.cost_total, proposalVersion.impressions_total);
             proposalDto.Margin = proposalVersion.margin;
             proposalDto.Notes = proposalVersion.notes;
             proposalDto.Version = proposalVersion.proposal_version;
@@ -1130,7 +1131,7 @@ namespace Services.Broadcast.Repositories
             baseDto.DetailSpotLengthId = pvd.spot_length_id;
             baseDto.DetailTargetImpressions = pvd.impressions_total;
             baseDto.DetailTargetBudget = pvd.cost_total;
-            baseDto.DetailCpm = GetCpm(pvd.impressions_total, pvd.cost_total);
+            baseDto.DetailCpm = ProposalMath.CalculateCpm(pvd.cost_total ?? 0, pvd.impressions_total);
             baseDto.DetailFlightEndDate = pvd.end_date;
             baseDto.DetailFlightStartDate = pvd.start_date;
             baseDto.DetailFlightWeeks = pvd.proposal_version_detail_quarters.SelectMany(quarter => quarter.proposal_version_detail_quarter_weeks.Select(week =>
@@ -1145,13 +1146,6 @@ namespace Services.Broadcast.Repositories
             baseDto.SharePostingBookId = pvd.share_posting_book_id;
             baseDto.HutPostingBookId = pvd.hut_posting_book_id;
             baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.playback_type;
-        }
-
-        private static decimal GetCpm(double totalImpressions, decimal? totalCost)
-        {
-            var cost = totalCost ?? 0;
-
-            return totalImpressions == 0 ? 0 : Math.Round(cost / (decimal) (totalImpressions / 1000), 2);
         }
     }
 }

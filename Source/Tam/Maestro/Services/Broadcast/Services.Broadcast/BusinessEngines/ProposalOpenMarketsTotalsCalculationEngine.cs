@@ -117,8 +117,8 @@ namespace Services.Broadcast.BusinessEngines
             inventoryWeek.ImpressionsTotal = inventoryWeek.Markets.Sum(a => a.Impressions);
 
             // percent
-            inventoryWeek.BudgetPercent = ProposalMathEngine.CalculateBudgetPercent(inventoryWeek.BudgetTotal, dto.Margin.Value, inventoryWeek.Budget);
-            inventoryWeek.ImpressionsPercent = ProposalMathEngine.CalculateImpressionsPercent(inventoryWeek.ImpressionsTotal, inventoryWeek.ImpressionsGoal);
+            inventoryWeek.BudgetPercent = ProposalMath.CalculateBudgetPercent(inventoryWeek.BudgetTotal, dto.Margin.Value, inventoryWeek.Budget);
+            inventoryWeek.ImpressionsPercent = ProposalMath.CalculateImpressionsPercent(inventoryWeek.ImpressionsTotal, inventoryWeek.ImpressionsGoal);
 
             // margin achieved
             inventoryWeek.ImpressionsMarginAchieved = inventoryWeek.ImpressionsPercent > 100;

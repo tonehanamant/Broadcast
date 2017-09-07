@@ -82,8 +82,8 @@ namespace Services.Broadcast.BusinessEngines
                     }
                 }
 
-                weekTotals.BudgetPercent = ProposalMathEngine.CalculateBudgetPercent(weekTotals.Budget, request.Margin.Value, inventoryWeek.Budget);
-                weekTotals.ImpressionsPercent = ProposalMathEngine.CalculateImpressionsPercent(weekTotals.Impressions, inventoryWeek.ImpressionsGoal);
+                weekTotals.BudgetPercent = ProposalMath.CalculateBudgetPercent(weekTotals.Budget, request.Margin.Value, inventoryWeek.Budget);
+                weekTotals.ImpressionsPercent = ProposalMath.CalculateImpressionsPercent(weekTotals.Impressions, inventoryWeek.ImpressionsGoal);
 
                 weekTotals.BudgetMarginAchieved = weekTotals.BudgetPercent > 100;
                 weekTotals.ImpressionsMarginAchieved = weekTotals.ImpressionsPercent > 100;
@@ -94,15 +94,13 @@ namespace Services.Broadcast.BusinessEngines
             // totals
             totals.TotalImpressions = totals.Weeks.Sum(w => w.Impressions);
             totals.TotalCost = totals.Weeks.Sum(w => w.Budget);
-            totals.TotalCpm = ProposalMathEngine.CalculateTotalCpm(totals.TotalCost, totals.TotalImpressions); 
+            totals.TotalCpm = ProposalMath.CalculateCpm(totals.TotalCost, totals.TotalImpressions);
 
             // percent
-            var requestTargetBudget = request.DetailTargetBudget ?? 0;
-            totals.ImpressionsPercent = ProposalMathEngine.CalculateImpressionsPercent(totals.TotalImpressions, request.DetailTargetImpressions);
-            totals.BudgetPercent = ProposalMathEngine.CalculateBudgetPercent(totals.TotalCost, request.Margin.Value, request.DetailTargetBudget.Value);
-            totals.CpmPercent = ProposalMathEngine.CalculateCpmPercent(totals.TotalCost, totals.TotalImpressions, requestTargetBudget, request.DetailTargetImpressions, request.Margin.Value);
-            
-            
+            totals.ImpressionsPercent = ProposalMath.CalculateImpressionsPercent(totals.TotalImpressions, request.DetailTargetImpressions);
+            totals.BudgetPercent = ProposalMath.CalculateBudgetPercent(totals.TotalCost, request.Margin.Value, request.DetailTargetBudget.Value);
+            totals.CpmPercent = ProposalMath.CalculateCpmPercent(totals.TotalCost, totals.TotalImpressions, request.DetailTargetBudget ?? 0, request.DetailTargetImpressions, request.Margin.Value);
+
             // margin
             totals.BudgetMarginAchieved = totals.BudgetPercent > 100;
             totals.ImpressionsMarginAchieved = totals.ImpressionsPercent > 100;

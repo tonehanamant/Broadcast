@@ -62,29 +62,24 @@ namespace Services.Broadcast.BusinessEngines
         {
             if (audience.Cpm15 != null)
             {
-                stationProgramFlightWeek.Rate15s = CalculateSpotCostValue(stationImpressionsWithAudience.impressions, audience.Cpm15.Value);
+                stationProgramFlightWeek.Rate15s = ProposalMath.CalculateCost(audience.Cpm15.Value, stationImpressionsWithAudience.impressions);
             }
             else if (audience.Cpm30 != null)
             {
-                stationProgramFlightWeek.Rate30s = CalculateSpotCostValue(stationImpressionsWithAudience.impressions, audience.Cpm30.Value);
+                stationProgramFlightWeek.Rate30s = ProposalMath.CalculateCost(audience.Cpm30.Value, stationImpressionsWithAudience.impressions);
             }
             else if (audience.Cpm60 != null)
             {
-                stationProgramFlightWeek.Rate60s = CalculateSpotCostValue(stationImpressionsWithAudience.impressions, audience.Cpm60.Value);
+                stationProgramFlightWeek.Rate60s = ProposalMath.CalculateCost(audience.Cpm60.Value, stationImpressionsWithAudience.impressions);
             }
             else if (audience.Cpm90 != null)
             {
-                stationProgramFlightWeek.Rate90s = CalculateSpotCostValue(stationImpressionsWithAudience.impressions, audience.Cpm90.Value);
+                stationProgramFlightWeek.Rate90s = ProposalMath.CalculateCost(audience.Cpm90.Value, stationImpressionsWithAudience.impressions);
             }
             else if (audience.Cpm120 != null)
             {
-                stationProgramFlightWeek.Rate120s = CalculateSpotCostValue(stationImpressionsWithAudience.impressions, audience.Cpm120.Value);
+                stationProgramFlightWeek.Rate120s = ProposalMath.CalculateCost(audience.Cpm120.Value, stationImpressionsWithAudience.impressions);
             }
-        }
-
-        private static decimal CalculateSpotCostValue(double viewers, decimal cpm)
-        {
-            return (decimal)viewers * cpm / 1000;
         }
     }
 }

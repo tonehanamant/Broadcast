@@ -80,25 +80,19 @@ namespace Services.Broadcast.BusinessEngines
                                         spotsForCalculation;
 
                 programDetails.TargetImpressions = targetImpressions;
-                programDetails.TargetCpm = targetImpressions != 0
-                    ? programDetails.TotalCost / ((decimal)targetImpressions / 1000)
-                    : 0;
-                programDetails.TRP = (float) (nsiData.TotalDemoUniverse != 0
-                    ? targetImpressions / nsiData.TotalDemoUniverse * 100
-                    : 0);
+                programDetails.TargetCpm = ProposalMath.CalculateCpm(programDetails.TotalCost, targetImpressions);
+                programDetails.TRP = ProposalMath.CalculateTRP_GRP(targetImpressions, nsiData.TotalDemoUniverse);
 
                 //household specific calculation (only if user didn't select HH as target)
                 if (proposal.GuaranteedDemoId.HasValue &&
                     proposal.GuaranteedDemoId.Value != BroadcastConstants.HouseHoldAudienceId)
                 {
-                    var hhImpressions = programDetails.HouseHoldRating * programDetails.HouseHoldMarketSubscribers *
-                                        spotsForCalculation;
+                    var hhImpressions = programDetails.HouseHoldRating * programDetails.HouseHoldMarketSubscribers * spotsForCalculation;
 
                     programDetails.HHImpressions = hhImpressions;
-                    programDetails.HHeCPM = hhImpressions != 0
-                        ? (programDetails.TotalCost / (decimal)hhImpressions / 1000)
-                        : 0;
-                    programDetails.GRP = (float) (nsiData.TotalHHUniverse != 0 ? (hhImpressions / nsiData.TotalHHUniverse) * 100 : 0);
+                    programDetails.HHeCPM = ProposalMath.CalculateCpm(programDetails.TotalCost, hhImpressions);
+
+                    programDetails.GRP = ProposalMath.CalculateTRP_GRP(hhImpressions, nsiData.TotalHHUniverse);
                 }
             }
 
@@ -116,18 +110,15 @@ namespace Services.Broadcast.BusinessEngines
                 TotalSpots = listOfTotals.Sum(q => q.TotalSpots),
                 TotalCost = totalCost,
                 TotalTargetImpressions = targetImpressions,
-                TotalTargetCPM = targetImpressions != 0 ? totalCost / (decimal)(targetImpressions / 1000) : 0,
-                TotalTRP = (float)(nsiData.TotalDemoUniverse != 0 ? targetImpressions / nsiData.TotalDemoUniverse * 100 : 0),
-                TotalGRP = (float)(nsiData.TotalHHUniverse != 0 ? hhImpressions / nsiData.TotalHHUniverse * 100 : 0),
-                TotalHHCPM = hhImpressions != 0 ? totalCost / (decimal)(hhImpressions / 1000) : 0,
+
+                TotalTargetCPM = ProposalMath.CalculateCpm(totalCost, targetImpressions),
+                TotalTRP = ProposalMath.CalculateTRP_GRP(targetImpressions, nsiData.TotalDemoUniverse),
+                TotalGRP = ProposalMath.CalculateTRP_GRP(hhImpressions, nsiData.TotalHHUniverse),
+                TotalHHCPM = ProposalMath.CalculateCpm(totalCost, hhImpressions),
                 TotalHHImpressions = hhImpressions,
                 //additional audience
-                TotalAdditionalAudienceImpressions =
-                        stationSubtotalAdditionalAudienceImpressions,
-                TotalAdditionalAudienceCPM =
-                        stationSubtotalAdditionalAudienceImpressions != 0
-                            ? totalCost / ((decimal)stationSubtotalAdditionalAudienceImpressions / 1000)
-                            : 0
+                TotalAdditionalAudienceImpressions = stationSubtotalAdditionalAudienceImpressions,
+                TotalAdditionalAudienceCPM = ProposalMath.CalculateCpm(totalCost, stationSubtotalAdditionalAudienceImpressions)
             };
 
             return p;
@@ -263,8 +254,8 @@ namespace Services.Broadcast.BusinessEngines
                 var activeWeeks = program.FlightWeeks.Where(w => w.IsHiatus == false).ToList();
                 var totalCost = activeWeeks.Sum(w => w.Rate);
                 var totalImpressions = program.UnitImpressions * activeWeeks.Count;
-                var rawCpm = totalImpressions > 0 ? totalCost / ((decimal)totalImpressions / 1000) : 0;
-                program.TargetCpm = Math.Round(rawCpm, 2);
+
+                program.TargetCpm = ProposalMath.CalculateCpm(totalCost, totalImpressions); ;
             }
         }
     }

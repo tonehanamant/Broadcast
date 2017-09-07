@@ -167,7 +167,7 @@
     <Compile Include="ApplicationServices\TrafficService.cs" />
     <Compile Include="BusinessEngines\ProposalTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalMarketsCalculationEngine.cs" />
-    <Compile Include="BusinessEngines\ProposalMathEngine.cs" />
+    <Compile Include="BusinessEngines\ProposalMath.cs" />
     <Compile Include="BusinessEngines\ProposalOpenMarketsTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalPostingBooksEngine.cs" />
     <Compile Include="BusinessEngines\ProposalProprietaryTotalsCalculationEngine.cs" />

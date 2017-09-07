@@ -203,6 +203,7 @@
     <Compile Include="ApplicationServices\RatingForecastServiceTests.cs" />
     <Compile Include="UnitTests\ProposalCalculationEngineUnitTests.cs" />
     <Compile Include="UnitTests\ProposalDetailHeaderTotalsCalculationEngineTests.cs" />
+    <Compile Include="UnitTests\ProposalMathTests.cs" />
     <Compile Include="UnitTests\ProposalTotalsCalculationEngineTests.cs" />
     <Compile Include="UnitTests\RateFileValidatorUnitTests.cs" />
   </ItemGroup>

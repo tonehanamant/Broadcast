@@ -45,7 +45,7 @@
     "Impressions": 0.0,
     "Program": "Integration Test",
     "Rate15": null,
-    "Rate30": 946.6886,
+    "Rate30": 946.6900,
     "Rating": null,
     "Spots": 4
   }
