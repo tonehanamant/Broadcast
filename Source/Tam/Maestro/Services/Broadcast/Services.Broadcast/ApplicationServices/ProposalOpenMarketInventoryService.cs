@@ -631,7 +631,7 @@ namespace Services.Broadcast.ApplicationServices
                 BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
                     .SaveProposalDetailOpenMarketWeekInventoryTotals(inventoryDto);
 
-                _CalculateProposalTotals(inventoryDto.ProposalVersionId);
+                _UpdateProposalTotals(inventoryDto.ProposalVersionId);
 
                 _CalculateOpenMarketTotals(inventoryDto);
 

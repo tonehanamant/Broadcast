@@ -32,6 +32,7 @@ namespace Services.Broadcast.Repositories
         int GetCountOfComponentsForSlot(int slotId, List<int> relevantMediaWeeks, List<LookupDto> spotLengthMappings);
         int GetNumberOfProprietaryInventoryAllocationsForProposal(int proposalId);
         ProprietaryInventoryAllocationSnapshotDto GetProprietaryInventoryAllocationSnapshot(int inventoryDetailSlotId);
+        int GetCountOfAllocationsForProposal(int proposalId);
     }
 
     public class ProposalInventoryRepository : BroadcastRepositoryBase, IProposalInventoryRepository
@@ -555,6 +556,21 @@ namespace Services.Broadcast.Repositories
                                 idsc.inventory_detail_slot_id == slotId &&
                                 relevantMediaWeeks.Contains(idsc.inventory_detail_slots.media_week_id) &&
                                 validSpotLengths.Contains(idsc.inventory_detail_slots.spot_length_id)));
+        }
+
+        public int GetCountOfAllocationsForProposal(int proposalId)
+        {
+            return
+                _InReadUncommitedTransaction(
+                    c => c.inventory_detail_slot_proposal
+                        .Include(
+                            idsc =>
+                                idsc.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters
+                                    .proposal_version_details.proposal_versions.proposal_id)
+                        .Count(
+                            idsc =>
+                                idsc.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters
+                                    .proposal_version_details.proposal_versions.proposal_id == proposalId));
         }
     }
 }

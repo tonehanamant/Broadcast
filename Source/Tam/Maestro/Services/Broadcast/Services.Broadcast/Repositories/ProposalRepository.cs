@@ -48,6 +48,7 @@ namespace Services.Broadcast.Repositories
         void UpdateProposalDetailSweepsBook(int proposalDetailId, int book);
         List<ProposalDetailTotalsDto> GetAllProposalDetailsTotals(int proposalVersionId);
         void SaveProposalTotals(int proposalVersionId, ProposalHeaderTotalsDto proposalTotals);
+        void ResetAllTotals(int proposalId, int proposalVersion);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -1071,6 +1072,33 @@ namespace Services.Broadcast.Repositories
                 var proposalVersion = c.proposal_versions.Find(proposalVersionId);
                 proposalVersion.impressions_total = proposalTotals.ImpressionsTotal;
                 proposalVersion.cost_total = proposalTotals.CostTotal;
+                c.SaveChanges();
+            });
+        }
+
+        public void ResetAllTotals(int proposalId, int proposalVersion)
+        {
+            _InReadUncommitedTransaction(c =>
+            {
+                var proposal =
+                    c.proposal_versions.Single(p => p.proposal_id == proposalId && p.proposal_version == proposalVersion);
+                proposal.cost_total = 0;
+                proposal.impressions_total = 0;
+                proposal.proposal_version_details.ForEach(pvd =>
+                {
+                    pvd.open_market_cost_total = 0;
+                    pvd.open_market_impressions_total = 0;
+                    pvd.proprietary_cost_total = 0;
+                    pvd.proprietary_impressions_total = 0;
+                    pvd.proposal_version_detail_quarters.ForEach(pvdq => pvdq.proposal_version_detail_quarter_weeks.ForEach(
+                        pvdqw =>
+                        {
+                            pvdqw.open_market_cost_total = 0;
+                            pvdqw.open_market_impressions_total = 0;
+                            pvdqw.proprietary_cost_total = 0;
+                            pvdqw.proprietary_impressions_total = 0;
+                        }));
+                });
                 c.SaveChanges();
             });
         }

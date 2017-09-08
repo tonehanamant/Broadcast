@@ -78,7 +78,7 @@ namespace Services.Broadcast.ApplicationServices
                 BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthById(proposalInventory.DetailSpotLengthId);
         }
 
-        protected void _CalculateProposalTotals(int proposalVersionId)
+        protected void _UpdateProposalTotals(int proposalVersionId)
         {
             var allProposalDetailsTotals = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
                         .GetAllProposalDetailsTotals(proposalVersionId);

@@ -89,6 +89,42 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
         }
 
+        private static void _SetupProposalWithAllocations()
+        {
+            var inventoryService =
+                IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>();
+            var request = new ProprietaryInventoryAllocationRequest { ProposalDetailId = 7, UserName = "test-user" };
+
+            request.SlotAllocations.Add(new ProprietaryInventorySlotAllocations
+            {
+                InventoryDetailSlotId = 10206,
+                Deletes =
+                    new List<ProprietaryInventorySlotProposal>
+                    {
+                        new ProprietaryInventorySlotProposal
+                        {
+                            QuarterWeekId = 7,
+                            Order = 1,
+                            SpotLength = 30,
+                            Impressions = 30203.123d
+                        }
+                    },
+                Adds =
+                    new List<ProprietaryInventorySlotProposal>
+                    {
+                        new ProprietaryInventorySlotProposal
+                        {
+                            QuarterWeekId = 7,
+                            Order = 1,
+                            SpotLength = 30,
+                            Impressions = 2000.12d
+                        }
+                    },
+            });
+
+            inventoryService.SaveInventoryAllocations(request);
+        }
+
         [Test]
         public void CanAddProposal()
         {
@@ -1494,6 +1530,26 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var proposal = _setupProposalDto();
                 _ProposalService.SaveProposal(proposal, "", _CurrentDateTime);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void RecalculateTotalsAfterDeletingAllocations()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _SetupProposalWithAllocations();
+
+                var proposal = _ProposalService.GetProposalById(248);
+
+                proposal.Details.RemoveAll(x => true);
+
+                _ProposalService.SaveProposal(proposal, "test-user", new DateTime(2017, 09, 08));
+
+                var newProposal = _ProposalService.GetProposalById(248);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(newProposal));
             }
         }
     }

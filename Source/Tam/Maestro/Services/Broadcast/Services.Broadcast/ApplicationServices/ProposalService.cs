@@ -55,6 +55,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IPostingBooksService _PostingBooksService;
         private readonly IRatingForecastService _RatingForecastService;
         private readonly IProposalTotalsCalculationEngine _ProposalTotalsCalculationEngine;
+        private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService;
 
         public ProposalService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
@@ -66,7 +67,8 @@ namespace Services.Broadcast.ApplicationServices
             IProposalScxConverter proposalScxConverter,
             IPostingBooksService postingBooksService,
             IRatingForecastService ratingForecastService,
-            IProposalTotalsCalculationEngine proposalTotalsCalculationEngine)
+            IProposalTotalsCalculationEngine proposalTotalsCalculationEngine,
+            IProposalProprietaryInventoryService proposalProprietaryInventoryService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AudiencesCache = audiencesCache;
@@ -84,6 +86,7 @@ namespace Services.Broadcast.ApplicationServices
             _PostingBooksService = postingBooksService;
             _RatingForecastService = ratingForecastService;
             _ProposalTotalsCalculationEngine = proposalTotalsCalculationEngine;
+            _ProposalProprietaryInventoryService = proposalProprietaryInventoryService;
         }
 
         public List<DisplayProposal> GetAllProposals()
@@ -124,6 +127,7 @@ namespace Services.Broadcast.ApplicationServices
                         if (saveRequest.ForceSave)
                         {
                             _ProposalInventoryRepository.DeleteInventoryAllocations(saveRequest.Id.Value);
+                            _ProposalRepository.ResetAllTotals(saveRequest.Id.Value, saveRequest.Version.Value);
                         }
                         else
                         {
@@ -345,13 +349,43 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _DeleteProposalDetailInventoryAllocations(ProposalDto proposalDto)
         {
+            if (!proposalDto.Id.HasValue || !proposalDto.Version.HasValue)
+                return;
+
+            var countOfAllocationsBeforeDeleting = _ProposalInventoryRepository.GetCountOfAllocationsForProposal(proposalDto.Id.Value);
+
             _DeleteProposalDetailInventoryAllocationsForQuarterWeeks(proposalDto);
 
             _DeleteProposalDetailInventoryAllocationsForSpotLength(proposalDto);
 
             _DeleteProposalDetailInventoryAllocationsForDaypart(proposalDto);
 
-            _DeleteProposalDetailInventoryAllocationsForMarkets(proposalDto);                
+            _DeleteProposalDetailInventoryAllocationsForMarkets(proposalDto);
+
+            var countOfAllocationsAfterDeleting = _ProposalInventoryRepository.GetCountOfAllocationsForProposal(proposalDto.Id.Value);
+
+            if (countOfAllocationsBeforeDeleting != countOfAllocationsAfterDeleting)
+            {
+                _RecalculateTotalsAfterDeletingAllocations(proposalDto);
+            }
+        }
+
+        private void _RecalculateTotalsAfterDeletingAllocations(ProposalDto proposalDto)
+        {
+            if (!proposalDto.Id.HasValue || !proposalDto.Version.HasValue)
+                return;
+
+            if (proposalDto.Details.Count == 0)
+                _ProposalRepository.ResetAllTotals(proposalDto.Id.Value, proposalDto.Version.Value);
+            else
+            {
+                foreach (var proposalDetailDto in proposalDto.Details)
+                {
+                    if (!proposalDetailDto.Id.HasValue)
+                        return;
+                    _ProposalProprietaryInventoryService.RecalculateInventoryTotals(proposalDetailDto.Id.Value);
+                }
+            }
         }
 
         private void _DeleteProposalDetailInventoryAllocationsForSpotLength(ProposalDto proposalDto)

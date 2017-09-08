@@ -20,6 +20,7 @@ namespace Services.Broadcast.ApplicationServices
         ProposalDetailProprietaryInventoryDto GetInventory(int proposalDetailId);
         List<ProprietaryInventoryAllocationConflict> SaveInventoryAllocations(ProprietaryInventoryAllocationRequest actualRequest);
         ProposalInventoryTotalsDto GetInventoryTotals(ProposalInventoryTotalsRequestDto request);
+        void RecalculateInventoryTotals(int proposalDetailId);
     }
 
     public class ProposalProprietaryInventoryService : BaseProposalInventoryService, IProposalProprietaryInventoryService
@@ -228,7 +229,7 @@ namespace Services.Broadcast.ApplicationServices
                         .SaveProposalDetailProprietaryInventoryTotals(actualRequest.ProposalDetailId, totals);
                     BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
                         .SaveProposalDetailProprietaryWeekInventoryTotals(actualRequest.ProposalDetailId, totals);
-                    _CalculateProposalTotals(inventoryDto.ProposalVersionId);
+                    _UpdateProposalTotals(inventoryDto.ProposalVersionId);
                 }
 
                 conflicts.ForEach(c =>
@@ -259,6 +260,21 @@ namespace Services.Broadcast.ApplicationServices
             var weeksTotals = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
                 .GetProposalDetailOpenMarketWeekInventoryTotals(request.ProposalDetailId);
             return _ProposalWeeklyTotalCalculationEngine.CalculateProprietaryDetailTotals(request, totals, weeksTotals);
+        }
+
+        public void RecalculateInventoryTotals(int proposalDetailId)
+        {
+            using (var transaction = new TransactionScopeWrapper())
+            {
+                var inventoryDto = GetInventory(proposalDetailId);
+                var totals = _ProposalWeeklyTotalCalculationEngine.CalculatePartialProprietaryTotals(inventoryDto);
+                BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
+                    .SaveProposalDetailProprietaryInventoryTotals(proposalDetailId, totals);
+                BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
+                    .SaveProposalDetailProprietaryWeekInventoryTotals(proposalDetailId, totals);
+                _UpdateProposalTotals(inventoryDto.ProposalVersionId);
+                transaction.Complete();
+            }
         }
     }
 }
