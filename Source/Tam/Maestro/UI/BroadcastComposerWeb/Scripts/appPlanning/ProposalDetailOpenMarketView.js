@@ -132,9 +132,14 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         this.setInventory(inventory);
     },
 
-    //reset inventory - filter, refine, etc
-    refreshInventory: function (inventory, reset, checkEdits) {
+    //reset inventory - filter, refine, sorts, etc
+    refreshInventory: function (inventory, reset, checkEdits, checkSorts) {
         this.onClearInventory(reset);
+        if (checkSorts) {
+            if (this.isMarketSortName) {
+                inventory = this.changeInventoryDataForSort(inventory, true);
+            }
+        }
         this.setInventory(inventory, true, checkEdits);
     },
 
@@ -196,7 +201,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
             var inventory = this.changeInventoryDataForSort(this.activeInventoryData, isName);
             //console.log('setMarketSort Name', inventory, this.marketSortIndexMap);
             //this.recordLastScrollPosition(); position should reset to top on sort?
-            this.refreshInventory(inventory, false, true);//pass last param true to checkEditSpots for reset
+            this.refreshInventory(inventory, false, true);//pass param true to checkEditSpots for reset
         }
     },
 
@@ -687,13 +692,8 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
                 if (isApply) {
                     //TBD - scroll, sorting
-                   $scope.recordLastScrollPosition();
-
-                    if ($scope.isMarketSortName) {
-                        inventory = $scope.changeInventoryDataForSort(inventory, true);
-                    }
-
-                    $scope.refreshInventory(inventory, true, false);
+                    $scope.recordLastScrollPosition();
+                    $scope.refreshInventory(inventory, false, false, true);
                 } else {
                     $scope.showModal(true); //close open market modal
                 }
@@ -719,7 +719,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
             this.isMarketSortName = false;
             this.marketSortIndexMap = [];
             this.OpenMarketVM.setSortByMarketName(false);
-            //this.scrollPositions = null;
+            this.activeProgramEditItems = [];
         }
     },
 
@@ -764,7 +764,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         }
 
         $scope.ProposalView.controller.apiApplyOpenMarketInventoryFilter(inventoryWithFilters, function (filteredInventory) {
-            $scope.refreshInventory(filteredInventory, true, true, true);
+            $scope.refreshInventory(filteredInventory, false, true, true);//check edits and sorts
 
             // filter indicator
             $scope.OpenMarketVM.hasFiltersApplied($scope.hasFiltersApplied());

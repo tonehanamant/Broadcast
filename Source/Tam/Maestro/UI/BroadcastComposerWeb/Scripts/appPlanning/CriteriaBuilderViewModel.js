@@ -278,7 +278,7 @@ function CriteriaBuilderViewModel(inventoryView) {
                 $scope.IsProcessing(false);
                 util.notify('Criteria applied successfully', 'success');
                 $scope.ShowModal(false);
-                $scope.InventoryView.refreshInventory(response, true, true);
+                $scope.InventoryView.refreshInventory(response, true, false);
             };
 
             $scope.confirmRefine = function() {
