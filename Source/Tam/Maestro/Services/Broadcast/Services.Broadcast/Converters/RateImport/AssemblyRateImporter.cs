@@ -199,7 +199,7 @@ namespace Services.Broadcast.Converters.RateImport
                 var flightWeekAudience = new StationProgramFlightWeekAudience()
                 {
                     Audience = _audienceMapping[audienceField.Key],
-                    Impressions = float.Parse(currentData[audienceField.Value]) * 1000
+                    Impressions = double.Parse(currentData[audienceField.Value]) * 1000
                 };
                 flightWeekAudiences.Add(flightWeekAudience);
             }
