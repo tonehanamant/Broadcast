@@ -136,7 +136,7 @@ namespace Services.Broadcast.Converters
                     var demoRank = demo.Key;
                     audiences.Add(new schedule_detail_audiences()
                     {
-                        demo_rank = demoRank,
+                        audience_rank = demoRank,
                         impressions = detailsGroup
                             .SelectMany(dg => dg.schedule_detail_audiences)
                             .Where(sda => sda.audience_id == demo.Value.AudienceId)
@@ -218,7 +218,7 @@ namespace Services.Broadcast.Converters
                 var demoRank = demo.Key;
                 audiences.Add(new schedule_detail_audiences()
                 {
-                    demo_rank = demoRank,
+                    audience_rank = demoRank,
                     impressions = System.Convert.ToInt32(decimal.Parse(fields[demo.Value.FieldIndex])*1000),
                     audience_id = demo.Value.AudienceId
                 });

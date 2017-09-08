@@ -119,7 +119,7 @@ namespace Services.Broadcast.Repositories
                         PrimaryDemoBooked = (from sda in context.schedule_detail_audiences
                                              join sd in context.schedule_details on sda.schedule_detail_id equals sd.id
                                              where sd.schedule_id == s.id
-                                                   && sda.demo_rank == 1
+                                                   && sda.audience_rank == 1
                                              select sda.impressions).Sum(),
                         PrimaryDemoDelivered = (from bfd in context.bvs_file_details
                                                 join pd in context.bvs_post_details on bfd.id equals
@@ -562,7 +562,7 @@ namespace Services.Broadcast.Repositories
 
                             PrimaryDemoBooked = (from sda in context.schedule_detail_audiences
                                                  join sd in context.schedule_details on sda.schedule_detail_id equals sd.id
-                                                 where sd.schedule_id == s.id && sda.demo_rank == 1
+                                                 where sd.schedule_id == s.id && sda.audience_rank == 1
                                                  select sda.impressions).Sum(),
 
                             PrimaryDemoDelivered = (from bfd in context.bvs_file_details

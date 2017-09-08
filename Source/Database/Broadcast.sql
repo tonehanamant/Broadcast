@@ -805,6 +805,20 @@ END
 GO
 /*************************************** BCOP-1693 - END *****************************************************/
 
+
+
+/*************************************** BCOP-1694 - START *****************************************************/
+EXEC sp_rename 'proposal_version_detail_quarter_weeks.[impressions]', 'impressions_goal', 'COLUMN'
+
+EXEC sp_rename 'bvs_map_types.[last_modified_by]', 'modified_by', 'COLUMN'
+EXEC sp_rename 'bvs_map_types.[last_modified_date]', 'modified_date', 'COLUMN'
+
+EXEC sp_rename 'schedule_detail_audiences.[demo_rank]', 'audience_rank', 'COLUMN'
+EXEC sp_rename 'schedule_detail_audiences.[demo_population]', 'audience_population', 'COLUMN'
+/*************************************** BCOP-1694 - END *****************************************************/
+
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

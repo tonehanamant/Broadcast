@@ -321,7 +321,7 @@ namespace Services.Broadcast.Repositories
                                     {
                                         is_hiatus = quarterWeek.IsHiatus,
                                         cost = quarterWeek.Cost,
-                                        impressions = quarterWeek.Impressions,
+                                        impressions_goal = quarterWeek.Impressions,
                                         units = quarterWeek.Units,
                                         media_week_id = quarterWeek.MediaWeekId,
                                         end_date = quarterWeek.EndDate,
@@ -437,7 +437,7 @@ namespace Services.Broadcast.Repositories
                                     quarterWeek.end_date = detatilQuarterWeek.EndDate;
                                     quarterWeek.is_hiatus = detatilQuarterWeek.IsHiatus;
                                     quarterWeek.units = detatilQuarterWeek.Units;
-                                    quarterWeek.impressions = detatilQuarterWeek.Impressions;
+                                    quarterWeek.impressions_goal = detatilQuarterWeek.Impressions;
                                     quarterWeek.cost = detatilQuarterWeek.Cost;
                                 }
                             });
@@ -467,7 +467,7 @@ namespace Services.Broadcast.Repositories
                             {
                                 is_hiatus = quarterWeek.IsHiatus,
                                 cost = quarterWeek.Cost,
-                                impressions = (quarterWeek.Impressions),
+                                impressions_goal = (quarterWeek.Impressions),
                                 units = quarterWeek.Units,
                                 media_week_id = quarterWeek.MediaWeekId,
                                 end_date = quarterWeek.EndDate,
@@ -489,7 +489,7 @@ namespace Services.Broadcast.Repositories
                 {
                     is_hiatus = quarterWeek.IsHiatus,
                     cost = quarterWeek.Cost,
-                    impressions = (quarterWeek.Impressions),
+                    impressions_goal = (quarterWeek.Impressions),
                     units = quarterWeek.Units,
                     media_week_id = quarterWeek.MediaWeekId,
                     end_date = quarterWeek.EndDate,
@@ -682,7 +682,7 @@ namespace Services.Broadcast.Repositories
                         Cost = week.cost.GetValueOrDefault(),
                         EndDate = week.end_date,
                         StartDate = week.start_date,
-                        Impressions = week.impressions,
+                        Impressions = week.impressions_goal,
                         IsHiatus = week.is_hiatus,
                         Units = week.units.GetValueOrDefault(),
                         MediaWeekId = week.media_week_id,
@@ -785,7 +785,7 @@ namespace Services.Broadcast.Repositories
                         proposal_version_quarter_id = quarterId,
                         is_hiatus = quarterWeek.IsHiatus,
                         cost = quarterWeek.Cost,
-                        impressions = quarterWeek.Impressions,
+                        impressions_goal = quarterWeek.Impressions,
                         units = quarterWeek.Units,
                         media_week_id = quarterWeek.MediaWeekId,
                         end_date = quarterWeek.EndDate,
@@ -825,7 +825,7 @@ namespace Services.Broadcast.Repositories
                                  select new ProposalOpenMarketInventoryWeekDto
                                  {
                                      ProposalVersionDetailQuarterWeekId = week.id,
-                                     ImpressionsGoal = week.impressions,
+                                     ImpressionsGoal = week.impressions_goal,
                                      Budget = week.cost ?? 0,
                                      QuarterText = string.Format("Q{0}", quarter.quarter),
                                      Week = week.start_date.ToShortDateString(),
@@ -1122,7 +1122,7 @@ namespace Services.Broadcast.Repositories
                                  select new ProposalProprietaryInventoryWeekDto
                                  {
                                      QuarterText = string.Format("Q{0}", quarter.quarter),
-                                     ImpressionsGoal = week.impressions,
+                                     ImpressionsGoal = week.impressions_goal,
                                      Budget = week.cost ?? 0,
                                      Week = week.start_date.ToShortDateString(),
                                      IsHiatus = week.is_hiatus,

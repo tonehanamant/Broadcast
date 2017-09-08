@@ -78,8 +78,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="display" Type="nvarchar" MaxLength="16" Nullable="false" />
           <Property Name="version" Type="int" Nullable="false" />
-          <Property Name="last_modified_by" Type="int" />
-          <Property Name="last_modified_date" Type="datetime" Nullable="false" />
+          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="bvs_maps">
           <Key>
@@ -341,7 +341,7 @@
           <Property Name="end_date" Type="date" Nullable="false" />
           <Property Name="is_hiatus" Type="bit" Nullable="false" />
           <Property Name="units" Type="int" />
-          <Property Name="impressions" Type="float" Nullable="false" />
+          <Property Name="impressions_goal" Type="float" Nullable="false" />
           <Property Name="cost" Type="money" />
           <Property Name="open_market_impressions_total" Type="float" Nullable="false" />
           <Property Name="open_market_cost_total" Type="money" Nullable="false" />
@@ -500,8 +500,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="schedule_detail_id" Type="int" Nullable="false" />
           <Property Name="audience_id" Type="int" Nullable="false" />
-          <Property Name="demo_rank" Type="int" Nullable="false" />
-          <Property Name="demo_population" Type="int" Nullable="false" />
+          <Property Name="audience_rank" Type="int" Nullable="false" />
+          <Property Name="audience_population" Type="int" Nullable="false" />
           <Property Name="impressions" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="schedule_detail_weeks">
@@ -740,7 +740,7 @@
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -1384,18 +1384,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_proposals_proposal_versions">
-          <End Role="proposal_versions" Type="Self.proposal_versions" Multiplicity="1" />
-          <End Role="proposals" Type="Self.proposals" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_versions">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposals">
-              <PropertyRef Name="primary_version_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_rate_files_media_months">
           <End Role="media_months" Type="Self.media_months" Multiplicity="0..1" />
           <End Role="rate_files" Type="Self.rate_files" Multiplicity="*" />
@@ -1770,18 +1758,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_station_programs_spot_lengths">
-          <End Role="spot_lengths" Type="Self.spot_lengths" Multiplicity="1" />
-          <End Role="station_programs" Type="Self.station_programs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_programs">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_station_programs_stations">
           <End Role="stations" Type="Self.stations" Multiplicity="1" />
           <End Role="station_programs" Type="Self.station_programs" Multiplicity="*" />
@@ -2077,10 +2053,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="proposals" EntitySet="proposals" />
             <End Role="proposal_versions" EntitySet="proposal_versions" />
           </AssociationSet>
-          <AssociationSet Name="FK_proposals_proposal_versions" Association="Self.FK_proposals_proposal_versions">
-            <End Role="proposal_versions" EntitySet="proposal_versions" />
-            <End Role="proposals" EntitySet="proposals" />
-          </AssociationSet>
           <AssociationSet Name="FK_rate_files_media_months" Association="Self.FK_rate_files_media_months">
             <End Role="media_months" EntitySet="media_months" />
             <End Role="rate_files" EntitySet="rate_files" />
@@ -2195,10 +2167,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </AssociationSet>
           <AssociationSet Name="FK_station_programs_rate_files" Association="Self.FK_station_programs_rate_files">
             <End Role="rate_files" EntitySet="rate_files" />
-            <End Role="station_programs" EntitySet="station_programs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_programs_spot_lengths" Association="Self.FK_station_programs_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="station_programs" EntitySet="station_programs" />
           </AssociationSet>
           <AssociationSet Name="FK_station_programs_stations" Association="Self.FK_station_programs_stations">
@@ -2671,9 +2639,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="display" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="version" Type="Int32" Nullable="false" />
-          <Property Name="last_modified_by" Type="Int32" />
-          <Property Name="last_modified_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="bvs_maps" Relationship="BroadcastModel.FK_bvs_maps_bvs_map_types" FromRole="bvs_map_types" ToRole="bvs_maps" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="bvs_maps">
           <Key>
@@ -2984,7 +2952,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="is_hiatus" Type="Boolean" Nullable="false" />
           <Property Name="units" Type="Int32" />
-          <Property Name="impressions" Type="Double" Nullable="false" />
           <Property Name="cost" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="open_market_impressions_total" Type="Double" Nullable="false" />
           <Property Name="open_market_cost_total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
@@ -2994,6 +2961,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_detail_quarters" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_proposal_version_detail_quarters" FromRole="proposal_version_detail_quarter_weeks" ToRole="proposal_version_detail_quarters" />
           <NavigationProperty Name="station_program_flight_proposal" Relationship="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" FromRole="proposal_version_detail_quarter_weeks" ToRole="station_program_flight_proposal" />
           <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_media_weeks" FromRole="proposal_version_detail_quarter_weeks" ToRole="media_weeks" />
+          <Property Name="impressions_goal" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="proposal_version_detail_quarters">
           <Key>
@@ -3146,11 +3114,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="schedule_detail_id" Type="Int32" Nullable="false" />
           <Property Name="audience_id" Type="Int32" Nullable="false" />
-          <Property Name="demo_rank" Type="Int32" Nullable="false" />
-          <Property Name="demo_population" Type="Int32" Nullable="false" />
           <Property Name="impressions" Type="Double" Nullable="false" />
           <NavigationProperty Name="schedule_details" Relationship="BroadcastModel.FK_schedule_detail_audiences_schedule_details" FromRole="schedule_detail_audiences" ToRole="schedule_details" />
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_schedule_detail_audiences_audiences" FromRole="schedule_detail_audiences" ToRole="audience" />
+          <Property Name="audience_rank" Type="Int32" Nullable="false" />
+          <Property Name="audience_population" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="schedule_detail_weeks">
           <Key>
@@ -4529,8 +4497,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="bvs_map_types">
             <EntityTypeMapping TypeName="BroadcastModel.bvs_map_types">
               <MappingFragment StoreEntitySet="bvs_map_types">
-                <ScalarProperty Name="last_modified_date" ColumnName="last_modified_date" />
-                <ScalarProperty Name="last_modified_by" ColumnName="last_modified_by" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="display" ColumnName="display" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -4795,12 +4763,12 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="proposal_version_detail_quarter_weeks">
             <EntityTypeMapping TypeName="BroadcastModel.proposal_version_detail_quarter_weeks">
               <MappingFragment StoreEntitySet="proposal_version_detail_quarter_weeks">
+                <ScalarProperty Name="impressions_goal" ColumnName="impressions_goal" />
                 <ScalarProperty Name="proprietary_cost_total" ColumnName="proprietary_cost_total" />
                 <ScalarProperty Name="proprietary_impressions_total" ColumnName="proprietary_impressions_total" />
                 <ScalarProperty Name="open_market_cost_total" ColumnName="open_market_cost_total" />
                 <ScalarProperty Name="open_market_impressions_total" ColumnName="open_market_impressions_total" />
                 <ScalarProperty Name="cost" ColumnName="cost" />
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
                 <ScalarProperty Name="units" ColumnName="units" />
                 <ScalarProperty Name="is_hiatus" ColumnName="is_hiatus" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
@@ -4941,9 +4909,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="schedule_detail_audiences">
             <EntityTypeMapping TypeName="BroadcastModel.schedule_detail_audiences">
               <MappingFragment StoreEntitySet="schedule_detail_audiences">
+                <ScalarProperty Name="audience_population" ColumnName="audience_population" />
+                <ScalarProperty Name="audience_rank" ColumnName="audience_rank" />
                 <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="demo_population" ColumnName="demo_population" />
-                <ScalarProperty Name="demo_rank" ColumnName="demo_rank" />
                 <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="schedule_detail_id" ColumnName="schedule_detail_id" />
                 <ScalarProperty Name="id" ColumnName="id" />

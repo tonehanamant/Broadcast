@@ -64,8 +64,8 @@ namespace Services.Broadcast.Repositories
 
                         var audience = context.schedule_detail_audiences.Create();
                         audience.audience_id = 31;
-                        audience.demo_rank = 1;
-                        audience.demo_population = 7368320;
+                        audience.audience_rank = 1;
+                        audience.audience_population = 7368320;
                         audience.impressions = 127859;
                         scheduleDetail.schedule_detail_audiences.Add(audience);
                     }
@@ -91,8 +91,8 @@ namespace Services.Broadcast.Repositories
 
                         var audience = context.schedule_detail_audiences.Create();
                         audience.audience_id = 31;
-                        audience.demo_rank = 1;
-                        audience.demo_population = 7368320;
+                        audience.audience_rank = 1;
+                        audience.audience_population = 7368320;
                         audience.impressions = 127859;
                         scheduleDetail2.schedule_detail_audiences.Add(audience);
                     }
@@ -118,8 +118,8 @@ namespace Services.Broadcast.Repositories
 
                         var audience = context.schedule_detail_audiences.Create();
                         audience.audience_id = 31;
-                        audience.demo_rank = 1;
-                        audience.demo_population = 7368320;
+                        audience.audience_rank = 1;
+                        audience.audience_population = 7368320;
                         audience.impressions = 127859;
                         scheduleDetail3.schedule_detail_audiences.Add(audience);
                     }
@@ -145,8 +145,8 @@ namespace Services.Broadcast.Repositories
 
                         var audience = context.schedule_detail_audiences.Create();
                         audience.audience_id = 31;
-                        audience.demo_rank = 1;
-                        audience.demo_population = 7368320;
+                        audience.audience_rank = 1;
+                        audience.audience_population = 7368320;
                         audience.impressions = 127859;
                         scheduleDetail4.schedule_detail_audiences.Add(audience);
                     }
@@ -228,8 +228,8 @@ namespace Services.Broadcast.Repositories
 
                         var audience = context.schedule_detail_audiences.Create();
                         audience.audience_id = 31;
-                        audience.demo_rank = 1;
-                        audience.demo_population = 7368320;
+                        audience.audience_rank = 1;
+                        audience.audience_population = 7368320;
                         audience.impressions = 127859;
                         scheduleDetail.schedule_detail_audiences.Add(audience);
                     }
@@ -255,8 +255,8 @@ namespace Services.Broadcast.Repositories
 
                         var audience = context.schedule_detail_audiences.Create();
                         audience.audience_id = 31;
-                        audience.demo_rank = 1;
-                        audience.demo_population = 7368320;
+                        audience.audience_rank = 1;
+                        audience.audience_population = 7368320;
                         audience.impressions = 127859;
                         scheduleDetail2.schedule_detail_audiences.Add(audience);
                     }
@@ -328,8 +328,8 @@ namespace Services.Broadcast.Repositories
 
                         var audience = context.schedule_detail_audiences.Create();
                         audience.audience_id = 31;
-                        audience.demo_rank = 1;
-                        audience.demo_population = 7368320;
+                        audience.audience_rank = 1;
+                        audience.audience_population = 7368320;
                         audience.impressions = 127859;
                         scheduleDetail.schedule_detail_audiences.Add(audience);
                     }

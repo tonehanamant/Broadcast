@@ -22,8 +22,8 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public string display { get; set; }
         public int version { get; set; }
-        public Nullable<int> last_modified_by { get; set; }
-        public System.DateTime last_modified_date { get; set; }
+        public Nullable<int> modified_by { get; set; }
+        public System.DateTime modified_date { get; set; }
     
         public virtual ICollection<bvs_maps> bvs_maps { get; set; }
     }

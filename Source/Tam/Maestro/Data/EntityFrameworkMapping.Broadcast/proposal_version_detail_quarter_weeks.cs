@@ -27,12 +27,12 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime end_date { get; set; }
         public bool is_hiatus { get; set; }
         public Nullable<int> units { get; set; }
-        public double impressions { get; set; }
         public Nullable<decimal> cost { get; set; }
         public double open_market_impressions_total { get; set; }
         public decimal open_market_cost_total { get; set; }
         public double proprietary_impressions_total { get; set; }
         public decimal proprietary_cost_total { get; set; }
+        public double impressions_goal { get; set; }
     
         public virtual ICollection<inventory_detail_slot_proposal> inventory_detail_slot_proposal { get; set; }
         public virtual proposal_version_detail_quarters proposal_version_detail_quarters { get; set; }
