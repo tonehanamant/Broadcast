@@ -113,17 +113,15 @@ var StationModalNewRate = function (view) {
         saveRate: function (addAnother) {
             var me = this;
             if ($("#new_program_form").valid()) {
-
-                // just use existing newProgram (Airtime, FlightStartDate, FlightEndDate, Flights will be set;) deal with Conflicts
                 me.newProgram.Conflicts = this.getConflictsForSave(this.$ProgramConflictGrid.records);
                 me.newProgram.Program = $('#new_program_name_input').val();
                 me.newProgram.Genres = me.processGenres();
                 me.newProgram.Rate15 = $('#new_program_spot15_input').val() ? parseFloat($('#new_program_spot15_input').val().replace(/[$,]+/g, "")) : null;
-                me.newProgram.Rate30 = $('#new_program_spot30_input').val() ? parseFloat($('#new_program_spot30_input').val().replace(/[$,]+/g, "")) : null
-                me.newProgram.Impressions = parseFloat($('#new_program_hhimpressions_input').val());
-                me.newProgram.Rating = parseFloat($('#new_program_hhrating_input').val());
+                me.newProgram.Rate30 = $('#new_program_spot30_input').val() ? parseFloat($('#new_program_spot30_input').val().replace(/[$,]+/g, "")) : null;
 
-                // console.log('save new program obj', this.newProgram);
+                me.newProgram.Impressions = parseFloat($('#new_program_hhimpressions_input').val().replace(/[$,]+/g, ""));
+                me.newProgram.Rating = parseFloat($('#new_program_hhrating_input').val().replace(/[$,]+/g, ""));
+
                 var callback = this.onAfterSaveNewRate.bind(this, addAnother);
                 _view.controller.apiSaveNewRatesProgram(this.newProgram, callback);
             }
