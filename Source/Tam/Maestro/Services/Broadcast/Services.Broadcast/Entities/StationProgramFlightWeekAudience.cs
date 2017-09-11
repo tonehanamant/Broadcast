@@ -6,7 +6,7 @@ namespace Services.Broadcast.Entities
     public class StationProgramFlightWeekAudience
     {
         public DisplayAudience Audience { get; set; }
-        public double? Impressions { get; set; }
+        public double Impressions { get; set; }
         public double? Rating { get; set; }
 
         public decimal? Cpm15 { get; set; }

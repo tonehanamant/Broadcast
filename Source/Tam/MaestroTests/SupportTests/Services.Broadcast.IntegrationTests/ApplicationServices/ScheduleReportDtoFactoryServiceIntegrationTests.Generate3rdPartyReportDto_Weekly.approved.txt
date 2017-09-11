@@ -7,7 +7,7 @@
           "AudienceId": 31,
           "AudienceName": "HH",
           "DeliveredImpressions": 0.0,
-          "OrderedImpressions": 147388,
+          "OrderedImpressions": 147388.0,
           "OutOfSpecDeliveredImpressions": 0.0,
           "TotalDeliveredImpressions": 0.0
         },
@@ -15,7 +15,7 @@
           "AudienceId": 33,
           "AudienceName": "A18-49",
           "DeliveredImpressions": 0.0,
-          "OrderedImpressions": 46200,
+          "OrderedImpressions": 46200.0,
           "OutOfSpecDeliveredImpressions": 0.0,
           "TotalDeliveredImpressions": 0.0
         }
@@ -27,17 +27,17 @@
             {
               "AudienceId": 31,
               "Delivery": 0.0,
-              "Impressions": 47178,
-              "NsiDelivery": null
+              "Impressions": 47178.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 0.0,
-              "Impressions": 13384,
-              "NsiDelivery": null
+              "Impressions": 13384.0,
+              "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -75,17 +75,17 @@
             {
               "AudienceId": 31,
               "Delivery": 0.0,
-              "Impressions": 100210,
-              "NsiDelivery": null
+              "Impressions": 100210.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 0.0,
-              "Impressions": 32816,
-              "NsiDelivery": null
+              "Impressions": 32816.0,
+              "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -129,7 +129,7 @@
           "AudienceId": 31,
           "AudienceName": "HH",
           "DeliveredImpressions": 0.0,
-          "OrderedImpressions": 147388,
+          "OrderedImpressions": 147388.0,
           "OutOfSpecDeliveredImpressions": 0.0,
           "TotalDeliveredImpressions": 0.0
         },
@@ -137,7 +137,7 @@
           "AudienceId": 33,
           "AudienceName": "A18-49",
           "DeliveredImpressions": 0.0,
-          "OrderedImpressions": 46200,
+          "OrderedImpressions": 46200.0,
           "OutOfSpecDeliveredImpressions": 0.0,
           "TotalDeliveredImpressions": 0.0
         }
@@ -149,17 +149,17 @@
             {
               "AudienceId": 31,
               "Delivery": 0.0,
-              "Impressions": 47178,
-              "NsiDelivery": null
+              "Impressions": 47178.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 0.0,
-              "Impressions": 13384,
-              "NsiDelivery": null
+              "Impressions": 13384.0,
+              "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -197,17 +197,17 @@
             {
               "AudienceId": 31,
               "Delivery": 0.0,
-              "Impressions": 100210,
-              "NsiDelivery": null
+              "Impressions": 100210.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 0.0,
-              "Impressions": 32816,
-              "NsiDelivery": null
+              "Impressions": 32816.0,
+              "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -251,7 +251,7 @@
           "AudienceId": 31,
           "AudienceName": "HH",
           "DeliveredImpressions": 171812.972,
-          "OrderedImpressions": 583763,
+          "OrderedImpressions": 583763.0,
           "OutOfSpecDeliveredImpressions": 574900.442,
           "TotalDeliveredImpressions": 746713.414
         },
@@ -259,7 +259,7 @@
           "AudienceId": 33,
           "AudienceName": "A18-49",
           "DeliveredImpressions": 46837.014,
-          "OrderedImpressions": 152020,
+          "OrderedImpressions": 152020.0,
           "OutOfSpecDeliveredImpressions": 206256.78,
           "TotalDeliveredImpressions": 253093.794
         }
@@ -271,17 +271,17 @@
             {
               "AudienceId": 31,
               "Delivery": 0.0,
-              "Impressions": 47178,
-              "NsiDelivery": null
+              "Impressions": 47178.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 0.0,
-              "Impressions": 13384,
-              "NsiDelivery": null
+              "Impressions": 13384.0,
+              "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -319,17 +319,17 @@
             {
               "AudienceId": 31,
               "Delivery": 0.0,
-              "Impressions": 100210,
-              "NsiDelivery": null
+              "Impressions": 100210.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 0.0,
-              "Impressions": 32816,
-              "NsiDelivery": null
+              "Impressions": 32816.0,
+              "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -367,17 +367,17 @@
             {
               "AudienceId": 31,
               "Delivery": 171812.972,
-              "Impressions": 306640,
-              "NsiDelivery": null
+              "Impressions": 306640.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 46837.014,
-              "Impressions": 80314,
-              "NsiDelivery": null
+              "Impressions": 80314.0,
+              "NsiDelivery": 0.0
             }
           ],
-          "Cost": 1300.0,
+          "Cost": 1300.00,
           "DeliveredSpots": 1,
           "DisplayDaypart": {
             "_Code": "",
@@ -415,17 +415,17 @@
             {
               "AudienceId": 31,
               "Delivery": 0.0,
-              "Impressions": 129735,
-              "NsiDelivery": null
+              "Impressions": 129735.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 0.0,
-              "Impressions": 25506,
-              "NsiDelivery": null
+              "Impressions": 25506.0,
+              "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -463,14 +463,14 @@
             {
               "AudienceId": 31,
               "Delivery": 157134.902,
-              "Impressions": null,
-              "NsiDelivery": null
+              "Impressions": 0.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 23469.332,
-              "Impressions": null,
-              "NsiDelivery": null
+              "Impressions": 0.0,
+              "NsiDelivery": 0.0
             }
           ],
           "Cost": null,
@@ -485,7 +485,7 @@
           "MatchSpotLength": false,
           "MatchStation": true,
           "MediaWeekId": null,
-          "OrderedSpots": null,
+          "OrderedSpots": 0,
           "OutOfSpecSpots": null,
           "ProgramName": "LET'S MAKE A DEAL",
           "Rank": 1,
@@ -501,14 +501,14 @@
             {
               "AudienceId": 31,
               "Delivery": 145942.572,
-              "Impressions": null,
-              "NsiDelivery": null
+              "Impressions": 0.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 43504.604,
-              "Impressions": null,
-              "NsiDelivery": null
+              "Impressions": 0.0,
+              "NsiDelivery": 0.0
             }
           ],
           "Cost": null,
@@ -523,7 +523,7 @@
           "MatchSpotLength": false,
           "MatchStation": true,
           "MediaWeekId": null,
-          "OrderedSpots": null,
+          "OrderedSpots": 0,
           "OutOfSpecSpots": null,
           "ProgramName": "TODAY SHW2-NBC",
           "Rank": 1,
@@ -539,14 +539,14 @@
             {
               "AudienceId": 31,
               "Delivery": 169428.054,
-              "Impressions": null,
-              "NsiDelivery": null
+              "Impressions": 0.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 61436.462,
-              "Impressions": null,
-              "NsiDelivery": null
+              "Impressions": 0.0,
+              "NsiDelivery": 0.0
             }
           ],
           "Cost": null,
@@ -561,7 +561,7 @@
           "MatchSpotLength": false,
           "MatchStation": true,
           "MediaWeekId": null,
-          "OrderedSpots": null,
+          "OrderedSpots": 0,
           "OutOfSpecSpots": null,
           "ProgramName": "1ST LOOK",
           "Rank": 1,
@@ -577,14 +577,14 @@
             {
               "AudienceId": 31,
               "Delivery": 42141.696,
-              "Impressions": null,
-              "NsiDelivery": null
+              "Impressions": 0.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 33120.99,
-              "Impressions": null,
-              "NsiDelivery": null
+              "Impressions": 0.0,
+              "NsiDelivery": 0.0
             }
           ],
           "Cost": null,
@@ -599,7 +599,7 @@
           "MatchSpotLength": false,
           "MatchStation": false,
           "MediaWeekId": null,
-          "OrderedSpots": null,
+          "OrderedSpots": 0,
           "OutOfSpecSpots": null,
           "ProgramName": "PIX11 MORNING NEWS 6A-7A",
           "Rank": 1,
@@ -615,14 +615,14 @@
             {
               "AudienceId": 31,
               "Delivery": 60253.218,
-              "Impressions": null,
-              "NsiDelivery": null
+              "Impressions": 0.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 44725.392,
-              "Impressions": null,
-              "NsiDelivery": null
+              "Impressions": 0.0,
+              "NsiDelivery": 0.0
             }
           ],
           "Cost": null,
@@ -637,7 +637,7 @@
           "MatchSpotLength": false,
           "MatchStation": false,
           "MediaWeekId": null,
-          "OrderedSpots": null,
+          "OrderedSpots": 0,
           "OutOfSpecSpots": null,
           "ProgramName": "PIX11 MORNING NEWS 7A-9A",
           "Rank": 1,
@@ -659,7 +659,7 @@
           "AudienceId": 31,
           "AudienceName": "HH",
           "DeliveredImpressions": 0.0,
-          "OrderedImpressions": 147388,
+          "OrderedImpressions": 147388.0,
           "OutOfSpecDeliveredImpressions": 0.0,
           "TotalDeliveredImpressions": 0.0
         },
@@ -667,7 +667,7 @@
           "AudienceId": 33,
           "AudienceName": "A18-49",
           "DeliveredImpressions": 0.0,
-          "OrderedImpressions": 46200,
+          "OrderedImpressions": 46200.0,
           "OutOfSpecDeliveredImpressions": 0.0,
           "TotalDeliveredImpressions": 0.0
         }
@@ -679,17 +679,17 @@
             {
               "AudienceId": 31,
               "Delivery": 0.0,
-              "Impressions": 47178,
-              "NsiDelivery": null
+              "Impressions": 47178.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 0.0,
-              "Impressions": 13384,
-              "NsiDelivery": null
+              "Impressions": 13384.0,
+              "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",
@@ -727,17 +727,17 @@
             {
               "AudienceId": 31,
               "Delivery": 0.0,
-              "Impressions": 100210,
-              "NsiDelivery": null
+              "Impressions": 100210.0,
+              "NsiDelivery": 0.0
             },
             {
               "AudienceId": 33,
               "Delivery": 0.0,
-              "Impressions": 32816,
-              "NsiDelivery": null
+              "Impressions": 32816.0,
+              "NsiDelivery": 0.0
             }
           ],
-          "Cost": 0.0,
+          "Cost": 0.00,
           "DeliveredSpots": 0,
           "DisplayDaypart": {
             "_Code": "CUS",

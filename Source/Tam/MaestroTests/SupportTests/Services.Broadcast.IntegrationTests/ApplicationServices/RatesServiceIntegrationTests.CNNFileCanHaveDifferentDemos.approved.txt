@@ -1,0 +1,90 @@
+﻿[
+  {
+    "Airtime": "F-SU 11PM-2PM",
+    "AudienceId": 4,
+    "Audiences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "Cpm120": null,
+        "Cpm15": 413.1300,
+        "Cpm30": null,
+        "Cpm60": null,
+        "Cpm90": null,
+        "Impressions": 0.0,
+        "Rating": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 50-54",
+          "Id": 13
+        },
+        "Cpm120": null,
+        "Cpm15": 312.1300,
+        "Cpm30": null,
+        "Cpm60": null,
+        "Cpm90": null,
+        "Impressions": 0.0,
+        "Rating": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 21-24",
+          "Id": 22
+        },
+        "Cpm120": null,
+        "Cpm15": 211.1300,
+        "Cpm30": null,
+        "Cpm60": null,
+        "Cpm90": null,
+        "Impressions": 0.0,
+        "Rating": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "Cpm120": null,
+        "Cpm15": 615.1300,
+        "Cpm30": null,
+        "Cpm60": null,
+        "Cpm90": null,
+        "Impressions": 0.0,
+        "Rating": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 6-11",
+          "Id": 46
+        },
+        "Cpm120": null,
+        "Cpm15": 514.1300,
+        "Cpm30": null,
+        "Cpm60": null,
+        "Cpm90": null,
+        "Impressions": 0.0,
+        "Rating": null
+      }
+    ],
+    "Flight": "2016/10/31 - 2016/11/06",
+    "FlightEndDate": "2016-11-06T00:00:00",
+    "Flights": [
+      {
+        "EndDate": "2016-11-06T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2016-10-31T00:00:00"
+      }
+    ],
+    "FlightStartDate": "2016-10-31T00:00:00",
+    "Genres": [],
+    "Impressions": 0.0,
+    "Program": "Integration Test",
+    "Rate15": null,
+    "Rate30": null,
+    "Rating": null,
+    "Spots": 60
+  }
+]

@@ -416,16 +416,16 @@ namespace Services.Broadcast.Aggregates
         }
         public double GetNsiDeliveredImpressions(int audienceId)
         {
-            return AudienceImpressions.Where(ai => ai.AudienceId == audienceId).Sum(ai => ai.NsiDelivery ?? 0);
+            return AudienceImpressions.Where(ai => ai.AudienceId == audienceId).Sum(ai => ai.NsiDelivery);
         }
     }
 
     public class AudienceImpressionsAndDelivery
     {
-        public int? Impressions { get; set; }
+        public double Impressions { get; set; }
         public int AudienceId { get; set; }
         public double Delivery { get; set; }
-        public double? NsiDelivery { get; set; }
+        public double NsiDelivery { get; set; }
     }
 
     public class ScheduleAudience

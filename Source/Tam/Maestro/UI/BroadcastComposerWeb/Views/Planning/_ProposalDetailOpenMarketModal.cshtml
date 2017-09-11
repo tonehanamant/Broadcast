@@ -1,4 +1,17 @@
 ﻿<style>
+    #openmarkets_grid {
+        height: 600px;
+    }
+
+    .openmarket-program-column-group {
+        background-image: -webkit-linear-gradient(#f9f9f9, #cacaca) !important;
+    }
+
+    #openmarkets_grid .w2ui-grid-fcolumns, #openmarkets_grid .w2ui-grid-frecords {
+        border-right: 1px solid #949494;
+        box-shadow: 1px 0px 0px 0px rgba(0,0,0,0.1), 2px 0px 0px 0px rgba(0,0,0,0.1);
+        z-index: 1;
+    }
     /* Open Market Header */
 
     #openmarket_header.modal-header {
@@ -6,9 +19,9 @@
         border-bottom: none;
     }
 
-    #openmarket_header.modal-header .panel-default {
-        margin-bottom: 0 !important;
-    }
+        #openmarket_header.modal-header .panel-default {
+            margin-bottom: 0 !important;
+        }
 
     #openmarket_header #openmarket_main_title {
         font-size: 16px;
@@ -20,53 +33,6 @@
         bottom: 2px;
     }
 
-    /* Open Market Container - horizontal grids structure */
-
-
-    .openmarket-container {
-        display: flex;
-        width: 100%;
-        overflow-y: auto;
-        overflow-x: hidden;
-        /*max-height: 600px;*/
-        max-height: calc(100vh - 470px);
-    }
-
-    .openmarket-container-supporting {
-        display: flex;
-        width: 100%;
-    }
-
-    .openmarket-programs-wrapper {
-        width: 580px;
-        flex-shrink: 0;
-    }
-
-    .openmarket-programs-wrapper.header {
-        margin-top: 0px;
-    }
-
-
-    .openmarket-weeks-scroll-wrapper {
-        display: flex;
-        width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        height: 100%;
-    }
-
-    .openmarket-weeks-scroll-hidden-wrapper {
-        display: flex;
-        width: 100%;
-        overflow-x: hidden;
-        overflow-y: hidden;
-        height: 100%;
-    }
-
-    .openmarket-week-item {
-        min-width: 650px;
-        /*flex-grow: 1;*/
-    }
 
     .openmarket-column-group {
         font-weight: bold;
@@ -80,12 +46,6 @@
         text-align: right;
     }
 
-    .openmarket-scroll-divider {
-        /*box-shadow: 4px 0px 4px -2px #888;*/
-        box-shadow: 5px 0 5px -5px #333;
-        margin-right: 5px;
-        height: 100%;
-    }
 
     /* filter */
     #filter_controls {
@@ -149,70 +109,43 @@
             </div>
 
             <div class="modal-body">
-                <div class="well">
-                    <div class="openmarket-container-supporting">
-                        <div style="height: 62px" class="openmarket-programs-wrapper header openmarket-scroll-divider">
-                            <div class="header-row row">
-                                <div class="col-xs-5">
-                                    <button id="refine_programs" class="btn btn-success btn-sm" type="button" formnovalidate="formnovalidate" data-bind="click: openCriteriaBuilder">Refine Programs</button>
-                                    <button class="btn btn-success btn-sm" type="button" formnovalidate="formnovalidate">Distribute</button>
-                                </div>
+                <div style="width: 560px;">
+                    <div class="header-row row">
+                        <div class="col-xs-5">
+                            <button id="refine_programs" class="btn btn-success btn-sm" type="button" formnovalidate="formnovalidate" data-bind="click: openCriteriaBuilder">Refine Programs</button>
+                            <button class="btn btn-success btn-sm" type="button" formnovalidate="formnovalidate">Distribute</button>
+                        </div>
 
-                                <div class="col-xs-7">
-                                    <div id="filter_controls">
-                                        <span id="filter_icon" class="glyphicon glyphicon-filter" aria-hidden="true" data-bind="style: { color: hasFiltersApplied() ? 'orange' : '#999' }"></span>
+                        <div class="col-xs-7">
+                            <div id="filter_controls">
+                                <span id="filter_icon" class="glyphicon glyphicon-filter" aria-hidden="true" data-bind="style: { color: hasFiltersApplied() ? 'orange' : '#999' }"></span>
 
-                                        <div class="input-group input-group-sm">
-                                            <span class="input-group-btn">
-                                                <button id="proposal_grid_search_btn" class="btn btn-info" role="button" data-bind="click: openFilter">
-                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                                </button>
-                                            </span>
-                                            
-                                            <select id="select_spot_filter" class="form-control input-sm" data-bind="options: spotFilterOptions, optionsText: 'Display', optionsValue: 'Id', value: selectedSpotFilterOption"></select>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-btn">
+                                        <button id="proposal_grid_search_btn" class="btn btn-info" role="button" data-bind="click: openFilter">
+                                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                        </button>
+                                    </span>
 
-                                            <div id="additional_option_menu" style="margin-right: 6px;" class="btn-group btn-group-sm">
-                                                <a class="btn btn-default btn-xs dropdown-toggle" data-target="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
-                                                </a>
+                                    <select id="select_spot_filter" class="form-control input-sm" data-bind="options: spotFilterOptions, optionsText: 'Display', optionsValue: 'Id', value: selectedSpotFilterOption"></select>
 
-                                                <ul id="additional_option_menu_dropdown" class="dropdown-menu dropdown-menu-right">
-                                                    <li data-bind="click:  toggleMarketSort.bind($data, true)"><a href="#"><i class="glyphicon glyphicon-ok sort_icon" data-bind="visible: isMarketSortName()"></i> Sort by Market Name</a></li>
-                                                    <li data-bind="click:  toggleMarketSort.bind($data, false)"><a href="#"><i class="glyphicon glyphicon-ok sort_icon" data-bind="visible: !isMarketSortName()"></i> Sort by Market Rank</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
+                                    <div id="additional_option_menu" style="margin-right: 6px;" class="btn-group btn-group-sm">
+                                        <a class="btn btn-default btn-xs dropdown-toggle" data-target="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                                        </a>
+
+                                        <ul id="additional_option_menu_dropdown" class="dropdown-menu dropdown-menu-right">
+                                            <li data-bind="click:  toggleMarketSort.bind($data, true)"><a href="#"><i class="glyphicon glyphicon-ok sort_icon" data-bind="visible: isMarketSortName()"></i> Sort by Market Name</a></li>
+                                            <li data-bind="click:  toggleMarketSort.bind($data, false)"><a href="#"><i class="glyphicon glyphicon-ok sort_icon" data-bind="visible: !isMarketSortName()"></i> Sort by Market Rank</a></li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-
-                            <div style="width: 580px;" id="openmarket_programs_header_grid"></div>
-                        </div>
-
-                        <div id="openmarket_weeks_headers" style="margin-top: 7px;" class="openmarket-weeks-scroll-hidden-wrapper scroll_wrapper1_openmarket">
-                            @*<div class="openmarket-week-item"><div id="openmarket_week_header_grid_1"></div></div>*@
-                        </div>
-                    </div>
-                    
-                    <div class="openmarket-container" id="openmarket_container_scrollable">
-                        <div class="openmarket-programs-wrapper openmarket-scroll-divider">
-                            <div style="width: 580px;" id="openmarket_programs_grid"></div>
-                        </div>
-
-                        <div id="openmarket_weeks" class="openmarket-weeks-scroll-hidden-wrapper scroll_wrapper2_openmarket">
-                            @*<div class="openmarket-week-item"><div id="openmarket_week_grid_1"></div></div>*@
-                        </div>
-                    </div>
-
-                    <div class="openmarket-container" style="height: 20px;">
-                        <div class="openmarket-programs-wrapper">
-                            <div style="width: 580px;"></div>
-                        </div>
-
-                        <div id="openmarket_weeks_bottom" class="openmarket-weeks-scroll-wrapper scroll_wrapper3_openmarket">
                         </div>
                     </div>
                 </div>
+
+                <div id="openmarkets_grid"></div>
             </div>
 
             <div class="modal-footer">

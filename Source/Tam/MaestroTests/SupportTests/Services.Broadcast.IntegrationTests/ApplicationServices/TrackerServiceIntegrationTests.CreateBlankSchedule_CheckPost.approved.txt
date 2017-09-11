@@ -1,0 +1,122 @@
+﻿[
+  {
+    "AudienceId": 31,
+    "AudienceRank": 1,
+    "Delivery": 2754.6
+  },
+  {
+    "AudienceId": 42,
+    "AudienceRank": 2,
+    "Delivery": 1371.25
+  },
+  {
+    "AudienceId": 31,
+    "AudienceRank": 1,
+    "Delivery": 0.0
+  },
+  {
+    "AudienceId": 42,
+    "AudienceRank": 2,
+    "Delivery": 0.0
+  },
+  {
+    "AudienceId": 31,
+    "AudienceRank": 1,
+    "Delivery": 0.0
+  },
+  {
+    "AudienceId": 42,
+    "AudienceRank": 2,
+    "Delivery": 0.0
+  },
+  {
+    "AudienceId": 31,
+    "AudienceRank": 1,
+    "Delivery": 0.0
+  },
+  {
+    "AudienceId": 42,
+    "AudienceRank": 2,
+    "Delivery": 0.0
+  },
+  {
+    "AudienceId": 31,
+    "AudienceRank": 1,
+    "Delivery": 4005.65
+  },
+  {
+    "AudienceId": 42,
+    "AudienceRank": 2,
+    "Delivery": 2447.95
+  },
+  {
+    "AudienceId": 31,
+    "AudienceRank": 1,
+    "Delivery": 523.8
+  },
+  {
+    "AudienceId": 42,
+    "AudienceRank": 2,
+    "Delivery": 187.95
+  },
+  {
+    "AudienceId": 31,
+    "AudienceRank": 1,
+    "Delivery": 604.05
+  },
+  {
+    "AudienceId": 42,
+    "AudienceRank": 2,
+    "Delivery": 567.9
+  },
+  {
+    "AudienceId": 31,
+    "AudienceRank": 1,
+    "Delivery": 543.85
+  },
+  {
+    "AudienceId": 42,
+    "AudienceRank": 2,
+    "Delivery": 566.85
+  },
+  {
+    "AudienceId": 31,
+    "AudienceRank": 1,
+    "Delivery": 139.625
+  },
+  {
+    "AudienceId": 42,
+    "AudienceRank": 2,
+    "Delivery": 0.0
+  },
+  {
+    "AudienceId": 31,
+    "AudienceRank": 1,
+    "Delivery": 2754.6
+  },
+  {
+    "AudienceId": 42,
+    "AudienceRank": 2,
+    "Delivery": 1371.25
+  },
+  {
+    "AudienceId": 31,
+    "AudienceRank": 1,
+    "Delivery": 0.0
+  },
+  {
+    "AudienceId": 42,
+    "AudienceRank": 2,
+    "Delivery": 0.0
+  },
+  {
+    "AudienceId": 31,
+    "AudienceRank": 1,
+    "Delivery": 0.0
+  },
+  {
+    "AudienceId": 42,
+    "AudienceRank": 2,
+    "Delivery": 0.0
+  }
+]

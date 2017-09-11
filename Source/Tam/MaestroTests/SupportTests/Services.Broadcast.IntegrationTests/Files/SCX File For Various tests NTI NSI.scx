@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<adx xsi:noNamespaceSchemaLocation="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<document>
+		<schemaVersion>1.0</schemaVersion>
+		<name>SCX Test</name>
+		<date>2017-03-13</date>
+		<mediaType>Spotcable</mediaType>
+		<documentType/>
+		<documentCode/>
+	</document>
+	<campaign>
+		<key codeOwner="NCC" codeDescription="CampaignID">
+			<id></id>
+		</key>
+		<key codeOwner="Strata" codeDescription="DMA Override">
+			<id>0</id>
+		</key>
+		<key codeOwner="Strata" codeDescription="Zone Pops">
+			<id>max</id>
+		</key>
+		<key codeOwner="VIEW32" codeDescription="CampaignName">
+			<id>SCX Test</id>
+		</key>
+		<dateRange>
+			<startDate>2017-03-06</startDate>
+			<endDate>2017-03-19</endDate>
+		</dateRange>
+		<company type="Rep">
+			<name>
+			</name>
+			<office>
+				<name>
+				</name>
+				<address>
+					<street/>
+					<city/>
+					<state code="__"/>
+					<postalCode>00000</postalCode>
+				</address>
+				<phone type="voice"></phone>
+			</office>
+			<contact role="AE">
+				<firstName/>
+				<lastName/>
+				<email/>
+				<phone type="voice"/>
+			</contact>
+		</company>
+		<company type="Agency">
+			<name>
+			</name>
+			<contact role="Buyer">
+				<firstName/>
+				<lastName/>
+				<email/>
+				<phone type="voice"></phone>
+			</contact>
+			<ID>
+				<code codeOwner="Agency"></code>
+			</ID>
+		</company>
+		<advertiser>
+			<name>Cadent Network</name>
+			<ID>
+				<code codeOwner="Agency"></code>
+			</ID>
+		</advertiser>
+		<product>
+			<name>SCX Thing</name>
+			<ID>
+				<code codeOwner="Agency">
+				</code>
+			</ID>
+		</product>
+		<estimate>
+			<desc>SCX Thing</desc>
+			<ID>
+				<code codeOwner="Agency">333444</code>
+			</ID>
+		</estimate>
+		<makeGoodPolicy>
+			<code/>
+		</makeGoodPolicy>
+		<demo demoRank="1">
+			<group>Households</group>
+			<ageFrom>0</ageFrom>
+			<ageTo>99</ageTo>
+		</demo>
+		<demo demoRank="2">
+			<group>Adults</group>
+			<ageFrom>18</ageFrom>
+			<ageTo>49</ageTo>
+		</demo>
+		<buyType>weekly</buyType>
+		<populations demoRank="1">7368320</populations>
+		<populations demoRank="2">8485887</populations>
+		<order>
+			<key codeOwner="NCC" codeDescription="Market">
+				<id>216</id>
+			</key>
+			<key codeOwner="">
+				<id/>
+			</key>
+			<key codeOwner="Strata" codeDescription="Pops">
+				<id>dma;book</id>
+			</key>
+			<key codeOwner="Strata" codeDescription="UseBroadcastWeeks">
+				<id>0</id>
+			</key>
+			<totals>
+				<cost>200.00</cost>
+				<spots>1</spots>
+			</totals>
+			<market nsi_id="139">
+				<name>TAMPA</name>
+			</market>
+			<survey>
+				<ratingService/>
+				<geography/>
+				<shareBook/>
+				<PUTBook/>
+				<profile/>
+				<comment codeOwner="Spotcable">May16 Proj. (May15 HUT, Nov15 SHR) DMA Nielsen Live+3</comment>
+			</survey>
+			<populations demoRank="1">7368320</populations>
+			<populations demoRank="2">8485887</populations>
+			<comment/>
+			<systemOrder>
+				<key codeOwner="">
+					<id/>
+				</key>
+				<key codeOwner="Strata" codeDescription="UseZonePop">
+					<id>false</id>
+				</key>
+				<comment></comment>
+				<system>
+					<name/>
+					<syscode/>
+				</system>
+				<affiliateSplit/>
+				<populations demoRank="1">7368320</populations>
+				<populations demoRank="2">8485887</populations>
+				<totals>
+					<cost>400.00</cost>
+					<spots>2</spots>
+				</totals>
+				<weeks count="2">
+				  <week number="1" startDate="2017-03-06"/>
+				  <week number="2" startDate="2017-03-13"/>
+				</weeks>
+				<detailLine detailLineID="0">
+					<startTime>01:30:00</startTime>
+					<endTime>03:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>N</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>Y</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT30S</length>
+					<daypartCode>RT</daypartCode>
+					<program>JUDGE ALEX</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WMOR</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="6288">WMOR</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WMOR-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">200.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">47178</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">13384</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">200.00</cost>
+						<spots>1</spots>
+					</totals>
+				  <spot>
+					<weekNumber>1</weekNumber>
+					<quantity>0</quantity>
+				  </spot>
+				  <spot>
+					<weekNumber>2</weekNumber>
+					<quantity>1</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>05:00:00</startTime>
+					<endTime>06:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>N</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>Y</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT30S</length>
+					<daypartCode>RT</daypartCode>
+					<program>JUDGE ALEX</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>WMOR</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="6288">WMOR</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">WMOR-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">200.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">47178</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">13384</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">200.00</cost>
+						<spots>1</spots>
+					</totals>
+				  <spot>
+					<weekNumber>1</weekNumber>
+					<quantity>0</quantity>
+				  </spot>
+				  <spot>
+					<weekNumber>2</weekNumber>
+					<quantity>1</quantity>
+					</spot>
+				</detailLine>
+			</systemOrder>
+		</order>
+		<order>
+			<key codeOwner="NCC" codeDescription="Market">
+				<id>216</id>
+			</key>
+			<key codeOwner="">
+				<id/>
+			</key>
+			<key codeOwner="Strata" codeDescription="Pops">
+				<id>dma;book</id>
+			</key>
+			<key codeOwner="Strata" codeDescription="UseBroadcastWeeks">
+				<id>0</id>
+			</key>
+			<totals>
+				<cost>350.00</cost>
+				<spots>4</spots>
+			</totals>
+			<market nsi_id="139">
+				<name>ST LOUIS</name>
+			</market>
+			<survey>
+				<ratingService/>
+				<geography/>
+				<shareBook/>
+				<PUTBook/>
+				<profile/>
+				<comment codeOwner="Spotcable">May16 Proj. (May15 HUT, Nov15 SHR) DMA Nielsen Live+3</comment>
+			</survey>
+			<populations demoRank="1">7368320</populations>
+			<populations demoRank="2">8485887</populations>
+			<comment/>
+			<systemOrder>
+				<key codeOwner="">
+					<id/>
+				</key>
+				<key codeOwner="Strata" codeDescription="UseZonePop">
+					<id>false</id>
+				</key>
+				<comment></comment>
+				<system>
+					<name/>
+					<syscode/>
+				</system>
+				<affiliateSplit/>
+				<populations demoRank="1">7368320</populations>
+				<populations demoRank="2">8485887</populations>
+				<totals>
+					<cost>350.00</cost>
+					<spots>4</spots>
+				</totals>
+				<weeks count="2">
+				  <week number="1" startDate="2017-03-06"/>
+				  <week number="2" startDate="2017-03-13"/>
+				</weeks>
+				<detailLine detailLineID="0">
+					<startTime>01:30:00</startTime>
+					<endTime>05:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>Y</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT30S</length>
+					<daypartCode>RT</daypartCode>
+					<program>CRIME WATCH DAILY WITH CHRIS HANSEN</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>KPLR</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="6288">KPLR</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">KPLR-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">100.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">47178</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">13384</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">300.00</cost>
+						<spots>3</spots>
+					</totals>
+				  <spot>
+					<weekNumber>1</weekNumber>
+					<quantity>1</quantity>
+				  </spot>
+				  <spot>
+					<weekNumber>2</weekNumber>
+					<quantity>2</quantity>
+					</spot>
+				</detailLine>
+				<detailLine detailLineID="0">
+					<startTime>09:00:00</startTime>
+					<endTime>10:00:00</endTime>
+					<startDay>M</startDay>
+					<dayOfWeek>
+						<Monday>Y</Monday>
+						<Tuesday>Y</Tuesday>
+						<Wednesday>Y</Wednesday>
+						<Thursday>Y</Thursday>
+						<Friday>Y</Friday>
+						<Saturday>Y</Saturday>
+						<Sunday>N</Sunday>
+					</dayOfWeek>
+					<length>PT30S</length>
+					<daypartCode>RT</daypartCode>
+					<program>CRIME WATCH DAILY WITH CHRIS HANSEN</program>
+					<comment>EMAY16</comment>
+					<network>
+						<name>KPLR</name>
+						<ID>
+							<code codeOwner="Spotcable" codeDescription="6288">KPLR</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Station">KPLR-TV</code>
+						</ID>
+						<ID>
+							<code codeOwner="Strata" codeDescription="Band">TV</code>
+						</ID>
+					</network>
+					<spotCost currency="USD">50.00</spotCost>
+					<demoValue demoRank="1">
+						<value type="Ratings">0.6</value>
+						<value type="Impressions">47178</value>
+					</demoValue>
+					<demoValue demoRank="2">
+						<value type="Ratings">0.2</value>
+						<value type="Impressions">13384</value>
+					</demoValue>
+					<totals>
+						<cost currency="USD">50.00</cost>
+						<spots>1</spots>
+					</totals>
+				  <spot>
+					<weekNumber>1</weekNumber>
+					<quantity>0</quantity>
+				  </spot>
+				  <spot>
+					<weekNumber>2</weekNumber>
+					<quantity>1</quantity>
+					</spot>
+				</detailLine>
+			</systemOrder>
+		</order>
+  </campaign>
+</adx>

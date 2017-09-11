@@ -790,14 +790,15 @@ namespace Services.Broadcast.Repositories
                                 {
                                     MediaWeekId = fw.media_week_id,
                                     IsHiatus = !fw.active,
-                                    Rate = (double)(spotLength == 15 ? fw.C15s_rate ?? 0
+                                    Rate = (spotLength == 15 ? fw.C15s_rate ?? 0
                                             : spotLength == 30 ? fw.C30s_rate ?? 0
                                             : spotLength == 60 ? fw.C60s_rate ?? 0
                                             : spotLength == 90 ? fw.C90s_rate ?? 0
                                             : spotLength == 120 ? fw.C120s_rate ?? 0
                                             : 0),
-                                    Allocations = fw.station_program_flight_proposal.Where(fp => fp.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_detail_id == proposalDetailId)
-                                                                                              .Select(fp => new OpenMarketAllocationDto { MediaWeekId = fp.proposal_version_detail_quarter_weeks.media_week_id, Spots = fp.spots }).ToList()
+                                    Allocations = context.station_program_flight_proposal.Where(fp => fp.station_program_flight_id == fw.id &&
+                                                                                                      fp.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_detail_id == proposalDetailId)
+                                                                                         .Select(fp => new OpenMarketAllocationDto { MediaWeekId = fp.proposal_version_detail_quarter_weeks.media_week_id, Spots = fp.spots }).ToList()
                                 }).ToList()
                             });
 
@@ -811,7 +812,7 @@ namespace Services.Broadcast.Repositories
             var programs = context.station_programs
                                   .Include(p => p.genres)
                                   .Include(p => p.station)
-                                  .Include(p => p.station_program_flights.Select(f => f.station_program_flight_proposal.Select(fp => fp.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters)))
+                                  .Include(p => p.station_program_flights)
                                   .AsQueryable();
 
             programs = programs.Where(p => p.rate_source == rateSource);

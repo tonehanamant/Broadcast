@@ -156,17 +156,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aggregates\RatingsAggregate.cs" />
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryService.cs" />
     <Compile Include="ApplicationServices\PostingBooksService.cs" />
     <Compile Include="ApplicationServices\InventoryCrunchService.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
+    <Compile Include="BusinessEngines\ImpressionAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailHeaderTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailWeekTotalsCalculationEngine.cs" />
     <Compile Include="ApplicationServices\TrafficService.cs" />
+    <Compile Include="BusinessEngines\ProposalTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalMarketsCalculationEngine.cs" />
-    <Compile Include="BusinessEngines\ProposalMathEngine.cs" />
+    <Compile Include="BusinessEngines\ProposalMath.cs" />
     <Compile Include="BusinessEngines\ProposalOpenMarketsTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalPostingBooksEngine.cs" />
     <Compile Include="BusinessEngines\ProposalProprietaryTotalsCalculationEngine.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\IHavePostingBooks.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
+    <Compile Include="Entities\OpenMarketInventoryAllocationSnapshotDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\BaseProposalInventoryWeekDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\OpenMarketAllocationSaveRequest.cs" />
     <Compile Include="Entities\OpenMarketInventory\OpenMarketInventoryAllocation.cs" />
@@ -185,9 +187,10 @@
     <Compile Include="Entities\OpenMarketRefineProgramsRequest.cs" />
     <Compile Include="Entities\DefaultPostingBooksDto.cs" />
     <Compile Include="Entities\PostingBookResultDto.cs" />
-    <Compile Include="Entities\ProposalAudienceDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleInventoryTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />
+    <Compile Include="Entities\ProposalDetailTotalsDto.cs" />
+    <Compile Include="Entities\ProposalHeaderTotalsDto.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationConflict.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationRequest.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposal.cs" />
@@ -202,6 +205,8 @@
     <Compile Include="Entities\OpenMarketInventory\ProposalInventoryMarketDto.cs" />
     <Compile Include="Entities\ProposalInventoryTotalsDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\ProposalOpenMarketInventoryWeekDto.cs" />
+    <Compile Include="Entities\ProprietaryInventoryAllocationSnapshotComponentDto.cs" />
+    <Compile Include="Entities\ProprietaryInventoryAllocationSnapshotDto.cs" />
     <Compile Include="Entities\StationDetailDaypart.cs" />
     <Compile Include="Entities\StationImpressions.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
@@ -231,11 +236,9 @@
     <Compile Include="Converters\StationContactMasterFileImporter.cs" />
     <Compile Include="Entities\ProposalInventoryDaypartDetailDto.cs" />
     <Compile Include="Entities\ProposalInventoryDaypartDto.cs" />
-    <Compile Include="Entities\ProposalInventoryWeekDaypartDto.cs" />
     <Compile Include="Entities\ProposalInventoryWeekDaypartDetailDto.cs" />
     <Compile Include="Entities\RatesInitialDataDto.cs" />
     <Compile Include="Entities\ReportOutput.cs" />
-    <Compile Include="Entities\FilterDaypart.cs" />
     <Compile Include="Converters\AssemblyScheduleConverter.cs" />
     <Compile Include="Entities\ForecastRatingsDefaultsDto.cs" />
     <Compile Include="Entities\MarketGroupDto.cs" />
@@ -249,7 +252,6 @@
     <Compile Include="Entities\ProposalDetailProprietaryInventoryDto.cs" />
     <Compile Include="Entities\ProposalMarketDto.cs" />
     <Compile Include="Entities\ProposalQuarterTotals.cs" />
-    <Compile Include="Entities\ProposalTargets.cs" />
     <Compile Include="Entities\ProposalMediaWeek.cs" />
     <Compile Include="Entities\ProposalWeekDto.cs" />
     <Compile Include="Entities\ProposalQuarterDto.cs" />
@@ -297,22 +299,17 @@
     <Compile Include="Entities\BvsReportData.cs" />
     <Compile Include="Entities\DisplayProposal.cs" />
     <Compile Include="Entities\DisplayScheduleStation.cs" />
-    <Compile Include="Entities\DistributeProposalSpotsRequest.cs" />
-    <Compile Include="Entities\GroupedDisplayProposalStationPrograms.cs" />
     <Compile Include="Entities\GroupedDisplayProposalMarketPrograms.cs" />
     <Compile Include="Entities\DisplayProposalVersion.cs" />
     <Compile Include="Entities\ImpressionAndDeliveryDto.cs" />
-    <Compile Include="Entities\MappingDetailDto.cs" />
     <Compile Include="Entities\NsiUniverseData.cs" />
     <Compile Include="Entities\ProgramMappingDto.cs" />
     <Compile Include="Entities\ProposalDto.cs" />
     <Compile Include="Entities\ProposalEnums.cs" />
     <Compile Include="Entities\ProposalFlightWeek.cs" />
     <Compile Include="Entities\ProposalLoadDto.cs" />
-    <Compile Include="Entities\GroupedProposalPrograms.cs" />
     <Compile Include="Entities\OpenMarketCriterion.cs" />
     <Compile Include="Entities\ProposalProgramFlightWeek.cs" />
-    <Compile Include="Entities\EditProposalProgramSpotsRequest.cs" />
     <Compile Include="Entities\ProposalTotalFields.cs" />
     <Compile Include="Entities\QuarterDetailDto.cs" />
     <Compile Include="Entities\RatesFileValidatorResult.cs" />
@@ -378,7 +375,6 @@
     <Compile Include="Repositories\NsiUniverseRepository.cs" />
     <Compile Include="Repositories\PostingBookRepository.cs" />
     <Compile Include="Repositories\GenreRepository.cs" />
-    <Compile Include="Entities\ProposalCriteriasDto.cs" />
     <Compile Include="Entities\PostFileDetail.cs" />
     <Compile Include="Repositories\ProposalInventoryRepository.cs" />
     <Compile Include="Repositories\ProposalOpenMarketInventoryRepository.cs" />

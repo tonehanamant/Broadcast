@@ -88,6 +88,7 @@ namespace BroadcastComposerWeb
                 "~/Scripts/appPlanning/ProposalDetailInventoryViewModel.js",
                 "~/Scripts/appPlanning/ProposalDetailOpenMarketView.js",
                 "~/Scripts/appPlanning/ProposalDetailOpenMarketViewModel.js",
+                 
                 "~/Scripts/appPlanning/CriteriaBuilderViewModel.js",
                 "~/Scripts/appPlanning/FilterViewModel.js",
                 "~/Scripts/appPlanning/SwitchProposalVersionView.js",

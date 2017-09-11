@@ -6,7 +6,7 @@
   "ImpressionsMarginAchieved": true,
   "ImpressionsPercent": 154.32,
   "TotalCost": 4426.0,
-  "TotalCpm": 0.29,
+  "TotalCpm": 286.81,
   "TotalImpressions": 15432.0,
   "Weeks": [
     {

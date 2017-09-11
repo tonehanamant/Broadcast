@@ -1,0 +1,72 @@
+﻿{
+  "Dayparts": [],
+  "DetailBudgetMarginAchieved": false,
+  "DetailCpm": 0.05,
+  "DetailCpmMarginAchieved": false,
+  "DetailDaypart": {
+    "endTime": 86400,
+    "fri": false,
+    "mon": false,
+    "sat": false,
+    "startTime": 0,
+    "sun": false,
+    "Text": "TH 24HR",
+    "thu": true,
+    "tue": false,
+    "wed": false
+  },
+  "DetailDaypartId": 14779,
+  "DetailFlightEndDate": "2016-06-06T00:00:00",
+  "DetailFlightStartDate": "2016-05-30T00:00:00",
+  "DetailFlightWeeks": [
+    {
+      "EndDate": "2016-06-06T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 649,
+      "StartDate": "2016-05-30T00:00:00"
+    }
+  ],
+  "DetailId": 7,
+  "DetailImpressionsMarginAchieved": false,
+  "DetailSpotLength": 30,
+  "DetailSpotLengthId": 1,
+  "DetailTargetBudget": 50.0000,
+  "DetailTargetImpressions": 1000000.0,
+  "Equivalized": null,
+  "GuaranteedAudience": 31,
+  "HutPostingBookId": 410,
+  "Margin": 20.0,
+  "PlaybackType": 4,
+  "PostType": null,
+  "ProposalFlightEndDate": "2016-06-06T00:00:00",
+  "ProposalFlightStartDate": "2016-05-30T00:00:00",
+  "ProposalFlightWeeks": [
+    {
+      "EndDate": "2016-06-06T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 649,
+      "StartDate": "2016-05-30T00:00:00"
+    }
+  ],
+  "ProposalId": 248,
+  "ProposalName": "Proposal Test",
+  "ProposalVersion": 1,
+  "ProposalVersionId": 41,
+  "SharePostingBookId": 413,
+  "SinglePostingBookId": null,
+  "Weeks": [
+    {
+      "Budget": 25.0000,
+      "BudgetMarginAchieved": false,
+      "DaypartGroups": [],
+      "ImpressionsGoal": 100000.0,
+      "ImpressionsMarginAchieved": false,
+      "IsHiatus": false,
+      "MaxSlotSpotLength": 0,
+      "MediaWeekId": 649,
+      "ProposalVersionDetailQuarterWeekId": 7,
+      "QuarterText": "Q2",
+      "Week": "5/30/2016"
+    }
+  ]
+}

@@ -101,10 +101,15 @@ var ProposalDetailInventoryView = BaseView.extend({
     },
 
     showModal: function (isHide) {
+        var $scope = this;
+
         if (isHide) {
-            this.$Modal.modal('hide');
+            $scope.ProposalView.controller.planningController.apiGetPrimaryProposal($scope.activeInventoryData.ProposalId, function (proposal) {
+                $scope.ProposalView.controller.proposalViewModel.load(proposal);
+                $scope.$Modal.modal('hide');
+            });
         } else {
-            this.$Modal.modal('show');
+            $scope.$Modal.modal('show');
         }
     },
 
@@ -631,7 +636,8 @@ var ProposalDetailInventoryView = BaseView.extend({
             //InventoryDetailSlotId: rec.InventoryDetailSlotId,
             QuarterWeekId: quarterId,
             Order: order,
-            SpotLength: spot
+            SpotLength: spot,
+            Impressions: rec.Impressions
         };
     },
 

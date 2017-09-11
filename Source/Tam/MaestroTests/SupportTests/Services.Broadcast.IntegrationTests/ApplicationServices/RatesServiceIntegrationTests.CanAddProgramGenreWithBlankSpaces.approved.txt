@@ -17,7 +17,7 @@
           "Display": "Integration Test"
         }
       ],
-      "Impressions": 5.90000009536743,
+      "Impressions": 5.9000001,
       "Program": "Integration Test",
       "Rate15": 10.0000,
       "Rate30": 20.0000,
@@ -35,7 +35,7 @@
           "Display": "Test"
         }
       ],
-      "Impressions": 5.90000009536743,
+      "Impressions": 5.9000001,
       "Program": "Integration Test",
       "Rate15": 10.0000,
       "Rate30": 20.0000,

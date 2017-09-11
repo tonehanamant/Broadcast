@@ -1,0 +1,14 @@
+﻿[
+  {
+    "CreatedBy": "test-user",
+    "Impressions": 1234.0,
+    "Isci": null,
+    "ProposalVersionDetailQuarterWeekId": 7,
+    "SpotCost": 488.0000,
+    "SpotLengthId": 1,
+    "Spots": 3,
+    "StationCode": 6852,
+    "StationProgramFlightId": 483045,
+    "StationProgramId": 2004
+  }
+]

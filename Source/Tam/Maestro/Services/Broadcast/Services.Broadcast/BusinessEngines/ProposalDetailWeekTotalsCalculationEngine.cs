@@ -16,13 +16,6 @@ namespace Services.Broadcast.BusinessEngines
 
     public class ProposalDetailWeekTotalsCalculationEngine : IProposalDetailWeekTotalsCalculationEngine
     {
-        private readonly IProposalMathEngine _proposalMathEngine;
-
-        public ProposalDetailWeekTotalsCalculationEngine(IProposalMathEngine proposalMathEngine)
-        {
-            _proposalMathEngine = proposalMathEngine;
-        }
-
         public void CalculateWeekTotalsForProprietary(ProposalInventoryTotalsDto.InventoryWeek proprietaryWeekTotals,
             ProposalInventoryTotalsRequestDto.InventoryWeek proprietaryTotalsRequest,
             ProposalDetailSingleWeekTotalsDto otherInventoryTotals, double margin)
@@ -55,22 +48,17 @@ namespace Services.Broadcast.BusinessEngines
             openMarketWeekTotals.ImpressionsMarginAchieved = openMarketWeekTotals.ImpressionsPercent > 100;
         }
 
-        private ProposalDetailWeekTotalsDto CalculateTotals(double impressionsInThousands, decimal cost,
-            double targetImpressionsInThousands, decimal targetCost, double margin,
-            ProposalDetailSingleWeekTotalsDto otherInventoryTotals)
+        private ProposalDetailWeekTotalsDto CalculateTotals(double impressions, decimal cost, double targetImpressions, decimal targetCost, double margin, ProposalDetailSingleWeekTotalsDto otherInventoryTotals)
         {
             var totals = new ProposalDetailWeekTotalsDto();
-            var impressions = (long)(impressionsInThousands * 1000);
-            var roundedImpressions = impressions / 1000.0;
-            var targetImpressions = (long)(targetImpressionsInThousands * 1000);
 
             // totals
-            totals.TotalImpressions = Math.Round(roundedImpressions + otherInventoryTotals.TotalImpressions, 3);
+            totals.TotalImpressions = impressions + otherInventoryTotals.TotalImpressions;
             totals.TotalCost = Math.Round(cost + otherInventoryTotals.TotalCost, 2);
 
             // percent
-            totals.BudgetPercent = _proposalMathEngine.CalculateBudgetPercent((double)totals.TotalCost, margin, (double)targetCost);
-            totals.ImpressionsPercent = _proposalMathEngine.CalculateImpressionsPercent(totals.TotalImpressions, targetImpressions);
+            totals.BudgetPercent = ProposalMath.CalculateBudgetPercent(totals.TotalCost, margin, targetCost);
+            totals.ImpressionsPercent = ProposalMath.CalculateImpressionsPercent(totals.TotalImpressions, targetImpressions);
 
             return totals;
         }

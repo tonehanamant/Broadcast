@@ -21,7 +21,7 @@
                 "EndDate": "0001-01-01T00:00:00",
                 "IsHiatus": false,
                 "MediaWeekId": 649,
-                "Rate": 10.0,
+                "Rate": 10.0000,
                 "StartDate": "0001-01-01T00:00:00"
               }
             ],
@@ -31,7 +31,7 @@
             "StationCode": 4544,
             "TargetCpm": 0.06,
             "TargetImpressions": 0.0,
-            "UnitImpressions": 170.57425
+            "UnitImpressions": 170574.25
           }
         ],
         "StationCode": 4544
@@ -52,7 +52,7 @@
                 "EndDate": "0001-01-01T00:00:00",
                 "IsHiatus": false,
                 "MediaWeekId": 649,
-                "Rate": 20.0,
+                "Rate": 20.0000,
                 "StartDate": "0001-01-01T00:00:00"
               }
             ],
@@ -62,7 +62,7 @@
             "StationCode": 5923,
             "TargetCpm": 1.08,
             "TargetImpressions": 0.0,
-            "UnitImpressions": 18.487
+            "UnitImpressions": 18487.0
           }
         ],
         "StationCode": 5923
@@ -91,7 +91,7 @@
                 "EndDate": "0001-01-01T00:00:00",
                 "IsHiatus": false,
                 "MediaWeekId": 649,
-                "Rate": 30.0,
+                "Rate": 30.0000,
                 "StartDate": "0001-01-01T00:00:00"
               }
             ],
@@ -101,7 +101,7 @@
             "StationCode": 5017,
             "TargetCpm": 0.01,
             "TargetImpressions": 0.0,
-            "UnitImpressions": 2478.5165
+            "UnitImpressions": 2478516.5
           }
         ],
         "StationCode": 5017
@@ -130,7 +130,7 @@
                 "EndDate": "0001-01-01T00:00:00",
                 "IsHiatus": false,
                 "MediaWeekId": 649,
-                "Rate": 30.0,
+                "Rate": 30.0000,
                 "StartDate": "0001-01-01T00:00:00"
               }
             ],
@@ -140,7 +140,7 @@
             "StationCode": 5982,
             "TargetCpm": 2.15,
             "TargetImpressions": 0.0,
-            "UnitImpressions": 13.95625
+            "UnitImpressions": 13956.25
           }
         ],
         "StationCode": 5982
@@ -161,7 +161,7 @@
                 "EndDate": "0001-01-01T00:00:00",
                 "IsHiatus": false,
                 "MediaWeekId": 649,
-                "Rate": 30.0,
+                "Rate": 30.0000,
                 "StartDate": "0001-01-01T00:00:00"
               }
             ],
@@ -171,7 +171,7 @@
             "StationCode": 6852,
             "TargetCpm": 3.73,
             "TargetImpressions": 0.0,
-            "UnitImpressions": 8.04025
+            "UnitImpressions": 8040.25
           }
         ],
         "StationCode": 6852

@@ -1,0 +1,3326 @@
+﻿[
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 56123,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "PHILADELPHIA",
+    "ProgramName": "PEOPLES COURT",
+    "Rank": 4,
+    "Station": "WPSG",
+    "TimeAired": "3:35 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 55991,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "PHILADELPHIA",
+    "ProgramName": "PEOPLES COURT",
+    "Rank": 4,
+    "Station": "WPSG",
+    "TimeAired": "3:33 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 50988,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-02T00:00:00",
+    "DateAired": "06/02/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "BOSTON",
+    "ProgramName": "JERRY SPRINGER",
+    "Rank": 8,
+    "Station": "WLVI",
+    "TimeAired": "2:09 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 42015,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "BOSTON",
+    "ProgramName": "JERRY SPRINGER",
+    "Rank": 8,
+    "Station": "WLVI",
+    "TimeAired": "11:40 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 42651,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "BOSTON",
+    "ProgramName": "JERRY SPRINGER",
+    "Rank": 8,
+    "Station": "WLVI",
+    "TimeAired": "11:50 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 53473,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "BOSTON",
+    "ProgramName": "JERRY SPRINGER",
+    "Rank": 8,
+    "Station": "WLVI",
+    "TimeAired": "2:51 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "MNTV",
+    "AirTime": 38244,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-08T00:00:00",
+    "DateAired": "06/08/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "ATLANTA",
+    "ProgramName": "MAURY",
+    "Rank": 9,
+    "Station": "WATL",
+    "TimeAired": "10:37 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "MNTV",
+    "AirTime": 52098,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 22535.65,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 21242.0,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "HOUSTON",
+    "ProgramName": "DIVORCE COURT",
+    "Rank": 10,
+    "Station": "KTXH",
+    "TimeAired": "2:28 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "MNTV",
+    "AirTime": 51861,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-08T00:00:00",
+    "DateAired": "06/08/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "HOUSTON",
+    "ProgramName": "DIVORCE COURT",
+    "Rank": 10,
+    "Station": "KTXH",
+    "TimeAired": "2:24 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 48683,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-05-31T00:00:00",
+    "DateAired": "05/31/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "PHOENIX",
+    "ProgramName": "ARIZONA MIDDAY",
+    "Rank": 12,
+    "Station": "KPNX",
+    "TimeAired": "1:31 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 47801,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 37104.45,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 34727.85,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "DETROIT",
+    "ProgramName": "PEOPLES COURT",
+    "Rank": 13,
+    "Station": "WKBD",
+    "TimeAired": "1:16 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 48243,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 37104.45,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 34727.85,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "DETROIT",
+    "ProgramName": "PEOPLES COURT",
+    "Rank": 13,
+    "Station": "WKBD",
+    "TimeAired": "1:24 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "MNTV",
+    "AirTime": 47858,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 13714.0,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 9643.05,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "SEATTLE",
+    "ProgramName": "JUDGE MATHIS",
+    "Rank": 14,
+    "Station": "KZJO",
+    "TimeAired": "1:17 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "MNTV",
+    "AirTime": 48500,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 13714.0,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 9643.05,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "SEATTLE",
+    "ProgramName": "JUDGE MATHIS",
+    "Rank": 14,
+    "Station": "KZJO",
+    "TimeAired": "1:28 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "MNTV",
+    "AirTime": 49706,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 18399.75,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 19831.8,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "ORLANDO",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 19,
+    "Station": "WRBW",
+    "TimeAired": "1:48 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "MNTV",
+    "AirTime": 60737,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 10245.75,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 9719.0,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "ORLANDO",
+    "ProgramName": "THE WENDY WILLIAMS SHOW",
+    "Rank": 19,
+    "Station": "WRBW",
+    "TimeAired": "4:52 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "MNTV",
+    "AirTime": 46753,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "ORLANDO",
+    "ProgramName": "DIVORCE COURT",
+    "Rank": 19,
+    "Station": "WRBW",
+    "TimeAired": "12:59 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "MNTV",
+    "AirTime": 60572,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-07T00:00:00",
+    "DateAired": "06/07/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "ORLANDO",
+    "ProgramName": "THE WENDY WILLIAMS SHOW",
+    "Rank": 19,
+    "Station": "WRBW",
+    "TimeAired": "4:49 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 42981,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 36805.75,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 36785.2,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "SACRAMENTO",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 20,
+    "Station": "KMAX",
+    "TimeAired": "11:56 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 57249,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 36282.25,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 36108.65,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "SACRAMENTO",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 20,
+    "Station": "KMAX",
+    "TimeAired": "3:54 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 55123,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-07T00:00:00",
+    "DateAired": "06/07/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "SACRAMENTO",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 20,
+    "Station": "KMAX",
+    "TimeAired": "3:18 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 40297,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 34249.65,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 34105.7,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-10T00:00:00",
+    "DateAired": "06/10/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "SACRAMENTO",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 20,
+    "Station": "KMAX",
+    "TimeAired": "11:11 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 34028,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 40643.35,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 31693.45,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "RALEIGH",
+    "ProgramName": "FAMILY FEUD",
+    "Rank": 25,
+    "Station": "WRAZ",
+    "TimeAired": "9:27 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 33687,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "RALEIGH",
+    "ProgramName": "FAMILY FEUD",
+    "Rank": 25,
+    "Station": "WRAZ",
+    "TimeAired": "9:21 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 40740,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "NASHVILLE",
+    "ProgramName": "NEWS 2 AT 11AM",
+    "Rank": 29,
+    "Station": "WKRN",
+    "TimeAired": "11:19 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 55626,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-08T00:00:00",
+    "DateAired": "06/08/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "NASHVILLE",
+    "ProgramName": "DR. PHIL",
+    "Rank": 29,
+    "Station": "WKRN",
+    "TimeAired": "3:27 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "IND",
+    "AirTime": 71791,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-05-31T00:00:00",
+    "DateAired": "05/31/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "SALT LAKE CITY",
+    "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+    "Rank": 34,
+    "Station": "KJZZ",
+    "TimeAired": "7:56 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "IND",
+    "AirTime": 71740,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "SALT LAKE CITY",
+    "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+    "Rank": 34,
+    "Station": "KJZZ",
+    "TimeAired": "7:55 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 45067,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-05-31T00:00:00",
+    "DateAired": "05/31/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "MILWAUKEE",
+    "ProgramName": "THE CHEW",
+    "Rank": 35,
+    "Station": "WISN",
+    "TimeAired": "12:31 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 44969,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-07T00:00:00",
+    "DateAired": "06/07/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "MILWAUKEE",
+    "ProgramName": "THE CHEW",
+    "Rank": 35,
+    "Station": "WISN",
+    "TimeAired": "12:29 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 34850,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 30200.95,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 23209.5,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "GREENVILLE,SC",
+    "ProgramName": "RACHAEL RAY",
+    "Rank": 37,
+    "Station": "WLOS",
+    "TimeAired": "9:40 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 37460,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 7925.8,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 6372.95,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-02T00:00:00",
+    "DateAired": "06/02/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "GREENVILLE,SC",
+    "ProgramName": "PEOPLES COURT",
+    "Rank": 37,
+    "Station": "WYCW",
+    "TimeAired": "10:24 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 39126,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 9093.6,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 7410.35,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-10T00:00:00",
+    "DateAired": "06/10/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "GREENVILLE,SC",
+    "ProgramName": "PEOPLES COURT",
+    "Rank": 37,
+    "Station": "WYCW",
+    "TimeAired": "10:52 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 60114,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 18829.55,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 15812.35,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "AUSTIN",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 39,
+    "Station": "KTBC",
+    "TimeAired": "4:41 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 60555,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 19636.75,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 16277.4,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-10T00:00:00",
+    "DateAired": "06/10/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "AUSTIN",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 39,
+    "Station": "KTBC",
+    "TimeAired": "4:49 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 56542,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "AUSTIN",
+    "ProgramName": "EXTRA ENTERTAINMENT MAG",
+    "Rank": 39,
+    "Station": "KVUE",
+    "TimeAired": "3:42 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 45900,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "GRAND RAPIDS",
+    "ProgramName": "WZZM 13 NEWS AT NOON",
+    "Rank": 41,
+    "Station": "WZZM",
+    "TimeAired": "12:45 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 58363,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "GRAND RAPIDS",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 41,
+    "Station": "WZZM",
+    "TimeAired": "4:12 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 44106,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-08T00:00:00",
+    "DateAired": "06/08/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "GRAND RAPIDS",
+    "ProgramName": "WZZM 13 NEWS AT NOON",
+    "Rank": 41,
+    "Station": "WZZM",
+    "TimeAired": "12:15 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 58760,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-10T00:00:00",
+    "DateAired": "06/10/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "GRAND RAPIDS",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 41,
+    "Station": "WZZM",
+    "TimeAired": "4:19 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 55205,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 32355.05,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 27369.55,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-02T00:00:00",
+    "DateAired": "06/02/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "OKLAHOMA CITY",
+    "ProgramName": "INSIDE EDITION",
+    "Rank": 43,
+    "Station": "KFOR",
+    "TimeAired": "3:20 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 57251,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 37066.45,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 35352.0,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-02T00:00:00",
+    "DateAired": "06/02/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "OKLAHOMA CITY",
+    "ProgramName": "JEOPARDY!",
+    "Rank": 43,
+    "Station": "KFOR",
+    "TimeAired": "3:54 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 57253,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 37066.45,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 35352.0,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "OKLAHOMA CITY",
+    "ProgramName": "JEOPARDY!",
+    "Rank": 43,
+    "Station": "KFOR",
+    "TimeAired": "3:54 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 55200,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 32355.05,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 27369.55,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-10T00:00:00",
+    "DateAired": "06/10/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "OKLAHOMA CITY",
+    "ProgramName": "INSIDE EDITION",
+    "Rank": 43,
+    "Station": "KFOR",
+    "TimeAired": "3:20 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 38321,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-01T00:00:00",
+    "DateAired": "06/01/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "HARRISBURG",
+    "ProgramName": "RACHAEL RAY",
+    "Rank": 44,
+    "Station": "WHTM",
+    "TimeAired": "10:38 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 56387,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-01T00:00:00",
+    "DateAired": "06/01/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "HARRISBURG",
+    "ProgramName": "HOT BENCH",
+    "Rank": 44,
+    "Station": "WHTM",
+    "TimeAired": "3:39 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 39125,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-07T00:00:00",
+    "DateAired": "06/07/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "HARRISBURG",
+    "ProgramName": "RACHAEL RAY",
+    "Rank": 44,
+    "Station": "WHTM",
+    "TimeAired": "10:52 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 56476,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-08T00:00:00",
+    "DateAired": "06/08/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "HARRISBURG",
+    "ProgramName": "HOT BENCH",
+    "Rank": 44,
+    "Station": "WHTM",
+    "TimeAired": "3:41 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CBS",
+    "AirTime": 39541,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-01T00:00:00",
+    "DateAired": "06/01/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "GREENSBORO",
+    "ProgramName": "LET'S MAKE A DEAL",
+    "Rank": 46,
+    "Station": "WFMY",
+    "TimeAired": "10:59 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CBS",
+    "AirTime": 43127,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "GREENSBORO",
+    "ProgramName": "PRICE IS RIGHT",
+    "Rank": 46,
+    "Station": "WFMY",
+    "TimeAired": "11:58 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 50179,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 15616.7,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 13550.9,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "GREENSBORO",
+    "ProgramName": "THE WENDY WILLIAMS SHOW",
+    "Rank": 46,
+    "Station": "WGHP",
+    "TimeAired": "1:56 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 49303,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 17194.8,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 13901.85,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "GREENSBORO",
+    "ProgramName": "THE WENDY WILLIAMS SHOW",
+    "Rank": 46,
+    "Station": "WGHP",
+    "TimeAired": "1:41 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "IND",
+    "AirTime": 59999,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 17492.25,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 13847.1,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "JACKSONVILLE",
+    "ProgramName": "THE DR. OZ SHOW",
+    "Rank": 47,
+    "Station": "WJXT",
+    "TimeAired": "4:39 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 46029,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 16223.75,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 15630.65,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "RICHMOND",
+    "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+    "Rank": 56,
+    "Station": "WRIC",
+    "TimeAired": "12:47 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 46708,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-08T00:00:00",
+    "DateAired": "06/08/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "RICHMOND",
+    "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+    "Rank": 56,
+    "Station": "WRIC",
+    "TimeAired": "12:58 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 46059,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-01T00:00:00",
+    "DateAired": "06/01/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "ALBANY,NY",
+    "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+    "Rank": 59,
+    "Station": "WNYT",
+    "TimeAired": "12:47 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 46453,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-07T00:00:00",
+    "DateAired": "06/07/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "ALBANY,NY",
+    "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+    "Rank": 59,
+    "Station": "WNYT",
+    "TimeAired": "12:54 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 45955,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-08T00:00:00",
+    "DateAired": "06/08/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "ALBANY,NY",
+    "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+    "Rank": 59,
+    "Station": "WNYT",
+    "TimeAired": "12:45 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 55838,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 32258.85,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 30156.1,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "KNOXVILLE",
+    "ProgramName": "DR. PHIL",
+    "Rank": 62,
+    "Station": "WBIR",
+    "TimeAired": "3:30 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 55149,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "KNOXVILLE",
+    "ProgramName": "DR. PHIL",
+    "Rank": 62,
+    "Station": "WBIR",
+    "TimeAired": "3:19 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CW",
+    "AirTime": 65964,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "LEXINGTON",
+    "ProgramName": "FAMILY FEUD",
+    "Rank": 63,
+    "Station": "EKYT",
+    "TimeAired": "6:19 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 55348,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 19702.55,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 19162.2,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "GREEN BAY",
+    "ProgramName": "DR. PHIL",
+    "Rank": 68,
+    "Station": "WBAY",
+    "TimeAired": "3:22 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 60716,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 18425.8,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 18504.95,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "GREEN BAY",
+    "ProgramName": "INSIDE EDITION",
+    "Rank": 68,
+    "Station": "WBAY",
+    "TimeAired": "4:51 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 55590,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-08T00:00:00",
+    "DateAired": "06/08/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "GREEN BAY",
+    "ProgramName": "DR. PHIL",
+    "Rank": 68,
+    "Station": "WBAY",
+    "TimeAired": "3:26 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 60721,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 18425.8,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 18504.95,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "GREEN BAY",
+    "ProgramName": "INSIDE EDITION",
+    "Rank": 68,
+    "Station": "WBAY",
+    "TimeAired": "4:52 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 64577,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 15833.6,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 16182.7,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "ROANOKE",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 69,
+    "Station": "WFXR",
+    "TimeAired": "5:56 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 35926,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 13527.15,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 9645.6,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "ROANOKE",
+    "ProgramName": "TODAY SHOW",
+    "Rank": 69,
+    "Station": "WSLS",
+    "TimeAired": "9:58 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 35912,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 13527.15,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 9645.6,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-10T00:00:00",
+    "DateAired": "06/10/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "ROANOKE",
+    "ProgramName": "TODAY SHOW",
+    "Rank": 69,
+    "Station": "WSLS",
+    "TimeAired": "9:58 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 34933,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 2494.1,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 1568.0,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "TUCSON",
+    "ProgramName": "THE DOCTORS",
+    "Rank": 70,
+    "Station": "KMSB",
+    "TimeAired": "9:42 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 34698,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-08T00:00:00",
+    "DateAired": "06/08/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "TUCSON",
+    "ProgramName": "THE DOCTORS",
+    "Rank": 70,
+    "Station": "KMSB",
+    "TimeAired": "9:38 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 52412,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 12345.9,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 11081.25,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "FLINT",
+    "ProgramName": "PEOPLES COURT",
+    "Rank": 71,
+    "Station": "WSMH",
+    "TimeAired": "2:33 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 55102,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 13073.65,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 11895.25,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "FLINT",
+    "ProgramName": "JUDGE MATHIS",
+    "Rank": 71,
+    "Station": "WSMH",
+    "TimeAired": "3:18 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 52265,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-01T00:00:00",
+    "DateAired": "06/01/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "OMAHA",
+    "ProgramName": "FABLIFE",
+    "Rank": 74,
+    "Station": "KETV",
+    "TimeAired": "2:31 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 45166,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 11930.0,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 9501.05,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "OMAHA",
+    "ProgramName": "THE CHEW",
+    "Rank": 74,
+    "Station": "KETV",
+    "TimeAired": "12:32 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 53668,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "OMAHA",
+    "ProgramName": "FABLIFE",
+    "Rank": 74,
+    "Station": "KETV",
+    "TimeAired": "2:54 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 44970,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 11776.9,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 9293.7,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "OMAHA",
+    "ProgramName": "THE CHEW",
+    "Rank": 74,
+    "Station": "KETV",
+    "TimeAired": "12:29 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CBS",
+    "AirTime": 39530,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 5683.15,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 5393.75,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-02T00:00:00",
+    "DateAired": "06/02/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "ROCHESTER,NY",
+    "ProgramName": "THE DR. OZ SHOW",
+    "Rank": 76,
+    "Station": "WROC",
+    "TimeAired": "10:58 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 55014,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 6860.3,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 6423.7,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "TOLEDO",
+    "ProgramName": "PEOPLES COURT",
+    "Rank": 77,
+    "Station": "WUPW",
+    "TimeAired": "3:16 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 54863,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 6680.25,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 6253.3,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-09T00:00:00",
+    "DateAired": "06/09/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "TOLEDO",
+    "ProgramName": "PEOPLES COURT",
+    "Rank": 77,
+    "Station": "WUPW",
+    "TimeAired": "3:14 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "ABC",
+    "AirTime": 43115,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 11355.5,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 10382.25,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-10T00:00:00",
+    "DateAired": "06/10/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "HUNTSVILLE",
+    "ProgramName": "WAAY 31 HOMETOWN NEWS AT 11",
+    "Rank": 79,
+    "Station": "WAAY",
+    "TimeAired": "11:58 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 46058,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 17178.1,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 19938.4,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-10T00:00:00",
+    "DateAired": "06/10/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "PORTLAND,ME",
+    "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+    "Rank": 80,
+    "Station": "WCSH",
+    "TimeAired": "12:47 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CBS",
+    "AirTime": 35886,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-07T00:00:00",
+    "DateAired": "06/07/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "SHREVEPORT",
+    "ProgramName": "YOUR HOMETOWN SHOW",
+    "Rank": 83,
+    "Station": "KSLA",
+    "TimeAired": "9:58 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 59720,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-01T00:00:00",
+    "DateAired": "06/01/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "CHAMPAIGN",
+    "ProgramName": "JEOPARDY!",
+    "Rank": 85,
+    "Station": "WAND",
+    "TimeAired": "4:35 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 60864,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "CHAMPAIGN",
+    "ProgramName": "JEOPARDY!",
+    "Rank": 85,
+    "Station": "WAND",
+    "TimeAired": "4:54 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CBS",
+    "AirTime": 43158,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-05-31T00:00:00",
+    "DateAired": "05/31/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "CHATTANOOGA",
+    "ProgramName": "PRICE IS RIGHT",
+    "Rank": 88,
+    "Station": "WDEF",
+    "TimeAired": "11:59 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CBS",
+    "AirTime": 41387,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-08T00:00:00",
+    "DateAired": "06/08/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "CHATTANOOGA",
+    "ProgramName": "PRICE IS RIGHT",
+    "Rank": 88,
+    "Station": "WDEF",
+    "TimeAired": "11:29 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 51208,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 5539.75,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 4322.0,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-02T00:00:00",
+    "DateAired": "06/02/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "CHARLESTON,SC",
+    "ProgramName": "PEOPLES COURT",
+    "Rank": 94,
+    "Station": "WTAT",
+    "TimeAired": "2:13 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 51854,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 5931.0,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 4815.55,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "CHARLESTON,SC",
+    "ProgramName": "PEOPLES COURT",
+    "Rank": 94,
+    "Station": "WTAT",
+    "TimeAired": "2:24 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 53883,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "CHARLESTON,SC",
+    "ProgramName": "PEOPLES COURT",
+    "Rank": 94,
+    "Station": "WTAT",
+    "TimeAired": "2:58 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "FOX",
+    "AirTime": 51835,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-07T00:00:00",
+    "DateAired": "06/07/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "CHARLESTON,SC",
+    "ProgramName": "PEOPLES COURT",
+    "Rank": 94,
+    "Station": "WTAT",
+    "TimeAired": "2:23 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CBS",
+    "AirTime": 39292,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 8260.15,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 8560.65,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174H",
+        "House": "17UPLC5174H",
+        "Id": 6
+      }
+    ],
+    "Length": 60,
+    "Market": "TRI CITIES",
+    "ProgramName": "DAYTIME TRI-CITIES",
+    "Rank": 97,
+    "Station": "WJHL",
+    "TimeAired": "10:54 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CBS",
+    "AirTime": 38817,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 8260.15,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 8560.65,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-10T00:00:00",
+    "DateAired": "06/10/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "TRI CITIES",
+    "ProgramName": "DAYTIME TRI-CITIES",
+    "Rank": 97,
+    "Station": "WJHL",
+    "TimeAired": "10:46 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CBS",
+    "AirTime": 33795,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 11614.25,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 10064.7,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-02T00:00:00",
+    "DateAired": "06/02/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "BURLINGTON",
+    "ProgramName": "RACHAEL RAY",
+    "Rank": 98,
+    "Station": "WCAX",
+    "TimeAired": "9:23 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CBS",
+    "AirTime": 39191,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 9555.75,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 8304.05,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-02T00:00:00",
+    "DateAired": "06/02/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "BURLINGTON",
+    "ProgramName": "THE DOCTORS",
+    "Rank": 98,
+    "Station": "WCAX",
+    "TimeAired": "10:53 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CBS",
+    "AirTime": 33849,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "BURLINGTON",
+    "ProgramName": "RACHAEL RAY",
+    "Rank": 98,
+    "Station": "WCAX",
+    "TimeAired": "9:24 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "CBS",
+    "AirTime": 38139,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721H",
+        "House": "17LPLC0721H",
+        "Id": 8
+      }
+    ],
+    "Length": 60,
+    "Market": "BURLINGTON",
+    "ProgramName": "THE DOCTORS",
+    "Rank": 98,
+    "Station": "WCAX",
+    "TimeAired": "10:35 AM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 58772,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-01T00:00:00",
+    "DateAired": "06/01/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "FT SMITH",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 100,
+    "Station": "KNWA",
+    "TimeAired": "4:19 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 58277,
+    "AudienceImpressions": [
+      {
+        "AudienceId": 31,
+        "Delivery": 6754.4,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      },
+      {
+        "AudienceId": 42,
+        "Delivery": 5942.2,
+        "Impressions": 0.0,
+        "NsiDelivery": 0.0
+      }
+    ],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-03T00:00:00",
+    "DateAired": "06/03/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17UPLC5174",
+        "House": "17UPLC5174",
+        "Id": 7
+      }
+    ],
+    "Length": 60,
+    "Market": "FT SMITH",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 100,
+    "Station": "KNWA",
+    "TimeAired": "4:11 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 58687,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-06T00:00:00",
+    "DateAired": "06/06/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "FT SMITH",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 100,
+    "Station": "KNWA",
+    "TimeAired": "4:18 PM"
+  },
+  {
+    "Advertiser": null,
+    "Affiliate": "NBC",
+    "AirTime": 58632,
+    "AudienceImpressions": [],
+    "Brand": "",
+    "Campaign": 3417,
+    "Date": "2016-06-07T00:00:00",
+    "DateAired": "06/07/2016",
+    "DaypartId": 0,
+    "InventorySource": 1,
+    "Isci": null,
+    "IsciDto": [
+      {
+        "Brand": null,
+        "Client": "17LPLC0721",
+        "House": "17LPLC0721",
+        "Id": 9
+      }
+    ],
+    "Length": 60,
+    "Market": "FT SMITH",
+    "ProgramName": "JUDGE JUDY",
+    "Rank": 100,
+    "Station": "KNWA",
+    "TimeAired": "4:17 PM"
+  }
+]

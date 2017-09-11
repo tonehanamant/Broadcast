@@ -1,8 +1,4 @@
 ﻿<style>
-    /*#proposal_modal small {
-        font-style: italic;
-    }*/
-
     #proposal_modal input[name=proposal_flight].read-only-picker:not([disabled]) {
         background-color: white;
         color: black;
@@ -21,27 +17,6 @@
         padding: 0;
         color: red;
     }
-
-    /* top right menu */
-
-    /*.proposal-status {
-        float: left;
-        height: 35px;
-    }
-
-    .proposal-status label {
-        margin-right: 15px;
-        position: relative;
-        top: 6px;
-    }
-
-    .proposal-status select {
-        float: right;
-        width: 75%;
-        margin-right: 5px;
-        position: relative;
-        bottom: 24px;
-    }*/
 
     .menu-options {
         position: absolute;
@@ -77,6 +52,10 @@
         background-color: #eee !important;
     }
 
+    .header-margin-label {
+        position: relative;
+        left: 3px;
+    }
 </style>
 
 <div class="modal slide-in modal-attached" id="proposal_modal" role="dialog">
@@ -126,6 +105,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Proposal Name</label>
+
                                     <input type="text" class="form-control" name="proposal_name" data-bind="value: proposalName, attr: { disabled: isReadOnly() ? 'disabled' : null }" />
                                     <div style="padding-left: 20px;" data-bind="visible: proposalId">
                                         Proposal ID: <span data-bind="text: proposalId"></span>
@@ -133,7 +113,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <div class="form-group">
                                     <label>Markets</label>
                                     <div class="dropdown">
@@ -172,27 +152,36 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <div class="form-group">
+                                        <div class="form-group" >
                                             <label>Target CPM</label>
-                                            @*<p class="form-control-static" data-bind="text: targetCpm() ? w2utils.formatters['money'](targetCpm()) : '-'"></p>*@
-                                            <p class="form-control-static" data-bind="text: targetCpm() ? numeral(targetCpm()).format('$0,0[.]00') : '-'"></p>
+                                            <div>
+                                                <span class="form-control-static" data-bind="text: totalCpm() ? numeral(totalCpm()).format('$0,0[.]00') : '-'"></span> /
+                                                <span class="form-control-static" data-bind="text: targetCpm() ? numeral(targetCpm()).format('$0,0[.]00') : '-'"></span>
+                                                <span class="label" data-bind="text: totalCPMPercent().toString().match(/^-?\d+(?:\.\d{0,2})?/)[0] + '%', css: { 'label-danger': totalCPMMarginAchieved, 'label-success': !totalCPMMarginAchieved() }"></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Target Budget</label>
-                                            @*<p id="proposal_target_budget" class="form-control-static" data-bind="text: targetBudget() ? w2utils.formatters['money'](targetBudget()) : '-'"></p>*@
-                                            <p id="proposal_target_budget" class="form-control-static" data-bind="text: targetBudget() ? numeral(targetBudget()).format('$0,0[.]00') : '-'"></p>
+                                            <div>
+                                                <span class="form-control-static" data-bind="text: totalCost() ? numeral(totalCost()).format('$0,0[.]00') : '-'"></span> /
+                                                <span id="proposal_target_budget" class="form-control-static" data-bind="text: targetBudget() ? numeral(targetBudget()).format('$0,0[.]00') : '-'"></span>
+                                                <span class="label" data-bind="text: totalCostPercent().toString().match(/^-?\d+(?:\.\d{0,2})?/)[0] + '%', css: { 'label-danger': totalCostMarginAchieved, 'label-success': !totalCostMarginAchieved() }"></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Target Impressions</label>
-                                            @*<p class="form-control-static" data-bind="text: targetImpressions() ? targetImpressions().toFixed(3) : '-'"></p>*@
-                                            <p class="form-control-static" data-bind="text: targetImpressions() ? numeral(targetImpressions()).format('0,0.[000]') : '-'"></p>
+                                            <div>
+                                                <span class="form-control-static" data-bind="text: numeral(totalImpressions()).format('0,0.[000]')"></span> /
+                                                <span class="form-control-static" data-bind="text: targetImpressions() ? numeral(targetImpressions()).format('0,0.[000]') : '-'"></span>
+                                                <span class="label" data-bind="text: totalImpressionsPercent().toString().match(/^-?\d+(?:\.\d{0,2})?/)[0] + '%', css: { 'label-danger': !totalImpressionsMarginAchieved(), 'label-success': totalImpressionsMarginAchieved }"></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">

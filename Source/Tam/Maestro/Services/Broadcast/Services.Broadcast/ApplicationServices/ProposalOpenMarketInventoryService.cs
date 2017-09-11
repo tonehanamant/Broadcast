@@ -38,8 +38,9 @@ namespace Services.Broadcast.ApplicationServices
             IDaypartCache daypartCache, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
             IProposalProgramsCalculationEngine proposalProgramsCalculationEngine,
             IProposalOpenMarketsTotalsCalculationEngine proposalOpenMarketsTotalsCalculationEngine,
-            IProposalPostingBooksEngine proposalPostingBooksEngine)
-            : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine)
+            IProposalPostingBooksEngine proposalPostingBooksEngine, IImpressionAdjustmentEngine impressionAdjustmentEngine,
+            IProposalTotalsCalculationEngine proposalTotalsCalculationEngine)
+            : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine, impressionAdjustmentEngine, proposalTotalsCalculationEngine)
         {
             _ProposalProgramsCalculationEngine = proposalProgramsCalculationEngine;
             _ProposalOpenMarketsTotalsCalculationEngine = proposalOpenMarketsTotalsCalculationEngine;
@@ -345,7 +346,27 @@ namespace Services.Broadcast.ApplicationServices
             _ApplyProgramImpressions(programs, dto);
             _ProposalProgramsCalculationEngine.ApplyBlendedCpmForEachProgram(programs, dto.DetailSpotLength);
 
-            programs.RemoveAll(p => FilterByCpmCriteria(p, dto.Criteria.CpmCriteria));
+            filteredProgramsWithAllocations.Clear();
+            programs.RemoveAll(p =>
+            {
+                if (FilterByCpmCriteria(p, dto.Criteria.CpmCriteria))
+                {
+                    if (p.FlightWeeks.Any(fw => fw.Allocations.Any(a => a.Spots > 0)))
+                    {
+                        if (!ignoreExistingAllocation)
+                        {
+                            dto.NewCriteriaAffectsExistingAllocations = true;
+                            return false;
+                        }
+                        filteredProgramsWithAllocations.Add(p.ProgramId);
+                    }
+                    return true;
+                }
+                return false;
+            });
+            if (filteredProgramsWithAllocations.Any())
+                BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>()
+                    .RemoveAllocations(filteredProgramsWithAllocations, dto.DetailId);
 
             var inventoryMarkets = _GroupProgramsByMarketAndStation(programs);
 
@@ -449,7 +470,7 @@ namespace Services.Broadcast.ApplicationServices
                             weekProgram.ProgramId = program.ProgramId;
                             weekProgram.Spots = existingAllocation == null ? 0 : existingAllocation.Spots;
                             weekProgram.UnitImpression = program.UnitImpressions;
-                            weekProgram.UnitCost = (decimal)programFlightweek.Rate;
+                            weekProgram.UnitCost = programFlightweek.Rate;
                             weekProgram.TargetImpressions = program.TargetImpressions;
                             weekProgram.TotalImpressions = weekProgram.Spots > 0 ? program.UnitImpressions * weekProgram.Spots : program.UnitImpressions;
                             weekProgram.Cost = weekProgram.Spots > 0 ? weekProgram.Spots * weekProgram.UnitCost : weekProgram.UnitCost;
@@ -604,9 +625,8 @@ namespace Services.Broadcast.ApplicationServices
         public ProposalDetailOpenMarketInventoryDto SaveInventoryAllocations(OpenMarketAllocationSaveRequest request)
         {
             var openMarketInventoryRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>();
-
-            var existingAllocations = openMarketInventoryRepository.GetProposalDetailAllocations(request.ProposalVersionDetailId);
-
+            var existingAllocations =
+                openMarketInventoryRepository.GetProposalDetailAllocations(request.ProposalVersionDetailId);
             var allocationToRemove = _GetAllocationsToRemove(request, existingAllocations);
             var allocationsToUpdate = _GetAllocationsToUpdate(request, existingAllocations);
             var allocationToAdd = _GetAllocationsToCreate(request, existingAllocations);
@@ -631,6 +651,8 @@ namespace Services.Broadcast.ApplicationServices
                 BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
                     .SaveProposalDetailOpenMarketWeekInventoryTotals(inventoryDto);
 
+                _UpdateProposalTotals(inventoryDto.ProposalVersionId);
+
                 _CalculateOpenMarketTotals(inventoryDto);
 
                 transaction.Complete();
@@ -639,7 +661,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private ProposalDetailSingleInventoryTotalsDto _GetProposalDetailTotals(ProposalDetailOpenMarketInventoryDto inventoryDto)
+        private static ProposalDetailSingleInventoryTotalsDto _GetProposalDetailTotals(ProposalDetailInventoryBase inventoryDto)
         {
             return new ProposalDetailSingleInventoryTotalsDto
             {
@@ -650,18 +672,15 @@ namespace Services.Broadcast.ApplicationServices
 
         private ProposalDetailOpenMarketInventoryDto _GetProposalDetailOpenMarketInventoryDto(int proposalInventoryDetailId, ProposalOpenMarketFilter openMarketFilter)
         {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                var dto = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetOpenMarketProposalDetailInventory(proposalInventoryDetailId);
-                _PopulateMarkets(dto, true);
-                _PopulateInventoryWeeks(dto);
-                _SetProposalOpenMarketDisplayFilters(dto);
-                if (openMarketFilter != null)
-                    dto.Filter = openMarketFilter;
-                _ApplyProposalOpenMarketFilter(dto, true);
-                _CalculateOpenMarketTotals(dto);
-                return dto;
-            }
+            var dto = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetOpenMarketProposalDetailInventory(proposalInventoryDetailId);
+            _PopulateMarkets(dto, true);
+            _PopulateInventoryWeeks(dto);
+            _SetProposalOpenMarketDisplayFilters(dto);
+            if (openMarketFilter != null)
+                dto.Filter = openMarketFilter;
+            _ApplyProposalOpenMarketFilter(dto, true);
+            _CalculateOpenMarketTotals(dto);
+            return dto;
         }
 
         private static List<OpenMarketInventoryAllocation> _GetAllocationsToCreate(OpenMarketAllocationSaveRequest request, List<OpenMarketInventoryAllocation> existingAllocations)
@@ -674,7 +693,9 @@ namespace Services.Broadcast.ApplicationServices
                             ProposalVersionDetailId = request.ProposalVersionDetailId,
                             MediaWeekId = w.MediaWeekId,
                             StationProgramId = p.ProgramId,
-                            Spots = p.Spots
+                            Spots = p.Spots,
+                            Impressions = p.Impressions,
+                            SpotCost = p.SpotCost
                         })).ToList();
 
             var newAllocations =

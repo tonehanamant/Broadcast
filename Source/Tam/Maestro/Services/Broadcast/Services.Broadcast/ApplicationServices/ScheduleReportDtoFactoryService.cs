@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Services.Extensions;
-using OfficeOpenXml.FormulaParsing.Utilities;
+using Services.Broadcast.BusinessEngines;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -21,7 +21,6 @@ namespace Services.Broadcast.ApplicationServices
         ScheduleReportDto GenereteScheduleReportData(SchedulesAggregate schedulesAggregate, ScheduleReportType reportType);
     }
 
-
     public enum ScheduleReportType
     {
         Schedule,
@@ -31,27 +30,19 @@ namespace Services.Broadcast.ApplicationServices
 
     public class ScheduleReportDtoFactoryService : IScheduleReportDtoFactoryService
     {
-        private readonly IScheduleAggregateFactoryService _ScheduleFactoryService;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IDaypartCache _DaypartCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
-        private List<RatingAdjustmentsDto> _RatingAdjustments;
-        private Dictionary<int, float> _SpotLengthMultipliers;
+        private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
 
-        public ScheduleReportDtoFactoryService(
-            IDataRepositoryFactory broadcastDataRepositoryFactory,
-            IDaypartCache daypartCache,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IBroadcastAudiencesCache audiencesCache)
+        public ScheduleReportDtoFactoryService(IDataRepositoryFactory broadcastDataRepositoryFactory, IDaypartCache daypartCache, IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, IBroadcastAudiencesCache audiencesCache, IImpressionAdjustmentEngine impressionAdjustmentEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _DaypartCache = daypartCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _AudiencesCache = audiencesCache;
-            _RatingAdjustments =
-                _BroadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>().GetRatingAdjustments();
-            _SpotLengthMultipliers = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthMultipliers();
+            _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
         }
 
         public ScheduleReportDto GenereteScheduleReportData(SchedulesAggregate schedulesAggregate, ScheduleReportType reportType)
@@ -90,13 +81,13 @@ namespace Services.Broadcast.ApplicationServices
             var prePostDataList = schedulesAggregate.GetBroadcastPrePostData(bvsDetailList);
 
             //Order of adjustments is important. If main delivery is calculated first, the NsiDelivery would get discounted twice. We may need to consider how to make this more resilient.
-            prePostDataList.ForEach(d => d.AudienceImpressions.ForEach(a => a.NsiDelivery = _AdjustDeliveredImpressions(a.Delivery, schedulesAggregate.IsEquivalized, d.Length, SchedulePostType.NSI, schedulesAggregate.PostingBookId)));
-            prePostDataList.ForEach(d => d.AudienceImpressions.ForEach(a => a.Delivery = _AdjustDeliveredImpressions(a.Delivery, schedulesAggregate.IsEquivalized, d.Length, schedulesAggregate.PostType, schedulesAggregate.PostingBookId)));
+            prePostDataList.ForEach(d => d.AudienceImpressions.ForEach(a => a.NsiDelivery = _ImpressionAdjustmentEngine.AdjustImpression(a.Delivery, schedulesAggregate.IsEquivalized, d.Length, SchedulePostType.NSI, schedulesAggregate.PostingBookId)));
+            prePostDataList.ForEach(d => d.AudienceImpressions.ForEach(a => a.Delivery = _ImpressionAdjustmentEngine.AdjustImpression(a.Delivery, schedulesAggregate.IsEquivalized, d.Length, schedulesAggregate.PostType, schedulesAggregate.PostingBookId)));
             var spotDetailsData = new SpotDetailDto(scheduleAudiences, prePostDataList, schedulesAggregate);
             _SetPrePostDetailIscisByReportType(spotDetailsData, reportType);
             //END spot details
 
-            var deliveryBySource = new SpotsAndImpressionsDeliveryBySource()
+            var deliveryBySource = new SpotsAndImpressionsDeliveryBySource
             {
                 Source = schedulesAggregate.InventorySource,
                 Spots = advertiserDataDto.DeliveredSpots ?? 0,
@@ -114,29 +105,29 @@ namespace Services.Broadcast.ApplicationServices
                 StationSummaryData = stationSummaryData,
                 SpotDetailData = spotDetailsData,
                 OutOfSpecToDate = outOfSpecToDate,
-                SpotsAndImpressionsBySource = new List<SpotsAndImpressionsDeliveryBySource>() { deliveryBySource },
+                SpotsAndImpressionsBySource = new List<SpotsAndImpressionsDeliveryBySource> { deliveryBySource },
                 SpotsAndImpressionsDeliveryByAdvertiser = deliveryByAdvertiser
             };
 
             return reportDto;
         }
 
-        private void _SetPrePostDetailIscisByReportType(SpotDetailDto spotDetailsData, ScheduleReportType reportType)
+        private static void _SetPrePostDetailIscisByReportType(SpotDetailDto spotDetailsData, ScheduleReportType reportType)
         {
             switch (reportType)
             {
                 case ScheduleReportType.Schedule:
                     spotDetailsData.ReportData.ForEach(
-                                    d => d.Isci = (d.IsciDto.Count > 1
+                                    d => d.Isci = d.IsciDto.Count > 1
                                         ? d.IsciDto.Select(i => i.House).FirstOrDefault()
-                                        : d.IsciDto.Select(i => i.Client).FirstOrDefault()));
+                                        : d.IsciDto.Select(i => i.Client).FirstOrDefault());
                     break;
 
                 case ScheduleReportType.Client:
                     spotDetailsData.ReportData.ForEach(
-                        d => d.Isci = (d.IsciDto.Count > 1
+                        d => d.Isci = d.IsciDto.Count > 1
                             ? d.IsciDto.Select(i => string.Format("{0}(M)", i.House)).FirstOrDefault()
-                            : d.IsciDto.Select(i => i.Client).FirstOrDefault()));
+                            : d.IsciDto.Select(i => i.Client).FirstOrDefault());
                     break;
 
                 case ScheduleReportType.ThirdPartyProvider:
@@ -149,7 +140,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<SpotsAndImpressionsDeliveryByAdvertiser> _GatherDeliveryByAdvertiser(
             SchedulesAggregate schedulesAggregate,
-            List<bvs_file_details> bvsDetailList,
+            IEnumerable<bvs_file_details> bvsDetailList,
             List<ScheduleAudience> scheduleAudiences)
         {
             var inSpecDetailsByAdvertiserAndSpotLength =
@@ -171,7 +162,7 @@ namespace Services.Broadcast.ApplicationServices
                 deliveryByAdvertiser.Spots = advertiserGroup.Count();
                 deliveryByAdvertiser.AudienceImpressions = scheduleAudiences.ToDictionary(
                     a => a.AudienceId,
-                    a => _AdjustDeliveredImpressions(schedulesAggregate.GetRestrictedDeliveredImpressionsByAudienceAndAdvertiserName(advertiserGroup.Key.Advertiser, a.AudienceId),
+                    a => _ImpressionAdjustmentEngine.AdjustImpression(schedulesAggregate.GetRestrictedDeliveredImpressionsByAudienceAndAdvertiserName(advertiserGroup.Key.Advertiser, a.AudienceId),
                                 schedulesAggregate.IsEquivalized, advertiserGroup.Key.SpotLength, schedulesAggregate.PostType, schedulesAggregate.PostingBookId)
                                 );
                 deliveryByAdvertiserAndSpotLength.Add(deliveryByAdvertiser);
@@ -180,7 +171,7 @@ namespace Services.Broadcast.ApplicationServices
             var result =
                 deliveryByAdvertiserAndSpotLength.GroupBy(d => d.AdvertiserName)
                     .Select(
-                        d => new SpotsAndImpressionsDeliveryByAdvertiser()
+                        d => new SpotsAndImpressionsDeliveryByAdvertiser
                         {
                             AdvertiserName = d.Key,
                             Spots = d.Sum(x => x.Spots),
@@ -193,7 +184,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private OutOfSpecToDateDto _GatherOutOfSpecToDateData(SchedulesAggregate schedulesAggregate,
                                                                 List<ScheduleAudience> scheduleAudiences,
-                                                                List<bvs_file_details> outOfSpecBvsDetails)
+                                                                IEnumerable<bvs_file_details> outOfSpecBvsDetails)
         {
             var outOfSpecToDate = new OutOfSpecToDateDto(scheduleAudiences);
 
@@ -247,7 +238,7 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             var data = GetOutOfScopeTotalDeliveryDetailsByAudienceId(bvsDetail, audience.AudienceId);
                             audienceImpressionsAndDeliveries.Delivery +=
-                                _AdjustDeliveredImpressions(data.Item2,
+                                _ImpressionAdjustmentEngine.AdjustImpression(data.Item2,
                                     schedulesAggregate.IsEquivalized, bvsReportData.SpotLength,
                                     schedulesAggregate.PostType, schedulesAggregate.PostingBookId);
                         }
@@ -311,10 +302,10 @@ namespace Services.Broadcast.ApplicationServices
                     SpotLength = coreData.SpotLength,
                     ProgramName = scheduleDetail.program,
                     DisplayDaypart = _DaypartCache.GetDisplayDaypart(scheduleDetail.daypart_id),
-                    Cost = (double)scheduleDetail.spot_cost * (double)deliveredSpots,
+                    Cost = scheduleDetail.spot_cost * deliveredSpots,
                     OrderedSpots = orderedSpots,
                     DeliveredSpots = deliveredSpots,
-                    SpotClearance = (double)deliveredSpots / (double)orderedSpots,
+                    SpotClearance = (double)deliveredSpots / orderedSpots,
                     Status = 1,
                     SpecStatus = specStatus,
                 };
@@ -337,7 +328,7 @@ namespace Services.Broadcast.ApplicationServices
                             .SelectMany(x => x.bvs_post_details)
                             .Where(x => x.audience_id == audience.AudienceId)
                             .ToList();
-                    audienceImpressionAndDelivery.Delivery = _AdjustDeliveredImpressions(
+                    audienceImpressionAndDelivery.Delivery = _ImpressionAdjustmentEngine.AdjustImpression(
                         audienceAndDeliver.Sum(x => x.delivery), schedulesAggregate.IsEquivalized, bvsReportData.SpotLength,
                         schedulesAggregate.PostType, schedulesAggregate.PostingBookId);
 
@@ -398,7 +389,7 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             var data = GetOutOfScopeTotalDeliveryDetailsByAudienceId(bvsDetail, audience.AudienceId);
                             audienceImpressionsAndDeliveries.Delivery +=
-                                _AdjustDeliveredImpressions(data.Item2,
+                                _ImpressionAdjustmentEngine.AdjustImpression(data.Item2,
                                     schedulesAggregate.IsEquivalized, bvsReportData.SpotLength,
                                     schedulesAggregate.PostType, schedulesAggregate.PostingBookId);
                         }
@@ -449,7 +440,7 @@ namespace Services.Broadcast.ApplicationServices
             var marketNamedRanks = GetMarketRanks(schedulesAggregate);
 
             var spotLengthRepo = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
-            var bvsDetailList = _ApplyNtiExclusions(schedulesAggregate.GetBvsDetails(), schedulesAggregate.PostType);
+            var bvsDetailList = schedulesAggregate.GetBvsDetails();
 
             var details = schedulesAggregate.GetScheduleDetails();
             foreach (var scheduleDetail in details) //in-spec
@@ -508,10 +499,10 @@ namespace Services.Broadcast.ApplicationServices
                     ProgramName = coreData.ProgramName,
                     SpotLength = coreData.SpotLength,
                     DisplayDaypart = _DaypartCache.GetDisplayDaypart(scheduleDetail.daypart_id),
-                    Cost = (double)scheduleDetail.spot_cost * (double)deliveredSpots,
+                    Cost = scheduleDetail.spot_cost * deliveredSpots,
                     OrderedSpots = scheduleDetail.total_spots,
                     DeliveredSpots = deliveredSpots,
-                    SpotClearance = (double)deliveredSpots / (double)orderedSpots,
+                    SpotClearance = deliveredSpots / (double)orderedSpots,
                 };
                 advertiserDataDto.ReportData.Add(bvsReportData);
 
@@ -521,7 +512,7 @@ namespace Services.Broadcast.ApplicationServices
                         scheduleDetail.schedule_detail_audiences.SingleOrDefault(
                             a => a.audience_id == audience.AudienceId);
 
-                    double delivery =
+                    var delivery =
                         coreData.BvsDetails.SelectMany(b => b.bvs_post_details)
                             .Where(p => p.audience_id == audience.AudienceId)
                             .Sum(p => p.delivery);
@@ -531,7 +522,7 @@ namespace Services.Broadcast.ApplicationServices
                         AudienceId = audience.AudienceId,
                         Impressions = scheduleDetail.total_spots * (audienceData == null ? 0 : audienceData.impressions),
                         Delivery =
-                            _AdjustDeliveredImpressions(delivery,
+                            _ImpressionAdjustmentEngine.AdjustImpression(delivery ,
                                 schedulesAggregate.IsEquivalized, bvsReportData.SpotLength, schedulesAggregate.PostType, schedulesAggregate.PostingBookId),
                     };
                     bvsReportData.AudienceImpressions.Add(audienceImpressionAndDelivery);
@@ -569,7 +560,6 @@ namespace Services.Broadcast.ApplicationServices
                                         List<bvs_file_details> bvsDetailList)
         {
             var weeklyData = new WeeklyDataDto(scheduleAudiences);
-            var weeks = new List<LookupDto>();
             var scheduleWeeks = schedulesAggregate.GetScheduleWeeks().ToList();
             var bvsDetailDateAired = schedulesAggregate.GetBvsDetailDateAired();
             bvsDetailDateAired.ForEach(mw =>
@@ -578,10 +568,7 @@ namespace Services.Broadcast.ApplicationServices
                 if (!scheduleWeeks.Contains(mediaWeek.Id))
                     scheduleWeeks.Add(mediaWeek.Id);
             });
-            foreach (var weekId in scheduleWeeks.Distinct().OrderBy(w => w))
-            {
-                weeks.Add(_MediaMonthAndWeekAggregateCache.FindMediaWeekLookup(weekId));
-            }
+            var weeks = scheduleWeeks.Distinct().OrderBy(w => w).Select(weekId => _MediaMonthAndWeekAggregateCache.FindMediaWeekLookup(weekId)).ToList();
 
             foreach (var week in weeks)
             {
@@ -590,7 +577,6 @@ namespace Services.Broadcast.ApplicationServices
                     Week = week,
                 };
                 weeklyData.ReportDataByWeek.Add(weeklyDto);
-
 
                 //In Spec
                 foreach (var detail in coreDataList)
@@ -604,7 +590,7 @@ namespace Services.Broadcast.ApplicationServices
                     if (orderedSpots == 0 && deliveredSpots == 0)
                         continue;
 
-                    var specStatus = deliveredSpots > 0 ? "Match" : string.Empty;
+                    var status = deliveredSpots > 0 ? "Match" : string.Empty;
                     var bvsReportData = new BvsReportData
                     {
                         Rank = detail.Rank,
@@ -614,13 +600,12 @@ namespace Services.Broadcast.ApplicationServices
                         ProgramName = detail.ProgramName,
                         SpotLength = detail.SpotLength,
                         DisplayDaypart = _DaypartCache.GetDisplayDaypart(scheduleDetail.daypart_id),
-                        Cost = (double)scheduleDetail.spot_cost * (double)deliveredSpots,
+                        Cost = scheduleDetail.spot_cost * deliveredSpots,
                         OrderedSpots = orderedSpots,
                         DeliveredSpots = deliveredSpots,
-                        SpotClearance = (double)deliveredSpots / (double)orderedSpots,
+                        SpotClearance = (double)deliveredSpots / orderedSpots,
                         Status = 1, //in-spec
-                        //@todo Fill this out
-                        SpecStatus = specStatus,
+                        SpecStatus = status,
                     };
 
                     foreach (var audience in scheduleAudiences)
@@ -640,7 +625,7 @@ namespace Services.Broadcast.ApplicationServices
                             AudienceId = audience.AudienceId,
                             Impressions = bvsReportData.OrderedSpots * audienceImpressions,
                             Delivery =
-                                _AdjustDeliveredImpressions(deliveries.Sum(x => x.delivery),
+                                _ImpressionAdjustmentEngine.AdjustImpression(deliveries.Sum(x => x.delivery),
                                     schedulesAggregate.IsEquivalized, bvsReportData.SpotLength, schedulesAggregate.PostType, schedulesAggregate.PostingBookId)
                         };
                         bvsReportData.AudienceImpressions.Add(audienceImpressionAndDelivery);
@@ -683,7 +668,7 @@ namespace Services.Broadcast.ApplicationServices
                             audienceImpressionsAndDeliveries.ForEach(
                                 a =>
                                     a.Delivery =
-                                        _AdjustDeliveredImpressions(a.Delivery, schedulesAggregate.IsEquivalized,
+                                        _ImpressionAdjustmentEngine.AdjustImpression(a.Delivery, schedulesAggregate.IsEquivalized,
                                             bvsReportData.SpotLength, schedulesAggregate.PostType,
                                             schedulesAggregate.PostingBookId));
                             bvsReportData.AudienceImpressions.AddRange(audienceImpressionsAndDeliveries);
@@ -746,79 +731,8 @@ namespace Services.Broadcast.ApplicationServices
             return string.Join(" / ", names);
         }
 
-        private List<bvs_file_details> _ApplyNtiExclusions(List<EntityFrameworkMapping.Broadcast.bvs_file_details> inputBvsDetailList, SchedulePostType schedulePostType)
-        {
-            //do nothing if not NTI
-            if (schedulePostType != SchedulePostType.NTI)
-            {
-                return inputBvsDetailList;
-            }
 
-            //exclude anything aired on mondays between 3am and 6am
-            var ntiExclusionDay = DayOfWeek.Monday;
-            var ntiExclusionStartTime = new TimeSpan(3, 0, 0);
-            var ntiExclusionEndTime = new TimeSpan(5, 59, 59);
-
-            var ntiOnlyList = new List<bvs_file_details>();
-            foreach (var detail in inputBvsDetailList)
-            {
-                if (detail.date_aired.DayOfWeek == ntiExclusionDay &&
-                    TimeSpan.FromSeconds(detail.time_aired) >= ntiExclusionStartTime &&
-                    TimeSpan.FromSeconds(detail.time_aired) <= ntiExclusionEndTime)
-                {
-                    //skip
-                }
-                else
-                {
-                    ntiOnlyList.Add(detail);
-                }
-            }
-            return ntiOnlyList;
-        }
-
-        private double _AdjustDeliveredImpressions(double rawDelivery, bool isEquivalized, int spotLength, SchedulePostType postType, int schedulePostingBook)
-        {
-
-            var adjustments = _RatingAdjustments.Where(a => a.MediaMonthId == schedulePostingBook).SingleOrDefault();
-            var haveAdjustmentsForSchedule = (adjustments != null);
-            double result;
-
-            if (haveAdjustmentsForSchedule)
-            {
-                result = rawDelivery * (double)(1 - adjustments.AnnualAdjustment / 100);
-
-                if (postType == SchedulePostType.NTI)
-                {
-                    result = result * (double)(1 - adjustments.NtiAdjustment / 100);
-                }
-            }
-            else
-            {
-                result = rawDelivery;
-            }
-
-            double factor = 1;
-            if (isEquivalized)
-            {
-                if (_SpotLengthMultipliers.ContainsKey(spotLength))
-                {
-                    factor = _SpotLengthMultipliers[spotLength];
-                }
-                else
-                {
-                    throw new ApplicationException(
-                            string.Format(
-                                "Unknown spot length {0} found while calculating delivered impressions",
-                                spotLength));
-                }
-
-                result = result * factor;
-            }
-
-            return result;
-        }
-
-        private Tuple<List<AudienceImpressionsAndDelivery>, double> GetOutOfScopeTotalDeliveryDetailsByAudienceId(bvs_file_details bfd, int audienceId)
+        private static Tuple<List<AudienceImpressionsAndDelivery>, double> GetOutOfScopeTotalDeliveryDetailsByAudienceId(bvs_file_details bfd, int audienceId)
         {
             var list = new List<AudienceImpressionsAndDelivery>();
             double delivery = 0;
@@ -828,7 +742,7 @@ namespace Services.Broadcast.ApplicationServices
                 var bpd = bfd.bvs_post_details.ElementAt(j);
                 if (bpd.audience_id != audienceId)
                     continue;
-                list.Add(new AudienceImpressionsAndDelivery { Impressions = null, Delivery = bpd.delivery, AudienceId = audienceId });
+                list.Add(new AudienceImpressionsAndDelivery { Impressions = 0, Delivery = bpd.delivery, AudienceId = audienceId });
                 delivery += bpd.delivery;
             }
 

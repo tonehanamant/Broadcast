@@ -20,16 +20,13 @@ namespace Services.Broadcast.BusinessEngines
     {
         private readonly IProposalDetailHeaderTotalsCalculationEngine _ProposalDetailTotalsCalculationEngine;
         private readonly IProposalDetailWeekTotalsCalculationEngine _ProposalDetailWeekTotalsCalculationEngine;
-        private readonly IProposalMathEngine _proposalMathEngine;
 
         public ProposalOpenMarketsTotalsCalculationEngine(
             IProposalDetailHeaderTotalsCalculationEngine proposalDetailTotalsCalculationEngine,
-            IProposalDetailWeekTotalsCalculationEngine proposalDetailWeekTotalsCalculationEngine,
-            IProposalMathEngine proposalMathEngine)
+            IProposalDetailWeekTotalsCalculationEngine proposalDetailWeekTotalsCalculationEngine)
         {
             _ProposalDetailTotalsCalculationEngine = proposalDetailTotalsCalculationEngine;
             _ProposalDetailWeekTotalsCalculationEngine = proposalDetailWeekTotalsCalculationEngine;
-            _proposalMathEngine = proposalMathEngine;
         }
 
         public void CalculatePartialOpenMarketTotals(ProposalDetailOpenMarketInventoryDto dto)
@@ -119,12 +116,9 @@ namespace Services.Broadcast.BusinessEngines
             inventoryWeek.BudgetTotal = inventoryWeek.Markets.Sum(s => s.Cost);
             inventoryWeek.ImpressionsTotal = inventoryWeek.Markets.Sum(a => a.Impressions);
 
-            // using same * as per week
-            var targetImpressions = (long)(inventoryWeek.ImpressionsGoal * 1000);
-
             // percent
-            inventoryWeek.BudgetPercent = _proposalMathEngine.CalculateBudgetPercent((double)inventoryWeek.BudgetTotal, dto.Margin.Value, (double)inventoryWeek.Budget);
-            inventoryWeek.ImpressionsPercent = _proposalMathEngine.CalculateImpressionsPercent(inventoryWeek.ImpressionsTotal, targetImpressions);
+            inventoryWeek.BudgetPercent = ProposalMath.CalculateBudgetPercent(inventoryWeek.BudgetTotal, dto.Margin.Value, inventoryWeek.Budget);
+            inventoryWeek.ImpressionsPercent = ProposalMath.CalculateImpressionsPercent(inventoryWeek.ImpressionsTotal, inventoryWeek.ImpressionsGoal);
 
             // margin achieved
             inventoryWeek.ImpressionsMarginAchieved = inventoryWeek.ImpressionsPercent > 100;

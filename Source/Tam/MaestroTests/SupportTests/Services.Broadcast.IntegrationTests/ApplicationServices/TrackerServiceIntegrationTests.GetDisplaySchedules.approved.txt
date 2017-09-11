@@ -1,0 +1,145 @@
+﻿{
+  "Advertisers": [
+    {
+      "Display": "1 Vision",
+      "Id": 37674
+    }
+  ],
+  "PostingBooks": [
+    {
+      "Display": "0213",
+      "Id": 377
+    },
+    {
+      "Display": "0513",
+      "Id": 380
+    },
+    {
+      "Display": "0713",
+      "Id": 382
+    },
+    {
+      "Display": "1113",
+      "Id": 386
+    },
+    {
+      "Display": "0214",
+      "Id": 389
+    },
+    {
+      "Display": "0514",
+      "Id": 392
+    },
+    {
+      "Display": "0714",
+      "Id": 394
+    },
+    {
+      "Display": "1114",
+      "Id": 398
+    },
+    {
+      "Display": "0215",
+      "Id": 401
+    },
+    {
+      "Display": "0515",
+      "Id": 404
+    },
+    {
+      "Display": "0715",
+      "Id": 406
+    },
+    {
+      "Display": "1115",
+      "Id": 410
+    },
+    {
+      "Display": "0216",
+      "Id": 413
+    },
+    {
+      "Display": "0516",
+      "Id": 416
+    },
+    {
+      "Display": "0716",
+      "Id": 418
+    },
+    {
+      "Display": "1116",
+      "Id": 422
+    }
+  ],
+  "Schedules": [
+    {
+      "Advertiser": "1 Vision",
+      "AdvertiserId": 37674,
+      "Audiences": null,
+      "DaypartRestriction": null,
+      "DaypartRestrictionId": 0,
+      "EndDate": "2016-12-24T00:00:00",
+      "Estimate": 8675309,
+      "InventorySource": 0,
+      "Iscis": null,
+      "IsEquivalized": false,
+      "MarketRestrictions": null,
+      "Name": "LeadInBlockTest",
+      "OutOfSpec": 1,
+      "PostingBook": "0216",
+      "PostingBookId": 413,
+      "PostType": 1,
+      "PrimaryDemoBooked": 511436.0,
+      "PrimaryDemoDelivered": 0.0,
+      "SpotsBooked": 8,
+      "SpotsDelivered": 0,
+      "StartDate": "2016-01-01T00:00:00"
+    },
+    {
+      "Advertiser": "1 Vision",
+      "AdvertiserId": 37674,
+      "Audiences": null,
+      "DaypartRestriction": null,
+      "DaypartRestrictionId": 0,
+      "EndDate": "2016-12-24T00:00:00",
+      "Estimate": 7618419,
+      "InventorySource": 0,
+      "Iscis": null,
+      "IsEquivalized": false,
+      "MarketRestrictions": null,
+      "Name": "OverflowSpotTest",
+      "OutOfSpec": 5,
+      "PostingBook": "0216",
+      "PostingBookId": 413,
+      "PostType": 1,
+      "PrimaryDemoBooked": 255718.0,
+      "PrimaryDemoDelivered": 0.0,
+      "SpotsBooked": 6,
+      "SpotsDelivered": 0,
+      "StartDate": "2016-01-01T00:00:00"
+    },
+    {
+      "Advertiser": "1 Vision",
+      "AdvertiserId": 37674,
+      "Audiences": null,
+      "DaypartRestriction": null,
+      "DaypartRestrictionId": 0,
+      "EndDate": "2016-12-24T00:00:00",
+      "Estimate": 7985133,
+      "InventorySource": 0,
+      "Iscis": null,
+      "IsEquivalized": false,
+      "MarketRestrictions": null,
+      "Name": "BvsAndScheduleNoDateMatch",
+      "OutOfSpec": 1,
+      "PostingBook": "0216",
+      "PostingBookId": 413,
+      "PostType": 1,
+      "PrimaryDemoBooked": 127859.0,
+      "PrimaryDemoDelivered": 0.0,
+      "SpotsBooked": 4,
+      "SpotsDelivered": 0,
+      "StartDate": "2016-01-01T00:00:00"
+    }
+  ]
+}

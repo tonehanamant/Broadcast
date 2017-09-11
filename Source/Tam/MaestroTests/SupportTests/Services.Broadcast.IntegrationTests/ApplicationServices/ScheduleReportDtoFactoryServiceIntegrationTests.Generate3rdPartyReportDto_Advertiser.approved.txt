@@ -5,7 +5,7 @@
       "AudienceId": 31,
       "AudienceName": "HH",
       "DeliveredImpressions": 171812.972,
-      "OrderedImpressions": 1025927,
+      "OrderedImpressions": 1025927.0,
       "OutOfSpecDeliveredImpressions": 0.0,
       "TotalDeliveredImpressions": 171812.972
     },
@@ -13,7 +13,7 @@
       "AudienceId": 33,
       "AudienceName": "A18-49",
       "DeliveredImpressions": 46837.014,
-      "OrderedImpressions": 290620,
+      "OrderedImpressions": 290620.0,
       "OutOfSpecDeliveredImpressions": 0.0,
       "TotalDeliveredImpressions": 46837.014
     }
@@ -26,17 +26,17 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": 188712,
-          "NsiDelivery": null
+          "Impressions": 188712.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 33,
           "Delivery": 0.0,
-          "Impressions": 53536,
-          "NsiDelivery": null
+          "Impressions": 53536.0,
+          "NsiDelivery": 0.0
         }
       ],
-      "Cost": 0.0,
+      "Cost": 0.00,
       "DeliveredSpots": 0,
       "DisplayDaypart": {
         "_Code": "CUS",
@@ -74,17 +74,17 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": 400840,
-          "NsiDelivery": null
+          "Impressions": 400840.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 33,
           "Delivery": 0.0,
-          "Impressions": 131264,
-          "NsiDelivery": null
+          "Impressions": 131264.0,
+          "NsiDelivery": 0.0
         }
       ],
-      "Cost": 0.0,
+      "Cost": 0.00,
       "DeliveredSpots": 0,
       "DisplayDaypart": {
         "_Code": "CUS",
@@ -122,17 +122,17 @@
         {
           "AudienceId": 31,
           "Delivery": 171812.972,
-          "Impressions": 306640,
-          "NsiDelivery": null
+          "Impressions": 306640.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 33,
           "Delivery": 46837.014,
-          "Impressions": 80314,
-          "NsiDelivery": null
+          "Impressions": 80314.0,
+          "NsiDelivery": 0.0
         }
       ],
-      "Cost": 1300.0,
+      "Cost": 1300.00,
       "DeliveredSpots": 1,
       "DisplayDaypart": {
         "_Code": "",
@@ -170,17 +170,17 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": 129735,
-          "NsiDelivery": null
+          "Impressions": 129735.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 33,
           "Delivery": 0.0,
-          "Impressions": 25506,
-          "NsiDelivery": null
+          "Impressions": 25506.0,
+          "NsiDelivery": 0.0
         }
       ],
-      "Cost": 0.0,
+      "Cost": 0.00,
       "DeliveredSpots": 0,
       "DisplayDaypart": {
         "_Code": "CUS",

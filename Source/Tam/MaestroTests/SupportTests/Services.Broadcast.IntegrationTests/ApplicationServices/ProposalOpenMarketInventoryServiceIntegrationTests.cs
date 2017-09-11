@@ -21,6 +21,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class ProposalOpenMarketInventoryServiceIntegrationTests
     {
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
+        private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
 
         [TestCase(MinMaxEnum.Min)]
         [TestCase(MinMaxEnum.Max)]
@@ -55,6 +56,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
 
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -93,6 +95,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(CpmCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
 
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -131,6 +134,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(CpmCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
 
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -169,6 +173,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
 
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -403,6 +408,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalFlightWeeks");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "DetailFlightWeeks");
+                jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "Markets");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "Criteria");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "DisplayFilter");
@@ -472,6 +478,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
+        public void OpenMarketInventorySetFlagToShowWarningOnFilterCPM()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                //var prop = ProposalScxConverterTest.Create_Proposal();
+                var request = new OpenMarketRefineProgramsRequest
+                {
+                    ProposalDetailId = 20,
+                    Criteria = new OpenMarketCriterion
+                    {
+                        CpmCriteria = new List<CpmCriteria>
+                        {
+                            new CpmCriteria()
+                            {
+                                MinMax = MinMaxEnum.Max,
+                                Value = 0.50M
+                            }
+                        }
+                    }
+                };
+                Assert.IsTrue(_ProposalOpenMarketInventoryService.RefinePrograms(request).NewCriteriaAffectsExistingAllocations);
+            }
+        }
+
+        [Test]
         public void RefineByProgramNameDontExcludePreviouslyAddedProgramNames()
         {
             using (new TransactionScopeWrapper())
@@ -513,7 +545,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -539,7 +571,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -575,7 +607,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -619,7 +651,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -645,7 +677,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -680,7 +712,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -724,7 +756,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -749,7 +781,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -785,7 +817,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -993,6 +1025,110 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var result = _ProposalOpenMarketInventoryService.SaveInventoryAllocations(request);
                 Assert.IsNotNull(result);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveSnapshotForOpenMarketAllocation()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new OpenMarketAllocationSaveRequest
+                {
+                    ProposalVersionDetailId = 7,
+                    Username = "test-user",
+                    Weeks = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek>
+                    {
+                        new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek
+                        {
+                            MediaWeekId = 649,
+                            Programs = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram>
+                            {
+                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
+                                {
+                                    Impressions = 1000,
+                                    ProgramId = 2000,
+                                    Spots = 1,
+                                    SpotCost = 1234
+                                },
+                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
+                                {
+                                    Impressions = 2000,
+                                    ProgramId = 2001,
+                                    Spots = 0,
+                                    SpotCost = 0
+                                },
+                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
+                                {
+                                    Impressions = 1234,
+                                    ProgramId = 2004,
+                                    Spots = 3,
+                                    SpotCost = 488
+                                }
+                            }
+                        }
+                    }
+                };
+
+                _ProposalOpenMarketInventoryService.SaveInventoryAllocations(request);
+
+                var proposalInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>();
+
+                var openMarketAllocationSnapshot = proposalInventoryRepository.GetOpenMarketInventoryAllocationSnapshot(new List<int> { 2004 }, 7);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(openMarketAllocationSnapshot));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculateProposalHeaderTotalsAfterInventoryIsSaved()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new OpenMarketAllocationSaveRequest
+                {
+                    ProposalVersionDetailId = 7,
+                    Username = "test-user",
+                    Weeks = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek>
+                    {
+                        new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek
+                        {
+                            MediaWeekId = 649,
+                            Programs = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram>
+                            {
+                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
+                                {
+                                    Impressions = 1000,
+                                    ProgramId = 2000,
+                                    Spots = 1,
+                                    SpotCost = 1234
+                                },
+                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
+                                {
+                                    Impressions = 2000,
+                                    ProgramId = 2001,
+                                    Spots = 50,
+                                    SpotCost = 0
+                                },
+                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
+                                {
+                                    Impressions = 1234,
+                                    ProgramId = 2004,
+                                    Spots = 10,
+                                    SpotCost = 488
+                                }
+                            }
+                        }
+                    }
+                };
+
+                _ProposalOpenMarketInventoryService.SaveInventoryAllocations(request);
+
+                var proposal = _ProposalService.GetProposalById(248);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(proposal));
             }
         }
     }

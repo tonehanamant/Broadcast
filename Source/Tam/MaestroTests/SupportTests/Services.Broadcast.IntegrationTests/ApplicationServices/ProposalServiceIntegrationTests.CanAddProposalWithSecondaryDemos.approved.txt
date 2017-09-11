@@ -1,0 +1,58 @@
+﻿{
+  "AdvertiserId": 37444,
+  "BlackoutMarketGroup": {
+    "Count": 210,
+    "Display": "All",
+    "Id": 0
+  },
+  "BlackoutMarketGroupId": 0,
+  "Details": [],
+  "Equivalized": false,
+  "FlightEndDate": null,
+  "FlightStartDate": null,
+  "FlightWeeks": [],
+  "GuaranteedDemoId": 31,
+  "Margin": 20.0,
+  "MarketGroup": {
+    "Count": 100,
+    "Display": "Top 100",
+    "Id": 100
+  },
+  "MarketGroupId": 100,
+  "Markets": [
+    {
+      "Display": "Portland-Auburn",
+      "Id": 100,
+      "IsBlackout": false
+    },
+    {
+      "Display": "Zanesville",
+      "Id": 196,
+      "IsBlackout": true
+    }
+  ],
+  "Notes": null,
+  "PostType": 1,
+  "ProposalName": "Proposal Test",
+  "SecondaryDemos": [
+    3,
+    4
+  ],
+  "SpotLengths": [],
+  "Status": 0,
+  "TargetBudget": null,
+  "TargetCPM": 0.0000,
+  "TargetImpressions": 0.0,
+  "TargetUnits": 1,
+  "TotalCost": 0.0000,
+  "TotalCostMarginAchieved": false,
+  "TotalCostPercent": 0.0,
+  "TotalCPM": 0.0,
+  "TotalCPMMarginAchieved": false,
+  "TotalCPMPercent": 0.0,
+  "TotalImpressions": 0.0,
+  "TotalImpressionsMarginAchieved": false,
+  "TotalImpressionsPercent": 0.0,
+  "ValidationWarning": null,
+  "Version": 1
+}

@@ -1,0 +1,285 @@
+﻿{
+  "AdvertiserId": 0,
+  "BlackoutMarketGroup": null,
+  "BlackoutMarketGroupId": null,
+  "Details": [
+    {
+      "Adu": false,
+      "Daypart": {
+        "endTime": 36000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 32400,
+        "sun": false,
+        "Text": "M-F 9AM-10AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      },
+      "DaypartCode": "NAV",
+      "DefaultPostingBooks": null,
+      "FlightEdited": false,
+      "FlightEndDate": "2017-04-09T00:00:00",
+      "FlightStartDate": "2017-03-13T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2017-03-19T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 690,
+          "StartDate": "2017-03-13T00:00:00"
+        },
+        {
+          "EndDate": "2017-03-26T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 691,
+          "StartDate": "2017-03-20T00:00:00"
+        },
+        {
+          "EndDate": "2017-04-02T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 692,
+          "StartDate": "2017-03-27T00:00:00"
+        },
+        {
+          "EndDate": "2017-04-09T00:00:00",
+          "IsHiatus": true,
+          "MediaWeekId": 693,
+          "StartDate": "2017-04-03T00:00:00"
+        }
+      ],
+      "HutPostingBookId": -1,
+      "PlaybackType": 3,
+      "Quarters": [
+        {
+          "Cpm": 12.5300,
+          "DistributeGoals": false,
+          "Id": 8,
+          "ImpressionGoal": 5500000.0,
+          "Quarter": 1,
+          "QuarterText": "2017 Q1",
+          "Weeks": [
+            {
+              "Cost": 56385.00,
+              "EndDate": "2017-03-19T00:00:00",
+              "Impressions": 4500000.0,
+              "IsHiatus": false,
+              "MediaWeekId": 690,
+              "StartDate": "2017-03-13T00:00:00",
+              "Units": 1,
+              "Week": "3/13/2017"
+            },
+            {
+              "Cost": 12530.00,
+              "EndDate": "2017-03-26T00:00:00",
+              "Impressions": 1000000.0,
+              "IsHiatus": false,
+              "MediaWeekId": 691,
+              "StartDate": "2017-03-20T00:00:00",
+              "Units": 1,
+              "Week": "3/20/2017"
+            }
+          ],
+          "Year": 2017
+        },
+        {
+          "Cpm": 410.8900,
+          "DistributeGoals": false,
+          "Id": 9,
+          "ImpressionGoal": 12589000.0,
+          "Quarter": 2,
+          "QuarterText": "2017 Q2",
+          "Weeks": [
+            {
+              "Cost": 5172694.21,
+              "EndDate": "2017-04-02T00:00:00",
+              "Impressions": 12589000.0,
+              "IsHiatus": false,
+              "MediaWeekId": 692,
+              "StartDate": "2017-03-27T00:00:00",
+              "Units": 1,
+              "Week": "3/27/2017"
+            },
+            {
+              "Cost": 0.0,
+              "EndDate": "2017-04-09T00:00:00",
+              "Impressions": 0.0,
+              "IsHiatus": true,
+              "MediaWeekId": 693,
+              "StartDate": "2017-04-03T00:00:00",
+              "Units": 0,
+              "Week": "4/3/2017"
+            }
+          ],
+          "Year": 2017
+        }
+      ],
+      "SharePostingBookId": 413,
+      "SinglePostingBookId": 413,
+      "SpotLengthId": 1,
+      "TotalCost": 5241609.21,
+      "TotalImpressions": 18089000.0,
+      "TotalUnits": 3
+    },
+    {
+      "Adu": false,
+      "Daypart": {
+        "endTime": 36000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 32400,
+        "sun": false,
+        "Text": "M-F 9AM-10AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      },
+      "DaypartCode": "NAV",
+      "DefaultPostingBooks": null,
+      "FlightEdited": false,
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2017-09-24T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 717,
+          "StartDate": "2017-09-18T00:00:00"
+        },
+        {
+          "EndDate": "2017-10-01T00:00:00",
+          "IsHiatus": true,
+          "MediaWeekId": 718,
+          "StartDate": "2017-09-25T00:00:00"
+        }
+      ],
+      "HutPostingBookId": -1,
+      "PlaybackType": 3,
+      "Quarters": [
+        {
+          "Cpm": 84.2000,
+          "DistributeGoals": false,
+          "Id": 10,
+          "ImpressionGoal": 9000000.0,
+          "Quarter": 3,
+          "QuarterText": "2017 Q3",
+          "Weeks": [
+            {
+              "Cost": 757800.00,
+              "EndDate": "2017-09-24T00:00:00",
+              "Impressions": 9000000.0,
+              "IsHiatus": false,
+              "MediaWeekId": 717,
+              "StartDate": "2017-09-18T00:00:00",
+              "Units": 1,
+              "Week": "9/18/2017"
+            }
+          ],
+          "Year": 2017
+        },
+        {
+          "Cpm": 2.5000,
+          "DistributeGoals": false,
+          "Id": 11,
+          "ImpressionGoal": 0.0,
+          "Quarter": 4,
+          "QuarterText": "2017 Q4",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "EndDate": "2017-10-01T00:00:00",
+              "Impressions": 0.0,
+              "IsHiatus": true,
+              "MediaWeekId": 718,
+              "StartDate": "2017-09-25T00:00:00",
+              "Units": 0,
+              "Week": "9/25/2017"
+            }
+          ],
+          "Year": 2017
+        }
+      ],
+      "SharePostingBookId": 413,
+      "SinglePostingBookId": 413,
+      "SpotLengthId": 1,
+      "TotalCost": 757800.00,
+      "TotalImpressions": 9000000.0,
+      "TotalUnits": 1
+    }
+  ],
+  "Equivalized": null,
+  "FlightEndDate": "2017-04-09T00:00:00",
+  "FlightStartDate": "2016-05-30T00:00:00",
+  "FlightWeeks": [
+    {
+      "EndDate": "2017-03-19T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 690,
+      "StartDate": "2017-03-13T00:00:00"
+    },
+    {
+      "EndDate": "2017-03-26T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 691,
+      "StartDate": "2017-03-20T00:00:00"
+    },
+    {
+      "EndDate": "2017-04-02T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 692,
+      "StartDate": "2017-03-27T00:00:00"
+    },
+    {
+      "EndDate": "2017-04-09T00:00:00",
+      "IsHiatus": true,
+      "MediaWeekId": 693,
+      "StartDate": "2017-04-03T00:00:00"
+    },
+    {
+      "EndDate": "2017-09-24T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 717,
+      "StartDate": "2017-09-18T00:00:00"
+    },
+    {
+      "EndDate": "2017-10-01T00:00:00",
+      "IsHiatus": true,
+      "MediaWeekId": 718,
+      "StartDate": "2017-09-25T00:00:00"
+    }
+  ],
+  "GuaranteedDemoId": null,
+  "Id": null,
+  "Margin": null,
+  "MarketGroup": null,
+  "MarketGroupId": null,
+  "Notes": null,
+  "PostType": null,
+  "PrimaryVersionId": null,
+  "ProposalName": null,
+  "SecondaryDemos": [],
+  "SpotLengths": [
+    {
+      "Display": "30",
+      "Id": 1
+    }
+  ],
+  "Status": 0,
+  "TargetBudget": 5999409.21,
+  "TargetCPM": 0.2214703093506589390527520396,
+  "TargetImpressions": 27089000.0,
+  "TargetUnits": 4,
+  "TotalCost": 0.0,
+  "TotalCostMarginAchieved": false,
+  "TotalCostPercent": 0.0,
+  "TotalCPM": 0.0,
+  "TotalCPMMarginAchieved": false,
+  "TotalCPMPercent": 0.0,
+  "TotalImpressions": 0.0,
+  "TotalImpressionsMarginAchieved": false,
+  "TotalImpressionsPercent": 0.0,
+  "ValidationWarning": null,
+  "Version": null,
+  "VersionId": 0
+}
