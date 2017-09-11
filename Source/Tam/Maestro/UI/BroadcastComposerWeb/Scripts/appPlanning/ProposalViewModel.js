@@ -575,4 +575,24 @@ var ProposalViewModel = function (controller) {
 
         return statusDisplay;
     };
+
+    //DELETE
+
+    $scope.deleteProposal = function () {
+        if (!$scope.isReadOnly()) {
+            var confirmed = function () {
+                console.log("Delete Proposal");
+                //$scope.controller.deleteProposal($scope.proposalId());
+                //with callback - notify - close modal
+            }
+
+            util.confirm('Delete Proposal'
+                         , 'Are you sure you wish to delete this proposal? </br>Any reserved inventory will be lost.'
+                         , confirmed);
+            
+
+        }
+    };
+
+
 };
