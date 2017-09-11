@@ -808,13 +808,47 @@ GO
 
 
 /*************************************** BCOP-1694 - START *****************************************************/
-EXEC sp_rename 'proposal_version_detail_quarter_weeks.[impressions]', 'impressions_goal', 'COLUMN'
+IF EXISTS(SELECT *
+          FROM   INFORMATION_SCHEMA.COLUMNS
+          WHERE  TABLE_NAME = 'proposal_version_detail_quarter_weeks'
+                 AND COLUMN_NAME = 'impressions')
+BEGIN
+	EXEC sp_rename 'proposal_version_detail_quarter_weeks.[impressions]', 'impressions_goal', 'COLUMN'
+END
 
-EXEC sp_rename 'bvs_map_types.[last_modified_by]', 'modified_by', 'COLUMN'
-EXEC sp_rename 'bvs_map_types.[last_modified_date]', 'modified_date', 'COLUMN'
+IF EXISTS(SELECT *
+          FROM   INFORMATION_SCHEMA.COLUMNS
+          WHERE  TABLE_NAME = 'bvs_map_types'
+                 AND COLUMN_NAME = 'last_modified_by')
+BEGIN
+	EXEC sp_rename 'bvs_map_types.[last_modified_by]', 'modified_by', 'COLUMN'
+END
 
-EXEC sp_rename 'schedule_detail_audiences.[demo_rank]', 'audience_rank', 'COLUMN'
-EXEC sp_rename 'schedule_detail_audiences.[demo_population]', 'audience_population', 'COLUMN'
+IF EXISTS(SELECT *
+          FROM   INFORMATION_SCHEMA.COLUMNS
+          WHERE  TABLE_NAME = 'bvs_map_types'
+                 AND COLUMN_NAME = 'last_modified_date')
+BEGIN
+	EXEC sp_rename 'bvs_map_types.[last_modified_date]', 'modified_date', 'COLUMN'
+END
+
+
+IF EXISTS(SELECT *
+          FROM   INFORMATION_SCHEMA.COLUMNS
+          WHERE  TABLE_NAME = 'schedule_detail_audiences'
+                 AND COLUMN_NAME = 'demo_rank')
+BEGIN
+	EXEC sp_rename 'schedule_detail_audiences.[demo_rank]', 'audience_rank', 'COLUMN'
+END 
+
+IF EXISTS(SELECT *
+          FROM   INFORMATION_SCHEMA.COLUMNS
+          WHERE  TABLE_NAME = 'schedule_detail_audiences'
+                 AND COLUMN_NAME = 'demo_population')
+BEGIN
+	EXEC sp_rename 'schedule_detail_audiences.[demo_population]', 'audience_population', 'COLUMN'
+END
+
 /*************************************** BCOP-1694 - END *****************************************************/
 
 
