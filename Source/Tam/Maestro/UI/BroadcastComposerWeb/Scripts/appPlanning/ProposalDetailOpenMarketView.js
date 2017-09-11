@@ -5,7 +5,6 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     //separate storage of edited records so can reset grid record state after changes (sort, filter); use for saving independent of what is displayed in grids
     activeProgramEditItems: [], //array of pending edit items
     activeDetailSet: null,
-    //isActive: false,
     openMarketsGrid: null,
     weeksLength: null,
     ProposalView: null,
@@ -15,7 +14,6 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     isReadOnly: false,
     bypassCheckSave: false,
     $Modal: null,
-    //isScrollSet: false,
     scrollPositions: null, //stored positions for resetting user poistion after refresh
     weekColumnGroupTpl: _.template('<div class="openmarket-column-group"><div>${ quarter } Week of ${ week }</div>' +
                                    '<div class="cadent-dk-blue goals">' +
@@ -74,8 +72,8 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         //$scope.activeProgramEditItems = [];
     },
 
-    //TBD try this way instaed of recvord scrool to
-    //store positions
+
+    //store grid scroll positions
     recordLastScrollPosition: function () {
         this.scrollPositions = {
             lastScrollTop: $("#grid_OpemMarketGrid_records").scrollTop(),
@@ -104,7 +102,6 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         if (!this.openMarketsGrid) {
             this.openMarketsGrid = $('#openmarkets_grid').w2grid(PlanningConfig.getOpenMarketGridCfg(this, this.weeksLength));
             //set up spot events dynamic reuse - do not bind as need the context of the jq el
-            // $('#openmarkets_grid').on('click', '.program_week_spot_click', this.onSpotsProgramWeekClick);
             var $scope = this;
             $('#openmarkets_grid').on('click', '.program_week_spot_click', function(evt) {
                 var recid = $(this).data('recid');
@@ -143,8 +140,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         this.setInventory(inventory, true, checkEdits);
     },
 
-    //REVISE
-    //set allinitial inventory data
+    //set all initial inventory data
     setInventory: function (inventory, isRefresh, checkEdits) {
         this.activeInventoryData = util.copyData(inventory, null, null, true);
         this.OpenMarketVM.setInventory(inventory, this.isReadOnly);
@@ -158,16 +154,9 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         }
     },
 
-    //REVISE - sey active back on close?
     //after modal shown/refresh - set inventory views
     onSetInventory: function (checkEdits) {
-        //initial render after shown
-        //if (!this.isActive) {
-        //    this.initGrid();
-        //    this.isActive = true;
-        //}
         this.setGrid();
-        //TODO
         //will only reset if recorded
         this.scrollToLastPosition();
         if (checkEdits) {
@@ -177,11 +166,9 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
     //set Grid - combined
     setGrid: function () {
-        //console.log(this.openMarketsGrid);
-        //var gridData = this.prepareProgramsGridData(markets);
         this.openMarketsGrid.clear();
         var gridRecs = this.setProgramsWeeksRecords();//will also set column groups
-        console.log('setProgramsWeeksRecords', gridRecs);
+        //console.log('setProgramsWeeksRecords', gridRecs);
 
         this.openMarketsGrid.add(gridRecs);
         this.openMarketsGrid.resize();
@@ -189,6 +176,173 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         var programsColumnGroup = $("#openmarket_programs_column_inner").closest("td").addClass('openmarket-program-column-group');
         //console.log('programsColumnGroup', programsColumnGroup);
 
+    },
+
+    //PROGRAMS section - grouped
+
+    //get a market row
+    getProgramsMarketRow: function (market) {
+        var ret = {
+            recid: 'market_' + market.MarketId,
+            MarketId: market.MarketId,
+            isMarket: true,
+            w2ui: { "style": "background-color: #dedede" },
+            MarketName: market.MarketName,
+            MarketSubscribers: market.MarketSubscribers,
+            MarketRank: market.MarketRank
+        };
+        return ret;
+    },
+
+    //get a station row
+    getProgramsStationRow: function (station) {
+        var ret = {
+            recid: 'station_' + station.StationCode,
+            isStation: true,
+            w2ui: { "style": "background-color: #E9E9E9" },
+            Affiliation: station.Affiliation,
+            StationName: station.LegacyCallLetters
+        };
+        return ret;
+    },
+
+    //prepare programs data for initial records by groupings
+    prepareProgramsGridData: function (markets) {
+        var $scope = this;
+        var ret = [];
+        $.each(markets, function (mIdx, market) {
+            ret.push($scope.getProgramsMarketRow(market));
+
+            var stationPrograms = market.Stations;
+            $.each(stationPrograms, function (sIdx, station) {
+                ret.push($scope.getProgramsStationRow(station));
+                $.each(station.Programs, function (pIdx, program) {
+                    //this should now be unique ProgramId
+                    program.recid = program.ProgramId;
+                    //program.recid = 'program_' + program.ProgramId;
+                    program.isProgram = true;
+                    program.MarketId = market.MarketId;
+                    ret.push(program);
+                });
+            });
+        });
+        return ret;
+    },
+
+    //WEEKs and Column Groups
+    setAllColumnGroups: function (weekGroups) {
+        var $scope = this;
+        //if weekGroups.length?
+        //set as empty headet to match height of weeks: 26 px = 12px height + top7 bottom7 padding
+        var colGroups = [{ span: 3, caption: '<div id="openmarket_programs_column_inner" style="height: 12px; padding-right: 5px; text-align: right;">' + this.weeksLength + ' WEEKS:</div>' }];
+        //var colGroups = [{ span: 1, caption: 'Airing Time', master:true }, { span: 1, caption: 'Program', master:true }, { span: 1, caption: 'CPM', master:true }]; //this does not work
+        $.each(weekGroups, function (idx, group) {
+            colGroups.push({ caption: group, span: 3 })
+        });
+
+        this.openMarketsGrid.columnGroups = colGroups;
+        //needs refresh but the final resize should handle
+    },
+
+    //for use in grid column settings and for updates
+    getWeekColumnGroup: function (week) {
+        var convertedGoalImpressions = week.ImpressionsGoal ? week.ImpressionsGoal / 1000 : null;
+        var convertedWeekImpressions = week.ImpressionsTotal ? week.ImpressionsTotal / 1000 : null;
+
+        var goal = convertedGoalImpressions ? numeral(convertedGoalImpressions).format('0,0.[000]') : '-';
+        var budget = week.Budget ? numeral(week.Budget).format('$0,0[.]00') : '-';
+        var impressionsPercent = week.ImpressionsPercent ? week.ImpressionsPercent.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0] : "-";
+        var budgetPercent = week.BudgetPercent ? week.BudgetPercent.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0] : "-";
+
+        var vals = {
+            quarter: week.QuarterText,
+            week: week.Week,
+            weekImpressions: convertedWeekImpressions ? numeral(convertedWeekImpressions).format('0,0.[000]') : "-",
+            impressions: goal,
+            impressionsPercent: impressionsPercent,
+            weekBudget: week.BudgetTotal ? numeral(week.BudgetTotal).format('$0,0[.]00') : "-",
+            budget: budget,
+            budgetPercent: budgetPercent,
+            impressionsMarginClass: week.ImpressionsMarginAchieved ? "label-success" : "label-danger",
+            budgetMarginClass: week.BudgetMarginAchieved ? "label-danger" : "label-success"
+        };
+
+        return this.weekColumnGroupTpl(vals);
+    },
+
+    //update column group
+    updateWeekColumnGroups: function (week) {
+        var el = $('#openmarket_week_column_group_' + week.MediaWeekId);
+        var summary = this.getWeekColumnGroup(week);
+        if (el) el.html(summary);
+    },
+
+    //get the market part for a week record
+    getWeekMarketItem: function (market, isHiatus) {
+        var ret = {
+            Cost: market.Cost,
+            Spots: market.Spots,
+            //EFF: market.EFF,
+            Impressions: market.Impressions,
+            isHiatus: isHiatus
+        };
+        return ret;
+    },
+
+    //program with indexes: [mIdx, sIdx, pIdx, weekIdx]
+    getWeekProgramItem: function (program, week, market, indexes) {
+        var ret;
+        if (!program) {//is null so not available throughout; 
+            ret = { active: false };//isProgram?
+        } else {
+            //pass week index or convention to identify?
+            program.isHiatus = week.IsHiatus;
+            program.active = true;//overall active
+            program.isChanged = false;//overall edited
+            program.initialSpots = program.Spots; //to determine if real change on edit/save
+
+            program.MediaWeekId = week.MediaWeekId;
+            //program.StationCode = station.StationCode;
+            program.MarketId = market.MarketId;
+            //for accessing stored data
+            program.marketDataIdx = indexes[0]; //mIdx;
+            program.stationDataIdx = indexes[1]; //sIdx;
+            program.programDataIdx = indexes[2]; //pIdx;
+            program.weekIdx = indexes[3]; //weekIdx
+            ret = program;
+        }
+
+        return ret;
+    },
+
+    //provides all combined methodas to get full records for grid
+    setProgramsWeeksRecords: function () {
+
+        var recs = this.prepareProgramsGridData(this.activeInventoryData.Markets);
+        var $scope = this;
+        var groups = [];  //test setting column groups
+        $.each(this.activeInventoryData.Weeks, function (weekIdx, week) {
+            var group = $scope.getWeekColumnGroup(week);
+            //append a div with Id to use for updates later          
+            groups.push('<div id="openmarket_week_column_group_' + week.MediaWeekId + '">' + group + '</div>');
+            var markets = week.Markets;
+            var recIdx = 0;
+            $.each(markets, function (mIdx, market) {
+                recs[recIdx]['week' + weekIdx] = $scope.getWeekMarketItem(market, week.IsHiatus);
+                recIdx++;
+                var stationPrograms = market.Stations;
+                $.each(stationPrograms, function (sIdx, station) {
+                    //station does not need week data?
+                    recIdx++;
+                    $.each(station.Programs, function (pIdx, program) {
+                        recs[recIdx]['week' + weekIdx] = $scope.getWeekProgramItem(program, week, market, [mIdx, sIdx, pIdx, weekIdx]);
+                        recIdx++
+                    });
+                });
+            });
+        });
+        this.setAllColumnGroups(groups);
+        return recs;
     },
 
     //SORTING strategy is to change activeInventory (markets sort in Markets and Weeks/Markets) and reset grids; store changed records separately from grids for reset states
@@ -239,181 +393,6 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         return sortedMarkets;
     },
 
-    //REVISE combined grid
-
-    //PROGRAMS section - grouped
-
-    //get a market row
-    getProgramsMarketRow: function (market) {
-        var ret = {
-            recid: 'market_' + market.MarketId,
-            MarketId: market.MarketId,
-            isMarket: true,
-            w2ui: { "style": "background-color: #dedede" },
-            MarketName: market.MarketName,
-            MarketSubscribers: market.MarketSubscribers,
-            MarketRank: market.MarketRank
-        };
-        return ret;
-    },
-
-    //get a station row
-    getProgramsStationRow: function (station) {
-        var ret = {
-            recid: 'station_' + station.StationCode,
-            isStation: true,
-            w2ui: { "style": "background-color: #E9E9E9" },
-            Affiliation: station.Affiliation,
-            StationName: station.LegacyCallLetters
-        };
-        return ret;
-    },
-
-    //prepare programs data for initial records by groupings
-    prepareProgramsGridData: function (markets) {
-        var $scope = this;
-        var ret = [];
-        $.each(markets, function (mIdx, market) {
-            ret.push($scope.getProgramsMarketRow(market));
-         
-            var stationPrograms = market.Stations;
-            $.each(stationPrograms, function (sIdx, station) {
-                ret.push($scope.getProgramsStationRow(station));
-                $.each(station.Programs, function (pIdx, program) {
-                    //this should now be unique ProgramId
-                    program.recid = program.ProgramId;
-                    //program.recid = 'program_' + program.ProgramId;
-                    program.isProgram = true;
-                    program.MarketId = market.MarketId;
-                    ret.push(program);
-                });
-            });
-        });
-        //var sums = $scope.getTotalRows(programsData.TargetUnitTotals, programsData.OverallTotals);
-        //ret = ret.concat(sums);
-        return ret;
-    },
-
-    //WEEKs and Column Groups
-    //try to set each setGrid by inserting?
-    setAllColumnGroups: function (weekGroups) {
-        var $scope = this;
-        //if weekGroups.length?
-        //set as empty headet to match height of weeks: 26 px = 12px height + top7 bottom7 padding
-        var colGroups = [{ span: 3, caption: '<div id="openmarket_programs_column_inner" style="height: 12px; padding-right: 5px; text-align: right;">' + this.weeksLength + ' WEEKS:</div>' }];
-        //var colGroups = [{ span: 1, caption: 'Airing Time', master:true }, { span: 1, caption: 'Program', master:true }, { span: 1, caption: 'CPM', master:true }]; //this does not work
-        $.each(weekGroups, function (idx, group) {
-            colGroups.push({ caption: group, span: 3 })
-        });
-
-        this.openMarketsGrid.columnGroups = colGroups;
-        //may need refresh?
-    },
-
-    //for use in grid column settings and for updates
-    getWeekColumnGroup: function (week) {
-        var convertedGoalImpressions = week.ImpressionsGoal ? week.ImpressionsGoal/1000 : null;
-        var convertedWeekImpressions = week.ImpressionsTotal ? week.ImpressionsTotal/1000 : null;
-
-        var goal = convertedGoalImpressions ? numeral(convertedGoalImpressions).format('0,0.[000]') : '-';
-        var budget = week.Budget ? numeral(week.Budget).format('$0,0[.]00') : '-';
-        var impressionsPercent = week.ImpressionsPercent ? week.ImpressionsPercent.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0] : "-";
-        var budgetPercent = week.BudgetPercent ? week.BudgetPercent.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0] : "-";
-
-        var vals = {
-            quarter: week.QuarterText,
-            week: week.Week,
-            weekImpressions: convertedWeekImpressions ? numeral(convertedWeekImpressions).format('0,0.[000]') : "-",
-            impressions: goal,
-            impressionsPercent: impressionsPercent,
-            weekBudget: week.BudgetTotal ? numeral(week.BudgetTotal).format('$0,0[.]00') : "-",
-            budget: budget,
-            budgetPercent: budgetPercent,
-            impressionsMarginClass: week.ImpressionsMarginAchieved ? "label-success" : "label-danger",
-            budgetMarginClass: week.BudgetMarginAchieved ? "label-danger" : "label-success"
-        };
-
-        return this.weekColumnGroupTpl(vals);
-    },
-
-    //update column group
-    updateWeekColumnGroups: function (week) {
-        var el = $('#openmarket_week_column_group_' + week.MediaWeekId);
-        var summary = this.getWeekColumnGroup(week);
-        if (el) el.html(summary);
-    },
-
-
-
-    //get the market part for a week record
-    getWeekMarketItem: function (market, isHiatus) {
-        var ret = {
-            Cost: market.Cost,
-            Spots: market.Spots,
-            //EFF: market.EFF,
-            Impressions: market.Impressions,
-            isHiatus: isHiatus
-        };
-        //need to set style color per columns - use renderer?
-        //ret.w2ui = isHiatus ? { "style": "color: #8f8f8f; background-color: #dedede;" } : { "style": "background-color: #dedede" };
-        return ret;
-    },
-
-    //program with indexes: [mIdx, sIdx, pIdx, weekIdx]
-    getWeekProgramItem: function (program, week, market, indexes) {
-        var ret;
-        if (!program) {//is null so not available throughout; 
-            ret = { active: false };//isProgram?
-        } else {
-            //pass week index or convention to identify?
-            program.isHiatus = week.IsHiatus;
-            program.active = true;//overall active
-            program.isChanged = false;//overall edited
-            program.initialSpots = program.Spots; //to determine if real change on edit/save
-
-            program.MediaWeekId = week.MediaWeekId;
-            //program.StationCode = station.StationCode;
-            program.MarketId = market.MarketId;
-            //for accessing stored data
-            program.marketDataIdx = indexes[0]; //mIdx;
-            program.stationDataIdx = indexes[1]; //sIdx;
-            program.programDataIdx = indexes[2]; //pIdx;
-            program.weekIdx = indexes[3]; //weekIdx
-            ret = program;
-        }
-
-        return ret;
-    },
-
-    setProgramsWeeksRecords: function () {
-
-        var recs = this.prepareProgramsGridData(this.activeInventoryData.Markets);
-        var $scope = this;
-        var groups = [];  //test setting column groups
-        $.each(this.activeInventoryData.Weeks, function (weekIdx, week) {
-            var group = $scope.getWeekColumnGroup(week);
-            //append a div with Id to use for updates later          
-            groups.push('<div id="openmarket_week_column_group_' + week.MediaWeekId + '">' + group + '</div>');
-            var markets = week.Markets;
-            var recIdx = 0;
-            $.each(markets, function (mIdx, market) {
-                recs[recIdx]['week' + weekIdx] = $scope.getWeekMarketItem(market, week.IsHiatus);
-                recIdx++;
-                var stationPrograms = market.Stations;
-                $.each(stationPrograms, function (sIdx, station) {
-                    //station does not need week data?
-                    recIdx++;
-                    $.each(station.Programs, function (pIdx, program) {
-                        recs[recIdx]['week' + weekIdx] = $scope.getWeekProgramItem(program, week, market, [mIdx, sIdx, pIdx, weekIdx]);
-                        recIdx++
-                    });
-                });
-            });
-        });
-        this.setAllColumnGroups(groups);
-        return recs;
-    },
-
 
     //EDITING SPOTS
 
@@ -426,7 +405,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         if (record && record.isProgram) {
             var week = record['week' + weekIdx];
             if (week && week.active && !week.isHiatus) {
-                console.log('onClickEditSpot', week, record, evt);
+                //console.log('onClickEditSpot', week, record, evt);
                 this.setEditSpot(record, week, evt);
             } 
             
@@ -507,6 +486,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         }
     },
 
+    //update the spot record and stored data
     updateEditSpot: function (rec, spotVal, week) {
         var $scope = this;
 
@@ -523,10 +503,9 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
             $scope.openMarketsGrid.set(rec.recid, changes);
             
-            //TBD
             //separated storage with check if changed
             this.storeEditedSpotWeek(rec, week);
-            console.log('updateEditSpot', rec, this.activeProgramEditItems);
+            //console.log('updateEditSpot', rec, this.activeProgramEditItems);
             // update entry on original inventory
             var originalWeek = _.find($scope.ProposalView.openMarketInventory.Weeks, ['MediaWeekId', weekDataItem.MediaWeekId]);
             $.each(originalWeek.Markets, function (mIdx, market) {
@@ -637,7 +616,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         return this.activeProgramEditItems.length >= 1;
     },
 
-    //tbd = how to get from new structure?
+    //parameters from saved edits - in BE structure by weeks
     getParamsForSave: function () {
         var params = {
             ProposalVersionDetailId: this.activeInventoryData.DetailId,
@@ -645,7 +624,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         };
 
         if (this.checkUnsavedSpots) {
-            //possibly partition - break down all items flat then partition by MediaWeekId?
+            //partition - break down all items flat then partition by MediaWeekId
             var programWeeks = [];
             $.each(this.activeProgramEditItems, function (idx, programItem) {
                 $.each(programItem.weeks, function (key, wk) {
@@ -654,7 +633,6 @@ var ProposalDetailOpenMarketView = BaseView.extend({
             });
 
             //partitions: breaks into week groups map and then values to arrays [[program, program], [program]]
-            //use values array or each on the groupBy?
             var partitionedByWeek = _.values(_.groupBy(programWeeks, 'MediaWeekId'));
             $.each(partitionedByWeek, function (pidx, items) {
                 var week = {
@@ -675,7 +653,6 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         return params;
     },
 
-    //TODO REVISE
     //save from apply or save context - 
     //if apply - record scroll positions, call api to refresh, and reset
     //apply sorting; revise to handle future filtering/post processing
@@ -685,13 +662,13 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         //if request.length etc?
         var continueSaveFn = function () {
             var request = $scope.getParamsForSave();
-            console.log('saveInventory', request);
+            //console.log('saveInventory', request);
             //if request.Weeks.length etc?
             $scope.ProposalView.controller.apiSaveInventoryOpenMarket(request, function (inventory) {
                 $scope.activeProgramEditItems = [];
 
                 if (isApply) {
-                    //TBD - scroll, sorting
+                    //scroll, sorting reset
                     $scope.recordLastScrollPosition();
                     $scope.refreshInventory(inventory, false, false, true);
                 } else {

@@ -507,7 +507,6 @@
     },
 
     //dynamic week  column sets
-    //todo editing revision
     getOpenMarketsWeekColumnsCfg: function (weekIdx) {
         var getWeekData = function (record) { return record['week' + weekIdx] };
         var columns = [
