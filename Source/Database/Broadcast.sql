@@ -52,6 +52,54 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+
+
+/*************************************** BCOP-1694 - START *****************************************************/
+IF EXISTS(SELECT *
+          FROM   INFORMATION_SCHEMA.COLUMNS
+          WHERE  TABLE_NAME = 'proposal_version_detail_quarter_weeks'
+                 AND COLUMN_NAME = 'impressions')
+BEGIN
+	EXEC sp_rename 'proposal_version_detail_quarter_weeks.[impressions]', 'impressions_goal', 'COLUMN'
+END
+
+IF EXISTS(SELECT *
+          FROM   INFORMATION_SCHEMA.COLUMNS
+          WHERE  TABLE_NAME = 'bvs_map_types'
+                 AND COLUMN_NAME = 'last_modified_by')
+BEGIN
+	EXEC sp_rename 'bvs_map_types.[last_modified_by]', 'modified_by', 'COLUMN'
+END
+
+IF EXISTS(SELECT *
+          FROM   INFORMATION_SCHEMA.COLUMNS
+          WHERE  TABLE_NAME = 'bvs_map_types'
+                 AND COLUMN_NAME = 'last_modified_date')
+BEGIN
+	EXEC sp_rename 'bvs_map_types.[last_modified_date]', 'modified_date', 'COLUMN'
+END
+
+
+IF EXISTS(SELECT *
+          FROM   INFORMATION_SCHEMA.COLUMNS
+          WHERE  TABLE_NAME = 'schedule_detail_audiences'
+                 AND COLUMN_NAME = 'demo_rank')
+BEGIN
+	EXEC sp_rename 'schedule_detail_audiences.[demo_rank]', 'audience_rank', 'COLUMN'
+END 
+
+IF EXISTS(SELECT *
+          FROM   INFORMATION_SCHEMA.COLUMNS
+          WHERE  TABLE_NAME = 'schedule_detail_audiences'
+                 AND COLUMN_NAME = 'demo_population')
+BEGIN
+	EXEC sp_rename 'schedule_detail_audiences.[demo_population]', 'audience_population', 'COLUMN'
+END
+
+/*************************************** BCOP-1694 - END *****************************************************/
+
+
+
 /*************************************** BCOP-1643 - START *****************************************************/
 
 -- inventory_detail_slot_component_proposal
@@ -425,7 +473,7 @@ IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'propos
 	OR (SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_detail_quarter_weeks' AND COLUMN_NAME = 'open_market_impressions_total') != 'float'
 	OR (SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_detail_quarter_weeks' AND COLUMN_NAME = 'proprietary_impressions_total') != 'float')
 BEGIN
-	UPDATE proposal_version_detail_quarter_weeks SET impressions = 0 where impressions is null;
+	UPDATE proposal_version_detail_quarter_weeks SET impressions_goal = 0 where impressions_goal is null;
 	ALTER TABLE proposal_version_detail_quarter_weeks ALTER COLUMN impressions float NOT NULL;
 	ALTER TABLE proposal_version_detail_quarter_weeks ALTER COLUMN open_market_impressions_total float NOT NULL;
 	ALTER TABLE proposal_version_detail_quarter_weeks ALTER COLUMN proprietary_impressions_total float NOT NULL;
@@ -804,52 +852,6 @@ BEGIN
 END
 GO
 /*************************************** BCOP-1693 - END *****************************************************/
-
-
-
-/*************************************** BCOP-1694 - START *****************************************************/
-IF EXISTS(SELECT *
-          FROM   INFORMATION_SCHEMA.COLUMNS
-          WHERE  TABLE_NAME = 'proposal_version_detail_quarter_weeks'
-                 AND COLUMN_NAME = 'impressions')
-BEGIN
-	EXEC sp_rename 'proposal_version_detail_quarter_weeks.[impressions]', 'impressions_goal', 'COLUMN'
-END
-
-IF EXISTS(SELECT *
-          FROM   INFORMATION_SCHEMA.COLUMNS
-          WHERE  TABLE_NAME = 'bvs_map_types'
-                 AND COLUMN_NAME = 'last_modified_by')
-BEGIN
-	EXEC sp_rename 'bvs_map_types.[last_modified_by]', 'modified_by', 'COLUMN'
-END
-
-IF EXISTS(SELECT *
-          FROM   INFORMATION_SCHEMA.COLUMNS
-          WHERE  TABLE_NAME = 'bvs_map_types'
-                 AND COLUMN_NAME = 'last_modified_date')
-BEGIN
-	EXEC sp_rename 'bvs_map_types.[last_modified_date]', 'modified_date', 'COLUMN'
-END
-
-
-IF EXISTS(SELECT *
-          FROM   INFORMATION_SCHEMA.COLUMNS
-          WHERE  TABLE_NAME = 'schedule_detail_audiences'
-                 AND COLUMN_NAME = 'demo_rank')
-BEGIN
-	EXEC sp_rename 'schedule_detail_audiences.[demo_rank]', 'audience_rank', 'COLUMN'
-END 
-
-IF EXISTS(SELECT *
-          FROM   INFORMATION_SCHEMA.COLUMNS
-          WHERE  TABLE_NAME = 'schedule_detail_audiences'
-                 AND COLUMN_NAME = 'demo_population')
-BEGIN
-	EXEC sp_rename 'schedule_detail_audiences.[demo_population]', 'audience_population', 'COLUMN'
-END
-
-/*************************************** BCOP-1694 - END *****************************************************/
 
 
 
