@@ -478,6 +478,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void OpenMarketInventorySetFlagToShowWarningOnFilterCPM()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new OpenMarketRefineProgramsRequest
+                {
+                    ProposalDetailId = 7,
+                    Criteria = new OpenMarketCriterion
+                    {
+                        CpmCriteria = new List<CpmCriteria>
+                        {
+                            new CpmCriteria()
+                            {
+                                MinMax = MinMaxEnum.Max,
+                                Value = 0.50M
+                            }
+                        }
+                    }
+                };
+
+                Assert.IsTrue(_ProposalOpenMarketInventoryService.RefinePrograms(request).NewCriteriaAffectsExistingAllocations);
+            }
+        }
+
+        [Test]
         public void RefineByProgramNameDontExcludePreviouslyAddedProgramNames()
         {
             using (new TransactionScopeWrapper())

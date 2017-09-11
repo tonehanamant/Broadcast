@@ -346,7 +346,27 @@ namespace Services.Broadcast.ApplicationServices
             _ApplyProgramImpressions(programs, dto);
             _ProposalProgramsCalculationEngine.ApplyBlendedCpmForEachProgram(programs, dto.DetailSpotLength);
 
-            programs.RemoveAll(p => FilterByCpmCriteria(p, dto.Criteria.CpmCriteria));
+            filteredProgramsWithAllocations.Clear();
+            programs.RemoveAll(p =>
+            {
+                if (FilterByCpmCriteria(p, dto.Criteria.CpmCriteria))
+                {
+                    if (p.FlightWeeks.Any(fw => fw.Allocations.Any(a => a.Spots > 0)))
+                    {
+                        if (!ignoreExistingAllocation)
+                        {
+                            dto.NewCriteriaAffectsExistingAllocations = true;
+                            return false;
+                        }
+                        filteredProgramsWithAllocations.Add(p.ProgramId);
+                    }
+                    return true;
+                }
+                return false;
+            });
+            if (filteredProgramsWithAllocations.Any())
+                BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>()
+                    .RemoveAllocations(filteredProgramsWithAllocations, dto.DetailId);
 
             var inventoryMarkets = _GroupProgramsByMarketAndStation(programs);
 
