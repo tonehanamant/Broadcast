@@ -478,13 +478,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void OpenMarketInventorySetFlagToShowWarningOnFilterCPM()
         {
             using (new TransactionScopeWrapper())
             {
+                //var prop = ProposalScxConverterTest.Create_Proposal();
                 var request = new OpenMarketRefineProgramsRequest
                 {
-                    ProposalDetailId = 7,
+                    ProposalDetailId = 20,
                     Criteria = new OpenMarketCriterion
                     {
                         CpmCriteria = new List<CpmCriteria>
@@ -497,7 +499,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     }
                 };
-
                 Assert.IsTrue(_ProposalOpenMarketInventoryService.RefinePrograms(request).NewCriteriaAffectsExistingAllocations);
             }
         }
