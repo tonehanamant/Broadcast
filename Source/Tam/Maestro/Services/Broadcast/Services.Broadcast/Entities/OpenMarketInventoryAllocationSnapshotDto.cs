@@ -1,4 +1,6 @@
-﻿namespace Services.Broadcast.Entities
+﻿using System;
+
+namespace Services.Broadcast.Entities
 {
     public class OpenMarketInventoryAllocationSnapshotDto
     {
@@ -11,6 +13,9 @@
         public decimal SpotCost { get; set; }
         public int SpotLengthId { get; set; }
         public short StationCode { get; set; }
-        public int StationProgramId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string DaypartCode { get; set; }
+        public RatesFile.RateSourceType RateSource { get; set; }
     }
 }

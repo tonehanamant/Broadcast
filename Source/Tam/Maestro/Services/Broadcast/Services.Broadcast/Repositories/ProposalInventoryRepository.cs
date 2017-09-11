@@ -1,13 +1,10 @@
-﻿using System;
-using System.Net.NetworkInformation;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
-using Services.Broadcast.Entities.spotcableXML;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -166,13 +163,15 @@ namespace Services.Broadcast.Repositories
                         where c.inventory_detail_slot_id == inventoryDetailSlotId
                         select new ProprietaryInventoryAllocationSnapshotComponentDto
                         {
-                            DaypartId = c.daypart_id,
                             InventoryDetailSlotComponentId = c.inventory_detail_slot_component_id,
-                            InventoryDetailSlotId = c.inventory_detail_slot_id,
                             ProprosalVersionDetailQuarterWeekId = c.proprosal_version_detail_quarter_week_id,
+                            InventoryDetailSlotId = c.inventory_detail_slot_id,
+                            DaypartId = c.daypart_id,
                             StationCode = c.station_code,
-                            StationProgramFlightId = c.station_program_flight_id,
-                            StationProgramId = c.station_program_id
+                            StartDate = c.start_date,
+                            EndDate = c.end_date,
+                            DaypartCode = c.daypart_code,
+                            RateSource = (RatesFile.RateSourceType)c.rate_source
                         }).ToList()
                 }).Single());
         }
@@ -491,20 +490,23 @@ namespace Services.Broadcast.Repositories
         private void SaveSnapshotOfInventoryComponents(BroadcastContext context, int inventoryDetailSlotId, int quarterWeekId)
         {
             var allSlotComponents =
-                context.inventory_detail_slot_components.Where(i => i.inventory_detail_slot_id == inventoryDetailSlotId)
+                context.inventory_detail_slot_components.Include(i => i.station_program_flights.station_programs)
+                    .Where(i => i.inventory_detail_slot_id == inventoryDetailSlotId)
                     .ToList();
 
             foreach (var component in allSlotComponents)
             {
-                context.inventory_detail_slot_component_proposal.Add(new inventory_detail_slot_component_proposal()
+                context.inventory_detail_slot_component_proposal.Add(new inventory_detail_slot_component_proposal
                 {
-                    daypart_id = component.daypart_id,
                     inventory_detail_slot_component_id = component.id,
                     proprosal_version_detail_quarter_week_id = quarterWeekId,
                     inventory_detail_slot_id = inventoryDetailSlotId,
+                    daypart_id = component.daypart_id,
                     station_code = component.station_code,
-                    station_program_flight_id = component.station_program_flight_id,
-                    station_program_id = component.station_program_flights.station_programs.id
+                    start_date = component.station_program_flights.station_programs.start_date,
+                    end_date = component.station_program_flights.station_programs.end_date,
+                    daypart_code = component.station_program_flights.station_programs.daypart_code,
+                    rate_source = component.station_program_flights.station_programs.rate_source
                 });
             }
         }

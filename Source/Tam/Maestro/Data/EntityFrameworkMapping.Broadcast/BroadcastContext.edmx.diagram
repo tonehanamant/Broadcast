@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="BroadcastModel.daypart" Width="1.5" PointX="13.75" PointY="2.5" />
         <EntityTypeShape EntityType="BroadcastModel.day" Width="1.5" PointX="16" PointY="2.5" />
         <EntityTypeShape EntityType="BroadcastModel.genre" Width="1.5" PointX="8.25" PointY="11.75" />
-        <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slot_component_proposal" Width="1.5" PointX="0.75" PointY="6.25" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slot_components" Width="1.5" PointX="13.5" PointY="8.125" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slot_proposal" Width="1.5" PointX="12" PointY="27.375" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slots" Width="1.5" PointX="11.25" PointY="0.75" />
@@ -52,7 +51,6 @@
         <EntityTypeShape EntityType="BroadcastModel.spot_length_cost_multipliers" Width="1.5" PointX="0.75" PointY="21.25" />
         <EntityTypeShape EntityType="BroadcastModel.spot_lengths" Width="1.5" PointX="19.75" PointY="9.25" />
         <EntityTypeShape EntityType="BroadcastModel.station_contacts" Width="1.5" PointX="10.5" PointY="7.25" />
-        <EntityTypeShape EntityType="BroadcastModel.station_program_flight_proposal" Width="1.5" PointX="12" PointY="23.5" />
         <EntityTypeShape EntityType="BroadcastModel.station_program_flights" Width="1.5" PointX="15.75" PointY="11.875" />
         <EntityTypeShape EntityType="BroadcastModel.station_programs" Width="1.5" PointX="13.5" PointY="11.625" />
         <EntityTypeShape EntityType="BroadcastModel.station" Width="1.5" PointX="8.25" PointY="7.75" />
@@ -79,7 +77,6 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_proposal_version_detail_quarters" />
-        <AssociationConnector Association="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" />
         <AssociationConnector Association="BroadcastModel.FK_station_contacts_rate_files_created" />
         <AssociationConnector Association="BroadcastModel.FK_station_contacts_rate_files_modified" />
@@ -140,6 +137,9 @@
         <AssociationConnector Association="BroadcastModel.FK_schedule_details_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_spot_length_cost_multipliers_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_station_programs_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slot_component_proposal" Width="1.5" PointX="20.375" PointY="13.75" />
+        <EntityTypeShape EntityType="BroadcastModel.station_program_flight_proposal" Width="1.5" PointX="12" PointY="49.125" />
+        <AssociationConnector Association="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -630,14 +630,15 @@ namespace Services.Broadcast.ApplicationServices
             var allocationToRemove = _GetAllocationsToRemove(request, existingAllocations);
             var allocationsToUpdate = _GetAllocationsToUpdate(request, existingAllocations);
             var allocationToAdd = _GetAllocationsToCreate(request, existingAllocations);
+            var spotLength = GetProposalSpotLength(request.ProposalVersionDetailId);
 
             using (var transaction = new TransactionScopeWrapper())
             {
                 openMarketInventoryRepository.RemoveAllocations(allocationToRemove);
 
-                openMarketInventoryRepository.UpdateAllocations(allocationsToUpdate, request.Username);
+                openMarketInventoryRepository.UpdateAllocations(allocationsToUpdate, request.Username, request.ProposalVersionDetailId, spotLength);
 
-                openMarketInventoryRepository.AddAllocations(allocationToAdd, request.Username);
+                openMarketInventoryRepository.AddAllocations(allocationToAdd, request.Username, spotLength);
 
                 var inventoryDto = _GetProposalDetailOpenMarketInventoryDto(request.ProposalVersionDetailId, null);
 
@@ -659,6 +660,15 @@ namespace Services.Broadcast.ApplicationServices
 
                 return _GetProposalDetailOpenMarketInventoryDto(request.ProposalVersionDetailId, request.Filter);
             }
+        }
+
+        private int GetProposalSpotLength(int proposalVersionDetailId)
+        {
+            var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+            var spotLengthRepository =
+                BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
+            var spotLengthId = proposalRepository.GetProposalDetailSpotLengthId(proposalVersionDetailId);
+            return spotLengthRepository.GetSpotLengthById(spotLengthId);
         }
 
         private static ProposalDetailSingleInventoryTotalsDto _GetProposalDetailTotals(ProposalDetailInventoryBase inventoryDto)

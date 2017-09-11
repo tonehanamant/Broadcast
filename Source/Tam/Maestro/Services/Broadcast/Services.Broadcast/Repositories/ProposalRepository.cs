@@ -36,6 +36,7 @@ namespace Services.Broadcast.Repositories
         List<int> GetProposalDetailQuarterWeekIdsByProposalVersionId(int proposalVersionId);
         ProposalDetailOpenMarketInventoryDto GetOpenMarketProposalDetailInventory(int proposalDetailId);
         ProposalDetailDto GetProposalDetail(int proposalDetailId);
+        int GetProposalDetailSpotLengthId(int proposalDetailId);
         void SaveProposalDetailOpenMarketInventoryTotals(int proposalDetailId, ProposalDetailSingleInventoryTotalsDto proposalDetailSingleInventoryTotalsDto);
         void SaveProposalDetailProprietaryInventoryTotals(int proposalDetailId, ProposalInventoryTotalsDto proposalDetailSingleInventoryTotalsDto);
         ProposalDetailSingleInventoryTotalsDto GetProposalDetailOpenMarketInventoryTotals(int proposalDetailId);
@@ -865,6 +866,16 @@ namespace Services.Broadcast.Repositories
                 };
 
                 return proposalDetailDto;
+            });
+        }
+
+        public int GetProposalDetailSpotLengthId(int proposalDetailId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var proposalDetail = context.proposal_version_details.Single(p => p.id == proposalDetailId,
+                    "Proposal detail not found");
+                return proposalDetail.spot_length_id;
             });
         }
 

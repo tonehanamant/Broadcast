@@ -1,14 +1,17 @@
 ﻿[
   {
     "CreatedBy": "test-user",
+    "DaypartCode": null,
+    "EndDate": "2016-06-05T00:00:00",
     "Impressions": 1234.0,
     "Isci": null,
     "ProposalVersionDetailQuarterWeekId": 7,
-    "SpotCost": 488.0000,
+    "RateSource": 1,
+    "SpotCost": 30.0000,
     "SpotLengthId": 1,
     "Spots": 3,
+    "StartDate": "2016-05-30T00:00:00",
     "StationCode": 6852,
-    "StationProgramFlightId": 483045,
-    "StationProgramId": 2004
+    "StationProgramFlightId": 483045
   }
 ]

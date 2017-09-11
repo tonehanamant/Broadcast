@@ -851,8 +851,201 @@ BEGIN
     REFERENCES dbo.spot_lengths (id) 
 END
 GO
+
 /*************************************** BCOP-1693 - END *****************************************************/
 
+
+/*************************************** BCOP-1643 - START *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'start_date'
+              AND object_id = object_id('inventory_detail_slot_component_proposal'))
+BEGIN
+	ALTER TABLE inventory_detail_slot_component_proposal
+	ADD start_date DATE NULL
+	
+	EXEC('UPDATE
+			inventory_detail_slot_component_proposal
+		  SET
+			inventory_detail_slot_component_proposal.start_date = station_programs.start_date
+		  FROM
+			inventory_detail_slot_component_proposal
+			JOIN station_programs ON station_programs.id = inventory_detail_slot_component_proposal.station_program_id')
+
+	ALTER TABLE inventory_detail_slot_component_proposal
+	ALTER COLUMN start_date DATE NOT NULL
+END
+
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'end_date'
+              AND object_id = object_id('inventory_detail_slot_component_proposal'))
+BEGIN
+	ALTER TABLE inventory_detail_slot_component_proposal
+	ADD end_date DATE NULL
+	
+	EXEC('UPDATE
+			inventory_detail_slot_component_proposal
+		  SET
+			inventory_detail_slot_component_proposal.end_date = station_programs.end_date
+		  FROM
+			inventory_detail_slot_component_proposal
+			JOIN station_programs ON station_programs.id = inventory_detail_slot_component_proposal.station_program_id')
+
+	ALTER TABLE inventory_detail_slot_component_proposal
+	ALTER COLUMN end_date DATE NOT NULL
+END
+
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'daypart_code'
+              AND object_id = object_id('inventory_detail_slot_component_proposal'))
+BEGIN
+	ALTER TABLE inventory_detail_slot_component_proposal
+	ADD daypart_code VARCHAR(10) NULL
+	
+	EXEC('UPDATE
+			inventory_detail_slot_component_proposal
+		  SET
+			inventory_detail_slot_component_proposal.daypart_code = station_programs.daypart_code
+		  FROM
+			inventory_detail_slot_component_proposal
+			JOIN station_programs ON station_programs.id = inventory_detail_slot_component_proposal.station_program_id')
+END
+
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'rate_source'
+              AND object_id = object_id('inventory_detail_slot_component_proposal'))
+BEGIN
+	ALTER TABLE inventory_detail_slot_component_proposal
+	ADD rate_source TINYINT NULL
+	
+	EXEC('UPDATE
+			inventory_detail_slot_component_proposal
+		  SET
+			inventory_detail_slot_component_proposal.rate_source = station_programs.rate_source
+		  FROM
+			inventory_detail_slot_component_proposal
+			JOIN station_programs ON station_programs.id = inventory_detail_slot_component_proposal.station_program_id')
+END
+
+GO
+
+IF EXISTS(SELECT 1 FROM sys.columns 
+          WHERE name = 'station_program_id'
+          AND object_id = object_id('inventory_detail_slot_component_proposal'))
+BEGIN
+	ALTER TABLE inventory_detail_slot_component_proposal
+	DROP COLUMN station_program_id
+END
+
+GO
+
+IF EXISTS(SELECT 1 FROM sys.columns 
+          WHERE name = 'station_program_flight_id'
+          AND object_id = object_id('inventory_detail_slot_component_proposal'))
+BEGIN
+	ALTER TABLE inventory_detail_slot_component_proposal
+	DROP COLUMN station_program_flight_id
+END
+
+GO
+
+-- station_program_flight_proposal
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'start_date'
+              AND object_id = object_id('station_program_flight_proposal'))
+BEGIN
+	ALTER TABLE station_program_flight_proposal
+	ADD start_date DATE NULL
+	
+	EXEC('UPDATE
+			station_program_flight_proposal
+		  SET
+			station_program_flight_proposal.start_date = station_programs.start_date
+		  FROM
+			station_program_flight_proposal
+			JOIN station_programs ON station_programs.id = station_program_flight_proposal.station_program_id')
+
+	ALTER TABLE station_program_flight_proposal
+	ALTER COLUMN start_date DATE NOT NULL
+END
+
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'end_date'
+              AND object_id = object_id('station_program_flight_proposal'))
+BEGIN
+	ALTER TABLE station_program_flight_proposal
+	ADD end_date DATE NULL
+	
+	EXEC('UPDATE
+			station_program_flight_proposal
+		  SET
+			station_program_flight_proposal.end_date = station_programs.end_date
+		  FROM
+			station_program_flight_proposal
+			JOIN station_programs ON station_programs.id = station_program_flight_proposal.station_program_id')
+
+	ALTER TABLE station_program_flight_proposal
+	ALTER COLUMN end_date DATE NOT NULL
+END
+
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'daypart_code'
+              AND object_id = object_id('station_program_flight_proposal'))
+BEGIN
+	ALTER TABLE station_program_flight_proposal
+	ADD daypart_code VARCHAR(10) NULL
+
+	EXEC('UPDATE
+			station_program_flight_proposal
+		  SET
+			station_program_flight_proposal.daypart_code = station_programs.daypart_code
+		  FROM
+			station_program_flight_proposal
+			JOIN station_programs ON station_programs.id = station_program_flight_proposal.station_program_id')
+END
+
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'rate_source'
+              AND object_id = object_id('station_program_flight_proposal'))
+BEGIN
+	ALTER TABLE station_program_flight_proposal
+	ADD rate_source TINYINT NULL
+
+	EXEC('UPDATE
+			station_program_flight_proposal
+		  SET
+			station_program_flight_proposal.rate_source = station_programs.rate_source
+		  FROM
+			station_program_flight_proposal
+			JOIN station_programs ON station_programs.id = station_program_flight_proposal.station_program_id')
+END
+
+GO
+
+IF EXISTS(SELECT 1 FROM sys.columns 
+          WHERE name = 'station_program_id'
+          AND object_id = object_id('station_program_flight_proposal'))
+BEGIN
+	ALTER TABLE station_program_flight_proposal
+	DROP COLUMN station_program_id
+END
+
+GO
+
+/*************************************** BCOP-1643 - END *****************************************************/
 
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
