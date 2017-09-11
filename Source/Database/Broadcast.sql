@@ -469,7 +469,7 @@ BEGIN
 END
 GO
 
-IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_detail_quarter_weeks' AND COLUMN_NAME = 'impressions') != 'float'
+IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_detail_quarter_weeks' AND COLUMN_NAME = 'impressions_goal') != 'float'
 	OR (SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_detail_quarter_weeks' AND COLUMN_NAME = 'open_market_impressions_total') != 'float'
 	OR (SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_detail_quarter_weeks' AND COLUMN_NAME = 'proprietary_impressions_total') != 'float')
 BEGIN
