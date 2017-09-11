@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BroadcastModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BroadcastModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="audience_audiences">
           <Key>
             <PropertyRef Name="rating_category_group_id" />
@@ -153,8 +153,10 @@
           <Property Name="inventory_detail_slot_id" Type="int" Nullable="false" />
           <Property Name="daypart_id" Type="int" Nullable="false" />
           <Property Name="station_code" Type="smallint" Nullable="false" />
-          <Property Name="station_program_id" Type="int" Nullable="false" />
-          <Property Name="station_program_flight_id" Type="int" Nullable="false" />
+          <Property Name="start_date" Type="date" Nullable="false" />
+          <Property Name="end_date" Type="date" Nullable="false" />
+          <Property Name="daypart_code" Type="varchar" MaxLength="10" />
+          <Property Name="rate_source" Type="tinyint" />
         </EntityType>
         <EntityType Name="inventory_detail_slot_components">
           <Key>
@@ -647,7 +649,10 @@
           <Property Name="spot_cost" Type="money" Nullable="false" />
           <Property Name="spot_length_id" Type="int" Nullable="false" />
           <Property Name="station_code" Type="smallint" Nullable="false" />
-          <Property Name="station_program_id" Type="int" Nullable="false" />
+          <Property Name="start_date" Type="date" Nullable="false" />
+          <Property Name="end_date" Type="date" Nullable="false" />
+          <Property Name="daypart_code" Type="varchar" MaxLength="10" />
+          <Property Name="rate_source" Type="tinyint" />
         </EntityType>
         <EntityType Name="station_program_flights">
           <Key>
@@ -740,7 +745,7 @@
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2193,7 +2198,6 @@ warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' do
           <EntitySet Name="dayparts" EntityType="BroadcastModel.daypart" />
           <EntitySet Name="days" EntityType="BroadcastModel.day" />
           <EntitySet Name="genres" EntityType="BroadcastModel.genre" />
-          <EntitySet Name="inventory_detail_slot_component_proposal" EntityType="BroadcastModel.inventory_detail_slot_component_proposal" />
           <EntitySet Name="inventory_detail_slot_components" EntityType="BroadcastModel.inventory_detail_slot_components" />
           <EntitySet Name="inventory_detail_slot_proposal" EntityType="BroadcastModel.inventory_detail_slot_proposal" />
           <EntitySet Name="inventory_detail_slots" EntityType="BroadcastModel.inventory_detail_slots" />
@@ -2230,7 +2234,6 @@ warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' do
           <EntitySet Name="spot_length_cost_multipliers" EntityType="BroadcastModel.spot_length_cost_multipliers" />
           <EntitySet Name="spot_lengths" EntityType="BroadcastModel.spot_lengths" />
           <EntitySet Name="station_contacts" EntityType="BroadcastModel.station_contacts" />
-          <EntitySet Name="station_program_flight_proposal" EntityType="BroadcastModel.station_program_flight_proposal" />
           <EntitySet Name="station_program_flights" EntityType="BroadcastModel.station_program_flights" />
           <EntitySet Name="station_programs" EntityType="BroadcastModel.station_programs" />
           <EntitySet Name="stations" EntityType="BroadcastModel.station" />
@@ -2316,10 +2319,6 @@ warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' do
           <AssociationSet Name="FK_proposal_version_detail_quarter_weeks_proposal_version_detail_quarters" Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_proposal_version_detail_quarters">
             <End Role="proposal_version_detail_quarters" EntitySet="proposal_version_detail_quarters" />
             <End Role="proposal_version_detail_quarter_weeks" EntitySet="proposal_version_detail_quarter_weeks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" Association="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks">
-            <End Role="proposal_version_detail_quarter_weeks" EntitySet="proposal_version_detail_quarter_weeks" />
-            <End Role="station_program_flight_proposal" EntitySet="station_program_flight_proposal" />
           </AssociationSet>
           <AssociationSet Name="FK_proposal_version_detail_quarters_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details">
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
@@ -2552,6 +2551,12 @@ warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' do
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="station_programs" EntitySet="station_programs" />
           </AssociationSet>
+          <EntitySet Name="inventory_detail_slot_component_proposal" EntityType="BroadcastModel.inventory_detail_slot_component_proposal" />
+          <EntitySet Name="station_program_flight_proposal" EntityType="BroadcastModel.station_program_flight_proposal" />
+          <AssociationSet Name="FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" Association="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks">
+            <End Role="proposal_version_detail_quarter_weeks" EntitySet="proposal_version_detail_quarter_weeks" />
+            <End Role="station_program_flight_proposal" EntitySet="station_program_flight_proposal" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -2708,19 +2713,6 @@ warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' do
           <Property Name="modified_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres" FromRole="genre" ToRole="proposal_version_detail_criteria_genres" />
           <NavigationProperty Name="station_programs" Relationship="BroadcastModel.station_program_genres" FromRole="genre" ToRole="station_programs" />
-        </EntityType>
-        <EntityType Name="inventory_detail_slot_component_proposal">
-          <Key>
-            <PropertyRef Name="inventory_detail_slot_component_id" />
-            <PropertyRef Name="proprosal_version_detail_quarter_week_id" />
-          </Key>
-          <Property Name="inventory_detail_slot_component_id" Type="Int32" Nullable="false" />
-          <Property Name="proprosal_version_detail_quarter_week_id" Type="Int32" Nullable="false" />
-          <Property Name="inventory_detail_slot_id" Type="Int32" Nullable="false" />
-          <Property Name="daypart_id" Type="Int32" Nullable="false" />
-          <Property Name="station_code" Type="Int16" Nullable="false" />
-          <Property Name="station_program_id" Type="Int32" Nullable="false" />
-          <Property Name="station_program_flight_id" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="inventory_detail_slot_components">
           <Key>
@@ -2959,9 +2951,9 @@ warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' do
           <Property Name="proprietary_cost_total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="inventory_detail_slot_proposal" Relationship="BroadcastModel.FK_inventory_detail_slot_proposal_proposal_version_detail_quarter_weeks" FromRole="proposal_version_detail_quarter_weeks" ToRole="inventory_detail_slot_proposal" />
           <NavigationProperty Name="proposal_version_detail_quarters" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_proposal_version_detail_quarters" FromRole="proposal_version_detail_quarter_weeks" ToRole="proposal_version_detail_quarters" />
-          <NavigationProperty Name="station_program_flight_proposal" Relationship="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" FromRole="proposal_version_detail_quarter_weeks" ToRole="station_program_flight_proposal" />
           <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_media_weeks" FromRole="proposal_version_detail_quarter_weeks" ToRole="media_weeks" />
           <Property Name="impressions_goal" Type="Double" Nullable="false" />
+          <NavigationProperty Name="station_program_flight_proposal" Relationship="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" FromRole="proposal_version_detail_quarter_weeks" ToRole="station_program_flight_proposal" />
         </EntityType>
         <EntityType Name="proposal_version_detail_quarters">
           <Key>
@@ -3249,23 +3241,6 @@ warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' do
           <NavigationProperty Name="rate_files" Relationship="BroadcastModel.FK_station_contacts_rate_files_created" FromRole="station_contacts" ToRole="rate_files" />
           <NavigationProperty Name="rate_files1" Relationship="BroadcastModel.FK_station_contacts_rate_files_modified" FromRole="station_contacts" ToRole="rate_files" />
           <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_contacts_stations" FromRole="station_contacts" ToRole="station" />
-        </EntityType>
-        <EntityType Name="station_program_flight_proposal">
-          <Key>
-            <PropertyRef Name="station_program_flight_id" />
-            <PropertyRef Name="proprosal_version_detail_quarter_week_id" />
-          </Key>
-          <Property Name="station_program_flight_id" Type="Int32" Nullable="false" />
-          <Property Name="proprosal_version_detail_quarter_week_id" Type="Int32" Nullable="false" />
-          <Property Name="spots" Type="Int32" Nullable="false" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="isci" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="impressions" Type="Double" Nullable="false" />
-          <Property Name="spot_cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
-          <Property Name="station_code" Type="Int16" Nullable="false" />
-          <Property Name="station_program_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" FromRole="station_program_flight_proposal" ToRole="proposal_version_detail_quarter_weeks" />
         </EntityType>
         <EntityType Name="station_program_flights">
           <Key>
@@ -3626,20 +3601,6 @@ warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' do
             </Principal>
             <Dependent Role="proposal_version_detail_quarter_weeks">
               <PropertyRef Name="proposal_version_quarter_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks">
-          <End Type="BroadcastModel.proposal_version_detail_quarter_weeks" Role="proposal_version_detail_quarter_weeks" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.station_program_flight_proposal" Role="station_program_flight_proposal" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_version_detail_quarter_weeks">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_program_flight_proposal">
-              <PropertyRef Name="proprosal_version_detail_quarter_week_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4420,6 +4381,55 @@ warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="inventory_detail_slot_component_proposal">
+          <Key>
+            <PropertyRef Name="inventory_detail_slot_component_id" />
+            <PropertyRef Name="proprosal_version_detail_quarter_week_id" />
+          </Key>
+          <Property Name="inventory_detail_slot_component_id" Type="Int32" Nullable="false" />
+          <Property Name="proprosal_version_detail_quarter_week_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_detail_slot_id" Type="Int32" Nullable="false" />
+          <Property Name="daypart_id" Type="Int32" Nullable="false" />
+          <Property Name="station_code" Type="Int16" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="daypart_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="rate_source" Type="Byte" />
+        </EntityType>
+        <EntityType Name="station_program_flight_proposal">
+          <Key>
+            <PropertyRef Name="station_program_flight_id" />
+            <PropertyRef Name="proprosal_version_detail_quarter_week_id" />
+          </Key>
+          <Property Name="station_program_flight_id" Type="Int32" Nullable="false" />
+          <Property Name="proprosal_version_detail_quarter_week_id" Type="Int32" Nullable="false" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="isci" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="spot_cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
+          <Property Name="station_code" Type="Int16" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="daypart_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="rate_source" Type="Byte" />
+          <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" FromRole="station_program_flight_proposal" ToRole="proposal_version_detail_quarter_weeks" />
+        </EntityType>
+        <Association Name="FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks">
+          <End Type="BroadcastModel.proposal_version_detail_quarter_weeks" Role="proposal_version_detail_quarter_weeks" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.station_program_flight_proposal" Role="station_program_flight_proposal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_detail_quarter_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_program_flight_proposal">
+              <PropertyRef Name="proprosal_version_detail_quarter_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4558,19 +4568,6 @@ warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' do
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="inventory_detail_slot_component_proposal">
-            <EntityTypeMapping TypeName="BroadcastModel.inventory_detail_slot_component_proposal">
-              <MappingFragment StoreEntitySet="inventory_detail_slot_component_proposal">
-                <ScalarProperty Name="station_program_flight_id" ColumnName="station_program_flight_id" />
-                <ScalarProperty Name="station_program_id" ColumnName="station_program_id" />
-                <ScalarProperty Name="station_code" ColumnName="station_code" />
-                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
-                <ScalarProperty Name="inventory_detail_slot_id" ColumnName="inventory_detail_slot_id" />
-                <ScalarProperty Name="proprosal_version_detail_quarter_week_id" ColumnName="proprosal_version_detail_quarter_week_id" />
-                <ScalarProperty Name="inventory_detail_slot_component_id" ColumnName="inventory_detail_slot_component_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5027,22 +5024,6 @@ warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' do
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="station_program_flight_proposal">
-            <EntityTypeMapping TypeName="BroadcastModel.station_program_flight_proposal">
-              <MappingFragment StoreEntitySet="station_program_flight_proposal">
-                <ScalarProperty Name="station_program_id" ColumnName="station_program_id" />
-                <ScalarProperty Name="station_code" ColumnName="station_code" />
-                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
-                <ScalarProperty Name="spot_cost" ColumnName="spot_cost" />
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="isci" ColumnName="isci" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="spots" ColumnName="spots" />
-                <ScalarProperty Name="proprosal_version_detail_quarter_week_id" ColumnName="proprosal_version_detail_quarter_week_id" />
-                <ScalarProperty Name="station_program_flight_id" ColumnName="station_program_flight_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="station_program_flights">
             <EntityTypeMapping TypeName="BroadcastModel.station_program_flights">
               <MappingFragment StoreEntitySet="station_program_flights">
@@ -5219,6 +5200,40 @@ warning 6002: The table/view 'broadcast_integration_mikeh.dbo.vw_ccc_daypart' do
                 <ScalarProperty Name="rating" ColumnName="rating" />
                 <ScalarProperty Name="impressions" ColumnName="impressions" />
                 <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="station_program_flight_id" ColumnName="station_program_flight_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_detail_slot_component_proposal">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_detail_slot_component_proposal">
+              <MappingFragment StoreEntitySet="inventory_detail_slot_component_proposal">
+                <ScalarProperty Name="rate_source" ColumnName="rate_source" />
+                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="station_code" ColumnName="station_code" />
+                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
+                <ScalarProperty Name="inventory_detail_slot_id" ColumnName="inventory_detail_slot_id" />
+                <ScalarProperty Name="proprosal_version_detail_quarter_week_id" ColumnName="proprosal_version_detail_quarter_week_id" />
+                <ScalarProperty Name="inventory_detail_slot_component_id" ColumnName="inventory_detail_slot_component_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="station_program_flight_proposal">
+            <EntityTypeMapping TypeName="BroadcastModel.station_program_flight_proposal">
+              <MappingFragment StoreEntitySet="station_program_flight_proposal">
+                <ScalarProperty Name="rate_source" ColumnName="rate_source" />
+                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="station_code" ColumnName="station_code" />
+                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+                <ScalarProperty Name="spot_cost" ColumnName="spot_cost" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="isci" ColumnName="isci" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="proprosal_version_detail_quarter_week_id" ColumnName="proprosal_version_detail_quarter_week_id" />
                 <ScalarProperty Name="station_program_flight_id" ColumnName="station_program_flight_id" />
               </MappingFragment>
             </EntityTypeMapping>

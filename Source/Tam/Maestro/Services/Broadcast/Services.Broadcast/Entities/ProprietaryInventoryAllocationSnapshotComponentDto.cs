@@ -1,4 +1,6 @@
-﻿namespace Services.Broadcast.Entities
+﻿using System;
+
+namespace Services.Broadcast.Entities
 {
     public class ProprietaryInventoryAllocationSnapshotComponentDto
     {
@@ -7,7 +9,9 @@
         public int InventoryDetailSlotId { get; set; }
         public int DaypartId { get; set; }
         public short StationCode { get; set; }
-        public int StationProgramId { get; set; }
-        public int StationProgramFlightId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string DaypartCode { get; set; }
+        public RatesFile.RateSourceType RateSource { get; set; }
     }
 }

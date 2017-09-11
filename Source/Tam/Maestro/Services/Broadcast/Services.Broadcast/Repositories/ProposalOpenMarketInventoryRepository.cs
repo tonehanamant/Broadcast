@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Common.Services.Extensions;
+﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
+using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.OpenMarketInventory;
-using EntityFrameworkMapping.Broadcast;
-using Tam.Maestro.Common;
-using Tam.Maestro.Services.Clients;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
+using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
 {
@@ -16,8 +16,8 @@ namespace Services.Broadcast.Repositories
     {
         List<OpenMarketInventoryAllocation> GetProposalDetailAllocations(int proposalVersionDetailId);
         void RemoveAllocations(List<OpenMarketInventoryAllocation> allocationToRemove);
-        void UpdateAllocations(List<OpenMarketInventoryAllocation> allocationsToUpdate, string username);
-        void AddAllocations(List<OpenMarketInventoryAllocation> allocationToAdd, string username);
+        void UpdateAllocations(List<OpenMarketInventoryAllocation> allocationsToUpdate, string username, int proposalDetail, int spotLength);
+        void AddAllocations(List<OpenMarketInventoryAllocation> allocationToAdd, string username, int spotLength);
         void RemoveAllocations(List<int> programIds, int proposalDetailId);
         List<OpenMarketInventoryAllocationSnapshotDto> GetOpenMarketInventoryAllocationSnapshot(List<int> programIds, int proposalDetailId);
     }
@@ -61,35 +61,36 @@ namespace Services.Broadcast.Repositories
                     foreach (var allocation in allocations)
                     {
                         var programAllocation =
-                            context.station_program_flight_proposal.Where(
-                                f =>
-                                    f.proprosal_version_detail_quarter_week_id ==
-                                    allocation.ProposalVersionDetailQuarterWeekId &&
-                                    f.station_program_flight_id == allocation.StationProgramFlightId).Single();
+                            context.station_program_flight_proposal.Single(
+                                f => f.proprosal_version_detail_quarter_week_id ==
+                                     allocation.ProposalVersionDetailQuarterWeekId &&
+                                     f.station_program_flight_id == allocation.StationProgramFlightId);
+
                         context.station_program_flight_proposal.Remove(programAllocation);
                     }
 
                     context.SaveChanges();
-
                 });
-
         }
 
-        public void UpdateAllocations(List<OpenMarketInventoryAllocation> allocations, string username)
+        public void UpdateAllocations(List<OpenMarketInventoryAllocation> allocations, string username, int proposalVersionDetailId, int spotLength)
         {
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    foreach (var allocation in allocations)
-                    {
-                        var proposalSpotLengthId =
-                            context.proposal_version_details.Where(p => p.id == allocation.ProposalVersionDetailId)
+                    var proposalSpotLengthId =
+                            context.proposal_version_details.Where(p => p.id == proposalVersionDetailId)
                                 .Select(p => p.spot_length_id)
                                 .Single();
+
+                    foreach (var allocation in allocations)
+                    {
                         var programFlight =
-                            context.station_program_flights.Single(f => f.media_week_id == allocation.MediaWeekId &&
+                            context.station_program_flights.Include(s => s.station_programs)
+                            .Single(f => f.media_week_id == allocation.MediaWeekId &&
                                                                         f.station_program_id ==
                                                                         allocation.StationProgramId);
+
                         var currentAllocation =
                             context.station_program_flight_proposal.Where(
                                 a =>
@@ -97,21 +98,26 @@ namespace Services.Broadcast.Repositories
                                     allocation.ProposalVersionDetailQuarterWeekId &&
                                     a.station_program_flight_id == allocation.StationProgramFlightId)
                                 .Single("Unable to find inventory allocation to update");
-                        currentAllocation.spots = allocation.Spots;
-                        currentAllocation.created_by = username;
+                        
                         currentAllocation.station_program_flight_id = programFlight.id;
                         currentAllocation.proprosal_version_detail_quarter_week_id = allocation.ProposalVersionDetailQuarterWeekId;
-                        currentAllocation.station_code = programFlight.station_programs.station_code;
+                        currentAllocation.spots = allocation.Spots;
+                        currentAllocation.created_by = username;
                         currentAllocation.impressions = allocation.Impressions;
-                        currentAllocation.spot_cost = allocation.SpotCost;
+                        currentAllocation.spot_cost = _GetSpotCost(programFlight, spotLength);
                         currentAllocation.spot_length_id = proposalSpotLengthId;
-                        currentAllocation.station_program_id = programFlight.station_program_id;
+                        currentAllocation.station_code = programFlight.station_programs.station_code;
+                        currentAllocation.start_date = programFlight.station_programs.start_date;
+                        currentAllocation.end_date = programFlight.station_programs.end_date;
+                        currentAllocation.daypart_code = programFlight.station_programs.daypart_code;
+                        currentAllocation.rate_source = programFlight.station_programs.rate_source;
+                        
                         context.SaveChanges();
                     }
                 });
         }
 
-        public void AddAllocations(List<OpenMarketInventoryAllocation> allocations, string username)
+        public void AddAllocations(List<OpenMarketInventoryAllocation> allocations, string username, int spotLength)
         {
             _InReadUncommitedTransaction(
                 context =>
@@ -119,9 +125,11 @@ namespace Services.Broadcast.Repositories
                     foreach (var allocation in allocations)
                     {
                         var programFlight =
-                            context.station_program_flights.Single(f => f.media_week_id == allocation.MediaWeekId &&
-                                                                        f.station_program_id ==
-                                                                        allocation.StationProgramId);
+                            context.station_program_flights.Include(s => s.station_programs)
+                                .Single(f => f.media_week_id == allocation.MediaWeekId &&
+                                             f.station_program_id ==
+                                             allocation.StationProgramId);
+
                         var proposalQuarterWeekId =
                             context.proposal_version_detail_quarter_weeks.Where(
                                 w =>
@@ -129,22 +137,26 @@ namespace Services.Broadcast.Repositories
                                     allocation.ProposalVersionDetailId && w.media_week_id == allocation.MediaWeekId)
                                 .Select(w => w.id)
                                 .Single();
+                        
                         var proposalSpotLengthId =
                             context.proposal_version_details.Where(p => p.id == allocation.ProposalVersionDetailId)
                                 .Select(p => p.spot_length_id)
                                 .Single();
 
-                        var programAllocation = new station_program_flight_proposal()
+                        var programAllocation = new station_program_flight_proposal
                         {
-                            created_by = username,
-                            spots = allocation.Spots,
                             station_program_flight_id = programFlight.id,
                             proprosal_version_detail_quarter_week_id = proposalQuarterWeekId,
-                            station_code = programFlight.station_programs.station_code,
+                            spots = allocation.Spots,
+                            created_by = username,
                             impressions = allocation.Impressions,
-                            spot_cost = allocation.SpotCost,
+                            spot_cost = _GetSpotCost(programFlight, spotLength),
                             spot_length_id = proposalSpotLengthId,
-                            station_program_id = programFlight.station_program_id
+                            station_code = programFlight.station_programs.station_code,
+                            start_date = programFlight.station_programs.start_date,
+                            end_date = programFlight.station_programs.end_date,
+                            daypart_code = programFlight.station_programs.daypart_code,
+                            rate_source = programFlight.station_programs.rate_source
                         };
 
                         context.station_program_flight_proposal.Add(programAllocation);
@@ -165,6 +177,7 @@ namespace Services.Broadcast.Repositories
                                                                                        && stationProgramFlightIds.Contains(spfp.station_program_flight_id));
 
                 c.station_program_flight_proposal.RemoveRange(matchingAllocations);
+                
                 c.SaveChanges();
             });
         }
@@ -191,18 +204,49 @@ namespace Services.Broadcast.Repositories
                             && stationProgramFlightIds.Contains(spfp.station_program_flight_id))
                         .Select(s => new OpenMarketInventoryAllocationSnapshotDto
                         {
-                            CreatedBy = s.created_by,
-                            Impressions = s.impressions,
-                            Isci = s.isci,
+                            StationProgramFlightId = s.station_program_flight_id,
                             ProposalVersionDetailQuarterWeekId = s.proprosal_version_detail_quarter_week_id,
+                            Spots = s.spots,
+                            CreatedBy = s.created_by,
+                            Isci = s.isci,
+                            Impressions = s.impressions,
                             SpotCost = s.spot_cost,
                             SpotLengthId = s.spot_length_id,
-                            Spots = s.spots,
                             StationCode = s.station_code,
-                            StationProgramFlightId = s.station_program_flight_id,
-                            StationProgramId = s.station_program_id
+                            StartDate = s.start_date,
+                            EndDate = s.end_date,
+                            DaypartCode = s.daypart_code,
+                            RateSource = (RatesFile.RateSourceType) s.rate_source
                         }).ToList();
             });
+        }
+
+        private decimal _GetSpotCost(station_program_flights stationProgramFlights, int spotLength)
+        {
+            decimal? spotCost = 0;
+
+            if (spotLength == 15)
+            {
+                spotCost = stationProgramFlights.C15s_rate;
+            }
+            else if (spotLength == 30)
+            {
+                spotCost = stationProgramFlights.C30s_rate;
+            }
+            else if (spotLength == 60)
+            {
+                spotCost = stationProgramFlights.C60s_rate;
+            }
+            else if (spotLength == 90)
+            {
+                spotCost = stationProgramFlights.C90s_rate;
+            }
+            else if (spotLength == 120)
+            {
+                spotCost = stationProgramFlights.C120s_rate;
+            }
+
+            return spotCost ?? 0;
         }
     }
 }
