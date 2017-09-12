@@ -1,0 +1,48 @@
+{
+  "ProposalVersionDetailId": 4014,
+  "Weeks": [
+    {
+      "MediaWeekId": 666,
+      "Programs": [
+        {
+          "ProgramId": 519159,
+          "Spots": 2,
+          "Impressions": 588.633918786507
+        },
+        {
+          "ProgramId": 519165,
+          "Spots": 3,
+          "Impressions": 289.4691537242589
+        }
+      ]
+    },
+    {
+      "MediaWeekId": 668,
+      "Programs": [
+        {
+          "ProgramId": 520050,
+          "Spots": 2,
+          "Impressions": 588.633918786507
+        }
+      ]
+    }
+  ],
+  "Filter": {
+    "ProgramNames": [
+      
+    ],
+    "Genres": [
+      
+    ],
+    "DayParts": [
+      
+    ],
+    "Affiliations": [
+      
+    ],
+    "Markets": [
+      
+    ],
+    "SpotFilter": 1
+  }
+}

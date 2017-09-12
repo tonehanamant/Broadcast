@@ -176,6 +176,7 @@
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProposalPostingBooksEngineTests.cs" />
     <Compile Include="ApplicationServices\ProposalScxConverterTest.cs" />
+    <Compile Include="ApplicationServices\ProposalTestHelper.cs" />
     <Compile Include="ApplicationServices\ProposalWeeklyTotalCalculationEngineTests.cs" />
     <Compile Include="ApplicationServices\TrafficServiceIntegrationTests.cs" />
     <Compile Include="AttributeIgnorer.cs" />

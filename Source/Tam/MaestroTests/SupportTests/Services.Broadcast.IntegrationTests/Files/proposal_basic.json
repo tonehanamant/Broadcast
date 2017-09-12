@@ -1,0 +1,174 @@
+{
+  "Id": null,
+  "Version": null,
+  "PrimaryVersionId": null,
+  "ProposalName": "Integrated Test Blooper",
+  "AdvertiserId": 37674,
+  "FlightStartDate": "2016-09-26 00:00:00.000",
+  "FlightEndDate": "2016-10-16 00:00:00.000",
+  "FlightWeeks": [
+    {
+      "StartDate": "2016-09-26 00:00:00.000",
+      "EndDate": "2016-10-02 00:00:00.000",
+      "IsHiatus": false,
+      "MediaWeekId": 666
+
+    },
+    {
+      "StartDate": "2016-10-03 00:00:00.000",
+      "EndDate": "2016-10-09 00:00:00.000",
+      "IsHiatus": false,
+      "MediaWeekId": 667
+    },
+    {
+      "StartDate": "2016-10-10 00:00:00.000",
+      "EndDate": "2016-10-16 00:00:00.000",
+      "IsHiatus": false,
+      "MediaWeekId": 668
+    }
+  ],
+  "SpotLengths": [
+    {
+      "Id": 3,
+      "Display": "15"
+    }
+  ],
+  "GuaranteedDemoId": 31,
+  "Notes": null,
+  "PostType": 1,
+  "SecondaryDemos": [
+    
+  ],
+  "Equivalized": true,
+  "TargetImpressions": 50,
+  "TargetBudget": 50000,
+  "TargetCPM": 1000,
+  "TargetUnits": 3,
+  "Status": 2,
+  "ForceSave": false,
+  "Markets": [{ "Id": "439","Display": "Las Vegas","IsBlackout": false}],
+  "MarketGroupId": null,
+  "BlackoutMarketGroupId": null,
+  "Details": [
+    {
+      "Id": null,
+      "FlightStartDate": "2016-09-26 00:00:00.000",
+      "FlightEndDate": "2016-10-02 00:00:00.000",
+      "FlightWeeks": [
+        {
+          "StartDate": "2016-09-26 00:00:00.000",
+          "EndDate": "2016-10-02 00:00:00.000",
+          "IsHiatus": false,
+          "MediaWeekId": 666
+        },
+        {
+          "StartDate": "2016-10-03 00:00:00.000",
+          "EndDate": "2016-10-09 00:00:00.000",
+          "IsHiatus": false,
+          "MediaWeekId": 667
+        },
+        {
+          "StartDate": "2016-10-10 00:00:00.000",
+          "EndDate": "2016-10-16 00:00:00.000",
+          "IsHiatus": false,
+          "MediaWeekId": 668
+        }
+      ],
+      "SpotLengthId": 3,
+      "Daypart": {
+        "mon": true,
+        "tue": true,
+        "wed": true,
+        "thu": true,
+        "fri": true,
+        "sat": true,
+        "sun": true,
+        "startTime": 28800,
+        "endTime": 82800,
+        "Text": "M-SU 8AM-11PM"
+      },
+      "DaypartCode": "bb",
+      "TotalUnits": 3,
+      "TotalImpressions": 50,
+      "TotalCost": 50000,
+      "Adu": false,
+      "Quarters": [
+        {
+          "Id": null,
+          "QuarterText": "2016 Q4",
+          "Quarter": 4,
+          "Year": 2016,
+          "Cpm": 1000,
+          "ImpressionGoal": 50,
+          "DistributeGoals": true,
+          "Weeks": [
+            {
+              "Id": null,
+              "MediaWeekId": 666,
+              "Week": "9/26/2016",
+              "IsHiatus": false,
+              "Units": 1,
+              "Impressions": 16.666,
+              "Cost": 16666,
+              "EndDate": "2016-10-02 00:00:00.000",
+              "StartDate": "2016-09-26 00:00:00.000",
+              "recid": "d12a06c5-ca99-43f3-8161-8694a9a18279",
+              "quarterId": null,
+              "quarterIdx": 0,
+              "weekIdx": 0
+            },
+            {
+              "Id": null,
+              "MediaWeekId": 667,
+              "Week": "10/3/2016",
+              "IsHiatus": false,
+              "Units": 1,
+              "Impressions": 16.666,
+              "Cost": 16666,
+              "EndDate": "2016-10-09 00:00:00.000",
+              "StartDate": "2016-10-03 00:00:00.000",
+              "recid": "456484d1-01ba-4132-bf34-0d88b79f95bf",
+              "quarterId": null,
+              "quarterIdx": 0,
+              "weekIdx": 1
+            },
+            {
+              "Id": null,
+              "MediaWeekId": 668,
+              "Week": "10/10/2016",
+              "IsHiatus": false,
+              "Units": 1,
+              "Impressions": 16.668,
+              "Cost": 16668,
+              "EndDate": "2016-10-16 00:00:00.000",
+              "StartDate": "2016-10-10 00:00:00.000",
+              "recid": "f0cfe1f0-c1d6-4644-bc0a-5a0660f737d0",
+              "quarterId": null,
+              "quarterIdx": 0,
+              "weekIdx": 2
+            }
+          ]
+        }
+      ],
+      "FlightEdited": false,
+      "SinglePostingBookId": null,
+      "SharePostingBookId": 416,
+      "HutPostingBookId": 413,
+      "PlaybackType": 4,
+      "DefaultPostingBooks": {
+        "DefaultShareBook": {
+          "PostingBookId": 416,
+          "HasWarning": true,
+          "WarningMessage": "The share book for the current quarter is not available, the default share book is the latest available"
+        },
+        "DefaultHutBook": {
+          "PostingBookId": 413,
+          "HasWarning": false,
+          "WarningMessage": null
+        },
+        "UseShareBookOnlyId": -1,
+        "DefaultPlaybackType": 4
+      }
+    }
+  ]
+}
