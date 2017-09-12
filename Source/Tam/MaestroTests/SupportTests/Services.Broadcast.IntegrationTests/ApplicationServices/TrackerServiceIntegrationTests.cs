@@ -525,129 +525,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void LoadAssemblySchedule()
-        {
-            const int estimateId = 3390;
-            using (new TransactionScopeWrapper())
-            {
-                var saveRequest = new ScheduleSaveRequest();
-                var schedule = new ScheduleDTO();
-
-                schedule.AdvertiserId = 39279;
-                schedule.EstimateId = estimateId;
-                schedule.PostingBookId = 413;
-                schedule.ScheduleName = "Assembly Schedule Template";
-                schedule.UserName = "User";
-                schedule.FileName = @"Assembly Schedule Template.csv";
-                schedule.FileStream = new FileStream(@".\Files\Assembly Schedule Template.csv", FileMode.Open,
-                    FileAccess.Read);
-
-                schedule.MarketRestrictions = new List<int> { 101, 102 };
-                // restrict NYC and Binghamton just because reasons
-                schedule.DaypartRestriction = new DaypartDto
-                {
-                    startTime = 0,
-                    endTime = 86400 - 1,
-                    mon = true,
-                    tue = true,
-                    wed = true,
-                    thu = true,
-                    fri = true,
-                    sat = true,
-                    sun = true
-                };
-                schedule.Equivalized = true;
-                schedule.ISCIs = new List<IsciDto>
-                {
-                    new IsciDto
-                    {
-                        House = "1111",
-                        Client = "2222"
-                    }
-                };
-                schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = RatesFile.RateSourceType.CNN;
-
-                saveRequest.Schedule = schedule;
-
-                _Sut.SaveSchedule(saveRequest);
-
-                var response = _ScheduleRepository.GetScheduleTrackingDetails(estimateId);
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(ScheduleDetailWeek), "ScheduleDetailWeekId");
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                var json = IntegrationTestHelper.ConvertToJson(response, jsonSettings);
-                Approvals.Verify(json);
-            }
-        }
-
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void LoadAssemblySchedule_WithInvalidWomanAndFemaleDemos()
-        {
-            const int estimateId = 3390;
-            using (new TransactionScopeWrapper())
-            {
-                var saveRequest = new ScheduleSaveRequest();
-                var schedule = new ScheduleDTO();
-
-                schedule.AdvertiserId = 39279;
-                schedule.EstimateId = estimateId;
-                schedule.PostingBookId = 413;
-                schedule.ScheduleName = "Assembly Schedule Template Invalid Woman and Female Demos";
-                schedule.UserName = "User";
-                schedule.FileName = @"Assembly Schedule Template Invalid Woman and Female Demos.csv";
-                schedule.FileStream =
-                    new FileStream(@".\Files\Assembly Schedule Template Invalid Woman and Female Demos.csv",
-                        FileMode.Open,
-                        FileAccess.Read);
-
-                schedule.MarketRestrictions = new List<int> { 101, 102 };
-                // restrict NYC and Binghamton just because reasons
-                schedule.DaypartRestriction = new DaypartDto
-                {
-                    startTime = 0,
-                    endTime = 86400 - 1,
-                    mon = true,
-                    tue = true,
-                    wed = true,
-                    thu = true,
-                    fri = true,
-                    sat = true,
-                    sun = true
-                };
-                schedule.Equivalized = true;
-                schedule.ISCIs = new List<IsciDto>
-                {
-                    new IsciDto
-                    {
-                        House = "1111",
-                        Client = "2222"
-                    }
-                };
-                schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = RatesFile.RateSourceType.CNN;
-
-                saveRequest.Schedule = schedule;
-
-                try
-                {
-                    _Sut.SaveSchedule(saveRequest);
-                }
-                catch (Exception e)
-                {
-                    if (!e.Message.Contains("Could not find a matching audience for "))
-                        throw;
-                }
-            }
-        }
+       
 
         [Test]
         public void LoadBvs()
@@ -1935,7 +1813,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
 
         public void Delete_BVS_File()
         {
@@ -1955,6 +1832,64 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var bvsFiles = sut.GetBvsFileSummaries().ToList();
                 // ensure newly created bvs file cannot be read.
                 Assert.IsEmpty(bvsFiles.Where(b => b.Id == bvsFileId));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+
+        public void Tracker_Overlapping_Fields_And_Choose_Higher_Rate()
+        {
+            const int estimate_id = 333123;
+            using (new TransactionScopeWrapper())
+            {
+                var stream = new FileStream(@".\Files\BVS For Overlapping Fields.xlsx", FileMode.Open, FileAccess.Read);
+                var fileName = "BVS For Overlapping Fields.xlsx";
+
+                var bvsRequest = new BvsSaveRequest();
+                bvsRequest.UserName = "BVS For Overlapping Fields";
+                bvsRequest.BvsFiles.Add(new BvsFile() { BvsFileName = fileName, BvsStream = stream });
+                
+                int bvsFileId = _Sut.SaveBvsFiles(bvsRequest).Item1.First();
+
+                var saveRequest = new ScheduleSaveRequest();
+                var schedule = new ScheduleDTO();
+
+                schedule.AdvertiserId = 39279;
+                schedule.EstimateId = estimate_id;
+                schedule.PostingBookId = 413;
+                schedule.ScheduleName = "SCX Overlapping Fields.scx";
+                schedule.UserName = "User";
+                schedule.FileName = @"SCX Overlapping Fields.scx";
+
+                schedule.ISCIs = new List<IsciDto>
+                {
+                    new IsciDto
+                    {
+                        House = "AAABBB",
+                        Client = "AAABBB"
+                    }
+                };
+
+                schedule.FileStream = new FileStream(@".\Files\SCX Overlapping Fields.scx", FileMode.Open,
+                    FileAccess.Read);
+                schedule.InventorySource = RatesFile.RateSourceType.OpenMarket;
+                schedule.PostType = SchedulePostType.NTI;
+                saveRequest.Schedule = schedule;
+
+                _Sut.SaveSchedule(saveRequest);
+
+                var output = _BvsRepository.GetBvsTrackingDetailsByEstimateId(estimate_id);
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(BvsTrackingDetail),"Id");
+                jsonResolver.Ignore(typeof(BvsTrackingDetail), "ScheduleDetailWeekId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(output, jsonSettings));
             }
         }
     }
