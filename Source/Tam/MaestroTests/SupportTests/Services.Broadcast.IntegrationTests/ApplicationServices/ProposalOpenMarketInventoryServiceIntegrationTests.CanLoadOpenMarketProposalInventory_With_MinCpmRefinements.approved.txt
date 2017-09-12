@@ -97,21 +97,7 @@
                 "Display": "M-SU 6AM-12AM",
                 "Id": 1
               },
-              "FlightWeeks": [
-                {
-                  "Allocations": [
-                    {
-                      "MediaWeekId": 649,
-                      "Spots": 2
-                    }
-                  ],
-                  "EndDate": "0001-01-01T00:00:00",
-                  "IsHiatus": false,
-                  "MediaWeekId": 649,
-                  "Rate": 20.0000,
-                  "StartDate": "0001-01-01T00:00:00"
-                }
-              ],
+              "FlightWeeks": [],
               "ProgramId": 2001,
               "ProgramName": "Open Market Program Too",
               "Spots": 0,
@@ -141,16 +127,7 @@
                 "Display": "M-SU 6AM-12AM",
                 "Id": 1
               },
-              "FlightWeeks": [
-                {
-                  "Allocations": [],
-                  "EndDate": "0001-01-01T00:00:00",
-                  "IsHiatus": false,
-                  "MediaWeekId": 649,
-                  "Rate": 30.0000,
-                  "StartDate": "0001-01-01T00:00:00"
-                }
-              ],
+              "FlightWeeks": [],
               "ProgramId": 2004,
               "ProgramName": "Open Market Program 4",
               "Spots": 0,
@@ -172,16 +149,7 @@
                 "Display": "M-SU 6AM-12AM",
                 "Id": 1
               },
-              "FlightWeeks": [
-                {
-                  "Allocations": [],
-                  "EndDate": "0001-01-01T00:00:00",
-                  "IsHiatus": false,
-                  "MediaWeekId": 649,
-                  "Rate": 30.0000,
-                  "StartDate": "0001-01-01T00:00:00"
-                }
-              ],
+              "FlightWeeks": [],
               "ProgramId": 2002,
               "ProgramName": "Open Market Program 2",
               "Spots": 0,
