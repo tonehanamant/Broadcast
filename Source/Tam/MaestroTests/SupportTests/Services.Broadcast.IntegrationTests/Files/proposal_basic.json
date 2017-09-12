@@ -4,24 +4,25 @@
   "PrimaryVersionId": null,
   "ProposalName": "Integrated Test Blooper",
   "AdvertiserId": 37674,
-  "FlightStartDate": "2016-09-26T00:00:00",
-  "FlightEndDate": "2016-10-16T00:00:00",
+  "FlightStartDate": "2016-09-26 00:00:00.000",
+  "FlightEndDate": "2016-10-16 00:00:00.000",
   "FlightWeeks": [
     {
-      "StartDate": "2016-09-26T00:00:00",
-      "EndDate": "2016-10-02T00:00:00",
+      "StartDate": "2016-09-26 00:00:00.000",
+      "EndDate": "2016-10-02 00:00:00.000",
       "IsHiatus": false,
       "MediaWeekId": 666
+
     },
     {
-      "StartDate": "2016-10-03T00:00:00",
-      "EndDate": "2016-10-09T00:00:00",
+      "StartDate": "2016-10-03 00:00:00.000",
+      "EndDate": "2016-10-09 00:00:00.000",
       "IsHiatus": false,
       "MediaWeekId": 667
     },
     {
-      "StartDate": "2016-10-10T00:00:00",
-      "EndDate": "2016-10-16T00:00:00",
+      "StartDate": "2016-10-10 00:00:00.000",
+      "EndDate": "2016-10-16 00:00:00.000",
       "IsHiatus": false,
       "MediaWeekId": 668
     }
@@ -45,30 +46,30 @@
   "TargetUnits": 3,
   "Status": 2,
   "ForceSave": false,
-  "Markets": null,
-  "MarketGroupId": 100,
+  "Markets": [{ "Id": "439","Display": "Las Vegas","IsBlackout": false}],
+  "MarketGroupId": null,
   "BlackoutMarketGroupId": null,
   "Details": [
     {
       "Id": null,
-      "FlightStartDate": "2016-09-26T00:00:00",
-      "FlightEndDate": "2016-10-16T00:00:00",
+      "FlightStartDate": "2016-09-26 00:00:00.000",
+      "FlightEndDate": "2016-10-02 00:00:00.000",
       "FlightWeeks": [
         {
-          "StartDate": "2016-09-26T00:00:00",
-          "EndDate": "2016-10-02T00:00:00",
+          "StartDate": "2016-09-26 00:00:00.000",
+          "EndDate": "2016-10-02 00:00:00.000",
           "IsHiatus": false,
           "MediaWeekId": 666
         },
         {
-          "StartDate": "2016-10-03T00:00:00",
-          "EndDate": "2016-10-09T00:00:00",
+          "StartDate": "2016-10-03 00:00:00.000",
+          "EndDate": "2016-10-09 00:00:00.000",
           "IsHiatus": false,
           "MediaWeekId": 667
         },
         {
-          "StartDate": "2016-10-10T00:00:00",
-          "EndDate": "2016-10-16T00:00:00",
+          "StartDate": "2016-10-10 00:00:00.000",
+          "EndDate": "2016-10-16 00:00:00.000",
           "IsHiatus": false,
           "MediaWeekId": 668
         }
@@ -109,8 +110,8 @@
               "Units": 1,
               "Impressions": 16.666,
               "Cost": 16666,
-              "EndDate": "2016-10-02T00:00:00",
-              "StartDate": "2016-09-26T00:00:00",
+              "EndDate": "2016-10-02 00:00:00.000",
+              "StartDate": "2016-09-26 00:00:00.000",
               "recid": "d12a06c5-ca99-43f3-8161-8694a9a18279",
               "quarterId": null,
               "quarterIdx": 0,
@@ -124,8 +125,8 @@
               "Units": 1,
               "Impressions": 16.666,
               "Cost": 16666,
-              "EndDate": "2016-10-09T00:00:00",
-              "StartDate": "2016-10-03T00:00:00",
+              "EndDate": "2016-10-09 00:00:00.000",
+              "StartDate": "2016-10-03 00:00:00.000",
               "recid": "456484d1-01ba-4132-bf34-0d88b79f95bf",
               "quarterId": null,
               "quarterIdx": 0,
@@ -139,8 +140,8 @@
               "Units": 1,
               "Impressions": 16.668,
               "Cost": 16668,
-              "EndDate": "2016-10-16T00:00:00",
-              "StartDate": "2016-10-10T00:00:00",
+              "EndDate": "2016-10-16 00:00:00.000",
+              "StartDate": "2016-10-10 00:00:00.000",
               "recid": "f0cfe1f0-c1d6-4644-bc0a-5a0660f737d0",
               "quarterId": null,
               "quarterIdx": 0,
@@ -151,17 +152,17 @@
       ],
       "FlightEdited": false,
       "SinglePostingBookId": null,
-      "SharePostingBookId": 413,
-      "HutPostingBookId": 406,
+      "SharePostingBookId": 416,
+      "HutPostingBookId": 413,
       "PlaybackType": 4,
       "DefaultPostingBooks": {
         "DefaultShareBook": {
-          "PostingBookId": 413,
+          "PostingBookId": 416,
           "HasWarning": true,
           "WarningMessage": "The share book for the current quarter is not available, the default share book is the latest available"
         },
         "DefaultHutBook": {
-          "PostingBookId": 406,
+          "PostingBookId": 413,
           "HasWarning": false,
           "WarningMessage": null
         },

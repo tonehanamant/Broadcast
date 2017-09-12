@@ -217,6 +217,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void GetRatingsCrunchStatus_Works()
         {
             var x = _Sut.GetMediaMonthCrunchStatuses();
+            x.ForEach(m => Console.WriteLine(m.ToString()));
         }
     }
     public static class EnumerableExtension
