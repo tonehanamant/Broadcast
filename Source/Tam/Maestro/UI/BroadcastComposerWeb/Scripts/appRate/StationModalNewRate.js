@@ -16,6 +16,7 @@ var StationModalNewRate = function (view) {
         activeConflictsRecord: null,
         $ConflictFlightRangeElem: null,
         hasPendingConflictsChanges: false,
+        lastInput30Val: null,
 
         initView: function () {
             this.$ProgramConflictGrid = $('#program_conflict_grid').w2grid(RateConfig.getProgramConflictGridCfg(this));
@@ -71,9 +72,12 @@ var StationModalNewRate = function (view) {
             };
         },
 
-        // set modal fields with cleared data; airtime plugin and flights DRP
+        // set modal fields with cleared data; airtime plugin and flights DRP; set change listener on spot30
         populateForm: function () {
             var me = this;
+            var input30 = $('#new_program_spot30_input');
+            //remove previous listeners and reset
+            input30.off('change');
 
             $('#new_program_name_input').val('');
             $('#new_program_airtime_input').val('');
@@ -87,6 +91,8 @@ var StationModalNewRate = function (view) {
             me.applyMasksToForm();
             me.setFormFlightsPicker($('#new_program_flight_input'));
             me.setFormAirtimeDropdown();
+            this.lastInput30Val = null;
+            input30.on('change', this.onSpot30change.bind(this, input30));
         },
 
         loadGenres: function () {
@@ -723,6 +729,19 @@ var StationModalNewRate = function (view) {
                     .off('mouseleave.daterangepicker', 'li')
                     .off('click.daterangepicker', 'li')
             });
+        },
+
+        //on user entered spot 30 change - get then set default values for spot 15
+        //issue - W2ui calls change event twice if input initially empty and formatted
+        //check not existing and val !existing
+        onSpot30change: function (input30) {
+            //var val = parseFloat(input30.val().replace(/[$,]+/g, ""));
+            var val = input30.val().replace(/[$,]+/g, "");//allow 0.00
+            if (val && (!this.lastInput30Val || (this.lastInput30Val != val))) {
+                console.log('spot 30 change', val);
+                //call api and set
+            }
+            this.lastInput30Val = val;
         }
 
     };

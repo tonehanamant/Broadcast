@@ -6,7 +6,7 @@ var StationModalEditRate = function (view) {
 
         $EditModal: null,
         activeRecord: null,
-
+        lastInput30Val: null,
         initView: function () {
             $("#update_program_save_btn").on('click', this.saveRate.bind(this));
             //$("#update_program_cancel_btn").on('click', this.cancelEdit.bind(this));
@@ -36,9 +36,13 @@ var StationModalEditRate = function (view) {
             this.$EditModal.modal('show');
         },
 
-        // set modal fields with active station rate data
+        // set modal fields with active station rate data; set change listener on spot30
         populateForm: function () {
             var me = this;
+            var input30 = $('#update_program_spot30_input');
+            //remove previous listeners and reset
+            //input30.off('blur keydown');
+            input30.off('change');
 
             $('#update_program_name_input').val(me.activeRecord.Program);
             $('#update_program_airtime_input').val(me.activeRecord.Airtime);
@@ -53,6 +57,16 @@ var StationModalEditRate = function (view) {
             me.loadGenres();
             me.applyMasksToForm();
             me.setFormEffectiveDatePicker($('#update_program_effective_date_input'));
+
+            this.lastInput30Val = null;
+            input30.on('change', this.onSpot30change.bind(this, input30));
+            //input30.on('blur', this.onSpot30change.bind(this, input30));
+            //input30.keydown(function (event) {
+            //    if (event.keyCode === 13) { //ENTER
+            //        event.preventDefault();
+            //        input30.blur();
+            //    }
+            //});
         },
 
         loadGenres: function () {
@@ -250,6 +264,19 @@ var StationModalEditRate = function (view) {
                     }
                 }
             });
+        },
+
+        //on user entered spot 30 change - get then set default values for spot 15
+        //issue - W2ui calls change event twice if input initially empty and formatted
+        //check not existing and val !existing
+        onSpot30change: function (input30) {
+            //var val = parseFloat(input30.val().replace(/[$,]+/g, ""));
+            var val = input30.val().replace(/[$,]+/g, "");//allow 0.00
+            if (val && (!this.lastInput30Val || (this.lastInput30Val != val))) {
+                console.log('spot 30 change', val);
+                //call api and set
+            }
+            this.lastInput30Val = val;
         }
     };
 
