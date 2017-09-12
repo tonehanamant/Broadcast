@@ -88,7 +88,7 @@
     "Genres": [],
     "Impressions": 20.5,
     "Program": "Q2 CADENT NEWS AT 11:30AM",
-    "Rate15": 60.0000,
+    "Rate15": 78.0000,
     "Rate30": 120.0000,
     "Rating": 3.8,
     "Spots": null
@@ -182,7 +182,7 @@
     "Genres": [],
     "Impressions": 30.5,
     "Program": "Q3 CADENT NEWS AT 11:30AM",
-    "Rate15": 65.0000,
+    "Rate15": 84.5000,
     "Rate30": 130.0000,
     "Rating": 3.8,
     "Spots": null
@@ -204,7 +204,7 @@
     "Genres": [],
     "Impressions": 40.5,
     "Program": "Q4 CADENT NEWS AT 11:30AM",
-    "Rate15": 70.0000,
+    "Rate15": 91.0000,
     "Rate30": 140.0000,
     "Rating": 3.8,
     "Spots": null
@@ -292,7 +292,7 @@
     "Genres": [],
     "Impressions": 60.5,
     "Program": "Q4 CADENT NEWS AT 11:30AM",
-    "Rate15": 90.0000,
+    "Rate15": 117.0000,
     "Rate30": 180.0000,
     "Rating": 4.5,
     "Spots": null

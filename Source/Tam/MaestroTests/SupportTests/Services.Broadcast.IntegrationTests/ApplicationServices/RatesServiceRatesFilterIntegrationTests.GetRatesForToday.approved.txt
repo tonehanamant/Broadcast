@@ -88,7 +88,7 @@
     "Genres": [],
     "Impressions": 10.5,
     "Program": "Q1 CADENT NEWS AT 11:30AM",
-    "Rate15": 55.0000,
+    "Rate15": 71.5000,
     "Rate30": 110.0000,
     "Rating": 3.8,
     "Spots": null

@@ -88,7 +88,7 @@
     "Genres": [],
     "Impressions": 147.0,
     "Program": "Simple Period News",
-    "Rate15": 900.0000,
+    "Rate15": 1170.0000,
     "Rate30": 1800.0000,
     "Rating": 2.7,
     "Spots": null

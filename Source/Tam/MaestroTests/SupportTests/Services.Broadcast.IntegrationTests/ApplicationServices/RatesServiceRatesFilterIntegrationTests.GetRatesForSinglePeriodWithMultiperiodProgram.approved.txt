@@ -16,7 +16,7 @@
     "Genres": [],
     "Impressions": 40.5,
     "Program": "Q4 CADENT NEWS AT 11:30AM",
-    "Rate15": 70.0000,
+    "Rate15": 91.0000,
     "Rate30": 140.0000,
     "Rating": 3.8,
     "Spots": null
