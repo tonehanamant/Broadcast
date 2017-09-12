@@ -90,16 +90,7 @@
                 "Display": "M-SU 6AM-12AM",
                 "Id": 1
               },
-              "FlightWeeks": [
-                {
-                  "Allocations": [],
-                  "EndDate": "0001-01-01T00:00:00",
-                  "IsHiatus": false,
-                  "MediaWeekId": 649,
-                  "Rate": 10.0000,
-                  "StartDate": "0001-01-01T00:00:00"
-                }
-              ],
+              "FlightWeeks": [],
               "ProgramId": 2000,
               "ProgramName": "Open Market Program",
               "Spots": 0,
