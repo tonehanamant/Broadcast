@@ -53,7 +53,7 @@
   "Genres": [],
   "Impressions": 26.1,
   "Program": "TR_WVTM-TV_TEST_1 11:30AM",
-  "Rate15": 62.5000,
+  "Rate15": 81.2500,
   "Rate30": 125.0000,
   "Rating": 3.8,
   "Spots": null
