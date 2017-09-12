@@ -1050,7 +1050,7 @@ GO
 /*************************************** BCOP-1733 - START *****************************************************/
 
 update spot_length_cost_multipliers
-set cost_multiplier = 6.5
+set cost_multiplier = 0.65
 from spot_length_cost_multipliers slcm
 inner join spot_lengths sl on slcm.spot_length_id = sl.id
 where length = 15
