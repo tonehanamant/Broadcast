@@ -25,38 +25,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _ProposalScxConverter = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalScxConverter>();
         }
 
-        public ProposalDto Create_Proposal()
-        {
-            string json;
-            ProposalDto proposal;
-
-            using (var fileStream = new FileStream(".\\Files\\proposal_basic.json", FileMode.Open))
-            {
-                var reader = new StreamReader(fileStream);
-                json = reader.ReadToEnd();
-                proposal = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<ProposalDto>(json);
-            }
-            proposal.Status = ProposalEnums.ProposalStatusType.AgencyOnHold;
-            proposal = _ProposalService.SaveProposal(proposal,"Integration user",DateTime.Now);
-
-//            json = @"{""ProposalVersionDetailId"":394,""Weeks"":[{""MediaWeekId"":713,""Programs"":[{""ProgramId"":79,""Spots"":3,""Impressions"":184.63887499999996},{""ProgramId"":218,""Spots"":4,""Impressions"":0}]},{""MediaWeekId"":714,""Programs"":[{""ProgramId"":80,""Spots"":3,""Impressions"":48.3829375}]}],""Filter"":{""ProgramNames"":[],""Genres"":[],""DayParts"":[],""Affiliations"":[],""Markets"":[],""SpotFilter"":1}}";
-            OpenMarketAllocationSaveRequest allocationSaveRequest;
-
-            using (var fileStream = new FileStream(string.Format(".\\Files\\proposal_basic_allocations.json"), FileMode.Open))
-            {
-                var reader = new StreamReader(fileStream);
-                json = reader.ReadToEnd();
-                allocationSaveRequest = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<OpenMarketAllocationSaveRequest>(json);
-            }
-
-            var versionDetailId = proposal.Details.First().Id.Value;
-            allocationSaveRequest.ProposalVersionDetailId = versionDetailId;
-            var appService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
-            allocationSaveRequest.Username = "Integration Tester";
-            appService.SaveInventoryAllocations(allocationSaveRequest);
-
-            return proposal;
-        }
 
         [Test]
         [Ignore]
@@ -64,7 +32,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         { // inspired by BCOP-1675
             using (new TransactionScopeWrapper())
             {
-                var proposal = Create_Proposal();
+                var proposal = ProposalTestHelper.CreateProposal();
                 //var result1 = _ProposalScxConverter.ConvertProposal(proposal);
                 var result = _ProposalService.GenerateScxFileArchive(proposal.Id.Value);
                 using (var fileStream = new FileStream(string.Format("..\\File.zip"), FileMode.OpenOrCreate))
