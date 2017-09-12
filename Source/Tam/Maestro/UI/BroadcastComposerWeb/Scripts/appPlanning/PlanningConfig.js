@@ -505,7 +505,7 @@
 
         return gridCfg;
     },
-
+    
     //dynamic week  column sets
     getOpenMarketsWeekColumnsCfg: function (weekIdx) {
         var getWeekData = function (record) { return record['week' + weekIdx] };
@@ -531,6 +531,13 @@
                             cell += '<div>' + spot + '</div>';
                             cell += '<div style="color: #bbbaba" class="glyphicon glyphicon-edit" aria-hidden="true"></div>';
                             cell += "</div>";
+                            //this is not dry
+                            if (!week.TotalImpressions || week.TotalImpressions === 0 || week.TotalImpression === '0') {
+                                spot = PlanningConfig.greyRenderer('Unavailable', true);
+                                var cell = '<div id="' + cellId + '" data-weekidx="' + weekIdx + '" data-recid="' + record.recid + '" class="flex-container-1' + changedCls + '">';
+                                cell += '<div>' + spot + '</div>';
+                                cell += "</div>";
+                            }
                             return cell;
                         } else {
                             return spot;
