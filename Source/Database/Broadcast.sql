@@ -474,7 +474,7 @@ IF ((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'propos
 	OR (SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'proposal_version_detail_quarter_weeks' AND COLUMN_NAME = 'proprietary_impressions_total') != 'float')
 BEGIN
 	UPDATE proposal_version_detail_quarter_weeks SET impressions_goal = 0 where impressions_goal is null;
-	ALTER TABLE proposal_version_detail_quarter_weeks ALTER COLUMN impressions float NOT NULL;
+	ALTER TABLE proposal_version_detail_quarter_weeks ALTER COLUMN impressions_goal float NOT NULL;
 	ALTER TABLE proposal_version_detail_quarter_weeks ALTER COLUMN open_market_impressions_total float NOT NULL;
 	ALTER TABLE proposal_version_detail_quarter_weeks ALTER COLUMN proprietary_impressions_total float NOT NULL;
 END
