@@ -23,6 +23,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
         private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
 
+
         [TestCase(MinMaxEnum.Min)]
         [TestCase(MinMaxEnum.Max)]
         public void MultipleMinCpmCriteria(MinMaxEnum minMax)
@@ -478,15 +479,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
-        public void OpenMarketInventorySetFlagToShowWarningOnFilterCPM()
+        public void OpenMarketInventoryOnFilterCPMSetFlagToShowWarning()
         {
             using (new TransactionScopeWrapper())
             {
-                //var prop = ProposalScxConverterTest.Create_Proposal();
+                var prop = ProposalTestHelper.CreateProposal();
                 var request = new OpenMarketRefineProgramsRequest
                 {
-                    ProposalDetailId = 20,
+                    ProposalDetailId = prop.Details.First().Id.Value,
                     Criteria = new OpenMarketCriterion
                     {
                         CpmCriteria = new List<CpmCriteria>
@@ -494,12 +494,48 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             new CpmCriteria()
                             {
                                 MinMax = MinMaxEnum.Max,
-                                Value = 0.50M
+                                Value = 100.00M
                             }
                         }
                     }
                 };
                 Assert.IsTrue(_ProposalOpenMarketInventoryService.RefinePrograms(request).NewCriteriaAffectsExistingAllocations);
+            }
+        }
+
+        [Test]
+        public void OpenMarketInventoryFilterCPM()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var prop = ProposalTestHelper.CreateProposal();
+                var request = new OpenMarketRefineProgramsRequest
+                {
+                    ProposalDetailId = prop.Details.First().Id.Value,
+                    IgnoreExistingAllocation = true,
+                    Criteria = new OpenMarketCriterion
+                    {
+                        CpmCriteria = new List<CpmCriteria>
+                        {
+                            new CpmCriteria()
+                            {
+                                MinMax = MinMaxEnum.Max,
+                                Value = 100.00M
+                            }
+                        }
+                    }
+                };
+                
+                var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
+                // get allocations before filter
+                var rawAllocations = repo.GetDataRepository<IProposalOpenMarketInventoryRepository>().GetProposalDetailAllocations(request.ProposalDetailId);
+                Assert.IsNotNull(rawAllocations.FirstOrDefault(a => a.StationProgramId == 519159));
+
+                var refinedPrograms = _ProposalOpenMarketInventoryService.RefinePrograms(request);
+                // that should have filtered out exactly one allocation with station_program_id = 519159
+
+                var refinedAllocations = repo.GetDataRepository<IProposalOpenMarketInventoryRepository>().GetProposalDetailAllocations(request.ProposalDetailId);
+                Assert.IsNull(refinedAllocations.FirstOrDefault(a => a.StationProgramId == 519159));
             }
         }
 
