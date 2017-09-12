@@ -1935,7 +1935,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
 
         public void Delete_BVS_File()
         {
@@ -1955,6 +1954,64 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var bvsFiles = sut.GetBvsFileSummaries().ToList();
                 // ensure newly created bvs file cannot be read.
                 Assert.IsEmpty(bvsFiles.Where(b => b.Id == bvsFileId));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+
+        public void Tracker_Overlapping_Fields_And_Choose_Higher_Rate()
+        {
+            const int estimate_id = 333123;
+            using (new TransactionScopeWrapper())
+            {
+                var stream = new FileStream(@".\Files\BVS For Overlapping Fields.xlsx", FileMode.Open, FileAccess.Read);
+                var fileName = "BVS For Overlapping Fields.xlsx";
+
+                var bvsRequest = new BvsSaveRequest();
+                bvsRequest.UserName = "BVS For Overlapping Fields";
+                bvsRequest.BvsFiles.Add(new BvsFile() { BvsFileName = fileName, BvsStream = stream });
+                
+                int bvsFileId = _Sut.SaveBvsFiles(bvsRequest).Item1.First();
+
+                var saveRequest = new ScheduleSaveRequest();
+                var schedule = new ScheduleDTO();
+
+                schedule.AdvertiserId = 39279;
+                schedule.EstimateId = estimate_id;
+                schedule.PostingBookId = 413;
+                schedule.ScheduleName = "SCX Overlapping Fields.scx";
+                schedule.UserName = "User";
+                schedule.FileName = @"SCX Overlapping Fields.scx";
+
+                schedule.ISCIs = new List<IsciDto>
+                {
+                    new IsciDto
+                    {
+                        House = "AAABBB",
+                        Client = "AAABBB"
+                    }
+                };
+
+                schedule.FileStream = new FileStream(@".\Files\SCX Overlapping Fields.scx", FileMode.Open,
+                    FileAccess.Read);
+                schedule.InventorySource = RatesFile.RateSourceType.OpenMarket;
+                schedule.PostType = SchedulePostType.NTI;
+                saveRequest.Schedule = schedule;
+
+                _Sut.SaveSchedule(saveRequest);
+
+                var output = _BvsRepository.GetBvsTrackingDetailsByEstimateId(estimate_id);
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(BvsTrackingDetail),"Id");
+                jsonResolver.Ignore(typeof(BvsTrackingDetail), "ScheduleDetailWeekId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(output, jsonSettings));
             }
         }
     }

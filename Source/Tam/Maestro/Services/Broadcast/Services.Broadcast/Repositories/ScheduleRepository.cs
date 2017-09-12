@@ -352,6 +352,7 @@ namespace Services.Broadcast.Repositories
                                    SpotLength = sd.spot_length,
                                    SpotLengthId = sd.spot_length_id,
                                    DaypartId = sd.daypart_id,
+                                   SpotCost = sd.spot_cost,
                                    DetailWeeks = (from x in context.schedule_detail_weeks
                                                   where x.schedule_detail_id == sd.id && x.spots > 0
                                                   select new ScheduleDetailWeek

@@ -7,8 +7,10 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -225,6 +227,14 @@ namespace Services.Broadcast.BusinessEngines
                             primaryMatch.ScheduleDetailWeek.FilledSpots++;
                         }
                     }
+                    else if (activeMatches.Count >= 2 && bvsDetail.MatchAirtime && bvsDetail.MatchStation && bvsDetail.MatchIsci
+                        && bvsDetail.MatchProgram && bvsDetail.MatchSpotLength)
+                    {
+                        var bestMatch = activeMatches.OrderByDescending(a => a.ScheduleDetail.SpotCost)
+                                                        .First();
+                        bvsDetail.ScheduleDetailWeekId = bestMatch.ScheduleDetailWeek.ScheduleDetailWeekId;
+                        bestMatch.ScheduleDetailWeek.FilledSpots++;
+                    }
                 }
             }
 
@@ -238,7 +248,7 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     bvsDetail.Status = TrackingStatus.InSpec;
                 }
-                else
+                else    
                 {
                     bvsDetail.Status = TrackingStatus.OutOfSpec;
                 }
@@ -300,7 +310,9 @@ namespace Services.Broadcast.BusinessEngines
             return ret;
         }
 
-        private List<ScheduleSpotTarget> _FindDeliveryTimeMatch(BvsTrackingDetail bvsTrackingDetail, List<ScheduleSpotTarget> scheduleDetails)
+        private List<ScheduleSpotTarget> _FindDeliveryTimeMatch(
+                                                    BvsTrackingDetail bvsTrackingDetail, 
+                                                    List<ScheduleSpotTarget> scheduleDetails)
         {
             var ret = new List<ScheduleSpotTarget>();
 
@@ -309,6 +321,7 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var scheduleDetail in scheduleDetails)
             {
                 var bufferInSeconds = _BroadcastMatchingBuffer;
+
                 var displayDaypart = dayparts[scheduleDetail.ScheduleDetail.DaypartId];
                 var actualStartTime = displayDaypart.StartTime < 0 ? 86400 - Math.Abs(displayDaypart.StartTime) : displayDaypart.StartTime;
                 var actualEndTime = displayDaypart.EndTime < 0 ? Math.Abs(86400 - displayDaypart.EndTime) : displayDaypart.EndTime;

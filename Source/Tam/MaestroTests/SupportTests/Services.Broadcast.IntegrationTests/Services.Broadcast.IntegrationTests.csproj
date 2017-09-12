@@ -267,6 +267,9 @@
     <None Include="Files\BVS Beiersdorf_Hersheys Week of 3_6 BVS Test FIle2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\BVS For Overlapping Fields.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\BVS Load For Various Tests NTI NSI Adjustments.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -399,6 +402,9 @@
     <None Include="Files\SCX File For Various tests NTI NSI.scx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Files\SCX Overlapping Fields.scx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\ThirdPartyFileMultipleDaypartsWithFixedPriceColumn.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

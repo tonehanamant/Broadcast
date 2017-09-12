@@ -26,6 +26,7 @@ namespace Services.Broadcast.Entities
         public string SpotLength { get; set; }
         public int? SpotLengthId { get; set; }
         public List<ScheduleDetailWeek> DetailWeeks { get; set; }
+        public decimal SpotCost { get; set; }
 
         public ScheduleDetail()
         {
