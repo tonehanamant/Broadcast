@@ -1,0 +1,33 @@
+﻿
+<div class="overlay">
+    <div class="center">
+        <i class="fa fa-cloud-upload upload-cloud" aria-hidden="true"></i>
+        <p>Drop Excel files here to upload</p>
+    </div>
+</div>
+
+<div id="posting_view">
+    <h4 class="cadent-dk-blue"><strong>Posting</strong></h4>
+    <div class="header-row row" style="margin-top: 10px;">
+        <div class="col-xs-10">
+            <input type="file" class="inputfile" id="uploadButton" multiple><label class="btn btn-success btn-xs" for="uploadButton">Upload</label>
+        </div>
+
+        <div class="col-xs-2">
+            <div class="input-group input-group-sm pull-right" style="width: 100%;">
+                <span class="input-group-btn">
+                    <button id="posting_grid_search_btn" style="" class="btn btn-info" role="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                </span>
+
+                <input type="text" id="posting_grid_search_input" class="form-control" placeholder="Search...">
+
+                <span class="input-group-btn">
+                    <button style="display:none;" class="btn btn-default" id="posting_grid_search_clear_btn" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div id="posting_grid"></div>
+</div>
+
+
