@@ -1,0 +1,6422 @@
+﻿{
+  "ImpressionsAndDelivery": [
+    {
+      "AudienceId": 31,
+      "AudienceName": "HH",
+      "DeliveredImpressions": 1762241.735,
+      "OrderedImpressions": 0.0,
+      "OutOfSpecDeliveredImpressions": 1762241.735,
+      "TotalDeliveredImpressions": 3524483.47
+    },
+    {
+      "AudienceId": 42,
+      "AudienceName": "A50+",
+      "DeliveredImpressions": 1518868.645,
+      "OrderedImpressions": 0.0,
+      "OutOfSpecDeliveredImpressions": 1518868.645,
+      "TotalDeliveredImpressions": 3037737.29
+    }
+  ],
+  "ReportData": [
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 32807.7275,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 32243.9025,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "NEW YORK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": true,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
+      "Rank": 1,
+      "SpecStatus": "Program Name",
+      "SpotClearance": null,
+      "SpotLength": 30,
+      "Station": "WLNY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 35110.6225,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 34098.2075,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "NEW YORK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
+      "Rank": 1,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WLNY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "NEW YORK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
+      "Rank": 1,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WLNY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 29255.0125,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 27537.7925,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "LOS ANGELES",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "JUDGE FAITH",
+      "Rank": 2,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KDOC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "LOS ANGELES",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
+      "Rank": 2,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KDOC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 23023.0125,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 22075.2925,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "LOS ANGELES",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE FAITH",
+      "Rank": 2,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KDOC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 22976.89,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 18025.4425,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "CHICAGO",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "CBS 2 MORNING NEWS",
+      "Rank": 3,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBBM",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "CHICAGO",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THIS MORNING",
+      "Rank": 3,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBBM",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 27113.0475,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 15848.47,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "CHICAGO",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "TMZ LIVE",
+      "Rank": 3,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WFLD",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "PHILADELPHIA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "HOT BENCH",
+      "Rank": 4,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WPSG",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "PHILADELPHIA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "HOT BENCH",
+      "Rank": 4,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WPSG",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "DALLAS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LEVERAGE",
+      "Rank": 5,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KTXA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 6626.1075,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 4167.9825,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "DALLAS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "SUPREME JUSTICE WITH JUDGE KAREN MIL",
+      "Rank": 5,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KTXA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "DALLAS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE DOCTORS",
+      "Rank": 5,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KTXA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 21971.79,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 20940.0425,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "WASHINGTON,DC",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "GREAT DAY WASHINGTON",
+      "Rank": 7,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WUSA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 37890.4175,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 37860.445,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "WASHINGTON,DC",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE INSIDER",
+      "Rank": 7,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WUSA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 21004.025,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 14080.2825,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "ATLANTA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "MAURY",
+      "Rank": 9,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WATL",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 6193.905,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 4118.7725,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "ATLANTA",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE MEREDITH VIEIRA SHOW",
+      "Rank": 9,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WUPA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 4747.245,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 2826.915,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "ATLANTA",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE MEREDITH VIEIRA SHOW",
+      "Rank": 9,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WUPA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "TAMPA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "FOX13 NEWS AT NOON",
+      "Rank": 11,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WTVT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "TAMPA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "FOX13 NEWS AT NOON",
+      "Rank": 11,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WTVT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 19682.29,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 19059.6125,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "PHOENIX",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "STEVE HARVEY INTERVIEW",
+      "Rank": 12,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KTVK",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "PHOENIX",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "STEVE HARVEY INTERVIEW",
+      "Rank": 12,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KTVK",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 9188.4,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 6241.31,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "DETROIT",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+      "Rank": 13,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WWJ",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "DETROIT",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+      "Rank": 13,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WWJ",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 16659.295,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 15430.47,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "SEATTLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "PEOPLES COURT",
+      "Rank": 14,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSTW",
+      "Status": 0
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 4921.475,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 1686.25,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "MIAMI",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "LAW & ORDER: CRIMINAL INTENT",
+      "Rank": 16,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBFS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 3244.4875,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 1268.25,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "MIAMI",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "LAW & ORDER: CRIMINAL INTENT",
+      "Rank": 16,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBFS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 53818.545,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 51109.335,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "MIAMI",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 16,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WFOR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 54473.6175,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 51961.105,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "MIAMI",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 16,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WFOR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 11057.1925,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 9213.005,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "CLEVELAND",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "JUSTICE WITH JUDGE MABLEAN",
+      "Rank": 18,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBNX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 12504.5175,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 9303.635,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "CLEVELAND",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
+      "Rank": 18,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBNX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "ST LOUIS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "TODAY SHOW",
+      "Rank": 21,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSDK",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 24528.8575,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 19041.61,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "ST LOUIS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "SHOW ME ST. LOUIS",
+      "Rank": 21,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSDK",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 88894.825,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 80124.615,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "CHARLOTTE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 3,
+      "ProgramName": "STEVE HARVEY INTERVIEW",
+      "Rank": 22,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBTV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 6892.6775,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 6934.335,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "PITTSBURGH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "DIVORCE COURT",
+      "Rank": 23,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WPGH",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 18736.5175,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 13078.6025,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "RALEIGH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 25,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WNCN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 18736.5175,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 13078.6025,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "RALEIGH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 25,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WNCN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "BALTIMORE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "THE DOCTORS",
+      "Rank": 26,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WMAR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "BALTIMORE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "THE DOCTORS",
+      "Rank": 26,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WMAR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 22015.87,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 10240.335,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "SAN DIEGO",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "FOX 5 MORNING NEWS AT 7AM",
+      "Rank": 28,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSWB",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 38655.0725,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 32205.9025,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "NASHVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "NEWS 2 AT 11AM",
+      "Rank": 29,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WKRN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 47982.8375,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 39197.95,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "NASHVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "DR. PHIL",
+      "Rank": 29,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WKRN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 8749.405,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 7517.6825,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "COLUMBUS,OH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PEOPLES COURT",
+      "Rank": 31,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WWHO",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 5321.4725,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 3336.875,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "COLUMBUS,OH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "TMZ LIVE",
+      "Rank": 31,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WWHO",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "COLUMBUS,OH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PEOPLES COURT",
+      "Rank": 31,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WWHO",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "COLUMBUS,OH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "TMZ LIVE",
+      "Rank": 31,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WWHO",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "SAN ANTONIO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE DOCTORS",
+      "Rank": 32,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WOAI",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13296.6275,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 10909.895,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "SAN ANTONIO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE DOCTORS",
+      "Rank": 32,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WOAI",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "KANSAS CITY",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "MODERN FAMILY",
+      "Rank": 33,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KCWE",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "KANSAS CITY",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "OFFICE",
+      "Rank": 33,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KCWE",
+      "Status": 0
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 239.9225,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 347.225,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "KANSAS CITY",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "GOSPEL TRUTH",
+      "Rank": 33,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSMO",
+      "Status": 0
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 2105.295,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 1723.68,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "KANSAS CITY",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE DOCTORS",
+      "Rank": 33,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSMO",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "SALT LAKE CITY",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "DAYTIME JEOPARDY",
+      "Rank": 34,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KJZZ",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "SALT LAKE CITY",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "DAYTIME JEOPARDY",
+      "Rank": 34,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KJZZ",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "MILWAUKEE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE MEREDITH VIEIRA SHOW",
+      "Rank": 35,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WISN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "MILWAUKEE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE MEREDITH VIEIRA SHOW",
+      "Rank": 35,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WISN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 24381.7025,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 18453.56,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "CINCINNATI",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "FOX19 MORNING XTRA",
+      "Rank": 36,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WXIX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "LAS VEGAS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LIVE WITH KELLY",
+      "Rank": 40,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KLAS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "LAS VEGAS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LIVE WITH KELLY",
+      "Rank": 40,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KLAS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 17149.78,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 13261.525,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "NORFOLK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "HOT BENCH",
+      "Rank": 42,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WTVZ",
+      "Status": 0
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 23493.12,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 18649.45,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "NORFOLK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "FAMILY FEUD",
+      "Rank": 42,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WTVZ",
+      "Status": 0
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 17149.78,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 13261.525,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "NORFOLK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "HOT BENCH",
+      "Rank": 42,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WTVZ",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 9542.2275,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 7537.775,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "BIRMINGHAM",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "THE DOCTORS",
+      "Rank": 45,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WVTM",
+      "Status": 0
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 44454.3475,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 40469.81,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "JACKSONVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "THE DR. OZ SHOW",
+      "Rank": 47,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WJXT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "ALBUQUERQUE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JERRY SPRINGER",
+      "Rank": 48,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KASY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "ALBUQUERQUE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE STEVE WILKOS SHOW",
+      "Rank": 48,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KASY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "ALBUQUERQUE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JERRY SPRINGER",
+      "Rank": 48,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KASY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "ALBUQUERQUE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE STEVE WILKOS SHOW",
+      "Rank": 48,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KASY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "LOUISVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "GREAT DAY LIVE!",
+      "Rank": 49,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WHAS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "LOUISVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "VIEW",
+      "Rank": 49,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WHAS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "LOUISVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "GREAT DAY LIVE!",
+      "Rank": 49,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WHAS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 19805.0775,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 17777.16,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "LOUISVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "VIEW",
+      "Rank": 49,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WHAS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 25909.73,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 22323.0525,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "MEMPHIS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": false,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "TODAY SHOW",
+      "Rank": 50,
+      "SpecStatus": "Airtime,Program Name,Station,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WMC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 19644.4325,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 18207.9375,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "MEMPHIS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": false,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "FLIP MY FOOD WITH CHEF JEFF",
+      "Rank": 50,
+      "SpecStatus": "Airtime,Program Name,Station,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WMC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 25909.73,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 22323.0525,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "MEMPHIS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": false,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "TODAY SHOW",
+      "Rank": 50,
+      "SpecStatus": "Airtime,Program Name,Station,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WMC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 19464.74,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 17626.585,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "NEW ORLEANS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "TODAY SHOW",
+      "Rank": 51,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WDSU",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "NEW ORLEANS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "TODAY SHOW",
+      "Rank": 51,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WDSU",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "PROVIDENCE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "NBC 10 NEWS AT NOON",
+      "Rank": 52,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WJAR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "PROVIDENCE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LIVE WITH KELLY",
+      "Rank": 52,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WJAR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "PROVIDENCE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "NBC 10 NEWS AT NOON",
+      "Rank": 52,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WJAR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 21540.8225,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 15366.0125,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "PROVIDENCE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LIVE WITH KELLY",
+      "Rank": 52,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WJAR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13884.535,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 10507.8075,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "BUFFALO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "RACHAEL RAY",
+      "Rank": 53,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WIVB",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "BUFFALO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "7 EYEWITNESS NEWS AT NOON",
+      "Rank": 53,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WKBW",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 25241.88,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 23671.1975,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "BUFFALO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "7 EYEWITNESS NEWS AT NOON",
+      "Rank": 53,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WKBW",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "FRESNO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+      "Rank": 54,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KFSN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 9563.46,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 7705.83,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "FRESNO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "RACHAEL RAY",
+      "Rank": 54,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KGPE",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 9140.6625,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 6675.5075,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "FRESNO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "RACHAEL RAY",
+      "Rank": 54,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KGPE",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "WILKES BARRE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "EYEWITNESS NEWS AT NOON",
+      "Rank": 55,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WYOU",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13800.6025,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 15144.1875,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "WILKES BARRE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 3,
+      "ProgramName": "EYEWITNESS NEWS AT NOON",
+      "Rank": 55,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WYOU",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 12931.02,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 12637.7075,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "RICHMOND",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PEOPLES COURT",
+      "Rank": 56,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WUPV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13142.0625,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 12764.77,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "RICHMOND",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PEOPLES COURT",
+      "Rank": 56,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WUPV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 16451.9575,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 11119.9875,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "LITTLE ROCK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "LET'S MAKE A DEAL",
+      "Rank": 57,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KTHV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 19143.64,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 12234.765,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "LITTLE ROCK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "DR. PHIL",
+      "Rank": 57,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KTHV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 18797.6975,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 16421.51,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "MOBILE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "TODAY",
+      "Rank": 58,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WPMI",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "MOBILE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "TODAY",
+      "Rank": 58,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WPMI",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 17595.9475,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 15390.8075,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "ALBANY,NY",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+      "Rank": 59,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WNYT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 18392.5225,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 16339.3825,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "TULSA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "CELEBRITY NAME GAME",
+      "Rank": 60,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KOTV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "TULSA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "CELEBRITY NAME GAME",
+      "Rank": 60,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KOTV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "FT MYERS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PEOPLES COURT",
+      "Rank": 61,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WFTX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "FT MYERS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
+      "Rank": 61,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WFTX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "FT MYERS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
+      "Rank": 61,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WFTX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 8756.53,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 7506.9,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "FT MYERS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PEOPLES COURT",
+      "Rank": 61,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WFTX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 18092.465,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 15660.56,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "KNOXVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "TODAY SHOW III",
+      "Rank": 62,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBIR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 18092.465,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 15660.56,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "KNOXVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "TODAY SHOW III",
+      "Rank": 62,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WBIR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 3943.07,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 2117.0275,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "LEXINGTON",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "GOOD DAY KENTUCKY",
+      "Rank": 63,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WTVQ",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "LEXINGTON",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "GOOD DAY KENTUCKY",
+      "Rank": 63,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WTVQ",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 10177.2075,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 11283.72,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "DAYTON",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "STEVE HARVEY INTERVIEW",
+      "Rank": 64,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WKEF",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 10177.2075,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 11283.72,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "DAYTON",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "STEVE HARVEY INTERVIEW",
+      "Rank": 64,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WKEF",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "DAYTON",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "MIKE & MOLLY WKND",
+      "Rank": 64,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WRGT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 15877.35,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 12729.335,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "WICHITA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "RACHAEL RAY",
+      "Rank": 65,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KAKE",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 7857.545,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 6081.9475,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "WICHITA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "GOOD MORNING KAKELAND",
+      "Rank": 65,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KAKE",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "CHARLESTON,WV",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "ENTERTAINMENT TONIGHT",
+      "Rank": 67,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WCHS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13122.1125,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 11471.6775,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "CHARLESTON,WV",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE CHEW",
+      "Rank": 67,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WCHS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "CHARLESTON,WV",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 67,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WCHS",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13641.5725,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 13954.835,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "ROANOKE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 69,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WFXR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 11728.605,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 10527.1875,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "FLINT",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PEOPLES COURT",
+      "Rank": 71,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WSMH",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 12419.9675,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 11300.4875,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "FLINT",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE MATHIS",
+      "Rank": 71,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WSMH",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 15511.41,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 16230.94,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "SPRINGFIELD,MO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PRICE IS RIGHT",
+      "Rank": 75,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KOLR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "SPRINGFIELD,MO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "INSIDER WEEKEND",
+      "Rank": 75,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KOLR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "SPRINGFIELD,MO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "INSIDER WEEKEND",
+      "Rank": 75,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KOLR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13495.225,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 11034.535,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "ROCHESTER,NY",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LIVE WITH KELLY",
+      "Rank": 76,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WHEC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13495.225,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 11034.535,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "ROCHESTER,NY",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LIVE WITH KELLY",
+      "Rank": 76,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WHEC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "ROCHESTER,NY",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PRICE IS RIGHT",
+      "Rank": 76,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WROC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "TOLEDO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "NEWS",
+      "Rank": 77,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WTVG",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "COLUMBIA,SC",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PRICE IS RIGHT",
+      "Rank": 78,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WLTX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 24366.3125,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 22508.54,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "COLUMBIA,SC",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PRICE IS RIGHT",
+      "Rank": 78,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WLTX",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "HUNTSVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE CHEW",
+      "Rank": 79,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WAAY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 9621.695,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 6827.4125,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "HUNTSVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "GENERAL HOSPITAL",
+      "Rank": 79,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WAAY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 9621.695,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 6827.4125,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "HUNTSVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "GENERAL HOSPITAL",
+      "Rank": 79,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WAAY",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13534.8875,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 13891.3275,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "PORTLAND,ME",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "YOUNG AND THE RESTLESS",
+      "Rank": 80,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WGME",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 20641.98,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 21394.4275,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "PORTLAND,ME",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 80,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WGME",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 12274.76,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 7167.845,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "MADISON",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "FAMILY FEUD",
+      "Rank": 81,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WMSN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 6470.925,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 3769.6,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "MADISON",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "FAMILY FEUD",
+      "Rank": 81,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WMSN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 12528.8375,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 11588.9075,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "SHREVEPORT",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "YOUR HOMETOWN SHOW",
+      "Rank": 83,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSLA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 31368.715,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 25511.3475,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "SHREVEPORT",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "YOUNG AND THE RESTLESS",
+      "Rank": 83,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSLA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 12528.8375,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 11588.9075,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "SHREVEPORT",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "YOUR HOMETOWN SHOW",
+      "Rank": 83,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KSLA",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 38146.3,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 37416.6525,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "SYRACUSE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+      "Rank": 84,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WSYR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 17454.35,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 17129.165,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "SYRACUSE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+      "Rank": 84,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WSYR",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "CHAMPAIGN",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LIVE WITH KELLY",
+      "Rank": 85,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WICD",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "HARLINGEN",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "RACHAEL RAY",
+      "Rank": 86,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KVEO",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "HARLINGEN",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "RACHAEL RAY",
+      "Rank": 86,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KVEO",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 2304.1775,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 2053.33,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "WACO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE DR. OZ SHOW",
+      "Rank": 87,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KCEN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 9749.28,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 10046.63,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "WACO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JEOPARDY!",
+      "Rank": 87,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KCEN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "WACO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE DR. OZ SHOW",
+      "Rank": 87,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KCEN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "WACO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+      "Rank": 87,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KCEN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 7605.51,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 6908.59,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "CHATTANOOGA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "BOLD AND THE BEAUTIFUL",
+      "Rank": 88,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WDEF",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 3592.995,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 2674.5825,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "CHATTANOOGA",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE DR. OZ SHOW",
+      "Rank": 88,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WDEF",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13206.995,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 14045.275,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "CEDAR RAPIDS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "CBS 2 NEWS AT NOON",
+      "Rank": 90,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KGAN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 6603.4975,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 7022.6375,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "CEDAR RAPIDS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "CBS 2 NEWS AT NOON",
+      "Rank": 90,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KGAN",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 27899.22,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 24036.14,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "SAVANNAH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 91,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WSAV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 14674.1275,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 12697.225,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "SAVANNAH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 2,
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 91,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WSAV",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "EL PASO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 92,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KDBC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 3458.855,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 2039.84,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "EL PASO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "STEVE HARVEY INTERVIEW",
+      "Rank": 92,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KDBC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "EL PASO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 92,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KDBC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 3723.2875,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 2114.795,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "EL PASO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "STEVE HARVEY INTERVIEW",
+      "Rank": 92,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "KDBC",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "JACKSON,MS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "MID-DAY MISSISSIPPI",
+      "Rank": 95,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WLBT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 7535.59,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 5537.265,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "JACKSON,MS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 4,
+      "ProgramName": "FABLIFE",
+      "Rank": 95,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WLBT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13141.16,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 12095.4475,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "SOUTH BEND",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "DAYTIME JEOPARDY",
+      "Rank": 96,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WSBT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "SOUTH BEND",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "DAYTIME JEOPARDY",
+      "Rank": 96,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WSBT",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 8392.9175,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 8290.08,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "TRI CITIES",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE DR. OZ SHOW",
+      "Rank": 97,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WJHL",
+      "Status": 0
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "TRI CITIES",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE DR. OZ SHOW",
+      "Rank": 97,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WJHL",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "GREENVILLE,NC",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "INSIDE EDITION",
+      "Rank": 99,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WCTI",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 9451.2175,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 8437.805,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "GREENVILLE,NC",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LIVE WITH KELLY",
+      "Rank": 99,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WCTI",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 10241.3325,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 8981.4425,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "GREENVILLE,NC",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "INSIDE EDITION",
+      "Rank": 99,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WCTI",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 9626.825,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 8612.5575,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "GREENVILLE,NC",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LIVE WITH KELLY",
+      "Rank": 99,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WCTI",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 9130.4975,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 7070.755,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "DAVENPORT",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LIVE WITH KELLY",
+      "Rank": 101,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WQAD",
+      "Status": 0
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "DAVENPORT",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LIVE WITH KELLY",
+      "Rank": 101,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotLength": 60,
+      "Station": "WQAD",
+      "Status": 0
+    }
+  ],
+  "ScheduleAudiences": [
+    {
+      "AudienceId": 31,
+      "AudienceName": "HH",
+      "IsHouseHold": true,
+      "Population": 7368320,
+      "Rank": 1
+    },
+    {
+      "AudienceId": 42,
+      "AudienceName": "A50+",
+      "IsHouseHold": false,
+      "Population": 7099429,
+      "Rank": 2
+    }
+  ]
+}

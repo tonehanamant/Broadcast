@@ -1,0 +1,923 @@
+﻿{
+  "Advertiser": null,
+  "AdvertiserData": {
+    "DeliveredSpots": 1,
+    "ImpressionsAndDelivey": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "DeliveredImpressions": 13058.092,
+        "OrderedImpressions": 283068.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 13058.092
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 5213.524,
+        "OrderedImpressions": 80304.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 5213.524
+      }
+    ],
+    "OrderedSpots": 6,
+    "ReportData": [
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 13058.092,
+            "Impressions": 141534.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 5213.524,
+            "Impressions": 40152.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "Cost": 0.00,
+        "DeliveredSpots": 0,
+        "DisplayDaypart": {
+          "_Code": "",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Id": 65139,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "",
+          "_Saturday": true,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": false,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 3,
+        "OutOfSpecSpots": null,
+        "ProgramName": "JUDGE ALEX",
+        "Rank": 11,
+        "SpecStatus": null,
+        "SpotClearance": 0.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 0.0,
+            "Impressions": 141534.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 0.0,
+            "Impressions": 40152.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "Cost": 10.00,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": {
+          "_Code": "",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Id": 65139,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "",
+          "_Saturday": true,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": false,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "PORTLAND,OR",
+        "MediaWeekId": null,
+        "OrderedSpots": 3,
+        "OutOfSpecSpots": null,
+        "ProgramName": "SHEPHERD'S CHAPEL",
+        "Rank": 25,
+        "SpecStatus": null,
+        "SpotClearance": 0.33333333333333331,
+        "SpotLength": 30,
+        "Station": "KPDX",
+        "Status": 0
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "IsHouseHold": true,
+        "Population": 7368320,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "IsHouseHold": false,
+        "Population": 8485887,
+        "Rank": 2
+      }
+    ]
+  },
+  "OutOfSpecToDate": {
+    "ImpressionsAndDelivery": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "DeliveredImpressions": 16951.8,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 16951.8,
+        "TotalDeliveredImpressions": 33903.6
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 7128.496,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 7128.496,
+        "TotalDeliveredImpressions": 14256.992
+      }
+    ],
+    "ReportData": [
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 13058.092,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 5213.524,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "Cost": null,
+        "DateAired": "0001-01-01T00:00:00",
+        "DeliveredSpots": null,
+        "DisplayDaypart": null,
+        "Isci": "AAABBB",
+        "Market": "TAMPA",
+        "MatchAirTime": true,
+        "MatchIsci": true,
+        "MatchProgram": true,
+        "MatchSpotLength": true,
+        "MatchStation": true,
+        "MediaWeekId": null,
+        "OrderedSpots": 0,
+        "OutOfSpecSpots": 1,
+        "ProgramName": "JUDGE ALEX",
+        "Rank": 11,
+        "SpecStatus": "",
+        "SpotClearance": null,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "CW",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 3893.708,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 1914.972,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "Cost": null,
+        "DateAired": "0001-01-01T00:00:00",
+        "DeliveredSpots": null,
+        "DisplayDaypart": null,
+        "Isci": "AAABBB",
+        "Market": "ST LOUIS",
+        "MatchAirTime": true,
+        "MatchIsci": true,
+        "MatchProgram": false,
+        "MatchSpotLength": true,
+        "MatchStation": false,
+        "MediaWeekId": null,
+        "OrderedSpots": 0,
+        "OutOfSpecSpots": 2,
+        "ProgramName": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+        "Rank": 21,
+        "SpecStatus": "Program Name,Station",
+        "SpotClearance": null,
+        "SpotLength": 30,
+        "Station": "KPLR",
+        "Status": 0
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "IsHouseHold": true,
+        "Population": 7368320,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "IsHouseHold": false,
+        "Population": 8485887,
+        "Rank": 2
+      }
+    ]
+  },
+  "SpotDetailData": {
+    "ImpressionsAndDelivery": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "DeliveredImpressions": 0.0,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 0.0,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
+      }
+    ],
+    "ReportData": [
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "MNTV",
+        "AirTime": 35918,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 0.0,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 0.0,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "Brand": "",
+        "Campaign": 333444,
+        "Date": "2017-03-13T00:00:00",
+        "DateAired": "03/13/2017",
+        "DaypartId": 0,
+        "InventorySource": 1,
+        "Isci": "AAABBB",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "AAABBB",
+            "House": "AAABBB"
+          }
+        ],
+        "Length": 30,
+        "Market": "PORTLAND,OR",
+        "ProgramName": "SHEPHERD'S CHAPEL",
+        "Rank": 25,
+        "Station": "KPDX",
+        "TimeAired": "9:58 AM"
+      }
+    ]
+  },
+  "SpotsAndImpressionsBySource": [
+    {
+      "AudienceImpressions": {
+        "31": 13058.092,
+        "33": 5213.524
+      },
+      "Source": 1,
+      "Spots": 1
+    }
+  ],
+  "SpotsAndImpressionsDeliveryByAdvertiser": [
+    {
+      "AdvertiserName": "BEIERS HERSHEY",
+      "AudienceImpressions": {
+        "31": 0.0,
+        "33": 0.0
+      },
+      "Spots": 1
+    }
+  ],
+  "StationSummaryData": {
+    "ImpressionsAndDelivery": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "DeliveredImpressions": 13058.092,
+        "OrderedImpressions": 283068.0,
+        "OutOfSpecDeliveredImpressions": 16951.8,
+        "TotalDeliveredImpressions": 30009.892
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 5213.524,
+        "OrderedImpressions": 80304.0,
+        "OutOfSpecDeliveredImpressions": 7128.496,
+        "TotalDeliveredImpressions": 12342.02
+      }
+    ],
+    "ReportData": [
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 0.0,
+            "Impressions": 141534.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 0.0,
+            "Impressions": 40152.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "Cost": 10.00,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": {
+          "_Code": "",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Id": 65139,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "",
+          "_Saturday": true,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": false,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "PORTLAND,OR",
+        "MediaWeekId": null,
+        "OrderedSpots": 4,
+        "OutOfSpecSpots": null,
+        "ProgramName": "SHEPHERD'S CHAPEL",
+        "Rank": 25,
+        "SpecStatus": "Match",
+        "SpotClearance": 0.25,
+        "SpotLength": 30,
+        "Station": "KPDX",
+        "Status": 1
+      },
+      {
+        "Affiliate": "CW",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 3893.708,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 1914.972,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "Cost": null,
+        "DateAired": "0001-01-01T00:00:00",
+        "DeliveredSpots": null,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "ST LOUIS",
+        "MatchAirTime": true,
+        "MatchIsci": true,
+        "MatchProgram": false,
+        "MatchSpotLength": true,
+        "MatchStation": false,
+        "MediaWeekId": null,
+        "OrderedSpots": 0,
+        "OutOfSpecSpots": 2,
+        "ProgramName": null,
+        "Rank": 21,
+        "SpecStatus": "Program Name,Station",
+        "SpotClearance": null,
+        "SpotLength": 30,
+        "Station": "KPLR",
+        "Status": 0
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 13058.092,
+            "Impressions": 141534.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 5213.524,
+            "Impressions": 40152.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "Cost": 0.00,
+        "DeliveredSpots": 0,
+        "DisplayDaypart": {
+          "_Code": "",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Id": 65139,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "",
+          "_Saturday": true,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": false,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 3,
+        "OutOfSpecSpots": null,
+        "ProgramName": "JUDGE ALEX",
+        "Rank": 11,
+        "SpecStatus": "",
+        "SpotClearance": 0.0,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 1
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 13058.092,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 5213.524,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "Cost": null,
+        "DateAired": "0001-01-01T00:00:00",
+        "DeliveredSpots": null,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "TAMPA",
+        "MatchAirTime": true,
+        "MatchIsci": true,
+        "MatchProgram": true,
+        "MatchSpotLength": true,
+        "MatchStation": true,
+        "MediaWeekId": null,
+        "OrderedSpots": 0,
+        "OutOfSpecSpots": 1,
+        "ProgramName": null,
+        "Rank": 11,
+        "SpecStatus": "",
+        "SpotClearance": null,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "IsHouseHold": true,
+        "Population": 7368320,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "IsHouseHold": false,
+        "Population": 8485887,
+        "Rank": 2
+      }
+    ]
+  },
+  "WeeklyData": {
+    "ImpressionsAndDelivey": [],
+    "ReportDataByWeek": [
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 31,
+            "AudienceName": "HH",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 235890.0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 0.0,
+            "OrderedImpressions": 66920.0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 0.0
+          }
+        ],
+        "ReportData": [
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 31,
+                "Delivery": 0.0,
+                "Impressions": 94356.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 33,
+                "Delivery": 0.0,
+                "Impressions": 26768.0,
+                "NsiDelivery": 0.0
+              }
+            ],
+            "Cost": 0.00,
+            "DeliveredSpots": 0,
+            "DisplayDaypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 65139,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": false,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "TAMPA",
+            "MediaWeekId": null,
+            "OrderedSpots": 2,
+            "OutOfSpecSpots": null,
+            "ProgramName": "JUDGE ALEX",
+            "Rank": 11,
+            "SpecStatus": "",
+            "SpotClearance": 0.0,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 1
+          },
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 31,
+                "Delivery": 0.0,
+                "Impressions": 141534.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 33,
+                "Delivery": 0.0,
+                "Impressions": 40152.0,
+                "NsiDelivery": 0.0
+              }
+            ],
+            "Cost": 0.00,
+            "DeliveredSpots": 0,
+            "DisplayDaypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 65139,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": false,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "PORTLAND,OR",
+            "MediaWeekId": null,
+            "OrderedSpots": 3,
+            "OutOfSpecSpots": null,
+            "ProgramName": "SHEPHERD'S CHAPEL",
+            "Rank": 25,
+            "SpecStatus": "",
+            "SpotClearance": 0.0,
+            "SpotLength": 30,
+            "Station": "KPDX",
+            "Status": 1
+          }
+        ],
+        "Week": {
+          "Display": "3/6/2017",
+          "Id": 689
+        }
+      },
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 31,
+            "AudienceName": "HH",
+            "DeliveredImpressions": 13058.092,
+            "OrderedImpressions": 94356.0,
+            "OutOfSpecDeliveredImpressions": 16951.8,
+            "TotalDeliveredImpressions": 30009.892
+          },
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 5213.524,
+            "OrderedImpressions": 26768.0,
+            "OutOfSpecDeliveredImpressions": 7128.496,
+            "TotalDeliveredImpressions": 12342.02
+          }
+        ],
+        "ReportData": [
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 31,
+                "Delivery": 13058.092,
+                "Impressions": 47178.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 33,
+                "Delivery": 5213.524,
+                "Impressions": 13384.0,
+                "NsiDelivery": 0.0
+              }
+            ],
+            "Cost": 0.00,
+            "DeliveredSpots": 0,
+            "DisplayDaypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 65139,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": false,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "TAMPA",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "JUDGE ALEX",
+            "Rank": 11,
+            "SpecStatus": "",
+            "SpotClearance": 0.0,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 1
+          },
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 31,
+                "Delivery": 0.0,
+                "Impressions": 47178.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 33,
+                "Delivery": 0.0,
+                "Impressions": 13384.0,
+                "NsiDelivery": 0.0
+              }
+            ],
+            "Cost": 10.00,
+            "DeliveredSpots": 1,
+            "DisplayDaypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 65139,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": false,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "PORTLAND,OR",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "SHEPHERD'S CHAPEL",
+            "Rank": 25,
+            "SpecStatus": "Match",
+            "SpotClearance": 1.0,
+            "SpotLength": 30,
+            "Station": "KPDX",
+            "Status": 1
+          },
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 31,
+                "Delivery": 13058.092,
+                "Impressions": 0.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 33,
+                "Delivery": 5213.524,
+                "Impressions": 0.0,
+                "NsiDelivery": 0.0
+              }
+            ],
+            "Cost": null,
+            "DateAired": "0001-01-01T00:00:00",
+            "DeliveredSpots": null,
+            "DisplayDaypart": null,
+            "Isci": "AAABBB",
+            "Market": "TAMPA",
+            "MatchAirTime": true,
+            "MatchIsci": true,
+            "MatchProgram": true,
+            "MatchSpotLength": true,
+            "MatchStation": true,
+            "MediaWeekId": null,
+            "OrderedSpots": 0,
+            "OutOfSpecSpots": null,
+            "ProgramName": "JUDGE ALEX",
+            "Rank": 11,
+            "SpecStatus": "",
+            "SpotClearance": null,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 0
+          },
+          {
+            "Affiliate": "CW",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 31,
+                "Delivery": 1946.854,
+                "Impressions": 0.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 33,
+                "Delivery": 957.486,
+                "Impressions": 0.0,
+                "NsiDelivery": 0.0
+              }
+            ],
+            "Cost": null,
+            "DateAired": "0001-01-01T00:00:00",
+            "DeliveredSpots": null,
+            "DisplayDaypart": null,
+            "Isci": "AAABBB",
+            "Market": "ST LOUIS",
+            "MatchAirTime": true,
+            "MatchIsci": true,
+            "MatchProgram": false,
+            "MatchSpotLength": true,
+            "MatchStation": false,
+            "MediaWeekId": null,
+            "OrderedSpots": 0,
+            "OutOfSpecSpots": null,
+            "ProgramName": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+            "Rank": 21,
+            "SpecStatus": "Program Name,Station",
+            "SpotClearance": null,
+            "SpotLength": 30,
+            "Station": "KPLR",
+            "Status": 0
+          },
+          {
+            "Affiliate": "CW",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 31,
+                "Delivery": 1946.854,
+                "Impressions": 0.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 33,
+                "Delivery": 957.486,
+                "Impressions": 0.0,
+                "NsiDelivery": 0.0
+              }
+            ],
+            "Cost": null,
+            "DateAired": "0001-01-01T00:00:00",
+            "DeliveredSpots": null,
+            "DisplayDaypart": null,
+            "Isci": "AAABBB",
+            "Market": "ST LOUIS",
+            "MatchAirTime": true,
+            "MatchIsci": true,
+            "MatchProgram": false,
+            "MatchSpotLength": true,
+            "MatchStation": false,
+            "MediaWeekId": null,
+            "OrderedSpots": 0,
+            "OutOfSpecSpots": null,
+            "ProgramName": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+            "Rank": 21,
+            "SpecStatus": "Program Name,Station",
+            "SpotClearance": null,
+            "SpotLength": 30,
+            "Station": "KPLR",
+            "Status": 0
+          }
+        ],
+        "Week": {
+          "Display": "3/13/2017",
+          "Id": 690
+        }
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "IsHouseHold": true,
+        "Population": 7368320,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "IsHouseHold": false,
+        "Population": 8485887,
+        "Rank": 2
+      }
+    ]
+  }
+}

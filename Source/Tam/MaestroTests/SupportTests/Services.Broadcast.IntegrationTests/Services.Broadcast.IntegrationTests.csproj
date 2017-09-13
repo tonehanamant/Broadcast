@@ -403,6 +403,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
+    <None Include="Files\SCX Various Tests.scx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\SCX Overlapping Fields.scx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
