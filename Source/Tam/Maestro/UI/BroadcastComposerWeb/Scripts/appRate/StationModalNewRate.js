@@ -738,10 +738,19 @@ var StationModalNewRate = function (view) {
             //var val = parseFloat(input30.val().replace(/[$,]+/g, ""));
             var val = input30.val().replace(/[$,]+/g, "");//allow 0.00
             if (val && (!this.lastInput30Val || (this.lastInput30Val != val))) {
-                console.log('spot 30 change', val);
+                //console.log('spot 30 change', val);
                 //call api and set
+                _view.controller.apiConvertRate(parseFloat(val), this.setSpot15Change.bind(this), false);
             }
             this.lastInput30Val = val;
+        },
+
+        //set spot/rate 15 from 30 change api
+        setSpot15Change: function (newVal) {
+            //console.log('setSpot15Change', newVal);
+            $('#new_program_spot15_input').val(newVal);
+            //setting val removes the formatting (W2Ui field does not update) so reset
+            $('#new_program_spot15_input').w2field('money');
         }
 
     };

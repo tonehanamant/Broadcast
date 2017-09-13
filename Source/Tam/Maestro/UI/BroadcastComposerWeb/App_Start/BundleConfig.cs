@@ -11,29 +11,29 @@ namespace BroadcastComposerWeb
 
             var librariesBundle = new ScriptBundle("~/bundles/libraries").Include(
                 /* Foundation Libraries & Utility Libraries */
-                "~/Scripts/library/jquery-2.2.3.min.js",                            // JQUERY, Javascript Library
-                "~/Scripts/library/jquery-validate/jquery.validate.min.js",         
-                "~/Scripts/library/jquery-validate/require_from_group.js",          
-                
-                "~/Scripts/library/bootstrap-3.3.5/js/bootstrap.js",                // BOOTSTRAP, JS,HTML,CSS Component Library
+                "~/Scripts/library/jquery-2.2.3.min.js",                                    // JQUERY, Javascript Library
+                "~/Scripts/library/jquery-validate/jquery.validate.min.js",
+                "~/Scripts/library/jquery-validate/require_from_group.js",
+
+                "~/Scripts/library/bootstrap-3.3.5/js/bootstrap.js",                        // BOOTSTRAP, JS,HTML,CSS Component Library
                 "~/Scripts/library/bootstrap-3.3.5/js/bootstrap-notify.min.js",
                 "~/Scripts/library/bootstrap-tagsinput/bootstrap-tagsinput.js",
-                 
-                "~/Scripts/library/knockout/knockout-3.3.0.js",                     // KNOCKOUT,  MVVM Library
+
+                "~/Scripts/library/knockout/knockout-3.3.0.js",                             // KNOCKOUT,  MVVM Library
                 "~/Scripts/library/knockout/knockout.mapping.js",
 
                 /* Utilitiy Libraries */
-                "~/Scripts/library/w2ui/w2ui-1.5.rc1.js",                           // W2UI, UI Library (Grid)
-                "~/Scripts/library/lodash.min.js",                                  // LODASH, Utility Library
-                "~/Scripts/library/moment.js",                                      // MOMENTJS, Date and Time Library
-                "~/Scripts/library/numeral.js",                                     // NUMERALJS, 
+                "~/Scripts/library/w2ui/w2ui-1.5.rc1.js",                                   // W2UI, UI Library (Grid)
+                "~/Scripts/library/lodash.min.js",                                          // LODASH, Utility Library
+                "~/Scripts/library/moment.js",                                              // MOMENTJS, Date and Time Library
+                "~/Scripts/library/numeral.js",                                             // NUMERALJS, 
 
                 /* Component Extensions */
-                "~/Scripts/library/daterangepicker/daterangepicker_modified.js",    // DATERANGEPICKER, Bootstrap Component Extension
-                "~/Scripts/library/webui-popover/jquery.webui-popover.min.js",      // WEBUI-POPOVER, JQuery Component Extension
-                "~/Scripts/library/timepicker/jquery.timepicker.js",                // TIMEPICKER, JQuery Component Extension
-                "~/Scripts/library/select2/select2.min.js",                         // SELECT2, JQuery Component Extension (Select Boxes)
-                "~/Scripts/library/cadent-daypart-dropdown/daypart-dropdown-broadcast.js"          // DAYPART-DROPDOWN-BROADCAST, Cadent Component Extension
+                "~/Scripts/library/daterangepicker/daterangepicker_modified.js",            // DATERANGEPICKER, Bootstrap Component Extension
+                "~/Scripts/library/webui-popover/jquery.webui-popover.min.js",              // WEBUI-POPOVER, JQuery Component Extension
+                "~/Scripts/library/timepicker/jquery.timepicker.js",                        // TIMEPICKER, JQuery Component Extension
+                "~/Scripts/library/select2/select2.min.js",                                 // SELECT2, JQuery Component Extension (Select Boxes)
+                "~/Scripts/library/cadent-daypart-dropdown/daypart-dropdown-broadcast.js"   // DAYPART-DROPDOWN-BROADCAST, Cadent Component Extension
                 );
 
             var appBundle = new ScriptBundle("~/bundles/app").Include(
@@ -49,12 +49,12 @@ namespace BroadcastComposerWeb
                 "~/Scripts/app/appController.js",
 
                 /* Knockout: Custom Bindings */
-                "~/Scripts/libraries/cadent-knockout/custom-bindings/daypart-dropdown.js",
-                "~/Scripts/libraries/cadent-knockout/custom-bindings/flightweek-picker.js",
-                "~/Scripts/libraries/cadent-knockout/custom-bindings/select2.js",
-                "~/Scripts/libraries/cadent-knockout/custom-bindings/modal.js",
-                "~/Scripts/libraries/cadent-knockout/custom-bindings/bootstrap-tagsinput.js",
-                "~/Scripts/libraries/cadent-knockout/custom-bindings/stopBubble.js");
+                "~/Scripts/library/cadent-knockout/custom-bindings/daypart-dropdown.js",
+                "~/Scripts/library/cadent-knockout/custom-bindings/flightweek-picker.js",
+                "~/Scripts/library/cadent-knockout/custom-bindings/select2.js",
+                "~/Scripts/library/cadent-knockout/custom-bindings/modal.js",
+                "~/Scripts/library/cadent-knockout/custom-bindings/bootstrap-tagsinput.js",
+                "~/Scripts/library/cadent-knockout/custom-bindings/stopBubble.js");
 
             var trackerBundle = new ScriptBundle("~/bundles/tracker").Include(
                 "~/Scripts/appTracker/TrackerConfig.js",
@@ -137,7 +137,7 @@ namespace BroadcastComposerWeb
                 /* Component Extensions */
                 "~/Scripts/library/bootstrap-tagsinput/bootstrap-tagsinput.css",
                 "~/Scripts/library/daterangepicker/daterangepicker.css",
-                "~/Scripts/library/webui-popover/jquery.webui-popover.min.css",                
+                "~/Scripts/library/webui-popover/jquery.webui-popover.min.css",
                 "~/Scripts/library/timepicker/jquery.timepicker.css",
                 "~/Scripts/library/select2/select2.min.css",
                 "~/Scripts/library/cadent-daypart-dropdown/daypart-dropdown.css",
