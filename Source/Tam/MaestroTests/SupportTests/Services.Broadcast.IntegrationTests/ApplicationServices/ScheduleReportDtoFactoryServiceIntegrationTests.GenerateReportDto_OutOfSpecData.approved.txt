@@ -4,7 +4,7 @@
       "AudienceId": 31,
       "AudienceName": "HH",
       "DeliveredImpressions": 1762241.735,
-      "OrderedImpressions": 0,
+      "OrderedImpressions": 0.0,
       "OutOfSpecDeliveredImpressions": 1762241.735,
       "TotalDeliveredImpressions": 3524483.47
     },
@@ -12,7 +12,7 @@
       "AudienceId": 42,
       "AudienceName": "A50+",
       "DeliveredImpressions": 1518868.645,
-      "OrderedImpressions": 0,
+      "OrderedImpressions": 0.0,
       "OutOfSpecDeliveredImpressions": 1518868.645,
       "TotalDeliveredImpressions": 3037737.29
     }
@@ -24,14 +24,14 @@
         {
           "AudienceId": 31,
           "Delivery": 32807.7275,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 32243.9025,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -46,7 +46,7 @@
       "MatchSpotLength": true,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
       "Rank": 1,
@@ -62,14 +62,14 @@
         {
           "AudienceId": 31,
           "Delivery": 35110.6225,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 34098.2075,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -84,7 +84,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
       "Rank": 1,
@@ -100,14 +100,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -122,7 +122,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
       "Rank": 1,
@@ -138,14 +138,14 @@
         {
           "AudienceId": 31,
           "Delivery": 29255.0125,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 27537.7925,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -160,7 +160,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "JUDGE FAITH",
       "Rank": 2,
@@ -176,14 +176,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -198,7 +198,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
       "Rank": 2,
@@ -214,14 +214,14 @@
         {
           "AudienceId": 31,
           "Delivery": 23023.0125,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 22075.2925,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -236,7 +236,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE FAITH",
       "Rank": 2,
@@ -252,14 +252,14 @@
         {
           "AudienceId": 31,
           "Delivery": 22976.89,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 18025.4425,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -274,7 +274,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "CBS 2 MORNING NEWS",
       "Rank": 3,
@@ -290,14 +290,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -312,7 +312,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THIS MORNING",
       "Rank": 3,
@@ -328,14 +328,14 @@
         {
           "AudienceId": 31,
           "Delivery": 27113.0475,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 15848.47,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -350,7 +350,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "TMZ LIVE",
       "Rank": 3,
@@ -366,14 +366,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -388,7 +388,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "HOT BENCH",
       "Rank": 4,
@@ -404,14 +404,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -426,7 +426,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "HOT BENCH",
       "Rank": 4,
@@ -442,14 +442,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -464,7 +464,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LEVERAGE",
       "Rank": 5,
@@ -480,14 +480,14 @@
         {
           "AudienceId": 31,
           "Delivery": 6626.1075,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 4167.9825,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -502,7 +502,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "SUPREME JUSTICE WITH JUDGE KAREN MIL",
       "Rank": 5,
@@ -518,14 +518,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -540,7 +540,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE DOCTORS",
       "Rank": 5,
@@ -556,14 +556,14 @@
         {
           "AudienceId": 31,
           "Delivery": 21971.79,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 20940.0425,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -578,7 +578,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "GREAT DAY WASHINGTON",
       "Rank": 7,
@@ -594,14 +594,14 @@
         {
           "AudienceId": 31,
           "Delivery": 37890.4175,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 37860.445,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -616,7 +616,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE INSIDER",
       "Rank": 7,
@@ -632,14 +632,14 @@
         {
           "AudienceId": 31,
           "Delivery": 21004.025,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 14080.2825,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -654,7 +654,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "MAURY",
       "Rank": 9,
@@ -670,14 +670,14 @@
         {
           "AudienceId": 31,
           "Delivery": 6193.905,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 4118.7725,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -692,7 +692,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE MEREDITH VIEIRA SHOW",
       "Rank": 9,
@@ -708,14 +708,14 @@
         {
           "AudienceId": 31,
           "Delivery": 4747.245,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 2826.915,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -730,7 +730,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE MEREDITH VIEIRA SHOW",
       "Rank": 9,
@@ -746,14 +746,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -768,7 +768,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "FOX13 NEWS AT NOON",
       "Rank": 11,
@@ -784,14 +784,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -806,7 +806,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "FOX13 NEWS AT NOON",
       "Rank": 11,
@@ -822,14 +822,14 @@
         {
           "AudienceId": 31,
           "Delivery": 19682.29,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 19059.6125,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -844,7 +844,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "STEVE HARVEY INTERVIEW",
       "Rank": 12,
@@ -860,14 +860,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -882,7 +882,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "STEVE HARVEY INTERVIEW",
       "Rank": 12,
@@ -898,14 +898,14 @@
         {
           "AudienceId": 31,
           "Delivery": 9188.4,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 6241.31,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -920,7 +920,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
       "Rank": 13,
@@ -936,14 +936,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -958,7 +958,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
       "Rank": 13,
@@ -974,14 +974,14 @@
         {
           "AudienceId": 31,
           "Delivery": 16659.295,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 15430.47,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -996,7 +996,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "PEOPLES COURT",
       "Rank": 14,
@@ -1012,14 +1012,14 @@
         {
           "AudienceId": 31,
           "Delivery": 4921.475,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 1686.25,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1034,7 +1034,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "LAW & ORDER: CRIMINAL INTENT",
       "Rank": 16,
@@ -1050,14 +1050,14 @@
         {
           "AudienceId": 31,
           "Delivery": 3244.4875,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 1268.25,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1072,7 +1072,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "LAW & ORDER: CRIMINAL INTENT",
       "Rank": 16,
@@ -1088,14 +1088,14 @@
         {
           "AudienceId": 31,
           "Delivery": 53818.545,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 51109.335,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1110,7 +1110,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE JUDY",
       "Rank": 16,
@@ -1126,14 +1126,14 @@
         {
           "AudienceId": 31,
           "Delivery": 54473.6175,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 51961.105,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1148,7 +1148,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE JUDY",
       "Rank": 16,
@@ -1164,14 +1164,14 @@
         {
           "AudienceId": 31,
           "Delivery": 11057.1925,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 9213.005,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1186,7 +1186,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "JUSTICE WITH JUDGE MABLEAN",
       "Rank": 18,
@@ -1202,14 +1202,14 @@
         {
           "AudienceId": 31,
           "Delivery": 12504.5175,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 9303.635,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1224,7 +1224,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
       "Rank": 18,
@@ -1240,14 +1240,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1262,7 +1262,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "TODAY SHOW",
       "Rank": 21,
@@ -1278,14 +1278,14 @@
         {
           "AudienceId": 31,
           "Delivery": 24528.8575,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 19041.61,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1300,7 +1300,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "SHOW ME ST. LOUIS",
       "Rank": 21,
@@ -1316,14 +1316,14 @@
         {
           "AudienceId": 31,
           "Delivery": 88894.825,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 80124.615,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1338,7 +1338,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 3,
       "ProgramName": "STEVE HARVEY INTERVIEW",
       "Rank": 22,
@@ -1354,14 +1354,14 @@
         {
           "AudienceId": 31,
           "Delivery": 6892.6775,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 6934.335,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1376,7 +1376,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "DIVORCE COURT",
       "Rank": 23,
@@ -1392,14 +1392,14 @@
         {
           "AudienceId": 31,
           "Delivery": 18736.5175,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 13078.6025,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1414,7 +1414,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE JUDY",
       "Rank": 25,
@@ -1430,14 +1430,14 @@
         {
           "AudienceId": 31,
           "Delivery": 18736.5175,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 13078.6025,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1452,7 +1452,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE JUDY",
       "Rank": 25,
@@ -1468,14 +1468,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1490,7 +1490,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "THE DOCTORS",
       "Rank": 26,
@@ -1506,14 +1506,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1528,7 +1528,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "THE DOCTORS",
       "Rank": 26,
@@ -1544,14 +1544,14 @@
         {
           "AudienceId": 31,
           "Delivery": 22015.87,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 10240.335,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1566,7 +1566,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "FOX 5 MORNING NEWS AT 7AM",
       "Rank": 28,
@@ -1582,14 +1582,14 @@
         {
           "AudienceId": 31,
           "Delivery": 38655.0725,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 32205.9025,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1604,7 +1604,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "NEWS 2 AT 11AM",
       "Rank": 29,
@@ -1620,14 +1620,14 @@
         {
           "AudienceId": 31,
           "Delivery": 47982.8375,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 39197.95,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1642,7 +1642,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "DR. PHIL",
       "Rank": 29,
@@ -1658,14 +1658,14 @@
         {
           "AudienceId": 31,
           "Delivery": 8749.405,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 7517.6825,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1680,7 +1680,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PEOPLES COURT",
       "Rank": 31,
@@ -1696,14 +1696,14 @@
         {
           "AudienceId": 31,
           "Delivery": 5321.4725,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 3336.875,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1718,7 +1718,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "TMZ LIVE",
       "Rank": 31,
@@ -1734,14 +1734,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1756,7 +1756,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PEOPLES COURT",
       "Rank": 31,
@@ -1772,14 +1772,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1794,7 +1794,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "TMZ LIVE",
       "Rank": 31,
@@ -1810,14 +1810,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1832,7 +1832,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE DOCTORS",
       "Rank": 32,
@@ -1848,14 +1848,14 @@
         {
           "AudienceId": 31,
           "Delivery": 13296.6275,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 10909.895,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1870,7 +1870,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE DOCTORS",
       "Rank": 32,
@@ -1886,14 +1886,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1908,7 +1908,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "MODERN FAMILY",
       "Rank": 33,
@@ -1924,14 +1924,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1946,7 +1946,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "OFFICE",
       "Rank": 33,
@@ -1962,14 +1962,14 @@
         {
           "AudienceId": 31,
           "Delivery": 239.9225,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 347.225,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -1984,7 +1984,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "GOSPEL TRUTH",
       "Rank": 33,
@@ -2000,14 +2000,14 @@
         {
           "AudienceId": 31,
           "Delivery": 2105.295,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 1723.68,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2022,7 +2022,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE DOCTORS",
       "Rank": 33,
@@ -2038,14 +2038,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2060,7 +2060,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "DAYTIME JEOPARDY",
       "Rank": 34,
@@ -2076,14 +2076,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2098,7 +2098,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "DAYTIME JEOPARDY",
       "Rank": 34,
@@ -2114,14 +2114,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2136,7 +2136,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE MEREDITH VIEIRA SHOW",
       "Rank": 35,
@@ -2152,14 +2152,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2174,7 +2174,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE MEREDITH VIEIRA SHOW",
       "Rank": 35,
@@ -2190,14 +2190,14 @@
         {
           "AudienceId": 31,
           "Delivery": 24381.7025,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 18453.56,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2212,7 +2212,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "FOX19 MORNING XTRA",
       "Rank": 36,
@@ -2228,14 +2228,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2250,7 +2250,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LIVE WITH KELLY",
       "Rank": 40,
@@ -2266,14 +2266,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2288,7 +2288,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LIVE WITH KELLY",
       "Rank": 40,
@@ -2304,14 +2304,14 @@
         {
           "AudienceId": 31,
           "Delivery": 17149.78,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 13261.525,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2326,7 +2326,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "HOT BENCH",
       "Rank": 42,
@@ -2342,14 +2342,14 @@
         {
           "AudienceId": 31,
           "Delivery": 23493.12,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 18649.45,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2364,7 +2364,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "FAMILY FEUD",
       "Rank": 42,
@@ -2380,14 +2380,14 @@
         {
           "AudienceId": 31,
           "Delivery": 17149.78,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 13261.525,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2402,7 +2402,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "HOT BENCH",
       "Rank": 42,
@@ -2418,14 +2418,14 @@
         {
           "AudienceId": 31,
           "Delivery": 9542.2275,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 7537.775,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2440,7 +2440,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "THE DOCTORS",
       "Rank": 45,
@@ -2456,14 +2456,14 @@
         {
           "AudienceId": 31,
           "Delivery": 44454.3475,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 40469.81,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2478,7 +2478,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "THE DR. OZ SHOW",
       "Rank": 47,
@@ -2494,14 +2494,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2516,7 +2516,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JERRY SPRINGER",
       "Rank": 48,
@@ -2532,14 +2532,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2554,7 +2554,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE STEVE WILKOS SHOW",
       "Rank": 48,
@@ -2570,14 +2570,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2592,7 +2592,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JERRY SPRINGER",
       "Rank": 48,
@@ -2608,14 +2608,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2630,7 +2630,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE STEVE WILKOS SHOW",
       "Rank": 48,
@@ -2646,14 +2646,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2668,7 +2668,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "GREAT DAY LIVE!",
       "Rank": 49,
@@ -2684,14 +2684,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2706,7 +2706,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "VIEW",
       "Rank": 49,
@@ -2722,14 +2722,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2744,7 +2744,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "GREAT DAY LIVE!",
       "Rank": 49,
@@ -2760,14 +2760,14 @@
         {
           "AudienceId": 31,
           "Delivery": 19805.0775,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 17777.16,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2782,7 +2782,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "VIEW",
       "Rank": 49,
@@ -2798,14 +2798,14 @@
         {
           "AudienceId": 31,
           "Delivery": 25909.73,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 22323.0525,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2820,7 +2820,7 @@
       "MatchSpotLength": false,
       "MatchStation": false,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "TODAY SHOW",
       "Rank": 50,
@@ -2836,14 +2836,14 @@
         {
           "AudienceId": 31,
           "Delivery": 19644.4325,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 18207.9375,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2858,7 +2858,7 @@
       "MatchSpotLength": false,
       "MatchStation": false,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "FLIP MY FOOD WITH CHEF JEFF",
       "Rank": 50,
@@ -2874,14 +2874,14 @@
         {
           "AudienceId": 31,
           "Delivery": 25909.73,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 22323.0525,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2896,7 +2896,7 @@
       "MatchSpotLength": false,
       "MatchStation": false,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "TODAY SHOW",
       "Rank": 50,
@@ -2912,14 +2912,14 @@
         {
           "AudienceId": 31,
           "Delivery": 19464.74,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 17626.585,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2934,7 +2934,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "TODAY SHOW",
       "Rank": 51,
@@ -2950,14 +2950,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -2972,7 +2972,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "TODAY SHOW",
       "Rank": 51,
@@ -2988,14 +2988,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3010,7 +3010,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "NBC 10 NEWS AT NOON",
       "Rank": 52,
@@ -3026,14 +3026,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3048,7 +3048,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LIVE WITH KELLY",
       "Rank": 52,
@@ -3064,14 +3064,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3086,7 +3086,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "NBC 10 NEWS AT NOON",
       "Rank": 52,
@@ -3102,14 +3102,14 @@
         {
           "AudienceId": 31,
           "Delivery": 21540.8225,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 15366.0125,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3124,7 +3124,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LIVE WITH KELLY",
       "Rank": 52,
@@ -3140,14 +3140,14 @@
         {
           "AudienceId": 31,
           "Delivery": 13884.535,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 10507.8075,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3162,7 +3162,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "RACHAEL RAY",
       "Rank": 53,
@@ -3178,14 +3178,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3200,7 +3200,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "7 EYEWITNESS NEWS AT NOON",
       "Rank": 53,
@@ -3216,14 +3216,14 @@
         {
           "AudienceId": 31,
           "Delivery": 25241.88,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 23671.1975,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3238,7 +3238,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "7 EYEWITNESS NEWS AT NOON",
       "Rank": 53,
@@ -3254,14 +3254,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3276,7 +3276,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
       "Rank": 54,
@@ -3292,14 +3292,14 @@
         {
           "AudienceId": 31,
           "Delivery": 9563.46,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 7705.83,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3314,7 +3314,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "RACHAEL RAY",
       "Rank": 54,
@@ -3330,14 +3330,14 @@
         {
           "AudienceId": 31,
           "Delivery": 9140.6625,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 6675.5075,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3352,7 +3352,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "RACHAEL RAY",
       "Rank": 54,
@@ -3368,14 +3368,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3390,7 +3390,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "EYEWITNESS NEWS AT NOON",
       "Rank": 55,
@@ -3406,14 +3406,14 @@
         {
           "AudienceId": 31,
           "Delivery": 13800.6025,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 15144.1875,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3428,7 +3428,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 3,
       "ProgramName": "EYEWITNESS NEWS AT NOON",
       "Rank": 55,
@@ -3444,14 +3444,14 @@
         {
           "AudienceId": 31,
           "Delivery": 12931.02,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 12637.7075,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3466,7 +3466,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PEOPLES COURT",
       "Rank": 56,
@@ -3482,14 +3482,14 @@
         {
           "AudienceId": 31,
           "Delivery": 13142.0625,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 12764.77,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3504,7 +3504,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PEOPLES COURT",
       "Rank": 56,
@@ -3520,14 +3520,14 @@
         {
           "AudienceId": 31,
           "Delivery": 16451.9575,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 11119.9875,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3542,7 +3542,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "LET'S MAKE A DEAL",
       "Rank": 57,
@@ -3558,14 +3558,14 @@
         {
           "AudienceId": 31,
           "Delivery": 19143.64,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 12234.765,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3580,7 +3580,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "DR. PHIL",
       "Rank": 57,
@@ -3596,14 +3596,14 @@
         {
           "AudienceId": 31,
           "Delivery": 18797.6975,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 16421.51,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3618,7 +3618,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "TODAY",
       "Rank": 58,
@@ -3634,14 +3634,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3656,7 +3656,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "TODAY",
       "Rank": 58,
@@ -3672,14 +3672,14 @@
         {
           "AudienceId": 31,
           "Delivery": 17595.9475,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 15390.8075,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3694,7 +3694,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
       "Rank": 59,
@@ -3710,14 +3710,14 @@
         {
           "AudienceId": 31,
           "Delivery": 18392.5225,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 16339.3825,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3732,7 +3732,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "CELEBRITY NAME GAME",
       "Rank": 60,
@@ -3748,14 +3748,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3770,7 +3770,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "CELEBRITY NAME GAME",
       "Rank": 60,
@@ -3786,14 +3786,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3808,7 +3808,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PEOPLES COURT",
       "Rank": 61,
@@ -3824,14 +3824,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3846,7 +3846,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
       "Rank": 61,
@@ -3862,14 +3862,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3884,7 +3884,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
       "Rank": 61,
@@ -3900,14 +3900,14 @@
         {
           "AudienceId": 31,
           "Delivery": 8756.53,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 7506.9,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3922,7 +3922,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PEOPLES COURT",
       "Rank": 61,
@@ -3938,14 +3938,14 @@
         {
           "AudienceId": 31,
           "Delivery": 18092.465,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 15660.56,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3960,7 +3960,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "TODAY SHOW III",
       "Rank": 62,
@@ -3976,14 +3976,14 @@
         {
           "AudienceId": 31,
           "Delivery": 18092.465,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 15660.56,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -3998,7 +3998,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "TODAY SHOW III",
       "Rank": 62,
@@ -4014,14 +4014,14 @@
         {
           "AudienceId": 31,
           "Delivery": 3943.07,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 2117.0275,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4036,7 +4036,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "GOOD DAY KENTUCKY",
       "Rank": 63,
@@ -4052,14 +4052,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4074,7 +4074,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "GOOD DAY KENTUCKY",
       "Rank": 63,
@@ -4090,14 +4090,14 @@
         {
           "AudienceId": 31,
           "Delivery": 10177.2075,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 11283.72,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4112,7 +4112,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "STEVE HARVEY INTERVIEW",
       "Rank": 64,
@@ -4128,14 +4128,14 @@
         {
           "AudienceId": 31,
           "Delivery": 10177.2075,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 11283.72,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4150,7 +4150,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "STEVE HARVEY INTERVIEW",
       "Rank": 64,
@@ -4166,14 +4166,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4188,7 +4188,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "MIKE & MOLLY WKND",
       "Rank": 64,
@@ -4204,14 +4204,14 @@
         {
           "AudienceId": 31,
           "Delivery": 15877.35,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 12729.335,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4226,7 +4226,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "RACHAEL RAY",
       "Rank": 65,
@@ -4242,14 +4242,14 @@
         {
           "AudienceId": 31,
           "Delivery": 7857.545,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 6081.9475,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4264,7 +4264,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "GOOD MORNING KAKELAND",
       "Rank": 65,
@@ -4280,14 +4280,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4302,7 +4302,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "ENTERTAINMENT TONIGHT",
       "Rank": 67,
@@ -4318,14 +4318,14 @@
         {
           "AudienceId": 31,
           "Delivery": 13122.1125,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 11471.6775,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4340,7 +4340,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE CHEW",
       "Rank": 67,
@@ -4356,14 +4356,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4378,7 +4378,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE JUDY",
       "Rank": 67,
@@ -4394,14 +4394,14 @@
         {
           "AudienceId": 31,
           "Delivery": 13641.5725,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 13954.835,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4416,7 +4416,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE JUDY",
       "Rank": 69,
@@ -4432,14 +4432,14 @@
         {
           "AudienceId": 31,
           "Delivery": 11728.605,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 10527.1875,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4454,7 +4454,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PEOPLES COURT",
       "Rank": 71,
@@ -4470,14 +4470,14 @@
         {
           "AudienceId": 31,
           "Delivery": 12419.9675,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 11300.4875,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4492,7 +4492,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE MATHIS",
       "Rank": 71,
@@ -4508,14 +4508,14 @@
         {
           "AudienceId": 31,
           "Delivery": 15511.41,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 16230.94,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4530,7 +4530,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PRICE IS RIGHT",
       "Rank": 75,
@@ -4546,14 +4546,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4568,7 +4568,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "INSIDER WEEKEND",
       "Rank": 75,
@@ -4584,14 +4584,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4606,7 +4606,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "INSIDER WEEKEND",
       "Rank": 75,
@@ -4622,14 +4622,14 @@
         {
           "AudienceId": 31,
           "Delivery": 13495.225,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 11034.535,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4644,7 +4644,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LIVE WITH KELLY",
       "Rank": 76,
@@ -4660,14 +4660,14 @@
         {
           "AudienceId": 31,
           "Delivery": 13495.225,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 11034.535,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4682,7 +4682,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LIVE WITH KELLY",
       "Rank": 76,
@@ -4698,14 +4698,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4720,7 +4720,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PRICE IS RIGHT",
       "Rank": 76,
@@ -4736,14 +4736,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4758,7 +4758,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "NEWS",
       "Rank": 77,
@@ -4774,14 +4774,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4796,7 +4796,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PRICE IS RIGHT",
       "Rank": 78,
@@ -4812,14 +4812,14 @@
         {
           "AudienceId": 31,
           "Delivery": 24366.3125,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 22508.54,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4834,7 +4834,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "PRICE IS RIGHT",
       "Rank": 78,
@@ -4850,14 +4850,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4872,7 +4872,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE CHEW",
       "Rank": 79,
@@ -4888,14 +4888,14 @@
         {
           "AudienceId": 31,
           "Delivery": 9621.695,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 6827.4125,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4910,7 +4910,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "GENERAL HOSPITAL",
       "Rank": 79,
@@ -4926,14 +4926,14 @@
         {
           "AudienceId": 31,
           "Delivery": 9621.695,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 6827.4125,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4948,7 +4948,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "GENERAL HOSPITAL",
       "Rank": 79,
@@ -4964,14 +4964,14 @@
         {
           "AudienceId": 31,
           "Delivery": 13534.8875,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 13891.3275,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -4986,7 +4986,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "YOUNG AND THE RESTLESS",
       "Rank": 80,
@@ -5002,14 +5002,14 @@
         {
           "AudienceId": 31,
           "Delivery": 20641.98,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 21394.4275,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5024,7 +5024,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE JUDY",
       "Rank": 80,
@@ -5040,14 +5040,14 @@
         {
           "AudienceId": 31,
           "Delivery": 12274.76,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 7167.845,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5062,7 +5062,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "FAMILY FEUD",
       "Rank": 81,
@@ -5078,14 +5078,14 @@
         {
           "AudienceId": 31,
           "Delivery": 6470.925,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 3769.6,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5100,7 +5100,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "FAMILY FEUD",
       "Rank": 81,
@@ -5116,14 +5116,14 @@
         {
           "AudienceId": 31,
           "Delivery": 12528.8375,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 11588.9075,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5138,7 +5138,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "YOUR HOMETOWN SHOW",
       "Rank": 83,
@@ -5154,14 +5154,14 @@
         {
           "AudienceId": 31,
           "Delivery": 31368.715,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 25511.3475,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5176,7 +5176,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "YOUNG AND THE RESTLESS",
       "Rank": 83,
@@ -5192,14 +5192,14 @@
         {
           "AudienceId": 31,
           "Delivery": 12528.8375,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 11588.9075,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5214,7 +5214,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "YOUR HOMETOWN SHOW",
       "Rank": 83,
@@ -5230,14 +5230,14 @@
         {
           "AudienceId": 31,
           "Delivery": 38146.3,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 37416.6525,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5252,7 +5252,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
       "Rank": 84,
@@ -5268,14 +5268,14 @@
         {
           "AudienceId": 31,
           "Delivery": 17454.35,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 17129.165,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5290,7 +5290,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
       "Rank": 84,
@@ -5306,14 +5306,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5328,7 +5328,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LIVE WITH KELLY",
       "Rank": 85,
@@ -5344,14 +5344,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5366,7 +5366,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "RACHAEL RAY",
       "Rank": 86,
@@ -5382,14 +5382,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5404,7 +5404,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "RACHAEL RAY",
       "Rank": 86,
@@ -5420,14 +5420,14 @@
         {
           "AudienceId": 31,
           "Delivery": 2304.1775,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 2053.33,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5442,7 +5442,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE DR. OZ SHOW",
       "Rank": 87,
@@ -5458,14 +5458,14 @@
         {
           "AudienceId": 31,
           "Delivery": 9749.28,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 10046.63,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5480,7 +5480,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JEOPARDY!",
       "Rank": 87,
@@ -5496,14 +5496,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5518,7 +5518,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE DR. OZ SHOW",
       "Rank": 87,
@@ -5534,14 +5534,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5556,7 +5556,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
       "Rank": 87,
@@ -5572,14 +5572,14 @@
         {
           "AudienceId": 31,
           "Delivery": 7605.51,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 6908.59,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5594,7 +5594,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "BOLD AND THE BEAUTIFUL",
       "Rank": 88,
@@ -5610,14 +5610,14 @@
         {
           "AudienceId": 31,
           "Delivery": 3592.995,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 2674.5825,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5632,7 +5632,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE DR. OZ SHOW",
       "Rank": 88,
@@ -5648,14 +5648,14 @@
         {
           "AudienceId": 31,
           "Delivery": 13206.995,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 14045.275,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5670,7 +5670,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "CBS 2 NEWS AT NOON",
       "Rank": 90,
@@ -5686,14 +5686,14 @@
         {
           "AudienceId": 31,
           "Delivery": 6603.4975,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 7022.6375,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5708,7 +5708,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "CBS 2 NEWS AT NOON",
       "Rank": 90,
@@ -5724,14 +5724,14 @@
         {
           "AudienceId": 31,
           "Delivery": 27899.22,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 24036.14,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5746,7 +5746,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "JUDGE JUDY",
       "Rank": 91,
@@ -5762,14 +5762,14 @@
         {
           "AudienceId": 31,
           "Delivery": 14674.1275,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 12697.225,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5784,7 +5784,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 2,
       "ProgramName": "JUDGE JUDY",
       "Rank": 91,
@@ -5800,14 +5800,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5822,7 +5822,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE JUDY",
       "Rank": 92,
@@ -5838,14 +5838,14 @@
         {
           "AudienceId": 31,
           "Delivery": 3458.855,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 2039.84,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5860,7 +5860,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "STEVE HARVEY INTERVIEW",
       "Rank": 92,
@@ -5876,14 +5876,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5898,7 +5898,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE JUDY",
       "Rank": 92,
@@ -5914,14 +5914,14 @@
         {
           "AudienceId": 31,
           "Delivery": 3723.2875,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 2114.795,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5936,7 +5936,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "STEVE HARVEY INTERVIEW",
       "Rank": 92,
@@ -5952,14 +5952,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -5974,7 +5974,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "MID-DAY MISSISSIPPI",
       "Rank": 95,
@@ -5990,14 +5990,14 @@
         {
           "AudienceId": 31,
           "Delivery": 7535.59,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 5537.265,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -6012,7 +6012,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 4,
       "ProgramName": "FABLIFE",
       "Rank": 95,
@@ -6028,14 +6028,14 @@
         {
           "AudienceId": 31,
           "Delivery": 13141.16,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 12095.4475,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -6050,7 +6050,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "DAYTIME JEOPARDY",
       "Rank": 96,
@@ -6066,14 +6066,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -6088,7 +6088,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "DAYTIME JEOPARDY",
       "Rank": 96,
@@ -6104,14 +6104,14 @@
         {
           "AudienceId": 31,
           "Delivery": 8392.9175,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 8290.08,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -6126,7 +6126,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE DR. OZ SHOW",
       "Rank": 97,
@@ -6142,14 +6142,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -6164,7 +6164,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "THE DR. OZ SHOW",
       "Rank": 97,
@@ -6180,14 +6180,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -6202,7 +6202,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "INSIDE EDITION",
       "Rank": 99,
@@ -6218,14 +6218,14 @@
         {
           "AudienceId": 31,
           "Delivery": 9451.2175,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 8437.805,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -6240,7 +6240,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LIVE WITH KELLY",
       "Rank": 99,
@@ -6256,14 +6256,14 @@
         {
           "AudienceId": 31,
           "Delivery": 10241.3325,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 8981.4425,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -6278,7 +6278,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "INSIDE EDITION",
       "Rank": 99,
@@ -6294,14 +6294,14 @@
         {
           "AudienceId": 31,
           "Delivery": 9626.825,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 8612.5575,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -6316,7 +6316,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LIVE WITH KELLY",
       "Rank": 99,
@@ -6332,14 +6332,14 @@
         {
           "AudienceId": 31,
           "Delivery": 9130.4975,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 7070.755,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -6354,7 +6354,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LIVE WITH KELLY",
       "Rank": 101,
@@ -6370,14 +6370,14 @@
         {
           "AudienceId": 31,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
           "Delivery": 0.0,
-          "Impressions": null,
-          "NsiDelivery": null
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
         }
       ],
       "Cost": null,
@@ -6392,7 +6392,7 @@
       "MatchSpotLength": false,
       "MatchStation": true,
       "MediaWeekId": null,
-      "OrderedSpots": null,
+      "OrderedSpots": 0,
       "OutOfSpecSpots": 1,
       "ProgramName": "LIVE WITH KELLY",
       "Rank": 101,

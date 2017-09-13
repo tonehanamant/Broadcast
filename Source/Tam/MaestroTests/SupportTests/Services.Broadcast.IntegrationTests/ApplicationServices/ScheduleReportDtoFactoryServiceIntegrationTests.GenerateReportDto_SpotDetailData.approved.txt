@@ -4,7 +4,7 @@
       "AudienceId": 31,
       "AudienceName": "HH",
       "DeliveredImpressions": 1589004.865,
-      "OrderedImpressions": 0,
+      "OrderedImpressions": 0.0,
       "OutOfSpecDeliveredImpressions": 0.0,
       "TotalDeliveredImpressions": 1589004.865
     },
@@ -12,7 +12,7 @@
       "AudienceId": 42,
       "AudienceName": "A50+",
       "DeliveredImpressions": 1589004.865,
-      "OrderedImpressions": 0,
+      "OrderedImpressions": 0.0,
       "OutOfSpecDeliveredImpressions": 0.0,
       "TotalDeliveredImpressions": 1589004.865
     }
@@ -215,14 +215,14 @@
         {
           "AudienceId": 31,
           "Delivery": 21408.8675,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 21408.8675
         },
         {
           "AudienceId": 42,
           "Delivery": 20179.9,
-          "Impressions": null,
-          "NsiDelivery": 20179.899999999998
+          "Impressions": 0.0,
+          "NsiDelivery": 20179.9
         }
       ],
       "Brand": "",
@@ -309,13 +309,13 @@
         {
           "AudienceId": 31,
           "Delivery": 35249.2275,
-          "Impressions": null,
-          "NsiDelivery": 35249.227499999994
+          "Impressions": 0.0,
+          "NsiDelivery": 35249.2275
         },
         {
           "AudienceId": 42,
           "Delivery": 32991.4575,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 32991.4575
         }
       ],
@@ -349,13 +349,13 @@
         {
           "AudienceId": 31,
           "Delivery": 35249.2275,
-          "Impressions": null,
-          "NsiDelivery": 35249.227499999994
+          "Impressions": 0.0,
+          "NsiDelivery": 35249.2275
         },
         {
           "AudienceId": 42,
           "Delivery": 32991.4575,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 32991.4575
         }
       ],
@@ -389,14 +389,14 @@
         {
           "AudienceId": 31,
           "Delivery": 13028.3,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 13028.3
         },
         {
           "AudienceId": 42,
           "Delivery": 9160.8975,
-          "Impressions": null,
-          "NsiDelivery": 9160.8975000000009
+          "Impressions": 0.0,
+          "NsiDelivery": 9160.8975
         }
       ],
       "Brand": "",
@@ -429,14 +429,14 @@
         {
           "AudienceId": 31,
           "Delivery": 13028.3,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 13028.3
         },
         {
           "AudienceId": 42,
           "Delivery": 9160.8975,
-          "Impressions": null,
-          "NsiDelivery": 9160.8975000000009
+          "Impressions": 0.0,
+          "NsiDelivery": 9160.8975
         }
       ],
       "Brand": "",
@@ -469,13 +469,13 @@
         {
           "AudienceId": 31,
           "Delivery": 17479.7625,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 17479.7625
         },
         {
           "AudienceId": 42,
           "Delivery": 18840.21,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 18840.21
         }
       ],
@@ -509,13 +509,13 @@
         {
           "AudienceId": 31,
           "Delivery": 9733.4625,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 9733.4625
         },
         {
           "AudienceId": 42,
           "Delivery": 9233.05,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 9233.05
         }
       ],
@@ -603,14 +603,14 @@
         {
           "AudienceId": 31,
           "Delivery": 34965.4625,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 34965.4625
         },
         {
           "AudienceId": 42,
           "Delivery": 34945.94,
-          "Impressions": null,
-          "NsiDelivery": 34945.939999999995
+          "Impressions": 0.0,
+          "NsiDelivery": 34945.94
         }
       ],
       "Brand": "",
@@ -643,14 +643,14 @@
         {
           "AudienceId": 31,
           "Delivery": 34468.1375,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 34468.1375
         },
         {
           "AudienceId": 42,
           "Delivery": 34303.2175,
-          "Impressions": null,
-          "NsiDelivery": 34303.217499999992
+          "Impressions": 0.0,
+          "NsiDelivery": 34303.2175
         }
       ],
       "Brand": "",
@@ -710,13 +710,13 @@
         {
           "AudienceId": 31,
           "Delivery": 32537.1675,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 32537.1675
         },
         {
           "AudienceId": 42,
           "Delivery": 32400.415,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 32400.415
         }
       ],
@@ -750,14 +750,14 @@
         {
           "AudienceId": 31,
           "Delivery": 38611.1825,
-          "Impressions": null,
-          "NsiDelivery": 38611.182499999995
+          "Impressions": 0.0,
+          "NsiDelivery": 38611.1825
         },
         {
           "AudienceId": 42,
           "Delivery": 30108.7775,
-          "Impressions": null,
-          "NsiDelivery": 30108.777500000004
+          "Impressions": 0.0,
+          "NsiDelivery": 30108.7775
         }
       ],
       "Brand": "",
@@ -979,13 +979,13 @@
         {
           "AudienceId": 31,
           "Delivery": 28690.9025,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 28690.9025
         },
         {
           "AudienceId": 42,
           "Delivery": 22049.025,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 22049.025
         }
       ],
@@ -1019,13 +1019,13 @@
         {
           "AudienceId": 31,
           "Delivery": 7529.51,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 7529.51
         },
         {
           "AudienceId": 42,
           "Delivery": 6054.3025,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 6054.3025
         }
       ],
@@ -1059,13 +1059,13 @@
         {
           "AudienceId": 31,
           "Delivery": 8638.92,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 8638.92
         },
         {
           "AudienceId": 42,
           "Delivery": 7039.8325,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 7039.8325
         }
       ],
@@ -1099,13 +1099,13 @@
         {
           "AudienceId": 31,
           "Delivery": 17888.0725,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 17888.0725
         },
         {
           "AudienceId": 42,
           "Delivery": 15021.7325,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 15021.7325
         }
       ],
@@ -1139,14 +1139,14 @@
         {
           "AudienceId": 31,
           "Delivery": 18654.9125,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 18654.9125
         },
         {
           "AudienceId": 42,
           "Delivery": 15463.53,
-          "Impressions": null,
-          "NsiDelivery": 15463.529999999997
+          "Impressions": 0.0,
+          "NsiDelivery": 15463.53
         }
       ],
       "Brand": "",
@@ -1314,13 +1314,13 @@
         {
           "AudienceId": 31,
           "Delivery": 30737.2975,
-          "Impressions": null,
-          "NsiDelivery": 30737.297499999997
+          "Impressions": 0.0,
+          "NsiDelivery": 30737.2975
         },
         {
           "AudienceId": 42,
           "Delivery": 26001.0725,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 26001.0725
         }
       ],
@@ -1354,13 +1354,13 @@
         {
           "AudienceId": 31,
           "Delivery": 35213.1275,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 35213.1275
         },
         {
           "AudienceId": 42,
           "Delivery": 33584.4,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 33584.4
         }
       ],
@@ -1394,13 +1394,13 @@
         {
           "AudienceId": 31,
           "Delivery": 35213.1275,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 35213.1275
         },
         {
           "AudienceId": 42,
           "Delivery": 33584.4,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 33584.4
         }
       ],
@@ -1434,13 +1434,13 @@
         {
           "AudienceId": 31,
           "Delivery": 30737.2975,
-          "Impressions": null,
-          "NsiDelivery": 30737.297499999997
+          "Impressions": 0.0,
+          "NsiDelivery": 30737.2975
         },
         {
           "AudienceId": 42,
           "Delivery": 26001.0725,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 26001.0725
         }
       ],
@@ -1636,13 +1636,13 @@
         {
           "AudienceId": 31,
           "Delivery": 14835.865,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 14835.865
         },
         {
           "AudienceId": 42,
           "Delivery": 12873.355,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 12873.355
         }
       ],
@@ -1676,14 +1676,14 @@
         {
           "AudienceId": 31,
           "Delivery": 16335.06,
-          "Impressions": null,
-          "NsiDelivery": 16335.059999999998
+          "Impressions": 0.0,
+          "NsiDelivery": 16335.06
         },
         {
           "AudienceId": 42,
           "Delivery": 13206.7575,
-          "Impressions": null,
-          "NsiDelivery": 13206.757499999998
+          "Impressions": 0.0,
+          "NsiDelivery": 13206.7575
         }
       ],
       "Brand": "",
@@ -1716,14 +1716,14 @@
         {
           "AudienceId": 31,
           "Delivery": 16617.6375,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 16617.6375
         },
         {
           "AudienceId": 42,
           "Delivery": 13154.745,
-          "Impressions": null,
-          "NsiDelivery": 13154.744999999999
+          "Impressions": 0.0,
+          "NsiDelivery": 13154.745
         }
       ],
       "Brand": "",
@@ -1756,13 +1756,13 @@
         {
           "AudienceId": 31,
           "Delivery": 15412.5625,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 15412.5625
         },
         {
           "AudienceId": 42,
           "Delivery": 14849.1175,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 14849.1175
         }
       ],
@@ -1904,14 +1904,14 @@
         {
           "AudienceId": 31,
           "Delivery": 30645.9075,
-          "Impressions": null,
-          "NsiDelivery": 30645.907499999998
+          "Impressions": 0.0,
+          "NsiDelivery": 30645.9075
         },
         {
           "AudienceId": 42,
           "Delivery": 28648.295,
-          "Impressions": null,
-          "NsiDelivery": 28648.295000000002
+          "Impressions": 0.0,
+          "NsiDelivery": 28648.295
         }
       ],
       "Brand": "",
@@ -1998,13 +1998,13 @@
         {
           "AudienceId": 31,
           "Delivery": 18717.4225,
-          "Impressions": null,
-          "NsiDelivery": 18717.422499999997
+          "Impressions": 0.0,
+          "NsiDelivery": 18717.4225
         },
         {
           "AudienceId": 42,
           "Delivery": 18204.09,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 18204.09
         }
       ],
@@ -2038,13 +2038,13 @@
         {
           "AudienceId": 31,
           "Delivery": 17504.51,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 17504.51
         },
         {
           "AudienceId": 42,
           "Delivery": 17579.7025,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 17579.7025
         }
       ],
@@ -2105,13 +2105,13 @@
         {
           "AudienceId": 31,
           "Delivery": 17504.51,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 17504.51
         },
         {
           "AudienceId": 42,
           "Delivery": 17579.7025,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 17579.7025
         }
       ],
@@ -2145,13 +2145,13 @@
         {
           "AudienceId": 31,
           "Delivery": 15041.92,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 15041.92
         },
         {
           "AudienceId": 42,
           "Delivery": 15373.565,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 15373.565
         }
       ],
@@ -2185,13 +2185,13 @@
         {
           "AudienceId": 31,
           "Delivery": 12850.7925,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 12850.7925
         },
         {
           "AudienceId": 42,
           "Delivery": 9163.32,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 9163.32
         }
       ],
@@ -2225,13 +2225,13 @@
         {
           "AudienceId": 31,
           "Delivery": 12850.7925,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 12850.7925
         },
         {
           "AudienceId": 42,
           "Delivery": 9163.32,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 9163.32
         }
       ],
@@ -2265,14 +2265,14 @@
         {
           "AudienceId": 31,
           "Delivery": 2369.395,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 2369.395
         },
         {
           "AudienceId": 42,
           "Delivery": 1489.6,
-          "Impressions": null,
-          "NsiDelivery": 1489.5999999999997
+          "Impressions": 0.0,
+          "NsiDelivery": 1489.6
         }
       ],
       "Brand": "",
@@ -2332,13 +2332,13 @@
         {
           "AudienceId": 31,
           "Delivery": 11728.605,
-          "Impressions": null,
-          "NsiDelivery": 11728.605000000001
+          "Impressions": 0.0,
+          "NsiDelivery": 11728.605
         },
         {
           "AudienceId": 42,
           "Delivery": 10527.1875,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 10527.1875
         }
       ],
@@ -2372,13 +2372,13 @@
         {
           "AudienceId": 31,
           "Delivery": 12419.9675,
-          "Impressions": null,
-          "NsiDelivery": 12419.967499999999
+          "Impressions": 0.0,
+          "NsiDelivery": 12419.9675
         },
         {
           "AudienceId": 42,
           "Delivery": 11300.4875,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 11300.4875
         }
       ],
@@ -2439,13 +2439,13 @@
         {
           "AudienceId": 31,
           "Delivery": 11333.5,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 11333.5
         },
         {
           "AudienceId": 42,
           "Delivery": 9025.9975,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 9025.9975
         }
       ],
@@ -2506,13 +2506,13 @@
         {
           "AudienceId": 31,
           "Delivery": 11188.055,
-          "Impressions": null,
-          "NsiDelivery": 11188.054999999998
+          "Impressions": 0.0,
+          "NsiDelivery": 11188.055
         },
         {
           "AudienceId": 42,
           "Delivery": 8829.015,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 8829.015
         }
       ],
@@ -2546,13 +2546,13 @@
         {
           "AudienceId": 31,
           "Delivery": 5398.9925,
-          "Impressions": null,
-          "NsiDelivery": 5398.9924999999994
+          "Impressions": 0.0,
+          "NsiDelivery": 5398.9925
         },
         {
           "AudienceId": 42,
           "Delivery": 5124.0625,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 5124.0625
         }
       ],
@@ -2586,14 +2586,14 @@
         {
           "AudienceId": 31,
           "Delivery": 6517.285,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 6517.285
         },
         {
           "AudienceId": 42,
           "Delivery": 6102.515,
-          "Impressions": null,
-          "NsiDelivery": 6102.5149999999994
+          "Impressions": 0.0,
+          "NsiDelivery": 6102.515
         }
       ],
       "Brand": "",
@@ -2626,13 +2626,13 @@
         {
           "AudienceId": 31,
           "Delivery": 6346.2375,
-          "Impressions": null,
-          "NsiDelivery": 6346.2374999999993
+          "Impressions": 0.0,
+          "NsiDelivery": 6346.2375
         },
         {
           "AudienceId": 42,
           "Delivery": 5940.635,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 5940.635
         }
       ],
@@ -2666,14 +2666,14 @@
         {
           "AudienceId": 31,
           "Delivery": 10787.725,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 10787.725
         },
         {
           "AudienceId": 42,
           "Delivery": 9863.1375,
-          "Impressions": null,
-          "NsiDelivery": 9863.1374999999989
+          "Impressions": 0.0,
+          "NsiDelivery": 9863.1375
         }
       ],
       "Brand": "",
@@ -2706,13 +2706,13 @@
         {
           "AudienceId": 31,
           "Delivery": 16319.195,
-          "Impressions": null,
-          "NsiDelivery": 16319.194999999998
+          "Impressions": 0.0,
+          "NsiDelivery": 16319.195
         },
         {
           "AudienceId": 42,
           "Delivery": 18941.48,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 18941.48
         }
       ],
@@ -2881,13 +2881,13 @@
         {
           "AudienceId": 31,
           "Delivery": 5262.7625,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 5262.7625
         },
         {
           "AudienceId": 42,
           "Delivery": 4105.9,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 4105.9
         }
       ],
@@ -2921,13 +2921,13 @@
         {
           "AudienceId": 31,
           "Delivery": 5634.45,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 5634.45
         },
         {
           "AudienceId": 42,
           "Delivery": 4574.7725,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 4574.7725
         }
       ],
@@ -3015,14 +3015,14 @@
         {
           "AudienceId": 31,
           "Delivery": 7847.1425,
-          "Impressions": null,
-          "NsiDelivery": 7847.142499999999
+          "Impressions": 0.0,
+          "NsiDelivery": 7847.1425
         },
         {
           "AudienceId": 42,
           "Delivery": 8132.6175,
-          "Impressions": null,
-          "NsiDelivery": 8132.6174999999994
+          "Impressions": 0.0,
+          "NsiDelivery": 8132.6175
         }
       ],
       "Brand": "",
@@ -3055,14 +3055,14 @@
         {
           "AudienceId": 31,
           "Delivery": 7847.1425,
-          "Impressions": null,
-          "NsiDelivery": 7847.142499999999
+          "Impressions": 0.0,
+          "NsiDelivery": 7847.1425
         },
         {
           "AudienceId": 42,
           "Delivery": 8132.6175,
-          "Impressions": null,
-          "NsiDelivery": 8132.6174999999994
+          "Impressions": 0.0,
+          "NsiDelivery": 8132.6175
         }
       ],
       "Brand": "",
@@ -3095,13 +3095,13 @@
         {
           "AudienceId": 31,
           "Delivery": 11033.5375,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 11033.5375
         },
         {
           "AudienceId": 42,
           "Delivery": 9561.465,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 9561.465
         }
       ],
@@ -3135,14 +3135,14 @@
         {
           "AudienceId": 31,
           "Delivery": 9077.9625,
-          "Impressions": null,
+          "Impressions": 0.0,
           "NsiDelivery": 9077.9625
         },
         {
           "AudienceId": 42,
           "Delivery": 7888.8475,
-          "Impressions": null,
-          "NsiDelivery": 7888.8474999999989
+          "Impressions": 0.0,
+          "NsiDelivery": 7888.8475
         }
       ],
       "Brand": "",
@@ -3256,14 +3256,14 @@
         {
           "AudienceId": 31,
           "Delivery": 6416.68,
-          "Impressions": null,
-          "NsiDelivery": 6416.6799999999994
+          "Impressions": 0.0,
+          "NsiDelivery": 6416.68
         },
         {
           "AudienceId": 42,
           "Delivery": 5645.09,
-          "Impressions": null,
-          "NsiDelivery": 5645.0899999999992
+          "Impressions": 0.0,
+          "NsiDelivery": 5645.09
         }
       ],
       "Brand": "",

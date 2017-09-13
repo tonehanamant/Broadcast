@@ -1892,5 +1892,72 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(output, jsonSettings));
             }
         }
+
+        /// <summary>
+        /// The idea of this test to to *not* include bvs details as part of delivery counts for 
+        /// bvs records that are not in spec.
+        /// </summary>
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Remove_OutofSpec_Deliveries_BCOP_1873()
+        {
+            const int estimate_id = 333444;
+            using (new TransactionScopeWrapper())
+            {
+                var stream = new FileStream(@".\Files\BVS Load For Various Tests.xlsx", FileMode.Open, FileAccess.Read);
+                var bvsFileName = "BVS Load For Various Tests.xlsx";
+
+                var bvsRequest = new BvsSaveRequest();
+                bvsRequest.UserName = bvsFileName;
+                bvsRequest.BvsFiles.Add(new BvsFile() { BvsFileName = bvsFileName, BvsStream = stream });
+
+                int bvsFileId = _Sut.SaveBvsFiles(bvsRequest).Item1.First();
+
+                var saveRequest = new ScheduleSaveRequest();
+                var schedule = new ScheduleDTO();
+
+                var scxFileName = "SCX Various Tests.scx";
+                schedule.AdvertiserId = 39279;
+                schedule.EstimateId = estimate_id;
+                schedule.PostingBookId = 413;
+                schedule.ScheduleName = scxFileName;
+                schedule.UserName = "User";
+                schedule.FileName = scxFileName;
+
+                schedule.ISCIs = new List<IsciDto> { new IsciDto { House = "AAABBB",Client = "AAABBB" }};
+
+                schedule.FileStream = new FileStream(@".\Files\" + scxFileName, FileMode.Open,
+                    FileAccess.Read);
+                schedule.InventorySource = RatesFile.RateSourceType.OpenMarket;
+                schedule.PostType = SchedulePostType.NTI;
+                saveRequest.Schedule = schedule;
+
+                var scheduleId = _Sut.SaveSchedule(saveRequest);
+
+
+                var trackingDetails = _BvsRepository.GetBvsTrackingDetailsByEstimateId(estimate_id);
+                // grab first detail record.
+                int outofSpecDetailId = trackingDetails.First().Id;
+                // mark it as out of spec.
+                var officiallyOutOfSpecBvsItems = _BvsRepository.GetBvsTrackingDetailsByDetailIds(new List<int>() {outofSpecDetailId});
+                officiallyOutOfSpecBvsItems.ForEach(c => c.Status = TrackingStatus.OfficialOutOfSpec);
+                _BvsRepository.PersistBvsDetails(officiallyOutOfSpecBvsItems);
+
+                // generate the report and the "DeliveredSpots" field for the above record should be 0.
+                var dtoReportService = IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
+                var output = dtoReportService.GenerateScheduleReportDto(scheduleId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(ScheduleReportDto), "ScheduleId");
+                jsonResolver.Ignore(typeof(IsciDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(output, jsonSettings));
+            }
+        }
     }
 }

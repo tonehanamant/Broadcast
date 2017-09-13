@@ -223,8 +223,9 @@ namespace Services.Broadcast.Aggregates
 
         public int GetDeliveredCountFromScheduleWeeks(IEnumerable<int> scheduleWeekIds)
         {
-            return _BvsFileDetails.Count(b => b.schedule_detail_week_id.HasValue
-                                              && scheduleWeekIds.Contains(b.schedule_detail_week_id.Value));
+            return _BvsFileDetails.Count(b => b.status == (int)TrackingStatus.InSpec 
+                                                && b.schedule_detail_week_id.HasValue
+                                                && scheduleWeekIds.Contains(b.schedule_detail_week_id.Value));
         }
         public List<bvs_file_details> GetBvsDetails()
         {

@@ -77,7 +77,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void GenerateReportDto_WithMarketRestrictions()
         {
@@ -127,7 +126,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             returnSchedule.inventory_source = schedule.inventory_source;
             return returnSchedule;
         }
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GenerateReportDto_AdvertiserData()
@@ -136,7 +134,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(_NotEquivalizedScheduleReportDto.AdvertiserData));
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GenerateReportDto_WeeklyData()
@@ -145,7 +142,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(_NotEquivalizedScheduleReportDto.WeeklyData));
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GenerateReportDto_StationSummaryData()
@@ -154,7 +150,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(_NotEquivalizedScheduleReportDto.StationSummaryData));
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GenerateReportDto_SpotDetailData()
@@ -163,7 +158,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(_NotEquivalizedScheduleReportDto.SpotDetailData));
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GenerateReportDto_OutOfSpecData()
@@ -172,7 +166,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(_NotEquivalizedScheduleReportDto.OutOfSpecToDate));
         }
 
-        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GenerateEquivalizedNtiReportDto_AdvertiserData()
         {
@@ -531,29 +524,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(json);
         }
 
-        /// <summary>
-        /// This test now covers issue BB-458.  Earlier it wasn't due to _CreateBlankSchedule not being set up properly.
-        /// </summary>
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void FullReport_BlankSchedule_ClientReport()
-        {
-            ScheduleReportDto reportDto = null;
-            using (new TransactionScopeWrapper())
-            {
-                _ImportSchedule(); // basic setup
-                var scheduleId = _CreateBlankSchedule();
-
-                ISchedulesReportService sut =
-                    IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
-                reportDto = sut.GenerateClientReportDto(scheduleId);
-                // 2 commented lines below are useful for debugging full report
-                var report = sut.GenerateClientReport(scheduleId);
-                File.WriteAllBytes(string.Format("..\\Client_Report{0}.xlsx",scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
-            }
-            _VerifyReportData(reportDto);
-        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -639,61 +609,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
             _VerifyReportData(reportDto);
         }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void FullReport_GenerateClientReportDto()
-        {
-            ScheduleReportDto reportDto = null;
-            using (new TransactionScopeWrapper())
-            {
-                var scheduleId = _ImportSchedule();
-                ISchedulesReportService sut =
-                    IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
-                reportDto = sut.GenerateClientReportDto(scheduleId);
-            }
-            _VerifyReportData(reportDto);
-        }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void FullReport_Generate3rdPartyProviderReportDto()
-        {
-            ScheduleReportDto reportDto = null;
-            using (new TransactionScopeWrapper())
-            {
-                var scheduleId = _ImportSchedule();
-                ISchedulesReportService sut =
-                    IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
-                reportDto = sut.Generate3rdPartyProviderReportDto(scheduleId);
-                //var report = sut.Generate3rdPartyProviderReport(scheduleId);
-                //File.WriteAllBytes(string.Format("..\\3rdPartyReport{0}.xlsx",scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
-            }
-            _VerifyReportData(reportDto);
-        }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void FullReport_Generate3rdPartyProviderReportDto_With_Restrictions_BB554()
-        {
-            ScheduleReportDto reportDto = null;
-            using (new TransactionScopeWrapper())
-            {
-                var scheduleId = _ImportRestrictedSchedule(); // basic setup
-
-                ISchedulesReportService sut =
-                    IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
-
-                reportDto = sut.Generate3rdPartyProviderReportDto(scheduleId);
-                //var report = sut.Generate3rdPartyProviderReport(scheduleId);
-                //File.WriteAllBytes(string.Format("..\\3rdPartyReport{0}.xlsx", scheduleId), report.Stream.GetBuffer());
-            }
-            _VerifyReportData(reportDto);
-        }
-
+        
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_Market_Datepart_Restrictions_BB294()
@@ -801,85 +718,5 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             return mainScheduleId;
         }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void FullReport_ClientReport_Market_Datepart_Restrictions_BB562()
-        {
-            ScheduleReportDto reportDto = null;
-            using (new TransactionScopeWrapper())
-            {
-                var scheduleId = _CreateScheduleWithRelatedSchedules();
-
-                ISchedulesReportService sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
-
-                reportDto = sut.GenerateClientReportDto(scheduleId);
-                //var report = sut.GenerateClientReport(scheduleId);
-                //File.WriteAllBytes(string.Format("..\\report{0}.xlsx",scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
-            }
-            _VerifyReportData(reportDto);
-        }
-
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void FullReport_BlankSchedule_ClientReport_Additional_Audiences_BB459()
-        {
-            ScheduleReportDto reportDto = null;
-            using (new TransactionScopeWrapper())
-            {
-                _ImportSchedule(); // basic setup
-                var scheduleId = _CreateBlankScheduleWithRelatedSchedules();
-
-                ISchedulesReportService sut =
-                    IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
-                reportDto = sut.GenerateClientReportDto(scheduleId);
-                // 2 commented lines below are useful for debugging full report
-                //var report = sut.GenerateClientReport(scheduleId);
-                //File.WriteAllBytes(string.Format("..\\Client_Report{0}.xlsx",scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
-            }
-            _VerifyReportData(reportDto);
-        }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void FullReport_BlankSchedule_ClientReport_Additional_Audiences_BB368_481()
-        {
-            _GetBlankScheduleClientReportDto();
-            var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(IsciDto), "Id");
-            var jsonSettings = new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
-            };
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_BlankScheduleClientReportDto, jsonSettings));
-        }
-
-        /// <summary>
-        /// This test uses already loaded files:
-        ///     BVS_For_Mapped.xlsx
-        ///     Assembly Schedule For Mapping.csv
-        /// It also already mapped bvs program names "JUDGE ALEX" and "CRIME WATCH DAILY WITH CHRIS HANSEN" to "VARIOUS" schedule program
-        /// </summary>
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void FullReport_ClientReport_Handle_Mapped_ProgramNames_BB507()
-        {
-            const int preloadedScheduleId = 3420;
-
-            ISchedulesReportService sut =
-                IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
-            var reportDto = sut.GenerateClientReportDto(preloadedScheduleId);
-            // 2 commented lines below are useful for debugging full report
-            //var report = sut.GenerateClientReport(scheduleId);
-            //File.WriteAllBytes(string.Format("..\\Client_Report{0}.xlsx",scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
-
-            _VerifyReportData(reportDto);
     }
-}
 }
