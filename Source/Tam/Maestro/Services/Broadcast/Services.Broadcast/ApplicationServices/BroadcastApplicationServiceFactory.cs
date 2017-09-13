@@ -91,7 +91,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IReportGenerator<PostFile>, PostExcelReportGenerator>();
             unityContainer.RegisterType<IPostService, PostService>();
             unityContainer.RegisterType<IInventoryCrunchService, InventoryCrunchService>();
-            unityContainer.RegisterType<ISpotCostCalculationEngine, SpotCostCalculationEngine>();
+            unityContainer.RegisterType<IThirdPartySpotCostCalculationEngine, ThirdPartySpotCostCalculationEngine>();
             unityContainer.RegisterType<IImpressionAdjustmentEngine, ImpressionAdjustmentEngine>();
 			unityContainer.RegisterType<IPostingBooksService, PostingBooksService>();
             unityContainer.RegisterType<IProposalDetailHeaderTotalsCalculationEngine, ProposalDetailHeaderTotalsCalculationEngine>();

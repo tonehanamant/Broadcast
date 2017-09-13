@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Planning";
+}
+
+@section styles{
+    <link href="~/Styles/css/appPlanning.css" rel="stylesheet" />
+}
+
+<div id="planning_view">
+    <h4 class="cadent-dk-blue"><strong>Planning</strong></h4>
+
+    <div class="header-row row" style="margin-top: 10px;">
+        <div class="col-xs-10">
+            <button class="btn btn-success" role="button" id="create_proposal_btn">Create New Proposal</button>
+        </div>
+
+        <div class="col-xs-2">
+            <div class="input-group input-group-sm pull-right" style="width: 100%;">
+                <span class="input-group-btn">
+                    <button id="proposal_grid_search_btn" style="" class="btn btn-info" role="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                </span>
+
+                <input type="text" id="proposal_grid_search_input" class="form-control" placeholder="Filter...">
+
+                <span class="input-group-btn">
+                    <button style="display:none;" class="btn btn-default" id="proposal_grid_search_clear_btn" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div id="proposal_grid"></div>
+</div>
+
+@Html.Partial("_ProposalView")
+
+@section scripts {
+    @Scripts.Render("~/bundles/planning")
+
+    <script>
+        var pageController = new PlanningMainController();
+        var appController = new AppController();
+        $(document).ready(function () {
+            (function () {
+                appController.initControllerPage(pageController);
+            })();
+        });
+    </script>
+}

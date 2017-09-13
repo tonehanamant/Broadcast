@@ -207,12 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\HelpPage\App_Start\" />
-    <Folder Include="Areas\HelpPage\Controllers\" />
-    <Folder Include="Areas\HelpPage\Models\" />
-    <Folder Include="Areas\HelpPage\SampleGeneration\" />
-    <Folder Include="Areas\HelpPage\Views\Help\DisplayTemplates\" />
-    <Folder Include="Areas\HelpPage\Views\Shared\" />
+    <Folder Include="Imports\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -235,48 +230,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\animate.css" />
-    <Content Include="Content\app.css" />
-    <Content Include="Content\app_old.css" />
-    <Content Include="Content\themes\base\accordion.css" />
-    <Content Include="Content\themes\base\all.css" />
-    <Content Include="Content\themes\base\autocomplete.css" />
-    <Content Include="Content\themes\base\base.css" />
-    <Content Include="Content\themes\base\button.css" />
-    <Content Include="Content\themes\base\core.css" />
-    <Content Include="Content\themes\base\datepicker.css" />
-    <Content Include="Content\themes\base\dialog.css" />
-    <Content Include="Content\themes\base\draggable.css" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\base\menu.css" />
-    <Content Include="Content\themes\base\progressbar.css" />
-    <Content Include="Content\themes\base\resizable.css" />
-    <Content Include="Content\themes\base\selectable.css" />
-    <Content Include="Content\themes\base\selectmenu.css" />
-    <Content Include="Content\themes\base\slider.css" />
-    <Content Include="Content\themes\base\sortable.css" />
-    <Content Include="Content\themes\base\spinner.css" />
-    <Content Include="Content\themes\base\tabs.css" />
-    <Content Include="Content\themes\base\theme.css" />
-    <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Styles\css\appPlanning.css" />
+    <Content Include="Styles\css\appPost.css" />
+    <Content Include="Styles\css\appTraffic.css" />
+    <Content Include="Styles\css\fonts\stack.css" />
+    <Content Include="Styles\css\libraries\animate.css" />
+    <Content Include="Styles\css\app.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\fontawesome-webfont.svg" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Styles\fonts\fontawesome-webfont.svg" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Images\cad_logo_rgb_pos.png" />
-    <Content Include="Images\cad_logo_sm.png" />
+    <Content Include="Styles\images\cad_logo_rgb_pos.png" />
+    <Content Include="Styles\images\cad_logo_sm.png" />
     <Content Include="Scripts\appPlanning\CriteriaBuilderViewModel.js" />
     <Content Include="Scripts\appPlanning\CustomMarketsSelectorViewModel.js" />
     <Content Include="Scripts\appPlanning\FilterViewModel.js" />
@@ -357,12 +322,12 @@
     <Content Include="Scripts\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Scripts\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Scripts\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
-    <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Styles\fonts\fontawesome-webfont.eot" />
+    <Content Include="Styles\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Styles\fonts\fontawesome-webfont.woff" />
+    <Content Include="Styles\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Styles\fonts\FontAwesome.otf" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\QA %28OnDeck%29.pubxml" />
     <None Include="Properties\PublishProfiles\QA.pubxml" />
     <None Include="Scripts\jquery-3.0.0.intellisense.js" />
@@ -434,17 +399,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\temp\release_ims_grid_inline\ims\appExplorer.css" />
-    <Content Include="Scripts\temp\release_ims_grid_inline\ims\ProposalConfig.js" />
-    <Content Include="Scripts\temp\release_ims_grid_inline\ims\ProposalController.js" />
-    <Content Include="Scripts\temp\release_ims_grid_inline\ims\ProposalView.js" />
-    <Content Include="Scripts\temp\release_ims_grid_inline\ims\ProposalViewModel.js" />
-    <Content Include="Scripts\temp\release_ims_grid_inline\release\app.css" />
-    <Content Include="Scripts\temp\release_ims_grid_inline\release\BaseView.js" />
-    <Content Include="Scripts\temp\release_ims_grid_inline\release\config.js" />
-    <Content Include="Scripts\temp\release_ims_grid_inline\release\CopyBulkUpdateModalView.js" />
-    <Content Include="Scripts\temp\release_ims_grid_inline\release\CopyUpdateView.js" />
-    <Content Include="Scripts\temp\release_ims_grid_inline\release\CopyView.js" />
     <Content Include="Scripts\library\knockout\custom-bindings\daypart-dropdown.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -455,7 +409,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -529,13 +482,6 @@
     <Content Include="Views\Rates\_ImportThirdPartyModal.cshtml" />
     <Content Include="Views\Home\_ManageMappingsModal.cshtml" />
     <Content Include="Views\Rates\_StationModalEditRateThirdParty.cshtml" />
-    <Content Include="Views\Planning_original\Index.cshtml" />
-    <Content Include="Views\Planning_original\_CriteriaBuilderModal.cshtml" />
-    <Content Include="Views\Planning_original\_FilterModal.cshtml" />
-    <Content Include="Views\Planning_original\_ManageRatings.cshtml" />
-    <Content Include="Views\Planning_original\_ProposalView.cshtml" />
-    <Content Include="Views\Planning_original\_SwitchProposalVersionModal.cshtml" />
-    <Content Include="Views\Planning_original\_VersionCreatedOptionsModal.cshtml" />
     <Content Include="Views\Home\_ManageRatingsBooksModal.cshtml" />
     <Content Include="Views\Planning\_CustomMarketsModal.cshtml" />
     <Content Include="Views\Planning\_CustomMarketsSelector.cshtml" />
@@ -550,6 +496,34 @@
     <Content Include="Views\Planning\_CriteriaBuilderModal.cshtml" />
     <Content Include="Views\Planning\_FilterModal.cshtml" />
     <Content Include="Views\Traffic\Index.cshtml" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Cyrillic-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Cyrillic.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Greek-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Greek.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Latin-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Latin.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Vietnamese.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Cyrillic-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Cyrillic.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Greek-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Greek.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Latin-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Latin.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Vietnamese.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Cyrillic-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Cyrillic.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Greek-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Greek.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Latin-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Latin.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Vietnamese.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Cyrillic-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Cyrillic.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Greek-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Greek.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Latin-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Latin.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Vietnamese.woff2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Services\Broadcast\Services.Broadcast\Services.Broadcast.csproj">
@@ -558,9 +532,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

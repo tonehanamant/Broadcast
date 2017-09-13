@@ -1,0 +1,22 @@
+﻿<div class="col-md-6" data-bind="with: @Model">
+    <h4 class="text-left"><span data-bind="text: title"></span>  ( <span data-bind="text: counter"></span> )</h4>
+
+    <button type="button" class="btn btn-link proposal-detail-remove-btn pull-right trash" data-bind="click: excludeAllMarkets">
+        <span class="glyphicon glyphicon-trash"></span>
+    </button>
+
+    <div class="well market-list">
+        <select id="select2-markets" multiple="multiple" class="form-control" data-bind="options: customMarketsOptions, optionsValue: 'Id', optionsText: 'Display', optionsCaption: 'Type to add...', selectedOptions: customMarketIds, select2: { placeholder: 'Type to add...' }"></select>
+
+        <br />
+
+        <ul id="check-list-box" class="list-group" data-bind="foreach: customMarkets">
+            <li class="list-group-item" data-bind="css: { 'font-bold': $data.hasOwnProperty('Count') }">
+                <button type="button" class="close pull-left" data-bind="click: $parent.excludeMarket"><span aria-hidden="true">&times;</span></button>
+                <span class="market-display" data-bind="text: Display"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+                    
+                    

@@ -29,8 +29,6 @@ namespace BroadcastComposerWeb
                 "~/Scripts/library/numeral.js",
                 "~/Scripts/library/bootstrap-tagsinput/bootstrap-tagsinput.js");
 
-            
-
             var appBundle = new ScriptBundle("~/bundles/app").Include(
                 "~/Scripts/app/Class.js",
                 "~/Scripts/app/config.js",
@@ -88,7 +86,7 @@ namespace BroadcastComposerWeb
                 "~/Scripts/appPlanning/ProposalDetailInventoryViewModel.js",
                 "~/Scripts/appPlanning/ProposalDetailOpenMarketView.js",
                 "~/Scripts/appPlanning/ProposalDetailOpenMarketViewModel.js",
-                 
+
                 "~/Scripts/appPlanning/CriteriaBuilderViewModel.js",
                 "~/Scripts/appPlanning/FilterViewModel.js",
                 "~/Scripts/appPlanning/SwitchProposalVersionView.js",
@@ -128,8 +126,9 @@ namespace BroadcastComposerWeb
                 "~/Scripts/library/select2/select2-bootstrap.min.css",
                 "~/Scripts/library/daypart-dropdown/daypart-dropdown.css",
                 "~/Scripts/library/bootstrap-tagsinput/bootstrap-tagsinput.css",
-                "~/Content/animate.css",
-                "~/Content/app.css");
+                "~/Styles/css/libraries/animate.css",
+                "~/Styles/css/fonts/stack.css",
+                "~/Styles/css/app.css");
 
             bundles.Add(librariesBundle);
             bundles.Add(appBundle);
