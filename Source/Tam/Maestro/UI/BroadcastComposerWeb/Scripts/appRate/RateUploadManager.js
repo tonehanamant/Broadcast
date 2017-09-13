@@ -62,8 +62,11 @@ var RateUploadManager = UploadManager.extend({
 
     activeSourceType: null,
 
+    //add change of file input multiple or remove attribute
     setActiveSourceType: function (type) {
         this.activeSourceType = this.sourceTypes[type] || null;
+        var multiple = this.activeSourceType.isSingleFile ? false : true;
+        this.setMultipleFileUpload(multiple);
     },
 
 
@@ -112,6 +115,17 @@ var RateUploadManager = UploadManager.extend({
         } else {
             util.notify('File Upload is not yet available for this Rate Type.', 'warning');
         }
+    },
+
+    setMultipleFileUpload: function (isMultiple) {
+
+        if (isMultiple) {
+            $('#uploadButton').attr('multiple', true);
+        } else {
+            
+            $('#uploadButton').removeAttr('multiple');
+        }
+
     }
 
 
