@@ -37,7 +37,7 @@
             success: function (result, status, xhr) {
                 me.debug('[' + url + '] -', result);
                 if (result.Success) {
-                    if (result.Data || result.Data === false) {
+                    if (result.Data || result.Data === false || result.Data === 0) {
                         state = 'success';
                         if (me.clearProcessing) me.clearProcessing();
 

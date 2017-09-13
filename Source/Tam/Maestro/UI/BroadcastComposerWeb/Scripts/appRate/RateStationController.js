@@ -322,5 +322,18 @@ var RateStationController = BaseController.extend({
                TitleErrorMessage: 'Error Loading Genres',
                StatusMessage: 'Error Loading Genres'
            });
+    },
+
+    //converts 15 spot/rate based on 30 (may have other conversions in future)
+    apiConvertRate: function (rate30, callback, isNew) {
+        var jsonObj = JSON.stringify({ Rate30: rate30, SpotLength: 15 });
+        var url = baseUrl + 'api/RatesManager/ConvertRate';
+        var el = isNew ? $('#new_program_form') : $('#update_program_form');
+        httpService.post(url, callback.bind(this), null, jsonObj, {
+            $ViewElement: el, //show processing to modal based on update/new
+            ErrorMessage: 'Convert Rate',
+            TitleErrorMessage: 'Convert Rate',
+            StatusMessage: 'Convert Rate'
+        });
     }
 });
