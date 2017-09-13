@@ -8,16 +8,16 @@
 @RenderPage("ScrubModal.cshtml")
 @RenderPage("BvsFileListingModal.cshtml")
 
-    @section scripts {
-        @Scripts.Render("~/bundles/tracker")
-        <script>
-            var pageController = new TrackerMainController();
-            var appController = new AppController();
-            $(document).ready(function () {
-                //initialize tracker controller
-                (function () {
-                    appController.initControllerPage(pageController);
-                })();
-            });
-        </script>
-    }
+@section scripts {
+    @Scripts.Render("~/bundles/tracker")
+    <script>
+        var pageController = new TrackerMainController();
+        var appController = new AppController();
+        $(document).ready(function () {
+            //initialize tracker controller
+            (function () {
+                appController.initControllerPage(pageController);
+            })();
+        });
+    </script>
+}

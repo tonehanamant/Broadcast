@@ -1,29 +1,4 @@
-﻿<style>
-    .select2-search__field {
-        width: 150px !important;
-    }
-
-    .trash {
-        position: relative;
-        bottom: 25px;
-        right: 20px;
-    }
-
-    .market-list {
-        max-height: 600px;
-        overflow: auto;
-    }
-
-    .market-display {
-        padding-left: 6px;
-    }
-
-    .font-bold {
-        font-weight: bold;
-    }
-</style>
-
-<div class="col-md-6" data-bind="with: @Model">
+﻿<div class="col-md-6" data-bind="with: @Model">
     <h4 class="text-left"><span data-bind="text: title"></span>  ( <span data-bind="text: counter"></span> )</h4>
 
     <button type="button" class="btn btn-link proposal-detail-remove-btn pull-right trash" data-bind="click: excludeAllMarkets">

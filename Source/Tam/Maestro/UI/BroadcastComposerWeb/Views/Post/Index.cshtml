@@ -2,47 +2,24 @@
 @{
     ViewBag.Title = "Posting";
 }
+
 @section styles{
-    <style>
-        #posting_view {
-            margin-top: 10px;
-        }
-
-            #posting_view h4 {
-                text-align: center;
-            }
-
-        #posting_grid {
-            height: 600px;
-        }
-
-        #posting-upload-view {
-            height: 50%;
-        }
-
-        #posting-delete-view {
-            text-align: center;
-        }
-
-        #post_input_posting-error,
-        #post_input_playback-error,
-        #post_input_demos-error {
-            color: #a94442;
-        }
-    </style>
+    <link href="~/Styles/css/appPost.css" rel="stylesheet" />
 }
 
 @RenderPage("PostingMainView.cshtml")
 @RenderPage("PostingUploadModal.cshtml")
 
-    @section scripts{
-        @Scripts.Render("~/bundles/posting")
-
-        <script>
-            var pageController = new PostingMainController();
-            var appController = new AppController();
-            $(document).ready(function () {
+@section scripts {
+    @Scripts.Render("~/bundles/posting")
+    <script>
+        var pageController = new PostingMainController();
+        var appController = new AppController();
+        $(document).ready(function () {
+            //initialize rate controller
+            (function () {
                 appController.initControllerPage(pageController);
-            });
-        </script>
-    }
+            })();
+        });
+    </script>
+}
