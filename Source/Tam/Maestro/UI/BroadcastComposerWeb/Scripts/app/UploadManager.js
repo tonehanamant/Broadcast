@@ -59,7 +59,13 @@ var UploadManager = Class.extend({
         function dragover(event) {
             event.stopPropagation();
             event.preventDefault();
-            if (me.dragEnabled) $('.overlay').show();
+            //prevent issue with non file specific items on page showing overlay on drag
+            var dt = event.originalEvent.dataTransfer;
+            if (dt.types && (dt.types.indexOf ? dt.types.indexOf('Files') != -1 : dt.types.contains('Files'))) {
+               // console.log('drag files', event);
+                if (me.dragEnabled) $('.overlay').show();
+            }
+
         }
 
         function dragleave(event) {
