@@ -196,6 +196,7 @@ var RateMainView = BaseView.extend({
         var ret = [];
         $.each(displayData, function (index, value) {
             var item = value;
+            item.LastUpdate = moment(item.ModifiedDate, "MM/DD/YYYY h:mm:ss a").valueOf();
             item.recid = item.Code;
             ret.push(item);
         });
@@ -205,7 +206,6 @@ var RateMainView = BaseView.extend({
 
     // Main Stations Grid - Clears data in grid; adds new data; called on error to clear data (previous active  rate source)
     setStationsGrid: function (data) {
-        
         if (data) {
             var stationsData = this.prepareStationsGridData(data);
             this.$StationsGrid.clear(false);

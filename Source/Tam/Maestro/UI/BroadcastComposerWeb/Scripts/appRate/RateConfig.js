@@ -81,11 +81,8 @@
                     caption: 'Last Update',
                     sortable: true,
                     size: '20%',
-
-                    //TODO - match to BE returned property
-                    //NOTES: this should be a straight forward conversion to date but with time formated as well (uncomment below).  Unless the BE already formats
                     render: function (record, index, column_index) {
-                        return moment(record.ModifiedDate).format("MM/DD/YYYY h:mm:ss a");
+                        return moment(record.LastUpdate).format("MM/DD/YYYY h:mm:ss a");
                     }
                 }
             ],
