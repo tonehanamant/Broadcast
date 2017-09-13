@@ -207,7 +207,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Imports\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -234,7 +233,7 @@
     <Content Include="Styles\css\appPost.css" />
     <Content Include="Styles\css\appTraffic.css" />
     <Content Include="Styles\css\fonts\stack.css" />
-    <Content Include="Styles\css\libraries\animate.css" />
+    <Content Include="Styles\css\library\animate.css" />
     <Content Include="Styles\css\app.css" />
     <Content Include="favicon.ico" />
     <Content Include="Styles\fonts\fontawesome-webfont.svg" />
@@ -317,11 +316,6 @@
     <Content Include="Scripts\app\UploadManager.js" />
     <Content Include="Scripts\app\util.js" />
     <Content Include="Scripts\app\wrappers.js" />
-    <Content Include="Scripts\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Scripts\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Scripts\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Scripts\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Scripts\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Styles\fonts\fontawesome-webfont.eot" />
     <Content Include="Styles\fonts\fontawesome-webfont.ttf" />
     <Content Include="Styles\fonts\fontawesome-webfont.woff" />
@@ -330,21 +324,11 @@
     <Content Include="Styles\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\QA %28OnDeck%29.pubxml" />
     <None Include="Properties\PublishProfiles\QA.pubxml" />
-    <None Include="Scripts\jquery-3.0.0.intellisense.js" />
-    <Content Include="Scripts\jquery-3.0.0.js" />
-    <Content Include="Scripts\jquery-3.0.0.min.js" />
-    <Content Include="Scripts\jquery-3.0.0.slim.js" />
-    <Content Include="Scripts\jquery-3.0.0.slim.min.js" />
-    <Content Include="Scripts\jquery-ui-1.11.4.js" />
-    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.0.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\library\bootstrap-tagsinput\bootstrap-tagsinput.css" />
     <Content Include="Scripts\library\bootstrap-tagsinput\bootstrap-tagsinput.js" />
-    <Content Include="Scripts\library\jquery.requestanimationframe.min.js" />
-    <Content Include="Scripts\library\knockout\custom-bindings\bootstrap-tagsinput.js" />
-    <Content Include="Scripts\library\knockout\custom-bindings\flightweek-picker.js" />
-    <Content Include="Scripts\library\knockout\custom-bindings\modal.js" />
+    <Content Include="Scripts\library\cadent-knockout\custom-bindings\bootstrap-tagsinput.js" />
+    <Content Include="Scripts\library\cadent-knockout\custom-bindings\flightweek-picker.js" />
+    <Content Include="Scripts\library\cadent-knockout\custom-bindings\modal.js" />
     <Content Include="Scripts\library\bootstrap-3.3.5\css\bootstrap-theme.css" />
     <Content Include="Scripts\library\bootstrap-3.3.5\css\bootstrap-theme.min.css" />
     <Content Include="Scripts\library\bootstrap-3.3.5\css\bootstrap.css" />
@@ -357,49 +341,37 @@
     <Content Include="Scripts\library\daterangepicker\daterangepicker.css" />
     <Content Include="Scripts\library\daterangepicker\daterangepicker.js" />
     <Content Include="Scripts\library\daterangepicker\daterangepicker_modified.js" />
-    <Content Include="Scripts\library\daypart-dropdown\daypart-dropdown-broadcast.js" />
-    <Content Include="Scripts\library\daypart-dropdown\daypart-dropdown-traffic.js" />
-    <Content Include="Scripts\library\daypart-dropdown\daypart-dropdown.css" />
-    <Content Include="Scripts\library\daypart-dropdown\daypart-dropdown.js" />
+    <Content Include="Scripts\library\cadent-daypart-dropdown\daypart-dropdown-broadcast.js" />
+    <Content Include="Scripts\library\cadent-daypart-dropdown\daypart-dropdown-traffic.js" />
+    <Content Include="Scripts\library\cadent-daypart-dropdown\daypart-dropdown.css" />
+    <Content Include="Scripts\library\cadent-daypart-dropdown\daypart-dropdown.js" />
     <Content Include="Scripts\library\font-awesome\css\font-awesome.css" />
     <Content Include="Scripts\library\font-awesome\css\font-awesome.min.css" />
     <Content Include="Scripts\library\font-awesome\fonts\fontawesome-webfont.svg" />
-    <Content Include="Scripts\library\jquery-1.11.3.min.js" />
     <Content Include="Scripts\library\jquery-2.2.3.min.js" />
     <Content Include="Scripts\library\jquery-validate\require_from_group.js" />
     <Content Include="Scripts\library\jquery-validate\jquery.validate.min.js" />
-    <Content Include="Scripts\library\knockout\custom-bindings\select2.js" />
-    <Content Include="Scripts\library\knockout\custom-bindings\stopBubble.js" />
+    <Content Include="Scripts\library\cadent-knockout\custom-bindings\select2.js" />
+    <Content Include="Scripts\library\cadent-knockout\custom-bindings\stopBubble.js" />
     <Content Include="Scripts\library\knockout\knockout-3.3.0.js" />
     <Content Include="Scripts\library\knockout\knockout-3.4.0.js" />
     <Content Include="Scripts\library\knockout\knockout.mapping.js" />
     <Content Include="Scripts\library\knockout\knockout.validation.min.js" />
     <Content Include="Scripts\library\lodash.min.js" />
     <Content Include="Scripts\library\moment.js" />
-    <Content Include="Scripts\library\moment.min.js" />
     <Content Include="Scripts\library\numeral.js" />
     <Content Include="Scripts\library\select2\select2-bootstrap.min.css" />
     <Content Include="Scripts\library\select2\select2.min.css" />
     <Content Include="Scripts\library\select2\select2.min.js" />
-    <Content Include="Scripts\library\selectize\selectize.bootstrap3.css" />
-    <Content Include="Scripts\library\selectize\selectize.css" />
-    <Content Include="Scripts\library\selectize\selectize.default.css" />
-    <Content Include="Scripts\library\selectize\selectize.min.js" />
     <Content Include="Scripts\library\timepicker\jquery.timepicker.css" />
     <Content Include="Scripts\library\timepicker\jquery.timepicker.js" />
     <Content Include="Scripts\library\w2ui\w2ui-1.5.rc1.css" />
     <Content Include="Scripts\library\w2ui\w2ui-1.5.rc1.js" />
     <Content Include="Scripts\library\w2ui\w2ui-1.5.rc1.min.css" />
     <Content Include="Scripts\library\w2ui\w2ui-1.5.rc1.min.js" />
-    <Content Include="Scripts\library\waypoints\jquery.waypoints.js" />
-    <Content Include="Scripts\library\waypoints\waypoints.shortcuts\sticky.js" />
-    <Content Include="Scripts\library\waypoints\waypoints.shortcuts\sticky.min.js" />
     <Content Include="Scripts\library\webui-popover\jquery.webui-popover.min.css" />
     <Content Include="Scripts\library\webui-popover\jquery.webui-popover.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\library\knockout\custom-bindings\daypart-dropdown.js" />
+    <Content Include="Scripts\library\cadent-knockout\custom-bindings\daypart-dropdown.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -423,8 +395,6 @@
     <Content Include="Scripts\library\bootstrap-3.3.5\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Scripts\library\bootstrap-3.3.5\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Scripts\library\bootstrap-3.3.5\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
-    <Content Include="Scripts\jquery-3.0.0.min.map" />
     <Content Include="Views\Shared\NavBar.cshtml" />
     <Content Include="Views\Home\TrackerView.cshtml" />
     <Content Include="Views\Home\ScheduleModal.cshtml" />
