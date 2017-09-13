@@ -376,10 +376,10 @@ var ProposalViewModel = function (controller) {
             SecondaryDemos: $scope.selectedSecondaryAudiences(),
             Equivalized: $scope.equivalized(),
 
-            TargetImpressions: $scope.targetImpressions(),
-            TargetBudget: $scope.targetBudget(),
-            TargetCPM: $scope.targetCpm(),
-            TargetUnits: $scope.targetUnits(),
+            TargetImpressions: $scope.targetImpressions() ? $scope.targetImpressions() : 0,
+            TargetBudget: $scope.targetBudget() ? $scope.targetBudget() : 0,
+            TargetCPM: $scope.targetCpm() ? $scope.targetCpm() : 0,
+            TargetUnits: $scope.targetUnits() ? $scope.targetUnits() : 0,
 
             Status: $scope.status(),
             ForceSave: $scope.forceSave()
