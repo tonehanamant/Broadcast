@@ -197,7 +197,7 @@
     <Compile Include="Entities\PostDto.cs" />
     <Compile Include="ApplicationServices\PostService.cs" />
     <Compile Include="ApplicationServices\ProposalProprietaryInventoryService.cs" />
-    <Compile Include="BusinessEngines\SpotCostCalculationEngine.cs" />
+    <Compile Include="BusinessEngines\ThirdPartySpotCostCalculationEngine.cs" />
     <Compile Include="Entities\BvsFileDetailKey.cs" />
     <Compile Include="Entities\ProposalDetailInventoryBase.cs" />
     <Compile Include="Entities\OpenMarketInventory\ProposalDetailOpenMarketInventoryDto.cs" />
@@ -207,6 +207,7 @@
     <Compile Include="Entities\OpenMarketInventory\ProposalOpenMarketInventoryWeekDto.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationSnapshotComponentDto.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationSnapshotDto.cs" />
+    <Compile Include="Entities\RateConversionRequest.cs" />
     <Compile Include="Entities\StationDetailDaypart.cs" />
     <Compile Include="Entities\StationImpressions.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
