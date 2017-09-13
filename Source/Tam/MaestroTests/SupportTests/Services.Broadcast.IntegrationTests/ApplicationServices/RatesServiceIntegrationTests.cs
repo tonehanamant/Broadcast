@@ -3791,5 +3791,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.AreEqual(7500m, stationAfterUpdate.fixed_price);
             }
         }
+
+        [Test]
+
+        public void CanConvert30sRateTo15sRate()
+        {
+            var result = _ratesService.ConvertRateForSpotLength(10, 15);
+            Assert.AreEqual(6.5, result);
+        }
     }
 }

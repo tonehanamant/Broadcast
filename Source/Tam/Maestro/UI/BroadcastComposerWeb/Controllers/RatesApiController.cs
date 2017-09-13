@@ -225,5 +225,16 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IRatesService>().UnlockStation(stationCode));
         }
+
+        [HttpPost]
+        [Route("ConvertRate")]
+        public BaseResponse<Decimal> ConvertRate(RateConversionRequest request)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () =>
+                        _ApplicationServiceFactory.GetApplicationService<IRatesService>()
+                            .ConvertRateForSpotLength(request.Rate30, request.SpotLength));
+        }
     }
 }

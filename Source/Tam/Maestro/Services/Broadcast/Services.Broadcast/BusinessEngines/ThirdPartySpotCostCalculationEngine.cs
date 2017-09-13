@@ -6,16 +6,16 @@ using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.BusinessEngines
 {
-    public interface ISpotCostCalculationEngine
+    public interface IThirdPartySpotCostCalculationEngine
     {
         void CalculateSpotCost(RatesSaveRequest request, RatesFile ratesFile);
     }
 
-    public class SpotCostCalculationEngine : ISpotCostCalculationEngine
+    public class ThirdPartySpotCostCalculationEngine : IThirdPartySpotCostCalculationEngine
     {
         private readonly IRatingForecastRepository _RatingsRepository;
 
-        public SpotCostCalculationEngine(IDataRepositoryFactory dataRepositoryFactory)
+        public ThirdPartySpotCostCalculationEngine(IDataRepositoryFactory dataRepositoryFactory)
         {
             _RatingsRepository = dataRepositoryFactory.GetDataRepository<IRatingForecastRepository>(); ;
         }

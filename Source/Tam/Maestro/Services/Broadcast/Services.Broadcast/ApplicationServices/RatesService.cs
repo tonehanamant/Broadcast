@@ -56,6 +56,7 @@ namespace Services.Broadcast.ApplicationServices
         LockResponse LockStation(int stationCode);
         ReleaseLockResponse UnlockStation(int stationCode);
         RatesInitialDataDto GetInitialRatesData();
+        Decimal ConvertRateForSpotLength(decimal rateFor30s, int outputRateSpotLength);
     }
 
     public class RatesService : IRatesService
@@ -77,7 +78,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IRatingForecastService _RatingForecastService;
         private readonly IInventoryCrunchService _InventoryCrunchService;
         private readonly Dictionary<int, int> _SpotLengthMap;
-        private readonly ISpotCostCalculationEngine _SpotCostCalculationEngine;
+        private readonly Dictionary<int, double> _SpotLengthCostMultipliers; 
+        private readonly IThirdPartySpotCostCalculationEngine _ThirdPartySpotCostCalculationEngine;
 
         public RatesService(IDataRepositoryFactory broadcastDataRepositoryFactory, IRatesFileValidator ratesFileValidator,
                             IDaypartCache daypartCache, IBroadcastAudiencesCache audiencesCache, IQuarterCalculationEngine quarterCalculationEngine,
@@ -85,7 +87,7 @@ namespace Services.Broadcast.ApplicationServices
             ISMSClient smsClient, ILockingManagerApplicationService lockingManager,
                             IRatingForecastService ratingForecastService,
                             IInventoryCrunchService inventoryCrunchService,
-                            ISpotCostCalculationEngine spotCostCalculationEngine)
+                            IThirdPartySpotCostCalculationEngine thirdPartySpotCostCalculationEngine)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _stationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -106,7 +108,10 @@ namespace Services.Broadcast.ApplicationServices
             _SpotLengthMap =
                 broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
             _SpotLengthMap.Add(0, 0);
-            _SpotCostCalculationEngine = spotCostCalculationEngine;
+            _SpotLengthCostMultipliers =
+                broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthMultiplierRepository>()
+                    .GetSpotLengthIdsAndCostMultipliers();
+            _ThirdPartySpotCostCalculationEngine = thirdPartySpotCostCalculationEngine;
         }
 
         public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
@@ -233,7 +238,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     if (isThirdParty)
                     {
-                        _SpotCostCalculationEngine.CalculateSpotCost(request, ratesFile);
+                        _ThirdPartySpotCostCalculationEngine.CalculateSpotCost(request, ratesFile);
                     }
 
                     ratesFile.FileStatus = RatesFile.FileStatusEnum.Loaded;
@@ -1084,6 +1089,25 @@ namespace Services.Broadcast.ApplicationServices
                         Id = mediaMonth.Id,
                         Display = mediaMonth.LongMonthNameAndYear
                     }).ToList();
+        }
+
+        public Decimal ConvertRateForSpotLength(decimal rateFor30s, int outputRateSpotLength)
+        {
+            if (!_SpotLengthMap.ContainsKey(outputRateSpotLength))
+            {
+                throw new ArgumentException(String.Format("Unable to convert rate to unknown spot length {0}", outputRateSpotLength));
+            }
+
+            var spotLengthId = _SpotLengthMap[outputRateSpotLength];
+
+            if (!_SpotLengthCostMultipliers.ContainsKey(spotLengthId))
+            {
+                throw new InvalidOperationException(string.Format("No conversion factor available for spot length {0}", outputRateSpotLength));
+            }
+
+            var costMultiplier = _SpotLengthCostMultipliers[spotLengthId];
+            var result = rateFor30s * (Decimal) costMultiplier;
+            return result;
         }
     }
 }
