@@ -1,5 +1,4 @@
-﻿
-//begins wrappers for plug-in factory (i.e use in VMs where binding is problematic)
+﻿//begins wrappers for plug-in factory (i.e use in VMs where binding is problematic)
 var wrappers = {
     //wraps single date pickers  - i.e. for form binding use in VM
     //provide mechanism to set start for an inital value (edit)

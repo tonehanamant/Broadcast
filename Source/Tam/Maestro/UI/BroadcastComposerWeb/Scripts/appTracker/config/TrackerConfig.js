@@ -201,7 +201,7 @@
                     sortable: true,
                     render: function (record, index, column_index) {
                         // allow zero, if null will be dash -- test for null to dash -- if (index == 3) record.Cost = null;
-                        return config.renderers.toMoneyOrDash(record.Cost, true);
+                        return w2uiConfig.renderers.toMoneyOrDash(record.Cost, true);
                     }
                 },
                 {

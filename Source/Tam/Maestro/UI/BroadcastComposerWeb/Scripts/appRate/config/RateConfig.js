@@ -316,7 +316,7 @@
                     size: '7%',
                     //tbd
                    // render: function (record, index, column_index) {
-                       // return config.renderers.toMoneyOrDash(record.Rate30, true);
+                       // return w2uiConfig.renderers.toMoneyOrDash(record.Rate30, true);
                     //}
                 },
                 {
@@ -325,7 +325,7 @@
                     sortable: true,
                     size: '7%',
                     render: function (record, index, column_index) {
-                        return config.renderers.toMoneyOrDash(record.Rate30, true);
+                        return w2uiConfig.renderers.toMoneyOrDash(record.Rate30, true);
                     }
                 },
                 {
@@ -334,7 +334,7 @@
                     sortable: true,
                     size: '7%',
                     render: function (record, index, column_index) {
-                        return config.renderers.toMoneyOrDash(record.Rate15, true);
+                        return w2uiConfig.renderers.toMoneyOrDash(record.Rate15, true);
                     }
                 },
                 {
@@ -499,7 +499,7 @@
                     sortable: true,
                     size: '15%',
                     render: function (record, index, column_index) {
-                        return config.renderers.toMoneyOrDash(record.Cpm30, false);
+                        return w2uiConfig.renderers.toMoneyOrDash(record.Cpm30, false);
                     }
                 },
                 {
@@ -508,7 +508,7 @@
                     sortable: true,
                     size: '15%',
                     render: function (record, index, column_index) {
-                        return config.renderers.toMoneyOrDash(record.Cpm15, false);
+                        return w2uiConfig.renderers.toMoneyOrDash(record.Cpm15, false);
                     }
                 },
                 {
@@ -517,7 +517,7 @@
                     sortable: true,
                     size: '15%',
                     render: function (record, index, column_index) {
-                        return config.renderers.toMoneyOrDash(record.Cpm60, false);
+                        return w2uiConfig.renderers.toMoneyOrDash(record.Cpm60, false);
                     }
                 },
                 {
@@ -526,7 +526,7 @@
                     sortable: true,
                     size: '15%',
                     render: function (record, index, column_index) {
-                        return config.renderers.toMoneyOrDash(record.Cpm90, false);
+                        return w2uiConfig.renderers.toMoneyOrDash(record.Cpm90, false);
                     }
                 },
                 {
@@ -535,7 +535,7 @@
                     sortable: true,
                     size: '15%',
                     render: function (record, index, column_index) {
-                        return config.renderers.toMoneyOrDash(record.Cpm120, false);
+                        return w2uiConfig.renderers.toMoneyOrDash(record.Cpm120, false);
                     }
                 }
 

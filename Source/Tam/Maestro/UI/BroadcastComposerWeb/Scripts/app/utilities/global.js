@@ -1,24 +1,4 @@
-//Common Utility methods; 
-//TODO: possibly enclosure module pattern; remove obsolete/project specific methods; remove prototypes
-Array.prototype.remove = function (predicate) {
-    var idxs = [];
-    for (var i = 0, j = this.length; i < j; i++) {
-        if (predicate(this[i], i, this)) {
-            idxs.push(i);
-        }
-    }
-
-    for (var i = 0; i < idxs.length; i++) {
-        this.splice(idxs[i] - i, 1);
-    }
-}
-Object.defineProperty(Array.prototype, "remove", { enumerable: false });
-
-//cannot rely on these to be rendered when this script is loaded
-//var alertModal = $("#alertModal").modal({ show: false });
-//var confirmModal = $("#confirmModal").modal({ show: false });
-
-var util = {
+﻿var util = {
 
     appNotify: null,
     //return reusable function closure to show/hide element (el should be JQ object not string selector);
@@ -304,42 +284,4 @@ var util = {
             return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
         });
     }
-};
-
-//Quick Date Format as prototype
-
-Date.prototype.format = function (format) {
-    var o = {
-        "M+": this.getMonth() + 1, //month
-        "d+": this.getDate(),    //day
-        "h+": this.getHours(),   //hour
-        "m+": this.getMinutes(), //minute
-        "s+": this.getSeconds(), //second
-        "q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
-        "S": this.getMilliseconds() //millisecond
-    };
-
-    if (/(y+)/.test(format)) format = format.replace(RegExp.$1,
-      (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o) if (new RegExp("(" + k + ")").test(format))
-        format = format.replace(RegExp.$1,
-          RegExp.$1.length == 1 ? o[k] :
-            ("00" + o[k]).substr(("" + o[k]).length));
-    return format;
-};
-
-//alert(new Date().format("yyyy-MM-dd"));
-//alert(new Date("january 12 2008 11:12:30").format("yyyy-MM-dd h:mm:ss"));
-
-$.fn.isolatedScroll = function () {
-    this.bind('mousewheel DOMMouseScroll', function (e) {
-        var delta = e.wheelDelta || (e.originalEvent && e.originalEvent.wheelDelta) || -e.detail,
-            bottomOverflow = this.scrollTop + $(this).outerHeight() - this.scrollHeight >= 0,
-            topOverflow = this.scrollTop <= 0;
-
-        if ((delta < 0 && bottomOverflow) || (delta > 0 && topOverflow)) {
-            e.preventDefault();
-        }
-    });
-    return this;
 };

@@ -37,16 +37,33 @@ namespace BroadcastComposerWeb
                 );
 
             var appBundle = new ScriptBundle("~/bundles/app").Include(
-                /* App */
-                "~/Scripts/app/Class.js",
-                "~/Scripts/app/config.js",
-                "~/Scripts/app/BaseController.js",
-                "~/Scripts/app/BaseView.js",
-                "~/Scripts/app/wrappers.js",
-                "~/Scripts/app/util.js",
-                "~/Scripts/app/httpService.js",
-                "~/Scripts/app/UploadManager.js",
-                "~/Scripts/app/appController.js",
+                /* Vendor Imports */
+                "~/Scripts/app/vendor/Class.js",
+
+                /* Configuration */
+                "~/Scripts/app/config/config.js",
+                "~/Scripts/app/config/jqvalidate.js",
+                "~/Scripts/app/config/w2ui.js",
+
+                /* Utilities */
+                "~/Scripts/app/utilities/array.js",      // Prototype
+                "~/Scripts/app/utilities/date.js",       // Prototype
+                "~/Scripts/app/utilities/global.js",
+                "~/Scripts/app/utilities/scroll.js",
+
+                /* Services - Data*/
+                "~/Scripts/app/services/httpService.js",
+
+                /* Factories - Function */
+                "~/Scripts/app/factories/wrappers.js",
+                
+                /* Controllers */
+                "~/Scripts/app/controllers/BaseController.js",
+                "~/Scripts/app/controllers/appController.js",
+
+                /* View */
+                "~/Scripts/app/views/BaseView.js",
+                "~/Scripts/app/views/UploadManager.js", // closely coupled with view
 
                 /* Knockout: Custom Bindings */
                 "~/Scripts/library/cadent-knockout/custom-bindings/daypart-dropdown.js",
@@ -54,73 +71,134 @@ namespace BroadcastComposerWeb
                 "~/Scripts/library/cadent-knockout/custom-bindings/select2.js",
                 "~/Scripts/library/cadent-knockout/custom-bindings/modal.js",
                 "~/Scripts/library/cadent-knockout/custom-bindings/bootstrap-tagsinput.js",
-                "~/Scripts/library/cadent-knockout/custom-bindings/stopBubble.js");
+                "~/Scripts/library/cadent-knockout/custom-bindings/stopBubble.js"
+                );
 
             var trackerBundle = new ScriptBundle("~/bundles/tracker").Include(
-                "~/Scripts/appTracker/TrackerConfig.js",
-                "~/Scripts/appTracker/TrackerMainController.js",
-                "~/Scripts/appTracker/TrackerScheduleViewModel.js",
-                "~/Scripts/appTracker/TrackerMainView.js",
+                /* Config */
+                "~/Scripts/appTracker/config/TrackerConfig.js",
+
+                /* Controllers */
+                "~/Scripts/appTracker/controllers/TrackerMainController.js",
+
+                /* View Models */
+                "~/Scripts/appTracker/viewmodels/TrackerScheduleViewModel.js",
+                
+                /* Views */
+                "~/Scripts/appTracker/views/TrackerMainView.js",
+                "~/Scripts/appTracker/views/BvsFileListingView.js",
+
+                /* Hybrid */
                 "~/Scripts/appTracker/TrackerManageMappings.js",
                 "~/Scripts/appTracker/TrackerManageRatingsBooks.js",
-                "~/Scripts/appTracker/TrackerUploadManager.js",
-                "~/Scripts/appTracker/BvsFileListingView.js");
+                "~/Scripts/appTracker/TrackerUploadManager.js"
+                );
 
             var rateBundle = new ScriptBundle("~/bundles/rate").Include(
-                "~/Scripts/appRate/RateConfig.js",
-                "~/Scripts/appRate/RateMainController.js",
-                "~/Scripts/appRate/RateMainView.js",
+                /* Config */
+                "~/Scripts/appRate/config/RateConfig.js",
+
+                /* Controllers */
+                "~/Scripts/appRate/controllers/RateMainController.js",
+                "~/Scripts/appRate/controllers/RateStationController.js",
+
+                /* View Models */
+                "~/Scripts/appRate/viewmodels/RateStationViewModel.js",
+                "~/Scripts/appRate/viewmodels/ImportThirdPartyViewModel.js",
+
+                /* Views */
+                "~/Scripts/appRate/views/RateMainView.js",
+                "~/Scripts/appRate/views/RateStationView.js",
+
+                /* Hybrid */
                 "~/Scripts/appRate/RateUploadManager.js",
-                "~/Scripts/appRate/RateStationController.js",
-                "~/Scripts/appRate/RateStationView.js",
-                "~/Scripts/appRate/RateStationViewModel.js",
                 "~/Scripts/appRate/StationModalEditRate.js",
                 "~/Scripts/appRate/StationModalEditRateThirdparty.js",
                 "~/Scripts/appRate/StationModalEndFlight.js",
-                "~/Scripts/appRate/StationModalNewRate.js",
-                "~/Scripts/appRate/ImportThirdPartyViewModel.js");
+                "~/Scripts/appRate/StationModalNewRate.js"
+
+                );
 
             var planningBundle = new ScriptBundle("~/bundles/planning").Include(
-                "~/Scripts/appPlanning/PlanningConfig.js",
-                "~/Scripts/appPlanning/PlanningMainController.js",
-                "~/Scripts/appPlanning/PlanningMainView.js",
-                "~/Scripts/appPlanning/PlanningSearchViewModel.js",
-                "~/Scripts/appPlanning/ProposalController.js",
-                "~/Scripts/appPlanning/ProposalView.js",
-                "~/Scripts/appPlanning/ProposalViewModel.js",
-                "~/Scripts/appPlanning/ProposalDetailSet.js",
-                "~/Scripts/appPlanning/CustomMarketsViewModel.js",
-                "~/Scripts/appPlanning/CustomMarketsSelectorViewModel.js",
-                "~/Scripts/appPlanning/ProposalDetailInventoryView.js",
-                "~/Scripts/appPlanning/ProposalDetailInventoryViewModel.js",
-                "~/Scripts/appPlanning/ProposalDetailOpenMarketView.js",
-                "~/Scripts/appPlanning/ProposalDetailOpenMarketViewModel.js",
-                "~/Scripts/appPlanning/CriteriaBuilderViewModel.js",
-                "~/Scripts/appPlanning/FilterViewModel.js",
-                "~/Scripts/appPlanning/SwitchProposalVersionView.js",
-                "~/Scripts/appPlanning/SwitchProposalVersionViewModel.js",
-                "~/Scripts/appPlanning/VersionCreatedOptionsViewModel.js",
-                "~/Scripts/appPlanning/ProposalUpdateWarningViewModel.js",
-                "~/Scripts/appPlanning/ManageRatingsViewModel.js");
+                /* Config */
+                "~/Scripts/appPlanning/config/PlanningConfig.js",
+
+                /* Controllers */
+                "~/Scripts/appPlanning/controllers/PlanningMainController.js",
+                "~/Scripts/appPlanning/controllers/ProposalController.js",
+
+                /* View Models */
+                "~/Scripts/appPlanning/viewmodels/PlanningSearchViewModel.js",
+                "~/Scripts/appPlanning/viewmodels/ProposalViewModel.js",
+                "~/Scripts/appPlanning/viewmodels/CustomMarketsViewModel.js",
+                "~/Scripts/appPlanning/viewmodels/CustomMarketsSelectorViewModel.js",
+                "~/Scripts/appPlanning/viewmodels/ProposalDetailInventoryViewModel.js",
+                "~/Scripts/appPlanning/viewmodels/ProposalDetailOpenMarketViewModel.js",
+                "~/Scripts/appPlanning/viewmodels/CriteriaBuilderViewModel.js",
+                "~/Scripts/appPlanning/viewmodels/FilterViewModel.js",
+                "~/Scripts/appPlanning/viewmodels/SwitchProposalVersionViewModel.js",
+                "~/Scripts/appPlanning/viewmodels/VersionCreatedOptionsViewModel.js",
+                "~/Scripts/appPlanning/viewmodels/ProposalUpdateWarningViewModel.js",
+                "~/Scripts/appPlanning/viewmodels/ManageRatingsViewModel.js",
+
+                /* Views */
+                "~/Scripts/appPlanning/views/PlanningMainView.js",
+                "~/Scripts/appPlanning/views/ProposalView.js",
+                "~/Scripts/appPlanning/views/ProposalDetailInventoryView.js",
+                "~/Scripts/appPlanning/views/ProposalDetailOpenMarketView.js",
+                "~/Scripts/appPlanning/views/SwitchProposalVersionView.js",
+
+                /* Hybrid */
+                "~/Scripts/appPlanning/ProposalDetailSet.js"
+                );
 
             var trackerScrubBundle = new ScriptBundle("~/bundles/trackerScrub").Include(
-                "~/Scripts/appTracker/TrackerScrubController.js",
-                "~/Scripts/appTracker/TrackerScrubViewModel.js",
-                "~/Scripts/appTracker/TrackerScrubView.js");
+                /* Config */
+                /* Controllers */
+                "~/Scripts/appTracker/controllers/TrackerScrubController.js",
+
+                /* View Models */
+                "~/Scripts/appTracker/viewmodels/TrackerScrubViewModel.js",
+
+                /* Views */
+                "~/Scripts/appTracker/views/TrackerScrubView.js"
+
+                /* Hybrid */
+                );
 
             var postingBundle = new ScriptBundle("~/bundles/posting").Include(
-                "~/Scripts/appPosting/PostingConfig.js",
-                "~/Scripts/appPosting/PostingMainController.js",
-                "~/Scripts/appPosting/PostingMainView.js",
-                "~/Scripts/appPosting/PostingUploadController.js",
-                "~/Scripts/appPosting/PostingUploadManager.js",
-                "~/Scripts/appPosting/PostingUploadView.js",
-                "~/Scripts/appPosting/PostingUploadViewModel.js");
+                /* Config */
+                "~/Scripts/appPosting/config/PostingConfig.js",
+
+                /* Controllers */
+                "~/Scripts/appPosting/controllers/PostingMainController.js",
+                "~/Scripts/appPosting/controllers/PostingUploadController.js",
+
+                /* View Models */
+                "~/Scripts/appPosting/viewmodels/PostingUploadViewModel.js",
+
+                /* Views */
+                "~/Scripts/appPosting/views/PostingMainView.js",
+                "~/Scripts/appPosting/views/PostingUploadView.js",
+
+                /* Hybrid */
+                "~/Scripts/appPosting/PostingUploadManager.js"
+                );
 
             var trafficBundle = new ScriptBundle("~/bundles/traffic").Include(
-                "~/Scripts/appTraffic/TrafficConfig.js",
-                "~/Scripts/appTraffic/TrafficController.js",
-                "~/Scripts/appTraffic/TrafficView.js");
+                /* Config */
+                "~/Scripts/appTraffic/config/TrafficConfig.js",
+
+                /* Controllers */
+                "~/Scripts/appTraffic/controllers/TrafficController.js",
+
+                /* View Models */
+
+                /* Views */
+                "~/Scripts/appTraffic/views/TrafficView.js"
+
+                /* Hybrid */
+                );
 
             var cssBundle = new StyleBundle("~/content/css").Include(
                 /* Bootstrap */

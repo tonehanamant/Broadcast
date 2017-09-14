@@ -2,5 +2,4 @@
 //Class will call init automatically if exists in instance creation new myClass(config)
 var BaseView = Class.extend({
 
-
 });
