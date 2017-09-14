@@ -652,6 +652,8 @@ namespace Services.Broadcast.ApplicationServices
             var allocationToAdd = _GetAllocationsToCreate(request, existingAllocations);
             var spotLength = GetProposalSpotLength(request.ProposalVersionDetailId);
 
+            _ValidateSpotsAllocation(allocationToAdd, allocationsToUpdate);
+
             using (var transaction = new TransactionScopeWrapper())
             {
                 openMarketInventoryRepository.RemoveAllocations(allocationToRemove);
@@ -679,6 +681,25 @@ namespace Services.Broadcast.ApplicationServices
                 transaction.Complete();
 
                 return _GetProposalDetailOpenMarketInventoryDto(request.ProposalVersionDetailId, request.Filter);
+            }
+        }
+
+        private void _ValidateSpotsAllocation(IEnumerable<OpenMarketInventoryAllocation> allocationToAdd,
+            IEnumerable<OpenMarketInventoryAllocation> allocationsToUpdate)
+        {
+            _ValidateAllocations(allocationToAdd);
+            _ValidateAllocations(allocationsToUpdate);
+        }
+
+        private static void _ValidateAllocations(IEnumerable<OpenMarketInventoryAllocation> allocations)
+        {
+            if (
+                allocations.Any(
+                    openMarketInventoryAllocation =>
+                        openMarketInventoryAllocation.Impressions == 0 &&
+                        openMarketInventoryAllocation.Spots > 0))
+            {
+                throw new Exception("Cannot allocate spots that have zero impressions");
             }
         }
 
@@ -748,7 +769,9 @@ namespace Services.Broadcast.ApplicationServices
                             ProposalVersionDetailId = request.ProposalVersionDetailId,
                             MediaWeekId = w.MediaWeekId,
                             StationProgramId = p.ProgramId,
-                            Spots = p.Spots
+                            Spots = p.Spots,
+                            Impressions = p.Impressions,
+                            SpotCost = p.SpotCost
                         })).Where(p => p.Spots > 0).ToList();
 
             var updateAllocations = new List<OpenMarketInventoryAllocation>();
