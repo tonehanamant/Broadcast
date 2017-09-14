@@ -167,7 +167,7 @@
                             //use Units as Cpm
                             //change only show decimals if present but with alway 2 decimals ($5.70); use commas
                             var formattedCpm = numeral(record.Units).format('$0,0[.]00');
-                            //return '<div class="editable-cell" id="' + id + '"><span class="grid-label">CPM ' + '</span>' + config.renderers.toMoneyOrDash(record.Units, false) + '</div>';
+                            //return '<div class="editable-cell" id="' + id + '"><span class="grid-label">CPM ' + '</span>' + w2uiConfig.renderers.toMoneyOrDash(record.Units, false) + '</div>';
                             return '<div class="editable-cell" id="' + id + '"><span class="grid-label">CPM ' + '</span>' + formattedCpm + '</div>';
                         } else {
                             //allow for comma 1000s
@@ -210,11 +210,11 @@
                     //Cost
                     render: function (record, index, column_index) {
                         //only show decimal if not 000
-                        if (record.w2ui && record.w2ui.summary) return config.renderers.toMoneyOrDash(record.TotalCost, false);
+                        if (record.w2ui && record.w2ui.summary) return w2uiConfig.renderers.toMoneyOrDash(record.TotalCost, false);
                         if (record.isQuarter) {
                             return '';
                         } else {
-                            return config.renderers.toMoneyOrDash(record.Cost, false);
+                            return w2uiConfig.renderers.toMoneyOrDash(record.Cost, false);
                         }
                     }
                 }
@@ -371,7 +371,7 @@
                 size: '80px',
                 //Cost
                 render: function (record, index, column_index) {
-                    //if (record.w2ui && record.w2ui.summary) return config.renderers.toMoneyOrDash(record.TotalCost, false);
+                    //if (record.w2ui && record.w2ui.summary) return w2uiConfig.renderers.toMoneyOrDash(record.TotalCost, false);
                     if (record.isGroup) {
                         return '';
                     } else {
@@ -388,7 +388,7 @@
                 resizable: false,
                 size: '120px',
                 render: function (record, index, column_index) {
-                    //if (record.w2ui && record.w2ui.summary) return config.renderers.toMoneyOrDash(record.TotalCost, false);
+                    //if (record.w2ui && record.w2ui.summary) return w2uiConfig.renderers.toMoneyOrDash(record.TotalCost, false);
                     if (record.isGroup) {
                         return '';
                     } else {
