@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ApprovalTests;
@@ -1165,6 +1166,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposal = _ProposalService.GetProposalById(248);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(proposal));
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot allocate spots that have zero impressions", MatchType = MessageMatch.Contains)]
+        public void CannotSaveInventoryAllocationWhenImpressionsIsZero()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new OpenMarketAllocationSaveRequest
+                {
+                    ProposalVersionDetailId = 7,
+                    Username = "test-user",
+                    Weeks = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek>
+                    {
+                        new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek
+                        {
+                            MediaWeekId = 649,
+                            Programs = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram>
+                            {
+                                new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
+                                {
+                                    Impressions = 0,
+                                    ProgramId = 2000,
+                                    Spots = 1,
+                                    SpotCost = 2.5m
+                                },
+                            }
+                        }
+                    }
+                };
+
+                _ProposalOpenMarketInventoryService.SaveInventoryAllocations(request);
             }
         }
     }
