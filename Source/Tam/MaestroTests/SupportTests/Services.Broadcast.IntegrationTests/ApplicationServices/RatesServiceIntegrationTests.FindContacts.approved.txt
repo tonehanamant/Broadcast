@@ -1,0 +1,29 @@
+﻿[
+  {
+    "Company": "CADENT",
+    "Email": "rvega@example.com",
+    "Fax": "(321)654-0987",
+    "Name": "ROGELIO DE LA VEGA",
+    "Phone": "(123)456-7890",
+    "StationCode": 5237,
+    "Type": "Station"
+  },
+  {
+    "Company": "CMW",
+    "Email": "rvega@example.com",
+    "Fax": "(321)654-0980",
+    "Name": "ROGELIO DE LA VEGA",
+    "Phone": "(123)456-7800",
+    "StationCode": 5269,
+    "Type": "Station"
+  },
+  {
+    "Company": "CMW",
+    "Email": "rvega@example.com",
+    "Fax": "(321)654-0987",
+    "Name": "ROGELIO DE LA VEGA",
+    "Phone": "(123)456-7890",
+    "StationCode": 5141,
+    "Type": "Rep"
+  }
+]
