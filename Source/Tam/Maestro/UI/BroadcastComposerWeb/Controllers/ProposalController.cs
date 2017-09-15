@@ -61,6 +61,17 @@ namespace BroadcastComposerWeb.Controllers
                             .SaveProposal(proposal, User.Identity.Name, DateTime.Now));
         }
 
+        [HttpDelete]
+        [Route("DeleteProposal/{proposalId}")]
+        public BaseResponse<ValidationWarningDto> DeleteProposal(int proposalId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () =>
+                        _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+                            .DeleteProposal(proposalId));
+        }
+
         [HttpPost]
         [Route("UnorderProposal")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Buyer)]

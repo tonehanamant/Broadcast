@@ -6,6 +6,7 @@
     "Id": 0
   },
   "BlackoutMarketGroupId": 0,
+  "CanDelete": true,
   "Details": [
     {
       "Adu": false,

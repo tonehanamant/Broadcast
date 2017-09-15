@@ -2,6 +2,7 @@
   "AdvertiserId": 37444,
   "BlackoutMarketGroup": null,
   "BlackoutMarketGroupId": null,
+  "CanDelete": true,
   "Equivalized": null,
   "GuaranteedDemoId": 31,
   "Id": 249,

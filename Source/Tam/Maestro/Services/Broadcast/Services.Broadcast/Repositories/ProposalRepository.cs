@@ -50,6 +50,7 @@ namespace Services.Broadcast.Repositories
         List<ProposalDetailTotalsDto> GetAllProposalDetailsTotals(int proposalVersionId);
         void SaveProposalTotals(int proposalVersionId, ProposalHeaderTotalsDto proposalTotals);
         void ResetAllTotals(int proposalId, int proposalVersion);
+        void DeleteProposal(int proposalId);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -1185,6 +1186,20 @@ namespace Services.Broadcast.Repositories
             baseDto.SharePostingBookId = pvd.share_posting_book_id;
             baseDto.HutPostingBookId = pvd.hut_posting_book_id;
             baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.playback_type;
+        }
+
+        public void DeleteProposal(int proposalId)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var proposal = context.proposals.Single(a => a.id == proposalId,
+                    string.Format("The Proposal information you have entered [{0}] does not exist. Please try again.",
+                        proposalId));
+
+                context.proposals.Remove(proposal);
+
+                context.SaveChanges();
+            });
         }
     }
 }

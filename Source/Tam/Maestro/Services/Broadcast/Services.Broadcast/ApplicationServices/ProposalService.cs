@@ -36,6 +36,7 @@ namespace Services.Broadcast.ApplicationServices
         ProposalDto UpdateProposal(List<ProposalDetailDto> proposalDetailDtos);
         ProposalDto UnorderProposal(int proposalId, string username);
         Tuple<string, Stream> GenerateScxFileArchive(int proposalIds);
+        ValidationWarningDto DeleteProposal(int proposalId);
     }
 
     public class ProposalService : IProposalService
@@ -170,6 +171,58 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
+        public ValidationWarningDto DeleteProposal(int proposalId)
+        {
+            // get all proposal versions 
+            var proposalVersions = GetProposalVersionsByProposalId(proposalId);
+
+            // check if there is at least one that is contracted or previously contracted
+            if (
+                proposalVersions.Any(
+                    a =>
+                        a.Status == ProposalEnums.ProposalStatusType.Contracted ||
+                        a.Status == ProposalEnums.ProposalStatusType.PreviouslyContracted))
+                return new ValidationWarningDto()
+                {
+                    HasWarning = true,
+                    Message = "Can only delete proposals with status 'Proposed' or 'Agency on Hold'."
+                };
+
+            using (var transaction = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                // remove allocations by version
+                foreach (var proposalVersion in proposalVersions)
+                {
+                    var proposal = GetProposalByIdWithVersion(proposalId, proposalVersion.Version);
+                    
+                    _DeleteProposalDetailInventoryAllocations(proposal);
+
+                    _DeleteAllInventoryAllocations(proposal);
+                }
+
+                _ProposalRepository.DeleteProposal(proposalId);
+
+                transaction.Complete();
+            }
+
+            return new ValidationWarningDto() {HasWarning = false};
+        }
+
+        private void _DeleteAllInventoryAllocations(ProposalDto proposalDto)
+        {
+            var proposalVersionQuarterWeeksIds = _GetProposalDetailQuarterWeekIdFromProposalDto(proposalDto);
+
+            // check if proposal has invetory allocated against those quarter week ids
+            var proposalHasInventoryDetailSlots =
+                _ProposalInventoryRepository.GetProposalsInventoryDetailSlotIdsByQuarterWeeksIds(
+                    proposalVersionQuarterWeeksIds)
+                    .Any();
+
+            // deal with inventory allocation
+            if (proposalHasInventoryDetailSlots)
+                _ProposalInventoryRepository.DeleteInventoryAllocationsForDetailQuarterWeek(
+                    proposalVersionQuarterWeeksIds);
+        }
 
         private void EnsureContractedOnHoldStatus(ProposalDto saveRequest, ProposalDto proposal = null)
         {
@@ -488,21 +541,7 @@ namespace Services.Broadcast.ApplicationServices
             // get unchanged proposal version detail week ids
             var proposalDetailQuaterWeekIds = _ProposalRepository.GetProposalDetailQuarterWeekIdsByProposalVersionId(proposalVersionid);
 
-            var updatedProposalQuarterWeeksIds = new List<int>();
-            // user can delete all details
-            if (proposalDto.Details != null && proposalDto.Details.Any())
-            {
-                // retrieve quarterweek ids that have an value against it (user could have added new week ids)
-                var proposalVersionQuarterWeeksIds =
-                    proposalDto.Details.Where(z => z.Quarters.Any())
-                        .SelectMany(
-                            a =>
-                                a.Quarters.Where(y => y.Weeks.Any())
-                                    .SelectMany(b => b.Weeks.Where(m => m.Id.HasValue && !m.IsHiatus).Select(w => w.Id.Value)))
-                        .ToList();
-
-                updatedProposalQuarterWeeksIds.AddRange(proposalVersionQuarterWeeksIds);
-            }
+            var updatedProposalQuarterWeeksIds = _GetProposalDetailQuarterWeekIdFromProposalDto(proposalDto);
 
             // get the details quarter week ids that have been removed, if any
             var deletedQuarterWeeksIds = proposalDetailQuaterWeekIds.Except(updatedProposalQuarterWeeksIds).ToList();
@@ -516,6 +555,20 @@ namespace Services.Broadcast.ApplicationServices
             // deal with inventory allocation
             if (proposalHasInventoryDetailSlots)
                 _ProposalInventoryRepository.DeleteInventoryAllocationsForDetailQuarterWeek(deletedQuarterWeeksIds);
+        }
+
+        private List<int> _GetProposalDetailQuarterWeekIdFromProposalDto(ProposalDto proposalDto)
+        {
+            var hasDetails = proposalDto.Details != null && proposalDto.Details.Any();
+            if (!hasDetails) return new List<int>();
+
+            // retrieve quarterweek ids that have an value against it (user could have added new week ids)
+            return proposalDto.Details.Where(z => z.Quarters.Any())
+                .SelectMany(
+                    a =>
+                        a.Quarters.Where(y => y.Weeks.Any())
+                            .SelectMany(b => b.Weeks.Where(m => m.Id.HasValue && !m.IsHiatus).Select(w => w.Id.Value)))
+                .ToList();
         }
 
 
@@ -675,6 +728,7 @@ namespace Services.Broadcast.ApplicationServices
                 _SetProposalMarketGroups(proposal);
                 _SetProposalRatingBooks(proposal);
                 _SetProposalMargins(proposal);
+                _SetProposalCanBeDeleted(proposal);
                 return proposal;
             }
         }
@@ -709,8 +763,18 @@ namespace Services.Broadcast.ApplicationServices
                 _SetProposalMarketGroups(proposal);
                 _SetProposalRatingBooks(proposal);
                 _SetProposalMargins(proposal);
+                _SetProposalCanBeDeleted(proposal);
                 return proposal;
             }
+        }
+
+        private void _SetProposalCanBeDeleted(ProposalDto proposal)
+        {
+            var proposalVersions = GetProposalVersionsByProposalId(proposal.Id.Value);
+            proposal.CanDelete =
+                !proposalVersions.Any(a => a.Status == ProposalEnums.ProposalStatusType.Contracted ||
+                                           a.Status == ProposalEnums.ProposalStatusType.PreviouslyContracted);
+
         }
 
         private void _SetProposalMargins(ProposalDto proposal)

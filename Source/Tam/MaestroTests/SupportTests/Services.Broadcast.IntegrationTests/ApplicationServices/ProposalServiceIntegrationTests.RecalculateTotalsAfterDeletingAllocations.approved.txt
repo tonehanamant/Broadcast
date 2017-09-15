@@ -2,6 +2,7 @@
   "AdvertiserId": 37444,
   "BlackoutMarketGroup": null,
   "BlackoutMarketGroupId": null,
+  "CanDelete": true,
   "Details": [],
   "Equivalized": null,
   "FlightEndDate": null,
