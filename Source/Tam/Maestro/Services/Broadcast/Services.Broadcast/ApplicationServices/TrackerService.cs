@@ -238,7 +238,7 @@ namespace Services.Broadcast.ApplicationServices
             throw new Exception("Could not determine file type.");
         }
 
-        public int SaveSchedule(ScheduleSaveRequest request)
+        private IScheduleConverter GetScheduleConverter(ScheduleSaveRequest request)
         {
             var requestType = _GetRequestFileType(request);
 
@@ -257,12 +257,14 @@ namespace Services.Broadcast.ApplicationServices
                     converter = _DefaultScheduleConverter;
                     break;
             }
-
-            return _SaveAndProcessSchedule(request.Schedule, converter);
+            return converter;
         }
 
-        private int _SaveAndProcessSchedule(ScheduleDTO scheduleDto, IScheduleConverter converter)
+        public int SaveSchedule(ScheduleSaveRequest request)
         {
+            var converter = GetScheduleConverter(request);
+            var scheduleDto = request.Schedule;
+
             _ValidateScheduleIscis(scheduleDto.ISCIs);
 
             var efSchedule = converter.Convert(scheduleDto);

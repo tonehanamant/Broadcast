@@ -36,14 +36,14 @@ namespace Services.Broadcast.BusinessEngines
 
         public void PostBvsDataByEstimate(int estimateId)
         {
-            var scheduleAudiences = _DataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetDictionaryOfScheduleAudiencesByRank(estimateId);
-
             var postingBookId = _DataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleDtoByEstimateId(estimateId).PostingBookId;
 
-            PostBvsDataByEstimate(estimateId, scheduleAudiences, postingBookId);
+            PostBvsDataByEstimate(estimateId, null, postingBookId);
         }
         public void PostBvsDataByEstimate(int estimateId, Dictionary<int, int> scheduleAudiences, int postingBookId)
         {
+            var audiences = scheduleAudiences;
+
             // verify the expectedPostingBookId corresponds with the estimateId
             EnsurePostingBook(estimateId, postingBookId);
 
@@ -52,10 +52,19 @@ namespace Services.Broadcast.BusinessEngines
             var bvsDetails = _DataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsPostDetailsByEstimateId(estimateId);
 
             //clear any existing post results
-            _DataRepositoryFactory.GetDataRepository<IBvsPostDetailsRepository>().DeletePostDetails(estimateId, scheduleAudiences.Select(s => s.Value).ToList());
-
+            if (audiences == null || !audiences.Any())
+            {
+                _DataRepositoryFactory.GetDataRepository<IBvsPostDetailsRepository>().DeletePostDetails(estimateId);
+                // we still need to get the audiences from the schedule for the posting.
+                audiences = _DataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetDictionaryOfScheduleAudiencesByRank(estimateId);
+            }
+            else
+            {   // this is for blank schedules that need to supply their own schedule audiences
+                _DataRepositoryFactory.GetDataRepository<IBvsPostDetailsRepository>()
+                    .DeletePostDetails(estimateId, audiences.Select(s => s.Value).ToList());
+            }
             //post data
-            _PostData(postingBookId, bvsDetails, scheduleAudiences);
+            _PostData(postingBookId, bvsDetails, audiences);
         }
 
         private void EnsurePostingBook(int estimateId, int expectedPostingBookId)

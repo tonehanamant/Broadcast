@@ -1961,5 +1961,69 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(output, jsonSettings));
             }
         }
+
+        /// <summary>
+        /// The various tests.scx file has 3 audiences.  Upload it and post data will have data for all audiences.
+        /// Then update schedule with only one audience, the post data should only have audiences for only the one.
+        /// </summary>
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void FullReport_GenerateScheduleReportDto_BCOP1900()
+        {
+            const int estimateId = 112233;
+
+            using (new TransactionScopeWrapper())
+            {
+                ITrackerService sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
+
+                var saveRequest = new ScheduleSaveRequest();
+                var schedule = new ScheduleDTO();
+
+                var scxFileName = "SCX Various Tests.scx";
+                schedule.AdvertiserId = 39279;
+                schedule.EstimateId = estimateId;
+                schedule.PostingBookId = 413;
+                schedule.ScheduleName = scxFileName;
+                schedule.UserName = "SCX User";
+                schedule.FileName = scxFileName;
+                schedule.FileStream = new FileStream(@".\Files\" + scxFileName, FileMode.Open, FileAccess.Read);
+
+                schedule.MarketRestrictions = new List<int>();
+                schedule.DaypartRestriction = new DaypartDto()
+                {
+                    startTime = 0,endTime = 86400 - 1,mon = true,tue = true,wed = true,thu = true,fri = true,sat = true,                    sun = true
+                };
+
+                schedule.Equivalized = true;
+                schedule.ISCIs = new List<IsciDto>
+                {
+                    new IsciDto {House = "AAABBB", Client = "cl_AAABBB"},
+                    new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}
+                };
+
+                schedule.PostType = SchedulePostType.NTI;
+                schedule.InventorySource = RatesFile.RateSourceType.OpenMarket;
+                saveRequest.Schedule = schedule;
+                int scheduleId = sut.SaveSchedule(saveRequest);
+
+                schedule.Audiences = new List<int>() { 31 };
+                schedule.FileStream = null;
+                schedule.FileName = null;
+                scheduleId = sut.SaveSchedule(saveRequest);
+
+                var postDetails = _BvsRepository.GetBvsPostDetailAudienceByEstimateId(estimateId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(IsciDto), "BvsDetailId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(postDetails, jsonSettings));
+            }
+        }
+
     }
 }
