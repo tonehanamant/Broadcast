@@ -57,6 +57,7 @@ namespace Services.Broadcast.ApplicationServices
         ReleaseLockResponse UnlockStation(int stationCode);
         RatesInitialDataDto GetInitialRatesData();
         Decimal ConvertRateForSpotLength(decimal rateFor30s, int outputRateSpotLength);
+        List<StationContact> FindStationContactsByName(string query);
     }
 
     public class RatesService : IRatesService
@@ -408,6 +409,11 @@ namespace Services.Broadcast.ApplicationServices
         public List<StationContact> GetStationContacts(string rateSource, int stationCode)
         {
             return _stationContactsRepository.GetStationContactsByStationCode(stationCode);
+        }
+
+        public List<StationContact> FindStationContactsByName(string query)
+        {
+            return _stationContactsRepository.GetLatestContactsByName(query);
         }
 
         public bool SaveStationContact(StationContact stationContact, string userName)
