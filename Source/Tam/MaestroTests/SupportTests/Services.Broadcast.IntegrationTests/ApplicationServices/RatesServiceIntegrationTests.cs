@@ -778,6 +778,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof (DiffReporter))]
+        public void FindContacts()
+        {
+            var contactQueryString = "rogelio";
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(StationContact), "Id");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            var result = _ratesService.FindStationContactsByName(contactQueryString);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+
+        }
+
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ImportNewStationContact()
         {
