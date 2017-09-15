@@ -368,5 +368,26 @@ var ProposalController = BaseController.extend({
                 TitleErrorMessage: 'Update Open Market Inventory Totals',
                 StatusMessage: 'Update Open Market Inventory Totals'
             });
+    },
+
+    //delete proposal
+    apiDeleteProposal: function (proposalId) {
+      
+        var url = baseUrl + 'api/Proposals/DeleteProposal/' + proposalId;    
+        
+        httpService.remove(url, this.onApiDeleteProposal.bind(this), null, {
+            $ViewElement: $('#proposal_view'),
+            ErrorMessage: 'Delete Proposal',
+            TitleErrorMessage: 'Delete Proposal',
+            StatusMessage: 'Delete Proposal'
+        });
+    },
+
+    //on delete close modal - proposals grid will update data
+    onApiDeleteProposal: function (response) {
+        util.notify('Proposal Deleted successfully', 'success');
+        this.proposalView.showModal(true);
     }
+
+    
 });
