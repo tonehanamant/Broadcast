@@ -1383,8 +1383,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         FileMode.Open,
                         FileAccess.Read),
                     UserName = "IntegrationTestUser",
-                    FileName = "simple_period_rate_file_wvtm.xml",
-                    RatingBook = 416
+                    FileName = "simple_period_rate_file_wvtm.xml"
             };
 
                 _ratesService.SaveRatesFile(request);

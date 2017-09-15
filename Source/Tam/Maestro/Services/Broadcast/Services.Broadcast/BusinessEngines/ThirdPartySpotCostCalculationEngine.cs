@@ -34,7 +34,7 @@ namespace Services.Broadcast.BusinessEngines
                 Id = stationProgram.First().Id
             }).ToList();
 
-            var stationsImpressions = _RatingsRepository.GetImpressionsDaypart(request.RatingBook, audiences, stations, request.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+            var stationsImpressions = _RatingsRepository.GetImpressionsDaypart(request.RatingBook.Value, audiences, stations, request.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
 
             foreach (var stationProgram in ratesFile.StationPrograms)
             {

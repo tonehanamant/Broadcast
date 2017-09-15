@@ -24,7 +24,7 @@ namespace Services.Broadcast.Entities
         }
         public DaypartDto Daypart { get; set; }
         public string BlockName { get; set; }
-        public int RatingBook { get; set; }
+        public int? RatingBook { get; set; }
         public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
 
         public Stream RatesStream

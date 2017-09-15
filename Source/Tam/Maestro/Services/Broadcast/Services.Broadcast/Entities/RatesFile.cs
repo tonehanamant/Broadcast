@@ -31,7 +31,7 @@ namespace Services.Broadcast.Entities
         public string Hash { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int RatingBook { get; set; }
+        public int? RatingBook { get; set; }
         public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
