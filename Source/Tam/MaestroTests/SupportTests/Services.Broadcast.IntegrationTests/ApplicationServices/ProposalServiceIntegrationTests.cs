@@ -1552,5 +1552,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(newProposal));
             }
         }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "The Proposal information you have entered [", MatchType = MessageMatch.Contains)]
+        public void CanDeleteProposal()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                _ProposalService.DeleteProposal(248);
+                // will throw an exception because it does not exist
+                var proposal = _ProposalService.GetProposalById(248);
+            }
+        }
+
+        [Test]
+        public void CannotDeleteProposalWithProposedStatus()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var res = _ProposalService.DeleteProposal(21421);
+
+                Assert.IsTrue(res.HasWarning);
+                Assert.IsTrue(res.Message.Contains("Can only delete proposals with status 'Proposed' or 'Agency on Hold'."));
+            }
+        }
+
     }
 }

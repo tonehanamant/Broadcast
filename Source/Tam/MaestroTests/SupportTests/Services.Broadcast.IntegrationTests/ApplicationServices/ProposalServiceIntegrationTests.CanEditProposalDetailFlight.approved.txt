@@ -2,6 +2,7 @@
   "AdvertiserId": 0,
   "BlackoutMarketGroup": null,
   "BlackoutMarketGroupId": null,
+  "CanDelete": false,
   "Details": [
     {
       "Adu": false,

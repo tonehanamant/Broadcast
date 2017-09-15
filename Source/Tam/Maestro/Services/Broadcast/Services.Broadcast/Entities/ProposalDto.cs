@@ -21,6 +21,18 @@ namespace Services.Broadcast.Entities
             _SecondaryDemos = new List<int>();
             _ProposalDetails = new List<ProposalDetailDto>();
             _Markets = new List<ProposalMarketDto>();
+            TotalCost = 0;
+            TotalCostPercent = 0;
+            TotalImpressions = 0;
+            TotalImpressionsPercent = 0;
+            TotalCPM = 0;
+            TotalCPMPercent = 0;
+            TargetImpressions = 0;
+            CanDelete = false;
+            ForceSave = false;
+            TotalCostMarginAchieved = false;
+            TotalImpressionsMarginAchieved = false;
+            TotalCPMMarginAchieved = false;
         }
 
         public int? Id { get; set; }
@@ -90,5 +102,6 @@ namespace Services.Broadcast.Entities
         public decimal TotalCPM { get; set; }
         public double TotalCPMPercent { get; set; }
         public bool TotalCPMMarginAchieved { get; set; }
+        public bool CanDelete { get; set; }
     }
 }
