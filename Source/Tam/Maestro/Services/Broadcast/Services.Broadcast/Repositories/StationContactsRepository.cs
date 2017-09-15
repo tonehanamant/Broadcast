@@ -81,7 +81,7 @@ namespace Services.Broadcast.Repositories
                                 Phone = c.phone,
                                 Type = (StationContact.StationContactType) c.type,
                                 StationCode = c.station_code
-                            }).ToList();
+                            }).OrderBy(c => c.Name).ToList();
                     return contactList;
                 });
         }
