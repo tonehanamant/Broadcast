@@ -1570,7 +1570,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var res = _ProposalService.DeleteProposal(21421);
+                var res = _ProposalService.DeleteProposal(253);
 
                 Assert.IsTrue(res.HasWarning);
                 Assert.IsTrue(res.Message.Contains("Can only delete proposals with status 'Proposed' or 'Agency on Hold'."));
