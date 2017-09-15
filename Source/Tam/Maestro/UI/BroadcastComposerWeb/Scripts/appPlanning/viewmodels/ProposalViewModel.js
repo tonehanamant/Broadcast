@@ -37,6 +37,7 @@ var ProposalViewModel = function (controller) {
     $scope.statusOptions = ko.observableArray();
     $scope.status = ko.observable();
     $scope.isReadOnly = ko.observable(false);
+    $scope.canDelete = ko.observable(true);
     $scope.advertisers = ko.observableArray();
     $scope.markets = ko.observableArray();
     $scope.audiences = ko.observableArray();
@@ -298,6 +299,7 @@ var ProposalViewModel = function (controller) {
         $scope.isDirty(false);
         $scope.checkDirty(true);
         $scope.isReadOnly(proposal.Status == 3 || proposal.Status == 4);
+        $scope.canDelete(proposal.CanDelete);
     };
 
     $scope.loadStaticFields = function (proposal) {
@@ -351,6 +353,7 @@ var ProposalViewModel = function (controller) {
         $scope.status(null);
         $scope.forceSave(false);
         $scope.isReadOnly(false);
+        $scope.canDelete(true);
         $scope.totalCpm(null);
         $scope.targetCpm(null);
         $scope.totalCPMPercent(0);
@@ -576,14 +579,13 @@ var ProposalViewModel = function (controller) {
         return statusDisplay;
     };
 
-    //DELETE
+    //DELETE Proposal
 
     $scope.deleteProposal = function () {
-        if (!$scope.isReadOnly()) {
+        if ($scope.canDelete()) {
             var confirmed = function () {
-                console.log("Delete Proposal");
-                //$scope.controller.deleteProposal($scope.proposalId());
-                //with callback - notify - close modal
+                //console.log("Delete Proposal");
+                $scope.controller.apiDeleteProposal($scope.proposalId());
             }
 
             util.confirm('Delete Proposal'

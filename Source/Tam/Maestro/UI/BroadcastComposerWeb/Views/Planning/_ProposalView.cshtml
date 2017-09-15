@@ -33,7 +33,7 @@
                                 <li><a href="#" id="switch_version_opt" data-bind="click: switchVersion">Switch Version</a></li>
                                 <li><a href="#" id="unorder_opt" data-bind="visible:isReadOnly() && status() != 4, click: unorder">Unorder</a></li>
                                 <li><a href="#" id="scx_opt" data-bind="visible:isReadOnly() && status() != 4, click: generateScx">Generate SCX</a></li>
-                                <li><a id="delete_opt" data-bind="visible: !isReadOnly(), click: deleteProposal">Delete Proposal</a></li>
+                                <li><a id="delete_opt" data-bind="visible: canDelete(), click: deleteProposal">Delete Proposal</a></li>
                             </ul>
                         </div>
                     </div>

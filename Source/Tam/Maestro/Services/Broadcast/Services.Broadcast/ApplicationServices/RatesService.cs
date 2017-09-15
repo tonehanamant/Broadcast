@@ -1,4 +1,5 @@
-﻿using Common.Services;
+﻿using System.ComponentModel;
+using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
@@ -239,6 +240,10 @@ namespace Services.Broadcast.ApplicationServices
 
                     if (isThirdParty)
                     {
+                        if (!request.RatingBook.HasValue)
+                        {
+                            throw new InvalidEnumArgumentException("Ratings book id required for third party rate files.");
+                        }
                         _ThirdPartySpotCostCalculationEngine.CalculateSpotCost(request, ratesFile);
                     }
 
