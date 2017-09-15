@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using System.Runtime.Remoting.Contexts;
+using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Exceptions;
@@ -21,6 +22,7 @@ namespace Services.Broadcast.Repositories
         station_contacts FindByStationContactId(int stationContactId);
         List<string> GetRepTeamNames();
         void DeleteStationContact(int stationContactId);
+        List<StationContact> GetLatestContactsByName(string query);
     }
 
     public class StationContactsRepository : BroadcastRepositoryBase, IStationContactsRepository
@@ -57,6 +59,30 @@ namespace Services.Broadcast.Repositories
                 new List<int>()
                 {
                     stationCode
+                });
+        }
+
+        public List<StationContact> GetLatestContactsByName(string query)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var contactList = context.station_contacts.Where(c => c.name.ToLower().Contains(query.ToLower()))
+                        .GroupBy(c => new {c.name, c.type, c.company})
+                        .Select(g => g.OrderByDescending(c => c.modified_date).FirstOrDefault())
+                        .Select(
+                            c => new StationContact()
+                            {
+                                Id = c.id,
+                                Company = c.company,
+                                Email = c.email,
+                                Fax = c.fax,
+                                Name = c.name,
+                                Phone = c.phone,
+                                Type = (StationContact.StationContactType) c.type,
+                                StationCode = c.station_code
+                            }).ToList();
+                    return contactList;
                 });
         }
 

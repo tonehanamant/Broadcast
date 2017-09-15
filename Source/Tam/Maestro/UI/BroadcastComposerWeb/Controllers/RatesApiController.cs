@@ -32,6 +32,15 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
+        [Route("Contacts/Find")]
+        public BaseResponse<List<StationContact>> FindContacts([FromUri] String query)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IRatesService>().FindStationContactsByName(query));
+        }
+
+        [HttpGet]
         [Route("{rateSource}/Stations")]
         public BaseResponse<List<DisplayBroadcastStation>> GetAllStations(string rateSource)
         {
