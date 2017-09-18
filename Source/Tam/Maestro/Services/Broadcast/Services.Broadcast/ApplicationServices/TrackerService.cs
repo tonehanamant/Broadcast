@@ -42,7 +42,6 @@ namespace Services.Broadcast.ApplicationServices
         RatingAdjustmentsResponse GetRatingAdjustments();
         List<BvsFileSummary> GetBvsFileSummaries();
         bool TrackSchedule(int scheduleId);
-
         bool DeleteBvsFile(int bvsFileId);
     }
 
@@ -673,7 +672,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var detail in details)
             {
                 if (detail.Impressions.HasValue)
-                    detail.Impressions = _ImpressionAdjustmentEngine.AdjustImpression(detail.Impressions.Value, schedule.PostType, schedule.PostingBookId, false);
+                    detail.Impressions = _ImpressionAdjustmentEngine.AdjustImpression(detail.Impressions.Value, schedule.Equivalized, detail.SpotLength, schedule.PostType, schedule.PostingBookId, false);
             }
             return details;
         }

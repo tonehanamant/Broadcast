@@ -250,6 +250,7 @@ namespace Services.Broadcast.Repositories
                         Id = efSchedule.id,
                         StartDate = efSchedule.start_date,
                         EndDate = efSchedule.end_date,
+                        Equivalized = efSchedule.equivalized,
                         PostType = (SchedulePostType)efSchedule.post_type
                     };
 

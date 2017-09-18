@@ -193,7 +193,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var bvsTrackingDetail = new BvsTrackingDetail
                 {
-                    Impressions = 9249234
+                    Impressions = 9249234,
+                    SpotLength = 30
                 };
 
                 var repo = new Mock<IBvsRepository>();
@@ -202,13 +203,46 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(repo.Object);
 
                 var engine = new Mock<IImpressionAdjustmentEngine>();
-                engine.Setup(e => e.AdjustImpression(bvsTrackingDetail.Impressions.Value, dto.PostType, dto.PostingBookId, false)).Returns(9999);
+                engine.Setup(e => e.AdjustImpression(bvsTrackingDetail.Impressions.Value, dto.Equivalized, bvsTrackingDetail.SpotLength, dto.PostType, dto.PostingBookId, false)).Returns(9999);
 
                 var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, engine.Object);
                 var actual = sut.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
 
                 Assert.That(actual.Single().Impressions, Is.EqualTo(9999));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetBvsDetailsWithAdjustedImpressionsEquivalized()
+        {
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                var dto = new ScheduleDTO
+                {
+                    EstimateId = 124124,
+                    PostType = SchedulePostType.NTI,
+                    PostingBookId = 12412,
+                    Equivalized = true
+                };
+
+                var bvsTrackingDetail = new BvsTrackingDetail
+                {
+                    Impressions = 9249234,
+                    SpotLength = 15,
+                };
+
+                var repo = new Mock<IBvsRepository>();
+                repo.Setup(r => r.GetBvsTrackingDetailsByEstimateId(dto.EstimateId.Value)).Returns(new List<BvsTrackingDetail> { bvsTrackingDetail });
+                var oldRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
+                IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(repo.Object);
+
+                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>());
+                var actual = sut.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);
+                IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
+
+                Assert.That(actual.Single().Impressions, Is.EqualTo(4624617.0d));
             }
         }
 
