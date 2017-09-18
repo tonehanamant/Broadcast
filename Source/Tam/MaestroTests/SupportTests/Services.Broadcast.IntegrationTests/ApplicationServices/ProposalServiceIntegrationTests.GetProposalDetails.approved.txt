@@ -69,5 +69,5 @@
   "SpotLengthId": 0,
   "TotalCost": 0.0,
   "TotalImpressions": 0.0,
-  "TotalUnits": 0
+  "TotalUnits": 2
 }
