@@ -7,6 +7,7 @@ namespace Services.Broadcast.BusinessEngines
     public interface IProposalCalculationEngine
     {
         void UpdateProposal(ProposalDto proposalDto);
+        void SetQuarterTotals(ProposalDetailDto proposalDetailDto);
     }
 
     public class ProposalCalculationEngine : IProposalCalculationEngine
@@ -22,7 +23,7 @@ namespace Services.Broadcast.BusinessEngines
                     _UpdateQuarterValues(proposalQuarterDto, proposalDetailDto.Adu);
                 }
 
-                _SetQuarterTotals(proposalDetailDto);
+                SetQuarterTotals(proposalDetailDto);
             }
 
             _SetProposalTargets(proposalDto);
@@ -51,7 +52,7 @@ namespace Services.Broadcast.BusinessEngines
             proposalDto.TargetCPM = proposalDto.TargetImpressions == 0 ? 0 : proposalDto.TargetBudget / (decimal)proposalDto.TargetImpressions;
         }
 
-        internal static void _SetQuarterTotals(ProposalDetailDto proposalDetailDto)
+        public void SetQuarterTotals(ProposalDetailDto proposalDetailDto)
         {
             var proposalQuarterTotalsDto = new ProposalQuarterTotals();
 

@@ -139,6 +139,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         public void SetQuarterTotals()
         {
             var dto = new ProposalDetailDto();
+            var calcEngine = new ProposalCalculationEngine();
             dto.Quarters = new List<ProposalQuarterDto>
             {
                 new ProposalQuarterDto
@@ -180,7 +181,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
 
             };
 
-            ProposalCalculationEngine._SetQuarterTotals(dto);
+            calcEngine.SetQuarterTotals(dto);
 
             Assert.That(dto.TotalCost, Is.EqualTo(66.66));
             Assert.That(dto.TotalUnits, Is.EqualTo(66));

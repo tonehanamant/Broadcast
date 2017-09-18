@@ -1057,6 +1057,31 @@ where length = 15
 
 /*************************************** BCOP-1733 - END *****************************************************/
 
+/*************************************** BCOP-1909 - START *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns
+              WHERE name = 'daypart_id'
+              AND object_id = object_id('station_program_flight_proposal'))
+BEGIN
+	ALTER TABLE station_program_flight_proposal
+	ADD daypart_id INT NULL
+
+	EXEC('UPDATE
+			station_program_flight_proposal
+		 SET
+			station_program_flight_proposal.daypart_id = station_programs.daypart_id
+		 FROM
+			station_program_flight_proposal
+			JOIN station_program_flights ON station_program_flights.id = station_program_flight_proposal.station_program_flight_id
+			JOIN station_programs ON station_programs.id = station_program_flights.station_program_id')
+
+	ALTER TABLE station_program_flight_proposal 
+	ALTER COLUMN daypart_id INT NOT NULL
+END
+
+/*************************************** BCOP-1909 - START *****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

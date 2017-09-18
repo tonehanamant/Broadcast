@@ -840,13 +840,17 @@ namespace Services.Broadcast.ApplicationServices
 
             var proposalQuarterDto = _GetProposalQuarterDtos(proposalMediaWeeks);
 
-            return new ProposalDetailDto
+            var proposalDetail =  new ProposalDetailDto
             {
                 FlightStartDate = proposalDetailRequestDto.StartDate,
                 FlightEndDate = proposalDetailRequestDto.EndDate,
                 Quarters = proposalQuarterDto.ToList(),
                 DefaultPostingBooks = _PostingBooksService.GetDefaultPostingBooks(proposalDetailRequestDto.StartDate)
             };
+
+            _ProposalCalculationEngine.SetQuarterTotals(proposalDetail);
+
+            return proposalDetail;
         }
 
         public ProposalDto UpdateProposal(List<ProposalDetailDto> proposalDetailDtos)
