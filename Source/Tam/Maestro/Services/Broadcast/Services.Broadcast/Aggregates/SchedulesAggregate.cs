@@ -1,5 +1,6 @@
 ﻿using Common.Services;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Extensions;
 using System;
@@ -303,7 +304,7 @@ namespace Services.Broadcast.Aggregates
                      Affiliate = bfd.affiliate,
                      ProgramName = bfd.program_name,
                      AirTime = bfd.time_aired,
-                     Date = bfd.date_aired,
+                     Date = bfd.nsi_date,
                      Length = bfd.spot_length,
                      IsciDto = _Schedule.schedule_iscis
                                         .Where(i => i.house_isci == bfd.isci)
