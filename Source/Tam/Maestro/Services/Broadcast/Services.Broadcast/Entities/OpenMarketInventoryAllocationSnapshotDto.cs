@@ -17,5 +17,6 @@ namespace Services.Broadcast.Entities
         public DateTime EndDate { get; set; }
         public string DaypartCode { get; set; }
         public RatesFile.RateSourceType RateSource { get; set; }
+        public int DaypartId { get; set; }
     }
 }

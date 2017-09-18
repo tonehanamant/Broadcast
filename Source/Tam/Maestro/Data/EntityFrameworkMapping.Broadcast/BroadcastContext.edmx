@@ -653,6 +653,7 @@
           <Property Name="end_date" Type="date" Nullable="false" />
           <Property Name="daypart_code" Type="varchar" MaxLength="10" />
           <Property Name="rate_source" Type="tinyint" />
+          <Property Name="daypart_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="station_program_flights">
           <Key>
@@ -4415,6 +4416,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="daypart_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="rate_source" Type="Byte" />
           <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" FromRole="station_program_flight_proposal" ToRole="proposal_version_detail_quarter_weeks" />
+          <Property Name="daypart_id" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks">
           <End Type="BroadcastModel.proposal_version_detail_quarter_weeks" Role="proposal_version_detail_quarter_weeks" Multiplicity="1">
@@ -5222,6 +5224,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="station_program_flight_proposal">
             <EntityTypeMapping TypeName="BroadcastModel.station_program_flight_proposal">
               <MappingFragment StoreEntitySet="station_program_flight_proposal">
+                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
                 <ScalarProperty Name="rate_source" ColumnName="rate_source" />
                 <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />

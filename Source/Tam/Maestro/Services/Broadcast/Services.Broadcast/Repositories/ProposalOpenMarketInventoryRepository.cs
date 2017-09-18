@@ -111,6 +111,7 @@ namespace Services.Broadcast.Repositories
                         currentAllocation.end_date = programFlight.station_programs.end_date;
                         currentAllocation.daypart_code = programFlight.station_programs.daypart_code;
                         currentAllocation.rate_source = programFlight.station_programs.rate_source;
+                        currentAllocation.daypart_id = programFlight.station_programs.daypart_id;
                         
                         context.SaveChanges();
                     }
@@ -156,7 +157,8 @@ namespace Services.Broadcast.Repositories
                             start_date = programFlight.station_programs.start_date,
                             end_date = programFlight.station_programs.end_date,
                             daypart_code = programFlight.station_programs.daypart_code,
-                            rate_source = programFlight.station_programs.rate_source
+                            rate_source = programFlight.station_programs.rate_source,
+                            daypart_id = programFlight.station_programs.daypart_id
                         };
 
                         context.station_program_flight_proposal.Add(programAllocation);
@@ -216,7 +218,8 @@ namespace Services.Broadcast.Repositories
                             StartDate = s.start_date,
                             EndDate = s.end_date,
                             DaypartCode = s.daypart_code,
-                            RateSource = (RatesFile.RateSourceType) s.rate_source
+                            RateSource = (RatesFile.RateSourceType) s.rate_source,
+                            DaypartId = s.daypart_id
                         }).ToList();
             });
         }

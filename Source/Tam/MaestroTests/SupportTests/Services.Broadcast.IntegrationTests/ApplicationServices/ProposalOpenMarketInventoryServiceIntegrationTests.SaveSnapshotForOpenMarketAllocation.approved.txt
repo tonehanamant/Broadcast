@@ -2,6 +2,7 @@
   {
     "CreatedBy": "test-user",
     "DaypartCode": null,
+    "DaypartId": 1,
     "EndDate": "2016-06-05T00:00:00",
     "Impressions": 1234.0,
     "Isci": null,
