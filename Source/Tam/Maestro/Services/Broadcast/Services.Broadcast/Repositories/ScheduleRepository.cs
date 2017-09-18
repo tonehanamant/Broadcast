@@ -120,7 +120,7 @@ namespace Services.Broadcast.Repositories
                                              join sd in context.schedule_details on sda.schedule_detail_id equals sd.id
                                              where sd.schedule_id == s.id
                                                    && sda.audience_rank == 1
-                                             select sda.impressions).Sum(),
+                                             select sd.total_spots * sda.impressions).Sum(),
                         PrimaryDemoDelivered = (from bfd in context.bvs_file_details
                                                 join pd in context.bvs_post_details on bfd.id equals
                                                 pd.bvs_file_detail_id
@@ -250,6 +250,7 @@ namespace Services.Broadcast.Repositories
                         Id = efSchedule.id,
                         StartDate = efSchedule.start_date,
                         EndDate = efSchedule.end_date,
+                        Equivalized = efSchedule.equivalized,
                         PostType = (SchedulePostType)efSchedule.post_type
                     };
 
