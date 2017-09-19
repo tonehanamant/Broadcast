@@ -304,7 +304,7 @@ namespace Services.Broadcast.Aggregates
                      Affiliate = bfd.affiliate,
                      ProgramName = bfd.program_name,
                      AirTime = bfd.time_aired,
-                     Date = bfd.nsi_date,
+                     Date = _GetBVSFileDetailDate(bfd),
                      Length = bfd.spot_length,
                      IsciDto = _Schedule.schedule_iscis
                                         .Where(i => i.house_isci == bfd.isci)
@@ -330,6 +330,11 @@ namespace Services.Broadcast.Aggregates
                  }).OrderBy(x => x.Rank);
 
             return query;
+        }
+
+        private DateTime _GetBVSFileDetailDate(bvs_file_details bvsFile)
+        {
+            return PostType == SchedulePostType.NSI ? bvsFile.nsi_date : bvsFile.nti_date;
         }
 
         public List<int> GetScheduleWeeks()
