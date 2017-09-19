@@ -18,7 +18,7 @@ var ProposalController = BaseController.extend({
         $scope.planningController = controller;
 
         /*** SUB COMPONENTS ***/
-        
+
         $scope.switchProposalVersionView = new SwitchProposalVersionView();
         $scope.switchProposalVersionView.initView($scope);
 
@@ -46,13 +46,13 @@ var ProposalController = BaseController.extend({
 
     /*** API ***/
 
-    apiGetOptions: function(callback, proposalId) {
+    apiGetOptions: function (callback, proposalId) {
         var url = baseUrl + 'api/Proposals/InitialData';
         var $scope = this;
         httpService.get(url,
-           callback.bind(this),
-           //error if from edit proposalId - unlock
-           $scope.planningController.onApiPrimaryProposalError.bind($scope.planningController, proposalId),
+            callback.bind(this),
+            //error if from edit proposalId - unlock
+            $scope.planningController.onApiPrimaryProposalError.bind($scope.planningController, proposalId),
             {
                 $ViewElement: $('#planning_view'),
                 ErrorMessage: 'Load Proposals Initial Data Error',
@@ -81,11 +81,17 @@ var ProposalController = BaseController.extend({
     },
 
     apiGetProposal: function (proposalId, version, callback) {
+        var $scope = this;
+
         version = version || 1;
         var url = baseUrl + 'api/Proposals/Proposal/' + proposalId + '/Versions/' + version;
 
         httpService.get(url,
-            callback.bind(this),
+            function (proposal) {
+                if (callback) {
+                    callback($scope.convertFromProposalImpressions(proposal));
+                }
+            },
             null,
             {
                 $ViewElement: $('#proposal_view'),
@@ -96,11 +102,18 @@ var ProposalController = BaseController.extend({
     },
 
     apiSaveProposal: function (proposal, callback, errorCallback) {
+        var $scope = this;
+
+        proposal = $scope.convertToProposalImpressions(proposal);
         var jsonObj = JSON.stringify(proposal);
         var url = baseUrl + 'api/Proposals/SaveProposal';
 
         httpService.post(url,
-            callback.bind(this),
+            function (proposal) {
+                if (callback) {
+                    callback($scope.convertFromProposalImpressions(proposal));
+                }
+            },
             errorCallback ? errorCallback.bind(this) : null,
             jsonObj,
             {
@@ -185,7 +198,7 @@ var ProposalController = BaseController.extend({
     },
 
     //PROPOSAL DETAIL
-    
+
     onProposalDetailFlightSelect: function (event, params, set) {
         this.apiGetProposalDetail(set.id, params);
     },
@@ -210,12 +223,20 @@ var ProposalController = BaseController.extend({
         this.proposalView.setDetailSetInitial(setId, detail);
     },
 
-    //update detail based on set grid changes (quarter or week) - passed full set of details from all sets; returns full proposal
+    //update detail based on set grid changes (quarter or week) - passed full set of detapiSaveProposalails from all sets; returns full proposal
     apiProposalDetailUpdate: function (details, callback) {
+        var $scope = this;
+
+        details = $scope.convertToDetailsImpressions(details);
         var jsonObj = JSON.stringify(details);
         var url = baseUrl + 'api/Proposals/UpdateProposal';
+
         httpService.post(url,
-            callback.bind(this),
+            function (proposal) {
+                if (callback) {
+                    callback($scope.convertFromDetailsImpressions(proposal));
+                }
+            },
             null,
             jsonObj,
             {
@@ -225,13 +246,18 @@ var ProposalController = BaseController.extend({
                 StatusMessage: 'Update Proposal Detail'
             });
     },
-   
-    apiGetProposalInventory: function(detailId, callback, fromInventory) {
-        //var url = baseUrl + 'api/Inventory/Detail/' + detailId;
+
+    apiGetProposalInventory: function (detailId, callback, fromInventory) {
+        var $scope = this;
+
         var url = baseUrl + 'api/Inventory/Proprietary/Detail/' + detailId;
-        //if fromInventory - change view el context
+
         httpService.get(url,
-            callback ? callback.bind(this) : null,
+            function (inventory) {
+                if (callback) {
+                    callback($scope.convertFromInventoryImpressions(inventory));
+                }
+            },
             null,
             {
                 $ViewElement: fromInventory ? $('#proposal_inventory_view') : $('#proposal_view'),
@@ -259,11 +285,18 @@ var ProposalController = BaseController.extend({
     },
 
     apiPostDetailTotals: function (data, callback) {
+        var $scope = this;
+
+        data = $scope.convertToInventoryImpressions(data);
         var jsonObj = JSON.stringify(data);
         var url = baseUrl + 'api/Inventory/Detail/Totals';
 
         httpService.post(url,
-            callback ? callback.bind(this) : null,
+            function (inventory) {
+                if (callback) {
+                    callback($scope.convertFromInventoryImpressions(inventory));
+                }
+            },
             null,
             jsonObj,
             {
@@ -277,10 +310,15 @@ var ProposalController = BaseController.extend({
     //OPEN MARKET
 
     apiGetProposalOpenMarketInventory: function (detailId, callback, fromInventory) {
+        var $scope = this;
         var url = baseUrl + 'api/Inventory/OpenMarket/Detail/' + detailId;
 
         httpService.get(url,
-            callback ? callback.bind(this) : null,
+            function (inventory) {
+                if (callback) {
+                    callback($scope.convertFromOpenMarketImpressions(inventory));
+                }
+            },
             null,
             {
                 $ViewElement: fromInventory ? $('#proposal_openmarket_view') : $('#proposal_view'),
@@ -291,12 +329,17 @@ var ProposalController = BaseController.extend({
     },
 
     apiPostOpenMarketRefine: function (data, callback, errorCallback) {
+        var $scope = this;
+
         var jsonObj = JSON.stringify(data);
         var url = baseUrl + 'api/Inventory/OpenMarket/Detail/' + data.ProposalDetailId + '/Refine';
 
         httpService.post(url,
-            callback ? callback.bind(this) : null,
-            errorCallback ? errorCallback.bind(this) : null,
+            function (inventory) {
+                if (callback)
+                    callback($scope.convertFromOpenMarketImpressions(inventory));
+            },
+            null,
             jsonObj,
             {
                 $ViewElement: $('#criteria_builder_view'),
@@ -307,11 +350,17 @@ var ProposalController = BaseController.extend({
     },
 
     apiUpdateInventoryOpenMarketTotals: function (data, callback) {
+        var $scope = this;
+
+        data = $scope.convertToOpenMarketImpressions(data);
         var jsonObj = JSON.stringify(data);
         var url = baseUrl + 'api/Inventory/OpenMarket/UpdateTotals';
 
         httpService.post(url,
-            callback ? callback.bind(this) : null,
+            function (inventory) {
+                if (callback)
+                    callback($scope.convertFromOpenMarketImpressions(inventory));
+            },
             null,
             jsonObj,
             {
@@ -323,10 +372,16 @@ var ProposalController = BaseController.extend({
     },
 
     apiSaveInventoryOpenMarket: function (params, callback) {
-        var url = baseUrl + 'api/Inventory/OpenMarket';
+        var $scope = this;
+
         var jsonObj = JSON.stringify(params);
+        var url = baseUrl + 'api/Inventory/OpenMarket';
+
         httpService.post(url,
-            callback ? callback.bind(this) : null,
+            function (inventory) {
+                if (callback)
+                    callback($scope.convertFromOpenMarketImpressions(inventory));
+            },
             null,
             jsonObj,
             {
@@ -372,9 +427,9 @@ var ProposalController = BaseController.extend({
 
     //delete proposal
     apiDeleteProposal: function (proposalId) {
-      
-        var url = baseUrl + 'api/Proposals/DeleteProposal/' + proposalId;    
-        
+
+        var url = baseUrl + 'api/Proposals/DeleteProposal/' + proposalId;
+
         httpService.remove(url, this.onApiDeleteProposal.bind(this), null, {
             $ViewElement: $('#proposal_view'),
             ErrorMessage: 'Delete Proposal',
@@ -387,7 +442,185 @@ var ProposalController = BaseController.extend({
     onApiDeleteProposal: function (response) {
         util.notify('Proposal Deleted successfully', 'success');
         this.proposalView.showModal(true);
-    }
+    },
 
-    
+    /*** HELPERS ***/
+
+    // Details
+
+    convertFromDetailsImpressions: function (proposal) {
+        proposal.TargetImpressions = proposal.TargetImpressions / 1000;
+        proposal.TotalImpressions = proposal.TotalImpressions / 1000;
+
+        proposal.Details.map(function (detail) {
+            detail.TotalImpressions = detail.TotalImpressions / 1000;
+
+            detail.Quarters.map(function (quarter) {
+                quarter.ImpressionGoal = quarter.ImpressionGoal / 1000;
+
+                quarter.Weeks.map(function (week) {
+                    week.Impressions = week.Impressions / 1000;
+                });
+            });
+        });
+
+        return proposal;
+    },
+
+    convertToDetailsImpressions: function (details) {
+        details.map(function (detail) {
+            detail.TotalImpressions = detail.TotalImpressions * 1000;
+
+            detail.Quarters.map(function (quarter) {
+                quarter.ImpressionGoal = quarter.ImpressionGoal * 1000;
+
+                quarter.Weeks.map(function (week) {
+                    week.Impressions = week.Impressions * 1000;
+                });
+            });
+        });
+
+        return details;
+    },
+
+    // Proposal
+
+    convertFromProposalImpressions: function (proposal) {
+        proposal.TargetImpressions = proposal.TargetImpressions / 1000;
+        if (proposal.TotalImpressions) {
+            proposal.TotalImpressions = proposal.TotalImpressions / 1000;
+        }
+
+        return proposal;
+    },
+
+    convertToProposalImpressions: function (proposal) {
+        proposal.TargetImpressions = proposal.TargetImpressions * 1000;
+        if (proposal.TotalImpressions) {
+            proposal.TotalImpressions = proposal.TotalImpressions * 1000;
+        }
+
+        return proposal;
+    },
+
+    // Open Market -- convert impressions 'From' and 'To'
+
+    convertFromOpenMarketImpressions: function (inventory) {
+        inventory.DetailTotalImpressions = inventory.DetailTotalImpressions / 1000;
+
+        inventory.Weeks.map(function (week) {
+            week.ImpressionsGoal = week.ImpressionsGoal / 1000;
+            week.ImpressionsTotal = week.ImpressionsTotal / 1000;
+
+            week.Markets.map(function (market) {
+                market.Impressions = market.Impressions / 1000;
+
+                market.Stations.map(function (station) {
+                    station.Programs.map(function (program) {
+                        if (program) {
+                            program.TargetImpressions = program.TargetImpressions / 1000;
+                            program.TotalImpressions = program.TotalImpressions / 1000;
+                            program.UnitImpression = program.UnitImpression / 1000;
+                        }
+                    });
+                });
+            });
+        });
+
+        return inventory;
+    },
+
+    convertToOpenMarketImpressions: function (inventory) {
+        inventory.DetailTotalImpressions = inventory.DetailTotalImpressions * 1000;
+
+        inventory.Weeks.map(function (week) {
+            week.ImpressionsGoal = week.ImpressionsGoal * 1000;
+            week.ImpressionsTotal = week.ImpressionsTotal * 1000;
+
+            week.Markets.map(function (market) {
+                market.Impressions = market.Impressions * 1000;
+
+                market.Stations.map(function (station) {
+                    station.Programs.map(function (program) {
+                        if (program) {
+                            program.TargetImpressions = program.TargetImpressions * 1000;
+                            program.TotalImpressions = program.TotalImpressions * 1000;
+                            program.UnitImpression = program.UnitImpression * 1000;
+                        }
+                    });
+                });
+            });
+        });
+
+        return inventory;
+    },
+
+    // Inventory -- convert impressions 'From' and 'To' 
+
+    convertFromInventoryImpressions: function (inventory) {
+        if (inventory.DetailTotalImpressions) {
+            inventory.DetailTotalImpressions = inventory.DetailTotalImpressions / 1000;
+        }
+
+        if (inventory.TotalImpressions) {
+            inventory.TotalImpressions = inventory.TotalImpressions / 1000;
+        }
+
+        inventory.Weeks.map(function (week) {
+            week.ImpressionsGoal = week.ImpressionsGoal / 1000;
+            week.Impressions = week.Impressions / 1000;
+
+            if (week.DaypartGroups) {
+                week.DaypartGroups.map(function (daypartGroup) {
+                    daypartGroup.Value.DaypartSlots.map(function (daypartSlot) {
+                        if (daypartSlot) {
+                            daypartSlot.Impressions = daypartSlot.Impressions / 1000;
+                        }
+                    });
+                });
+            }
+        });
+
+        return inventory;
+    },
+
+    convertToInventoryImpressions: function(inventory) {
+        if (inventory.DetailTotalImpressions) {
+            inventory.DetailTotalImpressions = inventory.DetailTotalImpressions * 1000;
+        }
+
+        if (inventory.TotalImpressions) {
+            inventory.TotalImpressions = inventory.TotalImpressions * 1000;
+        }
+
+        inventory.Weeks.map(function(week) {
+            if (week.ImpressionGoal) {
+                week.ImpressionGoal = week.ImpressionGoal * 1000;
+            }
+
+            if (week.Impressions) {
+                week.Impressions = week.Impressions * 1000;
+            }
+
+            if (week.Slots) {
+                week.Slots.map(function(slot) {
+                    if (slot) {
+                        slot.Impressions = slot.Impressions * 1000;
+                    }
+                });
+            }
+
+            if (week.DaypartGroups) {
+                week.DaypartGroups.map(function(daypartGroup) {
+                    daypartGroup.Value.DaypartSlots.map(function(daypartSlot) {
+                        if (daypartSlot) {
+                            daypartSlot.Impressions = daypartSlot.Impressions * 1000;
+                        }
+                    });
+                });
+            }
+        });
+
+        return inventory;
+    }
 });

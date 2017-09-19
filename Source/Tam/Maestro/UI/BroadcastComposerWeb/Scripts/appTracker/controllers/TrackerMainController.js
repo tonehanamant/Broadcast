@@ -72,20 +72,22 @@ var TrackerMainController = BaseController.extend({
 
     //load schedules data
     apiLoadSchedules: function (startDate, endDate, initial) {
+        var $scope = this;
+
         initial = initial || false;
         var url = baseUrl + 'api/Tracker/LoadSchedules';
         var queryData = {};
         if (startDate) {
-            //url += '?startDate=' + startDate;
             queryData.startDate = startDate;
             if (endDate) {
-                //url += '&endDate=' + endDate;
-                queryData.endDate = endDate
+                queryData.endDate = endDate;
             }
         }
 
         httpService.get(url,
-            this.onApiLoadSchedules.bind(this, initial),
+            function (response) {
+                $scope.onApiLoadSchedules(initial, $scope.convertFromScheduleImpressions(response));
+            },
             null,
             {
                 data: queryData,
@@ -429,5 +431,16 @@ var TrackerMainController = BaseController.extend({
                 TitleErrorMessage: 'No Delete Mapping Data Returned',
                 StatusMessage: 'Delete Mapping'
             });
+    },
+
+    /*** HELPERS ***/
+
+    convertFromScheduleImpressions: function (data) {
+        data.Schedules.map(function (schedule) {
+            schedule.PrimaryDemoBooked = schedule.PrimaryDemoBooked / 1000;
+            schedule.PrimaryDemoDelivered = schedule.PrimaryDemoDelivered / 1000;
+        });
+
+        return data;
     }
 });

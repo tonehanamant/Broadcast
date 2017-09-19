@@ -27,11 +27,15 @@ var TrackerScrubController = BaseController.extend({
         this.activeSchedule = schedule;
     },
 
-    apiGetScrub: function(estimateId, refreshOnly) {
+    apiGetScrub: function (estimateId, refreshOnly) {
+        var $scope = this;
+
         var url = baseUrl + 'api/Tracker/GetBvsScrubbingData';
         var queryData = { estimateId: estimateId };
         httpService.get(url,
-            this.onApiGetScrub.bind(this, refreshOnly),
+            function (response) {
+                $scope.onApiGetScrub(refreshOnly, $scope.convertFromScrubbingImpressions(response));
+            },
             null,
             {
                 $ViewElement: $('#schedule_view'),
@@ -43,7 +47,6 @@ var TrackerScrubController = BaseController.extend({
     },
 
     onApiGetScrub: function (refreshOnly, data) {
-
         this.activeEstimateId = data.EstimateId;
         this.scrubData = data;
         this.view.setActiveScrub(data, refreshOnly);
@@ -176,5 +179,15 @@ var TrackerScrubController = BaseController.extend({
     //called from view to refresh following scrubbing
     refreshSchedulesAfterSaveCancel: function () {
         this.appController.refreshApiLoadSchedules();
+    },
+
+    /*** HELPERS ***/
+
+    convertFromScrubbingImpressions: function (data) {
+        data.BvsDetails.map(function (bvsDetail) {
+            bvsDetail.Impressions = bvsDetail.Impressions / 1000;
+        });
+
+        return data;
     }
 });

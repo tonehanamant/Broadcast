@@ -40,15 +40,15 @@ var RateStationController = BaseController.extend({
     //API get station details (object with Rates array)
     apiGetStation: function (stationId) {
         var me = this;
-
         var url = baseUrl + 'api/RatesManager/' + this.getSource() + '/Stations/' + stationId;
-        //var queryData = { stationId: stationId };
+
         httpService.get(url,
-            me.onApiGetStation.bind(this),
+             function (station) { 
+                 me.onApiGetStation(me.convertFromProgramImpressions(station));
+             },
             me.appController.apiGetStationUnlock.bind(this, stationId, null),
             {
                 $ViewElement: $('#rate_view'),
-               // data: queryData,
                 ErrorMessage: 'Station Data',
                 TitleErrorMessage: 'No Station Data Returned',
                 StatusMessage: 'Station Data'
@@ -138,7 +138,6 @@ var RateStationController = BaseController.extend({
         data.RateSource = this.getSource();
         data.StationCode = this.activeStation.Code;
         var jsonObj = JSON.stringify(data);
-        //console.log('apiSaveNewRatesProgram', jsonObj);
         var url = baseUrl + 'api/RatesManager/Programs';
 
         httpService.post(url, this.onApiSaveNewRatesProgram.bind(this, callback), null, jsonObj, {
@@ -335,5 +334,15 @@ var RateStationController = BaseController.extend({
             TitleErrorMessage: 'Convert Rate',
             StatusMessage: 'Convert Rate'
         });
+    },
+
+    /*** HELPERS ***/
+
+    convertFromProgramImpressions: function (station) {
+        station.Rates.map(function(rate) {
+            rate.Impressions = rate.Impressions / 1000;
+        });
+
+        return station;
     }
 });
