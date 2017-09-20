@@ -548,6 +548,8 @@ var RateStationView = BaseView.extend({
 
         this.disableContactEditingAllowedStates(true);
         this.setContactEditData(rec);
+        var input = $('[name="contact_search_select_' + rec.recid + '"]');
+        //this.setSelect2Contact(input);
     },
 
     endActiveContactEdit: function (removeNewCheck) {
@@ -636,6 +638,15 @@ var RateStationView = BaseView.extend({
     //after save
     onAfterSaveContact: function (data) {
         this.endActiveContactEdit();
+    },
+
+    setSelect2Contact: function (input) {
+        var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
+
+        input.select2({
+            data: data,
+            placeholder: "Search Contacts..."
+        })
     }
 
 });
