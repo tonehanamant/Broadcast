@@ -77,12 +77,12 @@
                     }
                 },
                 {
-                    field: 'LastUpdate',
+                    field: 'ModifiedDate',
                     caption: 'Last Update',
                     sortable: true,
                     size: '20%',
                     render: function (record, index, column_index) {
-                        return moment(record.LastUpdate).format("MM/DD/YYYY h:mm:ss a");
+                        return moment(record.ModifiedDate).format("MM/DD/YYYY h:mm:ss a");
                     }
                 }
             ],
