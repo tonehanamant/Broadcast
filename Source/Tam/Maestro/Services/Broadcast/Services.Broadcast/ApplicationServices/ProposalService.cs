@@ -989,15 +989,22 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         Display = g.Display,
                         Id = g.Id,
-                        Count = g.Id == 0 ? totalMarkets : g.Id //set count to totalMarkets for ALL markets groups
+                        Count = g.Id
                     }).ToList();
+
+            var totalMarketsGroup =
+                marketGroups.Where(g => g.Id == (int) ProposalEnums.ProposalMarketGroups.All).Single();
+            totalMarketsGroup.Count = totalMarkets;
+
+            var customGroup = marketGroups.Where(g => g.Id == (int) ProposalEnums.ProposalMarketGroups.Custom).Single();
+            customGroup.Count = 0;
 
             return marketGroups;
         }
 
         private MarketGroupDto _GetMarketGroupDto(ProposalEnums.ProposalMarketGroups? marketGroup)
         {
-            if (marketGroup == null)
+            if (marketGroup == null || marketGroup == ProposalEnums.ProposalMarketGroups.Custom)
                 return null;
 
             var marketCount = _GetCountForMarketGroup(marketGroup.Value);
@@ -1018,6 +1025,10 @@ namespace Services.Broadcast.ApplicationServices
             {
                 marketCount =
                     _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos().Count;
+            }
+            else if (marketGroup == ProposalEnums.ProposalMarketGroups.Custom)
+            {
+                marketCount = 0;
             }
             else
             {

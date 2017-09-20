@@ -48,7 +48,7 @@ namespace Services.Broadcast.Entities
         public DateTime? FlightStartDate { get; set; }
         public DateTime? FlightEndDate { get; set; }
         public int? GuaranteedDemoId { get; set; }
-        public ProposalEnums.ProposalMarketGroups? MarketGroupId { get; set; }
+        public ProposalEnums.ProposalMarketGroups MarketGroupId { get; set; }
         public ProposalEnums.ProposalMarketGroups? BlackoutMarketGroupId { get; set; }
         public MarketGroupDto MarketGroup { get; set; }
         public MarketGroupDto BlackoutMarketGroup { get; set; }

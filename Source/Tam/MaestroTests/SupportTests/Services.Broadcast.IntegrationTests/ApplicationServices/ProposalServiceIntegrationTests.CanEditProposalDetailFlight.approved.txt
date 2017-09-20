@@ -166,7 +166,7 @@
   "GuaranteedDemoId": null,
   "Margin": null,
   "MarketGroup": null,
-  "MarketGroupId": null,
+  "MarketGroupId": 0,
   "Notes": null,
   "PostType": null,
   "ProposalName": null,

@@ -414,9 +414,6 @@
     <Compile Include="station_program_flight_proposal.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="system_component_parameters.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
