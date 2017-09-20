@@ -14,7 +14,10 @@ namespace Services.Broadcast.Entities
             Top50 = 50,
 
             [Description("All")]
-            All = 0
+            All = 0,
+
+            [Description("Custom")]
+            Custom = 255
         }
 
         public enum ProposalStatusType

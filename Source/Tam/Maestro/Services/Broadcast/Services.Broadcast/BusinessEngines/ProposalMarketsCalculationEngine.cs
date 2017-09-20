@@ -48,7 +48,7 @@ namespace Services.Broadcast.BusinessEngines
 
             _AddMarketsFromGroup(proposal, finalProposalMarkets, allMarkets, marketRankings);
             _AddCustomMarkets(proposal, finalProposalMarkets);
-            _ExcludeMarketsFromGroup(proposal, allMarkets, marketRankings, finalProposalMarkets);
+            _ExcludeStandardMarketGroupFromMarkets(proposal, allMarkets, marketRankings, finalProposalMarkets);
             _ExcludeCustomMarkets(proposal, finalProposalMarkets);
 
             return finalProposalMarkets.DistinctBy(m => m.Id).ToList();
@@ -69,13 +69,13 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private void _ExcludeMarketsFromGroup(
+        private void _ExcludeStandardMarketGroupFromMarkets(
             ProposalDto proposal,
             List<LookupDto> allMarkets,
             Dictionary<int, int> marketRankings,
             List<LookupDto> finalProposalMarkets)
         {
-            if (proposal.BlackoutMarketGroupId != null)
+            if (proposal.BlackoutMarketGroupId != null && proposal.BlackoutMarketGroupId != ProposalEnums.ProposalMarketGroups.Custom)
             {
                 var excludedMarketGroup = _GetMarketListByGroup(
                     allMarkets,
@@ -106,9 +106,9 @@ namespace Services.Broadcast.BusinessEngines
             List<LookupDto> allMarkets,
             Dictionary<int, int> marketRankings)
         {
-            if (proposal.MarketGroupId != null)
+            if (proposal.MarketGroupId != ProposalEnums.ProposalMarketGroups.Custom)
             {
-                finalProposalMarkets.AddRange(_GetMarketListByGroup(allMarkets, marketRankings, proposal.MarketGroupId.Value));
+                finalProposalMarkets.AddRange(_GetMarketListByGroup(allMarkets, marketRankings, proposal.MarketGroupId));
             }
         }
 

@@ -1081,6 +1081,20 @@ END
 
 /*************************************** BCOP-1909 - START *****************************************************/
 
+/*************************************** BCOP-1917 - START *****************************************************/
+
+  update proposal_versions set markets = 255 where markets is null
+  go
+
+  alter table proposal_versions
+  alter column markets tinyint not null
+  go
+
+  update proposal_versions set blackout_markets = 255 where blackout_markets is null
+  and id in (select distinct proposal_version_id from proposal_version_markets where is_blackout = 1)
+  go
+
+/*************************************** BCOP-1917 - START *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

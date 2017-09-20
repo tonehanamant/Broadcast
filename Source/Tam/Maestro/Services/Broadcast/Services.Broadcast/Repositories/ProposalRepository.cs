@@ -133,7 +133,7 @@ namespace Services.Broadcast.Repositories
                 start_date = proposalDto.FlightStartDate,
                 end_date = proposalDto.FlightEndDate,
                 guaranteed_audience_id = proposalDto.GuaranteedDemoId,
-                markets = (byte?)proposalDto.MarketGroupId,
+                markets = (byte)proposalDto.MarketGroupId,
                 blackout_markets = (byte?)proposalDto.BlackoutMarketGroupId,
                 created_by = userName,
                 created_date = timestamp,
@@ -232,8 +232,8 @@ namespace Services.Broadcast.Repositories
             dbProposalVersion.start_date = proposalDto.FlightStartDate;
             dbProposalVersion.end_date = proposalDto.FlightEndDate;
             dbProposalVersion.guaranteed_audience_id = proposalDto.GuaranteedDemoId;
-            dbProposalVersion.markets = (byte?)proposalDto.MarketGroupId;
-            dbProposalVersion.blackout_markets = (byte?)proposalDto.BlackoutMarketGroupId;
+            dbProposalVersion.markets = (byte)proposalDto.MarketGroupId;
+            dbProposalVersion.blackout_markets = (byte?) proposalDto.BlackoutMarketGroupId;
             dbProposalVersion.modified_by = userName;
             dbProposalVersion.modified_date = timestamp;
             dbProposalVersion.target_budget = proposalDto.TargetBudget;
@@ -616,7 +616,7 @@ namespace Services.Broadcast.Repositories
             proposalDto.FlightEndDate = proposalVersion.end_date;
             proposalDto.FlightStartDate = proposalVersion.start_date;
             proposalDto.GuaranteedDemoId = proposalVersion.guaranteed_audience_id;
-            proposalDto.MarketGroupId = (ProposalEnums.ProposalMarketGroups?)proposalVersion.markets;
+            proposalDto.MarketGroupId = (ProposalEnums.ProposalMarketGroups)proposalVersion.markets;
             proposalDto.BlackoutMarketGroupId = (ProposalEnums.ProposalMarketGroups?)proposalVersion.blackout_markets;
             proposalDto.Markets = proposalVersion.proposal_version_markets.Where(q => q.proposal_version_id == proposalVersion.id).
                     Select(f => new ProposalMarketDto
@@ -718,7 +718,7 @@ namespace Services.Broadcast.Repositories
             proposalVersion.GuaranteedAudienceId = x.guaranteed_audience_id;
             proposalVersion.LastModifiedBy = x.modified_by;
             proposalVersion.LastModifiedDate = x.modified_date;
-            proposalVersion.Markets = (ProposalEnums.ProposalMarketGroups?)x.markets;
+            proposalVersion.Markets = (ProposalEnums.ProposalMarketGroups)x.markets;
             proposalVersion.TargetUnits = x.target_units;
             proposalVersion.TargetImpressions = x.target_impressions;
             proposalVersion.Notes = x.notes;
