@@ -126,6 +126,8 @@ var StationModalNewRate = function (view) {
                 me.newProgram.Rate30 = $('#new_program_spot30_input').val() ? parseFloat($('#new_program_spot30_input').val().replace(/[$,]+/g, "")) : null;
 
                 me.newProgram.Impressions = parseFloat($('#new_program_hhimpressions_input').val().replace(/[$,]+/g, ""));
+                me.newProgram.Impressions = util.multiplyImpressions(me.newProgram.Impressions);
+
                 me.newProgram.Rating = parseFloat($('#new_program_hhrating_input').val().replace(/[$,]+/g, ""));
 
                 var callback = this.onAfterSaveNewRate.bind(this, addAnother);
