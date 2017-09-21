@@ -46,10 +46,12 @@ namespace BroadcastComposerWeb
                 "~/Scripts/app/config/w2ui.js",
 
                 /* Utilities */
-                "~/Scripts/app/utilities/array.js",      // Prototype
-                "~/Scripts/app/utilities/date.js",       // Prototype
-                "~/Scripts/app/utilities/global.js",
+                "~/Scripts/app/utilities/array.js",         // Prototype
+                "~/Scripts/app/utilities/date.js",          // Prototype
                 "~/Scripts/app/utilities/scroll.js",
+                "~/Scripts/app/utilities/global.js",        // Defines util 
+                "~/Scripts/app/utilities/impressions.js",   // Prototypes onto util
+
 
                 /* Services - Data*/
                 "~/Scripts/app/services/httpService.js",

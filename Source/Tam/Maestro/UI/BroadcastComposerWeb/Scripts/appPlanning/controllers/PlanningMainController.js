@@ -83,11 +83,12 @@ var PlanningMainController = BaseController.extend({
                 url = baseUrl + 'api/Proposals/Proposal/' + Number(proposalId);
 
             httpService.get(url,
-                function (proposal) {
-                    if (callback) {
-                        callback($scope.convertFromProposalImpressions(proposal));
-                    }
-                },
+                //function (proposal) {
+                //    if (callback) {
+                //        callback($scope.convertFromProposalImpressions(proposal));
+                //    }
+                //},
+                callback.bind(this),
                 //error - unlock
                 $scope.onApiPrimaryProposalError.bind($scope, proposalId),
                 {
@@ -107,12 +108,12 @@ var PlanningMainController = BaseController.extend({
 
     /*** HELPERS ***/
 
-    convertFromProposalImpressions: function(proposal) {
-        proposal.TargetImpressions = proposal.TargetImpressions / 1000;
-        if (proposal.TotalImpressions) {
-            proposal.TotalImpressions = proposal.TotalImpressions / 1000;
-        }
+    //convertFromProposalImpressions: function(proposal) {
+    //    proposal.TargetImpressions = proposal.TargetImpressions / 1000;
+    //    if (proposal.TotalImpressions) {
+    //        proposal.TotalImpressions = proposal.TotalImpressions / 1000;
+    //    }
 
-        return proposal;
-    }
+    //    return proposal;
+    //}
 });

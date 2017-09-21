@@ -87,10 +87,14 @@ var ProposalController = BaseController.extend({
         var url = baseUrl + 'api/Proposals/Proposal/' + proposalId + '/Versions/' + version;
 
         httpService.get(url,
-            function (proposal) {
-                if (callback) {
-                    callback($scope.convertFromProposalImpressions(proposal));
-                }
+            //function (proposal) {
+            //    if (callback) {
+            //        callback($scope.convertFromProposalImpressions(proposal));
+            //    }
+            //},
+            //callback.bind(this),
+            function(proposal){
+                if (callback) console.log(proposal);
             },
             null,
             {
@@ -104,16 +108,17 @@ var ProposalController = BaseController.extend({
     apiSaveProposal: function (proposal, callback, errorCallback) {
         var $scope = this;
 
-        proposal = $scope.convertToProposalImpressions(proposal);
+        //proposal = $scope.convertToProposalImpressions(proposal);
         var jsonObj = JSON.stringify(proposal);
         var url = baseUrl + 'api/Proposals/SaveProposal';
 
         httpService.post(url,
-            function (proposal) {
-                if (callback) {
-                    callback($scope.convertFromProposalImpressions(proposal));
-                }
-            },
+            //function (proposal) {
+            //    if (callback) {
+            //        callback($scope.convertFromProposalImpressions(proposal));
+            //    }
+            //},
+            callback.bind(this),
             errorCallback ? errorCallback.bind(this) : null,
             jsonObj,
             {
@@ -227,16 +232,17 @@ var ProposalController = BaseController.extend({
     apiProposalDetailUpdate: function (details, callback) {
         var $scope = this;
 
-        details = $scope.convertToDetailsImpressions(details);
+        //details = $scope.convertToDetailsImpressions(details)
         var jsonObj = JSON.stringify(details);
         var url = baseUrl + 'api/Proposals/UpdateProposal';
 
         httpService.post(url,
-            function (proposal) {
-                if (callback) {
-                    callback($scope.convertFromDetailsImpressions(proposal));
-                }
-            },
+            //function (proposal) {
+            //    if (callback) {
+            //        callback($scope.convertFromDetailsImpressions(proposal));
+            //    }
+            //},
+            callback.bind(this),
             null,
             jsonObj,
             {
@@ -253,11 +259,12 @@ var ProposalController = BaseController.extend({
         var url = baseUrl + 'api/Inventory/Proprietary/Detail/' + detailId;
 
         httpService.get(url,
-            function (inventory) {
-                if (callback) {
-                    callback($scope.convertFromInventoryImpressions(inventory));
-                }
-            },
+            //function (inventory) {
+            //    if (callback) {
+            //        callback($scope.convertFromInventoryImpressions(inventory));
+            //    }
+            //},
+            callback.bind(this),
             null,
             {
                 $ViewElement: fromInventory ? $('#proposal_inventory_view') : $('#proposal_view'),
@@ -287,16 +294,17 @@ var ProposalController = BaseController.extend({
     apiPostDetailTotals: function (data, callback) {
         var $scope = this;
 
-        data = $scope.convertToInventoryImpressions(data);
+        //data = $scope.convertToInventoryImpressions(data);
         var jsonObj = JSON.stringify(data);
         var url = baseUrl + 'api/Inventory/Detail/Totals';
 
         httpService.post(url,
-            function (inventory) {
-                if (callback) {
-                    callback($scope.convertFromInventoryImpressions(inventory));
-                }
-            },
+            //function (inventory) {
+            //    if (callback) {
+            //        callback($scope.convertFromInventoryImpressions(inventory));
+            //    }
+            //},
+            callback.bind(this),
             null,
             jsonObj,
             {
@@ -314,11 +322,13 @@ var ProposalController = BaseController.extend({
         var url = baseUrl + 'api/Inventory/OpenMarket/Detail/' + detailId;
 
         httpService.get(url,
-            function (inventory) {
-                if (callback) {
-                    callback($scope.convertFromOpenMarketImpressions(inventory));
-                }
-            },
+            //function (inventory) {
+            //    console.log(inventory);
+            //    if (callback) {
+            //        callback($scope.convertFromOpenMarketImpressions(inventory));
+            //    }
+            //},
+            callback.bind(this),
             null,
             {
                 $ViewElement: fromInventory ? $('#proposal_openmarket_view') : $('#proposal_view'),
@@ -335,10 +345,11 @@ var ProposalController = BaseController.extend({
         var url = baseUrl + 'api/Inventory/OpenMarket/Detail/' + data.ProposalDetailId + '/Refine';
 
         httpService.post(url,
-            function (inventory) {
-                if (callback)
-                    callback($scope.convertFromOpenMarketImpressions(inventory));
-            },
+            //function (inventory) {
+            //    if (callback)
+            //        callback($scope.convertFromOpenMarketImpressions(inventory));
+            //},
+            callback.bind(this),
             null,
             jsonObj,
             {
@@ -352,15 +363,16 @@ var ProposalController = BaseController.extend({
     apiUpdateInventoryOpenMarketTotals: function (data, callback) {
         var $scope = this;
 
-        data = $scope.convertToOpenMarketImpressions(data);
+        //data = $scope.convertToOpenMarketImpressions(data);
         var jsonObj = JSON.stringify(data);
         var url = baseUrl + 'api/Inventory/OpenMarket/UpdateTotals';
 
         httpService.post(url,
-            function (inventory) {
-                if (callback)
-                    callback($scope.convertFromOpenMarketImpressions(inventory));
-            },
+            //function (inventory) {
+            //    if (callback)
+            //        callback($scope.convertFromOpenMarketImpressions(inventory));
+            //},
+            callback.bind(this),
             null,
             jsonObj,
             {
@@ -378,10 +390,11 @@ var ProposalController = BaseController.extend({
         var url = baseUrl + 'api/Inventory/OpenMarket';
 
         httpService.post(url,
-            function (inventory) {
-                if (callback)
-                    callback($scope.convertFromOpenMarketImpressions(inventory));
-            },
+            //function (inventory) {
+            //    if (callback)
+            //        callback($scope.convertFromOpenMarketImpressions(inventory));
+            //},
+            callback.bind(this),
             null,
             jsonObj,
             {
@@ -448,179 +461,179 @@ var ProposalController = BaseController.extend({
 
     // Details
 
-    convertFromDetailsImpressions: function (proposal) {
-        proposal.TargetImpressions = proposal.TargetImpressions / 1000;
-        proposal.TotalImpressions = proposal.TotalImpressions / 1000;
+    //convertFromDetailsImpressions: function (proposal) {
+    //    proposal.TargetImpressions = proposal.TargetImpressions / 1000;
+    //    proposal.TotalImpressions = proposal.TotalImpressions / 1000;
 
-        proposal.Details.map(function (detail) {
-            detail.TotalImpressions = detail.TotalImpressions / 1000;
+    //    proposal.Details.map(function (detail) {
+    //        detail.TotalImpressions = detail.TotalImpressions / 1000;
 
-            detail.Quarters.map(function (quarter) {
-                quarter.ImpressionGoal = quarter.ImpressionGoal / 1000;
+    //        detail.Quarters.map(function (quarter) {
+    //            quarter.ImpressionGoal = quarter.ImpressionGoal / 1000;
 
-                quarter.Weeks.map(function (week) {
-                    week.Impressions = week.Impressions / 1000;
-                });
-            });
-        });
+    //            quarter.Weeks.map(function (week) {
+    //                week.Impressions = week.Impressions / 1000;
+    //            });
+    //        });
+    //    });
 
-        return proposal;
-    },
+    //    return proposal;
+    //},
 
-    convertToDetailsImpressions: function (details) {
-        details.map(function (detail) {
-            detail.TotalImpressions = detail.TotalImpressions * 1000;
+    //convertToDetailsImpressions: function (details) {
+    //    details.map(function (detail) {
+    //        detail.TotalImpressions = detail.TotalImpressions * 1000;
 
-            detail.Quarters.map(function (quarter) {
-                quarter.ImpressionGoal = quarter.ImpressionGoal * 1000;
+    //        detail.Quarters.map(function (quarter) {
+    //            quarter.ImpressionGoal = quarter.ImpressionGoal * 1000;
 
-                quarter.Weeks.map(function (week) {
-                    week.Impressions = week.Impressions * 1000;
-                });
-            });
-        });
+    //            quarter.Weeks.map(function (week) {
+    //                week.Impressions = week.Impressions * 1000;
+    //            });
+    //        });
+    //    });
 
-        return details;
-    },
+    //    return details;
+    //},
 
     // Proposal
 
-    convertFromProposalImpressions: function (proposal) {
-        proposal.TargetImpressions = proposal.TargetImpressions / 1000;
-        if (proposal.TotalImpressions) {
-            proposal.TotalImpressions = proposal.TotalImpressions / 1000;
-        }
+    //convertFromProposalImpressions: function (proposal) {
+    //    proposal.TargetImpressions = proposal.TargetImpressions / 1000;
+    //    if (proposal.TotalImpressions) {
+    //        proposal.TotalImpressions = proposal.TotalImpressions / 1000;
+    //    }
 
-        return proposal;
-    },
+    //    return proposal;
+    //},
 
-    convertToProposalImpressions: function (proposal) {
-        proposal.TargetImpressions = proposal.TargetImpressions * 1000;
-        if (proposal.TotalImpressions) {
-            proposal.TotalImpressions = proposal.TotalImpressions * 1000;
-        }
+    //convertToProposalImpressions: function (proposal) {
+    //    proposal.TargetImpressions = proposal.TargetImpressions * 1000;
+    //    if (proposal.TotalImpressions) {
+    //        proposal.TotalImpressions = proposal.TotalImpressions * 1000;
+    //    }
 
-        return proposal;
-    },
+    //    return proposal;
+    //},
 
     // Open Market -- convert impressions 'From' and 'To'
 
-    convertFromOpenMarketImpressions: function (inventory) {
-        inventory.DetailTotalImpressions = inventory.DetailTotalImpressions / 1000;
+    //convertFromOpenMarketImpressions: function (inventory) {
+    //    inventory.DetailTotalImpressions = inventory.DetailTotalImpressions / 1000;
 
-        inventory.Weeks.map(function (week) {
-            week.ImpressionsGoal = week.ImpressionsGoal / 1000;
-            week.ImpressionsTotal = week.ImpressionsTotal / 1000;
+    //    inventory.Weeks.map(function (week) {
+    //        week.ImpressionsGoal = week.ImpressionsGoal / 1000;
+    //        week.ImpressionsTotal = week.ImpressionsTotal / 1000;
 
-            week.Markets.map(function (market) {
-                market.Impressions = market.Impressions / 1000;
+    //        week.Markets.map(function (market) {
+    //            market.Impressions = market.Impressions / 1000;
 
-                market.Stations.map(function (station) {
-                    station.Programs.map(function (program) {
-                        if (program) {
-                            program.TargetImpressions = program.TargetImpressions / 1000;
-                            program.TotalImpressions = program.TotalImpressions / 1000;
-                            program.UnitImpression = program.UnitImpression / 1000;
-                        }
-                    });
-                });
-            });
-        });
+    //            market.Stations.map(function (station) {
+    //                station.Programs.map(function (program) {
+    //                    if (program) {
+    //                        program.TargetImpressions = program.TargetImpressions / 1000;
+    //                        program.TotalImpressions = program.TotalImpressions / 1000;
+    //                        program.UnitImpression = program.UnitImpression / 1000;
+    //                    }
+    //                });
+    //            });
+    //        });
+    //    });
 
-        return inventory;
-    },
+    //    return inventory;
+    //},
 
-    convertToOpenMarketImpressions: function (inventory) {
-        inventory.DetailTotalImpressions = inventory.DetailTotalImpressions * 1000;
+    //convertToOpenMarketImpressions: function (inventory) {
+    //    inventory.DetailTotalImpressions = inventory.DetailTotalImpressions * 1000;
 
-        inventory.Weeks.map(function (week) {
-            week.ImpressionsGoal = week.ImpressionsGoal * 1000;
-            week.ImpressionsTotal = week.ImpressionsTotal * 1000;
+    //    inventory.Weeks.map(function (week) {
+    //        week.ImpressionsGoal = week.ImpressionsGoal * 1000;
+    //        week.ImpressionsTotal = week.ImpressionsTotal * 1000;
 
-            week.Markets.map(function (market) {
-                market.Impressions = market.Impressions * 1000;
+    //        week.Markets.map(function (market) {
+    //            market.Impressions = market.Impressions * 1000;
 
-                market.Stations.map(function (station) {
-                    station.Programs.map(function (program) {
-                        if (program) {
-                            program.TargetImpressions = program.TargetImpressions * 1000;
-                            program.TotalImpressions = program.TotalImpressions * 1000;
-                            program.UnitImpression = program.UnitImpression * 1000;
-                        }
-                    });
-                });
-            });
-        });
+    //            market.Stations.map(function (station) {
+    //                station.Programs.map(function (program) {
+    //                    if (program) {
+    //                        program.TargetImpressions = program.TargetImpressions * 1000;
+    //                        program.TotalImpressions = program.TotalImpressions * 1000;
+    //                        program.UnitImpression = program.UnitImpression * 1000;
+    //                    }
+    //                });
+    //            });
+    //        });
+    //    });
 
-        return inventory;
-    },
+    //    return inventory;
+    //},
 
     // Inventory -- convert impressions 'From' and 'To' 
 
-    convertFromInventoryImpressions: function (inventory) {
-        if (inventory.DetailTotalImpressions) {
-            inventory.DetailTotalImpressions = inventory.DetailTotalImpressions / 1000;
-        }
+    //convertFromInventoryImpressions: function (inventory) {
+    //    if (inventory.DetailTotalImpressions) {
+    //        inventory.DetailTotalImpressions = inventory.DetailTotalImpressions / 1000;
+    //    }
 
-        if (inventory.TotalImpressions) {
-            inventory.TotalImpressions = inventory.TotalImpressions / 1000;
-        }
+    //    if (inventory.TotalImpressions) {
+    //        inventory.TotalImpressions = inventory.TotalImpressions / 1000;
+    //    }
 
-        inventory.Weeks.map(function (week) {
-            week.ImpressionsGoal = week.ImpressionsGoal / 1000;
-            week.Impressions = week.Impressions / 1000;
+    //    inventory.Weeks.map(function (week) {
+    //        week.ImpressionsGoal = week.ImpressionsGoal / 1000;
+    //        week.Impressions = week.Impressions / 1000;
 
-            if (week.DaypartGroups) {
-                week.DaypartGroups.map(function (daypartGroup) {
-                    daypartGroup.Value.DaypartSlots.map(function (daypartSlot) {
-                        if (daypartSlot) {
-                            daypartSlot.Impressions = daypartSlot.Impressions / 1000;
-                        }
-                    });
-                });
-            }
-        });
+    //        if (week.DaypartGroups) {
+    //            week.DaypartGroups.map(function (daypartGroup) {
+    //                daypartGroup.Value.DaypartSlots.map(function (daypartSlot) {
+    //                    if (daypartSlot) {
+    //                        daypartSlot.Impressions = daypartSlot.Impressions / 1000;
+    //                    }
+    //                });
+    //            });
+    //        }
+    //    });
 
-        return inventory;
-    },
+    //    return inventory;
+    //},
 
-    convertToInventoryImpressions: function(inventory) {
-        if (inventory.DetailTotalImpressions) {
-            inventory.DetailTotalImpressions = inventory.DetailTotalImpressions * 1000;
-        }
+    //convertToInventoryImpressions: function(inventory) {
+    //    if (inventory.DetailTotalImpressions) {
+    //        inventory.DetailTotalImpressions = inventory.DetailTotalImpressions * 1000;
+    //    }
 
-        if (inventory.TotalImpressions) {
-            inventory.TotalImpressions = inventory.TotalImpressions * 1000;
-        }
+    //    if (inventory.TotalImpressions) {
+    //        inventory.TotalImpressions = inventory.TotalImpressions * 1000;
+    //    }
 
-        inventory.Weeks.map(function(week) {
-            if (week.ImpressionGoal) {
-                week.ImpressionGoal = week.ImpressionGoal * 1000;
-            }
+    //    inventory.Weeks.map(function(week) {
+    //        if (week.ImpressionGoal) {
+    //            week.ImpressionGoal = week.ImpressionGoal * 1000;
+    //        }
 
-            if (week.Impressions) {
-                week.Impressions = week.Impressions * 1000;
-            }
+    //        if (week.Impressions) {
+    //            week.Impressions = week.Impressions * 1000;
+    //        }
 
-            if (week.Slots) {
-                week.Slots.map(function(slot) {
-                    if (slot) {
-                        slot.Impressions = slot.Impressions * 1000;
-                    }
-                });
-            }
+    //        if (week.Slots) {
+    //            week.Slots.map(function(slot) {
+    //                if (slot) {
+    //                    slot.Impressions = slot.Impressions * 1000;
+    //                }
+    //            });
+    //        }
 
-            if (week.DaypartGroups) {
-                week.DaypartGroups.map(function(daypartGroup) {
-                    daypartGroup.Value.DaypartSlots.map(function(daypartSlot) {
-                        if (daypartSlot) {
-                            daypartSlot.Impressions = daypartSlot.Impressions * 1000;
-                        }
-                    });
-                });
-            }
-        });
+    //        if (week.DaypartGroups) {
+    //            week.DaypartGroups.map(function(daypartGroup) {
+    //                daypartGroup.Value.DaypartSlots.map(function(daypartSlot) {
+    //                    if (daypartSlot) {
+    //                        daypartSlot.Impressions = daypartSlot.Impressions * 1000;
+    //                    }
+    //                });
+    //            });
+    //        }
+    //    });
 
-        return inventory;
-    }
+    //    return inventory;
+    //}
 });

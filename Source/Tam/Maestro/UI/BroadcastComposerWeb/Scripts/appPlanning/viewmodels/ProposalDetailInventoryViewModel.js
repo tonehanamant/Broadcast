@@ -55,8 +55,8 @@ function ProposalDetailInventoryViewModel(view) {
         // header 3
 
         // impressions
-        $scope.totalImpressions(inventory.DetailTotalImpressions);
-        $scope.detailTargetImpressions(inventory.DetailTargetImpressions);
+        $scope.totalImpressions(util.divideImpressions(inventory.DetailTotalImpressions));
+        $scope.detailTargetImpressions(util.divideImpressions(inventory.DetailTargetImpressions));
         $scope.impressionsPercent(inventory.DetailImpressionsPercent);
         $scope.detailImpressionsMarginAchieved(inventory.DetailImpressionsMarginAchieved);
 

@@ -512,7 +512,7 @@ var ProposalDetailSet = function (proposalView, id) {
                 this.grid.columns[2].editable = record.isQuarter ? { type: 'float', autoFormat: true, precision: 3, prefix: 'IMP Goal </br>' } : { type: 'float', precision: 3 };
                 //editing mode
                 //new - need to set the editing to no decimals if .00 or blank '' if 0 value overall - just use not to fixed and editor should handle?
-                var editImpressions = record.Impressions ? record.Impressions : '';
+                var editImpressions = record.Impressions ? util.divideImpressions(record.Impressions) : '';
                 this.grid.editField(event.recid, 2, editImpressions);
                 this.isGridEditing = true;
             }
@@ -565,6 +565,7 @@ var ProposalDetailSet = function (proposalView, id) {
                 if (event.column === 2) {//ImpressionGoal or Impressions
                     //me.isGridEditing = true;
                     newVal = newVal.toFixed(3);
+                    newVal = util.multiplyImpressions(newVal); // returns value *1000
                     if (record.isQuarter) {
                         //console.log('onGridEditChange ImpressionGoal Quarter', event, newVal);
                         //Quarter Impression Goal (float) - Impressions represents ImpressionGoal
