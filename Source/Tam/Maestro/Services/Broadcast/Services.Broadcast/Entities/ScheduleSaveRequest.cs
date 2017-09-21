@@ -64,7 +64,7 @@ namespace Services.Broadcast.Entities
 
         public bool ContainsIsci(string isci)
         {
-            return ISCIs != null && ISCIs.Any(i => i.House == isci);
+            return ISCIs != null && ISCIs.Any(i => i.House.ToUpper() == isci.ToUpper());
         }
 
         private string _GetHouseIsci(string isciString)

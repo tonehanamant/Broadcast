@@ -604,8 +604,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
 
                 reportDto = reportService.GenerateScheduleReportDto(scheduleId);
-                var report = reportService.GenerateScheduleReport(scheduleId);
-                File.WriteAllBytes(string.Format("..\\Report{0}.xlsx",scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
+                //var report = reportService.GenerateScheduleReport(scheduleId);
+                //File.WriteAllBytes(string.Format("..\\Report{0}.xlsx",scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
             }
             _VerifyReportData(reportDto);
         }
@@ -630,93 +630,58 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyReportData(reportDto);
         }
 
-        private int _CreateScheduleWithRelatedSchedules()
+ 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Schedule_Upload_Case_Sensitive_ISCIs_BCOP1927()
         {
-            var mainScheduleId = _ImportSchedule(new List<int>() { 209, 117 }); // markets ST LOUIS and Charlotte
-            
-            const int estimateId = 333441;
-            ITrackerService sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
-
-            var saveRequest = new ScheduleSaveRequest();
-            var schedule = new ScheduleDTO();
-
-            schedule.AdvertiserId = 39279;
-            schedule.EstimateId = estimateId;
-            schedule.PostingBookId = 413;
-            schedule.ScheduleName = "Assembly Schedule For Reporting Tests With Extra Audience Info 1";
-            schedule.UserName = "Assembly User";
-            schedule.FileName = @"Assembly Schedule For Reporting Tests With Extra Audience Info 1.csv";
-            schedule.FileStream =
-                new FileStream(@".\Files\Assembly Schedule For Reporting Tests With Extra Audience Info 1.csv",
-                    FileMode.Open,
-                    FileAccess.Read);
-
-            schedule.MarketRestrictions = new List<int>();
-            schedule.DaypartRestriction = new DaypartDto()
+            ScheduleReportDto reportDto = null;
+            using (new TransactionScopeWrapper())
             {
-                startTime = 0,
-                endTime = 86400 - 1,
-                mon = true,
-                tue = true,
-                wed = true,
-                thu = true,
-                fri = true,
-                sat = true,
-                sun = true
-            };
-            schedule.Equivalized = true;
-            schedule.ISCIs = new List<IsciDto>
-            {
-                new IsciDto {House = "AAABBB", Client = "cl_AAABBB"},
-                new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}    
-            };
+                _LoadBvsFile();
 
-            schedule.PostType = SchedulePostType.NTI;
-            schedule.InventorySource = RatesFile.RateSourceType.Assembly;
-            saveRequest.Schedule = schedule;
-            sut.SaveSchedule(saveRequest);
+                const int estimateId = 333444;
+                ITrackerService sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
 
-            // import the second related schedule
-            saveRequest = new ScheduleSaveRequest();
-            schedule = new ScheduleDTO();
+                var saveRequest = new ScheduleSaveRequest();
+                var schedule = new ScheduleDTO();
 
-            schedule.AdvertiserId = 39279;
-            schedule.EstimateId = 555666;
-            schedule.PostingBookId = 413;
-            schedule.ScheduleName = "Assembly Schedule For Reporting Tests With Extra Audience Info 2";
-            schedule.UserName = "Assembly User";
-            schedule.FileName = @"Assembly Schedule For Reporting Tests With Extra Audience Info 2.csv";
-            schedule.FileStream =
-                new FileStream(@".\Files\Assembly Schedule For Reporting Tests With Extra Audience Info 2.csv",
-                    FileMode.Open,
-                    FileAccess.Read);
+                schedule.AdvertiserId = 39279;
+                schedule.EstimateId = estimateId;
+                schedule.PostingBookId = 413;
+                
+                schedule.ScheduleName = "SCX Various Tests.scx";
+                schedule.UserName = "Assembly User";
+                schedule.FileName = @"SCX Various Tests.scx";
+                schedule.FileStream =
+                    new FileStream(@".\Files\SCX Various Tests.scx",
+                        FileMode.Open,
+                        FileAccess.Read);
 
-            schedule.MarketRestrictions = new List<int>();
-            schedule.DaypartRestriction = new DaypartDto()
-            {
-                startTime = 0,
-                endTime = 86400 - 1,
-                mon = true,
-                tue = true,
-                wed = true,
-                thu = true,
-                fri = true,
-                sat = true,
-                sun = true
-            };
-            schedule.Equivalized = true;
-            schedule.ISCIs = new List<IsciDto>
-            {
-                new IsciDto {House = "AAABBB", Client = "cl_AAABBB"},
-                new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}
-            };
+                schedule.MarketRestrictions = new List<int>();
+                schedule.DaypartRestriction = new DaypartDto()
+                {
+                    startTime = 0,endTime = 86400 - 1,mon = true,tue = true,wed = true,thu = true,fri = true,sat = true,
+                    sun = true
+                };
+                schedule.Equivalized = true;
+                schedule.ISCIs = new List<IsciDto>
+                {   // lower case house isci is the point of this test ;)
+                    new IsciDto {House = "aaabbb", Client = "cl_AAABBB"},
+                    new IsciDto {House = "cccddd", Client = "cl_CCCDDD"}
+                };
 
-            schedule.PostType = SchedulePostType.NTI;
-            schedule.InventorySource = RatesFile.RateSourceType.Assembly;
-            saveRequest.Schedule = schedule;
-            sut.SaveSchedule(saveRequest);
+                schedule.PostType = SchedulePostType.NTI;
+                schedule.InventorySource = RatesFile.RateSourceType.Assembly;
+                saveRequest.Schedule = schedule;
+                var scheduleId = sut.SaveSchedule(saveRequest);
 
-            return mainScheduleId;
-        }
+                ISchedulesReportService reportService =
+                    IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
+                reportDto = reportService.GenerateScheduleReportDto(scheduleId);
+            }
+            _VerifyReportData(reportDto);
+
     }
+}
 }
