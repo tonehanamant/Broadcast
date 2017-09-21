@@ -342,7 +342,9 @@
                     caption: 'HH Impressions (000)',
                     size: '10%',
                     sortable: false,
-                    render: 'number:1'
+                    render: function (record) {
+                        return record.Impressions ? numeral(util.divideImpressions(record.Impressions)).format('0,0.[000]') : '-';
+                    }
                 },
                 {
                     field: 'Rating',
@@ -399,7 +401,6 @@
         //return this.copyCfgItem(gridCfg);
         return gridCfg;
     },
-
 
     getProgramConflictGridCfg: function () {
         var me = this;

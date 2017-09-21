@@ -82,8 +82,26 @@
                 { field: 'SpotsDelivered', caption: 'Spots Delivered', size: '8%', sortable: true },
                 { field: 'OutOfSpec', caption: 'Out of Spec', size: '8%', sortable: true },
                 { field: 'PostingBook', caption: 'Posting Book', size: '8%', sortable: true },
-                { field: 'PrimaryDemoBooked', caption: 'Primary Demo Booked Imp. (000)', hidden: false, render: 'number', size: '10%', sortable: true },
-                { field: 'PrimaryDemoDelivered', caption: 'Primary Demo Delivered Imp. (000)', hidden: false, render: 'number', size: '10%', sortable: true }
+                {
+                    field: 'PrimaryDemoBooked',
+                    caption: 'Primary Demo Booked Imp. (000)',
+                    hidden: false,
+                    render: function (record) {
+                        return record.PrimaryDemoBooked ? numeral(util.divideImpressions(record.PrimaryDemoBooked)).format('0,0.[000]') : '-';
+                    },
+                    size: '10%',
+                    sortable: true
+                },
+                {
+                    field: 'PrimaryDemoDelivered',
+                    caption: 'Primary Demo Delivered Imp. (000)',
+                    hidden: false,
+                    render: function (record) {
+                        return record.PrimaryDemoDelivered ? numeral(util.divideImpressions(record.PrimaryDemoDelivered)).format('0,0.[000]') : '-';
+                    },
+                    size: '10%',
+                    sortable: true
+                }
             ],
 
             sortData: [{ field: 'recid', direction: 'asc' }]

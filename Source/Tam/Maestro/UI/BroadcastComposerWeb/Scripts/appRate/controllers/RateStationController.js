@@ -43,9 +43,7 @@ var RateStationController = BaseController.extend({
         var url = baseUrl + 'api/RatesManager/' + this.getSource() + '/Stations/' + stationId;
 
         httpService.get(url,
-             function (station) { 
-                 me.onApiGetStation(me.convertFromProgramImpressions(station));
-             },
+            me.onApiGetStation.bind(this),
             me.appController.apiGetStationUnlock.bind(this, stationId, null),
             {
                 $ViewElement: $('#rate_view'),
@@ -334,15 +332,5 @@ var RateStationController = BaseController.extend({
             TitleErrorMessage: 'Convert Rate',
             StatusMessage: 'Convert Rate'
         });
-    },
-
-    /*** HELPERS ***/
-
-    convertFromProgramImpressions: function (station) {
-        station.Rates.map(function(rate) {
-            rate.Impressions = rate.Impressions / 1000;
-        });
-
-        return station;
     }
 });
