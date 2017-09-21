@@ -4,6 +4,7 @@ using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -12,7 +13,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IStationRepository : IDataRepository
     {
-        List<DisplayBroadcastStation> GetBroadcastStations(RatesFile.RateSourceType rateSource);
+        List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(RatesFile.RateSourceType rateSource);
         DisplayBroadcastStation GetBroadcastStationByCode(int code);
         DisplayBroadcastStation GetBroadcastStationByLegacyCallLetters(string callLetters);
         DisplayBroadcastStation GetBroadcastStationByCallLetters(string stationCallLetters);
@@ -24,6 +25,7 @@ namespace Services.Broadcast.Repositories
         void UpdateStation(int code, string user, DateTime timeStamp);
         void UpdateStationList(List<int> stationCodes, string user, DateTime timeStamp);
         int GetBroadcastStationCodeByProgramId(int programId);
+        short? GetStationCode(string stationName);
     }
 
     public class StationRepository : BroadcastRepositoryBase, IStationRepository
@@ -33,7 +35,7 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public List<DisplayBroadcastStation> GetBroadcastStations(RatesFile.RateSourceType rateSource)
+        public List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(RatesFile.RateSourceType rateSource)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -274,6 +276,27 @@ namespace Services.Broadcast.Repositories
 
                     return stationContacts.station.station_code;
                 });
+        }
+
+        private readonly Dictionary<string, short> _StationCache = new Dictionary<string, short>();
+        public short? GetStationCode(string stationName)
+        {
+            short code;
+            if (_StationCache.TryGetValue(stationName, out code))
+                return code;
+
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                return _InReadUncommitedTransaction(c =>
+                {
+                    var firstOrDefault = c.stations.FirstOrDefault(s => s.legacy_call_letters == stationName);
+                    if (firstOrDefault == null)
+                        return (short?)null;
+
+                    _StationCache[stationName] = firstOrDefault.station_code;
+                    return firstOrDefault.station_code;
+                });
+            }
         }
     }
 }

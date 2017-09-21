@@ -131,12 +131,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
 
             _Worksheet.Cells.LoadFromCollection(new List<PostFileRow> { _ValidRow }, true);
 
-            var repository = new Mock<IPostRepository>();
+            var repository = new Mock<IStationRepository>();
             repository.Setup(r => r.GetStationCode(_ValidRow.Station)).Returns((short?)null);
 
             try
             {
-                using (new RepositoryMock<IPostRepository>(repository))
+                using (new RepositoryMock<IStationRepository>(repository))
                     _PostFileParser.Parse(_Package);
                 Assert.Fail();
             }

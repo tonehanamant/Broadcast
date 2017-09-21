@@ -118,7 +118,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
         {
-            var stations = _stationRepository.GetBroadcastStations(_ParseRateSource(rateSource));
+            var stations = _stationRepository.GetBroadcastStationsWithFlightWeeksForRateSource(_ParseRateSource(rateSource));
             _SetFlightData(stations, currentDate);
             return stations;
         }

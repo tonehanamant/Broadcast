@@ -27,13 +27,26 @@ namespace Services.Broadcast.BusinessEngines
         public void Post(post_files postFile)
         {
             var postUploadRepository = _DataRepositoryFactory.GetDataRepository<IPostRepository>();
-            var postDetails = postFile.post_file_details.Select(x => new StationDetailPointInTime
+            var stationRepo = _DataRepositoryFactory.GetDataRepository<IStationRepository>();
+
+            var postDetails = new List<StationDetailPointInTime>();
+
+            foreach (var postFileDetail in postFile.post_file_details)
             {
-                Id = x.id,
-                TimeAired = x.time_aired,
-                DayOfWeek = x.date.DayOfWeek,
-                Code = postUploadRepository.GetStationCode(x.station).Value
-            }).ToList();
+                var stationCode = stationRepo.GetStationCode(postFileDetail.station);
+                if (stationCode == null)
+                {
+                    continue;
+                }
+                var postDetail = new StationDetailPointInTime()
+                {
+                    Id = postFileDetail.id,
+                    TimeAired = postFileDetail.time_aired,
+                    DayOfWeek = postFileDetail.date.DayOfWeek,
+                    Code = stationCode.Value
+                };
+                postDetails.Add(postDetail);
+            }
 
             var maestroAudiences = postFile.post_file_demos.Select(d => d.demo).ToList();
             var audiencemappings = _DataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>().GetMaestroAudiencesGroupedByRatingAudiences(maestroAudiences);

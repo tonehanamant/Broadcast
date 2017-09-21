@@ -17,7 +17,6 @@ namespace Services.Broadcast.Repositories
         int SavePost(post_files file);
         PostFile GetPost(int id);
         bool DeletePost(int id);
-        short? GetStationCode(string stationName);
         void SavePostImpressions(List<post_file_detail_impressions> impressions);
         void DeletePostImpressions(int id);
         post_files GetPostEF(int id);
@@ -98,27 +97,6 @@ namespace Services.Broadcast.Repositories
                 });
             }
             return true;
-        }
-
-        private readonly Dictionary<string, short> _StationCache = new Dictionary<string, short>();
-        public short? GetStationCode(string stationName)
-        {
-            short code;
-            if (_StationCache.TryGetValue(stationName, out code))
-                return code;
-
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                return _InReadUncommitedTransaction(c =>
-                {
-                    var firstOrDefault = c.stations.FirstOrDefault(s => s.legacy_call_letters == stationName);
-                    if (firstOrDefault == null)
-                        return (short?)null;
-
-                    _StationCache[stationName] = firstOrDefault.station_code;
-                    return firstOrDefault.station_code;
-                });
-            }
         }
 
         public void SavePostImpressions(List<post_file_detail_impressions> impressions)

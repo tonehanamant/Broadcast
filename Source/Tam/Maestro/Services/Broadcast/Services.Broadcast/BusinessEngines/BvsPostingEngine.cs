@@ -93,14 +93,24 @@ namespace Services.Broadcast.BusinessEngines
             var ratingsAudienceMappings = _DataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>().GetRatingsAudiencesByMaestroAudience(scheduleAudiences.Select(x => x.Value).ToList());
             var uniqueRatingsAudiences = ratingsAudienceMappings.Select(x => x.rating_audience_id).Distinct().ToList();
 
-            var postUploadRepository = _DataRepositoryFactory.GetDataRepository<IPostRepository>();
-            var stationDetails = bvsData.Select(b => new StationDetailPointInTime
+            var stationRepo = _DataRepositoryFactory.GetDataRepository<IStationRepository>();
+            var stationDetails = new List<StationDetailPointInTime>();
+            foreach (var bvsPostDetail in bvsData)
             {
-                Code = postUploadRepository.GetStationCode(b.Station).Value,
-                Id = b.BvsDetailId,
-                DayOfWeek = b.NsiDate.DayOfWeek,
-                TimeAired = b.TimeAired
-            }).ToList();
+                var stationCode = stationRepo.GetStationCode(bvsPostDetail.Station);
+                if (stationCode == null)
+                {
+                    continue;
+                }
+                var stationDetail =  new StationDetailPointInTime
+                {
+                    Code = stationCode.Value,
+                    Id = bvsPostDetail.BvsDetailId,
+                    DayOfWeek = bvsPostDetail.NsiDate.DayOfWeek,
+                    TimeAired = bvsPostDetail.TimeAired
+                };
+                stationDetails.Add(stationDetail);
+            }
 
             var forecastRepo = _DataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
             var ratings = forecastRepo.GetImpressionsPointInTime(postingBook,
