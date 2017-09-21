@@ -83,13 +83,7 @@ var PlanningMainController = BaseController.extend({
                 url = baseUrl + 'api/Proposals/Proposal/' + Number(proposalId);
 
             httpService.get(url,
-                //function (proposal) {
-                //    if (callback) {
-                //        callback($scope.convertFromProposalImpressions(proposal));
-                //    }
-                //},
                 callback.bind(this),
-                //error - unlock
                 $scope.onApiPrimaryProposalError.bind($scope, proposalId),
                 {
                     data: data,
@@ -104,16 +98,5 @@ var PlanningMainController = BaseController.extend({
     //unlock if error either in gettin initialData (that is locked) or primary proposal
     onApiPrimaryProposalError: function (proposalId) {
         if (proposalId) this.proposalsController.apiGetUnlock(proposalId);
-    },
-
-    /*** HELPERS ***/
-
-    //convertFromProposalImpressions: function(proposal) {
-    //    proposal.TargetImpressions = proposal.TargetImpressions / 1000;
-    //    if (proposal.TotalImpressions) {
-    //        proposal.TotalImpressions = proposal.TotalImpressions / 1000;
-    //    }
-
-    //    return proposal;
-    //}
+    }
 });
