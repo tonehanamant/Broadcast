@@ -187,20 +187,20 @@
                     render: function (record, index, column_index) {
                         if (record.w2ui && record.w2ui.summary) {
                             //allow for comma 1000s; only show decimal if not 000
-                            return record.TotalImpressions ? numeral(record.TotalImpressions).format('0,0.[000]') : '-';
+                            return record.TotalImpressions ? numeral(util.divideImpressions(record.TotalImpressions)).format('0,0.[000]'): '-';
                         }
 
                         var id = 'editable_impressions_' + record.recid;
                         //var roundedImpressions = Math.round(Number(record.Impressions));
                         //no longer rounding; allow for comma 1000s; only show decimal if not 000
-                        var convertedImpressions = numeral(record.Impressions).format('0,0.[000]');
+                        var convertedImpressions = numeral(util.divideImpressions(record.Impressions)).format('0,0.[000]');
                         if (record.isQuarter) {
                             return '<div class="editable-cell" id="' + id + '"><span class="grid-label">Imp. Goal (000) ' + '</span>' + convertedImpressions + '</div>';
                         } else {
                             return '<div class="editable-cell" id="' + id + '">' + convertedImpressions + '</div>';
                         }
                     },
-                    editable: { type: 'float', precision: 3, prefix: 'IMP Goal </br>' }
+                    editable: { type: 'float', precision: 3, prefix: 'IMP Goal </br>'  }
                 },
                 {
                     field: 'Cost',
@@ -353,7 +353,7 @@
                         if (!record.active) return '-';
 
                         
-                        var formattedImpresions = numeral(record.Impressions).format('0,0.[000]');
+                        var formattedImpresions = numeral(util.divideImpressions(record.Impressions)).format('0,0.[000]');
 
                         if (record.HasWastage) {
                             return '<div>' + formattedImpresions + ' <span class="glyphicon glyphicon-info-sign" title="wastage"></span></div>';
@@ -558,12 +558,12 @@
                         if (record.isProgram) {//display val including 0 unless not active
                             if (!week.active) return PlanningConfig.greyRenderer('-', true);
                             //TODO hiatus needs set here
-                            var val = numeral(week.TotalImpressions).format('0,0.[000]');
+                            var val = numeral(util.divideImpressions(week.TotalImpressions)).format('0,0.[000]');
                             //return grey for 0 or hiatus
                             var grey = week.Spots === 0 || week.isHiatus;
                             return PlanningConfig.greyRenderer(val, grey);
                         } else {//market display val or dash
-                            return week.Impressions ? numeral(week.Impressions).format('0,0.[000]') : '-';
+                            return week.Impressions ? numeral(util.divideImpressions(week.Impressions)).format('0,0.[000]') : '-';
                         }
 
                     }

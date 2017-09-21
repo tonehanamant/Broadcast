@@ -313,8 +313,8 @@ var ProposalViewModel = function (controller) {
         $scope.totalCostPercent(proposal.TotalCostPercent);
         $scope.totalCostMarginAchieved(proposal.TotalCostMarginAchieved);
 
-        $scope.totalImpressions(proposal.TotalImpressions);
-        $scope.targetImpressions(proposal.TargetImpressions);
+        $scope.totalImpressions(util.divideImpressions(proposal.TotalImpressions));
+        $scope.targetImpressions(util.divideImpressions(proposal.TargetImpressions));
         $scope.totalImpressionsPercent(proposal.TotalImpressionsPercent);
         $scope.totalImpressionsMarginAchieved(proposal.TotalImpressionsMarginAchieved);
 
@@ -379,7 +379,7 @@ var ProposalViewModel = function (controller) {
             SecondaryDemos: $scope.selectedSecondaryAudiences(),
             Equivalized: $scope.equivalized(),
 
-            TargetImpressions: $scope.targetImpressions() ? $scope.targetImpressions() : 0,
+            TargetImpressions: $scope.targetImpressions() ? util.multiplyImpressions($scope.targetImpressions()) : 0,
             TargetBudget: $scope.targetBudget() ? $scope.targetBudget() : 0,
             TargetCPM: $scope.targetCpm() ? $scope.targetCpm() : 0,
             TargetUnits: $scope.targetUnits() ? $scope.targetUnits() : 0,

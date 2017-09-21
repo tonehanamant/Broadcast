@@ -234,6 +234,7 @@
     <Content Include="Scripts\app\utilities\array.js" />
     <Content Include="Scripts\app\utilities\date.js" />
     <Content Include="Scripts\app\utilities\global.js" />
+    <Content Include="Scripts\app\utilities\impressions.js" />
     <Content Include="Scripts\app\utilities\scroll.js" />
     <Content Include="Styles\css\appPlanning.css" />
     <Content Include="Styles\css\appPost.css" />
