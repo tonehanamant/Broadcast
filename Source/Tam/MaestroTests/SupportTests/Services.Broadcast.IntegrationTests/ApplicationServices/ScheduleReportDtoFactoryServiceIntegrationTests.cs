@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -514,6 +515,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(ScheduleReportDto), "ScheduleId");
             jsonResolver.Ignore(typeof(IsciDto), "Id");
+            jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
 
             var jsonSettings = new JsonSerializerSettings()
             {
