@@ -77,6 +77,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void PostWithUnknownStation()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
+                var files = new post_files();
+                files.equivalized = false;
+                files.file_name = "abctest";
+                files.post_file_demos = new List<post_file_demos> { new post_file_demos { demo = 33 }, new post_file_demos { demo = 34 } };
+                files.playback_type = (byte)ProposalEnums.ProposalPlaybackType.LivePlus7;
+                files.posting_book_id = 413;
+                files.modified_date = DateTime.Now;
+                files.upload_date = DateTime.Now;
+
+                var firstDetail = GetParsedDetail();
+                files.post_file_details.Add(firstDetail);
+                var secondDetail = GetParsedDetail();
+                secondDetail.station = "NRQE";
+                files.post_file_details.Add(secondDetail);
+
+                var fileId = postUploadRepository.SavePost(files);
+
+                var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostEngine>();
+                sut.Post(files);
+
+                var file = postUploadRepository.GetPost(fileId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(file));
+            }
+        }
+
+        [Test]
         public void Post_Friday()
         {
             using (new TransactionScopeWrapper())
