@@ -441,7 +441,7 @@ var RateStationView = BaseView.extend({
             this.setNewContactRecord();
         } else {
             //console.log('onContactsGridClick valid', record);
-            this.startActiveContactEdit(record);
+            this.startActiveContactEdit(record, true);
         }
     },
 
@@ -534,7 +534,7 @@ var RateStationView = BaseView.extend({
         }
     },
 
-    startActiveContactEdit: function (rec) {
+    startActiveContactEdit: function (rec, update) {
         var me = this;
 
         this.activeContactEditRecord = rec;
@@ -548,8 +548,9 @@ var RateStationView = BaseView.extend({
 
         this.disableContactEditingAllowedStates(true);
         this.setContactEditData(rec);
-        var input = $('[name="contact_search_select_' + rec.recid + '"]');
-        //this.setSelect2Contact(input);
+        var input = $('[name="contact_search_input_' + rec.recid + '"]');
+        var updateData = update ? { id: rec.Id, text: rec.Name } : null;
+        //this.setContactTypeahead(input, updateData);
     },
 
     endActiveContactEdit: function (removeNewCheck) {
@@ -640,13 +641,69 @@ var RateStationView = BaseView.extend({
         this.endActiveContactEdit();
     },
 
-    setSelect2Contact: function (input) {
-        var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
-
+    setContactTypeahead: function (input, updateData) {
+       // var data = [{ id: 1, text: 'Greg' }, { id: 2, text: 'Cary' }];
+        //input.select2({
+        //    tags: true,
+        //    maximumSelectionLength: 1,
+        //    multiple: true,
+        //    data: data
+        //});
+        var data = updateData ? [updateData] : [];
+        var url = baseUrl + 'api/RatesManager/Contacts/Find';
         input.select2({
+            minimumInputLength: 3,
+            maximumSelectionLength: 1,
+            tags: true,
+            multiple: true,
+            selectOnClose: true,
+            placeholder: "Search...",
             data: data,
-            placeholder: "Search Contacts..."
-        })
+            //templateResult: for drop down has issues
+            //templateSelection: function (item) {
+                
+            //    return item.Name || item.text;
+            //},
+
+            //templateResult: function (item) {
+            //    if (item.loading) return item.text;
+            //    return item.Name ? (item.Name + ' | ' + item.Type) : item.text;
+            //},
+            ajax: {
+                url: url,
+                //type: "GET",
+                // quietMillis: 50,
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    console.log(params.term);
+                    return {
+                        query: params.term
+                    };
+                },
+
+                processResults: function (response) {
+                    console.log('response', response.Data);
+                    //return {
+                    //    results: response.Data
+                    //};
+                    return {
+                        results: $.map(response.Data, function (item) {
+                            return {
+                                text: item.Name,
+                                id: item.Id
+                            }
+                        })
+                    };
+                }
+            }
+        });
+        if (updateData) input.val(updateData.id).trigger('change');
+        //todo - store and destroy on end edit
+        //this.activeSearchInput = input;
+        input.on("select2:select", function (e) { console.log("select2:select", e); });
+        input.on("change", function (e) { console.log("select2:change", e); });
+
     }
 
 });
