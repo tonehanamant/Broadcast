@@ -49,7 +49,7 @@ var StationModalEditRate = function (view) {
             $('#update_program_flight_input').val(me.activeRecord.Flight);
             $('#update_program_spot15_input').val(me.activeRecord.Rate15);
             $('#update_program_spot30_input').val(me.activeRecord.Rate30);
-            $('#update_program_hhimpressions_input').val(me.activeRecord.Impressions);
+            $('#update_program_hhimpressions_input').val(util.divideImpressions(me.activeRecord.Impressions));
             $('#update_program_hhrating_input').val(me.activeRecord.Rating);
             $('#update_program_effective_date_input').val(null);
             $('#update_program_audience_id_input').val(me.activeRecord.AudienceId);
@@ -103,6 +103,8 @@ var StationModalEditRate = function (view) {
                 var rate30 = $('#update_program_spot30_input').val() ? parseFloat($('#update_program_spot30_input').val().replace(/[$,]+/g, "")) : null;
 
                 var impressions = parseFloat($('#update_program_hhimpressions_input').val().replace(/,/g, ''));
+                    impressions = util.multiplyImpressions(impressions);
+
                 var rating = parseFloat($('#update_program_hhrating_input').val().replace(/,/g, ''));
                 var audienceId = $('#update_program_audience_id_input').val();
 
