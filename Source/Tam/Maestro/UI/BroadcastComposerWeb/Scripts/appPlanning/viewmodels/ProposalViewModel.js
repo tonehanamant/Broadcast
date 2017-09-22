@@ -48,6 +48,8 @@ var ProposalViewModel = function (controller) {
     $scope.selectedMarket = ko.observable();
     $scope.forceSave = ko.observable(false);
 
+    $scope.customMarketId = null;
+
     /*** FORM ***/
 
     // read only
@@ -230,6 +232,11 @@ var ProposalViewModel = function (controller) {
         $scope.advertisers(options.Advertisers);
         $scope.audiences(options.Audiences);
 
+
+        //deal with new Custom item added to the MarketGroups needed for nullable - remove it so not part of selection options and save id
+        var customGroup = options.MarketGroups.splice(-1, 1);
+        //console.log('test', options.MarketGroups, customGroup);
+        $scope.customMarketId = customGroup[0].Id;
         $scope.markets(_.cloneDeep(options.MarketGroups));
 
         // offset group Ids to prevent collision with single markets
@@ -520,7 +527,8 @@ var ProposalViewModel = function (controller) {
         var blackoutMarketGroupId = null;
 
         if (isCustom) {
-            marketGroupId = null;
+            //new: get the default id for custom to prevent NULL
+            marketGroupId = $scope.customMarketId;
             blackoutMarketGroupId = null;
 
             if (!_.isEmpty($scope.controller.customMarketsViewModel.simpleMarketGroup())) {

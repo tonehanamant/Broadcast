@@ -16,6 +16,10 @@
 
     open: open = function () {
         $scope.tempCriteriaList($scope.criteriaList.slice(0));
+
+        $scope.controller.apiGetGenres(function(genres) {
+            $scope.genresOptions(genres);
+        });
     }
 
     $scope.hide = function () {
@@ -93,7 +97,6 @@
     };
 
     $scope.setAvailableValues = function (filterValues) {
-        $scope.genresOptions(filterValues.Genres);
         $scope.marketsOptions(filterValues.Markets);
         $scope.affiliatesOptions(filterValues.Affiliations);
         $scope.programNamesOptions(filterValues.ProgramNames);

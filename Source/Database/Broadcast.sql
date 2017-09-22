@@ -1094,7 +1094,31 @@ END
   and id in (select distinct proposal_version_id from proposal_version_markets where is_blackout = 1)
   go
 
-/*************************************** BCOP-1917 - START *****************************************************/
+/*************************************** BCOP-1917 - END *****************************************************/
+
+/*************************************** BCOP-1931 - START *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE name = 'order'
+          AND object_id = object_id('inventory_detail_slot_component_proposal'))
+BEGIN
+	ALTER TABLE inventory_detail_slot_component_proposal
+	ADD [order] INT NULL
+
+	EXEC('UPDATE inventory_detail_slot_component_proposal
+		 SET [order] = 1')
+
+	ALTER TABLE inventory_detail_slot_component_proposal
+	ALTER COLUMN [order] INT NOT NULL
+
+	ALTER TABLE inventory_detail_slot_component_proposal
+	DROP CONSTRAINT PK_inventory_detail_slot_component_proposal
+
+	ALTER TABLE inventory_detail_slot_component_proposal
+	ADD CONSTRAINT PK_inventory_detail_slot_component_proposal PRIMARY KEY (inventory_detail_slot_component_id, proprosal_version_detail_quarter_week_id, [order])
+END
+
+/*************************************** BCOP-1931 - END *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

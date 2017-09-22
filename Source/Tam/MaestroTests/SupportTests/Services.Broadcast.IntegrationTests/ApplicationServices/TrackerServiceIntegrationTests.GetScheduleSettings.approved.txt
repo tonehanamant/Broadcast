@@ -1,0 +1,53 @@
+﻿{
+  "Advertiser": null,
+  "AdvertiserId": 39279,
+  "Audiences": [
+    31,
+    42
+  ],
+  "DaypartRestriction": {
+    "endTime": 86399,
+    "fri": true,
+    "mon": true,
+    "sat": true,
+    "startTime": 0,
+    "sun": true,
+    "Text": "M-SU 12AM-11:59PM",
+    "thu": true,
+    "tue": true,
+    "wed": true
+  },
+  "DaypartRestrictionId": 63332,
+  "EndDate": "2018-01-20T00:00:00",
+  "Estimate": 3910,
+  "InventorySource": 5,
+  "IsBlank": false,
+  "Iscis": [
+    {
+      "Brand": null,
+      "Client": "2TWNWEST000H",
+      "House": "2TWNWEST000H"
+    },
+    {
+      "Brand": null,
+      "Client": "37WEST1605H",
+      "House": "37WEST1605H"
+    }
+  ],
+  "IsEquivalized": true,
+  "MarketRestrictions": [
+    101,
+    102
+  ],
+  "Name": "Test Settings Schedule",
+  "OutOfSpec": 0,
+  "PostingBook": null,
+  "PostingBookDate": null,
+  "PostingBookId": 413,
+  "PostType": 2,
+  "PrimaryDemoBooked": null,
+  "PrimaryDemoDelivered": 0.0,
+  "SpotsBooked": null,
+  "SpotsDelivered": 0,
+  "StartDate": "2017-01-20T00:00:00"
+}

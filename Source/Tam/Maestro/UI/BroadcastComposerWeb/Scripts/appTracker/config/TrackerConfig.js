@@ -81,7 +81,17 @@
                 { field: 'SpotsBooked', caption: 'Spots Booked', size: '8%', sortable: true },
                 { field: 'SpotsDelivered', caption: 'Spots Delivered', size: '8%', sortable: true },
                 { field: 'OutOfSpec', caption: 'Out of Spec', size: '8%', sortable: true },
-                { field: 'PostingBook', caption: 'Posting Book', size: '8%', sortable: true },
+               // { field: 'PostingBook', caption: 'Posting Book', size: '8%', sortable: true },
+                {
+                     field: 'PostingBookDate',
+                     caption: 'Posting Book',
+                     sortable: true,
+                     render: function (record) {
+                         return record.PostingBook;
+                     },
+                     size: '8%'
+                 },
+
                 {
                     field: 'PrimaryDemoBooked',
                     caption: 'Primary Demo Booked Imp. (000)',
