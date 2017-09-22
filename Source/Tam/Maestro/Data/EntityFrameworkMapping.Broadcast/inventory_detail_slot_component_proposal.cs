@@ -23,5 +23,6 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime end_date { get; set; }
         public string daypart_code { get; set; }
         public Nullable<byte> rate_source { get; set; }
+        public int order { get; set; }
     }
 }

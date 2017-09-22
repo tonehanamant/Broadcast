@@ -171,7 +171,8 @@ namespace Services.Broadcast.Repositories
                             StartDate = c.start_date,
                             EndDate = c.end_date,
                             DaypartCode = c.daypart_code,
-                            RateSource = (RatesFile.RateSourceType)c.rate_source
+                            RateSource = (RatesFile.RateSourceType)c.rate_source,
+                            Order = c.order
                         }).ToList()
                 }).Single());
         }
@@ -232,7 +233,8 @@ namespace Services.Broadcast.Repositories
                         context.inventory_detail_slot_component_proposal.Where(
                             p => p.inventory_detail_slot_id == slotAllocation.inventory_detail_slot_id &&
                                  p.proprosal_version_detail_quarter_week_id ==
-                                 slotAllocation.proprosal_version_detail_quarter_week_id));
+                                 slotAllocation.proprosal_version_detail_quarter_week_id &&
+                                 p.order == slotAllocation.order));
                 }
 
                 context.inventory_detail_slot_proposal.RemoveRange(slotProposals);
@@ -306,7 +308,8 @@ namespace Services.Broadcast.Repositories
                             p =>
                                 p.inventory_detail_slot_id == proposal.inventory_detail_slot_id &&
                                 p.proprosal_version_detail_quarter_week_id ==
-                                proposal.proprosal_version_detail_quarter_week_id));
+                                proposal.proprosal_version_detail_quarter_week_id &&
+                                p.order == proposal.order));
                 }
 
                 c.inventory_detail_slot_proposal.RemoveRange(inventoryDetailSlotProposals);
@@ -382,7 +385,7 @@ namespace Services.Broadcast.Repositories
                                 {
                                     deletes.Add(slotProposal);
                                     c.inventory_detail_slot_proposal.Remove(slotProposal.idsp);
-                                    RemoveSnapshotOfInventorComponents(c, slotProposal.idsp.inventory_detail_slot_id, slotProposal.ProposalVersionDetailQuarterWeekId);
+                                    RemoveSnapshotOfInventorComponents(c, slotProposal.idsp.inventory_detail_slot_id, slotProposal.ProposalVersionDetailQuarterWeekId, slotProposal.Order);
                                 }
                             }
                         }
@@ -458,7 +461,7 @@ namespace Services.Broadcast.Repositories
                                 created_by = request.UserName
                             });
 
-                            SaveSnapshotOfInventoryComponents(c, allocation.InventoryDetailSlotId, save.QuarterWeekId);
+                            SaveSnapshotOfInventoryComponents(c, allocation.InventoryDetailSlotId, save.QuarterWeekId, save.Order);
                         }
                     }
 
@@ -474,12 +477,13 @@ namespace Services.Broadcast.Repositories
             }
         }
 
-        private void RemoveSnapshotOfInventorComponents(BroadcastContext broadcastContext, int inventoryDetailSlotId, int proposalVersionDetailQuarterWeekId)
+        private void RemoveSnapshotOfInventorComponents(BroadcastContext broadcastContext, int inventoryDetailSlotId, int proposalVersionDetailQuarterWeekId, int order)
         {
             var proposalInventoryComponents =
                 broadcastContext.inventory_detail_slot_component_proposal.Where(
                     x => x.inventory_detail_slot_id == inventoryDetailSlotId &&
-                         x.proprosal_version_detail_quarter_week_id == proposalVersionDetailQuarterWeekId).ToList();
+                         x.proprosal_version_detail_quarter_week_id == proposalVersionDetailQuarterWeekId &&
+                         x.order == order).ToList();
 
             foreach (var inventoryDetailSlotComponentProposal in proposalInventoryComponents)
             {
@@ -487,7 +491,7 @@ namespace Services.Broadcast.Repositories
             }
         }
 
-        private void SaveSnapshotOfInventoryComponents(BroadcastContext context, int inventoryDetailSlotId, int quarterWeekId)
+        private void SaveSnapshotOfInventoryComponents(BroadcastContext context, int inventoryDetailSlotId, int quarterWeekId, int order)
         {
             var allSlotComponents =
                 context.inventory_detail_slot_components.Include(i => i.station_program_flights.station_programs)
@@ -506,7 +510,8 @@ namespace Services.Broadcast.Repositories
                     start_date = component.station_program_flights.station_programs.start_date,
                     end_date = component.station_program_flights.station_programs.end_date,
                     daypart_code = component.station_program_flights.station_programs.daypart_code,
-                    rate_source = component.station_program_flights.station_programs.rate_source
+                    rate_source = component.station_program_flights.station_programs.rate_source,
+                    order = order
                 });
             }
         }

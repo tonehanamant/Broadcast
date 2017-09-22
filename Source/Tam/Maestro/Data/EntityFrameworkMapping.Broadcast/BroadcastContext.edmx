@@ -147,6 +147,7 @@
           <Key>
             <PropertyRef Name="inventory_detail_slot_component_id" />
             <PropertyRef Name="proprosal_version_detail_quarter_week_id" />
+            <PropertyRef Name="order" />
           </Key>
           <Property Name="inventory_detail_slot_component_id" Type="int" Nullable="false" />
           <Property Name="proprosal_version_detail_quarter_week_id" Type="int" Nullable="false" />
@@ -157,6 +158,7 @@
           <Property Name="end_date" Type="date" Nullable="false" />
           <Property Name="daypart_code" Type="varchar" MaxLength="10" />
           <Property Name="rate_source" Type="tinyint" />
+          <Property Name="order" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="inventory_detail_slot_components">
           <Key>
@@ -417,6 +419,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="proposal_id" Type="int" Nullable="false" />
           <Property Name="proposal_version" Type="smallint" Nullable="false" />
           <Property Name="start_date" Type="date" />
@@ -427,7 +430,6 @@
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="target_budget" Type="money" />
           <Property Name="target_units" Type="int" />
           <Property Name="target_impressions" Type="float" Nullable="false" />
@@ -736,7 +738,7 @@
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -4228,6 +4230,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Key>
             <PropertyRef Name="inventory_detail_slot_component_id" />
             <PropertyRef Name="proprosal_version_detail_quarter_week_id" />
+            <PropertyRef Name="order" />
           </Key>
           <Property Name="inventory_detail_slot_component_id" Type="Int32" Nullable="false" />
           <Property Name="proprosal_version_detail_quarter_week_id" Type="Int32" Nullable="false" />
@@ -4238,6 +4241,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="daypart_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="rate_source" Type="Byte" />
+          <Property Name="order" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="station_program_flight_proposal">
           <Key>
@@ -5129,6 +5133,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySetMapping Name="inventory_detail_slot_component_proposal">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_detail_slot_component_proposal">
               <MappingFragment StoreEntitySet="inventory_detail_slot_component_proposal">
+                <ScalarProperty Name="order" ColumnName="order" />
                 <ScalarProperty Name="rate_source" ColumnName="rate_source" />
                 <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
