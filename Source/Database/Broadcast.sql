@@ -1187,6 +1187,39 @@ end
 /*************************************** BCOP-1913 - END *****************************************************/
 
 
+/*************************************** BCOP-1914 - START *****************************************************/
+
+  alter table proposal_version_detail_criteria_cpm
+  alter column min_max tinyint not null
+  go
+  
+  alter table proposal_version_detail_criteria_genres
+  alter column contain_type tinyint not null
+  go
+
+  alter table proposal_version_detail_criteria_programs
+  alter column contain_type tinyint not null
+  go
+
+  update genres set modified_date = created_date, modified_by = created_by
+  where modified_date is null or modified_by is null
+  go
+  alter table genres
+  alter column created_by varchar(63) not null
+  go
+  alter table genres
+  alter column created_date datetime not null
+  go
+  alter table genres
+  alter column modified_by varchar(63) not null
+  go
+  alter table genres
+  alter column modified_date datetime not null
+  go
+
+/*************************************** BCOP-1914 - END *****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

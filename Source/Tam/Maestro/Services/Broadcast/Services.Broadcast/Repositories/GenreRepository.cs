@@ -54,13 +54,16 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context =>
-                {                    
+                {
+                    var timeNow = DateTime.Now;
                     EntityFrameworkMapping.Broadcast.genre newGenre =
                         context.genres.Add(new EntityFrameworkMapping.Broadcast.genre()
                         {
                             name = genre.Display.Trim(),
                             created_by = userName,
-                            created_date = DateTime.Now
+                            created_date = timeNow,
+                            modified_by = userName,
+                            modified_date = timeNow
                         });
 
                     context.SaveChanges();

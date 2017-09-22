@@ -16,7 +16,7 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public int id { get; set; }
         public int proposal_version_detail_id { get; set; }
-        public Nullable<byte> min_max { get; set; }
+        public byte min_max { get; set; }
         public decimal value { get; set; }
     
         public virtual proposal_version_details proposal_version_details { get; set; }

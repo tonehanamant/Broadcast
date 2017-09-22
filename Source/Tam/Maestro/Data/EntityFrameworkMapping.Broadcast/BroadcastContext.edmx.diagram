@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="BroadcastModel.bvs_post_details" Width="1.5" PointX="17.25" PointY="37.375" />
         <EntityTypeShape EntityType="BroadcastModel.daypart" Width="1.5" PointX="13.75" PointY="2.5" />
         <EntityTypeShape EntityType="BroadcastModel.day" Width="1.5" PointX="16" PointY="2.5" />
-        <EntityTypeShape EntityType="BroadcastModel.genre" Width="1.5" PointX="8.25" PointY="11.75" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slot_components" Width="1.5" PointX="13.5" PointY="8.125" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slot_proposal" Width="1.5" PointX="12" PointY="27.375" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_detail_slots" Width="1.5" PointX="11.25" PointY="0.75" />
@@ -27,9 +26,6 @@
         <EntityTypeShape EntityType="BroadcastModel.post_file_detail_impressions" Width="1.5" PointX="19.25" PointY="22" />
         <EntityTypeShape EntityType="BroadcastModel.post_file_details" Width="1.5" PointX="17" PointY="20.125" />
         <EntityTypeShape EntityType="BroadcastModel.post_files" Width="1.5" PointX="14.75" PointY="20.375" />
-        <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_criteria_cpm" Width="1.5" PointX="7.5" PointY="20.75" />
-        <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_criteria_genres" Width="1.5" PointX="10.5" PointY="19.875" />
-        <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_criteria_programs" Width="1.5" PointX="7.5" PointY="31.125" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_flight_weeks" Width="1.5" PointX="5.25" PointY="14.75" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_markets" Width="1.5" PointX="8.25" PointY="15.875" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_spot_length" Width="1.5" PointX="5.25" PointY="6.625" />
@@ -56,7 +52,6 @@
         <AssociationConnector Association="BroadcastModel.FK_bvs_file_details_schedule_detail_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_bvs_post_details_bvs_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_bvs_maps_bvs_map_types" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slot_components_inventory_detail_slots" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slot_components_station_program_flights" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slot_components_stations" />
@@ -81,7 +76,6 @@
         <AssociationConnector Association="BroadcastModel.FK_station_programs_stations" />
         <AssociationConnector Association="BroadcastModel.daypart_days" />
         <AssociationConnector Association="BroadcastModel.schedule_restriction_markets" />
-        <AssociationConnector Association="BroadcastModel.station_program_genres" />
         <EntityTypeShape EntityType="BroadcastModel.vw_ccc_daypart" Width="1.5" PointX="21.375" PointY="20.75" />
         <EntityTypeShape EntityType="BroadcastModel.station_program_flight_audiences" Width="1.5" PointX="18" PointY="12.125" />
         <AssociationConnector Association="BroadcastModel.FK_station_program_flight_audiences_station_program_flights" />
@@ -126,9 +120,6 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_hut_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_share_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_single_media_months" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_proposal_versions" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_quarters" Width="1.5" PointX="7.625" PointY="25.25" />
@@ -138,6 +129,15 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_media_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_proposal_version_detail_quarters" />
         <AssociationConnector Association="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" />
+        <EntityTypeShape EntityType="BroadcastModel.genre" Width="1.5" PointX="11.25" PointY="54" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_criteria_cpm" Width="1.5" PointX="7.5" PointY="29.5" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_criteria_genres" Width="1.5" PointX="10.5" PointY="22.125" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_criteria_programs" Width="1.5" PointX="7.5" PointY="20.875" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" />
+        <AssociationConnector Association="BroadcastModel.station_program_genres" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

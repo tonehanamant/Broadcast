@@ -23,9 +23,9 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public string name { get; set; }
         public string created_by { get; set; }
-        public Nullable<System.DateTime> created_date { get; set; }
+        public System.DateTime created_date { get; set; }
         public string modified_by { get; set; }
-        public Nullable<System.DateTime> modified_date { get; set; }
+        public System.DateTime modified_date { get; set; }
     
         public virtual ICollection<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
         public virtual ICollection<station_programs> station_programs { get; set; }

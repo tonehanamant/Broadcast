@@ -16,10 +16,10 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public proposal_version_details()
         {
+            this.proposal_version_detail_quarters = new HashSet<proposal_version_detail_quarters>();
             this.proposal_version_detail_criteria_cpm = new HashSet<proposal_version_detail_criteria_cpm>();
             this.proposal_version_detail_criteria_genres = new HashSet<proposal_version_detail_criteria_genres>();
             this.proposal_version_detail_criteria_programs = new HashSet<proposal_version_detail_criteria_programs>();
-            this.proposal_version_detail_quarters = new HashSet<proposal_version_detail_quarters>();
         }
     
         public int id { get; set; }
@@ -46,11 +46,11 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual media_months media_months { get; set; }
         public virtual media_months media_months1 { get; set; }
         public virtual media_months media_months2 { get; set; }
-        public virtual ICollection<proposal_version_detail_criteria_cpm> proposal_version_detail_criteria_cpm { get; set; }
-        public virtual ICollection<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
-        public virtual ICollection<proposal_version_detail_criteria_programs> proposal_version_detail_criteria_programs { get; set; }
         public virtual proposal_versions proposal_versions { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
         public virtual ICollection<proposal_version_detail_quarters> proposal_version_detail_quarters { get; set; }
+        public virtual ICollection<proposal_version_detail_criteria_cpm> proposal_version_detail_criteria_cpm { get; set; }
+        public virtual ICollection<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
+        public virtual ICollection<proposal_version_detail_criteria_programs> proposal_version_detail_criteria_programs { get; set; }
     }
 }

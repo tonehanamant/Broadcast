@@ -138,10 +138,10 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
-          <Property Name="created_by" Type="varchar" MaxLength="63" />
-          <Property Name="created_date" Type="datetime" />
-          <Property Name="modified_by" Type="varchar" MaxLength="63" />
-          <Property Name="modified_date" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="modified_date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="inventory_detail_slot_component_proposal">
           <Key>
@@ -313,7 +313,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="proposal_version_detail_id" Type="int" Nullable="false" />
-          <Property Name="min_max" Type="tinyint" />
+          <Property Name="min_max" Type="tinyint" Nullable="false" />
           <Property Name="value" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="proposal_version_detail_criteria_genres">
@@ -322,7 +322,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="proposal_version_detail_id" Type="int" Nullable="false" />
-          <Property Name="contain_type" Type="tinyint" />
+          <Property Name="contain_type" Type="tinyint" Nullable="false" />
           <Property Name="genre_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="proposal_version_detail_criteria_programs">
@@ -331,7 +331,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="proposal_version_detail_id" Type="int" Nullable="false" />
-          <Property Name="contain_type" Type="tinyint" />
+          <Property Name="contain_type" Type="tinyint" Nullable="false" />
           <Property Name="program_name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="proposal_version_detail_quarter_weeks">
@@ -2189,7 +2189,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySet Name="bvs_post_details" EntityType="BroadcastModel.bvs_post_details" />
           <EntitySet Name="dayparts" EntityType="BroadcastModel.daypart" />
           <EntitySet Name="days" EntityType="BroadcastModel.day" />
-          <EntitySet Name="genres" EntityType="BroadcastModel.genre" />
           <EntitySet Name="inventory_detail_slot_components" EntityType="BroadcastModel.inventory_detail_slot_components" />
           <EntitySet Name="inventory_detail_slot_proposal" EntityType="BroadcastModel.inventory_detail_slot_proposal" />
           <EntitySet Name="inventory_detail_slots" EntityType="BroadcastModel.inventory_detail_slots" />
@@ -2202,9 +2201,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySet Name="post_file_detail_impressions" EntityType="BroadcastModel.post_file_detail_impressions" />
           <EntitySet Name="post_file_details" EntityType="BroadcastModel.post_file_details" />
           <EntitySet Name="post_files" EntityType="BroadcastModel.post_files" />
-          <EntitySet Name="proposal_version_detail_criteria_cpm" EntityType="BroadcastModel.proposal_version_detail_criteria_cpm" />
-          <EntitySet Name="proposal_version_detail_criteria_genres" EntityType="BroadcastModel.proposal_version_detail_criteria_genres" />
-          <EntitySet Name="proposal_version_detail_criteria_programs" EntityType="BroadcastModel.proposal_version_detail_criteria_programs" />
           <EntitySet Name="proposal_version_flight_weeks" EntityType="BroadcastModel.proposal_version_flight_weeks" />
           <EntitySet Name="proposal_version_markets" EntityType="BroadcastModel.proposal_version_markets" />
           <EntitySet Name="proposal_version_spot_length" EntityType="BroadcastModel.proposal_version_spot_length" />
@@ -2242,10 +2238,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <AssociationSet Name="FK_bvs_maps_bvs_map_types" Association="BroadcastModel.FK_bvs_maps_bvs_map_types">
             <End Role="bvs_map_types" EntitySet="bvs_map_types" />
             <End Role="bvs_maps" EntitySet="bvs_maps" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_detail_criteria_genres_genres" Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres">
-            <End Role="genre" EntitySet="genres" />
-            <End Role="proposal_version_detail_criteria_genres" EntitySet="proposal_version_detail_criteria_genres" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_detail_slot_components_inventory_detail_slots" Association="BroadcastModel.FK_inventory_detail_slot_components_inventory_detail_slots">
             <End Role="inventory_detail_slots" EntitySet="inventory_detail_slots" />
@@ -2342,10 +2334,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <AssociationSet Name="schedule_restriction_markets" Association="BroadcastModel.schedule_restriction_markets">
             <End Role="market" EntitySet="markets" />
             <End Role="schedule" EntitySet="schedules" />
-          </AssociationSet>
-          <AssociationSet Name="station_program_genres" Association="BroadcastModel.station_program_genres">
-            <End Role="genre" EntitySet="genres" />
-            <End Role="station_programs" EntitySet="station_programs" />
           </AssociationSet>
           <EntitySet Name="vw_ccc_daypart" EntityType="BroadcastModel.vw_ccc_daypart" />
           <EntitySet Name="station_program_flight_audiences" EntityType="BroadcastModel.station_program_flight_audiences" />
@@ -2502,18 +2490,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="media_months" EntitySet="media_months" />
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
           </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_detail_criteria_cpm_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details">
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-            <End Role="proposal_version_detail_criteria_cpm" EntitySet="proposal_version_detail_criteria_cpm" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_detail_criteria_genres_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details">
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-            <End Role="proposal_version_detail_criteria_genres" EntitySet="proposal_version_detail_criteria_genres" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_criteria_programs_proposal_version_criterias" Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias">
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-            <End Role="proposal_version_detail_criteria_programs" EntitySet="proposal_version_detail_criteria_programs" />
-          </AssociationSet>
           <AssociationSet Name="FK_proposal_version_details_proposal_versions" Association="BroadcastModel.FK_proposal_version_details_proposal_versions">
             <End Role="proposal_versions" EntitySet="proposal_versions" />
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
@@ -2543,6 +2519,30 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <AssociationSet Name="FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" Association="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks">
             <End Role="proposal_version_detail_quarter_weeks" EntitySet="proposal_version_detail_quarter_weeks" />
             <End Role="station_program_flight_proposal" EntitySet="station_program_flight_proposal" />
+          </AssociationSet>
+          <EntitySet Name="genres" EntityType="BroadcastModel.genre" />
+          <EntitySet Name="proposal_version_detail_criteria_cpm" EntityType="BroadcastModel.proposal_version_detail_criteria_cpm" />
+          <EntitySet Name="proposal_version_detail_criteria_genres" EntityType="BroadcastModel.proposal_version_detail_criteria_genres" />
+          <EntitySet Name="proposal_version_detail_criteria_programs" EntityType="BroadcastModel.proposal_version_detail_criteria_programs" />
+          <AssociationSet Name="FK_proposal_version_detail_criteria_genres_genres" Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres">
+            <End Role="genre" EntitySet="genres" />
+            <End Role="proposal_version_detail_criteria_genres" EntitySet="proposal_version_detail_criteria_genres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_detail_criteria_cpm_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details">
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+            <End Role="proposal_version_detail_criteria_cpm" EntitySet="proposal_version_detail_criteria_cpm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_detail_criteria_genres_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details">
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+            <End Role="proposal_version_detail_criteria_genres" EntitySet="proposal_version_detail_criteria_genres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_criteria_programs_proposal_version_criterias" Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias">
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+            <End Role="proposal_version_detail_criteria_programs" EntitySet="proposal_version_detail_criteria_programs" />
+          </AssociationSet>
+          <AssociationSet Name="station_program_genres" Association="BroadcastModel.station_program_genres">
+            <End Role="genre" EntitySet="genres" />
+            <End Role="station_programs" EntitySet="station_programs" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -2687,19 +2687,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="name" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="ordinal" Type="Int32" Nullable="false" />
           <NavigationProperty Name="dayparts" Relationship="BroadcastModel.daypart_days" FromRole="day" ToRole="daypart" />
-        </EntityType>
-        <EntityType Name="genre">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
-          <Property Name="created_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_date" Type="DateTime" Precision="3" />
-          <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="modified_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres" FromRole="genre" ToRole="proposal_version_detail_criteria_genres" />
-          <NavigationProperty Name="station_programs" Relationship="BroadcastModel.station_program_genres" FromRole="genre" ToRole="station_programs" />
         </EntityType>
         <EntityType Name="inventory_detail_slot_components">
           <Key>
@@ -2877,37 +2864,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="post_file_demos" Relationship="BroadcastModel.FK_post_file_demos_post_files" FromRole="post_files" ToRole="post_file_demos" />
           <NavigationProperty Name="post_file_details" Relationship="BroadcastModel.FK_post_file_details_post_files" FromRole="post_files" ToRole="post_file_details" />
           <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_post_files_media_months" FromRole="post_files" ToRole="media_months" />
-        </EntityType>
-        <EntityType Name="proposal_version_detail_criteria_cpm">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="proposal_version_detail_id" Type="Int32" Nullable="false" />
-          <Property Name="min_max" Type="Byte" />
-          <Property Name="value" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details" FromRole="proposal_version_detail_criteria_cpm" ToRole="proposal_version_details" />
-        </EntityType>
-        <EntityType Name="proposal_version_detail_criteria_genres">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="proposal_version_detail_id" Type="Int32" Nullable="false" />
-          <Property Name="contain_type" Type="Byte" />
-          <Property Name="genre_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres" FromRole="proposal_version_detail_criteria_genres" ToRole="genre" />
-          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" FromRole="proposal_version_detail_criteria_genres" ToRole="proposal_version_details" />
-        </EntityType>
-        <EntityType Name="proposal_version_detail_criteria_programs">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="proposal_version_detail_id" Type="Int32" Nullable="false" />
-          <Property Name="contain_type" Type="Byte" />
-          <Property Name="program_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" FromRole="proposal_version_detail_criteria_programs" ToRole="proposal_version_details" />
         </EntityType>
         <EntityType Name="proposal_version_flight_weeks">
           <Key>
@@ -3194,9 +3150,9 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="rate_files" Relationship="BroadcastModel.FK_station_programs_rate_files" FromRole="station_programs" ToRole="rate_files" />
           <NavigationProperty Name="station_program_flights" Relationship="BroadcastModel.FK_station_program_flights_station_programs" FromRole="station_programs" ToRole="station_program_flights" />
           <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_programs_stations" FromRole="station_programs" ToRole="station" />
-          <NavigationProperty Name="genres" Relationship="BroadcastModel.station_program_genres" FromRole="station_programs" ToRole="genre" />
           <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_station_programs_dayparts" FromRole="station_programs" ToRole="daypart" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_station_programs_spot_lengths" FromRole="station_programs" ToRole="spot_lengths" />
+          <NavigationProperty Name="genres" Relationship="BroadcastModel.station_program_genres" FromRole="station_programs" ToRole="genre" />
         </EntityType>
         <EntityType Name="station">
           <Key>
@@ -3283,20 +3239,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Principal>
             <Dependent Role="bvs_maps">
               <PropertyRef Name="bvs_map_type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_detail_criteria_genres_genres">
-          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.proposal_version_detail_criteria_genres" Role="proposal_version_detail_criteria_genres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genre">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_detail_criteria_genres">
-              <PropertyRef Name="genre_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3599,10 +3541,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
         <Association Name="schedule_restriction_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="*" />
           <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="*" />
-        </Association>
-        <Association Name="station_program_genres">
-          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="*" />
-          <End Type="BroadcastModel.station_programs" Role="station_programs" Multiplicity="*" />
         </Association>
         <EntityType Name="vw_ccc_daypart">
           <Key>
@@ -4170,12 +4108,12 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_proposal_version_details_hut_media_months" FromRole="proposal_version_details" ToRole="media_months" />
           <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_proposal_version_details_share_media_months" FromRole="proposal_version_details" ToRole="media_months" />
           <NavigationProperty Name="media_months2" Relationship="BroadcastModel.FK_proposal_version_details_single_media_months" FromRole="proposal_version_details" ToRole="media_months" />
-          <NavigationProperty Name="proposal_version_detail_criteria_cpm" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_cpm" />
-          <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_genres" />
-          <NavigationProperty Name="proposal_version_detail_criteria_programs" Relationship="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_programs" />
           <NavigationProperty Name="proposal_versions" Relationship="BroadcastModel.FK_proposal_version_details_proposal_versions" FromRole="proposal_version_details" ToRole="proposal_versions" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="proposal_version_details" ToRole="spot_lengths" />
           <NavigationProperty Name="proposal_version_detail_quarters" Relationship="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_quarters" />
+          <NavigationProperty Name="proposal_version_detail_criteria_cpm" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_cpm" />
+          <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_genres" />
+          <NavigationProperty Name="proposal_version_detail_criteria_programs" Relationship="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_programs" />
         </EntityType>
         <Association Name="FK_proposal_version_details_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -4222,48 +4160,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Principal>
             <Dependent Role="proposal_version_details">
               <PropertyRef Name="single_posting_book_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_detail_criteria_cpm_proposal_version_details">
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.proposal_version_detail_criteria_cpm" Role="proposal_version_detail_criteria_cpm" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_version_details">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_detail_criteria_cpm">
-              <PropertyRef Name="proposal_version_detail_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_detail_criteria_genres_proposal_version_details">
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.proposal_version_detail_criteria_genres" Role="proposal_version_detail_criteria_genres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_version_details">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_detail_criteria_genres">
-              <PropertyRef Name="proposal_version_detail_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_criteria_programs_proposal_version_criterias">
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.proposal_version_detail_criteria_programs" Role="proposal_version_detail_criteria_programs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_version_details">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_detail_criteria_programs">
-              <PropertyRef Name="proposal_version_detail_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4396,6 +4292,110 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="genre">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres" FromRole="genre" ToRole="proposal_version_detail_criteria_genres" />
+          <NavigationProperty Name="station_programs" Relationship="BroadcastModel.station_program_genres" FromRole="genre" ToRole="station_programs" />
+        </EntityType>
+        <EntityType Name="proposal_version_detail_criteria_cpm">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="proposal_version_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="min_max" Type="Byte" Nullable="false" />
+          <Property Name="value" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details" FromRole="proposal_version_detail_criteria_cpm" ToRole="proposal_version_details" />
+        </EntityType>
+        <EntityType Name="proposal_version_detail_criteria_genres">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="proposal_version_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="contain_type" Type="Byte" Nullable="false" />
+          <Property Name="genre_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres" FromRole="proposal_version_detail_criteria_genres" ToRole="genre" />
+          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" FromRole="proposal_version_detail_criteria_genres" ToRole="proposal_version_details" />
+        </EntityType>
+        <EntityType Name="proposal_version_detail_criteria_programs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="proposal_version_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="contain_type" Type="Byte" Nullable="false" />
+          <Property Name="program_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" FromRole="proposal_version_detail_criteria_programs" ToRole="proposal_version_details" />
+        </EntityType>
+        <Association Name="FK_proposal_version_detail_criteria_genres_genres">
+          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.proposal_version_detail_criteria_genres" Role="proposal_version_detail_criteria_genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_detail_criteria_genres">
+              <PropertyRef Name="genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_detail_criteria_cpm_proposal_version_details">
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.proposal_version_detail_criteria_cpm" Role="proposal_version_detail_criteria_cpm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_detail_criteria_cpm">
+              <PropertyRef Name="proposal_version_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_detail_criteria_genres_proposal_version_details">
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.proposal_version_detail_criteria_genres" Role="proposal_version_detail_criteria_genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_detail_criteria_genres">
+              <PropertyRef Name="proposal_version_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_criteria_programs_proposal_version_criterias">
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.proposal_version_detail_criteria_programs" Role="proposal_version_detail_criteria_programs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_detail_criteria_programs">
+              <PropertyRef Name="proposal_version_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="station_program_genres">
+          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="*" />
+          <End Type="BroadcastModel.station_programs" Role="station_programs" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4521,18 +4521,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
                 <ScalarProperty Name="code_3" ColumnName="code_3" />
                 <ScalarProperty Name="code_2" ColumnName="code_2" />
                 <ScalarProperty Name="code_1" ColumnName="code_1" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="genres">
-            <EntityTypeMapping TypeName="BroadcastModel.genre">
-              <MappingFragment StoreEntitySet="genres">
-                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4679,36 +4667,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
                 <ScalarProperty Name="posting_book_id" ColumnName="posting_book_id" />
                 <ScalarProperty Name="equivalized" ColumnName="equivalized" />
                 <ScalarProperty Name="file_name" ColumnName="file_name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="proposal_version_detail_criteria_cpm">
-            <EntityTypeMapping TypeName="BroadcastModel.proposal_version_detail_criteria_cpm">
-              <MappingFragment StoreEntitySet="proposal_version_detail_criteria_cpm">
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="min_max" ColumnName="min_max" />
-                <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="proposal_version_detail_criteria_genres">
-            <EntityTypeMapping TypeName="BroadcastModel.proposal_version_detail_criteria_genres">
-              <MappingFragment StoreEntitySet="proposal_version_detail_criteria_genres">
-                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
-                <ScalarProperty Name="contain_type" ColumnName="contain_type" />
-                <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="proposal_version_detail_criteria_programs">
-            <EntityTypeMapping TypeName="BroadcastModel.proposal_version_detail_criteria_programs">
-              <MappingFragment StoreEntitySet="proposal_version_detail_criteria_programs">
-                <ScalarProperty Name="program_name" ColumnName="program_name" />
-                <ScalarProperty Name="contain_type" ColumnName="contain_type" />
-                <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -5016,14 +4974,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
               <ScalarProperty Name="market_code" ColumnName="market_code" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="station_program_genres" TypeName="BroadcastModel.station_program_genres" StoreEntitySet="station_program_genres">
-            <EndProperty Name="station_programs">
-              <ScalarProperty Name="id" ColumnName="station_program_id" />
-            </EndProperty>
-            <EndProperty Name="genre">
-              <ScalarProperty Name="id" ColumnName="genre_id" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="vw_ccc_daypart">
             <EntityTypeMapping TypeName="BroadcastModel.vw_ccc_daypart">
               <MappingFragment StoreEntitySet="vw_ccc_daypart">
@@ -5195,6 +5145,56 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="genres">
+            <EntityTypeMapping TypeName="BroadcastModel.genre">
+              <MappingFragment StoreEntitySet="genres">
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proposal_version_detail_criteria_cpm">
+            <EntityTypeMapping TypeName="BroadcastModel.proposal_version_detail_criteria_cpm">
+              <MappingFragment StoreEntitySet="proposal_version_detail_criteria_cpm">
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="min_max" ColumnName="min_max" />
+                <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proposal_version_detail_criteria_genres">
+            <EntityTypeMapping TypeName="BroadcastModel.proposal_version_detail_criteria_genres">
+              <MappingFragment StoreEntitySet="proposal_version_detail_criteria_genres">
+                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
+                <ScalarProperty Name="contain_type" ColumnName="contain_type" />
+                <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proposal_version_detail_criteria_programs">
+            <EntityTypeMapping TypeName="BroadcastModel.proposal_version_detail_criteria_programs">
+              <MappingFragment StoreEntitySet="proposal_version_detail_criteria_programs">
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="contain_type" ColumnName="contain_type" />
+                <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="station_program_genres" TypeName="BroadcastModel.station_program_genres" StoreEntitySet="station_program_genres">
+            <EndProperty Name="station_programs">
+              <ScalarProperty Name="id" ColumnName="station_program_id" />
+            </EndProperty>
+            <EndProperty Name="genre">
+              <ScalarProperty Name="id" ColumnName="genre_id" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -16,7 +16,7 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public int id { get; set; }
         public int proposal_version_detail_id { get; set; }
-        public Nullable<byte> contain_type { get; set; }
+        public byte contain_type { get; set; }
         public string program_name { get; set; }
     
         public virtual proposal_version_details proposal_version_details { get; set; }
