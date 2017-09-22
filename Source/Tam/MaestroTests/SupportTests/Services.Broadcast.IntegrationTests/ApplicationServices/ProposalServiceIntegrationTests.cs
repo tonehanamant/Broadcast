@@ -429,7 +429,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalDto = new ProposalDto()
                 {
                     AdvertiserId = 37444,
-                    ProposalName = "Proposal Test"
+                    ProposalName = "Proposal Test",
+                    GuaranteedDemoId = 31,
+                    PostType = SchedulePostType.NSI
                 };
 
                 var proposal = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);

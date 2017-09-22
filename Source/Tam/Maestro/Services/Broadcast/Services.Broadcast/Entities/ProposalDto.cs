@@ -47,7 +47,7 @@ namespace Services.Broadcast.Entities
  
         public DateTime? FlightStartDate { get; set; }
         public DateTime? FlightEndDate { get; set; }
-        public int? GuaranteedDemoId { get; set; }
+        public int GuaranteedDemoId { get; set; }
         public ProposalEnums.ProposalMarketGroups MarketGroupId { get; set; }
         public ProposalEnums.ProposalMarketGroups? BlackoutMarketGroupId { get; set; }
         public MarketGroupDto MarketGroup { get; set; }
@@ -69,8 +69,8 @@ namespace Services.Broadcast.Entities
         public int VersionId { get; set; }
         public ProposalEnums.ProposalStatusType Status { get; set; }
 
-        public SchedulePostType? PostType { get; set; }
-        public bool? Equivalized { get; set; }
+        public SchedulePostType PostType { get; set; }
+        public bool Equivalized { get; set; }
 
         public List<ProposalFlightWeek> FlightWeeks
         {

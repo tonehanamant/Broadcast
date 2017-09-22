@@ -18,11 +18,11 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.media_weeks = new HashSet<media_weeks>();
             this.post_files = new HashSet<post_files>();
+            this.rate_files = new HashSet<rate_files>();
+            this.schedules = new HashSet<schedule>();
             this.proposal_version_details = new HashSet<proposal_version_details>();
             this.proposal_version_details1 = new HashSet<proposal_version_details>();
             this.proposal_version_details2 = new HashSet<proposal_version_details>();
-            this.rate_files = new HashSet<rate_files>();
-            this.schedules = new HashSet<schedule>();
         }
     
         public int id { get; set; }
@@ -34,11 +34,11 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<media_weeks> media_weeks { get; set; }
         public virtual ICollection<post_files> post_files { get; set; }
-        public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
-        public virtual ICollection<proposal_version_details> proposal_version_details1 { get; set; }
-        public virtual ICollection<proposal_version_details> proposal_version_details2 { get; set; }
         public virtual ICollection<rate_files> rate_files { get; set; }
         public virtual rating_adjustments rating_adjustments { get; set; }
         public virtual ICollection<schedule> schedules { get; set; }
+        public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
+        public virtual ICollection<proposal_version_details> proposal_version_details1 { get; set; }
+        public virtual ICollection<proposal_version_details> proposal_version_details2 { get; set; }
     }
 }

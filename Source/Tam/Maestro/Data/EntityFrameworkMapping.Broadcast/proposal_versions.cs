@@ -16,18 +16,18 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public proposal_versions()
         {
-            this.proposal_version_audiences = new HashSet<proposal_version_audiences>();
-            this.proposal_version_details = new HashSet<proposal_version_details>();
             this.proposal_version_flight_weeks = new HashSet<proposal_version_flight_weeks>();
             this.proposal_version_markets = new HashSet<proposal_version_markets>();
             this.proposal_version_spot_length = new HashSet<proposal_version_spot_length>();
+            this.proposal_version_audiences = new HashSet<proposal_version_audiences>();
+            this.proposal_version_details = new HashSet<proposal_version_details>();
         }
     
         public int proposal_id { get; set; }
         public short proposal_version { get; set; }
         public Nullable<System.DateTime> start_date { get; set; }
         public Nullable<System.DateTime> end_date { get; set; }
-        public Nullable<int> guaranteed_audience_id { get; set; }
+        public int guaranteed_audience_id { get; set; }
         public byte markets { get; set; }
         public string created_by { get; set; }
         public System.DateTime created_date { get; set; }
@@ -38,8 +38,8 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> target_units { get; set; }
         public double target_impressions { get; set; }
         public string notes { get; set; }
-        public Nullable<byte> post_type { get; set; }
-        public Nullable<bool> equivalized { get; set; }
+        public byte post_type { get; set; }
+        public bool equivalized { get; set; }
         public Nullable<byte> blackout_markets { get; set; }
         public byte status { get; set; }
         public decimal target_cpm { get; set; }
@@ -47,11 +47,11 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal cost_total { get; set; }
         public double impressions_total { get; set; }
     
-        public virtual ICollection<proposal_version_audiences> proposal_version_audiences { get; set; }
-        public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
         public virtual ICollection<proposal_version_flight_weeks> proposal_version_flight_weeks { get; set; }
         public virtual ICollection<proposal_version_markets> proposal_version_markets { get; set; }
         public virtual ICollection<proposal_version_spot_length> proposal_version_spot_length { get; set; }
         public virtual proposal proposal { get; set; }
+        public virtual ICollection<proposal_version_audiences> proposal_version_audiences { get; set; }
+        public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
     }
 }

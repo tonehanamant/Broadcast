@@ -1120,6 +1120,73 @@ END
 
 /*************************************** BCOP-1931 - END *****************************************************/
 
+/*************************************** BCOP-1913 - START *****************************************************/
+
+-- proposal_versions
+IF EXISTS(SELECT * FROM sys.columns WHERE Name = N'guaranteed_audience_id' AND Object_ID = Object_ID(N'[dbo].[proposal_versions]'))
+   and (SELECT COLUMNPROPERTY(OBJECT_ID(N'[dbo].[proposal_versions]', 'U'), 'guaranteed_audience_id', 'AllowsNull')) = 1
+begin
+    update [dbo].[proposal_versions] set guaranteed_audience_id = 0 where guaranteed_audience_id is null
+	ALTER TABLE	[dbo].[proposal_versions] ALTER COLUMN [guaranteed_audience_id] [int] NOT NULL	
+end
+
+IF EXISTS(SELECT * FROM sys.columns WHERE Name = N'equivalized' AND Object_ID = Object_ID(N'[dbo].[proposal_versions]'))
+   and (SELECT COLUMNPROPERTY(OBJECT_ID(N'[dbo].[proposal_versions]', 'U'), 'equivalized', 'AllowsNull')) = 1
+begin
+    update [dbo].[proposal_versions] set equivalized = 0 where equivalized is null
+	ALTER TABLE	[dbo].[proposal_versions] ALTER COLUMN [equivalized] [bit] NOT NULL		
+end 
+
+IF EXISTS(SELECT * FROM sys.columns WHERE Name = N'post_type' AND Object_ID = Object_ID(N'[dbo].[proposal_versions]'))
+   and (SELECT COLUMNPROPERTY(OBJECT_ID(N'[dbo].[proposal_versions]', 'U'), 'post_type', 'AllowsNull')) = 1
+begin
+    update [dbo].[proposal_versions] set post_type = 1 where post_type is null
+	ALTER TABLE	[dbo].[proposal_versions] ALTER COLUMN [post_type] [tinyint] NOT NULL		
+end 
+
+-- proposal_version_audiences
+IF EXISTS(SELECT * FROM sys.columns WHERE Name = N'rank' AND Object_ID = Object_ID(N'[dbo].[proposal_version_audiences]'))
+   and (SELECT COLUMNPROPERTY(OBJECT_ID(N'[dbo].[proposal_version_audiences]', 'U'), 'rank', 'AllowsNull')) = 1
+begin
+    update [dbo].[proposal_version_audiences] set rank = 0 where rank is null
+	ALTER TABLE	[dbo].[proposal_version_audiences] ALTER COLUMN [rank] [tinyint] NOT NULL		
+end 
+
+
+-- proposal_version_details
+IF EXISTS(SELECT * FROM sys.columns WHERE Name = N'playback_type' AND Object_ID = Object_ID(N'[dbo].[proposal_version_details]'))
+   and (SELECT COLUMNPROPERTY(OBJECT_ID(N'[dbo].[proposal_version_details]', 'U'), 'playback_type', 'AllowsNull')) = 1
+begin
+    update [dbo].[proposal_version_details] set playback_type = 0 where playback_type is null
+	ALTER TABLE	[dbo].[proposal_version_details] ALTER COLUMN [playback_type] [tinyint] NOT NULL		
+end 
+
+-- proposal_version_detail_quarters
+IF EXISTS(SELECT * FROM sys.columns WHERE Name = N'cpm' AND Object_ID = Object_ID(N'[dbo].[proposal_version_detail_quarters]'))
+   and (SELECT COLUMNPROPERTY(OBJECT_ID(N'[dbo].[proposal_version_detail_quarters]', 'U'), 'cpm', 'AllowsNull')) = 1
+begin
+    update [dbo].[proposal_version_detail_quarters] set cpm = 0 where cpm is null
+	ALTER TABLE	[dbo].[proposal_version_detail_quarters] ALTER COLUMN [cpm] [money] NOT NULL		
+end 
+
+--proposal_version_detail_quarter_weeks
+IF EXISTS(SELECT * FROM sys.columns WHERE Name = N'units' AND Object_ID = Object_ID(N'[dbo].[proposal_version_detail_quarter_weeks]'))
+   and (SELECT COLUMNPROPERTY(OBJECT_ID(N'[dbo].[proposal_version_detail_quarter_weeks]', 'U'), 'units', 'AllowsNull')) = 1
+begin
+    update [dbo].[proposal_version_detail_quarter_weeks] set units = 0 where units is null
+	ALTER TABLE	[dbo].[proposal_version_detail_quarter_weeks] ALTER COLUMN [units] [int] NOT NULL		
+end 
+
+IF EXISTS(SELECT * FROM sys.columns WHERE Name = N'cost' AND Object_ID = Object_ID(N'[dbo].[proposal_version_detail_quarter_weeks]'))
+   and (SELECT COLUMNPROPERTY(OBJECT_ID(N'[dbo].[proposal_version_detail_quarter_weeks]', 'U'), 'cost', 'AllowsNull')) = 1
+begin
+    update [dbo].[proposal_version_detail_quarter_weeks] set cost = 0 where units is null
+	ALTER TABLE	[dbo].[proposal_version_detail_quarter_weeks] ALTER COLUMN [cost] [money] NOT NULL		
+end 
+
+/*************************************** BCOP-1913 - END *****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

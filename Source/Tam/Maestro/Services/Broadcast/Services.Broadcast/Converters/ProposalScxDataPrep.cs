@@ -101,7 +101,7 @@ namespace Services.Broadcast.Converters
         private void _SetDemos(ScxData data, ProposalDetailDto proposalDetailDto)
         {
             var demos = new List<int>();
-            demos.Add(data.ProposalDto.GuaranteedDemoId.Value);
+            demos.Add(data.ProposalDto.GuaranteedDemoId);
             demos.AddRange(data.ProposalDto.SecondaryDemos);
 
             var audiencesMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>()
@@ -168,7 +168,7 @@ namespace Services.Broadcast.Converters
 
         private void _GetDemoImpressionData(ScxData data, ProposalDetailDto proposalDetailDto)
         {
-            var playbackType = proposalDetailDto.PlaybackType.Value;
+            var playbackType = proposalDetailDto.PlaybackType;
 
             var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
             bool isSingleBook = proposalDetailDto.SinglePostingBookId.HasValue;
@@ -262,7 +262,7 @@ namespace Services.Broadcast.Converters
             var audienceIds = demo.RatingAudienceIds; //new List<int>() { demo.AudienceId };
             var playbackType =
                     PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(
-                    proposalDetailDto.PlaybackType.Value);
+                    proposalDetailDto.PlaybackType);
 
             List<RatingsResult> ratings = null;
             ratings = repo.ForecastRatings(

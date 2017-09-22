@@ -30,7 +30,7 @@ namespace Services.Broadcast.Entities
         public int? SinglePostingBookId { get; set; }
         public int? SharePostingBookId { get; set; }
         public int? HutPostingBookId { get; set; }
-        public ProposalEnums.ProposalPlaybackType? PlaybackType { get; set; }
+        public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
         public DefaultPostingBooksDto DefaultPostingBooks { get; set; }
     }
 }
