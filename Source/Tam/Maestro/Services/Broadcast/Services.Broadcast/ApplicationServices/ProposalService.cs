@@ -398,6 +398,14 @@ namespace Services.Broadcast.ApplicationServices
             // set target and default margin that are nullable when first creating a proposal
             proposalDto.TargetCPM = proposalDto.TargetCPM ?? 0;
             proposalDto.Margin = proposalDto.Margin ?? ProposalConstants.ProposalDefaultMargin;
+            if (proposalDto.Details != null && proposalDto.Details.Any())
+            {
+                foreach (var detail in proposalDto.Details)
+                {
+                    detail.PlaybackType = detail.PlaybackType ?? ProposalEnums.ProposalPlaybackType.LivePlus3;
+                }
+            }
+            
         }
 
         private void _DeleteProposalDetailInventoryAllocations(ProposalDto proposalDto)

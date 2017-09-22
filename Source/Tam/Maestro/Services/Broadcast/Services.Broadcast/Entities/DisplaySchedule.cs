@@ -17,6 +17,7 @@ namespace Services.Broadcast.Entities
         public int OutOfSpec { get; set; }
         public int PostingBookId { get; set; }
         public string PostingBook { get; set; }
+        public DateTime? PostingBookDate { get; set; }
         public double? PrimaryDemoBooked { get; set; }
         public double PrimaryDemoDelivered { get; set; }
         public SchedulePostType PostType { get; set; }

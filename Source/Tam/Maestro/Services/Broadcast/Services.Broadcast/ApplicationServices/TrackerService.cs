@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using Tam.Maestro.Common;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -93,14 +94,17 @@ namespace Services.Broadcast.ApplicationServices
 
             var scheduleAdvertisers = ret.Schedules.Select(x => x.AdvertiserId).ToList();
             ret.Advertisers = _SmsClient.GetActiveAdvertisers().Where(a => scheduleAdvertisers.Contains(a.Id)).ToList();
-            ret.PostingBooks = GetNsiPostingBookMonths();
+
+            var nsiPostingBooks = _GetNsiPostingMediaMonths();
+            ret.PostingBooks = nsiPostingBooks.Select(d => new LookupDto() {Id = d.Id, Display = d.MediaMonthX}).ToList();
             foreach (var schedule in ret.Schedules)
             {
                 var advertiser = ret.Advertisers.FirstOrDefault(a => a.Id == schedule.AdvertiserId);
-                var postingBook = ret.PostingBooks.FirstOrDefault(p => p.Id == schedule.PostingBookId);
-                schedule.Advertiser = advertiser == null ? "" : advertiser.Display;
-                schedule.PostingBook = postingBook == null ? "" : postingBook.Display;
+                var postingBook = nsiPostingBooks.FirstOrDefault(p => p.Id == schedule.PostingBookId);
 
+                schedule.Advertiser = advertiser == null ? "" : advertiser.Display;
+                schedule.PostingBook = postingBook == null ? "" : postingBook.MediaMonthX;
+                schedule.PostingBookDate = postingBook == null ? (DateTime?)null : postingBook.EndDate;
             }
 
             return ret;
@@ -212,6 +216,15 @@ namespace Services.Broadcast.ApplicationServices
                     ,
                         Display = x.MediaMonthX
                     }).ToList();
+        }
+
+        internal List<MediaMonth> _GetNsiPostingMediaMonths()
+        {
+            var postingBooks =
+                _BroadcastDataRepositoryFactory.GetDataRepository<IPostingBookRepository>()
+                    .GetPostableMediaMonths(BroadcastConstants.PostableMonthMarketThreshold);
+
+            return _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(postingBooks);
         }
 
         public ScheduleFileType _GetRequestFileType(ScheduleSaveRequest request)
