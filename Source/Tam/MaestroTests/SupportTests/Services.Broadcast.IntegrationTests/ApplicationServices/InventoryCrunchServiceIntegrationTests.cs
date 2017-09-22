@@ -248,6 +248,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(InventoryDetailSlotComponents), "Id");
                 jsonResolver.Ignore(typeof(InventoryDetailSlotComponents), "InventoryDetailSlotId");
                 jsonResolver.Ignore(typeof(InventoryDetailSlotComponents), "StationProgramFlightId");
+                jsonResolver.Ignore(typeof(InventoryDetailSlotComponents), "DaypartId");
 
                 var jsonSettings = new JsonSerializerSettings
                 {

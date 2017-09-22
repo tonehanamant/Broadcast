@@ -5,14 +5,12 @@
       "DetailLevel": 4,
       "InventoryDetailSlotComponents": [
         {
-          "DaypartId": 6717,
           "MarketCode": 211,
           "SpotCost15": null,
           "SpotCost30": null,
           "StationCode": 1027
         },
         {
-          "DaypartId": 6717,
           "MarketCode": 223,
           "SpotCost15": null,
           "SpotCost30": null,
@@ -30,14 +28,12 @@
       "DetailLevel": 3,
       "InventoryDetailSlotComponents": [
         {
-          "DaypartId": 6717,
           "MarketCode": 223,
           "SpotCost15": null,
           "SpotCost30": null,
           "StationCode": 6992
         },
         {
-          "DaypartId": 6717,
           "MarketCode": 211,
           "SpotCost15": null,
           "SpotCost30": null,
@@ -55,14 +51,12 @@
       "DetailLevel": 2,
       "InventoryDetailSlotComponents": [
         {
-          "DaypartId": 6717,
           "MarketCode": 211,
           "SpotCost15": null,
           "SpotCost30": null,
           "StationCode": 1027
         },
         {
-          "DaypartId": 6717,
           "MarketCode": 223,
           "SpotCost15": null,
           "SpotCost30": null,
@@ -80,14 +74,12 @@
       "DetailLevel": 1,
       "InventoryDetailSlotComponents": [
         {
-          "DaypartId": 6717,
           "MarketCode": 223,
           "SpotCost15": null,
           "SpotCost30": null,
           "StationCode": 6992
         },
         {
-          "DaypartId": 6717,
           "MarketCode": 211,
           "SpotCost15": null,
           "SpotCost30": null,
