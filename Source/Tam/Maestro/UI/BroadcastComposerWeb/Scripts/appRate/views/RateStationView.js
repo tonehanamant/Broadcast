@@ -16,6 +16,7 @@ var RateStationView = BaseView.extend({
     activeStationRateRecord: null, //the active record for a rate update
     activeContactEditRecord: null,
     activeRatesFilter: null,
+    activeContactSearchInput: null,
 
     isThirdPartyMode: false, //flag to determine handling for various modes
 
@@ -60,6 +61,7 @@ var RateStationView = BaseView.extend({
 
             //on close modal - controller refresh all stations via main App controller
             this.$StationModal.on('hidden.bs.modal', function (event) {
+                me.activeContactSearchInput = null;
                 me.controller.onStationClose();
             });
 
@@ -75,9 +77,11 @@ var RateStationView = BaseView.extend({
                 }
 
                 if (e.target.name == 'contacts') {
-                    me.$ContactsGrid.refresh();
                     //reset - remove editing state if present
+                    //me.activeContactSearchInput = null;
                     me.endActiveContactEdit(true);
+                    me.$ContactsGrid.refresh();
+                    
                 }
             });
 
@@ -548,12 +552,18 @@ var RateStationView = BaseView.extend({
 
         this.disableContactEditingAllowedStates(true);
         this.setContactEditData(rec);
-        var input = $('[name="contact_search_input_' + rec.recid + '"]');
+        var input = $('[name="contact_name_input_' + rec.recid + '"]');
         var updateData = update ? { id: rec.Id, text: rec.Name } : null;
-        //this.setContactTypeahead(input, updateData);
+        this.setContactSearch(input, updateData);
     },
 
     endActiveContactEdit: function (removeNewCheck) {
+
+        //destroy select 2
+        if (this.activeContactSearchInput) {
+            this.activeContactSearchInput.select2('destroy');
+            this.activeContactSearchInput = null;
+        }
         if (removeNewCheck) {
             var newrec = this.$ContactsGrid.get('N-1');
             if (newrec) this.$ContactsGrid.remove('N-1');
@@ -568,13 +578,15 @@ var RateStationView = BaseView.extend({
             this.disableContactEditingAllowedStates(false);
             this.activeContactEditRecord = null;
         }
+
+        
     },
 
-    //set the values for editin based on active record;  
+    //set the values for editing based on active record or data from search
     setContactEditData: function (rec) {
         var typeId = rec.Type === 'Station' ? 1 : (rec.Type === 'Rep' ? 2 : (rec.Type === 'Traffic') ? 3 : 0);
         $('[name="contact_type_select_' + rec.recid + '"]').val(typeId);
-        $('[name="contact_name_input_' + rec.recid + '"]').val(rec.Name);
+        //$('[name="contact_name_input_' + rec.recid + '"]').val(rec.Name); name now handled elsewhere via select2
         $('[name="contact_company_input_' + rec.recid + '"]').val(rec.Company);
         $('[name="contact_email_input_' + rec.recid + '"]').val(rec.Email);
         $('[name="contact_phone_input_' + rec.recid + '"]').val(rec.Phone);
@@ -587,7 +599,7 @@ var RateStationView = BaseView.extend({
         var canSend = true;
         var fields = [
             { selector: '[name="contact_type_select_' + rec.recid + '"]', required: true, key: 'Type' },
-            { selector: '[name="contact_name_input_' + rec.recid + '"]', required: true, key: 'Name' },
+           // { selector: '[name="contact_name_input_' + rec.recid + '"]', required: true, key: 'Name' }, handle seprately
             { selector: '[name="contact_company_input_' + rec.recid + '"]', required: false, key: 'Company' },
             { selector: '[name="contact_email_input_' + rec.recid + '"]', required: true, key: 'Email' },
             { selector: '[name="contact_phone_input_' + rec.recid + '"]', required: true, key: 'Phone' },
@@ -622,6 +634,16 @@ var RateStationView = BaseView.extend({
                 $(field.selector).parent().addClass('has-error');
             } 
         });
+        //deal with select 2 input
+        var name = $('[name="contact_name_input_' + rec.recid + '"]');
+        if (name.val()) {
+            retObj.Name = name.select2('data')[0].text;
+            name.parent().removeClass('has-error');
+        } else {
+            name.parent().addClass('has-error');
+            canSend = false;
+        }
+
         if (canSend) {
             this.doSaveContact(retObj, rec.isNew);
         }
@@ -641,14 +663,7 @@ var RateStationView = BaseView.extend({
         this.endActiveContactEdit();
     },
 
-    setContactTypeahead: function (input, updateData) {
-       // var data = [{ id: 1, text: 'Greg' }, { id: 2, text: 'Cary' }];
-        //input.select2({
-        //    tags: true,
-        //    maximumSelectionLength: 1,
-        //    multiple: true,
-        //    data: data
-        //});
+    setContactSearch: function (input, originalRec, updateData) {
         var data = updateData ? [updateData] : [];
         var url = baseUrl + 'api/RatesManager/Contacts/Find';
         input.select2({
@@ -657,18 +672,23 @@ var RateStationView = BaseView.extend({
             tags: true,
             multiple: true,
             selectOnClose: true,
-            placeholder: "Search...",
+            placeholder: "Search or new Name...",
             data: data,
             //templateResult: for drop down has issues
-            //templateSelection: function (item) {
+            templateSelection: function (item) {
                 
-            //    return item.Name || item.text;
-            //},
+                return item.Name || item.text;
+            },
 
-            //templateResult: function (item) {
-            //    if (item.loading) return item.text;
-            //    return item.Name ? (item.Name + ' | ' + item.Type) : item.text;
-            //},
+            templateResult: function (item) {
+                if (item.loading) return item.text;
+                var res = item.text;
+                if (item.Name) {
+                    res = item.Name + ' | ' + item.Type;
+                    if (item.Company) res += ' | ' + item.Company;
+                }
+                return res
+            },
             ajax: {
                 url: url,
                 //type: "GET",
@@ -676,7 +696,7 @@ var RateStationView = BaseView.extend({
                 dataType: 'json',
                 delay: 250,
                 data: function (params) {
-                    console.log(params.term);
+                    //console.log(params.term);
                     return {
                         query: params.term
                     };
@@ -684,25 +704,45 @@ var RateStationView = BaseView.extend({
 
                 processResults: function (response) {
                     console.log('response', response.Data);
-                    //return {
-                    //    results: response.Data
-                    //};
+                    //return needs to have text prop to make template/selection work
+                    $.each(response.Data, function (index, item) {
+                        item.text = item.Name;
+                        item.id = item.Id;
+                    });
+                    
                     return {
-                        results: $.map(response.Data, function (item) {
-                            return {
-                                text: item.Name,
-                                id: item.Id
-                            }
-                        })
+                        results: response.Data
                     };
+                    //return {
+                    //    results: $.map(response.Data, function (item) {
+                    //        return {
+                    //            text: item.Name,
+                    //            id: item.Id
+                    //        }
+                    //    })
+                    //};
                 }
             }
         });
         if (updateData) input.val(updateData.id).trigger('change');
-        //todo - store and destroy on end edit
-        //this.activeSearchInput = input;
-        input.on("select2:select", function (e) { console.log("select2:select", e); });
-        input.on("change", function (e) { console.log("select2:change", e); });
+
+     
+        input.on("select2:select", this.onContactSearchSelect.bind(this));
+        this.activeContactSearchInput = input;
+       // input.on("change", function (e) { console.log("select2:change", e); });
+
+    },
+
+    onContactSearchSelect: function (e) {
+        //todo - on select - change values based on params if from search
+        console.log("select2:select", e.params.data);
+        var data = e.params.data ? e.params.data : null;
+        //determine if selection from search
+        if (data.Name && data.StationCode) {
+            //need to get the original record id
+            data.recid = this.activeContactEditRecord.recid;
+            this.setContactEditData(data);
+        }
 
     }
 

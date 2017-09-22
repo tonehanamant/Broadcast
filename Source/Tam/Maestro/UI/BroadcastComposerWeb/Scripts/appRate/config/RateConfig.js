@@ -141,9 +141,9 @@
                         return cell;
                     }
                 },
-                /*
+                
                 {
-                    field: 'Search',
+                    field: 'Name',
                     caption: 'Name',
                     sortable: true,
                     searchable: true,
@@ -155,32 +155,32 @@
                         }
                         var cellId = "contact_search_" + record.recid;
                         var cell = "<div contactRecidEdit='" + record.recid + "' id='" + cellId + "'class='flex-container-1 editable-cell'>";
-                        cell += "<select name=\"contact_search_input_" + record.recid + "\" type='text' class='edit-input form-control select2' style='display: none !important'></select>";
+                        cell += "<select name=\"contact_name_input_" + record.recid + "\" type='text' class='edit-input form-control select2' style='display: none !important'></select>";
                         cell += record.Name ? '<div>' + record.Name + '</div>' : '<div></div>';
                         cell += "</div>";
                         return cell;
                     }
                 },
-                */
-                {
-                    field: 'Name',
-                    caption: 'Name',
-                    sortable: true,
-                    searchable: true,
-                    size: '15%',
-                    render: function (record, index, column_index) {
-                        //for add new button in Type - no display here
-                        if (record.addNew === true) {
-                            return null;
-                        }
-                        var cellId = "contact_name_" + record.recid;
-                        var cell = "<div contactRecidEdit='" + record.recid + "' id='" + cellId + "'class='flex-container-1 editable-cell'>";
-                        cell += "<input name=\"contact_name_input_" + record.recid + "\" type='text' class='edit-input' style='display: none !important'/>";
-                        cell += record.Name ? '<div>' + record.Name + '</div>' : '<div></div>';
-                        cell += "</div>";
-                        return cell;
-                    }
-                },
+                
+                //{
+                //    field: 'Name',
+                //    caption: 'Name',
+                //    sortable: true,
+                //    searchable: true,
+                //    size: '15%',
+                //    render: function (record, index, column_index) {
+                //        //for add new button in Type - no display here
+                //        if (record.addNew === true) {
+                //            return null;
+                //        }
+                //        var cellId = "contact_name_" + record.recid;
+                //        var cell = "<div contactRecidEdit='" + record.recid + "' id='" + cellId + "'class='flex-container-1 editable-cell'>";
+                //        cell += "<input name=\"contact_name_input_" + record.recid + "\" type='text' class='edit-input' style='display: none !important'/>";
+                //        cell += record.Name ? '<div>' + record.Name + '</div>' : '<div></div>';
+                //        cell += "</div>";
+                //        return cell;
+                //    }
+                //},
                 {
                     field: 'Company',
                     caption: 'Company',
