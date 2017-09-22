@@ -84,8 +84,7 @@ namespace Services.Broadcast.BusinessEngines
                 programDetails.TRP = ProposalMath.CalculateTRP_GRP(targetImpressions, nsiData.TotalDemoUniverse);
 
                 //household specific calculation (only if user didn't select HH as target)
-                if (proposal.GuaranteedDemoId.HasValue &&
-                    proposal.GuaranteedDemoId.Value != BroadcastConstants.HouseHoldAudienceId)
+                if (proposal.GuaranteedDemoId != BroadcastConstants.HouseHoldAudienceId)
                 {
                     var hhImpressions = programDetails.HouseHoldRating * programDetails.HouseHoldMarketSubscribers * spotsForCalculation;
 

@@ -17,7 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public int proposal_version_id { get; set; }
         public int audience_id { get; set; }
-        public Nullable<byte> rank { get; set; }
+        public byte rank { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual proposal_versions proposal_versions { get; set; }

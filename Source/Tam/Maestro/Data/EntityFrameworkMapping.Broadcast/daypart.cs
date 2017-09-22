@@ -19,9 +19,9 @@ namespace EntityFrameworkMapping.Broadcast
             this.days = new HashSet<day>();
             this.inventory_detail_slot_components = new HashSet<inventory_detail_slot_components>();
             this.inventory_detail_slots = new HashSet<inventory_detail_slots>();
-            this.proposal_version_details = new HashSet<proposal_version_details>();
             this.schedule_details = new HashSet<schedule_details>();
             this.station_programs = new HashSet<station_programs>();
+            this.proposal_version_details = new HashSet<proposal_version_details>();
         }
     
         public int id { get; set; }
@@ -35,8 +35,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<day> days { get; set; }
         public virtual ICollection<inventory_detail_slot_components> inventory_detail_slot_components { get; set; }
         public virtual ICollection<inventory_detail_slots> inventory_detail_slots { get; set; }
-        public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
         public virtual ICollection<schedule_details> schedule_details { get; set; }
         public virtual ICollection<station_programs> station_programs { get; set; }
+        public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
     }
 }

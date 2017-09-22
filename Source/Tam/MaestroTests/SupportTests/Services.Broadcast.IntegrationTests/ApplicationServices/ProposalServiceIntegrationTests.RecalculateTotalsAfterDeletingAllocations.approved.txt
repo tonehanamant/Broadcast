@@ -4,7 +4,7 @@
   "BlackoutMarketGroupId": null,
   "CanDelete": true,
   "Details": [],
-  "Equivalized": null,
+  "Equivalized": false,
   "FlightEndDate": null,
   "FlightStartDate": null,
   "FlightWeeks": [],
@@ -20,7 +20,7 @@
   "MarketGroupId": 100,
   "Markets": [],
   "Notes": null,
-  "PostType": null,
+  "PostType": 1,
   "PrimaryVersionId": 41,
   "ProposalName": "Proposal Test",
   "SecondaryDemos": [

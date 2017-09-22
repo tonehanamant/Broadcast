@@ -69,7 +69,7 @@
       "Open Market Program Too"
     ]
   },
-  "Equivalized": null,
+  "Equivalized": false,
   "Filter": {
     "Affiliations": [],
     "DayParts": [],
@@ -166,7 +166,7 @@
   ],
   "NewCriteriaAffectsExistingAllocations": false,
   "PlaybackType": 4,
-  "PostType": null,
+  "PostType": 1,
   "ProposalFlightEndDate": "2016-12-11T00:00:00",
   "ProposalFlightStartDate": "2016-10-31T00:00:00",
   "ProposalFlightWeeks": [

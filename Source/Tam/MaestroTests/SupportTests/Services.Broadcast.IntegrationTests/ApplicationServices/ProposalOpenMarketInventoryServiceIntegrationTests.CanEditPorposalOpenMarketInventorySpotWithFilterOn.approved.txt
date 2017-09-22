@@ -29,7 +29,7 @@
   "DetailTotalBudget": 16000.00,
   "DetailTotalCpm": 0.05,
   "DetailTotalImpressions": 317190336.529,
-  "Equivalized": null,
+  "Equivalized": false,
   "Filter": {
     "Affiliations": [],
     "DayParts": [],
@@ -43,7 +43,7 @@
   "Margin": 20.0,
   "NewCriteriaAffectsExistingAllocations": false,
   "PlaybackType": 4,
-  "PostType": null,
+  "PostType": 1,
   "ProposalFlightEndDate": "2016-12-11T00:00:00",
   "ProposalFlightStartDate": "2016-10-31T00:00:00",
   "ProposalId": 248,

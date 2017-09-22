@@ -12,21 +12,13 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class proposal_version_detail_quarters
+    public partial class proposal_version_detail_criteria_cpm
     {
-        public proposal_version_detail_quarters()
-        {
-            this.proposal_version_detail_quarter_weeks = new HashSet<proposal_version_detail_quarter_weeks>();
-        }
-    
         public int id { get; set; }
         public int proposal_version_detail_id { get; set; }
-        public byte quarter { get; set; }
-        public int year { get; set; }
-        public decimal cpm { get; set; }
-        public double impressions_goal { get; set; }
+        public byte min_max { get; set; }
+        public decimal value { get; set; }
     
         public virtual proposal_version_details proposal_version_details { get; set; }
-        public virtual ICollection<proposal_version_detail_quarter_weeks> proposal_version_detail_quarter_weeks { get; set; }
     }
 }

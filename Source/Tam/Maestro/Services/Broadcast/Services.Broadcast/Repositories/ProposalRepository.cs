@@ -145,7 +145,7 @@ namespace Services.Broadcast.Repositories
                 margin = proposalDto.Margin.Value,
                 target_units = proposalDto.TargetUnits,
                 notes = proposalDto.Notes,
-                post_type = (byte?)proposalDto.PostType,
+                post_type = (byte)proposalDto.PostType,
                 equivalized = proposalDto.Equivalized,
                 status = (byte)proposalDto.Status
             };
@@ -242,7 +242,7 @@ namespace Services.Broadcast.Repositories
             dbProposalVersion.margin = proposalDto.Margin.Value;
             dbProposalVersion.target_units = proposalDto.TargetUnits;
             dbProposalVersion.notes = proposalDto.Notes;
-            dbProposalVersion.post_type = (byte?)proposalDto.PostType;
+            dbProposalVersion.post_type = (byte)proposalDto.PostType;
             dbProposalVersion.equivalized = proposalDto.Equivalized;
             dbProposalVersion.status = (byte)proposalDto.Status;
 
@@ -309,7 +309,7 @@ namespace Services.Broadcast.Repositories
                     single_posting_book_id = proposalDetail.SinglePostingBookId,
                     hut_posting_book_id = proposalDetail.HutPostingBookId,
                     share_posting_book_id = proposalDetail.SharePostingBookId,
-                    playback_type = (byte?) proposalDetail.PlaybackType,
+                    playback_type = (byte) proposalDetail.PlaybackType,
                     proposal_version_detail_quarters =
                         proposalDetail.Quarters.Select(quarter => new proposal_version_detail_quarters
                         {
@@ -383,7 +383,7 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.single_posting_book_id = detail.SinglePostingBookId;
                     updatedDetail.hut_posting_book_id = detail.HutPostingBookId;
                     updatedDetail.share_posting_book_id = detail.SharePostingBookId;
-                    updatedDetail.playback_type = (byte?)detail.PlaybackType;
+                    updatedDetail.playback_type = (byte)detail.PlaybackType;
 
                     // deal with quarters that have been deleted 
                     // scenario where user maintain the detail but change completely the flight generating new quarters for this particular detail
@@ -650,7 +650,7 @@ namespace Services.Broadcast.Repositories
             proposalDto.Equivalized = proposalVersion.equivalized;
             proposalDto.SecondaryDemos =
                 proposalVersion.proposal_version_audiences.OrderBy(r => r.rank).Select(a => a.audience_id).ToList();
-            proposalDto.PostType = (SchedulePostType?)proposalVersion.post_type;
+            proposalDto.PostType = (SchedulePostType)proposalVersion.post_type;
             proposalDto.SpotLengths =
                 proposalVersion.proposal_version_spot_length.Select(a => new LookupDto { Id = a.spot_length_id })
                     .ToList();
@@ -669,10 +669,10 @@ namespace Services.Broadcast.Repositories
                 SinglePostingBookId = version.single_posting_book_id,
                 SharePostingBookId = version.share_posting_book_id,
                 HutPostingBookId = version.hut_posting_book_id,
-                PlaybackType = (ProposalEnums.ProposalPlaybackType?)version.playback_type,
+                PlaybackType = (ProposalEnums.ProposalPlaybackType)version.playback_type,
                 Quarters = version.proposal_version_detail_quarters.Select(quarter => new ProposalQuarterDto
                 {
-                    Cpm = quarter.cpm.GetValueOrDefault(),
+                    Cpm = quarter.cpm,
                     ImpressionGoal = quarter.impressions_goal,
                     Id = quarter.id,
                     Year = quarter.year,
@@ -681,12 +681,12 @@ namespace Services.Broadcast.Repositories
                     Weeks = quarter.proposal_version_detail_quarter_weeks.Select(week => new ProposalWeekDto
                     {
                         Id = week.id,
-                        Cost = week.cost.GetValueOrDefault(),
+                        Cost = week.cost,
                         EndDate = week.end_date,
                         StartDate = week.start_date,
                         Impressions = week.impressions_goal,
                         IsHiatus = week.is_hiatus,
-                        Units = week.units.GetValueOrDefault(),
+                        Units = week.units,
                         MediaWeekId = week.media_week_id,
                         Week = week.start_date.ToShortDateString()
                     }).ToList()
@@ -828,7 +828,7 @@ namespace Services.Broadcast.Repositories
                                  {
                                      ProposalVersionDetailQuarterWeekId = week.id,
                                      ImpressionsGoal = week.impressions_goal,
-                                     Budget = week.cost ?? 0,
+                                     Budget = week.cost,
                                      QuarterText = string.Format("Q{0}", quarter.quarter),
                                      Week = week.start_date.ToShortDateString(),
                                      IsHiatus = week.is_hiatus,
@@ -863,7 +863,7 @@ namespace Services.Broadcast.Repositories
                     SinglePostingBookId = proposalDetail.single_posting_book_id,
                     SharePostingBookId = proposalDetail.share_posting_book_id,
                     HutPostingBookId = proposalDetail.hut_posting_book_id,
-                    PlaybackType = (ProposalEnums.ProposalPlaybackType?)proposalDetail.playback_type
+                    PlaybackType = (ProposalEnums.ProposalPlaybackType)proposalDetail.playback_type
                 };
 
                 return proposalDetailDto;
@@ -1135,7 +1135,7 @@ namespace Services.Broadcast.Repositories
                                  {
                                      QuarterText = string.Format("Q{0}", quarter.quarter),
                                      ImpressionsGoal = week.impressions_goal,
-                                     Budget = week.cost ?? 0,
+                                     Budget = week.cost,
                                      Week = week.start_date.ToShortDateString(),
                                      IsHiatus = week.is_hiatus,
                                      MediaWeekId = week.media_week_id,

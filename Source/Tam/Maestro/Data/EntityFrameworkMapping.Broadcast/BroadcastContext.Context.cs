@@ -34,7 +34,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<bvs_post_details> bvs_post_details { get; set; }
         public virtual DbSet<daypart> dayparts { get; set; }
         public virtual DbSet<day> days { get; set; }
-        public virtual DbSet<genre> genres { get; set; }
         public virtual DbSet<inventory_detail_slot_components> inventory_detail_slot_components { get; set; }
         public virtual DbSet<inventory_detail_slot_proposal> inventory_detail_slot_proposal { get; set; }
         public virtual DbSet<inventory_detail_slots> inventory_detail_slots { get; set; }
@@ -47,13 +46,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<post_file_detail_impressions> post_file_detail_impressions { get; set; }
         public virtual DbSet<post_file_details> post_file_details { get; set; }
         public virtual DbSet<post_files> post_files { get; set; }
-        public virtual DbSet<proposal_version_audiences> proposal_version_audiences { get; set; }
-        public virtual DbSet<proposal_version_detail_criteria_cpm> proposal_version_detail_criteria_cpm { get; set; }
-        public virtual DbSet<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
-        public virtual DbSet<proposal_version_detail_criteria_programs> proposal_version_detail_criteria_programs { get; set; }
-        public virtual DbSet<proposal_version_detail_quarter_weeks> proposal_version_detail_quarter_weeks { get; set; }
-        public virtual DbSet<proposal_version_detail_quarters> proposal_version_detail_quarters { get; set; }
-        public virtual DbSet<proposal_version_details> proposal_version_details { get; set; }
         public virtual DbSet<proposal_version_flight_weeks> proposal_version_flight_weeks { get; set; }
         public virtual DbSet<proposal_version_markets> proposal_version_markets { get; set; }
         public virtual DbSet<proposal_version_spot_length> proposal_version_spot_length { get; set; }
@@ -81,5 +73,13 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<inventory_detail_slot_component_proposal> inventory_detail_slot_component_proposal { get; set; }
         public virtual DbSet<station_program_flight_proposal> station_program_flight_proposal { get; set; }
         public virtual DbSet<proposal_versions> proposal_versions { get; set; }
+        public virtual DbSet<proposal_version_audiences> proposal_version_audiences { get; set; }
+        public virtual DbSet<proposal_version_details> proposal_version_details { get; set; }
+        public virtual DbSet<proposal_version_detail_quarters> proposal_version_detail_quarters { get; set; }
+        public virtual DbSet<proposal_version_detail_quarter_weeks> proposal_version_detail_quarter_weeks { get; set; }
+        public virtual DbSet<genre> genres { get; set; }
+        public virtual DbSet<proposal_version_detail_criteria_cpm> proposal_version_detail_criteria_cpm { get; set; }
+        public virtual DbSet<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
+        public virtual DbSet<proposal_version_detail_criteria_programs> proposal_version_detail_criteria_programs { get; set; }
     }
 }

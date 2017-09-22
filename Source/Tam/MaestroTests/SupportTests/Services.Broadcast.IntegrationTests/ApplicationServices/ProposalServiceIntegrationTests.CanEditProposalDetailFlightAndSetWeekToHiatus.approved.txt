@@ -96,7 +96,7 @@
       "TotalUnits": 2
     }
   ],
-  "Equivalized": null,
+  "Equivalized": false,
   "FlightEndDate": "2017-06-04T00:00:00",
   "FlightStartDate": "2017-05-15T00:00:00",
   "FlightWeeks": [
@@ -119,12 +119,12 @@
       "StartDate": "2017-05-29T00:00:00"
     }
   ],
-  "GuaranteedDemoId": null,
+  "GuaranteedDemoId": 0,
   "Margin": null,
   "MarketGroup": null,
   "MarketGroupId": 0,
   "Notes": null,
-  "PostType": null,
+  "PostType": 0,
   "ProposalName": null,
   "SecondaryDemos": [],
   "SpotLengths": [

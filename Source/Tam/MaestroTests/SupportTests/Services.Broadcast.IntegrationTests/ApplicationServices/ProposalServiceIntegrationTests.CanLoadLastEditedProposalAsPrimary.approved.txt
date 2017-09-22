@@ -19,7 +19,7 @@
   "MarketGroupId": 100,
   "Markets": [],
   "Notes": "second",
-  "PostType": null,
+  "PostType": 1,
   "PrimaryVersionId": 43,
   "ProposalName": "Proposal Versions Test",
   "SecondaryDemos": [],
