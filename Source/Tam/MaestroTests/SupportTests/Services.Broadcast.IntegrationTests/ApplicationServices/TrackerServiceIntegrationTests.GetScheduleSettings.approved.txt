@@ -42,6 +42,7 @@
   "Name": "Test Settings Schedule",
   "OutOfSpec": 0,
   "PostingBook": null,
+  "PostingBookDate": null,
   "PostingBookId": 413,
   "PostType": 2,
   "PrimaryDemoBooked": null,

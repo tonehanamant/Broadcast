@@ -26,6 +26,7 @@
   "Name": "Test Update (UPDATED)",
   "OutOfSpec": 0,
   "PostingBook": null,
+  "PostingBookDate": null,
   "PostingBookId": 377,
   "PostType": 1,
   "PrimaryDemoBooked": null,
