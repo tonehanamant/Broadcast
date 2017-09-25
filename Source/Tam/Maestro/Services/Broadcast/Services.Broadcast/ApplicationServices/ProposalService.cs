@@ -57,6 +57,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IRatingForecastService _RatingForecastService;
         private readonly IProposalTotalsCalculationEngine _ProposalTotalsCalculationEngine;
         private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService;
+        private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService;
 
         public ProposalService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
@@ -69,7 +70,8 @@ namespace Services.Broadcast.ApplicationServices
             IPostingBooksService postingBooksService,
             IRatingForecastService ratingForecastService,
             IProposalTotalsCalculationEngine proposalTotalsCalculationEngine,
-            IProposalProprietaryInventoryService proposalProprietaryInventoryService)
+            IProposalProprietaryInventoryService proposalProprietaryInventoryService,
+            IProposalOpenMarketInventoryService proposalOpenMarketInventoryService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AudiencesCache = audiencesCache;
@@ -88,6 +90,7 @@ namespace Services.Broadcast.ApplicationServices
             _RatingForecastService = ratingForecastService;
             _ProposalTotalsCalculationEngine = proposalTotalsCalculationEngine;
             _ProposalProprietaryInventoryService = proposalProprietaryInventoryService;
+            _ProposalOpenMarketInventoryService = proposalOpenMarketInventoryService;
         }
 
         public List<DisplayProposal> GetAllProposals()
@@ -379,6 +382,8 @@ namespace Services.Broadcast.ApplicationServices
                     // handle proposal detail inventory allocation
                     _DeleteProposalDetailInventoryAllocations(proposalDto);
 
+                    _DeleteAnyOpenMarketAllocations(proposalDto);
+
                     // handle proposal detail updates
                     _ProposalRepository.UpdateProposal(proposalDto, userName);
                 }
@@ -398,9 +403,53 @@ namespace Services.Broadcast.ApplicationServices
             // set target and default margin that are nullable when first creating a proposal
             proposalDto.TargetCPM = proposalDto.TargetCPM ?? 0;
             proposalDto.Margin = proposalDto.Margin ?? ProposalConstants.ProposalDefaultMargin;
-           
+
         }
 
+        private void _DeleteAnyOpenMarketAllocations(ProposalDto proposalDto)
+        {
+            if (!proposalDto.Id.HasValue || !proposalDto.Version.HasValue)
+                return;
+
+            //var existingProposal = GetProposalByIdWithVersion(proposalDto.Id.Value, proposalDto.Version.Value);
+            _DeleteAnyOpenMarketAllocationsByDaypart(proposalDto);
+        }
+
+        /// <summary>
+        /// deletes existing allocations that fall outside the new proposal's daypart.
+        /// </summary>
+        private void _DeleteAnyOpenMarketAllocationsByDaypart(ProposalDto proposalToUpdateDto)
+        {
+            foreach (var detail in proposalToUpdateDto.Details)
+            {
+                if (!detail.Id.HasValue)
+                    continue;
+
+                int detailId = detail.Id.Value;
+                var detailDaypart = DaypartCache.Instance.GetDisplayDaypart(detail.DaypartId);
+
+                var allocations = _ProposalOpenMarketInventoryService.GetProposalInventoryAllocations(detailId);
+                var stationPrograms = _BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>()
+                                            .GetStationProgramsByIds(allocations.Select(a => a.StationProgramId).ToList())
+                                            .ToDictionary(k => k.Id,v => v);
+
+                List<int> programsToDelete = new List<int>();
+                allocations.ForEach(p =>
+                {
+                    var stationProgram = stationPrograms[p.StationProgramId];
+
+                    var programDaypart = DaypartCache.Instance.GetDisplayDaypart(stationProgram.Daypart.Id);
+                    if (!programDaypart.Intersects(detailDaypart))
+                    {
+                        programsToDelete.Add(p.StationProgramId);
+                    }
+                });
+
+                if (programsToDelete.Any())
+                    _BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>()
+                        .RemoveAllocations(programsToDelete, detailId);
+            }
+        }
         private void _DeleteProposalDetailInventoryAllocations(ProposalDto proposalDto)
         {
             if (!proposalDto.Id.HasValue || !proposalDto.Version.HasValue)

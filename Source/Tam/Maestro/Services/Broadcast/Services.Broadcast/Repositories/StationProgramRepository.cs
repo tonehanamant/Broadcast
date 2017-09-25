@@ -20,6 +20,7 @@ namespace Services.Broadcast.Repositories
     public interface IStationProgramRepository : IDataRepository
     {
         station_programs GetStationProgramById(int stationProgramId);
+        List<StationProgram> GetStationProgramsByIds(List<int> stationProgramIds);
         List<StationProgram> GetStationProgramsWithPrimaryAudienceRatesByStationCode(RatesFile.RateSourceType rateSource, int stationCode);
         int CreateStationProgramRate(DisplayBroadcastStation station, StationProgram newProgram, RatesFile.RateSourceType rateSource, int spotLengthId, string userName, int? rateFileId);
         void DeleteProgramRates(int programId, int startWeek, int endWeek, string userName, IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache);
@@ -109,6 +110,52 @@ namespace Services.Broadcast.Repositories
 
                 });
 
+        }
+
+        public List<StationProgram> GetStationProgramsByIds(List<int> stationProgramIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                    context.station_programs
+                            .Where(q => stationProgramIds.Contains(q.id))
+                            .Select(sp =>
+                                new StationProgram()
+                                {
+                                    Id = sp.id,
+                                    Daypart = new DisplayDaypart() { Id = sp.daypart_id },
+                                    StartDate = sp.start_date,
+                                    EndDate = sp.end_date,
+                                    ProgramName = sp.program_name,
+                                    DaypartCode = sp.daypart_code,
+                                    Genres = sp.genres.Select(genre => new LookupDto()
+                                    {
+                                        Id = genre.id,
+                                        Display = genre.name
+                                    }).ToList(),
+                                    FlightWeeks = sp.station_program_flights.Select(fw => new StationProgramFlightWeek()
+                                    {
+                                        FlightWeek = new DisplayMediaWeek() { Id = fw.media_week_id },
+                                        Active = fw.active,
+                                        Rate15s = fw.C15s_rate,
+                                        Rate30s = fw.C30s_rate,
+                                        Rate60s = fw.C60s_rate,
+                                        Rate90s = fw.C90s_rate,
+                                        Rate120s = fw.C120s_rate,
+                                        Spots = fw.spots,
+                                        Audiences = fw.station_program_flight_audiences
+                                            .Select(a => new StationProgramFlightWeekAudience()
+                                            {
+                                                Audience = new DisplayAudience() { Id = a.audience_id },
+                                                Rating = a.rating,
+                                                Impressions = a.impressions,
+                                                Cpm120 = a.cpm120,
+                                                Cpm15 = a.cpm15,
+                                                Cpm30 = a.cpm30,
+                                                Cpm60 = a.cpm60,
+                                                Cpm90 = a.cpm90
+                                            }).ToList()
+                                    }).ToList()
+                                }).ToList());
         }
 
         public station_programs GetStationProgramById(int stationProgramId)

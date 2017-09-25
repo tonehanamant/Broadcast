@@ -1,0 +1,10 @@
+﻿[
+  {
+    "Impressions": 0.0,
+    "MediaWeekId": 666,
+    "SpotCost": 0.0,
+    "Spots": 3,
+    "StationProgramFlightId": 1246032,
+    "StationProgramId": 519165
+  }
+]
