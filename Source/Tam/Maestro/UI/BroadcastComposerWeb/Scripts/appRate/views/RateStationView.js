@@ -663,7 +663,7 @@ var RateStationView = BaseView.extend({
         this.endActiveContactEdit();
     },
 
-    setContactSearch: function (input, originalRec, updateData) {
+    setContactSearch: function (input, updateData) {
         var data = updateData ? [updateData] : [];
         var url = baseUrl + 'api/RatesManager/Contacts/Find';
         input.select2({

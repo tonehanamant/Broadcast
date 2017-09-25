@@ -238,6 +238,7 @@
     <Content Include="Scripts\app\utilities\scroll.js" />
     <Content Include="Styles\css\appPlanning.css" />
     <Content Include="Styles\css\appPost.css" />
+    <Content Include="Styles\css\appRate.css" />
     <Content Include="Styles\css\appTraffic.css" />
     <Content Include="Styles\css\fonts\stack.css" />
     <Content Include="Styles\css\library\animate.css" />
@@ -573,7 +574,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61936/</IISUrl>
+          <IISUrl>http://localhost:61938/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
