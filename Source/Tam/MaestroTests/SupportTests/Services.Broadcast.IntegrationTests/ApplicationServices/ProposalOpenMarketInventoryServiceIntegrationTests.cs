@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ApprovalTests;
 using ApprovalTests.Reporters;
+using Common.Services;
 using Common.Services.Repositories;
 using IntegrationTests.Common;
 using Moq;
@@ -1199,6 +1200,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 _ProposalOpenMarketInventoryService.SaveInventoryAllocations(request);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Proposal_Update_Delete_Allocation_Outside_Daypart_BCOP1932()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = ProposalTestHelper.CreateProposal();
+                
+                // this has 3 allocation with dayparts: M 8PM-9PM;  TU 8PM - 10PM; SA 5:30PM - 9PM
+                // the proposal detail has daypart  M-SU 8AM-11PM.
+                // if we update the proposal to M-SU 9PM-11PM, that should remove allocation for SA 5:30PM - 9PM and M 8PM-9PM; 
+
+                var newProposalDetailDaypart = DaypartCache.Instance.GetDisplayDaypart(proposal.Details.First().DaypartId);
+                newProposalDetailDaypart.StartTime = Convert.ToInt32(Convert.ToDateTime("1/1/2017 9PM").TimeOfDay.TotalSeconds);
+                var detail = proposal.Details.First();
+                proposal.Details.First().Daypart = DaypartDto.ConvertDisplayDaypart(newProposalDetailDaypart);
+                detail.DaypartId = DaypartCache.Instance.GetIdByDaypart(newProposalDetailDaypart);
+                _ProposalService.SaveProposal(proposal, "Test user", DateTime.Now);
+
+                var allocations = _ProposalOpenMarketInventoryService.GetProposalInventoryAllocations(detail.Id.Value);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(OpenMarketInventoryAllocation), "ProposalVersionDetailQuarterWeekId");
+                jsonResolver.Ignore(typeof(OpenMarketInventoryAllocation), "ProposalVersionDetailId");
+                
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(allocations, jsonSettings));
             }
         }
     }
