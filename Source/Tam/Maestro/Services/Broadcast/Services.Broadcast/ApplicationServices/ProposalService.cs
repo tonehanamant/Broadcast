@@ -422,6 +422,9 @@ namespace Services.Broadcast.ApplicationServices
         {
             foreach (var detail in proposalToUpdateDto.Details)
             {
+                if (!detail.Id.HasValue)
+                    continue;
+
                 int detailId = detail.Id.Value;
                 var detailDaypart = DaypartCache.Instance.GetDisplayDaypart(detail.DaypartId);
 
