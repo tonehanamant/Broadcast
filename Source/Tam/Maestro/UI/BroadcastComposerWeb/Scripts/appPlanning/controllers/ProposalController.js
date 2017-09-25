@@ -85,9 +85,7 @@ var ProposalController = BaseController.extend({
         var url = baseUrl + 'api/Proposals/Proposal/' + proposalId + '/Versions/' + version;
 
         httpService.get(url,
-            function(proposal){
-                if (callback) console.log(proposal);
-            },
+            callback.bind(this),
             null,
             {
                 $ViewElement: $('#proposal_view'),
