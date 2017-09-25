@@ -32,7 +32,6 @@
         <EntityTypeShape EntityType="BroadcastModel.proposal" Width="1.5" PointX="0.75" PointY="15.5" />
         <EntityTypeShape EntityType="BroadcastModel.rate_files" Width="1.5" PointX="11.25" PointY="12.25" />
         <EntityTypeShape EntityType="BroadcastModel.rating_adjustments" Width="1.5" PointX="17.75" PointY="9.25" />
-        <EntityTypeShape EntityType="BroadcastModel.rep_firms" Width="1.5" PointX="18.75" PointY="2.25" />
         <EntityTypeShape EntityType="BroadcastModel.schedule_audiences" Width="1.5" PointX="10.5" PointY="43.5" />
         <EntityTypeShape EntityType="BroadcastModel.schedule_detail_audiences" Width="1.5" PointX="12.75" PointY="40.5" />
         <EntityTypeShape EntityType="BroadcastModel.schedule_detail_weeks" Width="1.5" PointX="12.75" PointY="37" />
@@ -138,6 +137,7 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" />
         <AssociationConnector Association="BroadcastModel.station_program_genres" />
+        <EntityTypeShape EntityType="BroadcastModel.rep_firms" Width="1.5" PointX="18.5" PointY="2.375" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

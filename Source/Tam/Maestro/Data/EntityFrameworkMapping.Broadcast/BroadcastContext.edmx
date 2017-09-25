@@ -419,6 +419,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="proposal_id" Type="int" Nullable="false" />
           <Property Name="proposal_version" Type="smallint" Nullable="false" />
           <Property Name="start_date" Type="date" />
@@ -429,7 +430,6 @@
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="target_budget" Type="money" />
           <Property Name="target_units" Type="int" />
           <Property Name="target_impressions" Type="float" Nullable="false" />
@@ -467,7 +467,7 @@
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="status" Type="tinyint" Nullable="false" />
-          <Property Name="rate_source" Type="tinyint" />
+          <Property Name="rate_source" Type="tinyint" Nullable="false" />
           <Property Name="sweep_book_id" Type="int" />
           <Property Name="play_back_type" Type="tinyint" />
         </EntityType>
@@ -484,8 +484,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="parent_name" Type="varchar" MaxLength="127" />
-          <Property Name="team_name" Type="varchar" MaxLength="127" />
+          <Property Name="parent_name" Type="varchar" MaxLength="127" Nullable="false" />
+          <Property Name="team_name" Type="varchar" MaxLength="127" Nullable="false" />
         </EntityType>
         <EntityType Name="schedule_audiences">
           <Key>
@@ -700,7 +700,7 @@
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
-          <Property Name="rate_source" Type="tinyint" />
+          <Property Name="rate_source" Type="tinyint" Nullable="false" />
           <Property Name="daypart_code" Type="varchar" MaxLength="10" />
           <Property Name="spot_length_id" Type="int" Nullable="false" />
           <Property Name="fixed_price" Type="money" />
@@ -711,9 +711,9 @@
           </Key>
           <Property Name="station_code" Type="smallint" Nullable="false" />
           <Property Name="station_call_letters" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="affiliation" Type="varchar" MaxLength="7" />
+          <Property Name="affiliation" Type="varchar" MaxLength="7" Nullable="false" />
           <Property Name="market_code" Type="smallint" Nullable="false" />
-          <Property Name="legacy_call_letters" Type="varchar" MaxLength="15" />
+          <Property Name="legacy_call_letters" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -738,7 +738,7 @@
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2207,7 +2207,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySet Name="proposals" EntityType="BroadcastModel.proposal" />
           <EntitySet Name="rate_files" EntityType="BroadcastModel.rate_files" />
           <EntitySet Name="rating_adjustments" EntityType="BroadcastModel.rating_adjustments" />
-          <EntitySet Name="rep_firms" EntityType="BroadcastModel.rep_firms" />
           <EntitySet Name="schedule_audiences" EntityType="BroadcastModel.schedule_audiences" />
           <EntitySet Name="schedule_detail_audiences" EntityType="BroadcastModel.schedule_detail_audiences" />
           <EntitySet Name="schedule_detail_weeks" EntityType="BroadcastModel.schedule_detail_weeks" />
@@ -2544,6 +2543,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="genre" EntitySet="genres" />
             <End Role="station_programs" EntitySet="station_programs" />
           </AssociationSet>
+          <EntitySet Name="rep_firms" EntityType="BroadcastModel.rep_firms" />
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -2924,7 +2924,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="status" Type="Byte" Nullable="false" />
-          <Property Name="rate_source" Type="Byte" />
+          <Property Name="rate_source" Type="Byte" Nullable="false" />
           <Property Name="sweep_book_id" Type="Int32" />
           <Property Name="play_back_type" Type="Byte" />
           <NavigationProperty Name="station_contacts" Relationship="BroadcastModel.FK_station_contacts_rate_files_created" FromRole="rate_files" ToRole="station_contacts" />
@@ -2940,14 +2940,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="annual_adjustment" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
           <Property Name="nti_adjustment" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
           <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_rating_adjustments_media_months" FromRole="rating_adjustments" ToRole="media_months" />
-        </EntityType>
-        <EntityType Name="rep_firms">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="parent_name" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
-          <Property Name="team_name" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="schedule_audiences">
           <Key>
@@ -3143,7 +3135,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="rate_source" Type="Byte" />
+          <Property Name="rate_source" Type="Byte" Nullable="false" />
           <Property Name="daypart_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="spot_length_id" Type="Int32" Nullable="false" />
           <Property Name="fixed_price" Type="Decimal" Precision="19" Scale="4" />
@@ -3160,9 +3152,9 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           </Key>
           <Property Name="station_code" Type="Int16" Nullable="false" />
           <Property Name="station_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="affiliation" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="affiliation" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="market_code" Type="Int16" Nullable="false" />
-          <Property Name="legacy_call_letters" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="legacy_call_letters" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="inventory_detail_slot_components" Relationship="BroadcastModel.FK_inventory_detail_slot_components_stations" FromRole="station" ToRole="inventory_detail_slot_components" />
@@ -4396,6 +4388,14 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <End Type="BroadcastModel.genre" Role="genre" Multiplicity="*" />
           <End Type="BroadcastModel.station_programs" Role="station_programs" Multiplicity="*" />
         </Association>
+        <EntityType Name="rep_firms">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="parent_name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="team_name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4738,15 +4738,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
                 <ScalarProperty Name="nti_adjustment" ColumnName="nti_adjustment" />
                 <ScalarProperty Name="annual_adjustment" ColumnName="annual_adjustment" />
                 <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="rep_firms">
-            <EntityTypeMapping TypeName="BroadcastModel.rep_firms">
-              <MappingFragment StoreEntitySet="rep_firms">
-                <ScalarProperty Name="team_name" ColumnName="team_name" />
-                <ScalarProperty Name="parent_name" ColumnName="parent_name" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5195,6 +5186,15 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
               <ScalarProperty Name="id" ColumnName="genre_id" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="rep_firms">
+            <EntityTypeMapping TypeName="BroadcastModel.rep_firms">
+              <MappingFragment StoreEntitySet="rep_firms">
+                <ScalarProperty Name="team_name" ColumnName="team_name" />
+                <ScalarProperty Name="parent_name" ColumnName="parent_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
