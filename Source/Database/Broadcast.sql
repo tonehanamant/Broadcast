@@ -1220,6 +1220,40 @@ end
 /*************************************** BCOP-1914 - END *****************************************************/
 
 
+/*************************************** BCOP-1916 - START *****************************************************/
+
+ALTER TABLE rate_files
+ALTER COLUMN rate_source TINYINT NOT NULL
+
+GO
+
+ALTER TABLE rep_firms
+ALTER COLUMN parent_name VARCHAR(127) NOT NULL
+
+GO
+
+ALTER TABLE rep_firms
+ALTER COLUMN team_name VARCHAR(127) NOT NULL
+
+GO
+
+ALTER TABLE station_programs
+ALTER COLUMN rate_source TINYINT NOT NULL
+
+GO
+
+ALTER TABLE stations
+ALTER COLUMN affiliation VARCHAR(7) NOT NULL
+
+GO
+
+ALTER TABLE stations
+ALTER COLUMN legacy_call_letters VARCHAR(15) NOT NULL
+
+GO
+
+/*************************************** BCOP-1916 - END *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

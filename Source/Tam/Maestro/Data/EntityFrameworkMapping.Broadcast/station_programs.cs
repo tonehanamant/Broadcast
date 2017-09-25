@@ -32,7 +32,7 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime created_date { get; set; }
         public string modified_by { get; set; }
         public System.DateTime modified_date { get; set; }
-        public Nullable<byte> rate_source { get; set; }
+        public byte rate_source { get; set; }
         public string daypart_code { get; set; }
         public int spot_length_id { get; set; }
         public Nullable<decimal> fixed_price { get; set; }

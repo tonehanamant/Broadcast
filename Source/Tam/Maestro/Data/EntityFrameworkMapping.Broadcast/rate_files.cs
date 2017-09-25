@@ -28,7 +28,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string created_by { get; set; }
         public System.DateTime created_date { get; set; }
         public byte status { get; set; }
-        public Nullable<byte> rate_source { get; set; }
+        public byte rate_source { get; set; }
         public Nullable<int> sweep_book_id { get; set; }
         public Nullable<byte> play_back_type { get; set; }
     

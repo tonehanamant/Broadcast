@@ -72,7 +72,7 @@ namespace Services.Broadcast.Repositories
                             s =>
                                 s.station_programs.Any(
                                     p => (p.station_program_flights.Any(f => f.media_week_id == mediaWeekId))
-                                         && p.rate_source.Value == (byte) rateSource &&
+                                         && p.rate_source == (byte) rateSource &&
                                          (p.rate_file_id == null ||
                                           p.rate_files.status == (byte)RatesFile.FileStatusEnum.Loaded)
                                           ) == isIncluded);
