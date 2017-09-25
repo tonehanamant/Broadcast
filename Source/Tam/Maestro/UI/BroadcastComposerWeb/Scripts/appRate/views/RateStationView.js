@@ -552,6 +552,7 @@ var RateStationView = BaseView.extend({
 
         this.disableContactEditingAllowedStates(true);
         this.setContactEditData(rec);
+        //handle initial value of select2 field if Update
         var input = $('[name="contact_name_input_' + rec.recid + '"]');
         var updateData = update ? { id: rec.Id, text: rec.Name } : null;
         this.setContactSearch(input, updateData);
@@ -599,7 +600,7 @@ var RateStationView = BaseView.extend({
         var canSend = true;
         var fields = [
             { selector: '[name="contact_type_select_' + rec.recid + '"]', required: true, key: 'Type' },
-           // { selector: '[name="contact_name_input_' + rec.recid + '"]', required: true, key: 'Name' }, handle seprately
+           // { selector: '[name="contact_name_input_' + rec.recid + '"]', required: true, key: 'Name' }, handle separately
             { selector: '[name="contact_company_input_' + rec.recid + '"]', required: false, key: 'Company' },
             { selector: '[name="contact_email_input_' + rec.recid + '"]', required: true, key: 'Email' },
             { selector: '[name="contact_phone_input_' + rec.recid + '"]', required: true, key: 'Phone' },
@@ -663,6 +664,7 @@ var RateStationView = BaseView.extend({
         this.endActiveContactEdit();
     },
 
+    //set select2 search on name field; handle updates - initial and on select event
     setContactSearch: function (input, updateData) {
         var data = updateData ? [updateData] : [];
         var url = baseUrl + 'api/RatesManager/Contacts/Find';
@@ -674,7 +676,6 @@ var RateStationView = BaseView.extend({
             selectOnClose: true,
             placeholder: "Search or new Name...",
             data: data,
-            //templateResult: for drop down has issues
             templateSelection: function (item) {
                 
                 return item.Name || item.text;
@@ -729,13 +730,10 @@ var RateStationView = BaseView.extend({
      
         input.on("select2:select", this.onContactSearchSelect.bind(this));
         this.activeContactSearchInput = input;
-       // input.on("change", function (e) { console.log("select2:change", e); });
-
     },
-
+    //on select - check if search - replace values in current fields
     onContactSearchSelect: function (e) {
-        //todo - on select - change values based on params if from search
-        console.log("select2:select", e.params.data);
+        //console.log("select2:select", e.params.data);
         var data = e.params.data ? e.params.data : null;
         //determine if selection from search
         if (data.Name && data.StationCode) {
