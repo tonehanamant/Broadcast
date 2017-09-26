@@ -147,8 +147,9 @@
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Logging.5.8.8.1\lib\net45\Tam.Maestro.Common.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Tam.Maestro.Common.Systems, Version=5.8.9.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.5.8.9.2\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
+    <Reference Include="Tam.Maestro.Common.Systems, Version=5.8.11.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.5.8.11.1\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating, Version=5.8.8.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.5.8.8.1\lib\net45\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.dll</HintPath>
@@ -399,10 +400,28 @@
     <Compile Include="Repositories\StationRepository.cs" />
     <Compile Include="Repositories\TrackerMappingRepository.cs" />
     <Compile Include="Repositories\TrafficRepository.cs" />
+    <Compile Include="SystemComponentParameters\SystemComponentParameter.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SystemComponentParameter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SystemComponentParameters\SystemComponentParameterNames.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SystemComponentParameterNames.tt</DependentUpon>
+    </Compile>
     <Compile Include="Validators\RatesFileValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Schemas\SpotTVCableProposalSample.xml" />
+    <Content Include="SystemComponentParameters\SystemComponentParameter.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SystemComponentParameter.cs</LastGenOutput>
+    </Content>
+    <Content Include="SystemComponentParameters\SystemComponentParameterNames.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SystemComponentParameterNames.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Data\EntityFrameworkMapping.BroadcastForecast\EntityFrameworkMapping.BroadcastForecast.csproj">
@@ -427,6 +446,10 @@
     <None Include="ServiceCommonAppSettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
