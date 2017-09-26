@@ -665,7 +665,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 openMarketInventoryRepository.RemoveAllocations(allocationToRemove);
 
-                openMarketInventoryRepository.UpdateAllocations(allocationsToUpdate, request.Username, request.ProposalVersionDetailId, spotLength);
+                openMarketInventoryRepository.UpdateAllocations(allocationsToUpdate, request.Username, spotLength);
 
                 openMarketInventoryRepository.AddAllocations(allocationToAdd, request.Username, spotLength);
 

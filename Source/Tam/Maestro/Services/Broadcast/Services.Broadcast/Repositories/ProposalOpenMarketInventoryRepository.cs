@@ -16,7 +16,7 @@ namespace Services.Broadcast.Repositories
     {
         List<OpenMarketInventoryAllocation> GetProposalDetailAllocations(int proposalVersionDetailId);
         void RemoveAllocations(List<OpenMarketInventoryAllocation> allocationToRemove);
-        void UpdateAllocations(List<OpenMarketInventoryAllocation> allocationsToUpdate, string username, int proposalDetail, int spotLength);
+        void UpdateAllocations(List<OpenMarketInventoryAllocation> allocationsToUpdate, string username, int spotLength);
         void AddAllocations(List<OpenMarketInventoryAllocation> allocationToAdd, string username, int spotLength);
         void RemoveAllocations(List<int> programIds, int proposalDetailId);
         List<OpenMarketInventoryAllocationSnapshotDto> GetOpenMarketInventoryAllocationSnapshot(List<int> programIds, int proposalDetailId);
@@ -73,16 +73,11 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void UpdateAllocations(List<OpenMarketInventoryAllocation> allocations, string username, int proposalVersionDetailId, int spotLength)
+        public void UpdateAllocations(List<OpenMarketInventoryAllocation> allocations, string username, int spotLength)
         {
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    var proposalSpotLengthId =
-                            context.proposal_version_details.Where(p => p.id == proposalVersionDetailId)
-                                .Select(p => p.spot_length_id)
-                                .Single();
-
                     foreach (var allocation in allocations)
                     {
                         var programFlight =
@@ -105,7 +100,7 @@ namespace Services.Broadcast.Repositories
                         currentAllocation.created_by = username;
                         currentAllocation.impressions = allocation.Impressions;
                         currentAllocation.spot_cost = _GetSpotCost(programFlight, spotLength);
-                        currentAllocation.spot_length_id = proposalSpotLengthId;
+                        currentAllocation.spot_length_id = programFlight.station_programs.spot_length_id;
                         currentAllocation.station_code = programFlight.station_programs.station_code;
                         currentAllocation.start_date = programFlight.station_programs.start_date;
                         currentAllocation.end_date = programFlight.station_programs.end_date;
@@ -138,11 +133,6 @@ namespace Services.Broadcast.Repositories
                                     allocation.ProposalVersionDetailId && w.media_week_id == allocation.MediaWeekId)
                                 .Select(w => w.id)
                                 .Single();
-                        
-                        var proposalSpotLengthId =
-                            context.proposal_version_details.Where(p => p.id == allocation.ProposalVersionDetailId)
-                                .Select(p => p.spot_length_id)
-                                .Single();
 
                         var programAllocation = new station_program_flight_proposal
                         {
@@ -152,7 +142,7 @@ namespace Services.Broadcast.Repositories
                             created_by = username,
                             impressions = allocation.Impressions,
                             spot_cost = _GetSpotCost(programFlight, spotLength),
-                            spot_length_id = proposalSpotLengthId,
+                            spot_length_id = programFlight.station_programs.spot_length_id,
                             station_code = programFlight.station_programs.station_code,
                             start_date = programFlight.station_programs.start_date,
                             end_date = programFlight.station_programs.end_date,
