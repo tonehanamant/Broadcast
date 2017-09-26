@@ -85,9 +85,7 @@ var TrackerMainController = BaseController.extend({
         }
 
         httpService.get(url,
-            function (response) {
-                $scope.onApiLoadSchedules(initial, $scope.convertFromScheduleImpressions(response));
-            },
+            this.onApiLoadSchedules.bind(this, initial),
             null,
             {
                 data: queryData,
@@ -432,15 +430,4 @@ var TrackerMainController = BaseController.extend({
                 StatusMessage: 'Delete Mapping'
             });
     },
-
-    /*** HELPERS ***/
-
-    convertFromScheduleImpressions: function (data) {
-        data.Schedules.map(function (schedule) {
-            schedule.PrimaryDemoBooked = schedule.PrimaryDemoBooked / 1000;
-            schedule.PrimaryDemoDelivered = schedule.PrimaryDemoDelivered / 1000;
-        });
-
-        return data;
-    }
 });
