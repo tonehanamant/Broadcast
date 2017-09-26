@@ -18,9 +18,9 @@ namespace EntityFrameworkMapping.Broadcast
         public int schedule_id { get; set; }
         public int audience_id { get; set; }
         public int population { get; set; }
-        public Nullable<int> rank { get; set; }
+        public int rank { get; set; }
     
-        public virtual schedule schedule { get; set; }
         public virtual audience audience { get; set; }
+        public virtual schedule schedule { get; set; }
     }
 }

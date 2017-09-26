@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="BroadcastModel.audience" Width="1.5" PointX="2.75" PointY="2.25" />
         <EntityTypeShape EntityType="BroadcastModel.bvs_file_details" Width="1.5" PointX="15" PointY="35" />
         <EntityTypeShape EntityType="BroadcastModel.bvs_files" Width="1.5" PointX="12.75" PointY="33" />
-        <EntityTypeShape EntityType="BroadcastModel.bvs_map_types" Width="1.5" PointX="15.75" PointY="6.375" />
         <EntityTypeShape EntityType="BroadcastModel.bvs_maps" Width="1.5" PointX="18" PointY="6.625" />
         <EntityTypeShape EntityType="BroadcastModel.bvs_post_details" Width="1.5" PointX="17.25" PointY="37.375" />
         <EntityTypeShape EntityType="BroadcastModel.daypart" Width="1.5" PointX="13.75" PointY="2.5" />
@@ -32,7 +31,6 @@
         <EntityTypeShape EntityType="BroadcastModel.proposal" Width="1.5" PointX="0.75" PointY="15.5" />
         <EntityTypeShape EntityType="BroadcastModel.rate_files" Width="1.5" PointX="11.25" PointY="12.25" />
         <EntityTypeShape EntityType="BroadcastModel.rating_adjustments" Width="1.5" PointX="17.75" PointY="9.25" />
-        <EntityTypeShape EntityType="BroadcastModel.schedule_audiences" Width="1.5" PointX="10.5" PointY="43.5" />
         <EntityTypeShape EntityType="BroadcastModel.schedule_detail_audiences" Width="1.5" PointX="12.75" PointY="40.5" />
         <EntityTypeShape EntityType="BroadcastModel.schedule_detail_weeks" Width="1.5" PointX="12.75" PointY="37" />
         <EntityTypeShape EntityType="BroadcastModel.schedule_details" Width="1.5" PointX="10.5" PointY="38" />
@@ -50,7 +48,6 @@
         <AssociationConnector Association="BroadcastModel.FK_bvs_file_bvs_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_bvs_file_details_schedule_detail_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_bvs_post_details_bvs_file_details" />
-        <AssociationConnector Association="BroadcastModel.FK_bvs_maps_bvs_map_types" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slot_components_inventory_detail_slots" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slot_components_station_program_flights" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_detail_slot_components_stations" />
@@ -64,7 +61,6 @@
         <AssociationConnector Association="BroadcastModel.FK_station_contacts_rate_files_created" />
         <AssociationConnector Association="BroadcastModel.FK_station_contacts_rate_files_modified" />
         <AssociationConnector Association="BroadcastModel.FK_station_programs_rate_files" />
-        <AssociationConnector Association="BroadcastModel.FK_schedule_audiences_schedule" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_detail_audiences_schedule_details" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_detail_weeks_schedule_details" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_details_schedule" />
@@ -81,7 +77,6 @@
         <AssociationConnector Association="BroadcastModel.FK_audience_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_bvs_post_details_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_post_file_detail_impressions_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_schedule_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_detail_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_station_program_flight_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_bvs_file_details_spot_lengths" />
@@ -138,6 +133,11 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" />
         <AssociationConnector Association="BroadcastModel.station_program_genres" />
         <EntityTypeShape EntityType="BroadcastModel.rep_firms" Width="1.5" PointX="18.5" PointY="2.375" />
+        <EntityTypeShape EntityType="BroadcastModel.bvs_map_types" Width="1.5" PointX="16" PointY="6.5" />
+        <AssociationConnector Association="BroadcastModel.FK_bvs_maps_bvs_map_types" />
+        <EntityTypeShape EntityType="BroadcastModel.schedule_audiences" Width="1.5" PointX="5.25" PointY="39" />
+        <AssociationConnector Association="BroadcastModel.FK_schedule_audiences_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_schedule_audiences_schedule" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

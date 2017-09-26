@@ -47,7 +47,7 @@ namespace Services.Broadcast.Repositories
                                                         .Select(sa => new ScheduleAudience
                                                             {
                                                                 AudienceId = sa.audience_id,
-                                                                Rank = sa.rank ?? 0,
+                                                                Rank = sa.rank,
                                                                 Population = sa.population
                                                             })
                                                         .OrderByDescending(a => a.IsHouseHold)

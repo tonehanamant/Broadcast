@@ -285,7 +285,7 @@ namespace Services.Broadcast.Repositories
                                where s.estimate_id == estimateId
                                select sa).ToList();
 
-                    return ret.ToDictionary(x => x.rank.GetValueOrDefault(), x => x.audience_id); //weird duplicate key issue here.
+                    return ret.ToDictionary(x => x.rank, x => x.audience_id); //weird duplicate key issue here.
                 });
         }
 
@@ -663,7 +663,7 @@ namespace Services.Broadcast.Repositories
                         sa => new ScheduleAudience
                         {
                             AudienceId = sa.audience_id,
-                            Rank = sa.rank ?? 0,
+                            Rank = sa.rank,
                             Population = sa.population
                         }).ToList();
                     return scheduleAudiences;

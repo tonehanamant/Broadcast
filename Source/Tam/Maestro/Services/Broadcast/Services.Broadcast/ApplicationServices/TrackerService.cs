@@ -314,7 +314,7 @@ namespace Services.Broadcast.ApplicationServices
             else if (converter is IDefaultScheduleConverter)
             {
                 var iscis = efSchedule.schedule_iscis.Select(si => si.house_isci).ToList();
-                var scheduleAudiences = efSchedule.schedule_audiences.ToDictionary(sa => sa.rank ?? 0, sa => sa.audience_id);
+                var scheduleAudiences = efSchedule.schedule_audiences.ToDictionary(sa => sa.rank, sa => sa.audience_id);
                 _BvsPostingEngine.PostBvsData(iscis, scheduleAudiences, scheduleDto.PostingBookId);
             }
 

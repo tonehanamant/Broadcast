@@ -78,7 +78,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="display" Type="nvarchar" MaxLength="16" Nullable="false" />
           <Property Name="version" Type="int" Nullable="false" />
-          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="bvs_maps">
@@ -419,7 +419,6 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="proposal_id" Type="int" Nullable="false" />
           <Property Name="proposal_version" Type="smallint" Nullable="false" />
           <Property Name="start_date" Type="date" />
@@ -430,6 +429,7 @@
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="target_budget" Type="money" />
           <Property Name="target_units" Type="int" />
           <Property Name="target_impressions" Type="float" Nullable="false" />
@@ -495,7 +495,7 @@
           <Property Name="schedule_id" Type="int" Nullable="false" />
           <Property Name="audience_id" Type="int" Nullable="false" />
           <Property Name="population" Type="int" Nullable="false" />
-          <Property Name="rank" Type="int" />
+          <Property Name="rank" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="schedule_detail_audiences">
           <Key>
@@ -738,7 +738,7 @@
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2184,7 +2184,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="audiences" EntityType="BroadcastModel.audience" />
           <EntitySet Name="bvs_file_details" EntityType="BroadcastModel.bvs_file_details" />
           <EntitySet Name="bvs_files" EntityType="BroadcastModel.bvs_files" />
-          <EntitySet Name="bvs_map_types" EntityType="BroadcastModel.bvs_map_types" />
           <EntitySet Name="bvs_maps" EntityType="BroadcastModel.bvs_maps" />
           <EntitySet Name="bvs_post_details" EntityType="BroadcastModel.bvs_post_details" />
           <EntitySet Name="dayparts" EntityType="BroadcastModel.daypart" />
@@ -2207,7 +2206,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="proposals" EntityType="BroadcastModel.proposal" />
           <EntitySet Name="rate_files" EntityType="BroadcastModel.rate_files" />
           <EntitySet Name="rating_adjustments" EntityType="BroadcastModel.rating_adjustments" />
-          <EntitySet Name="schedule_audiences" EntityType="BroadcastModel.schedule_audiences" />
           <EntitySet Name="schedule_detail_audiences" EntityType="BroadcastModel.schedule_detail_audiences" />
           <EntitySet Name="schedule_detail_weeks" EntityType="BroadcastModel.schedule_detail_weeks" />
           <EntitySet Name="schedule_details" EntityType="BroadcastModel.schedule_details" />
@@ -2233,10 +2231,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_bvs_post_details_bvs_file_details" Association="BroadcastModel.FK_bvs_post_details_bvs_file_details">
             <End Role="bvs_file_details" EntitySet="bvs_file_details" />
             <End Role="bvs_post_details" EntitySet="bvs_post_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_bvs_maps_bvs_map_types" Association="BroadcastModel.FK_bvs_maps_bvs_map_types">
-            <End Role="bvs_map_types" EntitySet="bvs_map_types" />
-            <End Role="bvs_maps" EntitySet="bvs_maps" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_detail_slot_components_inventory_detail_slots" Association="BroadcastModel.FK_inventory_detail_slot_components_inventory_detail_slots">
             <End Role="inventory_detail_slots" EntitySet="inventory_detail_slots" />
@@ -2289,10 +2283,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_station_programs_rate_files" Association="BroadcastModel.FK_station_programs_rate_files">
             <End Role="rate_files" EntitySet="rate_files" />
             <End Role="station_programs" EntitySet="station_programs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_schedule_audiences_schedule" Association="BroadcastModel.FK_schedule_audiences_schedule">
-            <End Role="schedule" EntitySet="schedules" />
-            <End Role="schedule_audiences" EntitySet="schedule_audiences" />
           </AssociationSet>
           <AssociationSet Name="FK_schedule_detail_audiences_schedule_details" Association="BroadcastModel.FK_schedule_detail_audiences_schedule_details">
             <End Role="schedule_details" EntitySet="schedule_details" />
@@ -2351,10 +2341,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_post_file_detail_impressions_audiences" Association="BroadcastModel.FK_post_file_detail_impressions_audiences">
             <End Role="audience" EntitySet="audiences" />
             <End Role="post_file_detail_impressions" EntitySet="post_file_detail_impressions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_schedule_audiences_audiences" Association="BroadcastModel.FK_schedule_audiences_audiences">
-            <End Role="audience" EntitySet="audiences" />
-            <End Role="schedule_audiences" EntitySet="schedule_audiences" />
           </AssociationSet>
           <AssociationSet Name="FK_schedule_detail_audiences_audiences" Association="BroadcastModel.FK_schedule_detail_audiences_audiences">
             <End Role="audience" EntitySet="audiences" />
@@ -2544,6 +2530,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="station_programs" EntitySet="station_programs" />
           </AssociationSet>
           <EntitySet Name="rep_firms" EntityType="BroadcastModel.rep_firms" />
+          <EntitySet Name="bvs_map_types" EntityType="BroadcastModel.bvs_map_types" />
+          <AssociationSet Name="FK_bvs_maps_bvs_map_types" Association="BroadcastModel.FK_bvs_maps_bvs_map_types">
+            <End Role="bvs_map_types" EntitySet="bvs_map_types" />
+            <End Role="bvs_maps" EntitySet="bvs_maps" />
+          </AssociationSet>
+          <EntitySet Name="schedule_audiences" EntityType="BroadcastModel.schedule_audiences" />
+          <AssociationSet Name="FK_schedule_audiences_audiences" Association="BroadcastModel.FK_schedule_audiences_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="schedule_audiences" EntitySet="schedule_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_schedule_audiences_schedule" Association="BroadcastModel.FK_schedule_audiences_schedule">
+            <End Role="schedule" EntitySet="schedules" />
+            <End Role="schedule_audiences" EntitySet="schedule_audiences" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -2571,10 +2571,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="audience_audiences" Relationship="BroadcastModel.FK_audience_audiences_audiences" FromRole="audience" ToRole="audience_audiences" />
           <NavigationProperty Name="bvs_post_details" Relationship="BroadcastModel.FK_bvs_post_details_audiences" FromRole="audience" ToRole="bvs_post_details" />
           <NavigationProperty Name="post_file_detail_impressions" Relationship="BroadcastModel.FK_post_file_detail_impressions_audiences" FromRole="audience" ToRole="post_file_detail_impressions" />
-          <NavigationProperty Name="schedule_audiences" Relationship="BroadcastModel.FK_schedule_audiences_audiences" FromRole="audience" ToRole="schedule_audiences" />
           <NavigationProperty Name="schedule_detail_audiences" Relationship="BroadcastModel.FK_schedule_detail_audiences_audiences" FromRole="audience" ToRole="schedule_detail_audiences" />
           <NavigationProperty Name="station_program_flight_audiences" Relationship="BroadcastModel.FK_station_program_flight_audiences_audiences" FromRole="audience" ToRole="station_program_flight_audiences" />
           <NavigationProperty Name="proposal_version_audiences" Relationship="BroadcastModel.FK_proposal_version_audiences_audiences" FromRole="audience" ToRole="proposal_version_audiences" />
+          <NavigationProperty Name="schedule_audiences" Relationship="BroadcastModel.FK_schedule_audiences_audiences" FromRole="audience" ToRole="schedule_audiences" />
         </EntityType>
         <EntityType Name="bvs_file_details">
           <Key>
@@ -2623,17 +2623,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="bvs_file_details" Relationship="BroadcastModel.FK_bvs_file_bvs_file_details" FromRole="bvs_files" ToRole="bvs_file_details" />
-        </EntityType>
-        <EntityType Name="bvs_map_types">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="display" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
-          <Property Name="version" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="bvs_maps" Relationship="BroadcastModel.FK_bvs_maps_bvs_map_types" FromRole="bvs_map_types" ToRole="bvs_maps" />
-          <Property Name="modified_by" Type="Int32" />
-          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="bvs_maps">
           <Key>
@@ -2941,18 +2930,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="nti_adjustment" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
           <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_rating_adjustments_media_months" FromRole="rating_adjustments" ToRole="media_months" />
         </EntityType>
-        <EntityType Name="schedule_audiences">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="schedule_id" Type="Int32" Nullable="false" />
-          <Property Name="audience_id" Type="Int32" Nullable="false" />
-          <Property Name="population" Type="Int32" Nullable="false" />
-          <Property Name="rank" Type="Int32" />
-          <NavigationProperty Name="schedule" Relationship="BroadcastModel.FK_schedule_audiences_schedule" FromRole="schedule_audiences" ToRole="schedule" />
-          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_schedule_audiences_audiences" FromRole="schedule_audiences" ToRole="audience" />
-        </EntityType>
         <EntityType Name="schedule_detail_audiences">
           <Key>
             <PropertyRef Name="id" />
@@ -3040,12 +3017,12 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="post_type" Type="Byte" Nullable="false" />
           <Property Name="inventory_source" Type="Byte" Nullable="false" />
           <Property Name="equivalized" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="schedule_audiences" Relationship="BroadcastModel.FK_schedule_audiences_schedule" FromRole="schedule" ToRole="schedule_audiences" />
           <NavigationProperty Name="schedule_details" Relationship="BroadcastModel.FK_schedule_details_schedule" FromRole="schedule" ToRole="schedule_details" />
           <NavigationProperty Name="schedule_iscis" Relationship="BroadcastModel.FK_schedule_iscis_schedules" FromRole="schedule" ToRole="schedule_iscis" />
           <NavigationProperty Name="schedule_restriction_dayparts" Relationship="BroadcastModel.FK_schedule_restriction_dayparts_schedules" FromRole="schedule" ToRole="schedule_restriction_dayparts" />
           <NavigationProperty Name="markets" Relationship="BroadcastModel.schedule_restriction_markets" FromRole="schedule" ToRole="market" />
           <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_schedules_media_months" FromRole="schedule" ToRole="media_months" />
+          <NavigationProperty Name="schedule_audiences" Relationship="BroadcastModel.FK_schedule_audiences_schedule" FromRole="schedule" ToRole="schedule_audiences" />
         </EntityType>
         <EntityType Name="spot_length_cost_multipliers">
           <Key>
@@ -3222,18 +3199,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_bvs_maps_bvs_map_types">
-          <End Type="BroadcastModel.bvs_map_types" Role="bvs_map_types" Multiplicity="1" />
-          <End Type="BroadcastModel.bvs_maps" Role="bvs_maps" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bvs_map_types">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_maps">
-              <PropertyRef Name="bvs_map_type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_inventory_detail_slot_components_inventory_detail_slots">
           <End Type="BroadcastModel.inventory_detail_slots" Role="inventory_detail_slots" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -3401,20 +3366,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="station_programs">
               <PropertyRef Name="rate_file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_schedule_audiences_schedule">
-          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.schedule_audiences" Role="schedule_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="schedule">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="schedule_audiences">
-              <PropertyRef Name="schedule_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3629,18 +3580,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="post_file_detail_impressions">
               <PropertyRef Name="demo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_schedule_audiences_audiences">
-          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
-          <End Type="BroadcastModel.schedule_audiences" Role="schedule_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audience">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="schedule_audiences">
-              <PropertyRef Name="audience_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4396,6 +4335,67 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="parent_name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
           <Property Name="team_name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="bvs_map_types">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="display" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="version" Type="Int32" Nullable="false" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="bvs_maps" Relationship="BroadcastModel.FK_bvs_maps_bvs_map_types" FromRole="bvs_map_types" ToRole="bvs_maps" />
+        </EntityType>
+        <Association Name="FK_bvs_maps_bvs_map_types">
+          <End Type="BroadcastModel.bvs_map_types" Role="bvs_map_types" Multiplicity="1" />
+          <End Type="BroadcastModel.bvs_maps" Role="bvs_maps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bvs_map_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bvs_maps">
+              <PropertyRef Name="bvs_map_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="schedule_audiences">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="schedule_id" Type="Int32" Nullable="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="population" Type="Int32" Nullable="false" />
+          <Property Name="rank" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_schedule_audiences_audiences" FromRole="schedule_audiences" ToRole="audience" />
+          <NavigationProperty Name="schedule" Relationship="BroadcastModel.FK_schedule_audiences_schedule" FromRole="schedule_audiences" ToRole="schedule" />
+        </EntityType>
+        <Association Name="FK_schedule_audiences_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.schedule_audiences" Role="schedule_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="schedule_audiences">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_schedule_audiences_schedule">
+          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.schedule_audiences" Role="schedule_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="schedule">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="schedule_audiences">
+              <PropertyRef Name="schedule_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4466,17 +4466,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
                 <ScalarProperty Name="start_date" ColumnName="start_date" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="bvs_map_types">
-            <EntityTypeMapping TypeName="BroadcastModel.bvs_map_types">
-              <MappingFragment StoreEntitySet="bvs_map_types">
-                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="display" ColumnName="display" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4738,17 +4727,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="nti_adjustment" ColumnName="nti_adjustment" />
                 <ScalarProperty Name="annual_adjustment" ColumnName="annual_adjustment" />
                 <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="schedule_audiences">
-            <EntityTypeMapping TypeName="BroadcastModel.schedule_audiences">
-              <MappingFragment StoreEntitySet="schedule_audiences">
-                <ScalarProperty Name="rank" ColumnName="rank" />
-                <ScalarProperty Name="population" ColumnName="population" />
-                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
-                <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5191,6 +5169,28 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <MappingFragment StoreEntitySet="rep_firms">
                 <ScalarProperty Name="team_name" ColumnName="team_name" />
                 <ScalarProperty Name="parent_name" ColumnName="parent_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bvs_map_types">
+            <EntityTypeMapping TypeName="BroadcastModel.bvs_map_types">
+              <MappingFragment StoreEntitySet="bvs_map_types">
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="display" ColumnName="display" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="schedule_audiences">
+            <EntityTypeMapping TypeName="BroadcastModel.schedule_audiences">
+              <MappingFragment StoreEntitySet="schedule_audiences">
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="population" ColumnName="population" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

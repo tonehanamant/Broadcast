@@ -52,6 +52,26 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** BCOP-1915 - START *****************************************************/
+
+-- bvs_map_types
+IF EXISTS(SELECT * FROM sys.columns WHERE Name = N'modified_by' AND Object_ID = Object_ID(N'[dbo].[bvs_map_types]'))
+   and (SELECT COLUMNPROPERTY(OBJECT_ID(N'[dbo].[bvs_map_types]', 'U'), 'modified_by', 'AllowsNull')) = 1
+begin    
+	ALTER TABLE	[dbo].[bvs_map_types] ALTER COLUMN [modified_by] varchar(63) NOT NULL	
+	update [dbo].[bvs_map_types] set modified_by = 'TAM01\vmoura' 
+end
+
+-- schedule_audiences
+IF EXISTS(SELECT * FROM sys.columns WHERE Name = N'rank' AND Object_ID = Object_ID(N'[dbo].[schedule_audiences]'))
+   and (SELECT COLUMNPROPERTY(OBJECT_ID(N'[dbo].[schedule_audiences]', 'U'), 'rank', 'AllowsNull')) = 1
+begin
+    update [dbo].[schedule_audiences] set rank = 0 where rank is null
+	ALTER TABLE	[dbo].[schedule_audiences] ALTER COLUMN [rank] [int] NOT NULL		
+end 
+
+
+/*************************************** BCOP-1915 - END *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
