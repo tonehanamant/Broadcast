@@ -21,7 +21,6 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_spot_length = new HashSet<proposal_version_spot_length>();
             this.schedule_details = new HashSet<schedule_details>();
             this.spot_length_cost_multipliers = new HashSet<spot_length_cost_multipliers>();
-            this.station_programs = new HashSet<station_programs>();
             this.proposal_version_details = new HashSet<proposal_version_details>();
         }
     
@@ -36,7 +35,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_version_spot_length> proposal_version_spot_length { get; set; }
         public virtual ICollection<schedule_details> schedule_details { get; set; }
         public virtual ICollection<spot_length_cost_multipliers> spot_length_cost_multipliers { get; set; }
-        public virtual ICollection<station_programs> station_programs { get; set; }
         public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
     }
 }

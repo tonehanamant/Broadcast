@@ -169,7 +169,6 @@
     <Compile Include="ApplicationServices\BulkRateFileImportTester.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ImpressionAdjustmentEngineIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\InventoryCrunchServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\NsiUniverseServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostingBookServiceTests.cs" />
     <Compile Include="ApplicationServices\PostRepositoryIntegrationTests.cs" />

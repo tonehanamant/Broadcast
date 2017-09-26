@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using System;
+using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
@@ -25,7 +26,6 @@ namespace Services.Broadcast.Repositories
         List<int> DeleteInventoryAllocationsByInventory(InventoryDetail inventory);
         void DeleteInventoryAllocations(int proposalId);
         List<InventoryDetailSlotProposalDto> GetProprietaryInventoryAllocations(int proposalId);
-        List<StationProgramFlightDto> GetOpenMarketInventoryAllocations(int proposalId);
         int GetCountOfComponentsForSlot(int slotId, List<int> relevantMediaWeeks, List<LookupDto> spotLengthMappings);
         int GetNumberOfProprietaryInventoryAllocationsForProposal(int proposalId);
         ProprietaryInventoryAllocationSnapshotDto GetProprietaryInventoryAllocationSnapshot(int inventoryDetailSlotId);
@@ -93,26 +93,6 @@ namespace Services.Broadcast.Repositories
             return new List<InventoryDetailSlotProposalDto>();
         }
 
-        public List<StationProgramFlightDto> GetOpenMarketInventoryAllocations(int proposalId)
-        {
-            return _InReadUncommitedTransaction(c =>
-            {
-                var openMarket = from pv in c.proposals.Find(proposalId).proposal_versions
-                                 from pvd in pv.proposal_version_details
-                                 from pdq in pvd.proposal_version_detail_quarters
-                                 from pdqw in pdq.proposal_version_detail_quarter_weeks
-                                 from spfp in pdqw.station_program_flight_proposal
-                                 select spfp;
-
-                return openMarket.Select(spfp => new StationProgramFlightDto
-                {
-                    StationProgramFlightId = spfp.station_program_flight_id,
-                    ProposalVersionDetailQuarterWeekId = spfp.proprosal_version_detail_quarter_week_id,
-                    Spots = spfp.spots,
-                    CreatedBy = spfp.created_by
-                }).ToList();
-            });
-        }
 
         public void DeleteInventoryAllocations(int proposalId)
         {

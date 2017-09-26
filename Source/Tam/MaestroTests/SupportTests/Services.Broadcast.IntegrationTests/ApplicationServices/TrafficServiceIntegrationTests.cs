@@ -13,8 +13,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class TrafficServiceIntegrationTests
     {
         private readonly ITrafficService _TrafficService = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrafficService>();
-        private readonly DateTime _CurrentDateTime = new DateTime(2016, 05, 30); 
+        private readonly DateTime _CurrentDateTime = new DateTime(2016, 05, 30);
 
+        [Ignore]
         [Test]
         public void CanLoadTrafficWeeksProposals()
         {

@@ -1,21 +1,8 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
+﻿
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Entities
 {
-    public class StationProgramConflictRequest
-    {
-        public int StationCode { get; set; }
-        [JsonConverter(typeof(StringEnumConverter))]
-        public RatesFile.RateSourceType RateSource { get; set; }
-        public DaypartDto Airtime { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public DateTime ConflictedProgramNewStartDate { get; set; }
-        public DateTime ConflictedProgramNewEndDate { get; set; }
-    }
 
     public class DaypartDto
     {

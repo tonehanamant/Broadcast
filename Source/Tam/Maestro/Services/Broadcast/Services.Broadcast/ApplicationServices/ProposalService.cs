@@ -412,7 +412,7 @@ namespace Services.Broadcast.ApplicationServices
                 return;
 
             //var existingProposal = GetProposalByIdWithVersion(proposalDto.Id.Value, proposalDto.Version.Value);
-            _DeleteAnyOpenMarketAllocationsByDaypart(proposalDto);
+            //_DeleteAnyOpenMarketAllocationsByDaypart(proposalDto);
         }
 
         /// <summary>
@@ -420,35 +420,35 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         private void _DeleteAnyOpenMarketAllocationsByDaypart(ProposalDto proposalToUpdateDto)
         {
-            foreach (var detail in proposalToUpdateDto.Details)
-            {
-                if (!detail.Id.HasValue)
-                    continue;
+            //foreach (var detail in proposalToUpdateDto.Details)
+            //{
+            //    if (!detail.Id.HasValue)
+            //        continue;
 
-                int detailId = detail.Id.Value;
-                var detailDaypart = DaypartCache.Instance.GetDisplayDaypart(detail.DaypartId);
+            //    int detailId = detail.Id.Value;
+            //    var detailDaypart = DaypartCache.Instance.GetDisplayDaypart(detail.DaypartId);
 
-                var allocations = _ProposalOpenMarketInventoryService.GetProposalInventoryAllocations(detailId);
-                var stationPrograms = _BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>()
-                                            .GetStationProgramsByIds(allocations.Select(a => a.StationProgramId).ToList())
-                                            .ToDictionary(k => k.Id,v => v);
+            //    var allocations = _ProposalOpenMarketInventoryService.GetProposalInventoryAllocations(detailId);
+            //    var stationPrograms = _BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>()
+            //                                .GetStationProgramsByIds(allocations.Select(a => a.StationProgramId).ToList())
+            //                                .ToDictionary(k => k.Id,v => v);
 
-                List<int> programsToDelete = new List<int>();
-                allocations.ForEach(p =>
-                {
-                    var stationProgram = stationPrograms[p.StationProgramId];
+            //    List<int> programsToDelete = new List<int>();
+            //    allocations.ForEach(p =>
+            //    {
+            //        var stationProgram = stationPrograms[p.StationProgramId];
 
-                    var programDaypart = DaypartCache.Instance.GetDisplayDaypart(stationProgram.Daypart.Id);
-                    if (!programDaypart.Intersects(detailDaypart))
-                    {
-                        programsToDelete.Add(p.StationProgramId);
-                    }
-                });
+            //        var programDaypart = DaypartCache.Instance.GetDisplayDaypart(stationProgram.Daypart.Id);
+            //        if (!programDaypart.Intersects(detailDaypart))
+            //        {
+            //            programsToDelete.Add(p.StationProgramId);
+            //        }
+            //    });
 
-                if (programsToDelete.Any())
-                    _BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>()
-                        .RemoveAllocations(programsToDelete, detailId);
-            }
+            //    if (programsToDelete.Any())
+            //        _BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>()
+            //            .RemoveAllocations(programsToDelete, detailId);
+            //}
         }
         private void _DeleteProposalDetailInventoryAllocations(ProposalDto proposalDto)
         {

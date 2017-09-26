@@ -11,6 +11,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService =
             IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
 
+        [Ignore]
         [Test]
         public void CalculateOpenMarketsTotalsTest()
         {

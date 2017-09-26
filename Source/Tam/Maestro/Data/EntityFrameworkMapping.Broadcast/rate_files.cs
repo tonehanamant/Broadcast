@@ -18,7 +18,6 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.station_contacts = new HashSet<station_contacts>();
             this.station_contacts1 = new HashSet<station_contacts>();
-            this.station_programs = new HashSet<station_programs>();
         }
     
         public int id { get; set; }
@@ -34,7 +33,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<station_contacts> station_contacts { get; set; }
         public virtual ICollection<station_contacts> station_contacts1 { get; set; }
-        public virtual ICollection<station_programs> station_programs { get; set; }
         public virtual media_months media_months { get; set; }
     }
 }

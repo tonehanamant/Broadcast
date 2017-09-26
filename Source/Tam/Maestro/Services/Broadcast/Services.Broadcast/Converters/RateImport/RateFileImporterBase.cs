@@ -108,14 +108,14 @@ namespace Services.Broadcast.Converters.RateImport
 
         }
 
-        protected void _ApplySpotLengthRateMultipliers(StationProgramFlightWeek flightWeek, decimal periodRate)
-        {
-            flightWeek.Rate15s = periodRate * (decimal) _SpotLengthMultipliers[15];
-            flightWeek.Rate30s = periodRate;
-            flightWeek.Rate60s = periodRate * (decimal) _SpotLengthMultipliers[60];
-            flightWeek.Rate90s = periodRate * (decimal) _SpotLengthMultipliers[90];
-            flightWeek.Rate120s = periodRate * (decimal) _SpotLengthMultipliers[120];
-        }
+        //protected void _ApplySpotLengthRateMultipliers(StationProgramFlightWeek flightWeek, decimal periodRate)
+        //{
+        //    flightWeek.Rate15s = periodRate * (decimal) _SpotLengthMultipliers[15];
+        //    flightWeek.Rate30s = periodRate;
+        //    flightWeek.Rate60s = periodRate * (decimal) _SpotLengthMultipliers[60];
+        //    flightWeek.Rate90s = periodRate * (decimal) _SpotLengthMultipliers[90];
+        //    flightWeek.Rate120s = periodRate * (decimal) _SpotLengthMultipliers[120];
+        //}
 
         protected DisplayDaypart ParseStringToDaypart(string dayPartText, string station)
         {

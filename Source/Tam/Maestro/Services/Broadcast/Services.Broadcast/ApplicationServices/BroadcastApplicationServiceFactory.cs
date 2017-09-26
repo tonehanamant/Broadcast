@@ -90,7 +90,6 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostFileParser, PostFileParser>();
             unityContainer.RegisterType<IReportGenerator<PostFile>, PostExcelReportGenerator>();
             unityContainer.RegisterType<IPostService, PostService>();
-            unityContainer.RegisterType<IInventoryCrunchService, InventoryCrunchService>();
             unityContainer.RegisterType<IThirdPartySpotCostCalculationEngine, ThirdPartySpotCostCalculationEngine>();
             unityContainer.RegisterType<IImpressionAdjustmentEngine, ImpressionAdjustmentEngine>();
 			unityContainer.RegisterType<IPostingBooksService, PostingBooksService>();

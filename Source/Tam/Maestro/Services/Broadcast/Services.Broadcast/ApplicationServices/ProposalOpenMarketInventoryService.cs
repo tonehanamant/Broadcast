@@ -290,94 +290,94 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _PopulateMarkets(ProposalDetailOpenMarketInventoryDto dto, bool ignoreExistingAllocation)
         {
-            _SetProposalInventoryDetailSpotLength(dto);
-            _SetProposalInventoryDetailDaypart(dto);
+            //_SetProposalInventoryDetailSpotLength(dto);
+            //_SetProposalInventoryDetailDaypart(dto);
 
-            var proposalMarketIds =
-                ProposalMarketsCalculationEngine.GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion,
-                    dto.DetailId).Select(m => m.Id).ToList();
+            //var proposalMarketIds =
+            //    ProposalMarketsCalculationEngine.GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion,
+            //        dto.DetailId).Select(m => m.Id).ToList();
 
-            var programs = BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>()
-                .GetStationProgramsForProposalDetail(dto.DetailFlightStartDate.Value, dto.DetailFlightEndDate.Value,
-                    dto.DetailSpotLength, (int)RatesFile.RateSourceType.OpenMarket, proposalMarketIds, dto.DetailId);
+            //var programs = BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>()
+            //    .GetStationProgramsForProposalDetail(dto.DetailFlightStartDate.Value, dto.DetailFlightEndDate.Value,
+            //        dto.DetailSpotLength, (int)RatesFile.RateSourceType.OpenMarket, proposalMarketIds, dto.DetailId);
 
-            // represents the actual program names before any refine is applied
-            dto.RefineFilterPrograms = programs.Where(l => l != null).Select(z => z.ProgramName)
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .OrderBy(m => m)
-                .ToList();
+            //// represents the actual program names before any refine is applied
+            //dto.RefineFilterPrograms = programs.Where(l => l != null).Select(z => z.ProgramName)
+            //    .Distinct(StringComparer.OrdinalIgnoreCase)
+            //    .OrderBy(m => m)
+            //    .ToList();
 
-            var proposalDetailDaypart = DaypartCache.GetDisplayDaypart(dto.DetailDaypartId.Value);
-            var filteredProgramsWithAllocations = new List<int>();
-            programs.RemoveAll(p =>
-            {
-                if (!DaypartCache.GetDisplayDaypart(p.DayPartId).Intersects(proposalDetailDaypart))
-                    return true;
+            //var proposalDetailDaypart = DaypartCache.GetDisplayDaypart(dto.DetailDaypartId.Value);
+            //var filteredProgramsWithAllocations = new List<int>();
+            //programs.RemoveAll(p =>
+            //{
+            //    if (!DaypartCache.GetDisplayDaypart(p.DayPartId).Intersects(proposalDetailDaypart))
+            //        return true;
 
-                if (FilterByGenreAndProgramNameCriteria(p, dto.Criteria))
-                {
-                    if (p.FlightWeeks.Any(fw => fw.Allocations.Any(a => a.Spots > 0)))
-                    {
-                        if (!ignoreExistingAllocation)
-                        {
-                            dto.NewCriteriaAffectsExistingAllocations = true;
+            //    if (FilterByGenreAndProgramNameCriteria(p, dto.Criteria))
+            //    {
+            //        if (p.FlightWeeks.Any(fw => fw.Allocations.Any(a => a.Spots > 0)))
+            //        {
+            //            if (!ignoreExistingAllocation)
+            //            {
+            //                dto.NewCriteriaAffectsExistingAllocations = true;
 
-                            return false;
-                        }
+            //                return false;
+            //            }
 
-                        filteredProgramsWithAllocations.Add(p.ProgramId);
-                    }
+            //            filteredProgramsWithAllocations.Add(p.ProgramId);
+            //        }
 
-                    return true;
-                }
+            //        return true;
+            //    }
 
-                return false;
-            });
+            //    return false;
+            //});
 
-            if (filteredProgramsWithAllocations.Any())
-                BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>()
-                    .RemoveAllocations(filteredProgramsWithAllocations, dto.DetailId);
+            //if (filteredProgramsWithAllocations.Any())
+            //    BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>()
+            //        .RemoveAllocations(filteredProgramsWithAllocations, dto.DetailId);
 
-            if (programs.Count < 1)
-            {
-                return;
-            }
+            //if (programs.Count < 1)
+            //{
+            //    return;
+            //}
 
-            _ApplyDaypartNames(programs);
-            _ApplyProgramImpressions(programs, dto);
-            _ProposalProgramsCalculationEngine.ApplyBlendedCpmForEachProgram(programs, dto.DetailSpotLength);
+            //_ApplyDaypartNames(programs);
+            //_ApplyProgramImpressions(programs, dto);
+            //_ProposalProgramsCalculationEngine.ApplyBlendedCpmForEachProgram(programs, dto.DetailSpotLength);
 
-            filteredProgramsWithAllocations.Clear();
-            programs.RemoveAll(p =>
-            {
-                if (FilterByCpmCriteria(p, dto.Criteria.CpmCriteria))
-                {
-                    if (p.FlightWeeks.Any(fw => fw.Allocations.Any(a => a.Spots > 0)))
-                    {
-                        if (!ignoreExistingAllocation)
-                        {
-                            dto.NewCriteriaAffectsExistingAllocations = true;
-                            return false;
-                        }
-                        filteredProgramsWithAllocations.Add(p.ProgramId);
-                    }
-                    return true;
-                }
-                return false;
-            });
-            if (filteredProgramsWithAllocations.Any())
-                BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>()
-                    .RemoveAllocations(filteredProgramsWithAllocations, dto.DetailId);
+            //filteredProgramsWithAllocations.Clear();
+            //programs.RemoveAll(p =>
+            //{
+            //    if (FilterByCpmCriteria(p, dto.Criteria.CpmCriteria))
+            //    {
+            //        if (p.FlightWeeks.Any(fw => fw.Allocations.Any(a => a.Spots > 0)))
+            //        {
+            //            if (!ignoreExistingAllocation)
+            //            {
+            //                dto.NewCriteriaAffectsExistingAllocations = true;
+            //                return false;
+            //            }
+            //            filteredProgramsWithAllocations.Add(p.ProgramId);
+            //        }
+            //        return true;
+            //    }
+            //    return false;
+            //});
+            //if (filteredProgramsWithAllocations.Any())
+            //    BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>()
+            //        .RemoveAllocations(filteredProgramsWithAllocations, dto.DetailId);
 
-            var inventoryMarkets = _GroupProgramsByMarketAndStation(programs);
+            //var inventoryMarkets = _GroupProgramsByMarketAndStation(programs);
 
-            var postingBook = _ProposalPostingBooksEngine.GetPostingBookId(dto);
-            _ApplyInventoryMarketSubscribers(postingBook, inventoryMarkets);
-            _ApplyInventoryMarketRankings(postingBook, inventoryMarkets);
+            //var postingBook = _ProposalPostingBooksEngine.GetPostingBookId(dto);
+            //_ApplyInventoryMarketSubscribers(postingBook, inventoryMarkets);
+            //_ApplyInventoryMarketRankings(postingBook, inventoryMarkets);
 
-            dto.Markets.AddRange(inventoryMarkets.OrderBy(m => m.MarketRank).ToList());
+            //dto.Markets.AddRange(inventoryMarkets.OrderBy(m => m.MarketRank).ToList());
 
-            _ApplyDefaultSorting(dto);
+            //_ApplyDefaultSorting(dto);
         }
 
         internal static bool FilterByCpmCriteria(ProposalProgramDto program, List<CpmCriteria> cpmCriteria)

@@ -17,7 +17,6 @@ namespace EntityFrameworkMapping.Broadcast
         public genre()
         {
             this.proposal_version_detail_criteria_genres = new HashSet<proposal_version_detail_criteria_genres>();
-            this.station_programs = new HashSet<station_programs>();
         }
     
         public int id { get; set; }
@@ -28,6 +27,5 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime modified_date { get; set; }
     
         public virtual ICollection<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
-        public virtual ICollection<station_programs> station_programs { get; set; }
     }
 }

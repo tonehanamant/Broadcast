@@ -14,11 +14,6 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class proposal_version_detail_quarter_weeks
     {
-        public proposal_version_detail_quarter_weeks()
-        {
-            this.station_program_flight_proposal = new HashSet<station_program_flight_proposal>();
-        }
-    
         public int id { get; set; }
         public int proposal_version_quarter_id { get; set; }
         public int media_week_id { get; set; }
@@ -35,6 +30,5 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual media_weeks media_weeks { get; set; }
         public virtual proposal_version_detail_quarters proposal_version_detail_quarters { get; set; }
-        public virtual ICollection<station_program_flight_proposal> station_program_flight_proposal { get; set; }
     }
 }

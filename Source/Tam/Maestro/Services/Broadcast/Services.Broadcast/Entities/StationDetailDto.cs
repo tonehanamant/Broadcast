@@ -8,7 +8,6 @@ namespace Services.Broadcast.Entities
         public string Affiliate { get; set; }
         public string Market { get; set; }
         public int StationCode { get; set; }
-        public List<StationProgramAudienceRateDto> Rates { get; set; }
         public List<StationContact> Contacts { get; set; }
     }
 }

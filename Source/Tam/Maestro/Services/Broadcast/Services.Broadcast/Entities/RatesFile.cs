@@ -37,20 +37,6 @@ namespace Services.Broadcast.Entities
         [JsonConverter(typeof(StringEnumConverter))]
         public RateSourceType RateSource { get; set; }
         private List<StationContact> _stationContacts; 
-        private List<StationProgram> _stationPrograms; 
-
-        public List<StationProgram> StationPrograms
-        {
-            get
-            {
-                if (_stationPrograms == null)
-                {
-                    _stationPrograms = new List<StationProgram>();
-                }
-                return _stationPrograms;
-            }
-            set { _stationPrograms = value; }
-        }
 
         public List<StationContact> StationContacts
         {

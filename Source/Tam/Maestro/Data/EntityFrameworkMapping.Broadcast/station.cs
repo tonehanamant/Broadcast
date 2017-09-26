@@ -17,7 +17,6 @@ namespace EntityFrameworkMapping.Broadcast
         public station()
         {
             this.station_contacts = new HashSet<station_contacts>();
-            this.station_programs = new HashSet<station_programs>();
         }
     
         public short station_code { get; set; }
@@ -30,6 +29,5 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual market market { get; set; }
         public virtual ICollection<station_contacts> station_contacts { get; set; }
-        public virtual ICollection<station_programs> station_programs { get; set; }
     }
 }

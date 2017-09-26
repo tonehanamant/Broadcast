@@ -8,7 +8,6 @@ namespace Services.Broadcast.IntegrationTests
         public void SetupIgnoreFields(IgnorableSerializerContractResolver jsonResolver)
         {
             jsonResolver.Ignore(typeof(NewStationProgramDto), "Id");
-            jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Id");
 
             jsonResolver.Ignore(typeof(PostFile), "Id");
             jsonResolver.Ignore(typeof(PostFile), "UploadDate");

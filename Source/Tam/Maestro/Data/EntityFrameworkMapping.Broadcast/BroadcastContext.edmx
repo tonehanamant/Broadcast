@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BroadcastModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BroadcastModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="audience_audiences">
           <Key>
             <PropertyRef Name="rating_category_group_id" />
@@ -355,6 +355,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="proposal_id" Type="int" Nullable="false" />
           <Property Name="proposal_version" Type="smallint" Nullable="false" />
           <Property Name="start_date" Type="date" />
@@ -365,7 +366,6 @@
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="target_budget" Type="money" />
           <Property Name="target_units" Type="int" />
           <Property Name="target_impressions" Type="float" Nullable="false" />
@@ -554,93 +554,6 @@
           <Property Name="company" Type="varchar" MaxLength="127" />
           <Property Name="modified_file_id" Type="int" />
         </EntityType>
-        <EntityType Name="station_program_flight_audiences">
-          <Key>
-            <PropertyRef Name="station_program_flight_id" />
-            <PropertyRef Name="audience_id" />
-          </Key>
-          <Property Name="station_program_flight_id" Type="int" Nullable="false" />
-          <Property Name="audience_id" Type="int" Nullable="false" />
-          <Property Name="impressions" Type="float" Nullable="false" />
-          <Property Name="rating" Type="float" />
-          <Property Name="cpm15" Type="money" />
-          <Property Name="cpm30" Type="money" />
-          <Property Name="cpm60" Type="money" />
-          <Property Name="cpm90" Type="money" />
-          <Property Name="cpm120" Type="money" />
-          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="created_date" Type="datetime" Nullable="false" />
-          <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="modified_date" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="station_program_flight_proposal">
-          <Key>
-            <PropertyRef Name="station_program_flight_id" />
-            <PropertyRef Name="proprosal_version_detail_quarter_week_id" />
-          </Key>
-          <Property Name="station_program_flight_id" Type="int" Nullable="false" />
-          <Property Name="proprosal_version_detail_quarter_week_id" Type="int" Nullable="false" />
-          <Property Name="spots" Type="int" Nullable="false" />
-          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="isci" Type="varchar" MaxLength="63" />
-          <Property Name="impressions" Type="float" Nullable="false" />
-          <Property Name="spot_cost" Type="money" Nullable="false" />
-          <Property Name="spot_length_id" Type="int" Nullable="false" />
-          <Property Name="station_code" Type="smallint" Nullable="false" />
-          <Property Name="start_date" Type="date" Nullable="false" />
-          <Property Name="end_date" Type="date" Nullable="false" />
-          <Property Name="daypart_code" Type="varchar" MaxLength="10" />
-          <Property Name="rate_source" Type="tinyint" />
-          <Property Name="daypart_id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="station_program_flights">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="station_program_id" Type="int" Nullable="false" />
-          <Property Name="media_week_id" Type="int" Nullable="false" />
-          <Property Name="active" Type="bit" Nullable="false" />
-          <Property Name="15s_rate" Type="money" />
-          <Property Name="30s_rate" Type="money" />
-          <Property Name="60s_rate" Type="money" />
-          <Property Name="90s_rate" Type="money" />
-          <Property Name="120s_rate" Type="money" />
-          <Property Name="spots" Type="int" />
-          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="created_date" Type="datetime" Nullable="false" />
-          <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="modified_date" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="station_program_genres">
-          <Key>
-            <PropertyRef Name="station_program_id" />
-            <PropertyRef Name="genre_id" />
-          </Key>
-          <Property Name="station_program_id" Type="int" Nullable="false" />
-          <Property Name="genre_id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="station_programs">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="program_name" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="station_code" Type="smallint" Nullable="false" />
-          <Property Name="daypart_id" Type="int" Nullable="false" />
-          <Property Name="daypart_name" Type="varchar" MaxLength="50" />
-          <Property Name="start_date" Type="date" Nullable="false" />
-          <Property Name="end_date" Type="date" Nullable="false" />
-          <Property Name="rate_file_id" Type="int" />
-          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="created_date" Type="datetime" Nullable="false" />
-          <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="modified_date" Type="datetime" Nullable="false" />
-          <Property Name="rate_source" Type="tinyint" Nullable="false" />
-          <Property Name="daypart_code" Type="varchar" MaxLength="10" />
-          <Property Name="spot_length_id" Type="int" Nullable="false" />
-          <Property Name="fixed_price" Type="money" />
-        </EntityType>
         <EntityType Name="stations">
           <Key>
             <PropertyRef Name="station_code" />
@@ -674,7 +587,7 @@
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -1460,136 +1373,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_station_program_flight_audiences_audiences">
-          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
-          <End Role="station_program_flight_audiences" Type="Self.station_program_flight_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audiences">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_program_flight_audiences">
-              <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_program_flight_audiences_station_program_flights">
-          <End Role="station_program_flights" Type="Self.station_program_flights" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="station_program_flight_audiences" Type="Self.station_program_flight_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station_program_flights">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_program_flight_audiences">
-              <PropertyRef Name="station_program_flight_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks">
-          <End Role="proposal_version_detail_quarter_weeks" Type="Self.proposal_version_detail_quarter_weeks" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="station_program_flight_proposal" Type="Self.station_program_flight_proposal" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_version_detail_quarter_weeks">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_program_flight_proposal">
-              <PropertyRef Name="proprosal_version_detail_quarter_week_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_program_flights_media_weeks">
-          <End Role="media_weeks" Type="Self.media_weeks" Multiplicity="1" />
-          <End Role="station_program_flights" Type="Self.station_program_flights" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_weeks">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_program_flights">
-              <PropertyRef Name="media_week_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_program_flights_station_programs">
-          <End Role="station_programs" Type="Self.station_programs" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="station_program_flights" Type="Self.station_program_flights" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station_programs">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_program_flights">
-              <PropertyRef Name="station_program_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_program_genres_genres">
-          <End Role="genres" Type="Self.genres" Multiplicity="1" />
-          <End Role="station_program_genres" Type="Self.station_program_genres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genres">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_program_genres">
-              <PropertyRef Name="genre_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_program_genres_station_programs">
-          <End Role="station_programs" Type="Self.station_programs" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="station_program_genres" Type="Self.station_program_genres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station_programs">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_program_genres">
-              <PropertyRef Name="station_program_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_programs_dayparts">
-          <End Role="dayparts" Type="Self.dayparts" Multiplicity="1" />
-          <End Role="station_programs" Type="Self.station_programs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="dayparts">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_programs">
-              <PropertyRef Name="daypart_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_programs_rate_files">
-          <End Role="rate_files" Type="Self.rate_files" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="station_programs" Type="Self.station_programs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="rate_files">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_programs">
-              <PropertyRef Name="rate_file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_programs_stations">
-          <End Role="stations" Type="Self.stations" Multiplicity="1" />
-          <End Role="station_programs" Type="Self.station_programs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="stations">
-              <PropertyRef Name="station_code" />
-            </Principal>
-            <Dependent Role="station_programs">
-              <PropertyRef Name="station_code" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_stations_markets">
           <End Role="markets" Type="Self.markets" Multiplicity="1" />
           <End Role="stations" Type="Self.stations" Multiplicity="*" />
@@ -1648,11 +1431,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySet Name="spot_length_cost_multipliers" EntityType="Self.spot_length_cost_multipliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spot_lengths" EntityType="Self.spot_lengths" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_contacts" EntityType="Self.station_contacts" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="station_program_flight_audiences" EntityType="Self.station_program_flight_audiences" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="station_program_flight_proposal" EntityType="Self.station_program_flight_proposal" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="station_program_flights" EntityType="Self.station_program_flights" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="station_program_genres" EntityType="Self.station_program_genres" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="station_programs" EntityType="Self.station_programs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stations" EntityType="Self.stations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="system_component_parameters" EntityType="Self.system_component_parameters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="timespans" EntityType="Self.timespans" Schema="dbo" store:Type="Tables" />
@@ -1911,46 +1689,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="stations" EntitySet="stations" />
             <End Role="station_contacts" EntitySet="station_contacts" />
           </AssociationSet>
-          <AssociationSet Name="FK_station_program_flight_audiences_audiences" Association="Self.FK_station_program_flight_audiences_audiences">
-            <End Role="audiences" EntitySet="audiences" />
-            <End Role="station_program_flight_audiences" EntitySet="station_program_flight_audiences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_program_flight_audiences_station_program_flights" Association="Self.FK_station_program_flight_audiences_station_program_flights">
-            <End Role="station_program_flights" EntitySet="station_program_flights" />
-            <End Role="station_program_flight_audiences" EntitySet="station_program_flight_audiences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" Association="Self.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks">
-            <End Role="proposal_version_detail_quarter_weeks" EntitySet="proposal_version_detail_quarter_weeks" />
-            <End Role="station_program_flight_proposal" EntitySet="station_program_flight_proposal" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_program_flights_media_weeks" Association="Self.FK_station_program_flights_media_weeks">
-            <End Role="media_weeks" EntitySet="media_weeks" />
-            <End Role="station_program_flights" EntitySet="station_program_flights" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_program_flights_station_programs" Association="Self.FK_station_program_flights_station_programs">
-            <End Role="station_programs" EntitySet="station_programs" />
-            <End Role="station_program_flights" EntitySet="station_program_flights" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_program_genres_genres" Association="Self.FK_station_program_genres_genres">
-            <End Role="genres" EntitySet="genres" />
-            <End Role="station_program_genres" EntitySet="station_program_genres" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_program_genres_station_programs" Association="Self.FK_station_program_genres_station_programs">
-            <End Role="station_programs" EntitySet="station_programs" />
-            <End Role="station_program_genres" EntitySet="station_program_genres" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_programs_dayparts" Association="Self.FK_station_programs_dayparts">
-            <End Role="dayparts" EntitySet="dayparts" />
-            <End Role="station_programs" EntitySet="station_programs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_programs_rate_files" Association="Self.FK_station_programs_rate_files">
-            <End Role="rate_files" EntitySet="rate_files" />
-            <End Role="station_programs" EntitySet="station_programs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_programs_stations" Association="Self.FK_station_programs_stations">
-            <End Role="stations" EntitySet="stations" />
-            <End Role="station_programs" EntitySet="station_programs" />
-          </AssociationSet>
           <AssociationSet Name="FK_stations_markets" Association="Self.FK_stations_markets">
             <End Role="markets" EntitySet="markets" />
             <End Role="stations" EntitySet="stations" />
@@ -1992,8 +1730,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySet Name="spot_length_cost_multipliers" EntityType="BroadcastModel.spot_length_cost_multipliers" />
           <EntitySet Name="spot_lengths" EntityType="BroadcastModel.spot_lengths" />
           <EntitySet Name="station_contacts" EntityType="BroadcastModel.station_contacts" />
-          <EntitySet Name="station_program_flights" EntityType="BroadcastModel.station_program_flights" />
-          <EntitySet Name="station_programs" EntityType="BroadcastModel.station_programs" />
           <EntitySet Name="stations" EntityType="BroadcastModel.station" />
           <EntitySet Name="system_component_parameters" EntityType="BroadcastModel.system_component_parameters" />
           <EntitySet Name="timespans" EntityType="BroadcastModel.timespan" />
@@ -2041,10 +1777,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="rate_files" EntitySet="rate_files" />
             <End Role="station_contacts" EntitySet="station_contacts" />
           </AssociationSet>
-          <AssociationSet Name="FK_station_programs_rate_files" Association="BroadcastModel.FK_station_programs_rate_files">
-            <End Role="rate_files" EntitySet="rate_files" />
-            <End Role="station_programs" EntitySet="station_programs" />
-          </AssociationSet>
           <AssociationSet Name="FK_schedule_detail_audiences_schedule_details" Association="BroadcastModel.FK_schedule_detail_audiences_schedule_details">
             <End Role="schedule_details" EntitySet="schedule_details" />
             <End Role="schedule_detail_audiences" EntitySet="schedule_detail_audiences" />
@@ -2069,14 +1801,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="station" EntitySet="stations" />
             <End Role="station_contacts" EntitySet="station_contacts" />
           </AssociationSet>
-          <AssociationSet Name="FK_station_program_flights_station_programs" Association="BroadcastModel.FK_station_program_flights_station_programs">
-            <End Role="station_programs" EntitySet="station_programs" />
-            <End Role="station_program_flights" EntitySet="station_program_flights" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_programs_stations" Association="BroadcastModel.FK_station_programs_stations">
-            <End Role="station" EntitySet="stations" />
-            <End Role="station_programs" EntitySet="station_programs" />
-          </AssociationSet>
           <AssociationSet Name="daypart_days" Association="BroadcastModel.daypart_days">
             <End Role="daypart" EntitySet="dayparts" />
             <End Role="day" EntitySet="days" />
@@ -2086,11 +1810,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="schedule" EntitySet="schedules" />
           </AssociationSet>
           <EntitySet Name="vw_ccc_daypart" EntityType="BroadcastModel.vw_ccc_daypart" />
-          <EntitySet Name="station_program_flight_audiences" EntityType="BroadcastModel.station_program_flight_audiences" />
-          <AssociationSet Name="FK_station_program_flight_audiences_station_program_flights" Association="BroadcastModel.FK_station_program_flight_audiences_station_program_flights">
-            <End Role="station_program_flights" EntitySet="station_program_flights" />
-            <End Role="station_program_flight_audiences" EntitySet="station_program_flight_audiences" />
-          </AssociationSet>
           <AssociationSet Name="FK_audience_audiences_audiences" Association="BroadcastModel.FK_audience_audiences_audiences">
             <End Role="audience" EntitySet="audiences" />
             <End Role="audience_audiences" EntitySet="audience_audiences" />
@@ -2107,10 +1826,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="audience" EntitySet="audiences" />
             <End Role="schedule_detail_audiences" EntitySet="schedule_detail_audiences" />
           </AssociationSet>
-          <AssociationSet Name="FK_station_program_flight_audiences_audiences" Association="BroadcastModel.FK_station_program_flight_audiences_audiences">
-            <End Role="audience" EntitySet="audiences" />
-            <End Role="station_program_flight_audiences" EntitySet="station_program_flight_audiences" />
-          </AssociationSet>
           <AssociationSet Name="FK_bvs_file_details_spot_lengths" Association="BroadcastModel.FK_bvs_file_details_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="bvs_file_details" EntitySet="bvs_file_details" />
@@ -2118,10 +1833,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <AssociationSet Name="FK_schedule_details_dayparts" Association="BroadcastModel.FK_schedule_details_dayparts">
             <End Role="daypart" EntitySet="dayparts" />
             <End Role="schedule_details" EntitySet="schedule_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_programs_dayparts" Association="BroadcastModel.FK_station_programs_dayparts">
-            <End Role="daypart" EntitySet="dayparts" />
-            <End Role="station_programs" EntitySet="station_programs" />
           </AssociationSet>
           <AssociationSet Name="FK_media_weeks_media_months" Association="BroadcastModel.FK_media_weeks_media_months">
             <End Role="media_months" EntitySet="media_months" />
@@ -2151,10 +1862,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="media_weeks" EntitySet="media_weeks" />
             <End Role="schedule_detail_weeks" EntitySet="schedule_detail_weeks" />
           </AssociationSet>
-          <AssociationSet Name="FK_station_program_flights_media_weeks" Association="BroadcastModel.FK_station_program_flights_media_weeks">
-            <End Role="media_weeks" EntitySet="media_weeks" />
-            <End Role="station_program_flights" EntitySet="station_program_flights" />
-          </AssociationSet>
           <AssociationSet Name="FK_post_file_details_spot_lengths" Association="BroadcastModel.FK_post_file_details_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="post_file_details" EntitySet="post_file_details" />
@@ -2171,11 +1878,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="spot_length_cost_multipliers" EntitySet="spot_length_cost_multipliers" />
           </AssociationSet>
-          <AssociationSet Name="FK_station_programs_spot_lengths" Association="BroadcastModel.FK_station_programs_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="station_programs" EntitySet="station_programs" />
-          </AssociationSet>
-          <EntitySet Name="station_program_flight_proposal" EntityType="BroadcastModel.station_program_flight_proposal" />
           <EntitySet Name="proposal_versions" EntityType="BroadcastModel.proposal_versions" />
           <AssociationSet Name="FK_proposal_version_flight_weeks_proposal_versions" Association="BroadcastModel.FK_proposal_version_flight_weeks_proposal_versions">
             <End Role="proposal_versions" EntitySet="proposal_versions" />
@@ -2241,10 +1943,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="proposal_version_detail_quarters" EntitySet="proposal_version_detail_quarters" />
             <End Role="proposal_version_detail_quarter_weeks" EntitySet="proposal_version_detail_quarter_weeks" />
           </AssociationSet>
-          <AssociationSet Name="FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" Association="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks">
-            <End Role="proposal_version_detail_quarter_weeks" EntitySet="proposal_version_detail_quarter_weeks" />
-            <End Role="station_program_flight_proposal" EntitySet="station_program_flight_proposal" />
-          </AssociationSet>
           <EntitySet Name="genres" EntityType="BroadcastModel.genre" />
           <EntitySet Name="proposal_version_detail_criteria_cpm" EntityType="BroadcastModel.proposal_version_detail_criteria_cpm" />
           <EntitySet Name="proposal_version_detail_criteria_genres" EntityType="BroadcastModel.proposal_version_detail_criteria_genres" />
@@ -2264,10 +1962,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <AssociationSet Name="FK_proposal_version_criteria_programs_proposal_version_criterias" Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias">
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
             <End Role="proposal_version_detail_criteria_programs" EntitySet="proposal_version_detail_criteria_programs" />
-          </AssociationSet>
-          <AssociationSet Name="station_program_genres" Association="BroadcastModel.station_program_genres">
-            <End Role="genre" EntitySet="genres" />
-            <End Role="station_programs" EntitySet="station_programs" />
           </AssociationSet>
           <EntitySet Name="rep_firms" EntityType="BroadcastModel.rep_firms" />
           <EntitySet Name="bvs_map_types" EntityType="BroadcastModel.bvs_map_types" />
@@ -2312,7 +2006,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="bvs_post_details" Relationship="BroadcastModel.FK_bvs_post_details_audiences" FromRole="audience" ToRole="bvs_post_details" />
           <NavigationProperty Name="post_file_detail_impressions" Relationship="BroadcastModel.FK_post_file_detail_impressions_audiences" FromRole="audience" ToRole="post_file_detail_impressions" />
           <NavigationProperty Name="schedule_detail_audiences" Relationship="BroadcastModel.FK_schedule_detail_audiences_audiences" FromRole="audience" ToRole="schedule_detail_audiences" />
-          <NavigationProperty Name="station_program_flight_audiences" Relationship="BroadcastModel.FK_station_program_flight_audiences_audiences" FromRole="audience" ToRole="station_program_flight_audiences" />
           <NavigationProperty Name="proposal_version_audiences" Relationship="BroadcastModel.FK_proposal_version_audiences_audiences" FromRole="audience" ToRole="proposal_version_audiences" />
           <NavigationProperty Name="schedule_audiences" Relationship="BroadcastModel.FK_schedule_audiences_audiences" FromRole="audience" ToRole="schedule_audiences" />
         </EntityType>
@@ -2400,7 +2093,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="total_hours" Type="Double" Nullable="false" />
           <NavigationProperty Name="days" Relationship="BroadcastModel.daypart_days" FromRole="daypart" ToRole="day" />
           <NavigationProperty Name="schedule_details" Relationship="BroadcastModel.FK_schedule_details_dayparts" FromRole="daypart" ToRole="schedule_details" />
-          <NavigationProperty Name="station_programs" Relationship="BroadcastModel.FK_station_programs_dayparts" FromRole="daypart" ToRole="station_programs" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_dayparts" FromRole="daypart" ToRole="proposal_version_details" />
         </EntityType>
         <EntityType Name="day">
@@ -2465,7 +2157,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_media_weeks_media_months" FromRole="media_weeks" ToRole="media_months" />
           <NavigationProperty Name="proposal_version_flight_weeks" Relationship="BroadcastModel.FK_proposal_version_flight_weeks_media_weeks" FromRole="media_weeks" ToRole="proposal_version_flight_weeks" />
           <NavigationProperty Name="schedule_detail_weeks" Relationship="BroadcastModel.FK_schedule_detail_weeks_media_weeks" FromRole="media_weeks" ToRole="schedule_detail_weeks" />
-          <NavigationProperty Name="station_program_flights" Relationship="BroadcastModel.FK_station_program_flights_media_weeks" FromRole="media_weeks" ToRole="station_program_flights" />
           <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_media_weeks" FromRole="media_weeks" ToRole="proposal_version_detail_quarter_weeks" />
         </EntityType>
         <EntityType Name="post_file_demos">
@@ -2597,7 +2288,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="play_back_type" Type="Byte" />
           <NavigationProperty Name="station_contacts" Relationship="BroadcastModel.FK_station_contacts_rate_files_created" FromRole="rate_files" ToRole="station_contacts" />
           <NavigationProperty Name="station_contacts1" Relationship="BroadcastModel.FK_station_contacts_rate_files_modified" FromRole="rate_files" ToRole="station_contacts" />
-          <NavigationProperty Name="station_programs" Relationship="BroadcastModel.FK_station_programs_rate_files" FromRole="rate_files" ToRole="station_programs" />
           <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_rate_files_media_months" FromRole="rate_files" ToRole="media_months" />
         </EntityType>
         <EntityType Name="rating_adjustments">
@@ -2726,7 +2416,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="proposal_version_spot_length" Relationship="BroadcastModel.FK_proposal_version_spot_length_spot_lengths" FromRole="spot_lengths" ToRole="proposal_version_spot_length" />
           <NavigationProperty Name="schedule_details" Relationship="BroadcastModel.FK_schedule_details_spot_lengths" FromRole="spot_lengths" ToRole="schedule_details" />
           <NavigationProperty Name="spot_length_cost_multipliers" Relationship="BroadcastModel.FK_spot_length_cost_multipliers_spot_lengths" FromRole="spot_lengths" ToRole="spot_length_cost_multipliers" />
-          <NavigationProperty Name="station_programs" Relationship="BroadcastModel.FK_station_programs_spot_lengths" FromRole="spot_lengths" ToRole="station_programs" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="spot_lengths" ToRole="proposal_version_details" />
         </EntityType>
         <EntityType Name="station_contacts">
@@ -2751,55 +2440,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="rate_files1" Relationship="BroadcastModel.FK_station_contacts_rate_files_modified" FromRole="station_contacts" ToRole="rate_files" />
           <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_contacts_stations" FromRole="station_contacts" ToRole="station" />
         </EntityType>
-        <EntityType Name="station_program_flights">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="station_program_id" Type="Int32" Nullable="false" />
-          <Property Name="media_week_id" Type="Int32" Nullable="false" />
-          <Property Name="active" Type="Boolean" Nullable="false" />
-          <Property Name="C15s_rate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="C30s_rate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="C60s_rate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="C90s_rate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="C120s_rate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="spots" Type="Int32" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="station_programs" Relationship="BroadcastModel.FK_station_program_flights_station_programs" FromRole="station_program_flights" ToRole="station_programs" />
-          <NavigationProperty Name="station_program_flight_audiences" Relationship="BroadcastModel.FK_station_program_flight_audiences_station_program_flights" FromRole="station_program_flights" ToRole="station_program_flight_audiences" />
-          <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_station_program_flights_media_weeks" FromRole="station_program_flights" ToRole="media_weeks" />
-        </EntityType>
-        <EntityType Name="station_programs">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="program_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="station_code" Type="Int16" Nullable="false" />
-          <Property Name="daypart_id" Type="Int32" Nullable="false" />
-          <Property Name="daypart_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="rate_file_id" Type="Int32" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="rate_source" Type="Byte" Nullable="false" />
-          <Property Name="daypart_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
-          <Property Name="fixed_price" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="rate_files" Relationship="BroadcastModel.FK_station_programs_rate_files" FromRole="station_programs" ToRole="rate_files" />
-          <NavigationProperty Name="station_program_flights" Relationship="BroadcastModel.FK_station_program_flights_station_programs" FromRole="station_programs" ToRole="station_program_flights" />
-          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_programs_stations" FromRole="station_programs" ToRole="station" />
-          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_station_programs_dayparts" FromRole="station_programs" ToRole="daypart" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_station_programs_spot_lengths" FromRole="station_programs" ToRole="spot_lengths" />
-          <NavigationProperty Name="genres" Relationship="BroadcastModel.station_program_genres" FromRole="station_programs" ToRole="genre" />
-        </EntityType>
         <EntityType Name="station">
           <Key>
             <PropertyRef Name="station_code" />
@@ -2813,7 +2453,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="market" Relationship="BroadcastModel.FK_stations_markets" FromRole="station" ToRole="market" />
           <NavigationProperty Name="station_contacts" Relationship="BroadcastModel.FK_station_contacts_stations" FromRole="station" ToRole="station_contacts" />
-          <NavigationProperty Name="station_programs" Relationship="BroadcastModel.FK_station_programs_stations" FromRole="station" ToRole="station_programs" />
         </EntityType>
         <EntityType Name="system_component_parameters">
           <Key>
@@ -2979,20 +2618,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_station_programs_rate_files">
-          <End Type="BroadcastModel.rate_files" Role="rate_files" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.station_programs" Role="station_programs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="rate_files">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_programs">
-              <PropertyRef Name="rate_file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_schedule_detail_audiences_schedule_details">
           <End Type="BroadcastModel.schedule_details" Role="schedule_details" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -3075,32 +2700,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_station_program_flights_station_programs">
-          <End Type="BroadcastModel.station_programs" Role="station_programs" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.station_program_flights" Role="station_program_flights" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station_programs">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_program_flights">
-              <PropertyRef Name="station_program_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_programs_stations">
-          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
-          <End Type="BroadcastModel.station_programs" Role="station_programs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station">
-              <PropertyRef Name="station_code" />
-            </Principal>
-            <Dependent Role="station_programs">
-              <PropertyRef Name="station_code" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="daypart_days">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="*" />
           <End Type="BroadcastModel.day" Role="day" Multiplicity="*" />
@@ -3136,41 +2735,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="daypart_text" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="total_hours" Type="Double" Nullable="false" />
         </EntityType>
-        <EntityType Name="station_program_flight_audiences">
-          <Key>
-            <PropertyRef Name="station_program_flight_id" />
-            <PropertyRef Name="audience_id" />
-          </Key>
-          <Property Name="station_program_flight_id" Type="Int32" Nullable="false" />
-          <Property Name="audience_id" Type="Int32" Nullable="false" />
-          <Property Name="impressions" Type="Double" Nullable="false" />
-          <Property Name="rating" Type="Double" />
-          <Property Name="cpm15" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="cpm30" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="cpm60" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="cpm90" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="cpm120" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="station_program_flights" Relationship="BroadcastModel.FK_station_program_flight_audiences_station_program_flights" FromRole="station_program_flight_audiences" ToRole="station_program_flights" />
-          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_station_program_flight_audiences_audiences" FromRole="station_program_flight_audiences" ToRole="audience" />
-        </EntityType>
-        <Association Name="FK_station_program_flight_audiences_station_program_flights">
-          <End Type="BroadcastModel.station_program_flights" Role="station_program_flights" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.station_program_flight_audiences" Role="station_program_flight_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station_program_flights">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_program_flight_audiences">
-              <PropertyRef Name="station_program_flight_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_audience_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
           <End Type="BroadcastModel.audience_audiences" Role="audience_audiences" Multiplicity="*" />
@@ -3219,18 +2783,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_station_program_flight_audiences_audiences">
-          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
-          <End Type="BroadcastModel.station_program_flight_audiences" Role="station_program_flight_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audience">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_program_flight_audiences">
-              <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_bvs_file_details_spot_lengths">
           <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
           <End Type="BroadcastModel.bvs_file_details" Role="bvs_file_details" Multiplicity="*" />
@@ -3251,18 +2803,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="schedule_details">
-              <PropertyRef Name="daypart_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_programs_dayparts">
-          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
-          <End Type="BroadcastModel.station_programs" Role="station_programs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="daypart">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_programs">
               <PropertyRef Name="daypart_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -3351,18 +2891,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_station_program_flights_media_weeks">
-          <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1" />
-          <End Type="BroadcastModel.station_program_flights" Role="station_program_flights" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_weeks">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_program_flights">
-              <PropertyRef Name="media_week_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_post_file_details_spot_lengths">
           <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
           <End Type="BroadcastModel.post_file_details" Role="post_file_details" Multiplicity="*" />
@@ -3411,39 +2939,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_station_programs_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
-          <End Type="BroadcastModel.station_programs" Role="station_programs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_programs">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="station_program_flight_proposal">
-          <Key>
-            <PropertyRef Name="station_program_flight_id" />
-            <PropertyRef Name="proprosal_version_detail_quarter_week_id" />
-          </Key>
-          <Property Name="station_program_flight_id" Type="Int32" Nullable="false" />
-          <Property Name="proprosal_version_detail_quarter_week_id" Type="Int32" Nullable="false" />
-          <Property Name="spots" Type="Int32" Nullable="false" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="isci" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="impressions" Type="Double" Nullable="false" />
-          <Property Name="spot_cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
-          <Property Name="station_code" Type="Int16" Nullable="false" />
-          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="daypart_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="rate_source" Type="Byte" />
-          <Property Name="daypart_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" FromRole="station_program_flight_proposal" ToRole="proposal_version_detail_quarter_weeks" />
-        </EntityType>
         <EntityType Name="proposal_versions">
           <Key>
             <PropertyRef Name="id" />
@@ -3725,7 +3220,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="proprietary_cost_total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_media_weeks" FromRole="proposal_version_detail_quarter_weeks" ToRole="media_weeks" />
           <NavigationProperty Name="proposal_version_detail_quarters" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_proposal_version_detail_quarters" FromRole="proposal_version_detail_quarter_weeks" ToRole="proposal_version_detail_quarters" />
-          <NavigationProperty Name="station_program_flight_proposal" Relationship="BroadcastModel.FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks" FromRole="proposal_version_detail_quarter_weeks" ToRole="station_program_flight_proposal" />
         </EntityType>
         <Association Name="FK_proposal_version_detail_quarter_weeks_media_weeks">
           <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1" />
@@ -3753,20 +3247,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks">
-          <End Type="BroadcastModel.proposal_version_detail_quarter_weeks" Role="proposal_version_detail_quarter_weeks" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.station_program_flight_proposal" Role="station_program_flight_proposal" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_version_detail_quarter_weeks">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_program_flight_proposal">
-              <PropertyRef Name="proprosal_version_detail_quarter_week_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="genre">
           <Key>
             <PropertyRef Name="id" />
@@ -3778,7 +3258,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres" FromRole="genre" ToRole="proposal_version_detail_criteria_genres" />
-          <NavigationProperty Name="station_programs" Relationship="BroadcastModel.station_program_genres" FromRole="genre" ToRole="station_programs" />
         </EntityType>
         <EntityType Name="proposal_version_detail_criteria_cpm">
           <Key>
@@ -3866,10 +3345,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
               <PropertyRef Name="proposal_version_detail_id" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="station_program_genres">
-          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="*" />
-          <End Type="BroadcastModel.station_programs" Role="station_programs" Multiplicity="*" />
         </Association>
         <EntityType Name="rep_firms">
           <Key>
@@ -4346,48 +3821,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="station_program_flights">
-            <EntityTypeMapping TypeName="BroadcastModel.station_program_flights">
-              <MappingFragment StoreEntitySet="station_program_flights">
-                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="spots" ColumnName="spots" />
-                <ScalarProperty Name="C120s_rate" ColumnName="120s_rate" />
-                <ScalarProperty Name="C90s_rate" ColumnName="90s_rate" />
-                <ScalarProperty Name="C60s_rate" ColumnName="60s_rate" />
-                <ScalarProperty Name="C30s_rate" ColumnName="30s_rate" />
-                <ScalarProperty Name="C15s_rate" ColumnName="15s_rate" />
-                <ScalarProperty Name="active" ColumnName="active" />
-                <ScalarProperty Name="media_week_id" ColumnName="media_week_id" />
-                <ScalarProperty Name="station_program_id" ColumnName="station_program_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="station_programs">
-            <EntityTypeMapping TypeName="BroadcastModel.station_programs">
-              <MappingFragment StoreEntitySet="station_programs">
-                <ScalarProperty Name="fixed_price" ColumnName="fixed_price" />
-                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
-                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
-                <ScalarProperty Name="rate_source" ColumnName="rate_source" />
-                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="rate_file_id" ColumnName="rate_file_id" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
-                <ScalarProperty Name="start_date" ColumnName="start_date" />
-                <ScalarProperty Name="daypart_name" ColumnName="daypart_name" />
-                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
-                <ScalarProperty Name="station_code" ColumnName="station_code" />
-                <ScalarProperty Name="program_name" ColumnName="program_name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="stations">
             <EntityTypeMapping TypeName="BroadcastModel.station">
               <MappingFragment StoreEntitySet="stations">
@@ -4456,45 +3889,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="station_program_flight_audiences">
-            <EntityTypeMapping TypeName="BroadcastModel.station_program_flight_audiences">
-              <MappingFragment StoreEntitySet="station_program_flight_audiences">
-                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="cpm120" ColumnName="cpm120" />
-                <ScalarProperty Name="cpm90" ColumnName="cpm90" />
-                <ScalarProperty Name="cpm60" ColumnName="cpm60" />
-                <ScalarProperty Name="cpm30" ColumnName="cpm30" />
-                <ScalarProperty Name="cpm15" ColumnName="cpm15" />
-                <ScalarProperty Name="rating" ColumnName="rating" />
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
-                <ScalarProperty Name="station_program_flight_id" ColumnName="station_program_flight_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="station_program_flight_proposal">
-            <EntityTypeMapping TypeName="BroadcastModel.station_program_flight_proposal">
-              <MappingFragment StoreEntitySet="station_program_flight_proposal">
-                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
-                <ScalarProperty Name="rate_source" ColumnName="rate_source" />
-                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
-                <ScalarProperty Name="start_date" ColumnName="start_date" />
-                <ScalarProperty Name="station_code" ColumnName="station_code" />
-                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
-                <ScalarProperty Name="spot_cost" ColumnName="spot_cost" />
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="isci" ColumnName="isci" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="spots" ColumnName="spots" />
-                <ScalarProperty Name="proprosal_version_detail_quarter_week_id" ColumnName="proprosal_version_detail_quarter_week_id" />
-                <ScalarProperty Name="station_program_flight_id" ColumnName="station_program_flight_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4635,14 +4029,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="station_program_genres" TypeName="BroadcastModel.station_program_genres" StoreEntitySet="station_program_genres">
-            <EndProperty Name="station_programs">
-              <ScalarProperty Name="id" ColumnName="station_program_id" />
-            </EndProperty>
-            <EndProperty Name="genre">
-              <ScalarProperty Name="id" ColumnName="genre_id" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="rep_firms">
             <EntityTypeMapping TypeName="BroadcastModel.rep_firms">
               <MappingFragment StoreEntitySet="rep_firms">

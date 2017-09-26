@@ -34,9 +34,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var sut = (ProposalProprietaryInventoryService)_ProposalProprietaryInventoryService;
             Assert.That(() => sut._SetProprietaryInventoryDaypartAndWeekInfo(new ProposalDetailProprietaryInventoryDto { GuaranteedAudience = null }, 0), Throws.Exception.With.Message.EqualTo(ProposalProprietaryInventoryService.MissingGuaranteedAudienceErorMessage));
         }
-
-        [Test]
         [Ignore]
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadProposalInventoryWithWastageIndicator()
         {
@@ -80,8 +79,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Test]
         [Ignore]
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadProposalInventoryWithWastageIndicatorOnMarketsChange()
         {
@@ -148,8 +147,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Test]
         [Ignore]
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SaveInventoryAllocations_NoDelete_OneConflict()
         {
@@ -165,6 +164,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SaveInventoryAllocations_Delete_NoConflict()
@@ -188,8 +188,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Test]
         [Ignore]
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SaveInventoryAllocations_SaveSnapshot()
         {
@@ -223,6 +223,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SaveInventoryAllocations_CalculateHeaderTotals()

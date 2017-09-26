@@ -160,7 +160,6 @@
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryService.cs" />
     <Compile Include="ApplicationServices\PostingBooksService.cs" />
-    <Compile Include="ApplicationServices\InventoryCrunchService.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
     <Compile Include="BusinessEngines\ImpressionAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailHeaderTotalsCalculationEngine.cs" />
@@ -177,6 +176,7 @@
     <Compile Include="Converters\ProposalScxConverter.cs" />
     <Compile Include="DaypartCache.cs" />
     <Compile Include="Entities\BroadcastAudience.cs" />
+    <Compile Include="Entities\DaypartDto.cs" />
     <Compile Include="Entities\IHavePostingBooks.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
     <Compile Include="Entities\OpenMarketInventoryAllocationSnapshotDto.cs" />
@@ -339,11 +339,6 @@
     <Compile Include="Entities\FlightWeekDto.cs" />
     <Compile Include="Entities\StationDetailDto.cs" />
     <Compile Include="Entities\NewStationProgramDto.cs" />
-    <Compile Include="Entities\StationProgramConflict.cs" />
-    <Compile Include="Entities\StationProgram.cs" />
-    <Compile Include="Entities\StationProgramFlightWeek.cs" />
-    <Compile Include="Entities\StationProgramFlightWeekAudience.cs" />
-    <Compile Include="Entities\StationProgramAudienceRateDto.cs" />
     <Compile Include="Entities\StationSummaryDto.cs" />
     <Compile Include="Entities\WeeklyDataDto.cs" />
     <Compile Include="Exceptions\BroadcastDuplicateRatesFileException.cs" />
@@ -395,8 +390,6 @@
     <Compile Include="Repositories\SpotLengthBroadcastRepository.cs" />
     <Compile Include="Repositories\SpotLengthMultiplierRepository.cs" />
     <Compile Include="Repositories\StationContactsRepository.cs" />
-    <Compile Include="Entities\StationProgramFlightDto.cs" />
-    <Compile Include="Repositories\StationProgramRepository.cs" />
     <Compile Include="Repositories\StationRepository.cs" />
     <Compile Include="Repositories\TrackerMappingRepository.cs" />
     <Compile Include="Repositories\TrafficRepository.cs" />

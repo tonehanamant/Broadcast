@@ -39,425 +39,426 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override void ExtractFileData(System.IO.Stream stream, Entities.RatesFile ratesFile, List<Entities.RatesFileProblem> fileProblems)
         {
-            try
-            {
-                _ValidateInputFileParams();
+            //Todo: fix or remove
+            //try
+            //{
+            //    _ValidateInputFileParams();
 
-                using (var parser = _SetupCSVParser(stream))
-                {
-                    if (parser == null)
-                    {
-                        throw new Exception("Unable to read file data.");
-                    }
+            //    using (var parser = _SetupCSVParser(stream))
+            //    {
+            //        if (parser == null)
+            //        {
+            //            throw new Exception("Unable to read file data.");
+            //        }
 
-                    var headerFields = parser.ReadFields();
-                    _requiredFields = _ValidateAndSetupRequiredFields(headerFields);
-                    _optionalFields = _ValidateAndSetupOptionalFields(headerFields);
-                    _audienceFields = _ValidateAndSetupAudienceFields(headerFields, fileProblems);
+            //        var headerFields = parser.ReadFields();
+            //        _requiredFields = _ValidateAndSetupRequiredFields(headerFields);
+            //        _optionalFields = _ValidateAndSetupOptionalFields(headerFields);
+            //        _audienceFields = _ValidateAndSetupAudienceFields(headerFields, fileProblems);
 
-                    ratesFile.StationPrograms.AddRange(_BuildStationProgramsList(parser, fileProblems));
-                }
+            //        ratesFile.StationPrograms.AddRange(_BuildStationProgramsList(parser, fileProblems));
+            //    }
 
-            }
-            catch (Exception e)
-            {
-                throw new Exception(string.Format("Unable to parse rate file: {0} The file may be invalid: {1}", e.Message, ratesFile.FileName), e);
-            }            
+            //}
+            //catch (Exception e)
+            //{
+            //    throw new Exception(string.Format("Unable to parse rate file: {0} The file may be invalid: {1}", e.Message, ratesFile.FileName), e);
+            //}            
         }
 
-        private Dictionary<string, int> _ValidateAndSetupOptionalFields(IEnumerable<string> fieldsArray)
-        {
-            var fields = fieldsArray.ToList();
-            var headerDict = new Dictionary<string, int>();
+        //private Dictionary<string, int> _ValidateAndSetupOptionalFields(IEnumerable<string> fieldsArray)
+        //{
+        //    var fields = fieldsArray.ToList();
+        //    var headerDict = new Dictionary<string, int>();
 
-            foreach (var header in CsvOptionalFileHeaders)
-            {
-                var headerItemIndex = fields.IndexOf(header);
-                if (headerItemIndex < 0)
-                    continue;
-                headerDict.Add(header, headerItemIndex);
-            }
+        //    foreach (var header in CsvOptionalFileHeaders)
+        //    {
+        //        var headerItemIndex = fields.IndexOf(header);
+        //        if (headerItemIndex < 0)
+        //            continue;
+        //        headerDict.Add(header, headerItemIndex);
+        //    }
 
-            return headerDict;
-        }
+        //    return headerDict;
+        //}
 
-        private void _ValidateInputFileParams()
-        {
-            if (string.IsNullOrEmpty(Request.FileName))
-                throw new Exception(string.Format("Unable to parse rate file: {0}. The name of the file is invalid.", Request.FileName));
+        //private void _ValidateInputFileParams()
+        //{
+        //    if (string.IsNullOrEmpty(Request.FileName))
+        //        throw new Exception(string.Format("Unable to parse rate file: {0}. The name of the file is invalid.", Request.FileName));
 
-            if (Request.RatesStream.Length == 0)
-                throw new Exception(string.Format("Unable to parse rate file: {0}. Invalid file size.", Request.FileName));
+        //    if (Request.RatesStream.Length == 0)
+        //        throw new Exception(string.Format("Unable to parse rate file: {0}. Invalid file size.", Request.FileName));
 
-            if (string.IsNullOrEmpty(Request.BlockName))
-                throw new Exception(string.Format("Unable to parse rate file: {0}. The block name is invalid.", Request.FileName));
+        //    if (string.IsNullOrEmpty(Request.BlockName))
+        //        throw new Exception(string.Format("Unable to parse rate file: {0}. The block name is invalid.", Request.FileName));
 
-            if (!Request.FlightWeeks.Any())
-                throw new Exception(string.Format("Unable to parse rate file: {0}. Invalid flight weeks.", Request.FileName));
-        }
+        //    if (!Request.FlightWeeks.Any())
+        //        throw new Exception(string.Format("Unable to parse rate file: {0}. Invalid flight weeks.", Request.FileName));
+        //}
 
-        private Dictionary<string, int> _ValidateAndSetupRequiredFields(string[] fieldsArray)
-        {
-            var fields = fieldsArray.ToList();
-            var validationErrors = new List<string>();
-            Dictionary<string, int> headerDict = new Dictionary<string, int>();
+        //private Dictionary<string, int> _ValidateAndSetupRequiredFields(string[] fieldsArray)
+        //{
+        //    var fields = fieldsArray.ToList();
+        //    var validationErrors = new List<string>();
+        //    Dictionary<string, int> headerDict = new Dictionary<string, int>();
 
-            foreach (var header in CsvFileHeaders)
-            {
-                int headerItemIndex = fields.IndexOf(header);
-                if (headerItemIndex >= 0)
-                {
-                    headerDict.Add(header, headerItemIndex);
-                    continue;
-                }
-                validationErrors.Add(string.Format("Could not find required column {0}.", header));
-            }
+        //    foreach (var header in CsvFileHeaders)
+        //    {
+        //        int headerItemIndex = fields.IndexOf(header);
+        //        if (headerItemIndex >= 0)
+        //        {
+        //            headerDict.Add(header, headerItemIndex);
+        //            continue;
+        //        }
+        //        validationErrors.Add(string.Format("Could not find required column {0}.", header));
+        //    }
 
-            if (validationErrors.Any())
-            {
-                string message = "";
-                validationErrors.ForEach(err => message += err + Environment.NewLine);
-                throw new ApplicationException(message);
-            }
-            return headerDict;
-        }
+        //    if (validationErrors.Any())
+        //    {
+        //        string message = "";
+        //        validationErrors.ForEach(err => message += err + Environment.NewLine);
+        //        throw new ApplicationException(message);
+        //    }
+        //    return headerDict;
+        //}
 
-        private TextFieldParser _SetupCSVParser(Stream rawStream)
-        {
-            var parser = new TextFieldParser(rawStream);
-            if (parser.EndOfData)
-            {
-                parser.Close();
-                return null;
-            }
+        //private TextFieldParser _SetupCSVParser(Stream rawStream)
+        //{
+        //    var parser = new TextFieldParser(rawStream);
+        //    if (parser.EndOfData)
+        //    {
+        //        parser.Close();
+        //        return null;
+        //    }
 
-            parser.SetDelimiters(new string[] { "," });
+        //    parser.SetDelimiters(new string[] { "," });
 
-            return parser;
-        }
+        //    return parser;
+        //}
 
-        private IEnumerable<StationProgram> _BuildStationProgramsList(TextFieldParser parser, List<RatesFileProblem> fileProblems)
-        {
-            var stationPrograms = new List<StationProgram>();
-            while (!parser.EndOfData)
-            {
-                var currentLine = parser.LineNumber;
-                var currentData = parser.ReadFields();
-                if (_IsEmptyLine(currentData))
-                { 
-                    continue; //skip line if empty
-                }
+        //private IEnumerable<StationProgram> _BuildStationProgramsList(TextFieldParser parser, List<RatesFileProblem> fileProblems)
+        //{
+        //    var stationPrograms = new List<StationProgram>();
+        //    while (!parser.EndOfData)
+        //    {
+        //        var currentLine = parser.LineNumber;
+        //        var currentData = parser.ReadFields();
+        //        if (_IsEmptyLine(currentData))
+        //        { 
+        //            continue; //skip line if empty
+        //        }
 
-                if (_IsIncompleteLine(currentData))
-                {
-                    fileProblems.Add(new RatesFileProblem()
-                    {
-                        ProblemDescription = string.Format("Incomplete record at line {0}", currentLine),
-                        ProgramName = Request.BlockName,
-                        StationLetters = currentData[_requiredFields["Station"]]
-                    });
-                    continue;
-                }
+        //        if (_IsIncompleteLine(currentData))
+        //        {
+        //            fileProblems.Add(new RatesFileProblem()
+        //            {
+        //                ProblemDescription = string.Format("Incomplete record at line {0}", currentLine),
+        //                ProgramName = Request.BlockName,
+        //                StationLetters = currentData[_requiredFields["Station"]]
+        //            });
+        //            continue;
+        //        }
 
-                try
-                {
-                    var stationProgram = _BuildStationProgram(currentData);
+        //        try
+        //        {
+        //            var stationProgram = _BuildStationProgram(currentData);
 
-                    // validation rule for adding same station with same spot lenght
-                    if (_CheckStationAndDaypartAndSpotLengthExists(stationProgram, stationPrograms, fileProblems))
-                        stationPrograms.Add(stationProgram);   
-                }
-                catch (Exception e)
-                {
-                    fileProblems.Add(new RatesFileProblem()
-                    {
-                        ProblemDescription = string.Format("Error while parsing record at line {0}: {1}", currentLine, e.Message),
-                        ProgramName = Request.BlockName,
-                        StationLetters = currentData[_requiredFields["Station"]]
-                    });
-                }
-            }
+        //            // validation rule for adding same station with same spot lenght
+        //            if (_CheckStationAndDaypartAndSpotLengthExists(stationProgram, stationPrograms, fileProblems))
+        //                stationPrograms.Add(stationProgram);   
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            fileProblems.Add(new RatesFileProblem()
+        //            {
+        //                ProblemDescription = string.Format("Error while parsing record at line {0}: {1}", currentLine, e.Message),
+        //                ProgramName = Request.BlockName,
+        //                StationLetters = currentData[_requiredFields["Station"]]
+        //            });
+        //        }
+        //    }
 
-            if (!stationPrograms.Any() && fileProblems.Any() && fileProblems.All(a => a.ProblemDescription.Contains("Invalid station")))
-                throw new Exception(string.Format("There are no known stations in the file {0}", this.Request.FileName));
+        //    if (!stationPrograms.Any() && fileProblems.Any() && fileProblems.All(a => a.ProblemDescription.Contains("Invalid station")))
+        //        throw new Exception(string.Format("There are no known stations in the file {0}", this.Request.FileName));
 
-            // check for programs with invalid cpms
-            CheckProgramsAudiences(stationPrograms, fileProblems);
+        //    // check for programs with invalid cpms
+        //    CheckProgramsAudiences(stationPrograms, fileProblems);
 
-            // if no programs returned after validating cpms, throw exception
-            if (!stationPrograms.Any() && fileProblems.Any() && fileProblems.All(a => a.ProblemDescription.Contains("Invalid station: no Demo cpm")))
-                throw new Exception(string.Format("There are no valid cpm entries in the file {0}", this.Request.FileName));
+        //    // if no programs returned after validating cpms, throw exception
+        //    if (!stationPrograms.Any() && fileProblems.Any() && fileProblems.All(a => a.ProblemDescription.Contains("Invalid station: no Demo cpm")))
+        //        throw new Exception(string.Format("There are no valid cpm entries in the file {0}", this.Request.FileName));
 
-            if (!stationPrograms.Any() && fileProblems.Any() && fileProblems.All(a => a.ProblemDescription.Contains("Invalid daypart")))
-                throw new Exception(string.Format("There are no valid dayparts in the file {0}", this.Request.FileName));
+        //    if (!stationPrograms.Any() && fileProblems.Any() && fileProblems.All(a => a.ProblemDescription.Contains("Invalid daypart")))
+        //        throw new Exception(string.Format("There are no valid dayparts in the file {0}", this.Request.FileName));
 
-            if (!stationPrograms.Any() && fileProblems.Any() && fileProblems.All(a => a.ProblemDescription.Contains("Invalid spot length for program")))
-                throw new Exception(string.Format("There are no valid spot length in the file {0}", this.Request.FileName));       
+        //    if (!stationPrograms.Any() && fileProblems.Any() && fileProblems.All(a => a.ProblemDescription.Contains("Invalid spot length for program")))
+        //        throw new Exception(string.Format("There are no valid spot length in the file {0}", this.Request.FileName));       
 
-            _CheckIfFixedPriceIsTheSameForDaypart(stationPrograms);
+        //    _CheckIfFixedPriceIsTheSameForDaypart(stationPrograms);
 
-            return stationPrograms;
-        }
+        //    return stationPrograms;
+        //}
 
-        private void _CheckIfFixedPriceIsTheSameForDaypart(IEnumerable<StationProgram> stationPrograms)
-        {
-            var stationProgramsGroupedByDaypartCode = stationPrograms.GroupBy(stationProgram => stationProgram.DaypartCode);
+        //private void _CheckIfFixedPriceIsTheSameForDaypart(IEnumerable<StationProgram> stationPrograms)
+        //{
+        //    var stationProgramsGroupedByDaypartCode = stationPrograms.GroupBy(stationProgram => stationProgram.DaypartCode);
 
-            foreach (var stationProgram in stationProgramsGroupedByDaypartCode)
-            {
-                var firstStationProgram = stationProgram.First();
-                var stationProgramWithDifferentFixedPrice = stationProgram.FirstOrDefault(s => s.FixedPrice != firstStationProgram.FixedPrice);
-                
-                if (stationProgramWithDifferentFixedPrice != null)
-                {
-                    throw new Exception(string.Format("Daypart code {0} has multiple costs, please correct the error", firstStationProgram.DaypartCode));
-                }
-            }
-        }
+        //    foreach (var stationProgram in stationProgramsGroupedByDaypartCode)
+        //    {
+        //        var firstStationProgram = stationProgram.First();
+        //        var stationProgramWithDifferentFixedPrice = stationProgram.FirstOrDefault(s => s.FixedPrice != firstStationProgram.FixedPrice);
 
-        private void CheckProgramsAudiences(List<StationProgram> stationsPrograms, List<RatesFileProblem> fileProblems)
-        {
-            var programsWithNoAudiences =
-                stationsPrograms.Where(program => program.FlightWeeks.Any(flight => !flight.Audiences.Any())).ToList();
+        //        if (stationProgramWithDifferentFixedPrice != null)
+        //        {
+        //            throw new Exception(string.Format("Daypart code {0} has multiple costs, please correct the error", firstStationProgram.DaypartCode));
+        //        }
+        //    }
+        //}
 
-            fileProblems.AddRange(programsWithNoAudiences.Select(program => new RatesFileProblem()
-            {
-                ProblemDescription = "Invalid station: no Demo cpm", ProgramName = Request.BlockName, StationLetters = program.StationLegacyCallLetters
-            }));
+        //private void CheckProgramsAudiences(List<StationProgram> stationsPrograms, List<RatesFileProblem> fileProblems)
+        //{
+        //    var programsWithNoAudiences =
+        //        stationsPrograms.Where(program => program.FlightWeeks.Any(flight => !flight.Audiences.Any())).ToList();
 
-            stationsPrograms.RemoveAll(a=> programsWithNoAudiences.Contains(a));
-        }
+        //    fileProblems.AddRange(programsWithNoAudiences.Select(program => new RatesFileProblem()
+        //    {
+        //        ProblemDescription = "Invalid station: no Demo cpm", ProgramName = Request.BlockName, StationLetters = program.StationLegacyCallLetters
+        //    }));
 
-        private bool _IsValidSpotLenght(int spotLength)
-        {
-            return SpothLengths.Contains(spotLength);
-        }
+        //    stationsPrograms.RemoveAll(a=> programsWithNoAudiences.Contains(a));
+        //}
 
-        private bool _CheckStationAndDaypartAndSpotLengthExists(StationProgram program, List<StationProgram> stationPrograms,
-            List<RatesFileProblem> fileProblems)
-        {
-            if (!stationPrograms.Any(
-                p =>
-                    p.StationLegacyCallLetters == program.StationLegacyCallLetters &&
-                    p.SpotLength == program.SpotLength &&
-                    p.Daypart.Id == program.Daypart.Id)) return true;
+        //private bool _IsValidSpotLenght(int spotLength)
+        //{
+        //    return SpothLengths.Contains(spotLength);
+        //}
 
-            fileProblems.Add(new RatesFileProblem()
-            {
-                ProblemDescription = string.Format("Invalid data for Station {0}, duplicate entry for same spot length", program.StationLegacyCallLetters),
-                ProgramName = Request.BlockName,
-                StationLetters = program.StationLegacyCallLetters
-            });
+        //private bool _CheckStationAndDaypartAndSpotLengthExists(StationProgram program, List<StationProgram> stationPrograms,
+        //    List<RatesFileProblem> fileProblems)
+        //{
+        //    if (!stationPrograms.Any(
+        //        p =>
+        //            p.StationLegacyCallLetters == program.StationLegacyCallLetters &&
+        //            p.SpotLength == program.SpotLength &&
+        //            p.Daypart.Id == program.Daypart.Id)) return true;
 
-            return false;
-        }
+        //    fileProblems.Add(new RatesFileProblem()
+        //    {
+        //        ProblemDescription = string.Format("Invalid data for Station {0}, duplicate entry for same spot length", program.StationLegacyCallLetters),
+        //        ProgramName = Request.BlockName,
+        //        StationLetters = program.StationLegacyCallLetters
+        //    });
 
-        private StationProgram _BuildStationProgram(string[] currentData)
-        {
-            var station = currentData[_requiredFields["Station"]];
-            var daypart = ParseStringToDaypart(currentData[_requiredFields["Daypart"]], station);
-            var stationCallLetters = _ParseStationCallLetters(station);
-            // check for valid spot length
-            var spotLength = _ParseSpotLength(currentData[_requiredFields["Length"]], stationCallLetters);
-            // parse daypart code
-            var daypartCode = _ParseDaypartCode(currentData[_requiredFields["Daypart Code"]], stationCallLetters);
+        //    return false;
+        //}
 
-            var program = new StationProgram();
-            program.Daypart = daypart;
-            program.Daypart.Id = _DaypartCache.GetIdByDaypart(program.Daypart);
-            program.DayPartName = daypart.Preview;
-            program.StartDate = Request.FlightStartDate;
-            program.EndDate = Request.FlightEndDate;
-            program.FlightWeeks = _BuildProgramFlightWeeks(Request.FlightWeeks, currentData);
-            program.ProgramName = Request.BlockName; // selected by user
-            program.StationLegacyCallLetters = stationCallLetters;
-            program.SpotLength = spotLength;
-            program.DaypartCode = daypartCode;
-            program.RateSource = RateSource;
-            program.FixedPrice = ParseFixedPrice(currentData, "Fixed");
-            
-            return program;
-        }
+        //private StationProgram _BuildStationProgram(string[] currentData)
+        //{
+        //    var station = currentData[_requiredFields["Station"]];
+        //    var daypart = ParseStringToDaypart(currentData[_requiredFields["Daypart"]], station);
+        //    var stationCallLetters = _ParseStationCallLetters(station);
+        //    // check for valid spot length
+        //    var spotLength = _ParseSpotLength(currentData[_requiredFields["Length"]], stationCallLetters);
+        //    // parse daypart code
+        //    var daypartCode = _ParseDaypartCode(currentData[_requiredFields["Daypart Code"]], stationCallLetters);
 
-        private string _ParseDaypartCode(string daypartCode, string stationCallLetters)
-        {
-            var dayCode = daypartCode.Trim();
-            if (string.IsNullOrEmpty(dayCode) || daypartCode.Length > 10 || !dayCode.All(c => char.IsLetterOrDigit(c) || c == ' '))
-            {
-                throw new Exception(string.Format("Invalid 'daypart code' format for Station {0}", stationCallLetters));
-            }
+        //    var program = new StationProgram();
+        //    program.Daypart = daypart;
+        //    program.Daypart.Id = _DaypartCache.GetIdByDaypart(program.Daypart);
+        //    program.DayPartName = daypart.Preview;
+        //    program.StartDate = Request.FlightStartDate;
+        //    program.EndDate = Request.FlightEndDate;
+        //    program.FlightWeeks = _BuildProgramFlightWeeks(Request.FlightWeeks, currentData);
+        //    program.ProgramName = Request.BlockName; // selected by user
+        //    program.StationLegacyCallLetters = stationCallLetters;
+        //    program.SpotLength = spotLength;
+        //    program.DaypartCode = daypartCode;
+        //    program.RateSource = RateSource;
+        //    program.FixedPrice = ParseFixedPrice(currentData, "Fixed");
 
-            return dayCode;
-        }
+        //    return program;
+        //}
 
-        private int _ParseSpotLength(string length, string stationCallLetters)
-        {
-            int spotLength;
+        //private string _ParseDaypartCode(string daypartCode, string stationCallLetters)
+        //{
+        //    var dayCode = daypartCode.Trim();
+        //    if (string.IsNullOrEmpty(dayCode) || daypartCode.Length > 10 || !dayCode.All(c => char.IsLetterOrDigit(c) || c == ' '))
+        //    {
+        //        throw new Exception(string.Format("Invalid 'daypart code' format for Station {0}", stationCallLetters));
+        //    }
 
-            if (!int.TryParse(length, out spotLength))
-                throw new Exception(string.Format("Invalid spot length for program '{0}' on Station '{1}'", this.Request.BlockName, stationCallLetters));
-            if (!_IsValidSpotLenght(spotLength))
-                throw new Exception(string.Format("Invalid spot length for program '{0}' on Station '{1}'", this.Request.BlockName, stationCallLetters));
+        //    return dayCode;
+        //}
 
-            return spotLength;
-        }
+        //private int _ParseSpotLength(string length, string stationCallLetters)
+        //{
+        //    int spotLength;
 
-        private List<StationProgramFlightWeek> _BuildProgramFlightWeeks(List<FlightWeekDto> flightWeeks, string[] currentData)
-        {
-            var flightweeks = new List<StationProgramFlightWeek>();
-            
-            foreach (var mediaweek in flightWeeks)
-            {
-                var flightweek = new StationProgramFlightWeek
-                {
-                    Active = !mediaweek.IsHiatus,
-                    FlightWeek = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(
-                        mediaweek.StartDate, mediaweek.EndDate).FirstOrDefault()
-                };
-                flightweek.Spots = int.Parse(currentData[_requiredFields["Spots"]]);
-                flightweek.Audiences = _BuildFlightweekAudiences(currentData);
-                
-                flightweeks.Add(flightweek);
-            }
+        //    if (!int.TryParse(length, out spotLength))
+        //        throw new Exception(string.Format("Invalid spot length for program '{0}' on Station '{1}'", this.Request.BlockName, stationCallLetters));
+        //    if (!_IsValidSpotLenght(spotLength))
+        //        throw new Exception(string.Format("Invalid spot length for program '{0}' on Station '{1}'", this.Request.BlockName, stationCallLetters));
 
-            return flightweeks;
-        }
+        //    return spotLength;
+        //}
 
-        private decimal? ParseFixedPrice(string[] currentData, string optionalHeader)
-        {
-            int headerIndex;
-            if (!_optionalFields.TryGetValue(optionalHeader, out headerIndex))
-                return null;
-            return Convert.ToDecimal(currentData[headerIndex]);
-        }
+        //private List<StationProgramFlightWeek> _BuildProgramFlightWeeks(List<FlightWeekDto> flightWeeks, string[] currentData)
+        //{
+        //    var flightweeks = new List<StationProgramFlightWeek>();
 
-        private List<StationProgramFlightWeekAudience> _BuildFlightweekAudiences(string[] currentData)
-        {
-            List<StationProgramFlightWeekAudience> flightWeekAudiences = new List<StationProgramFlightWeekAudience>();
-            foreach (var audienceField in _audienceFields)
-            {
-                if (audienceField.Value >= currentData.Length || string.IsNullOrEmpty(currentData[audienceField.Value]))
-                    continue;
+        //    foreach (var mediaweek in flightWeeks)
+        //    {
+        //        var flightweek = new StationProgramFlightWeek
+        //        {
+        //            Active = !mediaweek.IsHiatus,
+        //            FlightWeek = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(
+        //                mediaweek.StartDate, mediaweek.EndDate).FirstOrDefault()
+        //        };
+        //        flightweek.Spots = int.Parse(currentData[_requiredFields["Spots"]]);
+        //        flightweek.Audiences = _BuildFlightweekAudiences(currentData);
 
-                var flightWeekAudience = new StationProgramFlightWeekAudience();
-                flightWeekAudience.Audience = _audienceMapping[audienceField.Key];
+        //        flightweeks.Add(flightweek);
+        //    }
 
-                var audienceCpm = decimal.Parse(currentData[audienceField.Value]);
+        //    return flightweeks;
+        //}
 
-                var spotLength = int.Parse(currentData[_requiredFields["Length"]]);
-                switch (spotLength)
-                {
-                    case 15:
-                        flightWeekAudience.Cpm15 = audienceCpm;
-                        break;
-                    case 30:
-                        flightWeekAudience.Cpm30 = audienceCpm;
-                        break;
-                    case 60:
-                        flightWeekAudience.Cpm60 = audienceCpm;
-                        break;
-                    case 90:
-                        flightWeekAudience.Cpm90 = audienceCpm;
-                        break;
-                    case 120:
-                        flightWeekAudience.Cpm120 = audienceCpm;
-                        break;
-                }
+        //private decimal? ParseFixedPrice(string[] currentData, string optionalHeader)
+        //{
+        //    int headerIndex;
+        //    if (!_optionalFields.TryGetValue(optionalHeader, out headerIndex))
+        //        return null;
+        //    return Convert.ToDecimal(currentData[headerIndex]);
+        //}
 
-                flightWeekAudiences.Add(flightWeekAudience);
-            }
-            return flightWeekAudiences;
-        }
+        //private List<StationProgramFlightWeekAudience> _BuildFlightweekAudiences(string[] currentData)
+        //{
+        //    List<StationProgramFlightWeekAudience> flightWeekAudiences = new List<StationProgramFlightWeekAudience>();
+        //    foreach (var audienceField in _audienceFields)
+        //    {
+        //        if (audienceField.Value >= currentData.Length || string.IsNullOrEmpty(currentData[audienceField.Value]))
+        //            continue;
 
-        private string _ParseStationCallLetters(string stationName)
-        {
-            // check if it is legacy or the call letters
-            var foundStation = _GetDisplayBroadcastStation(stationName);
+        //        var flightWeekAudience = new StationProgramFlightWeekAudience();
+        //        flightWeekAudience.Audience = _audienceMapping[audienceField.Key];
 
-            if (foundStation == null)
-            {
-                var station = stationName.Replace("-TV", "").Trim();
-                foundStation = _GetDisplayBroadcastStation(station);
-            }
+        //        var audienceCpm = decimal.Parse(currentData[audienceField.Value]);
 
-            if (foundStation == null)
-                throw new Exception(string.Format("Invalid station: {0}.", stationName));
+        //        var spotLength = int.Parse(currentData[_requiredFields["Length"]]);
+        //        switch (spotLength)
+        //        {
+        //            case 15:
+        //                flightWeekAudience.Cpm15 = audienceCpm;
+        //                break;
+        //            case 30:
+        //                flightWeekAudience.Cpm30 = audienceCpm;
+        //                break;
+        //            case 60:
+        //                flightWeekAudience.Cpm60 = audienceCpm;
+        //                break;
+        //            case 90:
+        //                flightWeekAudience.Cpm90 = audienceCpm;
+        //                break;
+        //            case 120:
+        //                flightWeekAudience.Cpm120 = audienceCpm;
+        //                break;
+        //        }
 
-            return foundStation.LegacyCallLetters;
-        }
+        //        flightWeekAudiences.Add(flightWeekAudience);
+        //    }
+        //    return flightWeekAudiences;
+        //}
 
-        private DisplayBroadcastStation _GetDisplayBroadcastStation(string stationName)
-        {
-            var _stationRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
-            return _stationRepository.GetBroadcastStationByLegacyCallLetters(stationName) ??
-                                _stationRepository.GetBroadcastStationByCallLetters(stationName); 
-        }
+        //private string _ParseStationCallLetters(string stationName)
+        //{
+        //    // check if it is legacy or the call letters
+        //    var foundStation = _GetDisplayBroadcastStation(stationName);
 
-        private Dictionary<string, int> _ValidateAndSetupAudienceFields(string[] fieldsArray, List<RatesFileProblem> fileProblems)
-        {
-            Dictionary<string, int> audienceFieldsMap = new Dictionary<string, int>();
-            _audienceMapping = new Dictionary<string, DisplayAudience>();
-            var allFields = fieldsArray.ToList();
-            var audienceFields = fieldsArray.Except(_requiredFields.Keys).Except(_optionalFields.Keys).Where(a=>!string.IsNullOrWhiteSpace(a)).ToList();
-            var validationErrors = new List<string>();
+        //    if (foundStation == null)
+        //    {
+        //        var station = stationName.Replace("-TV", "").Trim();
+        //        foundStation = _GetDisplayBroadcastStation(station);
+        //    }
 
-            foreach (var field in audienceFields)
-            {
-                int fieldIndex = allFields.IndexOf(field);
-                try
-                {
-                    var maestroAudience = _GetMaestroAudienceIdByAudienceCode(field);
-                    audienceFieldsMap.Add(field, fieldIndex);
-                    _audienceMapping.Add(field, maestroAudience);
-                }
-                catch (Exception e)
-                {
-                    fileProblems.Add(new RatesFileProblem()
-                    {
-                        ProblemDescription = string.Format("Could not find Maestro audience mapping to {0}: {1}", field, e.Message),
-                        ProgramName = this.Request.BlockName
-                    });
-                }
-            }
+        //    if (foundStation == null)
+        //        throw new Exception(string.Format("Invalid station: {0}.", stationName));
 
-            return audienceFieldsMap;
-        }
+        //    return foundStation.LegacyCallLetters;
+        //}
 
-        private DisplayAudience _GetMaestroAudienceIdByAudienceCode(string audienceCode)
-        {
-            var matchingAudience = _AudiencesCache.GetDisplayAudienceByCode(audienceCode);
+        //private DisplayBroadcastStation _GetDisplayBroadcastStation(string stationName)
+        //{
+        //    var _stationRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
+        //    return _stationRepository.GetBroadcastStationByLegacyCallLetters(stationName) ??
+        //                        _stationRepository.GetBroadcastStationByCallLetters(stationName); 
+        //}
 
-            if (matchingAudience == null)
-            {
-                throw new Exception(
-                    string.Format("Unable to find matching maestro audience {0}.", audienceCode));
-            }
-            return matchingAudience;
-        } 
+        //private Dictionary<string, int> _ValidateAndSetupAudienceFields(string[] fieldsArray, List<RatesFileProblem> fileProblems)
+        //{
+        //    Dictionary<string, int> audienceFieldsMap = new Dictionary<string, int>();
+        //    _audienceMapping = new Dictionary<string, DisplayAudience>();
+        //    var allFields = fieldsArray.ToList();
+        //    var audienceFields = fieldsArray.Except(_requiredFields.Keys).Except(_optionalFields.Keys).Where(a=>!string.IsNullOrWhiteSpace(a)).ToList();
+        //    var validationErrors = new List<string>();
 
-        private bool _IsEmptyLine(string[] fieldArray)
-        {
-            foreach (var field in fieldArray)
-            {
-                if (!String.IsNullOrEmpty(field))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+        //    foreach (var field in audienceFields)
+        //    {
+        //        int fieldIndex = allFields.IndexOf(field);
+        //        try
+        //        {
+        //            var maestroAudience = _GetMaestroAudienceIdByAudienceCode(field);
+        //            audienceFieldsMap.Add(field, fieldIndex);
+        //            _audienceMapping.Add(field, maestroAudience);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            fileProblems.Add(new RatesFileProblem()
+        //            {
+        //                ProblemDescription = string.Format("Could not find Maestro audience mapping to {0}: {1}", field, e.Message),
+        //                ProgramName = this.Request.BlockName
+        //            });
+        //        }
+        //    }
 
-        private bool _IsIncompleteLine(string[] fieldArray)
-        {
-            foreach (var requiredField in _requiredFields)
-            {
-                if (string.IsNullOrEmpty(fieldArray[requiredField.Value]))
-                {
-                    return true;
-                }
-            }
+        //    return audienceFieldsMap;
+        //}
 
-            return false;
-        }
+        //private DisplayAudience _GetMaestroAudienceIdByAudienceCode(string audienceCode)
+        //{
+        //    var matchingAudience = _AudiencesCache.GetDisplayAudienceByCode(audienceCode);
+
+        //    if (matchingAudience == null)
+        //    {
+        //        throw new Exception(
+        //            string.Format("Unable to find matching maestro audience {0}.", audienceCode));
+        //    }
+        //    return matchingAudience;
+        //} 
+
+        //private bool _IsEmptyLine(string[] fieldArray)
+        //{
+        //    foreach (var field in fieldArray)
+        //    {
+        //        if (!String.IsNullOrEmpty(field))
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //}
+
+        //private bool _IsIncompleteLine(string[] fieldArray)
+        //{
+        //    foreach (var requiredField in _requiredFields)
+        //    {
+        //        if (string.IsNullOrEmpty(fieldArray[requiredField.Value]))
+        //        {
+        //            return true;
+        //        }
+        //    }
+
+        //    return false;
+        //}
     }
 }

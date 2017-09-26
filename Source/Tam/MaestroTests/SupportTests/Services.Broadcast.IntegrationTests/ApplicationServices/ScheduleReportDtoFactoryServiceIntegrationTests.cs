@@ -528,6 +528,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_GenerateScheduleReportDto()
         {
@@ -553,6 +554,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         /// (which would have been excluded with old logic) bvs records.
         /// </summary>
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_GenerateScheduleReportDto_NTI_ClockDateAdjustment()
         {
@@ -614,6 +616,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         
         
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_Market_Datepart_Restrictions_BB294()
         {
@@ -634,6 +637,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
  
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void Schedule_Upload_Case_Sensitive_ISCIs_BCOP1927()
         {

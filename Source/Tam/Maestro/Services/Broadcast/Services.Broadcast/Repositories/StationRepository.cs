@@ -17,14 +17,12 @@ namespace Services.Broadcast.Repositories
         DisplayBroadcastStation GetBroadcastStationByCode(int code);
         DisplayBroadcastStation GetBroadcastStationByLegacyCallLetters(string callLetters);
         DisplayBroadcastStation GetBroadcastStationByCallLetters(string stationCallLetters);
-        DisplayBroadcastStation GetBroadcastStationFromProgramId(int programId);
         List<DisplayBroadcastStation> GetBroadcastStationListByLegacyCallLetters(List<string> stationNameList);
         List<DisplayBroadcastStation> GetBroadcastStationsByFlightWeek(RatesFile.RateSourceType rateSource, int mediaWeekId, bool isIncluded);
         List<DisplayBroadcastStation> GetBroadcastStationListByStationCode(List<int> fileStationCodes);
         int GetBroadcastStationCodeByContactId(int stationContactId);
         void UpdateStation(int code, string user, DateTime timeStamp);
         void UpdateStationList(List<int> stationCodes, string user, DateTime timeStamp);
-        int GetBroadcastStationCodeByProgramId(int programId);
         short? GetStationCode(string stationName);
     }
 
@@ -37,67 +35,70 @@ namespace Services.Broadcast.Repositories
 
         public List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(RatesFile.RateSourceType rateSource)
         {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    return (from s in context.stations
-                            select new DisplayBroadcastStation
-                            {
-                                Code = s.station_code,
-                                Affiliation = s.affiliation,
-                                CallLetters = s.station_call_letters,
-                                LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market.geography_name,
-                                ModifiedDate = s.modified_date,
-                                FlightWeeks =
-                                (from pf in context.station_program_flights
-                                 join sp in context.station_programs on pf.station_program_id equals sp.id
-                                 where sp.station_code == s.station_code && sp.rate_source == (byte) rateSource
-                                 select new FlightWeekDto
-                                 {
-                                     Id = pf.media_week_id,
-                                     IsHiatus = !pf.active
-                                 }).Distinct().OrderBy(fw => fw.Id)
-                            }).ToList();
-                });
+            return new List<DisplayBroadcastStation>();
+            //return _InReadUncommitedTransaction(
+            //    context =>
+            //    {
+            //        return (from s in context.stations
+            //                select new DisplayBroadcastStation
+            //                {
+            //                    Code = s.station_code,
+            //                    Affiliation = s.affiliation,
+            //                    CallLetters = s.station_call_letters,
+            //                    LegacyCallLetters = s.legacy_call_letters,
+            //                    OriginMarket = s.market.geography_name,
+            //                    ModifiedDate = s.modified_date,
+            //                    FlightWeeks =
+            //                    (from pf in context.station_program_flights
+            //                     join sp in context.station_programs on pf.station_program_id equals sp.id
+            //                     where sp.station_code == s.station_code && sp.rate_source == (byte) rateSource
+            //                     select new FlightWeekDto
+            //                     {
+            //                         Id = pf.media_week_id,
+            //                         IsHiatus = !pf.active
+            //                     }).Distinct().OrderBy(fw => fw.Id)
+            //                }).ToList();
+            //    });
         }
 
         public List<DisplayBroadcastStation> GetBroadcastStationsByFlightWeek(RatesFile.RateSourceType rateSource, int mediaWeekId, bool isIncluded)
         {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    var query =
-                        context.stations.Where(
-                            s =>
-                                s.station_programs.Any(
-                                    p => (p.station_program_flights.Any(f => f.media_week_id == mediaWeekId))
-                                         && p.rate_source == (byte) rateSource &&
-                                         (p.rate_file_id == null ||
-                                          p.rate_files.status == (byte)RatesFile.FileStatusEnum.Loaded)
-                                          ) == isIncluded);
+            //Todo: fix or remove
+            return new List<DisplayBroadcastStation>();
+            //return _InReadUncommitedTransaction(
+            //    context =>
+            //    {
+            //        var query =
+            //            context.stations.Where(
+            //                s =>
+            //                    s.station_programs.Any(
+            //                        p => (p.station_program_flights.Any(f => f.media_week_id == mediaWeekId))
+            //                             && p.rate_source == (byte) rateSource &&
+            //                             (p.rate_file_id == null ||
+            //                              p.rate_files.status == (byte)RatesFile.FileStatusEnum.Loaded)
+            //                              ) == isIncluded);
 
-                    var result = query.Select(
-                        s => new DisplayBroadcastStation
-                        {
-                            Code = s.station_code,
-                            Affiliation = s.affiliation,
-                            CallLetters = s.station_call_letters,
-                            LegacyCallLetters = s.legacy_call_letters,
-                            OriginMarket = s.market.geography_name,
-                            ModifiedDate = s.modified_date,
-                            FlightWeeks =
-                                (from pf in context.station_program_flights
-                                 join sp in context.station_programs on pf.station_program_id equals sp.id
-                                 where sp.station_code == s.station_code && sp.rate_source == (byte) rateSource
-                                 select new FlightWeekDto
-                                 {
-                                     Id = pf.media_week_id,
-                                     IsHiatus = !pf.active
-                                 }).Distinct().OrderBy(fw => fw.Id)
-                        }).ToList();
-                    return result;
-                });
+            //        var result = query.Select(
+            //            s => new DisplayBroadcastStation
+            //            {
+            //                Code = s.station_code,
+            //                Affiliation = s.affiliation,
+            //                CallLetters = s.station_call_letters,
+            //                LegacyCallLetters = s.legacy_call_letters,
+            //                OriginMarket = s.market.geography_name,
+            //                ModifiedDate = s.modified_date,
+            //                FlightWeeks =
+            //                    (from pf in context.station_program_flights
+            //                     join sp in context.station_programs on pf.station_program_id equals sp.id
+            //                     where sp.station_code == s.station_code && sp.rate_source == (byte) rateSource
+            //                     select new FlightWeekDto
+            //                     {
+            //                         Id = pf.media_week_id,
+            //                         IsHiatus = !pf.active
+            //                     }).Distinct().OrderBy(fw => fw.Id)
+            //            }).ToList();
+            //        return result;
+            //    });
         }
 
         public DisplayBroadcastStation GetBroadcastStationByCode(int code)
@@ -175,34 +176,6 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public DisplayBroadcastStation GetBroadcastStationFromProgramId(int programId)
-        {
-            DisplayBroadcastStation returnStation = new DisplayBroadcastStation();
-
-            _InReadUncommitedTransaction(
-                context =>
-                {
-                    var program = context.station_programs.SingleOrDefault(sp => sp.id == programId);
-
-                    if (program != null)
-                    {
-                        returnStation = context.stations
-                            .Where(s => s.station_code == program.station_code)
-                            .Select(s => new DisplayBroadcastStation
-                            {
-                                Code = s.station_code,
-                                Affiliation = s.affiliation,
-                                CallLetters = s.station_call_letters,
-                                LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market.geography_name,
-                                ModifiedDate = s.modified_date
-                            })
-                            .First();
-                    }
-                });
-
-            return returnStation;
-        }
 
         public List<DisplayBroadcastStation> GetBroadcastStationListByStationCode(List<int> fileStationCodes)
         {
@@ -252,18 +225,6 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public int GetBroadcastStationCodeByProgramId(int programId)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    var stationPrograms = context.station_programs.SingleOrDefault(s => s.id == programId);
-                    if (stationPrograms == null)
-                        throw new Exception("No Station Program found.");
-
-                    return stationPrograms.station.station_code;
-                });
-        }
 
         public int GetBroadcastStationCodeByContactId(int stationContactId)
         {

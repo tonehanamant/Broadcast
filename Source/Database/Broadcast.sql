@@ -98,6 +98,134 @@ GO
 
 /*************************************** BCOP-1951 - END *****************************************************/
 
+
+
+
+
+
+
+/*************************************** BCOP-1963 - START *****************************************************/
+
+/*
+
+[dbo].[station_program_flight_audiences]
+[dbo].[station_program_flight_proposal]
+[dbo].[station_program_flights]
+[dbo].[station_program_genres]
+
+[dbo].[station_programs]
+FK_inventory_detail_slot_components_station_program_flights
+	 for inventory_detail_slot_components
+*/
+GO
+IF EXISTS(SELECT 1  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_inventory_detail_slot_components_station_program_flights')
+BEGIN
+	ALTER TABLE [dbo].[inventory_detail_slot_components] DROP CONSTRAINT [FK_inventory_detail_slot_components_station_program_flights]
+END
+GO
+IF EXISTS(SELECT 1  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_station_programs_stations')
+BEGIN
+	ALTER TABLE [dbo].[station_programs] DROP CONSTRAINT [FK_station_programs_stations]
+END
+GO
+IF EXISTS(SELECT 1  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_station_programs_rate_files')
+BEGIN
+	ALTER TABLE [dbo].[station_programs] DROP CONSTRAINT [FK_station_programs_rate_files]
+END
+GO
+
+IF EXISTS(SELECT 1  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_station_programs_dayparts')
+BEGIN
+	ALTER TABLE [dbo].[station_programs] DROP CONSTRAINT [FK_station_programs_dayparts]
+END
+GO
+
+IF EXISTS(SELECT 1  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_station_program_genres_station_programs')
+BEGIN
+	ALTER TABLE [dbo].[station_program_genres] DROP CONSTRAINT [FK_station_program_genres_station_programs]
+END
+GO
+
+IF EXISTS(SELECT 1  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_station_program_genres_genres')
+BEGIN
+	ALTER TABLE [dbo].[station_program_genres] DROP CONSTRAINT [FK_station_program_genres_genres]
+END
+GO
+
+IF EXISTS(SELECT 1  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_station_program_flights_station_programs')
+BEGIN
+	ALTER TABLE [dbo].[station_program_flights] DROP CONSTRAINT [FK_station_program_flights_station_programs]
+END
+GO
+
+IF EXISTS(SELECT 1  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_station_program_flights_media_weeks')
+BEGIN
+	ALTER TABLE [dbo].[station_program_flights] DROP CONSTRAINT [FK_station_program_flights_media_weeks]
+END
+GO
+
+IF EXISTS(SELECT 1  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks')
+BEGIN
+	ALTER TABLE [dbo].[station_program_flight_proposal] DROP CONSTRAINT [FK_station_program_flight_proposal_proposal_version_detail_quarter_weeks]
+END
+GO
+
+IF EXISTS(SELECT 1  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_station_program_flight_audiences_station_program_flights')
+BEGIN
+	ALTER TABLE [dbo].[station_program_flight_audiences] DROP CONSTRAINT [FK_station_program_flight_audiences_station_program_flights]
+END
+GO
+
+IF EXISTS(SELECT 1  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_station_program_flight_audiences_audiences')
+BEGIN
+	ALTER TABLE [dbo].[station_program_flight_audiences] DROP CONSTRAINT [FK_station_program_flight_audiences_audiences]
+END
+GO
+
+
+
+
+IF (EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'station_programs'))
+BEGIN
+    DROP TABLE [dbo].[station_programs]
+END
+GO
+
+/****** Object:  Table [dbo].[station_program_genres]    Script Date: 9/26/2017 10:50:50 AM ******/
+IF (EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'station_program_genres'))
+BEGIN
+    DROP TABLE [dbo].[station_program_genres]
+END
+GO
+
+/****** Object:  Table [dbo].[station_program_flights]    Script Date: 9/26/2017 10:50:50 AM ******/
+IF (EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'station_program_flights'))
+BEGIN
+    DROP TABLE [dbo].[station_program_flights]
+END
+GO
+
+/****** Object:  Table [dbo].[station_program_flight_proposal]    Script Date: 9/26/2017 10:50:50 AM ******/
+IF (EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'station_program_flight_proposal'))
+BEGIN
+    DROP TABLE [dbo].[station_program_flight_proposal]
+END
+GO
+
+/****** Object:  Table [dbo].[station_program_flight_audiences]    Script Date: 9/26/2017 10:50:50 AM ******/
+IF (EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'station_program_flight_audiences'))
+BEGIN
+    DROP TABLE [dbo].[station_program_flight_audiences]
+END
+GO
+
+
+/*************************************** BCOP-1963 - END *****************************************************/
+
+
+
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------
