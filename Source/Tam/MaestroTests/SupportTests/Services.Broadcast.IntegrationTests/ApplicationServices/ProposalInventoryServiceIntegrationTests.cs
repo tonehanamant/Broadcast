@@ -36,6 +36,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadProposalInventoryWithWastageIndicator()
         {
@@ -80,6 +81,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadProposalInventoryWithWastageIndicatorOnMarketsChange()
         {
@@ -147,6 +149,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void SaveInventoryAllocations_NoDelete_OneConflict()
         {
@@ -186,6 +189,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void SaveInventoryAllocations_SaveSnapshot()
         {

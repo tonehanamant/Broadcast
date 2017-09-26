@@ -16,7 +16,6 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public station_program_flights()
         {
-            this.inventory_detail_slot_components = new HashSet<inventory_detail_slot_components>();
             this.station_program_flight_audiences = new HashSet<station_program_flight_audiences>();
         }
     
@@ -35,7 +34,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string modified_by { get; set; }
         public System.DateTime modified_date { get; set; }
     
-        public virtual ICollection<inventory_detail_slot_components> inventory_detail_slot_components { get; set; }
         public virtual station_programs station_programs { get; set; }
         public virtual ICollection<station_program_flight_audiences> station_program_flight_audiences { get; set; }
         public virtual media_weeks media_weeks { get; set; }

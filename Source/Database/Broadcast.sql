@@ -73,6 +73,31 @@ end
 
 /*************************************** BCOP-1915 - END *****************************************************/
 
+/*************************************** BCOP-1951 - START *****************************************************/
+
+-- Removing proprietary inventory tables
+IF OBJECT_ID('inventory_detail_slot_component_proposal', 'U') IS NOT NULL 
+  DROP TABLE inventory_detail_slot_component_proposal
+GO
+
+IF OBJECT_ID('inventory_detail_slot_components', 'U') IS NOT NULL 
+  DROP TABLE inventory_detail_slot_components
+GO
+
+IF OBJECT_ID('inventory_detail_slot_proposal', 'U') IS NOT NULL 
+  DROP TABLE inventory_detail_slot_proposal
+GO
+
+IF OBJECT_ID('inventory_detail_slots', 'U') IS NOT NULL 
+  DROP TABLE inventory_detail_slots
+GO
+
+IF OBJECT_ID('inventory_details', 'U') IS NOT NULL 
+  DROP TABLE inventory_details
+GO 
+
+/*************************************** BCOP-1951 - END *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

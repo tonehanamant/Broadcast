@@ -33,10 +33,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<bvs_post_details> bvs_post_details { get; set; }
         public virtual DbSet<daypart> dayparts { get; set; }
         public virtual DbSet<day> days { get; set; }
-        public virtual DbSet<inventory_detail_slot_components> inventory_detail_slot_components { get; set; }
-        public virtual DbSet<inventory_detail_slot_proposal> inventory_detail_slot_proposal { get; set; }
-        public virtual DbSet<inventory_detail_slots> inventory_detail_slots { get; set; }
-        public virtual DbSet<inventory_details> inventory_details { get; set; }
         public virtual DbSet<market_dma_map> market_dma_map { get; set; }
         public virtual DbSet<market> markets { get; set; }
         public virtual DbSet<media_months> media_months { get; set; }
@@ -67,7 +63,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<timespan> timespans { get; set; }
         public virtual DbSet<vw_ccc_daypart> vw_ccc_daypart { get; set; }
         public virtual DbSet<station_program_flight_audiences> station_program_flight_audiences { get; set; }
-        public virtual DbSet<inventory_detail_slot_component_proposal> inventory_detail_slot_component_proposal { get; set; }
         public virtual DbSet<station_program_flight_proposal> station_program_flight_proposal { get; set; }
         public virtual DbSet<proposal_versions> proposal_versions { get; set; }
         public virtual DbSet<proposal_version_audiences> proposal_version_audiences { get; set; }

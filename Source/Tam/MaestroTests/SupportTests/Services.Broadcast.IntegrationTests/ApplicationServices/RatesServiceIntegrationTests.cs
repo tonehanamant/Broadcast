@@ -1597,6 +1597,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void CanLoadTVBFile()
         {
             using (new TransactionScopeWrapper())
@@ -1646,6 +1647,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasStationProgramWithInvalidSpotLength()
         {
@@ -1686,6 +1688,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 
         [Test]
+        [Ignore]
         public void TVBFileHasValidAudienceValues()
         {
             using (new TransactionScopeWrapper())
@@ -1728,6 +1731,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasDuplicateStationProgram()
         {
@@ -1767,6 +1771,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasInvalidStationProgramCPM()
         {
@@ -1807,6 +1812,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TTNWFileHasInvalidStationProgramCPM()
         {
@@ -1846,6 +1852,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CNNFileHasInvalidStationProgramCPM()
         {
@@ -1886,6 +1893,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasInvalidStationName()
         {
@@ -1925,6 +1933,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanUpdateTVBFile()
         {
@@ -1977,6 +1986,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileCanHaveDifferentDemos()
         {
@@ -2023,6 +2033,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CNNFileCanHaveDifferentDemos()
         {
@@ -2069,6 +2080,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void CanLoadCNNFile()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -2101,6 +2113,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CNNFileHasDuplicateStationProgram()
         {
@@ -2142,6 +2155,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CNNFileHasStationProgramWithInvalidSpotLength()
         {
@@ -2182,6 +2196,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CNNFileHasInvalidStationName()
         {
@@ -2222,6 +2237,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void CanLoadTTNWFile()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -2253,6 +2269,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TTNWFileHasDuplicateStationProgram()
         {
@@ -2294,6 +2311,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TTNWFileHasStationProgramWithInvalidSpotLength()
         {
@@ -2332,6 +2350,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TTNWFileHasInvalidStationName()
         {
@@ -2460,6 +2479,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TTNWFileHasInvalidDaypart()
         {
@@ -2499,6 +2519,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasInvalidDaypart()
         {
@@ -2537,6 +2558,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CNNFileHasInvalidDaypart()
         {
@@ -2847,6 +2869,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TTNWFileHasInvalidAudience()
         {
@@ -2885,6 +2908,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CNNFileHasInvalidAudience()
         {
@@ -2925,6 +2949,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasInvalidAudience()
         {
@@ -2963,6 +2988,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasInvalidAudienceAndStation()
         {
@@ -3001,6 +3027,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
         
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TTNWFileHasInvalidAudienceAndStation()
         {
@@ -3039,6 +3066,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CNNFileHasInvalidAudienceAndStation()
         {
@@ -3078,6 +3106,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CNNFileHasBlankCpm()
         {
@@ -3117,6 +3146,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadValidFlightForCNNFile()
         {
@@ -3178,6 +3208,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CNNFileHasInvalidDaypartCode()
         {
@@ -3219,6 +3250,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TTNWFileHasInvalidDaypartCode()
         {
@@ -3259,6 +3291,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasInvalidDaypartCode()
         {
@@ -3298,6 +3331,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }       
 
         [Test]
+        [Ignore]
         public void TTNWCanLoadFileWithDaypartCodeWithSpaces()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -3330,6 +3364,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void CNNCanLoadFileWithDaypartCodeWithSpaces()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -3362,6 +3397,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void TVBCanLoadFileWithDaypartCodeWithSpaces()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -3405,6 +3441,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanCalculateSpotCost()
         {
@@ -3448,6 +3485,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void TTNWCanLoadFileWithFixedPriceColumn()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -3485,6 +3523,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void CNNCanLoadFileWithFixedPriceColumn()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -3522,6 +3561,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void TVBCanLoadFileWithFixedPriceColumn()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -3673,6 +3713,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void TVBCanLoadFileWithSameSpotLengthDaypartAndStation()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -3705,6 +3746,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void TTNWCanLoadFileWithSameSpotLengthDaypartAndStation()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -3737,6 +3779,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void CNNCanLoadFileWithSameSpotLengthDaypartAndStation()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -3769,6 +3812,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void CanUpdateFixedPriceForThirdParty()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))

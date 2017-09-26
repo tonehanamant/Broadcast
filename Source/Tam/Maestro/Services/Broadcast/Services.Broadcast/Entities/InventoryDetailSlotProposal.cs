@@ -14,7 +14,5 @@ namespace Services.Broadcast.Entities
         public string UserName { get; set; }
         public DateTime WeekStartDate { get; set; }
 
-        [JsonIgnore]
-        public inventory_detail_slot_proposal idsp { get; set; }
     }
 }

@@ -924,6 +924,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void ProposalWithInventorySelectedIsNotSavedWithoutForceSave()
         {
             using (new TransactionScopeWrapper())
@@ -988,6 +989,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void UpdateProposalStatus_FromAgencyOnHoldToProposed_Clears_InventoryAllocations_When_ForceSave()
         {
             using (new TransactionScopeWrapper())
@@ -1088,6 +1090,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanDeleteInventoryAllocationsForDetailQuarterWeekWhenUpdatingProposalDetail()
         {
@@ -1119,6 +1122,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void HasInventorySelectedWhenChangingWeekToHiatus()
         {
@@ -1281,6 +1285,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void CanReturnHasInventorySelectedWhenProposalDetailDaypartIsChanged()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -1298,6 +1303,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void CanReturnHasInventorySelectedWhenProposalDetailSpotLengthIsChanged()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -1314,6 +1320,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void CanReturnHasInventorySelectedWhenProposalDetailQuarterCPMIsChanged()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -1330,6 +1337,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void CanReturnHasInventorySelectedWhenProposalDetailQuarterImpressionGoalIsChanged()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -1536,6 +1544,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void RecalculateTotalsAfterDeletingAllocations()
         {

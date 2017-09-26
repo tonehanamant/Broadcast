@@ -16,7 +16,6 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public media_weeks()
         {
-            this.inventory_detail_slots = new HashSet<inventory_detail_slots>();
             this.proposal_version_flight_weeks = new HashSet<proposal_version_flight_weeks>();
             this.schedule_detail_weeks = new HashSet<schedule_detail_weeks>();
             this.station_program_flights = new HashSet<station_program_flights>();
@@ -29,7 +28,6 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime start_date { get; set; }
         public System.DateTime end_date { get; set; }
     
-        public virtual ICollection<inventory_detail_slots> inventory_detail_slots { get; set; }
         public virtual media_months media_months { get; set; }
         public virtual ICollection<proposal_version_flight_weeks> proposal_version_flight_weeks { get; set; }
         public virtual ICollection<schedule_detail_weeks> schedule_detail_weeks { get; set; }

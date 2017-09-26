@@ -17,7 +17,6 @@ namespace EntityFrameworkMapping.Broadcast
         public spot_lengths()
         {
             this.bvs_file_details = new HashSet<bvs_file_details>();
-            this.inventory_detail_slots = new HashSet<inventory_detail_slots>();
             this.post_file_details = new HashSet<post_file_details>();
             this.proposal_version_spot_length = new HashSet<proposal_version_spot_length>();
             this.schedule_details = new HashSet<schedule_details>();
@@ -33,7 +32,6 @@ namespace EntityFrameworkMapping.Broadcast
         public bool is_default { get; set; }
     
         public virtual ICollection<bvs_file_details> bvs_file_details { get; set; }
-        public virtual ICollection<inventory_detail_slots> inventory_detail_slots { get; set; }
         public virtual ICollection<post_file_details> post_file_details { get; set; }
         public virtual ICollection<proposal_version_spot_length> proposal_version_spot_length { get; set; }
         public virtual ICollection<schedule_details> schedule_details { get; set; }

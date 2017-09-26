@@ -35,38 +35,7 @@ namespace Services.Broadcast.Repositories
         public InventoryDetail GetInventoryDetailByDaypartCodeAndRateSource(string daypartCode,
             RatesFile.RateSourceType? rateSource)
         {
-            return _InReadUncommitedTransaction(
-                context => (from p in context.inventory_details
-                            where p.inventory_source == (byte?)rateSource &&
-                                  string.Compare(p.daypart_code, daypartCode, StringComparison.OrdinalIgnoreCase) == 0
-                            select new InventoryDetail()
-                            {
-                                DaypartCode = p.daypart_code,
-                                InventorySource = (RatesFile.RateSourceType)p.inventory_source,
-                                Id = p.id,
-                                InventoryDetailSlots = p.inventory_detail_slots.Select(slot => new InventoryDetailSlot()
-                                {
-                                    DetailLevel = slot.detail_level,
-                                    TotalStations = (int)slot.total_stations,
-                                    SpotLengthId = slot.spot_length_id,
-                                    RolleupDaypartId = slot.rolled_up_daypart_id,
-                                    MediaWeekId = slot.media_week_id,
-                                    InventoryDetailId = slot.inventory_detail_id,
-                                    Id = slot.id,
-                                    SlotCost = slot.slot_cost,
-                                    InventoryDetailSlotComponents =
-                                        slot.inventory_detail_slot_components.Select(
-                                            compo => new InventoryDetailSlotComponents()
-                                            {
-                                                Id = compo.id,
-                                                StationCode = compo.station_code,
-                                                DaypartId = compo.daypart_id,
-                                                StationProgramFlightId = compo.station_program_flight_id,
-                                                InventoryDetailSlotId = compo.inventory_detail_slot_id,
-                                                MarketCode = compo.station_program_flights.station_programs.station.market_code
-                                            }).ToList()
-                                }).ToList()
-                            }).SingleOrDefault());
+                return new InventoryDetail();
         }
 
         public int GetMaximunNumberOfSpotsAvailableByDaypartCode(string daypartCode,
@@ -97,25 +66,7 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    var inventory = new inventory_details()
-                    {
-                        daypart_code = inventoryDetail.DaypartCode,
-                        inventory_source = (byte)inventoryDetail.InventorySource,
-                        inventory_detail_slots =
-                            inventoryDetail.InventoryDetailSlots.Select(slot => new inventory_detail_slots()
-                            {
-                                detail_level = (byte)slot.DetailLevel,
-                                media_week_id = slot.MediaWeekId,
-                                rolled_up_daypart_id = slot.RolleupDaypartId,
-                                spot_length_id = slot.SpotLengthId,
-                                total_stations = (short)slot.TotalStations,
-                                slot_cost = slot.SlotCost,
-                                inventory_detail_slot_components = _BuildSlotComponents(slot.InventoryDetailSlotComponents)
-                            }).ToList()
-                    };
 
-                    context.inventory_details.Add(inventory);
-                    context.SaveChanges();
                 });
         }
 
@@ -165,80 +116,9 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    var originalInventoryDetailSlots = context.inventory_detail_slots.Where(a => a.inventory_detail_id == inventory.Id);
-
-                    // deal with excluded slots
-                    var excludedSlotsIds = originalInventoryDetailSlots.Select(b => b.id)
-                        .Except(inventory.InventoryDetailSlots.Where(a => a.Id > 0).Select(b => b.Id).ToList())
-                        .ToList();
-
-                    // remove inventory slots
-                    context.inventory_detail_slots.RemoveRange(
-                        context.inventory_detail_slots.Where(a => a.inventory_detail_id == inventory.Id &&
-                        excludedSlotsIds.Any(b => b == a.id)));
-
-                    // deal with new added slots
-                    _SaveInventorySlots(context, inventory.Id, inventory.InventoryDetailSlots.Where(a => a.Id == 0).ToList());
                     
-                    // deal with slots that have been updated
-                    inventory.InventoryDetailSlots.Where(a => a.Id > 0).ForEach(slot =>
-                    {
-                        var updatedSlot = originalInventoryDetailSlots.FirstOrDefault(a => a.id == slot.Id);
-
-                        if (updatedSlot != null)
-                        {
-                            updatedSlot.spot_length_id = slot.SpotLengthId;
-                            updatedSlot.detail_level = (byte) slot.DetailLevel;
-                            updatedSlot.media_week_id = slot.MediaWeekId;
-                            updatedSlot.total_stations = (short)slot.TotalStations;
-                            updatedSlot.rolled_up_daypart_id = slot.RolleupDaypartId;
-                            updatedSlot.slot_cost = slot.SlotCost;
-
-                            // remove slot components
-                            var slotComponents = originalInventoryDetailSlots.Where(a => a.id == slot.Id)
-                                .SelectMany(b => b.inventory_detail_slot_components);
-                            context.inventory_detail_slot_components.RemoveRange(slotComponents);
-
-                            // add updated slot components
-                            var newSlotComponents = _BuildSlotComponents(slot.InventoryDetailSlotComponents);
-                            newSlotComponents.ForEach(q => updatedSlot.inventory_detail_slot_components.Add(q));
-                        }
-                    });
-
-                    context.SaveChanges();
                 });
-
         }
-
-        private List<inventory_detail_slot_components> _BuildSlotComponents(List<InventoryDetailSlotComponents> inventoryDetailSlotComponentses)
-        {
-            return inventoryDetailSlotComponentses.Select(
-                component => new inventory_detail_slot_components()
-                {
-                    station_program_flight_id = component.StationProgramFlightId,
-                    station_code = component.StationCode,
-                    daypart_id = component.DaypartId
-                }).ToList();
-        }
-
-        private void _SaveInventorySlots(QueryHintBroadcastContext context, int inventoryDetailId,
-            List<InventoryDetailSlot> inventoryDetailSlots)
-        {
-            context.inventory_detail_slots.AddRange(inventoryDetailSlots.Select(slot => new inventory_detail_slots()
-            {
-                inventory_detail_id = inventoryDetailId,
-                detail_level = (byte) slot.DetailLevel,
-                media_week_id = slot.MediaWeekId,
-                rolled_up_daypart_id = slot.RolleupDaypartId,
-                spot_length_id = slot.SpotLengthId,
-                total_stations = (short) slot.TotalStations,
-                slot_cost = slot.SlotCost,
-                inventory_detail_slot_components = _BuildSlotComponents(slot.InventoryDetailSlotComponents)
-            }).ToList());
-
-            context.SaveChanges();
-        }
-
 
     }
 }

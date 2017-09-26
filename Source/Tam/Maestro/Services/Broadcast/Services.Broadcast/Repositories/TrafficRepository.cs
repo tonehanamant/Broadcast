@@ -59,8 +59,7 @@ namespace Services.Broadcast.Repositories
                 join pd in context.proposal_version_details on pv.id equals pd.proposal_version_id
                 join pq in context.proposal_version_detail_quarters on pd.id equals pq.proposal_version_detail_id
                 join pw in context.proposal_version_detail_quarter_weeks on pq.id equals pw.proposal_version_quarter_id
-                join inv in context.inventory_detail_slot_proposal on pw.id equals
-                    inv.proprosal_version_detail_quarter_week_id into ProprietaryUnassignedISCI
+                
                 join pro in context.station_program_flight_proposal on pw.id equals
                     pro.proprosal_version_detail_quarter_week_id into OpenMarketUnassignedISCI
                 where pv.proposal_id == p.id &&
@@ -75,13 +74,12 @@ namespace Services.Broadcast.Repositories
                     ProposalAdvertiserId = p.advertiser_id,
                     ProposalFlightStartDate = pv.start_date,
                     ProposalFlightEndDate = pv.end_date,
-                    ProprietaryISCI = ProprietaryUnassignedISCI.Count(z1 => string.IsNullOrEmpty(z1.isci)),
                     OpenMarketISCI = OpenMarketUnassignedISCI.Count(z2 => string.IsNullOrEmpty(z2.isci))
                 });
 
             // group proposals to sum up the values of openmarket or proprietary
             var trafficProposals = (from t in trafficWeeks
-                where t.ProprietaryISCI > 0 || t.OpenMarketISCI > 0
+                where t.OpenMarketISCI > 0
                 group t by
                     new
                     {
@@ -103,8 +101,7 @@ namespace Services.Broadcast.Repositories
                         Name = grp.Key.ProposalName,
                         StartDate = grp.Key.ProposalFlightStartDate,
                         EndDate = grp.Key.ProposalFlightEndDate,
-                        OpenMarketUnassignedISCI = grp.Sum(a => a.OpenMarketISCI),
-                        ProprietaryUnassignedISCI = grp.Sum(b => b.ProprietaryISCI)
+                        OpenMarketUnassignedISCI = grp.Sum(a => a.OpenMarketISCI)
                     }
                 }).OrderBy(c => c.MediaWeekId).ThenBy(d => d.TrafficProposal.Id).ToList();
 

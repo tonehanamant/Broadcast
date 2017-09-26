@@ -24,6 +24,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IDaypartCache _daypartCache = DaypartCache.Instance;
 
         [Test]
+        [Ignore]
         public void CanCrunchInventoryData()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -96,6 +97,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadInventoryCrunchData()
         {
@@ -124,6 +126,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void CanCrunchFile()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -161,6 +164,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanReturnAffectedProposalsAfterCrunch()
         {
@@ -204,6 +208,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanCrunchDataWithFixedPriceAndCalculateSlotCost()
         {
@@ -261,6 +266,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanCrunchDataWithoutFixedPriceAndCalculateSlotClost()
         {
@@ -318,6 +324,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void CanUpdateInventoryCrunchedData()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -357,6 +364,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanCrunchInventoryForDifferentDaypartCodes()
         {
