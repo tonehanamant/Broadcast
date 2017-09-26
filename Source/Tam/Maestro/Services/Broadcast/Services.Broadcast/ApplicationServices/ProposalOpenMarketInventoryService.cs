@@ -102,28 +102,8 @@ namespace Services.Broadcast.ApplicationServices
             _PopulateMarkets(dto, request.IgnoreExistingAllocation);
             _PopulateInventoryWeeks(dto);
             _SetProposalOpenMarketDisplayFilters(dto);
-            _CalculateOpenMarketTotals(dto);
-            _RemoveUnusedDataElements(dto); 
+            _CalculateOpenMarketTotals(dto); 
             return dto;
-        }
-
-        /// <summary>
-        /// Removes unused data elements that are not needed by the UI
-        /// </summary>
-        /// <param name="dto"></param>
-        private void _RemoveUnusedDataElements(ProposalDetailOpenMarketInventoryDto dto)
-        {
-            foreach (var market in dto.Markets)
-            {
-                foreach (var station in market.Stations)
-                {
-                    foreach (var program in station.Programs)
-                    {
-                        program.FlightWeeks.Clear();
-                        program.Genres.Clear();
-                    }
-                }
-            }
         }
 
         private void _CalculateOpenMarketTotals(ProposalDetailOpenMarketInventoryDto dto)
@@ -738,7 +718,6 @@ namespace Services.Broadcast.ApplicationServices
                 dto.Filter = openMarketFilter;
             _ApplyProposalOpenMarketFilter(dto, true);
             _CalculateOpenMarketTotals(dto);
-            _RemoveUnusedDataElements(dto);
             return dto;
         }
 
