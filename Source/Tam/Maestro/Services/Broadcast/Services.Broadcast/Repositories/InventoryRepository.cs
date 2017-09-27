@@ -41,7 +41,7 @@ namespace Services.Broadcast.Repositories
         public int GetMaximunNumberOfSpotsAvailableByDaypartCode(string daypartCode,
             RatesFile.RateSourceType? rateSource, int mediaWeekId, int spotLengthId)
         {
-            //Todo: fix or remove
+            //TODO: Fixme or remove.
             throw new NotImplementedException();
             //return _InReadUncommitedTransaction(
             //    context =>
@@ -72,7 +72,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        //Todo: fix or remove
+        //TODO: Fixme or remove.
         //public List<StationProgram> GetStationProgramsPerSpotAvailable(int? spots, int mediaWeekId,
         //    RatesFile.RateSourceType? rateSource, int spotLengthId, string daypartCode)
         //{

@@ -134,7 +134,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public RatesFileSaveResult SaveRatesFile(RatesSaveRequest request)
         {
-            //TODO: fix or remove
+            //TODO: Fixme or remove.
             return new RatesFileSaveResult();
             //var rateSourceType = _ParseRateSourceOrDefault(request.RateSource);
             //var fileImporter = _rateFileImporterFactory.GetFileImporterInstance(rateSourceType);
@@ -303,7 +303,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SaveRateFileContacts(RatesSaveRequest request, RatesFile ratesFile)
         {
-            //TODO: fix or remove
+            //TODO: Fixme or remove.
             //var fileStationCodes = ratesFile.StationPrograms.Select(p => (int)p.StationCode).Distinct().ToList();
             List<StationContact> existingStationContacts = null;//_stationContactsRepository.GetStationContactsByStationCode(fileStationCodes);
 
@@ -330,7 +330,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SaveRateFilePrograms(RatesSaveRequest request, RatesFile ratesFile)
         {
-            //Todo: fix or remove
+            //TODO: Fixme or remove.
             //System.Diagnostics.Debug.WriteLine("Going to add programs");
             //if (ratesFile.RateSource == RatesFile.RateSourceType.TVB ||
             //    ratesFile.RateSource == RatesFile.RateSourceType.CNN ||
@@ -351,7 +351,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SaveThirdPartyFilePrograms(RatesSaveRequest request, RatesFile ratesFile)
         {
-            //Todo: fix or remove
+            //TODO: Fixme or remove.
             //var currentTime = DateTime.Now;
             //foreach (var stationProgram in ratesFile.StationPrograms)
             //{

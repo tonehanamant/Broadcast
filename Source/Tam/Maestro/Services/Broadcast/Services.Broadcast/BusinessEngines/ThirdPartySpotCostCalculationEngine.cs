@@ -23,7 +23,7 @@ namespace Services.Broadcast.BusinessEngines
 
         public void CalculateSpotCost(RatesSaveRequest request, RatesFile ratesFile)
         {
-            //Todo: fix or remove
+            //TODO: Fixme or remove.
             //var audiences = (from stationProgram in ratesFile.StationPrograms
             //                 from stationProgramFlightWeek in stationProgram.FlightWeeks
             //                 from stationProgramFlightWeekAudience in stationProgramFlightWeek.Audiences

@@ -39,7 +39,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override void ExtractFileData(System.IO.Stream stream, Entities.RatesFile ratesFile, List<Entities.RatesFileProblem> fileProblems)
         {
-            //Todo: fix or remove
+            //TODO: Fixme or remove.
             //try
             //{
             //    _ValidateInputFileParams();

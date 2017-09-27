@@ -32,7 +32,7 @@ namespace Services.Broadcast.Repositories
 
         public List<OpenMarketInventoryAllocation> GetProposalDetailAllocations(int proposalVersionDetailId)
         {
-            //Todo: fix or remove
+            //TODO: Fixme or remove.
             return new List<OpenMarketInventoryAllocation>();
             //return _InReadUncommitedTransaction(
             //    context =>
@@ -58,7 +58,7 @@ namespace Services.Broadcast.Repositories
 
         public void RemoveAllocations(List<OpenMarketInventoryAllocation> allocations)
         {
-            //Todo: fix or remove
+            //TODO: Fixme or remove.
             
             //_InReadUncommitedTransaction(
             //    context =>
@@ -80,7 +80,7 @@ namespace Services.Broadcast.Repositories
 
         public void UpdateAllocations(List<OpenMarketInventoryAllocation> allocations, string username, int spotLength)
         {
-            //Todo: fix or remove
+            //TODO: Fixme or remove.
             //_InReadUncommitedTransaction(
             //    context =>
             //    {
@@ -121,7 +121,7 @@ namespace Services.Broadcast.Repositories
 
         public void AddAllocations(List<OpenMarketInventoryAllocation> allocations, string username, int spotLength)
         {
-            //Todo: fix or remove
+            //TODO: Fixme or remove.
             //_InReadUncommitedTransaction(
             //    context =>
             //    {
@@ -166,7 +166,7 @@ namespace Services.Broadcast.Repositories
 
         public void RemoveAllocations(List<int> programIds, int proposalDetailId)
         {
-            //Todo: fix or remove
+            //TODO: Fixme or remove.
 
             //_InReadUncommitedTransaction(c =>
             //{
@@ -185,7 +185,7 @@ namespace Services.Broadcast.Repositories
 
         public List<OpenMarketInventoryAllocationSnapshotDto> GetOpenMarketInventoryAllocationSnapshot(List<int> programIds, int proposalDetailId)
         {
-            //Todo: fix or remove
+            //TODO: Fixme or remove.
             return new List<OpenMarketInventoryAllocationSnapshotDto>();
             //return _InReadUncommitedTransaction(c =>
             //{
