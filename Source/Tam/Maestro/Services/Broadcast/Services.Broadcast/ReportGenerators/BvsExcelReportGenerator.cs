@@ -156,6 +156,7 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells[rowOffset, columnOffset++].Value = row.ProgramName;
                 ws.Cells[rowOffset, columnOffset++].Value = row.DisplayDaypart;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Cost;
+                ws.Cells[rowOffset, columnOffset++].Value = row.SpotCost;
                 ws.Cells[rowOffset, columnOffset++].Value = row.OrderedSpots;
                 ws.Cells[rowOffset, columnOffset++].Value = row.DeliveredSpots;
                 ws.Cells[rowOffset, columnOffset++].Value = row.SpotClearance;
@@ -164,12 +165,12 @@ namespace Services.Broadcast.ReportGenerators
             }
 
             // add audience and delivery
-            _SetAudienceData(ws, 1, 12, reportData);
+            _SetAudienceData(ws, 1, 13, reportData);
 
-            _BuildCommonTotalsRow(ws, "I", "J", "K", _ScheduleReportDto.AdvertiserData.OrderedSpots, _ScheduleReportDto.AdvertiserData.DeliveredSpots, reportData.Count);
+            _BuildCommonTotalsRow(ws, "J", "K", "L", _ScheduleReportDto.AdvertiserData.OrderedSpots, _ScheduleReportDto.AdvertiserData.DeliveredSpots, reportData.Count);
 
             // sumarry rows
-            columnOffset = 12;
+            columnOffset = 13;
             var summaryIndexRowCell = reportData.Count + 4;
 
             foreach (var impressionsAndDelivery in _ScheduleReportDto.AdvertiserData.ImpressionsAndDelivey)
@@ -238,6 +239,7 @@ namespace Services.Broadcast.ReportGenerators
                     ws.Cells[rowOffset, columnOffset++].Value = row.Isci;
                 }
                 ws.Cells[rowOffset, columnOffset++].Value = row.Cost;
+                ws.Cells[rowOffset, columnOffset++].Value = isOutOfSpec ? null : row.SpotCost;
                 ws.Cells[rowOffset, columnOffset++].Value = row.OrderedSpots;
                 ws.Cells[rowOffset, columnOffset++].Value = row.DeliveredSpots;
                 ws.Cells[rowOffset, columnOffset++].Value = row.SpotClearance;
@@ -249,14 +251,24 @@ namespace Services.Broadcast.ReportGenerators
                 rowOffset++;
                 columnOffset = 1;
             }
-            columnOffset = 12;
+            columnOffset = 13;
             if (isOutOfSpec)
-                columnOffset = 13;
+                columnOffset = 14;
 
             // add audience and delivery
             _SetAudienceData(ws, 1, columnOffset, reportData);
             var orderedSpots = isInSpec ? weeklyData.OrderedSpots() : 0;
-            _BuildCommonTotalsRow(ws, "I", "J", "K", orderedSpots, weeklyData.DeliveredSpots(isInSpec), reportData.Count);
+            if (isInSpec)
+            {
+                _BuildCommonTotalsRow(ws, "J", "K", "L", orderedSpots, weeklyData.DeliveredSpots(isInSpec),
+                    reportData.Count);
+            }
+            else
+            {
+                _BuildCommonTotalsRow(ws, "K", "L", "M", orderedSpots, weeklyData.DeliveredSpots(isInSpec),
+                    reportData.Count);
+            }
+
 
             // sumarry rows
             var summaryIndexRowCell = reportData.Count + 4;
@@ -636,6 +648,7 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells[rowOffset, columnOffset++].Value = "Isci";
             }
             ws.Cells[rowOffset, columnOffset++].Value = "Cost";
+            ws.Cells[rowOffset, columnOffset++].Value = "Spot Cost";
             ws.Cells[rowOffset, columnOffset++].Value = "Ordered Spots";
             ws.Cells[rowOffset, columnOffset++].Value = "Delivered Spots";
             ws.Cells[rowOffset, columnOffset++].Value = "Spot Clearance";
@@ -644,8 +657,10 @@ namespace Services.Broadcast.ReportGenerators
             {
                 // Cost
                 ws.Cells["H2:H" + (reportDataRowCount + 1)].Style.Numberformat.Format = "$0.00";
+                // spot cost
+                ws.Cells["I2:I" + (reportDataRowCount + 1)].Style.Numberformat.Format = "$0.00";
                 // Spot Clearance
-                ws.Cells["K2:K" + (reportDataRowCount + 1)].Style.Numberformat.Format = "0.00%";
+                ws.Cells["L2:L" + (reportDataRowCount + 1)].Style.Numberformat.Format = "0.00%";
             }
 
             foreach (var audience in _ScheduleReportDto.AdvertiserData.ScheduleAudiences)

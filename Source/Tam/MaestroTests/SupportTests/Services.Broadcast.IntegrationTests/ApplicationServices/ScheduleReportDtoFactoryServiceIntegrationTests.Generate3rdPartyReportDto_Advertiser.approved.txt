@@ -64,6 +64,7 @@
       "Rank": 1,
       "SpecStatus": null,
       "SpotClearance": 0.0,
+      "SpotCost": 1625.00,
       "SpotLength": 15,
       "Station": "WNBC-TV",
       "Status": 0
@@ -112,6 +113,7 @@
       "Rank": 1,
       "SpecStatus": null,
       "SpotClearance": 0.0,
+      "SpotCost": 585.00,
       "SpotLength": 15,
       "Station": "WNBC-TV",
       "Status": 0
@@ -160,6 +162,7 @@
       "Rank": 1,
       "SpecStatus": null,
       "SpotClearance": 0.5,
+      "SpotCost": 1300.00,
       "SpotLength": 15,
       "Station": "WCBS-TV",
       "Status": 0
@@ -208,6 +211,7 @@
       "Rank": 1,
       "SpecStatus": null,
       "SpotClearance": 0.0,
+      "SpotCost": 455.00,
       "SpotLength": 15,
       "Station": "WCBS-TV",
       "Status": 0

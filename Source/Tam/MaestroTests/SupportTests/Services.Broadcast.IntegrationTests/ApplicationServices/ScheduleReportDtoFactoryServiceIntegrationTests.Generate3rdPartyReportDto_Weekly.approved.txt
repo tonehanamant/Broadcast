@@ -65,6 +65,7 @@
           "Rank": 1,
           "SpecStatus": "",
           "SpotClearance": 0.0,
+          "SpotCost": 1625.00,
           "SpotLength": 15,
           "Station": "WNBC-TV",
           "Status": 1
@@ -113,6 +114,7 @@
           "Rank": 1,
           "SpecStatus": "",
           "SpotClearance": 0.0,
+          "SpotCost": 585.00,
           "SpotLength": 15,
           "Station": "WNBC-TV",
           "Status": 1
@@ -187,6 +189,7 @@
           "Rank": 1,
           "SpecStatus": "",
           "SpotClearance": 0.0,
+          "SpotCost": 1625.00,
           "SpotLength": 15,
           "Station": "WNBC-TV",
           "Status": 1
@@ -235,6 +238,7 @@
           "Rank": 1,
           "SpecStatus": "",
           "SpotClearance": 0.0,
+          "SpotCost": 585.00,
           "SpotLength": 15,
           "Station": "WNBC-TV",
           "Status": 1
@@ -309,6 +313,7 @@
           "Rank": 1,
           "SpecStatus": "",
           "SpotClearance": 0.0,
+          "SpotCost": 1625.00,
           "SpotLength": 15,
           "Station": "WNBC-TV",
           "Status": 1
@@ -357,6 +362,7 @@
           "Rank": 1,
           "SpecStatus": "",
           "SpotClearance": 0.0,
+          "SpotCost": 585.00,
           "SpotLength": 15,
           "Station": "WNBC-TV",
           "Status": 1
@@ -405,6 +411,7 @@
           "Rank": 1,
           "SpecStatus": "Match",
           "SpotClearance": 0.5,
+          "SpotCost": 1300.00,
           "SpotLength": 15,
           "Station": "WCBS-TV",
           "Status": 1
@@ -453,6 +460,7 @@
           "Rank": 1,
           "SpecStatus": "",
           "SpotClearance": 0.0,
+          "SpotCost": 455.00,
           "SpotLength": 15,
           "Station": "WCBS-TV",
           "Status": 1
@@ -491,6 +499,7 @@
           "Rank": 1,
           "SpecStatus": "Spot Length",
           "SpotClearance": null,
+          "SpotCost": null,
           "SpotLength": 60,
           "Station": "WCBS",
           "Status": 0
@@ -529,6 +538,7 @@
           "Rank": 1,
           "SpecStatus": "Spot Length",
           "SpotClearance": null,
+          "SpotCost": null,
           "SpotLength": 30,
           "Station": "WNBC",
           "Status": 0
@@ -567,6 +577,7 @@
           "Rank": 1,
           "SpecStatus": "Spot Length",
           "SpotClearance": null,
+          "SpotCost": null,
           "SpotLength": 30,
           "Station": "WNBC",
           "Status": 0
@@ -605,6 +616,7 @@
           "Rank": 1,
           "SpecStatus": "Airtime,Program Name,Station,Spot Length",
           "SpotClearance": null,
+          "SpotCost": null,
           "SpotLength": 30,
           "Station": "WPIX",
           "Status": 0
@@ -643,6 +655,7 @@
           "Rank": 1,
           "SpecStatus": "Airtime,Program Name,Station,Spot Length",
           "SpotClearance": null,
+          "SpotCost": null,
           "SpotLength": 30,
           "Station": "WPIX",
           "Status": 0
@@ -717,6 +730,7 @@
           "Rank": 1,
           "SpecStatus": "",
           "SpotClearance": 0.0,
+          "SpotCost": 1625.00,
           "SpotLength": 15,
           "Station": "WNBC-TV",
           "Status": 1
@@ -765,6 +779,7 @@
           "Rank": 1,
           "SpecStatus": "",
           "SpotClearance": 0.0,
+          "SpotCost": 585.00,
           "SpotLength": 15,
           "Station": "WNBC-TV",
           "Status": 1

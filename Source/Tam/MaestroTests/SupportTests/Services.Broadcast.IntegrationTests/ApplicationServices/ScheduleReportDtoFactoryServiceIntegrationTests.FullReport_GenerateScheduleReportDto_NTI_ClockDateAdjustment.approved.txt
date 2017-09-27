@@ -65,6 +65,7 @@
         "Rank": 0,
         "SpecStatus": null,
         "SpotClearance": 0.0,
+        "SpotCost": 200.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -112,6 +113,7 @@
         "Rank": 11,
         "SpecStatus": null,
         "SpotClearance": 1.0,
+        "SpotCost": 200.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -159,6 +161,7 @@
         "Rank": 21,
         "SpecStatus": null,
         "SpotClearance": 0.33333333333333331,
+        "SpotCost": 100.00,
         "SpotLength": 30,
         "Station": "KPLR",
         "Status": 0
@@ -206,6 +209,7 @@
         "Rank": 0,
         "SpecStatus": null,
         "SpotClearance": 0.0,
+        "SpotCost": 50.00,
         "SpotLength": 30,
         "Station": "KPLR",
         "Status": 0
@@ -282,6 +286,7 @@
         "Rank": 11,
         "SpecStatus": "Airtime",
         "SpotClearance": null,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -320,6 +325,7 @@
         "Rank": 25,
         "SpecStatus": "Program Name,Station",
         "SpotClearance": null,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "KPDX",
         "Status": 0
@@ -358,6 +364,7 @@
         "Rank": 21,
         "SpecStatus": "Airtime",
         "SpotClearance": null,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "KPLR",
         "Status": 0
@@ -554,6 +561,7 @@
         "Rank": 25,
         "SpecStatus": "Program Name,Station",
         "SpotClearance": null,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "KPDX",
         "Status": 0
@@ -601,6 +609,7 @@
         "Rank": 0,
         "SpecStatus": "",
         "SpotClearance": 0.0,
+        "SpotCost": 50.00,
         "SpotLength": 30,
         "Station": "KPLR",
         "Status": 1
@@ -648,6 +657,7 @@
         "Rank": 21,
         "SpecStatus": "Match",
         "SpotClearance": 0.33333333333333331,
+        "SpotCost": 100.00,
         "SpotLength": 30,
         "Station": "KPLR",
         "Status": 1
@@ -686,6 +696,7 @@
         "Rank": 21,
         "SpecStatus": "Airtime",
         "SpotClearance": null,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "KPLR",
         "Status": 0
@@ -733,6 +744,7 @@
         "Rank": 0,
         "SpecStatus": "",
         "SpotClearance": 0.0,
+        "SpotCost": 200.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 1
@@ -780,6 +792,7 @@
         "Rank": 11,
         "SpecStatus": "Match",
         "SpotClearance": 1.0,
+        "SpotCost": 200.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 1
@@ -818,6 +831,7 @@
         "Rank": 11,
         "SpecStatus": "Airtime",
         "SpotClearance": null,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -906,6 +920,7 @@
             "Rank": 21,
             "SpecStatus": "",
             "SpotClearance": 0.0,
+            "SpotCost": 100.00,
             "SpotLength": 30,
             "Station": "KPLR",
             "Status": 1
@@ -979,6 +994,7 @@
             "Rank": 0,
             "SpecStatus": "",
             "SpotClearance": 0.0,
+            "SpotCost": 200.00,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 1
@@ -1026,6 +1042,7 @@
             "Rank": 11,
             "SpecStatus": "Match",
             "SpotClearance": 1.0,
+            "SpotCost": 200.00,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 1
@@ -1073,6 +1090,7 @@
             "Rank": 21,
             "SpecStatus": "Match",
             "SpotClearance": 0.5,
+            "SpotCost": 100.00,
             "SpotLength": 30,
             "Station": "KPLR",
             "Status": 1
@@ -1120,6 +1138,7 @@
             "Rank": 0,
             "SpecStatus": "",
             "SpotClearance": 0.0,
+            "SpotCost": 50.00,
             "SpotLength": 30,
             "Station": "KPLR",
             "Status": 1
@@ -1158,6 +1177,7 @@
             "Rank": 11,
             "SpecStatus": "Airtime",
             "SpotClearance": null,
+            "SpotCost": null,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 0
@@ -1196,6 +1216,7 @@
             "Rank": 25,
             "SpecStatus": "Program Name,Station",
             "SpotClearance": null,
+            "SpotCost": null,
             "SpotLength": 30,
             "Station": "KPDX",
             "Status": 0
@@ -1260,6 +1281,7 @@
             "Rank": 21,
             "SpecStatus": "Airtime",
             "SpotClearance": null,
+            "SpotCost": null,
             "SpotLength": 30,
             "Station": "KPLR",
             "Status": 0

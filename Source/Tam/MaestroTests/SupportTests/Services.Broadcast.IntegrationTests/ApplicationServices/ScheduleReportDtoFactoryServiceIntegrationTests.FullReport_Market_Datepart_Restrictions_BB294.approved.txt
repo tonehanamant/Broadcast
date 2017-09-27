@@ -93,6 +93,7 @@
         "Rank": 11,
         "SpecStatus": null,
         "SpotClearance": 1.0,
+        "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -152,6 +153,7 @@
         "Rank": 12,
         "SpecStatus": null,
         "SpotClearance": 0.0,
+        "SpotCost": 22.00,
         "SpotLength": 30,
         "Station": "KTVK",
         "Status": 0
@@ -211,6 +213,7 @@
         "Rank": 21,
         "SpecStatus": null,
         "SpotClearance": 2.0,
+        "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "KPLR",
         "Status": 0
@@ -329,6 +332,7 @@
         "Rank": 25,
         "SpecStatus": "Program Name,Station",
         "SpotClearance": null,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "KPDX",
         "Status": 0
@@ -612,6 +616,7 @@
         "Rank": 25,
         "SpecStatus": "Program Name,Station",
         "SpotClearance": null,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "KPDX",
         "Status": 0
@@ -671,6 +676,7 @@
         "Rank": 21,
         "SpecStatus": "Match",
         "SpotClearance": 2.0,
+        "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "KPLR",
         "Status": 1
@@ -730,6 +736,7 @@
         "Rank": 12,
         "SpecStatus": "",
         "SpotClearance": 0.0,
+        "SpotCost": 22.00,
         "SpotLength": 30,
         "Station": "KTVK",
         "Status": 1
@@ -789,6 +796,7 @@
         "Rank": 11,
         "SpecStatus": "Match",
         "SpotClearance": 1.0,
+        "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 1
@@ -919,6 +927,7 @@
             "Rank": 11,
             "SpecStatus": "Match",
             "SpotClearance": 1.0,
+            "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 1
@@ -978,6 +987,7 @@
             "Rank": 12,
             "SpecStatus": "",
             "SpotClearance": 0.0,
+            "SpotCost": 22.00,
             "SpotLength": 30,
             "Station": "KTVK",
             "Status": 1
@@ -1037,6 +1047,7 @@
             "Rank": 21,
             "SpecStatus": "Match",
             "SpotClearance": 2.0,
+            "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "KPLR",
             "Status": 1
@@ -1062,6 +1073,7 @@
             "Rank": 25,
             "SpecStatus": "Program Name,Station",
             "SpotClearance": null,
+            "SpotCost": null,
             "SpotLength": 30,
             "Station": "KPDX",
             "Status": 0

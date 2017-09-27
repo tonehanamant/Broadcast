@@ -384,7 +384,8 @@ namespace Services.Broadcast.ApplicationServices
                         g.Isci,
                         g.DisplayDaypart,
                         g.Status,
-                        g.SpecStatus
+                        g.SpecStatus,
+                        g.SpotCost
                     }).Select(
                         g => g.Key.Status == (int)TrackingStatus.InSpec ?
                             new BvsReportData
@@ -399,6 +400,7 @@ namespace Services.Broadcast.ApplicationServices
                                 Status = g.Key.Status,
                                 SpecStatus = g.Key.SpecStatus,
                                 Cost = g.Sum(r => r.Cost),
+                                SpotCost = g.Key.SpotCost,
                                 OrderedSpots = g.Sum(r => r.OrderedSpots),
                                 DeliveredSpots = g.Sum(r => r.DeliveredSpots),
                                 SpotClearance =
@@ -494,6 +496,7 @@ namespace Services.Broadcast.ApplicationServices
                     g.ProgramName,
                     g.DisplayDaypart,
                     g.SpotLength,
+                    g.SpotCost
                 }).Select(
                     g => new BvsReportData
                     {
@@ -506,6 +509,7 @@ namespace Services.Broadcast.ApplicationServices
                         ProgramName = g.Key.ProgramName,
                         SpotLength = g.Key.SpotLength,
                         Cost = g.Sum(a => a.Cost),
+                        SpotCost = g.Key.SpotCost,
                         OrderedSpots = g.Sum(a => a.OrderedSpots),
                         SpotClearance = g.Sum(a => a.OrderedSpots) == 0 ? 0 : (double)g.Sum(a => a.DeliveredSpots) / g.Sum(a => a.OrderedSpots),
                         AudienceImpressions = _AddUpAudienceImpressions(

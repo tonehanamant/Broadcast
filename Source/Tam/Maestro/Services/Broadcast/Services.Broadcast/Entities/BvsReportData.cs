@@ -22,6 +22,7 @@ namespace Services.Broadcast.Entities
         public DisplayDaypart DisplayDaypart { get; set; }
         public string Isci { get; set; }
         public decimal? Cost { get; set; }
+        public decimal? SpotCost { get; set; }
         public int OrderedSpots { get; set; }
         public int? DeliveredSpots { get; set; }
         public double? SpotClearance { get; set; }
