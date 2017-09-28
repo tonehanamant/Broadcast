@@ -235,7 +235,9 @@
                 {
                     field: 'Impressions',
                     caption: 'Impressions (000)',
-                    render: 'number',
+                    render: function (record) {
+                        return record.Impressions ? numeral(util.divideImpressions(record.Impressions)).format('0,0.[000]') : '-';
+                    },
                     size: '10%',
                     sortable: true
                 },
