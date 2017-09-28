@@ -80,6 +80,7 @@
         "Rank": 11,
         "SpecStatus": null,
         "SpotClearance": 1.0,
+        "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -134,6 +135,7 @@
         "Rank": 3,
         "SpecStatus": null,
         "SpotClearance": 1.0,
+        "SpotCost": 22.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -188,6 +190,7 @@
         "Rank": 11,
         "SpecStatus": null,
         "SpotClearance": 1.0,
+        "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -242,6 +245,7 @@
         "Rank": 22,
         "SpecStatus": null,
         "SpotClearance": 1.0,
+        "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -296,6 +300,7 @@
         "Rank": 25,
         "SpecStatus": null,
         "SpotClearance": 1.0,
+        "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -350,6 +355,7 @@
         "Rank": 21,
         "SpecStatus": null,
         "SpotClearance": 1.0,
+        "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -404,6 +410,7 @@
         "Rank": 11,
         "SpecStatus": null,
         "SpotClearance": 1.0,
+        "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -458,6 +465,7 @@
         "Rank": 0,
         "SpecStatus": null,
         "SpotClearance": 0.0,
+        "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -555,6 +563,7 @@
         "Rank": 11,
         "SpecStatus": "Airtime",
         "SpotClearance": null,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -1013,6 +1022,7 @@
         "Rank": 0,
         "SpecStatus": "",
         "SpotClearance": 0.0,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 1
@@ -1051,6 +1061,7 @@
         "Rank": 3,
         "SpecStatus": "Match",
         "SpotClearance": 1.0,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 1
@@ -1089,6 +1100,7 @@
         "Rank": 11,
         "SpecStatus": "Match",
         "SpotClearance": 1.0,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 1
@@ -1133,6 +1145,7 @@
         "Rank": 11,
         "SpecStatus": "Airtime",
         "SpotClearance": 0.0,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 0
@@ -1171,6 +1184,7 @@
         "Rank": 21,
         "SpecStatus": "Match",
         "SpotClearance": 1.0,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 1
@@ -1209,6 +1223,7 @@
         "Rank": 22,
         "SpecStatus": "Match",
         "SpotClearance": 1.0,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 1
@@ -1247,6 +1262,7 @@
         "Rank": 25,
         "SpecStatus": "Match",
         "SpotClearance": 1.0,
+        "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
         "Status": 1
@@ -1357,6 +1373,7 @@
             "Rank": 11,
             "SpecStatus": "Match",
             "SpotClearance": 1.0,
+            "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 1
@@ -1411,6 +1428,7 @@
             "Rank": 3,
             "SpecStatus": "Match",
             "SpotClearance": 1.0,
+            "SpotCost": 22.00,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 1
@@ -1465,6 +1483,7 @@
             "Rank": 11,
             "SpecStatus": "Match",
             "SpotClearance": 1.0,
+            "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 1
@@ -1519,6 +1538,7 @@
             "Rank": 22,
             "SpecStatus": "Match",
             "SpotClearance": 1.0,
+            "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 1
@@ -1573,6 +1593,7 @@
             "Rank": 25,
             "SpecStatus": "Match",
             "SpotClearance": 1.0,
+            "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 1
@@ -1627,6 +1648,7 @@
             "Rank": 21,
             "SpecStatus": "Match",
             "SpotClearance": 1.0,
+            "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 1
@@ -1681,6 +1703,7 @@
             "Rank": 11,
             "SpecStatus": "Match",
             "SpotClearance": 1.0,
+            "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 1
@@ -1735,6 +1758,7 @@
             "Rank": 0,
             "SpecStatus": "",
             "SpotClearance": 0.0,
+            "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 1
@@ -1813,6 +1837,7 @@
             "Rank": 11,
             "SpecStatus": "Airtime",
             "SpotClearance": 0.0,
+            "SpotCost": null,
             "SpotLength": 30,
             "Station": "WMOR",
             "Status": 0

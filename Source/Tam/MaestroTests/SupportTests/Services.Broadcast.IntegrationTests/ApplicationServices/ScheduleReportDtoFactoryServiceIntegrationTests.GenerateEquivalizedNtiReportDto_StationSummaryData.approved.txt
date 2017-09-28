@@ -62,6 +62,7 @@
       "Rank": 1,
       "SpecStatus": "Match",
       "SpotClearance": 0.16666666666666666,
+      "SpotCost": 1300.00,
       "SpotLength": 30,
       "Station": "WCBS-TV",
       "Status": 1
@@ -110,6 +111,7 @@
       "Rank": 1,
       "SpecStatus": "Match",
       "SpotClearance": 0.5,
+      "SpotCost": 455.00,
       "SpotLength": 30,
       "Station": "WCBS-TV",
       "Status": 1
@@ -158,6 +160,7 @@
       "Rank": 1,
       "SpecStatus": "Match",
       "SpotClearance": 0.25,
+      "SpotCost": 1625.00,
       "SpotLength": 30,
       "Station": "WNBC-TV",
       "Status": 1
@@ -206,6 +209,7 @@
       "Rank": 1,
       "SpecStatus": "Match",
       "SpotClearance": 0.25,
+      "SpotCost": 585.00,
       "SpotLength": 30,
       "Station": "WNBC-TV",
       "Status": 1
@@ -244,6 +248,7 @@
       "Rank": 1,
       "SpecStatus": "Airtime,ISCI,Program Name,Station,Spot Length",
       "SpotClearance": null,
+      "SpotCost": null,
       "SpotLength": 30,
       "Station": "WPIX",
       "Status": 0

@@ -52,6 +52,7 @@
       "Rank": 1,
       "SpecStatus": "Airtime,ISCI,Program Name,Station,Spot Length",
       "SpotClearance": null,
+      "SpotCost": null,
       "SpotLength": 30,
       "Station": "WPIX",
       "Status": 0
@@ -90,6 +91,7 @@
       "Rank": 1,
       "SpecStatus": "Airtime,ISCI,Program Name,Station,Spot Length",
       "SpotClearance": null,
+      "SpotCost": null,
       "SpotLength": 30,
       "Station": "WPIX",
       "Status": 0

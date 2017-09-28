@@ -52,6 +52,7 @@
       "Rank": 1,
       "SpecStatus": "Spot Length",
       "SpotClearance": null,
+      "SpotCost": null,
       "SpotLength": 60,
       "Station": "WCBS",
       "Status": 0
@@ -90,6 +91,7 @@
       "Rank": 1,
       "SpecStatus": "Spot Length",
       "SpotClearance": null,
+      "SpotCost": null,
       "SpotLength": 30,
       "Station": "WNBC",
       "Status": 0
@@ -128,6 +130,7 @@
       "Rank": 1,
       "SpecStatus": "Spot Length",
       "SpotClearance": null,
+      "SpotCost": null,
       "SpotLength": 30,
       "Station": "WNBC",
       "Status": 0
@@ -166,6 +169,7 @@
       "Rank": 1,
       "SpecStatus": "Airtime,Program Name,Station,Spot Length",
       "SpotClearance": null,
+      "SpotCost": null,
       "SpotLength": 30,
       "Station": "WPIX",
       "Status": 0
@@ -204,6 +208,7 @@
       "Rank": 1,
       "SpecStatus": "Airtime,Program Name,Station,Spot Length",
       "SpotClearance": null,
+      "SpotCost": null,
       "SpotLength": 30,
       "Station": "WPIX",
       "Status": 0
