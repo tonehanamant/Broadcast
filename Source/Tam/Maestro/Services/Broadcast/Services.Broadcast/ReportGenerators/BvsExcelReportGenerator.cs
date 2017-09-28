@@ -102,7 +102,9 @@ namespace Services.Broadcast.ReportGenerators
 
             foreach (var audience in _ScheduleReportDto.StationSummaryData.ScheduleAudiences)
             {
-                ws.Cells[1, columnOffset++].Value = "Delivered Impressions (" + audience.AudienceName + ")";
+                var column = columnOffset++;
+                ws.Cells[1, column].Value = "Delivered Impressions (" + audience.AudienceName + ")";
+                ws.Column(column).Style.Numberformat.Format = "#,0";
             }
 
             for (int i = 1; i <= columnOffset; i++)
@@ -119,7 +121,7 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells[rowOffset, columnOffset++].Value = row.Spots;
                 foreach (var audience in _ScheduleReportDto.StationSummaryData.ScheduleAudiences)
                 {
-                    ws.Cells[rowOffset, columnOffset++].Value = row.AudienceImpressions[audience.AudienceId];
+                    ws.Cells[rowOffset, columnOffset++].Value = _FormatImpressionsValue(row.AudienceImpressions[audience.AudienceId]);
                 }
                 rowOffset++;
             }
@@ -273,7 +275,7 @@ namespace Services.Broadcast.ReportGenerators
             var orderedSpots = isInSpec ? weeklyData.OrderedSpots() : 0;
 
             _BuildWeeklyTabTotalRows(ws, isOutOfSpec, includeDateColumns, orderedSpots, weeklyData.DeliveredSpots(isInSpec),
-                reportData.Count);
+                    reportData.Count);
 
             // sumarry rows
             var summaryIndexRowCell = reportData.Count + 4;
@@ -354,11 +356,8 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells["H2:H" + (reportData.Count + 1)].Style.Numberformat.Format = "0.00%";// spot clearance column format             
             }
 
-            foreach (var audience in _ScheduleReportDto.StationSummaryData.ScheduleAudiences)
-            {
-                ws.Cells[1, columnOffset++].Value = "Ordered Impressions (" + audience.AudienceName + ")";
-                ws.Cells[1, columnOffset++].Value = "Delivered Impressions (" + audience.AudienceName + ")";
-            }
+            _SetOrderedAndDeliveredImpressionsColumn(1, ref columnOffset, ws);
+
             ws.Cells[1, columnOffset++].Value = "Spec Status";
             ws.Cells[1, columnOffset].Value = "Out of Spec Spots";
 
@@ -402,8 +401,8 @@ namespace Services.Broadcast.ReportGenerators
             columnOffset = 9;
             foreach (var impressionsAndDelivery in _ScheduleReportDto.StationSummaryData.ImpressionsAndDelivery)
             {
-                ws.Cells[reportData.Count + 2, columnOffset++].Value = impressionsAndDelivery.OrderedImpressions;
-                ws.Cells[reportData.Count + 2, columnOffset++].Value = impressionsAndDelivery.TotalDeliveredImpressions;
+                ws.Cells[reportData.Count + 2, columnOffset++].Value = _FormatImpressionsValue(impressionsAndDelivery.OrderedImpressions);
+                ws.Cells[reportData.Count + 2, columnOffset++].Value = _FormatImpressionsValue(impressionsAndDelivery.TotalDeliveredImpressions);
             }
 
             for (int i = 1; i <= columnOffset + 1; i++)
@@ -450,12 +449,9 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells[1, columnOffset++].Value = "Delivered Spots";
             ws.Cells[1, columnOffset++].Value = "Spot Clearance";
 
+            //
+            _SetOrderedAndDeliveredImpressionsColumn(1, ref columnOffset, ws);
 
-            foreach (var audience in _ScheduleReportDto.StationSummaryData.ScheduleAudiences)
-            {
-                ws.Cells[1, columnOffset++].Value = "Ordered Impressions (" + audience.AudienceName + ")";
-                ws.Cells[1, columnOffset++].Value = "Delivered Impressions (" + audience.AudienceName + ")";
-            }
             ws.Cells[1, columnOffset++].Value = "Out of spec Reason";
             ws.Cells[1, columnOffset].Value = "Out of Spec Spots";
 
@@ -498,7 +494,7 @@ namespace Services.Broadcast.ReportGenerators
             // add audience and delivery
             _SetAudienceData(ws, 1, 12, reportData);
 
-            // impressions/delivery totals
+            // impressions/delivery totals 
             _BuildOutOfSpecToDateTotalRows(ws, includeDateColumns, outOfSpecData.DeliveredSpots(false), reportData.Count);
 
             // sumarry rows
@@ -524,6 +520,23 @@ namespace Services.Broadcast.ReportGenerators
             }
 
             ws.Cells.AutoFitColumns();
+        }
+
+        /// <summary>
+        /// Set name and excel number format for ordered/delievered impressions columns
+        /// </summary>
+        private void _SetOrderedAndDeliveredImpressionsColumn(int row, ref int columnOffset, ExcelWorksheet ws)
+        {
+            foreach (var audience in _ScheduleReportDto.StationSummaryData.ScheduleAudiences)
+            {
+                var columIndex = columnOffset++;
+                ws.Cells[row, columIndex].Value = "Ordered Impressions (" + audience.AudienceName + ")";
+                ws.Column(columIndex).Style.Numberformat.Format = "#,0";
+
+                columIndex = columnOffset++;
+                ws.Cells[row, columIndex].Value = "Delivered Impressions (" + audience.AudienceName + ")";
+                ws.Column(columIndex).Style.Numberformat.Format = "#,0";
+            }
         }
 
         private void _BuildOutOfSpecToDateTotalRows(ExcelWorksheet ws, bool includeDateColumns, int? deliveredSpots, int count)
@@ -562,7 +575,9 @@ namespace Services.Broadcast.ReportGenerators
 
             foreach (var audience in _ScheduleReportDto.StationSummaryData.ScheduleAudiences)
             {
-                ws.Cells[1, columnOffset++].Value = "Delivered Impressions (" + audience.AudienceName + ")";
+                var columIndex = columnOffset++;
+                ws.Cells[1, columIndex].Value = "Delivered Impressions (" + audience.AudienceName + ")";
+                ws.Column(columIndex).Style.Numberformat.Format = "#,0";
             }
 
             for (int i = 1; i <= columnOffset; i++)
@@ -579,7 +594,7 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells[rowOffset, columnOffset++].Value = row.Spots;
                 foreach (var audience in _ScheduleReportDto.StationSummaryData.ScheduleAudiences)
                 {
-                    ws.Cells[rowOffset, columnOffset++].Value = row.AudienceImpressions[audience.AudienceId];
+                    ws.Cells[rowOffset, columnOffset++].Value = _FormatImpressionsValue(row.AudienceImpressions[audience.AudienceId]);
                 }
                 rowOffset++;
             }
@@ -630,7 +645,9 @@ namespace Services.Broadcast.ReportGenerators
 
             foreach (var impressionsAndDelivery in _ScheduleReportDto.SpotDetailData.ImpressionsAndDelivery)
             {
-                ws.Cells[rowOffset, columnOffset++].Value = impressionsAndDelivery.AudienceName + " Impressions";
+                var columIndex = columnOffset++;
+                ws.Cells[rowOffset, columIndex].Value = impressionsAndDelivery.AudienceName + " Impressions";
+                ws.Column(columIndex).Style.Numberformat.Format = "#,0";
             }
             for (int i = 1; i <= columnOffset; i++)
             {
@@ -667,11 +684,11 @@ namespace Services.Broadcast.ReportGenerators
                 {
                     if (useNsiDelivery) //use nsi post-type
                     {
-                        ws.Cells[rowOffset, columnOffset++].Value = row.GetNsiDeliveredImpressions(audience.AudienceId);
+                        ws.Cells[rowOffset, columnOffset++].Value = _FormatImpressionsValue(row.GetNsiDeliveredImpressions(audience.AudienceId));
                     }
                     else //use client-selected post-type
                     {
-                        ws.Cells[rowOffset, columnOffset++].Value = row.GetDeliveredImpressions(audience.AudienceId);
+                        ws.Cells[rowOffset, columnOffset++].Value = _FormatImpressionsValue(row.GetDeliveredImpressions(audience.AudienceId));
                     }
 
                 }
@@ -687,13 +704,13 @@ namespace Services.Broadcast.ReportGenerators
         {
             if (isInSpec)
             {
-                ws.Cells[count + 2, columnOffset++].Value = impressionAndDeliveryDto.OrderedImpressions;
-                ws.Cells[count + 2, columnOffset++].Value = impressionAndDeliveryDto.DeliveredImpressions;
+                ws.Cells[count + 2, columnOffset++].Value = _FormatImpressionsValue(impressionAndDeliveryDto.OrderedImpressions);
+                ws.Cells[count + 2, columnOffset++].Value = _FormatImpressionsValue(impressionAndDeliveryDto.DeliveredImpressions);
             }
             else
             {
                 ++columnOffset;
-                ws.Cells[count + 2, columnOffset++].Value = impressionAndDeliveryDto.OutOfSpecDeliveredImpressions;
+                ws.Cells[count + 2, columnOffset++].Value = _FormatImpressionsValue(impressionAndDeliveryDto.OutOfSpecDeliveredImpressions);
                 
             }
         }
@@ -733,11 +750,7 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells["L2:L" + (reportDataRowCount + 1)].Style.Numberformat.Format = "0.00%";
             }
 
-            foreach (var audience in _ScheduleReportDto.AdvertiserData.ScheduleAudiences)
-            {
-                ws.Cells[rowOffset, columnOffset++].Value = "Ordered Impressions (" + audience.AudienceName + ")";
-                ws.Cells[rowOffset, columnOffset++].Value = "Delivered Impressions (" + audience.AudienceName + ")";
-            }
+            _SetOrderedAndDeliveredImpressionsColumn(rowOffset, ref columnOffset, ws);
 
             for (int i = 1; i <= columnOffset; i++)
             {
@@ -765,8 +778,8 @@ namespace Services.Broadcast.ReportGenerators
                 rowOffset++;
                 foreach (var audience in _ScheduleReportDto.AdvertiserData.ScheduleAudiences)
                 {
-                    ws.Cells[rowOffset, columnOffset++].Value = reportRow.GetOrderedImpressions(audience.AudienceId);
-                    ws.Cells[rowOffset, columnOffset++].Value = reportRow.GetDeliveredImpressions(audience.AudienceId);
+                    ws.Cells[rowOffset, columnOffset++].Value = _FormatImpressionsValue(reportRow.GetOrderedImpressions(audience.AudienceId));
+                    ws.Cells[rowOffset, columnOffset++].Value = _FormatImpressionsValue(reportRow.GetDeliveredImpressions(audience.AudienceId));
                 }
                 columnOffset = originalOffset;
             }
@@ -789,6 +802,12 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells[summaryIndexRowCell, 11, summaryIndexRowCell, 12].Style.Border.Top.Style = ExcelBorderStyle.Thin;
             ws.Cells[summaryIndexRowCell, 11, summaryIndexRowCell, 12].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
             ws.Cells[summaryIndexRowCell++, 12].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+        }
+
+        // impressions value need to be divided by 1000 and later formated to have "," for thousands 
+        internal double _FormatImpressionsValue(double imp)
+        {
+            return imp/1000;
         }
 
     }
