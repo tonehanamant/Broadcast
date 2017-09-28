@@ -34,6 +34,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-04-11T00:00:00",
+      "BvsDate": "2016-04-11T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -55,7 +57,8 @@
       "SpotCost": null,
       "SpotLength": 30,
       "Station": "WPIX",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T06:28:13"
     },
     {
       "Affiliate": "CW",
@@ -73,6 +76,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-04-11T00:00:00",
+      "BvsDate": "2016-04-11T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -94,7 +99,8 @@
       "SpotCost": null,
       "SpotLength": 30,
       "Station": "WPIX",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T07:52:46"
     }
   ],
   "ScheduleAudiences": [

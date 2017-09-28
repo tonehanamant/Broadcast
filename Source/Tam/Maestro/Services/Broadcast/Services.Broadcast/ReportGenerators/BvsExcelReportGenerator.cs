@@ -13,6 +13,7 @@ namespace Services.Broadcast.ReportGenerators
     {
         private ScheduleReportDto _ScheduleReportDto;
         private Image _Logo;
+        private const string DateFormat = "MM/dd/yyyy";
 
         public BvsExcelReportGenerator(ScheduleReportDto scheduleReportDto, Image logo)
         {
@@ -27,9 +28,9 @@ namespace Services.Broadcast.ReportGenerators
             using (var package = new ExcelPackage(new MemoryStream()))
             {
                 _GenerateAdvertiserDataSheet(package);
-                _GenerateBroadcastWeeksDataSheets(package);
+                _GenerateBroadcastWeeksDataSheets(package, true);
                 _GenerateStationSummaryDataSheet(package);
-                _GenerateOutofSpecToDate(package);
+                _GenerateOutofSpecToDate(package, true);
                 _GenerateSpotDetailDataSheet(package, false, false, false);
 
                 package.SaveAs(output.Stream);
@@ -46,9 +47,9 @@ namespace Services.Broadcast.ReportGenerators
             using (var package = new ExcelPackage(new MemoryStream()))
             {
                 _GenerateAdvertiserDataSheet(package);
-                _GenerateBroadcastWeeksDataSheets(package);
+                _GenerateBroadcastWeeksDataSheets(package, false);
                 _GenerateStationSummaryDataSheet(package);
-                _GenerateOutofSpecToDate(package);
+                _GenerateOutofSpecToDate(package, false);
                 _GenerateSpotDetailDataSheet(package, false, true, true);
                 _GenerateDeliveryBySourceSheet(package);
 
@@ -66,9 +67,9 @@ namespace Services.Broadcast.ReportGenerators
             using (var package = new ExcelPackage(new MemoryStream()))
             {
                 _GenerateAdvertiserDataSheet(package);
-                _GenerateBroadcastWeeksDataSheets(package);
+                _GenerateBroadcastWeeksDataSheets(package, false);
                 _GenerateStationSummaryDataSheet(package);
-                _GenerateOutofSpecToDate(package);
+                _GenerateOutofSpecToDate(package, false);
                 _GenerateSpotDetailDataSheet(package, true, false, false);
                 _GenerateAdvertiserDelivery(package);
 
@@ -140,7 +141,7 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells.Style.Font.Name = "Calibri";
 
             var columnOffset = 1;
-            _BuildCommonHeader(ws, 1, ref columnOffset, reportData.Count, false);
+            _BuildCommonHeader(ws, 1, ref columnOffset, reportData.Count, false, false);
 
             // tables
             var rowOffset = 2;
@@ -187,7 +188,7 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells.AutoFitColumns();
         }
 
-        private void _GenerateBroadcastWeeksDataSheets(ExcelPackage package)
+        private void _GenerateBroadcastWeeksDataSheets(ExcelPackage package, bool includeDateColumns)
         {
             // add weekly detail information
             foreach (var weeklyData in _ScheduleReportDto.WeeklyData.ReportDataByWeek)
@@ -197,18 +198,18 @@ namespace Services.Broadcast.ReportGenerators
                     package.Workbook.Worksheets.Delete(sheetName);
 
                 var wsInspec = package.Workbook.Worksheets.Add(sheetName);
-                _SetWeeklyTab(wsInspec, weeklyData, true);
+                _SetWeeklyTab(wsInspec, weeklyData, true, includeDateColumns);
 
                 sheetName = "Week Out of Spec - " + weeklyData.Week.Display.Replace('/', '.');
                 if (package.Workbook.Worksheets[sheetName] != null)
                     package.Workbook.Worksheets.Delete(sheetName);
 
                 var wsOutofSpec = package.Workbook.Worksheets.Add(sheetName);
-                _SetWeeklyTab(wsOutofSpec, weeklyData, false);
+                _SetWeeklyTab(wsOutofSpec, weeklyData, false, includeDateColumns);
             }
         }
 
-        private void _SetWeeklyTab(ExcelWorksheet ws, WeeklyImpressionAndDeliveryDto weeklyData, bool isInSpec)
+        private void _SetWeeklyTab(ExcelWorksheet ws, WeeklyImpressionAndDeliveryDto weeklyData, bool isInSpec, bool includeDateColumns)
         {
             ws.Cells.Style.Font.Size = 9;
             ws.Cells.Style.Font.Name = "Calibri";
@@ -219,7 +220,7 @@ namespace Services.Broadcast.ReportGenerators
             var isOutOfSpec = !isInSpec;
 
             int columnOffset = 1;
-            _BuildCommonHeader(ws, 1, ref columnOffset, reportData.Count(), isOutOfSpec);
+            _BuildCommonHeader(ws, 1, ref columnOffset, reportData.Count(), isOutOfSpec, includeDateColumns);
             ws.Cells[1, columnOffset].Value = "Spec Status";
 
             // tables
@@ -238,6 +239,12 @@ namespace Services.Broadcast.ReportGenerators
                 {
                     ws.Cells[rowOffset, columnOffset++].Value = row.Isci;
                 }
+                if (isOutOfSpec && includeDateColumns)
+                {
+                    ws.Cells[rowOffset, columnOffset++].Value = row.BvsDate.ToString(DateFormat);
+                    ws.Cells[rowOffset, columnOffset++].Value = row.BroadcastDate.ToString(DateFormat);
+                    ws.Cells[rowOffset, columnOffset++].Value = row.TimeAired.ToShortTimeString();
+                }
                 ws.Cells[rowOffset, columnOffset++].Value = row.Cost;
                 ws.Cells[rowOffset, columnOffset++].Value = isOutOfSpec ? null : row.SpotCost;
                 ws.Cells[rowOffset, columnOffset++].Value = row.OrderedSpots;
@@ -251,27 +258,26 @@ namespace Services.Broadcast.ReportGenerators
                 rowOffset++;
                 columnOffset = 1;
             }
+            
             columnOffset = 13;
+
             if (isOutOfSpec)
                 columnOffset = 14;
 
+            if (isOutOfSpec && includeDateColumns)
+                columnOffset = 17;
+
             // add audience and delivery
             _SetAudienceData(ws, 1, columnOffset, reportData);
-            var orderedSpots = isInSpec ? weeklyData.OrderedSpots() : 0;
-            if (isInSpec)
-            {
-                _BuildCommonTotalsRow(ws, "J", "K", "L", orderedSpots, weeklyData.DeliveredSpots(isInSpec),
-                    reportData.Count);
-            }
-            else
-            {
-                _BuildCommonTotalsRow(ws, "K", "L", "M", orderedSpots, weeklyData.DeliveredSpots(isInSpec),
-                    reportData.Count);
-            }
 
+            var orderedSpots = isInSpec ? weeklyData.OrderedSpots() : 0;
+
+            _BuildWeeklyTabTotalRows(ws, isOutOfSpec, includeDateColumns, orderedSpots, weeklyData.DeliveredSpots(isInSpec),
+                reportData.Count);
 
             // sumarry rows
             var summaryIndexRowCell = reportData.Count + 4;
+
             foreach (var impressionsAndDelivery in weeklyData.ImpressionsAndDelivery)
             {
                 _BuildAudienceAndDeliveryTotalsRow(ws, impressionsAndDelivery, reportData.Count, isInSpec, ref columnOffset);
@@ -282,13 +288,39 @@ namespace Services.Broadcast.ReportGenerators
                         summaryIndexRowCell++);
             }
 
-            var lineWidth = columnOffset + (isInSpec ? 0 : 1);
-            for (int i = 1; i <= lineWidth; i++)
+            for (var i = 1; i <= columnOffset; i++)
             {
                 ws.Cells[reportData.Count + 2, i].Style.Border.Top.Style = ExcelBorderStyle.Thick;
             }
 
             ws.Cells.AutoFitColumns();
+        }
+
+        /// <summary>
+        /// Build the total columns for the weekly tabs. The total values are shifted forward if extra columns are to be displayed to the spreadsheet.
+        /// </summary>
+        private void _BuildWeeklyTabTotalRows(ExcelWorksheet ws, bool isOutOfSpec, bool includeDateColumns, int? orderedSpots, int? deliveredSpots, int count)
+        {
+            var orderedSpotsColumn = "J";
+            var deliveredSpotsColumn = "K";
+            var spotClearanceColumn = "L";
+
+            if (isOutOfSpec)
+            {
+                orderedSpotsColumn = "K";
+                deliveredSpotsColumn = "L";
+                spotClearanceColumn = "M";
+            }
+
+            if (isOutOfSpec && includeDateColumns)
+            {
+                orderedSpotsColumn = "N";
+                deliveredSpotsColumn = "O";
+                spotClearanceColumn = "P";
+            }
+
+            _BuildCommonTotalsRow(ws, orderedSpotsColumn, deliveredSpotsColumn, spotClearanceColumn, orderedSpots, deliveredSpots,
+                    count);
         }
 
         private void _GenerateStationSummaryDataSheet(ExcelPackage package)
@@ -382,7 +414,7 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells.AutoFitColumns();
         }
 
-        private void _GenerateOutofSpecToDate(ExcelPackage package)
+        private void _GenerateOutofSpecToDate(ExcelPackage package, bool includeDateColumns)
         {
             var sheetName = "Out of Spec To Date";
             if (package.Workbook.Worksheets[sheetName] != null)
@@ -408,6 +440,12 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells[1, columnOffset++].Value = "Daypart";
             ws.Cells[1, columnOffset++].Value = "Spot Length";
             ws.Cells[1, columnOffset++].Value = "Isci";
+            if (includeDateColumns)
+            {
+                ws.Cells[1, columnOffset++].Value = "BVS Date";
+                ws.Cells[1, columnOffset++].Value = "Broadcast Date";
+                ws.Cells[1, columnOffset++].Value = "Time Aired";
+            }
             ws.Cells[1, columnOffset++].Value = "Ordered Spots";
             ws.Cells[1, columnOffset++].Value = "Delivered Spots";
             ws.Cells[1, columnOffset++].Value = "Spot Clearance";
@@ -440,6 +478,12 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells[rowOffset, columnOffset++].Value = string.Empty;
                 ws.Cells[rowOffset, columnOffset++].Value = row.SpotLength;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Isci;
+                if (includeDateColumns)
+                {
+                    ws.Cells[rowOffset, columnOffset++].Value = row.BvsDate.ToString(DateFormat);
+                    ws.Cells[rowOffset, columnOffset++].Value = row.BroadcastDate.ToString(DateFormat);
+                    ws.Cells[rowOffset, columnOffset++].Value = row.TimeAired.ToShortTimeString();
+                }
                 ws.Cells[rowOffset, columnOffset++].Value = row.OrderedSpots;
                 ws.Cells[rowOffset, columnOffset++].Value = row.DeliveredSpots;
                 ws.Cells[rowOffset, columnOffset++].Value = row.SpotClearance;
@@ -454,11 +498,15 @@ namespace Services.Broadcast.ReportGenerators
             // add audience and delivery
             _SetAudienceData(ws, 1, 12, reportData);
 
-            // impressions/delivery totals 
-            _BuildCommonTotalsRow(ws, "I", "J", "K", 0, outOfSpecData.DeliveredSpots(false), reportData.Count);
+            // impressions/delivery totals
+            _BuildOutOfSpecToDateTotalRows(ws, includeDateColumns, outOfSpecData.DeliveredSpots(false), reportData.Count);
 
             // sumarry rows
             columnOffset = 12;
+
+            if (includeDateColumns)
+                columnOffset = 14;
+
             var summaryIndexRowCell = reportData.Count + 4;
 
             foreach (var impressionsAndDelivery in outOfSpecData.ImpressionsAndDelivery)
@@ -476,6 +524,22 @@ namespace Services.Broadcast.ReportGenerators
             }
 
             ws.Cells.AutoFitColumns();
+        }
+
+        private void _BuildOutOfSpecToDateTotalRows(ExcelWorksheet ws, bool includeDateColumns, int? deliveredSpots, int count)
+        {
+            var orderedSpotsColumn = "I";
+            var deliveredSpotsColumn = "J";
+            var spotClearanceColumn = "K";
+
+            if (includeDateColumns)
+            {
+                orderedSpotsColumn = "L";
+                deliveredSpotsColumn = "M";
+                spotClearanceColumn = "N";
+            }
+
+            _BuildCommonTotalsRow(ws, orderedSpotsColumn, deliveredSpotsColumn, spotClearanceColumn, 0, deliveredSpots, count);
         }
 
         private void _GenerateDeliveryBySourceSheet(ExcelPackage package)
@@ -633,7 +697,7 @@ namespace Services.Broadcast.ReportGenerators
                 
             }
         }
-        private void _BuildCommonHeader(ExcelWorksheet ws, int rowOffset, ref int columnOffset, int reportDataRowCount, bool includeIsciColumn)
+        private void _BuildCommonHeader(ExcelWorksheet ws, int rowOffset, ref int columnOffset, int reportDataRowCount, bool isOutOfSpec, bool includeDateColumns)
         {
             // header
             ws.Cells[rowOffset, columnOffset++].Value = "Rank";
@@ -643,9 +707,15 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells[rowOffset, columnOffset++].Value = "Spot Length";
             ws.Cells[rowOffset, columnOffset++].Value = "Program";
             ws.Cells[rowOffset, columnOffset++].Value = "Daypart";
-            if (includeIsciColumn)
+            if (isOutOfSpec)
             {
                 ws.Cells[rowOffset, columnOffset++].Value = "Isci";
+            }
+            if (isOutOfSpec && includeDateColumns)
+            {
+                ws.Cells[rowOffset, columnOffset++].Value = "BVS Date";
+                ws.Cells[rowOffset, columnOffset++].Value = "Broadcast Date";
+                ws.Cells[rowOffset, columnOffset++].Value = "Time Aired";
             }
             ws.Cells[rowOffset, columnOffset++].Value = "Cost";
             ws.Cells[rowOffset, columnOffset++].Value = "Spot Cost";

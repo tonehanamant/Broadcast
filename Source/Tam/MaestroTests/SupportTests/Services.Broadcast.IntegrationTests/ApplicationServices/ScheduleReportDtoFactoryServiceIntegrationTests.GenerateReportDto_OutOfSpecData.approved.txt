@@ -34,6 +34,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -55,7 +57,8 @@
       "SpotCost": null,
       "SpotLength": 30,
       "Station": "WLNY",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T13:24:25"
     },
     {
       "Affiliate": "IND",
@@ -73,6 +76,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -94,7 +99,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WLNY",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T13:38:12"
     },
     {
       "Affiliate": "IND",
@@ -112,6 +118,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -125,7 +133,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
       "Rank": 1,
       "SpecStatus": "Program Name,Spot Length",
@@ -133,7 +141,92 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WLNY",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T13:59:02"
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "NEW YORK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
+      "Rank": 1,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WLNY",
+      "Status": 0,
+      "TimeAired": "0001-01-01T13:45:05"
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "LOS ANGELES",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE FAITH",
+      "Rank": 2,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KDOC",
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:18:26"
     },
     {
       "Affiliate": "IND",
@@ -151,6 +244,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -164,7 +259,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE FAITH",
       "Rank": 2,
       "SpecStatus": "Program Name,Spot Length",
@@ -172,7 +267,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KDOC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:17:56"
     },
     {
       "Affiliate": "IND",
@@ -190,6 +286,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -211,7 +309,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KDOC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:08:51"
     },
     {
       "Affiliate": "IND",
@@ -229,6 +328,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -250,7 +351,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KDOC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:38:30"
     },
     {
       "Affiliate": "CBS",
@@ -268,6 +370,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -289,7 +393,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WBBM",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T06:12:12"
     },
     {
       "Affiliate": "CBS",
@@ -307,6 +412,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -328,7 +435,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WBBM",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T08:49:06"
     },
     {
       "Affiliate": "FOX",
@@ -346,6 +454,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -367,7 +477,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WFLD",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:48:18"
     },
     {
       "Affiliate": "CW",
@@ -385,6 +496,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -406,7 +519,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WPSG",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T17:41:31"
     },
     {
       "Affiliate": "CW",
@@ -424,6 +538,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -445,7 +561,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WPSG",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T17:25:32"
     },
     {
       "Affiliate": "IND",
@@ -463,6 +580,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-04T00:00:00",
+      "BvsDate": "2016-06-04T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -484,24 +603,27 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KTXA",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T17:24:07"
     },
     {
       "Affiliate": "IND",
       "AudienceImpressions": [
         {
           "AudienceId": 31,
-          "Delivery": 6626.1075,
+          "Delivery": 0.0,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
-          "Delivery": 4167.9825,
+          "Delivery": 0.0,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -515,7 +637,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "SUPREME JUSTICE WITH JUDGE KAREN MIL",
       "Rank": 5,
       "SpecStatus": "Airtime,Program Name,Spot Length",
@@ -523,7 +645,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KTXA",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T07:45:22"
     },
     {
       "Affiliate": "IND",
@@ -541,6 +664,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -562,24 +687,69 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KTXA",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:53:40"
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 6626.1075,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 4167.9825,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "DALLAS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "SUPREME JUSTICE WITH JUDGE KAREN MIL",
+      "Rank": 5,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KTXA",
+      "Status": 0,
+      "TimeAired": "0001-01-01T07:37:33"
     },
     {
       "Affiliate": "CBS",
       "AudienceImpressions": [
         {
           "AudienceId": 31,
-          "Delivery": 21971.79,
+          "Delivery": 11092.58,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
-          "Delivery": 20940.0425,
+          "Delivery": 10870.3275,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -593,7 +763,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "GREAT DAY WASHINGTON",
       "Rank": 7,
       "SpecStatus": "Program Name,Spot Length",
@@ -601,7 +771,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WUSA",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:15:28"
     },
     {
       "Affiliate": "CBS",
@@ -619,6 +790,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -640,7 +813,50 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WUSA",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:17:46"
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 10879.21,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 10069.715,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "WASHINGTON,DC",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "GREAT DAY WASHINGTON",
+      "Rank": 7,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WUSA",
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:41:45"
     },
     {
       "Affiliate": "MNTV",
@@ -658,6 +874,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -679,7 +897,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WATL",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T10:48:29"
     },
     {
       "Affiliate": "CW",
@@ -697,6 +916,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -718,7 +939,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WUPA",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T08:54:47"
     },
     {
       "Affiliate": "CW",
@@ -736,6 +958,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -757,7 +981,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WUPA",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T08:16:43"
     },
     {
       "Affiliate": "FOX",
@@ -775,6 +1000,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -796,7 +1023,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WTVT",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:58:26"
     },
     {
       "Affiliate": "FOX",
@@ -814,6 +1042,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -835,7 +1065,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WTVT",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:54:45"
     },
     {
       "Affiliate": "IND",
@@ -853,6 +1084,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -874,7 +1107,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KTVK",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:38:00"
     },
     {
       "Affiliate": "IND",
@@ -892,6 +1126,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -913,7 +1149,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KTVK",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:53:58"
     },
     {
       "Affiliate": "CBS",
@@ -931,6 +1168,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -952,7 +1191,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WWJ",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:59:04"
     },
     {
       "Affiliate": "CBS",
@@ -970,6 +1210,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -991,7 +1233,50 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WWJ",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:23:46"
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "SEATTLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "PEOPLES COURT",
+      "Rank": 14,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KSTW",
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:14:12"
     },
     {
       "Affiliate": "CW",
@@ -1009,6 +1294,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1022,7 +1309,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "PEOPLES COURT",
       "Rank": 14,
       "SpecStatus": "Program Name,Spot Length",
@@ -1030,24 +1317,27 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KSTW",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:34:13"
     },
     {
       "Affiliate": "MNTV",
       "AudienceImpressions": [
         {
           "AudienceId": 31,
-          "Delivery": 4921.475,
+          "Delivery": 2359.3725,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
-          "Delivery": 1686.25,
+          "Delivery": 1032.5075,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1061,7 +1351,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "LAW & ORDER: CRIMINAL INTENT",
       "Rank": 16,
       "SpecStatus": "Airtime,Program Name,Spot Length",
@@ -1069,7 +1359,92 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WBFS",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T08:05:34"
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 2562.1025,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 653.7425,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "MIAMI",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LAW & ORDER: CRIMINAL INTENT",
+      "Rank": 16,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WBFS",
+      "Status": 0,
+      "TimeAired": "0001-01-01T08:17:27"
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "MIAMI",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LAW & ORDER: CRIMINAL INTENT",
+      "Rank": 16,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WBFS",
+      "Status": 0,
+      "TimeAired": "0001-01-01T08:06:35"
     },
     {
       "Affiliate": "MNTV",
@@ -1087,6 +1462,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1100,7 +1477,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "LAW & ORDER: CRIMINAL INTENT",
       "Rank": 16,
       "SpecStatus": "Airtime,Program Name,Spot Length",
@@ -1108,7 +1485,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WBFS",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T08:33:19"
     },
     {
       "Affiliate": "CBS",
@@ -1126,6 +1504,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1147,7 +1527,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WFOR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:39:48"
     },
     {
       "Affiliate": "CBS",
@@ -1165,6 +1546,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1186,7 +1569,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WFOR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:48:30"
     },
     {
       "Affiliate": "CW",
@@ -1204,6 +1588,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1217,7 +1603,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "JUSTICE WITH JUDGE MABLEAN",
       "Rank": 18,
       "SpecStatus": "Program Name,Spot Length",
@@ -1225,7 +1611,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WBNX",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T13:53:15"
     },
     {
       "Affiliate": "CW",
@@ -1243,6 +1630,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1256,7 +1645,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
       "Rank": 18,
       "SpecStatus": "Program Name,Spot Length",
@@ -1264,7 +1653,92 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WBNX",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:25:17"
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "CLEVELAND",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUSTICE WITH JUDGE MABLEAN",
+      "Rank": 18,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WBNX",
+      "Status": 0,
+      "TimeAired": "0001-01-01T13:45:40"
+    },
+    {
+      "Affiliate": "CW",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "CLEVELAND",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LAUREN LAKE'S PATERNITY COURT",
+      "Rank": 18,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WBNX",
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:44:07"
     },
     {
       "Affiliate": "NBC",
@@ -1282,6 +1756,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1295,7 +1771,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "TODAY SHOW",
       "Rank": 21,
       "SpecStatus": "Program Name,Spot Length",
@@ -1303,7 +1779,92 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KSDK",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:57:11"
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "ST LOUIS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "SHOW ME ST. LOUIS",
+      "Rank": 21,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KSDK",
+      "Status": 0,
+      "TimeAired": "0001-01-01T10:04:43"
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "ST LOUIS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "TODAY SHOW",
+      "Rank": 21,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KSDK",
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:54:11"
     },
     {
       "Affiliate": "NBC",
@@ -1321,6 +1882,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1334,7 +1897,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "SHOW ME ST. LOUIS",
       "Rank": 21,
       "SpecStatus": "Program Name,Spot Length",
@@ -1342,24 +1905,27 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KSDK",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T10:13:58"
     },
     {
       "Affiliate": "CBS",
       "AudienceImpressions": [
         {
           "AudienceId": 31,
-          "Delivery": 88894.825,
+          "Delivery": 0.0,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
-          "Delivery": 80124.615,
+          "Delivery": 0.0,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1373,7 +1939,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 3,
+      "OutOfSpecSpots": 1,
       "ProgramName": "STEVE HARVEY INTERVIEW",
       "Rank": 22,
       "SpecStatus": "Program Name,Spot Length",
@@ -1381,7 +1947,134 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WBTV",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:19:03"
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 44447.4125,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 40062.3075,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "CHARLOTTE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "STEVE HARVEY INTERVIEW",
+      "Rank": 22,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WBTV",
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:49:09"
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 44447.4125,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 40062.3075,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "CHARLOTTE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "STEVE HARVEY INTERVIEW",
+      "Rank": 22,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WBTV",
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:55:19"
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "PITTSBURGH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "DIVORCE COURT",
+      "Rank": 23,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WPGH",
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:17:33"
     },
     {
       "Affiliate": "FOX",
@@ -1399,6 +2092,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1412,7 +2107,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "DIVORCE COURT",
       "Rank": 23,
       "SpecStatus": "Program Name,Spot Length",
@@ -1420,7 +2115,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WPGH",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:39:11"
     },
     {
       "Affiliate": "CBS",
@@ -1438,6 +2134,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1459,7 +2157,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WNCN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:46:52"
     },
     {
       "Affiliate": "CBS",
@@ -1477,6 +2176,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1498,7 +2199,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WNCN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:47:46"
     },
     {
       "Affiliate": "ABC",
@@ -1516,6 +2218,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-05-31T00:00:00",
+      "BvsDate": "2016-05-31T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1529,7 +2233,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "THE DOCTORS",
       "Rank": 26,
       "SpecStatus": "Program Name,Spot Length",
@@ -1537,7 +2241,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WMAR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:19:28"
     },
     {
       "Affiliate": "ABC",
@@ -1555,6 +2260,50 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "BALTIMORE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE DOCTORS",
+      "Rank": 26,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WMAR",
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:58:46"
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1568,7 +2317,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "THE DOCTORS",
       "Rank": 26,
       "SpecStatus": "Program Name,Spot Length",
@@ -1576,24 +2325,69 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WMAR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:37:33"
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "BALTIMORE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE DOCTORS",
+      "Rank": 26,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WMAR",
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:53:47"
     },
     {
       "Affiliate": "FOX",
       "AudienceImpressions": [
         {
           "AudienceId": 31,
-          "Delivery": 22015.87,
+          "Delivery": 11007.935,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
-          "Delivery": 10240.335,
+          "Delivery": 5120.1675,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1607,7 +2401,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "FOX 5 MORNING NEWS AT 7AM",
       "Rank": 28,
       "SpecStatus": "Airtime,Program Name,Spot Length",
@@ -1615,7 +2409,50 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KSWB",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T08:23:47"
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 11007.935,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 5120.1675,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "SAN DIEGO",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "FOX 5 MORNING NEWS AT 7AM",
+      "Rank": 28,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KSWB",
+      "Status": 0,
+      "TimeAired": "0001-01-01T08:25:53"
     },
     {
       "Affiliate": "ABC",
@@ -1633,6 +2470,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1654,7 +2493,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WKRN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:12:20"
     },
     {
       "Affiliate": "ABC",
@@ -1672,6 +2512,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1693,7 +2535,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WKRN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:45:17"
     },
     {
       "Affiliate": "CW",
@@ -1711,6 +2554,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1732,7 +2577,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WWHO",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:31:44"
     },
     {
       "Affiliate": "CW",
@@ -1750,6 +2596,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1771,7 +2619,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WWHO",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:54:28"
     },
     {
       "Affiliate": "CW",
@@ -1789,6 +2638,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1810,7 +2661,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WWHO",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:13:56"
     },
     {
       "Affiliate": "CW",
@@ -1828,6 +2680,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1849,7 +2703,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WWHO",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:54:32"
     },
     {
       "Affiliate": "NBC",
@@ -1867,6 +2722,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-05-31T00:00:00",
+      "BvsDate": "2016-05-31T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1888,7 +2745,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WOAI",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:38:05"
     },
     {
       "Affiliate": "NBC",
@@ -1906,6 +2764,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1927,7 +2787,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WOAI",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:44:43"
     },
     {
       "Affiliate": "CW",
@@ -1945,6 +2806,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -1966,7 +2829,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KCWE",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T22:25:32"
     },
     {
       "Affiliate": "CW",
@@ -1984,6 +2848,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2005,7 +2871,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KCWE",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T23:50:59"
     },
     {
       "Affiliate": "MNTV",
@@ -2023,6 +2890,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2044,7 +2913,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KSMO",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:58:52"
     },
     {
       "Affiliate": "MNTV",
@@ -2062,6 +2932,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2083,7 +2955,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KSMO",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T10:45:30"
     },
     {
       "Affiliate": "IND",
@@ -2101,6 +2974,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2122,7 +2997,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KJZZ",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T19:06:59"
     },
     {
       "Affiliate": "IND",
@@ -2140,6 +3016,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2161,7 +3039,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KJZZ",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T19:07:12"
     },
     {
       "Affiliate": "ABC",
@@ -2179,6 +3058,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-05-31T00:00:00",
+      "BvsDate": "2016-05-31T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2200,7 +3081,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WISN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:55:20"
     },
     {
       "Affiliate": "ABC",
@@ -2218,6 +3100,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2239,7 +3123,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WISN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:47:43"
     },
     {
       "Affiliate": "FOX",
@@ -2257,6 +3142,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2278,7 +3165,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WXIX",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:45:32"
     },
     {
       "Affiliate": "CBS",
@@ -2296,6 +3184,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2317,7 +3207,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KLAS",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:55:23"
     },
     {
       "Affiliate": "CBS",
@@ -2335,6 +3226,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2356,7 +3249,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KLAS",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:56:06"
     },
     {
       "Affiliate": "MNTV",
@@ -2374,6 +3268,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2395,7 +3291,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WTVZ",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:59:10"
     },
     {
       "Affiliate": "MNTV",
@@ -2413,6 +3310,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2434,7 +3333,50 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WTVZ",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T17:29:23"
+    },
+    {
+      "Affiliate": "MNTV",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "NORFOLK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "HOT BENCH",
+      "Rank": 42,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WTVZ",
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:29:04"
     },
     {
       "Affiliate": "MNTV",
@@ -2452,6 +3394,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2465,7 +3409,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "HOT BENCH",
       "Rank": 42,
       "SpecStatus": "Program Name,Spot Length",
@@ -2473,7 +3417,50 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WTVZ",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:59:05"
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "BIRMINGHAM",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE DOCTORS",
+      "Rank": 45,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WVTM",
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:34:38"
     },
     {
       "Affiliate": "NBC",
@@ -2491,6 +3478,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2504,7 +3493,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "THE DOCTORS",
       "Rank": 45,
       "SpecStatus": "Airtime,Program Name,Spot Length",
@@ -2512,24 +3501,27 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WVTM",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:44:01"
     },
     {
       "Affiliate": "IND",
       "AudienceImpressions": [
         {
           "AudienceId": 31,
-          "Delivery": 44454.3475,
+          "Delivery": 23512.9275,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
-          "Delivery": 40469.81,
+          "Delivery": 21523.5325,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2543,7 +3535,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "THE DR. OZ SHOW",
       "Rank": 47,
       "SpecStatus": "Program Name,Spot Length",
@@ -2551,7 +3543,50 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WJXT",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T10:28:06"
+    },
+    {
+      "Affiliate": "IND",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 20941.42,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 18946.2775,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "JACKSONVILLE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "THE DR. OZ SHOW",
+      "Rank": 47,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WJXT",
+      "Status": 0,
+      "TimeAired": "0001-01-01T10:55:48"
     },
     {
       "Affiliate": "MNTV",
@@ -2569,6 +3604,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-05-31T00:00:00",
+      "BvsDate": "2016-05-31T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2590,7 +3627,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KASY",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:29:42"
     },
     {
       "Affiliate": "MNTV",
@@ -2608,6 +3646,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-05-31T00:00:00",
+      "BvsDate": "2016-05-31T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2629,7 +3669,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KASY",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:10:02"
     },
     {
       "Affiliate": "MNTV",
@@ -2647,6 +3688,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2668,7 +3711,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KASY",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:39:15"
     },
     {
       "Affiliate": "MNTV",
@@ -2686,6 +3730,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2707,7 +3753,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KASY",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:39:44"
     },
     {
       "Affiliate": "ABC",
@@ -2725,6 +3772,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2746,7 +3795,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WHAS",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:50:08"
     },
     {
       "Affiliate": "ABC",
@@ -2764,6 +3814,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2785,7 +3837,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WHAS",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:33:24"
     },
     {
       "Affiliate": "ABC",
@@ -2803,6 +3856,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2824,7 +3879,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WHAS",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:25:26"
     },
     {
       "Affiliate": "ABC",
@@ -2842,6 +3898,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2863,7 +3921,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WHAS",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:34:46"
     },
     {
       "Affiliate": "NBC",
@@ -2881,6 +3940,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2902,7 +3963,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WMC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:59:01"
     },
     {
       "Affiliate": "NBC",
@@ -2920,6 +3982,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2941,7 +4005,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WMC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:44:49"
     },
     {
       "Affiliate": "NBC",
@@ -2959,6 +4024,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -2980,7 +4047,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WMC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:56:00"
     },
     {
       "Affiliate": "NBC",
@@ -2998,6 +4066,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3019,7 +4089,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WDSU",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:58:53"
     },
     {
       "Affiliate": "NBC",
@@ -3037,6 +4108,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3058,7 +4131,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WDSU",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:56:23"
     },
     {
       "Affiliate": "NBC",
@@ -3076,6 +4150,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-05-31T00:00:00",
+      "BvsDate": "2016-05-31T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3097,7 +4173,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WJAR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:12:49"
     },
     {
       "Affiliate": "NBC",
@@ -3115,6 +4192,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3136,7 +4215,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WJAR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T10:46:35"
     },
     {
       "Affiliate": "NBC",
@@ -3154,6 +4234,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3175,7 +4257,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WJAR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:15:02"
     },
     {
       "Affiliate": "NBC",
@@ -3193,6 +4276,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3214,7 +4299,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WJAR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T10:47:46"
     },
     {
       "Affiliate": "CBS",
@@ -3232,6 +4318,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3253,7 +4341,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WIVB",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:34:55"
     },
     {
       "Affiliate": "ABC",
@@ -3271,6 +4360,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-05-31T00:00:00",
+      "BvsDate": "2016-05-31T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3292,7 +4383,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WKBW",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:18:33"
     },
     {
       "Affiliate": "ABC",
@@ -3310,6 +4402,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3331,7 +4425,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WKBW",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:28:20"
     },
     {
       "Affiliate": "ABC",
@@ -3349,6 +4444,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3362,7 +4459,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
       "Rank": 54,
       "SpecStatus": "Program Name,Spot Length",
@@ -3370,7 +4467,50 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KFSN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:47:24"
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "FRESNO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+      "Rank": 54,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KFSN",
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:46:06"
     },
     {
       "Affiliate": "CBS",
@@ -3388,6 +4528,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3409,7 +4551,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KGPE",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:14:17"
     },
     {
       "Affiliate": "CBS",
@@ -3427,6 +4570,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3448,7 +4593,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KGPE",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:40:34"
     },
     {
       "Affiliate": "CBS",
@@ -3466,6 +4612,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3487,7 +4635,92 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WYOU",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:11:05"
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "WILKES BARRE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "EYEWITNESS NEWS AT NOON",
+      "Rank": 55,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WYOU",
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:08:45"
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "WILKES BARRE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "EYEWITNESS NEWS AT NOON",
+      "Rank": 55,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WYOU",
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:20:18"
     },
     {
       "Affiliate": "CBS",
@@ -3505,6 +4738,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3518,7 +4753,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 3,
+      "OutOfSpecSpots": 1,
       "ProgramName": "EYEWITNESS NEWS AT NOON",
       "Rank": 55,
       "SpecStatus": "Program Name,Spot Length",
@@ -3526,7 +4761,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WYOU",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:10:02"
     },
     {
       "Affiliate": "CW",
@@ -3544,6 +4780,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3565,7 +4803,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WUPV",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T13:23:30"
     },
     {
       "Affiliate": "CW",
@@ -3583,6 +4822,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3604,7 +4845,92 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WUPV",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T13:33:34"
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "LITTLE ROCK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "LET'S MAKE A DEAL",
+      "Rank": 57,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KTHV",
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:59:03"
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "LITTLE ROCK",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "DR. PHIL",
+      "Rank": 57,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KTHV",
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:45:31"
     },
     {
       "Affiliate": "CBS",
@@ -3622,6 +4948,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3635,7 +4963,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "LET'S MAKE A DEAL",
       "Rank": 57,
       "SpecStatus": "Program Name,Spot Length",
@@ -3643,7 +4971,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KTHV",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:58:48"
     },
     {
       "Affiliate": "CBS",
@@ -3661,6 +4990,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3674,7 +5005,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "DR. PHIL",
       "Rank": 57,
       "SpecStatus": "Program Name,Spot Length",
@@ -3682,7 +5013,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KTHV",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:53:50"
     },
     {
       "Affiliate": "NBC",
@@ -3700,6 +5032,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3721,7 +5055,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WPMI",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T07:28:55"
     },
     {
       "Affiliate": "NBC",
@@ -3739,6 +5074,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3760,7 +5097,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WPMI",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T08:27:15"
     },
     {
       "Affiliate": "NBC",
@@ -3778,6 +5116,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3799,7 +5139,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WNYT",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:46:42"
     },
     {
       "Affiliate": "CBS",
@@ -3817,6 +5158,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3838,7 +5181,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KOTV",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:52:54"
     },
     {
       "Affiliate": "CBS",
@@ -3856,6 +5200,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3877,7 +5223,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KOTV",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:38:55"
     },
     {
       "Affiliate": "FOX",
@@ -3895,6 +5242,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-05-31T00:00:00",
+      "BvsDate": "2016-05-31T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3916,7 +5265,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WFTX",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:21:42"
     },
     {
       "Affiliate": "FOX",
@@ -3934,6 +5284,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3955,7 +5307,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WFTX",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:14:03"
     },
     {
       "Affiliate": "FOX",
@@ -3973,6 +5326,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -3994,7 +5349,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WFTX",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:14:02"
     },
     {
       "Affiliate": "FOX",
@@ -4012,6 +5368,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4033,7 +5391,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WFTX",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:14:33"
     },
     {
       "Affiliate": "NBC",
@@ -4051,6 +5410,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4072,7 +5433,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WBIR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T10:59:08"
     },
     {
       "Affiliate": "NBC",
@@ -4090,6 +5452,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4111,7 +5475,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WBIR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T10:47:58"
     },
     {
       "Affiliate": "ABC",
@@ -4129,6 +5494,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4150,7 +5517,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WTVQ",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:58:53"
     },
     {
       "Affiliate": "ABC",
@@ -4168,6 +5536,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4189,7 +5559,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WTVQ",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:35:53"
     },
     {
       "Affiliate": "ABC",
@@ -4207,6 +5578,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4228,7 +5601,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WKEF",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:54:59"
     },
     {
       "Affiliate": "ABC",
@@ -4246,6 +5620,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4267,7 +5643,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WKEF",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:55:19"
     },
     {
       "Affiliate": "FOX",
@@ -4285,6 +5662,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-12T00:00:00",
+      "BvsDate": "2016-06-12T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4298,7 +5677,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "MIKE & MOLLY WKND",
       "Rank": 64,
       "SpecStatus": "Airtime,Program Name,Spot Length",
@@ -4306,24 +5685,69 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WRGT",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T18:11:42"
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-12T00:00:00",
+      "BvsDate": "2016-06-12T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "DAYTON",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "MIKE & MOLLY WKND",
+      "Rank": 64,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WRGT",
+      "Status": 0,
+      "TimeAired": "0001-01-01T18:55:43"
     },
     {
       "Affiliate": "ABC",
       "AudienceImpressions": [
         {
           "AudienceId": 31,
-          "Delivery": 15877.35,
+          "Delivery": 7971.0225,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
-          "Delivery": 12729.335,
+          "Delivery": 6256.3675,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4337,7 +5761,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "RACHAEL RAY",
       "Rank": 65,
       "SpecStatus": "Program Name,Spot Length",
@@ -4345,7 +5769,92 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KAKE",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:34:47"
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 7906.3275,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 6472.9675,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "WICHITA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "RACHAEL RAY",
+      "Rank": 65,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KAKE",
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:12:55"
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "WICHITA",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "GOOD MORNING KAKELAND",
+      "Rank": 65,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KAKE",
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:33:02"
     },
     {
       "Affiliate": "ABC",
@@ -4363,6 +5872,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4376,7 +5887,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "GOOD MORNING KAKELAND",
       "Rank": 65,
       "SpecStatus": "Program Name,Spot Length",
@@ -4384,7 +5895,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KAKE",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:56:48"
     },
     {
       "Affiliate": "ABC",
@@ -4402,6 +5914,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4415,7 +5929,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "ENTERTAINMENT TONIGHT",
       "Rank": 67,
       "SpecStatus": "Program Name,Spot Length",
@@ -4423,7 +5937,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WCHS",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T19:41:31"
     },
     {
       "Affiliate": "ABC",
@@ -4441,6 +5956,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4462,7 +5979,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WCHS",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T13:30:10"
     },
     {
       "Affiliate": "ABC",
@@ -4480,6 +5998,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4501,7 +6021,50 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WCHS",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T19:10:08"
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "CHARLESTON,WV",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "ENTERTAINMENT TONIGHT",
+      "Rank": 67,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WCHS",
+      "Status": 0,
+      "TimeAired": "0001-01-01T19:55:48"
     },
     {
       "Affiliate": "FOX",
@@ -4519,6 +6082,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4540,7 +6105,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WFXR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T17:13:56"
     },
     {
       "Affiliate": "FOX",
@@ -4558,6 +6124,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4579,7 +6147,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WSMH",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:35:55"
     },
     {
       "Affiliate": "FOX",
@@ -4597,6 +6166,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4618,7 +6189,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WSMH",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:18:38"
     },
     {
       "Affiliate": "CBS",
@@ -4636,6 +6208,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4657,7 +6231,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KOLR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T10:28:18"
     },
     {
       "Affiliate": "CBS",
@@ -4675,6 +6250,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-04T00:00:00",
+      "BvsDate": "2016-06-04T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4696,7 +6273,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KOLR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T17:11:17"
     },
     {
       "Affiliate": "CBS",
@@ -4714,6 +6292,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-11T00:00:00",
+      "BvsDate": "2016-06-11T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4735,7 +6315,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KOLR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T17:12:44"
     },
     {
       "Affiliate": "NBC",
@@ -4753,6 +6334,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4774,7 +6357,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WHEC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:59:01"
     },
     {
       "Affiliate": "NBC",
@@ -4792,6 +6376,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4813,7 +6399,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WHEC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:55:40"
     },
     {
       "Affiliate": "CBS",
@@ -4831,6 +6418,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4852,7 +6441,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WROC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:58:48"
     },
     {
       "Affiliate": "ABC",
@@ -4870,6 +6460,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4883,7 +6475,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "NEWS",
       "Rank": 77,
       "SpecStatus": "Program Name,Spot Length",
@@ -4891,7 +6483,50 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WTVG",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:18:52"
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721",
+      "Market": "TOLEDO",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "NEWS",
+      "Rank": 77,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WTVG",
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:10:42"
     },
     {
       "Affiliate": "CBS",
@@ -4909,6 +6544,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4930,7 +6567,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WLTX",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:28:21"
     },
     {
       "Affiliate": "CBS",
@@ -4948,6 +6586,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -4969,7 +6609,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WLTX",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:59:31"
     },
     {
       "Affiliate": "ABC",
@@ -4987,6 +6628,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5008,7 +6651,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WAAY",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:31:40"
     },
     {
       "Affiliate": "ABC",
@@ -5026,6 +6670,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5047,7 +6693,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WAAY",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T13:26:23"
     },
     {
       "Affiliate": "ABC",
@@ -5065,6 +6712,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5086,7 +6735,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WAAY",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T13:25:19"
     },
     {
       "Affiliate": "CBS",
@@ -5104,6 +6754,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5125,7 +6777,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WGME",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T13:29:11"
     },
     {
       "Affiliate": "CBS",
@@ -5143,6 +6796,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5164,24 +6819,27 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WGME",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:29:10"
     },
     {
       "Affiliate": "FOX",
       "AudienceImpressions": [
         {
           "AudienceId": 31,
-          "Delivery": 12274.76,
+          "Delivery": 6137.38,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
-          "Delivery": 7167.845,
+          "Delivery": 3583.9225,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5195,7 +6853,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "FAMILY FEUD",
       "Rank": 81,
       "SpecStatus": "Program Name,Spot Length",
@@ -5203,7 +6861,92 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WMSN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:57:35"
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 6137.38,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 3583.9225,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "MADISON",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "FAMILY FEUD",
+      "Rank": 81,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WMSN",
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:58:16"
+    },
+    {
+      "Affiliate": "FOX",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "MADISON",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "FAMILY FEUD",
+      "Rank": 81,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WMSN",
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:39:07"
     },
     {
       "Affiliate": "FOX",
@@ -5221,6 +6964,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5234,7 +6979,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "FAMILY FEUD",
       "Rank": 81,
       "SpecStatus": "Program Name,Spot Length",
@@ -5242,7 +6987,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WMSN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:41:18"
     },
     {
       "Affiliate": "CBS",
@@ -5260,6 +7006,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5281,7 +7029,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KSLA",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:57:59"
     },
     {
       "Affiliate": "CBS",
@@ -5299,6 +7048,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5320,7 +7071,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KSLA",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:59:31"
     },
     {
       "Affiliate": "CBS",
@@ -5338,6 +7090,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5359,46 +7113,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KSLA",
-      "Status": 0
-    },
-    {
-      "Affiliate": "ABC",
-      "AudienceImpressions": [
-        {
-          "AudienceId": 31,
-          "Delivery": 38146.3,
-          "Impressions": 0.0,
-          "NsiDelivery": 0.0
-        },
-        {
-          "AudienceId": 42,
-          "Delivery": 37416.6525,
-          "Impressions": 0.0,
-          "NsiDelivery": 0.0
-        }
-      ],
-      "Cost": null,
-      "DateAired": "0001-01-01T00:00:00",
-      "DeliveredSpots": null,
-      "DisplayDaypart": null,
-      "Isci": "17UPLC5174",
-      "Market": "SYRACUSE",
-      "MatchAirTime": true,
-      "MatchIsci": true,
-      "MatchProgram": false,
-      "MatchSpotLength": false,
-      "MatchStation": true,
-      "MediaWeekId": null,
-      "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
-      "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
-      "Rank": 84,
-      "SpecStatus": "Program Name,Spot Length",
-      "SpotClearance": null,
-      "SpotCost": null,
-      "SpotLength": 60,
-      "Station": "WSYR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:59:04"
     },
     {
       "Affiliate": "ABC",
@@ -5416,11 +7132,13 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
       "DisplayDaypart": null,
-      "Isci": "17LPLC0721H",
+      "Isci": "17UPLC5174",
       "Market": "SYRACUSE",
       "MatchAirTime": true,
       "MatchIsci": true,
@@ -5429,7 +7147,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
       "Rank": 84,
       "SpecStatus": "Program Name,Spot Length",
@@ -5437,7 +7155,50 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WSYR",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:51:16"
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 20691.95,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 20287.4875,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "SYRACUSE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+      "Rank": 84,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WSYR",
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:30:02"
     },
     {
       "Affiliate": "ABC",
@@ -5455,6 +7216,92 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "SYRACUSE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+      "Rank": 84,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WSYR",
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:45:22"
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 17454.35,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 17129.165,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "SYRACUSE",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
+      "Rank": 84,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WSYR",
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:53:02"
+    },
+    {
+      "Affiliate": "ABC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5476,7 +7323,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WICD",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:55:35"
     },
     {
       "Affiliate": "NBC",
@@ -5494,6 +7342,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5507,7 +7357,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "RACHAEL RAY",
       "Rank": 86,
       "SpecStatus": "Program Name,Spot Length",
@@ -5515,7 +7365,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KVEO",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:26:21"
     },
     {
       "Affiliate": "NBC",
@@ -5533,6 +7384,50 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "HARLINGEN",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "RACHAEL RAY",
+      "Rank": 86,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KVEO",
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:59:06"
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5546,7 +7441,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "RACHAEL RAY",
       "Rank": 86,
       "SpecStatus": "Program Name,Spot Length",
@@ -5554,7 +7449,50 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KVEO",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:33:35"
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "HARLINGEN",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "RACHAEL RAY",
+      "Rank": 86,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KVEO",
+      "Status": 0,
+      "TimeAired": "0001-01-01T11:14:31"
     },
     {
       "Affiliate": "NBC",
@@ -5572,6 +7510,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5593,7 +7533,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KCEN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:17:16"
     },
     {
       "Affiliate": "NBC",
@@ -5611,6 +7552,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5632,7 +7575,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KCEN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:53:45"
     },
     {
       "Affiliate": "NBC",
@@ -5650,6 +7594,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5671,7 +7617,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KCEN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:54:55"
     },
     {
       "Affiliate": "NBC",
@@ -5689,6 +7636,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5710,7 +7659,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KCEN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:23:15"
     },
     {
       "Affiliate": "CBS",
@@ -5728,6 +7678,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5749,7 +7701,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WDEF",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T13:58:55"
     },
     {
       "Affiliate": "CBS",
@@ -5767,6 +7720,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5788,46 +7743,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WDEF",
-      "Status": 0
-    },
-    {
-      "Affiliate": "CBS",
-      "AudienceImpressions": [
-        {
-          "AudienceId": 31,
-          "Delivery": 13206.995,
-          "Impressions": 0.0,
-          "NsiDelivery": 0.0
-        },
-        {
-          "AudienceId": 42,
-          "Delivery": 14045.275,
-          "Impressions": 0.0,
-          "NsiDelivery": 0.0
-        }
-      ],
-      "Cost": null,
-      "DateAired": "0001-01-01T00:00:00",
-      "DeliveredSpots": null,
-      "DisplayDaypart": null,
-      "Isci": "17UPLC5174",
-      "Market": "CEDAR RAPIDS",
-      "MatchAirTime": true,
-      "MatchIsci": true,
-      "MatchProgram": false,
-      "MatchSpotLength": false,
-      "MatchStation": true,
-      "MediaWeekId": null,
-      "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
-      "ProgramName": "CBS 2 NEWS AT NOON",
-      "Rank": 90,
-      "SpecStatus": "Program Name,Spot Length",
-      "SpotClearance": null,
-      "SpotCost": null,
-      "SpotLength": 60,
-      "Station": "KGAN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:27:06"
     },
     {
       "Affiliate": "CBS",
@@ -5845,6 +7762,92 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "CEDAR RAPIDS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "CBS 2 NEWS AT NOON",
+      "Rank": 90,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KGAN",
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:26:32"
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 6603.4975,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 7022.6375,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174",
+      "Market": "CEDAR RAPIDS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "CBS 2 NEWS AT NOON",
+      "Rank": 90,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KGAN",
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:23:11"
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5858,7 +7861,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "CBS 2 NEWS AT NOON",
       "Rank": 90,
       "SpecStatus": "Program Name,Spot Length",
@@ -5866,24 +7869,69 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KGAN",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:23:03"
+    },
+    {
+      "Affiliate": "CBS",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 6603.4975,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 7022.6375,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "CEDAR RAPIDS",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "CBS 2 NEWS AT NOON",
+      "Rank": 90,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "KGAN",
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:20:50"
     },
     {
       "Affiliate": "NBC",
       "AudienceImpressions": [
         {
           "AudienceId": 31,
-          "Delivery": 27899.22,
+          "Delivery": 13917.785,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
-          "Delivery": 24036.14,
+          "Delivery": 11963.4925,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5897,7 +7945,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE JUDY",
       "Rank": 91,
       "SpecStatus": "Program Name,Spot Length",
@@ -5905,7 +7953,92 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WSAV",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:13:39"
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 13981.435,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 12072.6475,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17UPLC5174H",
+      "Market": "SAVANNAH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 91,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WSAV",
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:24:22"
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-06T00:00:00",
+      "BvsDate": "2016-06-06T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "SAVANNAH",
+      "MatchAirTime": true,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 91,
+      "SpecStatus": "Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WSAV",
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:50:05"
     },
     {
       "Affiliate": "NBC",
@@ -5923,6 +8056,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5936,7 +8071,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 2,
+      "OutOfSpecSpots": 1,
       "ProgramName": "JUDGE JUDY",
       "Rank": 91,
       "SpecStatus": "Program Name,Spot Length",
@@ -5944,7 +8079,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WSAV",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:55:08"
     },
     {
       "Affiliate": "CBS",
@@ -5962,6 +8098,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-05-31T00:00:00",
+      "BvsDate": "2016-05-31T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -5983,7 +8121,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KDBC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:55:02"
     },
     {
       "Affiliate": "CBS",
@@ -6001,6 +8140,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6022,7 +8163,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KDBC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:54:39"
     },
     {
       "Affiliate": "CBS",
@@ -6040,6 +8182,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6061,7 +8205,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KDBC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:28:32"
     },
     {
       "Affiliate": "CBS",
@@ -6079,6 +8224,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6100,7 +8247,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "KDBC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T15:09:49"
     },
     {
       "Affiliate": "NBC",
@@ -6118,6 +8266,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-01T00:00:00",
+      "BvsDate": "2016-06-01T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6139,24 +8289,27 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WLBT",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:58:30"
     },
     {
       "Affiliate": "NBC",
       "AudienceImpressions": [
         {
           "AudienceId": 31,
-          "Delivery": 7535.59,
+          "Delivery": 0.0,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         },
         {
           "AudienceId": 42,
-          "Delivery": 5537.265,
+          "Delivery": 0.0,
           "Impressions": 0.0,
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6170,7 +8323,7 @@
       "MatchStation": true,
       "MediaWeekId": null,
       "OrderedSpots": 0,
-      "OutOfSpecSpots": 4,
+      "OutOfSpecSpots": 1,
       "ProgramName": "FABLIFE",
       "Rank": 95,
       "SpecStatus": "Airtime,Program Name,Spot Length",
@@ -6178,7 +8331,134 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WLBT",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:24:03"
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 0.0,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "JACKSON,MS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "FABLIFE",
+      "Rank": 95,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WLBT",
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:50:57"
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 3843.32,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 2878.025,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "JACKSON,MS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "FABLIFE",
+      "Rank": 95,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WLBT",
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:23:04"
+    },
+    {
+      "Affiliate": "NBC",
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 3692.27,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 2659.24,
+          "Impressions": 0.0,
+          "NsiDelivery": 0.0
+        }
+      ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
+      "Cost": null,
+      "DateAired": "0001-01-01T00:00:00",
+      "DeliveredSpots": null,
+      "DisplayDaypart": null,
+      "Isci": "17LPLC0721H",
+      "Market": "JACKSON,MS",
+      "MatchAirTime": false,
+      "MatchIsci": true,
+      "MatchProgram": false,
+      "MatchSpotLength": false,
+      "MatchStation": true,
+      "MediaWeekId": null,
+      "OrderedSpots": 0,
+      "OutOfSpecSpots": 1,
+      "ProgramName": "FABLIFE",
+      "Rank": 95,
+      "SpecStatus": "Airtime,Program Name,Spot Length",
+      "SpotClearance": null,
+      "SpotCost": null,
+      "SpotLength": 60,
+      "Station": "WLBT",
+      "Status": 0,
+      "TimeAired": "0001-01-01T14:55:47"
     },
     {
       "Affiliate": "CBS",
@@ -6196,6 +8476,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6217,7 +8499,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WSBT",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:54:36"
     },
     {
       "Affiliate": "CBS",
@@ -6235,6 +8518,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6256,7 +8541,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WSBT",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T16:35:36"
     },
     {
       "Affiliate": "CBS",
@@ -6274,6 +8560,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6295,7 +8583,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WJHL",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:28:16"
     },
     {
       "Affiliate": "CBS",
@@ -6313,6 +8602,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-08T00:00:00",
+      "BvsDate": "2016-06-08T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6334,7 +8625,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WJHL",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:10:23"
     },
     {
       "Affiliate": "ABC",
@@ -6352,6 +8644,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-05-31T00:00:00",
+      "BvsDate": "2016-05-31T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6373,7 +8667,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WCTI",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:58:43"
     },
     {
       "Affiliate": "ABC",
@@ -6391,6 +8686,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-03T00:00:00",
+      "BvsDate": "2016-06-03T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6412,7 +8709,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WCTI",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:32:29"
     },
     {
       "Affiliate": "ABC",
@@ -6430,6 +8728,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-09T00:00:00",
+      "BvsDate": "2016-06-09T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6451,7 +8751,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WCTI",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T12:42:12"
     },
     {
       "Affiliate": "ABC",
@@ -6469,6 +8770,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-10T00:00:00",
+      "BvsDate": "2016-06-10T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6490,7 +8793,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WCTI",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:27:41"
     },
     {
       "Affiliate": "ABC",
@@ -6508,6 +8812,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-02T00:00:00",
+      "BvsDate": "2016-06-02T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6529,7 +8835,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WQAD",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:46:50"
     },
     {
       "Affiliate": "ABC",
@@ -6547,6 +8854,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-06-07T00:00:00",
+      "BvsDate": "2016-06-07T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -6568,7 +8877,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WQAD",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:35:57"
     }
   ],
   "ScheduleAudiences": [
