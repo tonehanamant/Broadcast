@@ -52,6 +52,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 21.00,
         "DeliveredSpots": 1,
         "DisplayDaypart": {
@@ -83,7 +85,8 @@
         "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -107,6 +110,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 22.00,
         "DeliveredSpots": 1,
         "DisplayDaypart": {
@@ -138,7 +143,8 @@
         "SpotCost": 22.00,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -162,6 +168,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 21.00,
         "DeliveredSpots": 1,
         "DisplayDaypart": {
@@ -193,7 +201,8 @@
         "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -217,6 +226,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 21.00,
         "DeliveredSpots": 1,
         "DisplayDaypart": {
@@ -248,7 +259,8 @@
         "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -272,6 +284,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 21.00,
         "DeliveredSpots": 1,
         "DisplayDaypart": {
@@ -303,7 +317,8 @@
         "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -327,6 +342,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 21.00,
         "DeliveredSpots": 1,
         "DisplayDaypart": {
@@ -358,7 +375,8 @@
         "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -382,6 +400,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 21.00,
         "DeliveredSpots": 1,
         "DisplayDaypart": {
@@ -413,7 +433,8 @@
         "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -437,6 +458,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 0.00,
         "DeliveredSpots": 0,
         "DisplayDaypart": {
@@ -468,7 +491,8 @@
         "SpotCost": 21.00,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       }
     ],
     "ScheduleAudiences": [
@@ -545,6 +569,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "2017-03-19T00:00:00",
+        "BvsDate": "2017-03-20T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
         "DeliveredSpots": null,
@@ -566,7 +592,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:01:00"
       }
     ],
     "ScheduleAudiences": [
@@ -1010,6 +1037,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DeliveredSpots": 0,
         "DisplayDaypart": null,
@@ -1025,7 +1054,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 1
+        "Status": 1,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -1049,6 +1079,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DeliveredSpots": 1,
         "DisplayDaypart": null,
@@ -1064,7 +1096,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 1
+        "Status": 1,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -1088,6 +1121,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DeliveredSpots": 3,
         "DisplayDaypart": null,
@@ -1103,7 +1138,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 1
+        "Status": 1,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -1127,6 +1163,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
         "DeliveredSpots": 0,
@@ -1148,7 +1186,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -1172,6 +1211,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DeliveredSpots": 1,
         "DisplayDaypart": null,
@@ -1187,7 +1228,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 1
+        "Status": 1,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -1211,6 +1253,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DeliveredSpots": 1,
         "DisplayDaypart": null,
@@ -1226,7 +1270,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 1
+        "Status": 1,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -1250,6 +1295,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DeliveredSpots": 1,
         "DisplayDaypart": null,
@@ -1265,7 +1312,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 1
+        "Status": 1,
+        "TimeAired": "0001-01-01T00:00:00"
       }
     ],
     "ScheduleAudiences": [
@@ -1345,6 +1393,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 21.00,
             "DeliveredSpots": 1,
             "DisplayDaypart": {
@@ -1376,7 +1426,8 @@
             "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
-            "Status": 1
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
           },
           {
             "Affiliate": "IND",
@@ -1400,6 +1451,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 22.00,
             "DeliveredSpots": 1,
             "DisplayDaypart": {
@@ -1431,7 +1484,8 @@
             "SpotCost": 22.00,
             "SpotLength": 30,
             "Station": "WMOR",
-            "Status": 1
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
           },
           {
             "Affiliate": "IND",
@@ -1455,6 +1509,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 21.00,
             "DeliveredSpots": 1,
             "DisplayDaypart": {
@@ -1486,7 +1542,8 @@
             "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
-            "Status": 1
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
           },
           {
             "Affiliate": "IND",
@@ -1510,6 +1567,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 21.00,
             "DeliveredSpots": 1,
             "DisplayDaypart": {
@@ -1541,7 +1600,8 @@
             "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
-            "Status": 1
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
           },
           {
             "Affiliate": "IND",
@@ -1565,6 +1625,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 21.00,
             "DeliveredSpots": 1,
             "DisplayDaypart": {
@@ -1596,7 +1658,8 @@
             "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
-            "Status": 1
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
           },
           {
             "Affiliate": "IND",
@@ -1620,6 +1683,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 21.00,
             "DeliveredSpots": 1,
             "DisplayDaypart": {
@@ -1651,7 +1716,8 @@
             "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
-            "Status": 1
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
           },
           {
             "Affiliate": "IND",
@@ -1675,6 +1741,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 21.00,
             "DeliveredSpots": 1,
             "DisplayDaypart": {
@@ -1706,7 +1774,8 @@
             "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
-            "Status": 1
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
           },
           {
             "Affiliate": "IND",
@@ -1730,6 +1799,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
             "DisplayDaypart": {
@@ -1761,7 +1832,8 @@
             "SpotCost": 21.00,
             "SpotLength": 30,
             "Station": "WMOR",
-            "Status": 1
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
           }
         ],
         "Week": {
@@ -1819,6 +1891,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "2017-03-19T00:00:00",
+            "BvsDate": "2017-03-20T00:00:00",
             "Cost": 0.0,
             "DateAired": "0001-01-01T00:00:00",
             "DeliveredSpots": 0,
@@ -1840,7 +1914,8 @@
             "SpotCost": null,
             "SpotLength": 30,
             "Station": "WMOR",
-            "Status": 0
+            "Status": 0,
+            "TimeAired": "0001-01-01T00:01:00"
           }
         ],
         "Week": {

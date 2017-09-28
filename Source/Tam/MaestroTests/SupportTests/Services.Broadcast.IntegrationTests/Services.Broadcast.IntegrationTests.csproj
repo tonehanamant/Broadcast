@@ -533,7 +533,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ApplicationServices\ScheduleReportDtoFactoryServiceIntegrationTests.FullReport_GenerateScheduleReportDto_NTI_ClockDateAdjustment.approved.txt" />
     <Content Include="appsettings_integration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

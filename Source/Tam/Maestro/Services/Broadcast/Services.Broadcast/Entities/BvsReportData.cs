@@ -31,6 +31,9 @@ namespace Services.Broadcast.Entities
         public int? MediaWeekId { get; set; }
         public int Status { get; set; }
         public int? OutOfSpecSpots { get; set; }
+        public DateTime BvsDate { get; set; }
+        public DateTime BroadcastDate { get; set; }
+        public DateTime TimeAired { get; set; }
         public double GetDeliveredImpressions(int audienceId)
         {
             return AudienceImpressions.Where(ai => ai.AudienceId == audienceId).Sum(ai => ai.Delivery);

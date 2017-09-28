@@ -38,6 +38,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 0.00,
         "DeliveredSpots": 0,
         "DisplayDaypart": {
@@ -68,7 +70,8 @@
         "SpotCost": 200.00,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -86,6 +89,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 200.00,
         "DeliveredSpots": 1,
         "DisplayDaypart": {
@@ -116,7 +121,8 @@
         "SpotCost": 200.00,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "CW",
@@ -134,6 +140,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 100.00,
         "DeliveredSpots": 1,
         "DisplayDaypart": {
@@ -164,7 +172,8 @@
         "SpotCost": 100.00,
         "SpotLength": 30,
         "Station": "KPLR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "CW",
@@ -182,6 +191,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 0.00,
         "DeliveredSpots": 0,
         "DisplayDaypart": {
@@ -212,7 +223,8 @@
         "SpotCost": 50.00,
         "SpotLength": 30,
         "Station": "KPLR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       }
     ],
     "ScheduleAudiences": [
@@ -268,6 +280,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "2017-03-14T00:00:00",
+        "BvsDate": "2017-03-15T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
         "DeliveredSpots": null,
@@ -289,7 +303,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T02:08:52"
       },
       {
         "Affiliate": "MNTV",
@@ -307,6 +322,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "2017-03-13T00:00:00",
+        "BvsDate": "2017-03-13T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
         "DeliveredSpots": null,
@@ -328,7 +345,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "KPDX",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T09:58:38"
       },
       {
         "Affiliate": "CW",
@@ -346,6 +364,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "2017-03-20T00:00:00",
+        "BvsDate": "2017-03-20T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
         "DeliveredSpots": null,
@@ -367,7 +387,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "KPLR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T09:36:57"
       }
     ],
     "ScheduleAudiences": [
@@ -543,6 +564,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
         "DeliveredSpots": null,
@@ -564,7 +587,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "KPDX",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "CW",
@@ -582,6 +606,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 0.00,
         "DeliveredSpots": 0,
         "DisplayDaypart": {
@@ -612,7 +638,8 @@
         "SpotCost": 50.00,
         "SpotLength": 30,
         "Station": "KPLR",
-        "Status": 1
+        "Status": 1,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "CW",
@@ -630,6 +657,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 100.00,
         "DeliveredSpots": 1,
         "DisplayDaypart": {
@@ -660,7 +689,8 @@
         "SpotCost": 100.00,
         "SpotLength": 30,
         "Station": "KPLR",
-        "Status": 1
+        "Status": 1,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "CW",
@@ -678,6 +708,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
         "DeliveredSpots": null,
@@ -699,7 +731,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "KPLR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -717,6 +750,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 0.00,
         "DeliveredSpots": 0,
         "DisplayDaypart": {
@@ -747,7 +782,8 @@
         "SpotCost": 200.00,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 1
+        "Status": 1,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -765,6 +801,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 200.00,
         "DeliveredSpots": 1,
         "DisplayDaypart": {
@@ -795,7 +833,8 @@
         "SpotCost": 200.00,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 1
+        "Status": 1,
+        "TimeAired": "0001-01-01T00:00:00"
       },
       {
         "Affiliate": "IND",
@@ -813,6 +852,8 @@
             "NsiDelivery": 0.0
           }
         ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
         "DeliveredSpots": null,
@@ -834,7 +875,8 @@
         "SpotCost": null,
         "SpotLength": 30,
         "Station": "WMOR",
-        "Status": 0
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
       }
     ],
     "ScheduleAudiences": [
@@ -893,6 +935,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
             "DisplayDaypart": {
@@ -923,7 +967,8 @@
             "SpotCost": 100.00,
             "SpotLength": 30,
             "Station": "KPLR",
-            "Status": 1
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
           }
         ],
         "Week": {
@@ -967,6 +1012,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
             "DisplayDaypart": {
@@ -997,7 +1044,8 @@
             "SpotCost": 200.00,
             "SpotLength": 30,
             "Station": "WMOR",
-            "Status": 1
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
           },
           {
             "Affiliate": "IND",
@@ -1015,6 +1063,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 200.00,
             "DeliveredSpots": 1,
             "DisplayDaypart": {
@@ -1045,7 +1095,8 @@
             "SpotCost": 200.00,
             "SpotLength": 30,
             "Station": "WMOR",
-            "Status": 1
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
           },
           {
             "Affiliate": "CW",
@@ -1063,6 +1114,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 100.00,
             "DeliveredSpots": 1,
             "DisplayDaypart": {
@@ -1093,7 +1146,8 @@
             "SpotCost": 100.00,
             "SpotLength": 30,
             "Station": "KPLR",
-            "Status": 1
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
           },
           {
             "Affiliate": "CW",
@@ -1111,6 +1165,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
             "DisplayDaypart": {
@@ -1141,7 +1197,8 @@
             "SpotCost": 50.00,
             "SpotLength": 30,
             "Station": "KPLR",
-            "Status": 1
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
           },
           {
             "Affiliate": "IND",
@@ -1159,6 +1216,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "2017-03-14T00:00:00",
+            "BvsDate": "2017-03-15T00:00:00",
             "Cost": null,
             "DateAired": "0001-01-01T00:00:00",
             "DeliveredSpots": null,
@@ -1180,7 +1239,8 @@
             "SpotCost": null,
             "SpotLength": 30,
             "Station": "WMOR",
-            "Status": 0
+            "Status": 0,
+            "TimeAired": "0001-01-01T02:08:52"
           },
           {
             "Affiliate": "MNTV",
@@ -1198,6 +1258,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "2017-03-13T00:00:00",
+            "BvsDate": "2017-03-13T00:00:00",
             "Cost": null,
             "DateAired": "0001-01-01T00:00:00",
             "DeliveredSpots": null,
@@ -1219,7 +1281,8 @@
             "SpotCost": null,
             "SpotLength": 30,
             "Station": "KPDX",
-            "Status": 0
+            "Status": 0,
+            "TimeAired": "0001-01-01T09:58:38"
           }
         ],
         "Week": {
@@ -1263,6 +1326,8 @@
                 "NsiDelivery": 0.0
               }
             ],
+            "BroadcastDate": "2017-03-20T00:00:00",
+            "BvsDate": "2017-03-20T00:00:00",
             "Cost": null,
             "DateAired": "0001-01-01T00:00:00",
             "DeliveredSpots": null,
@@ -1284,7 +1349,8 @@
             "SpotCost": null,
             "SpotLength": 30,
             "Station": "KPLR",
-            "Status": 0
+            "Status": 0,
+            "TimeAired": "0001-01-01T09:36:57"
           }
         ],
         "Week": {

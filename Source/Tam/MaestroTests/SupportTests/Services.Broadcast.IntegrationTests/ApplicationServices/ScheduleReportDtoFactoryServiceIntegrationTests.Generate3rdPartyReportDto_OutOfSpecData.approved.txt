@@ -34,6 +34,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-04-11T00:00:00",
+      "BvsDate": "2016-04-11T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -55,7 +57,8 @@
       "SpotCost": null,
       "SpotLength": 60,
       "Station": "WCBS",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T10:56:39"
     },
     {
       "Affiliate": "NBC",
@@ -73,6 +76,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-04-11T00:00:00",
+      "BvsDate": "2016-04-11T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -94,7 +99,8 @@
       "SpotCost": null,
       "SpotLength": 30,
       "Station": "WNBC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T09:11:53"
     },
     {
       "Affiliate": "NBC",
@@ -112,6 +118,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-04-11T00:00:00",
+      "BvsDate": "2016-04-11T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -133,7 +141,8 @@
       "SpotCost": null,
       "SpotLength": 30,
       "Station": "WNBC",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T19:47:16"
     },
     {
       "Affiliate": "CW",
@@ -151,6 +160,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-04-11T00:00:00",
+      "BvsDate": "2016-04-11T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -172,7 +183,8 @@
       "SpotCost": null,
       "SpotLength": 30,
       "Station": "WPIX",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T06:28:13"
     },
     {
       "Affiliate": "CW",
@@ -190,6 +202,8 @@
           "NsiDelivery": 0.0
         }
       ],
+      "BroadcastDate": "2016-04-11T00:00:00",
+      "BvsDate": "2016-04-11T00:00:00",
       "Cost": null,
       "DateAired": "0001-01-01T00:00:00",
       "DeliveredSpots": null,
@@ -211,7 +225,8 @@
       "SpotCost": null,
       "SpotLength": 30,
       "Station": "WPIX",
-      "Status": 0
+      "Status": 0,
+      "TimeAired": "0001-01-01T07:52:46"
     }
   ],
   "ScheduleAudiences": [

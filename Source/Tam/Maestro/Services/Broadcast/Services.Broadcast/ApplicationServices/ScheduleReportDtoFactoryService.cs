@@ -197,6 +197,9 @@ namespace Services.Broadcast.ApplicationServices
                 ProgramName = x.program_name,
                 SpotLength = x.spot_length,
                 Isci = x.isci,
+                BvsDateAired = x.date_aired,
+                BroadcastDate = _GetBroadcastDate(x, schedulesAggregate),
+                TimeAired = new DateTime().AddSeconds(x.time_aired),
                 MatchAirTime = x.match_airtime,
                 MatchIsci = x.match_isci,
                 MatchProgram = x.match_program,
@@ -216,6 +219,9 @@ namespace Services.Broadcast.ApplicationServices
                     ProgramName = bvsDetailGroup.Key.ProgramName,
                     Isci = bvsDetailGroup.Key.Isci,
                     Status = 0,
+                    BvsDate =  bvsDetailGroup.Key.BvsDateAired,
+                    BroadcastDate = bvsDetailGroup.Key.BroadcastDate,
+                    TimeAired = bvsDetailGroup.Key.TimeAired,
                     MatchAirTime = bvsDetailGroup.Key.MatchAirTime,
                     MatchIsci = bvsDetailGroup.Key.MatchIsci,
                     MatchProgram = bvsDetailGroup.Key.MatchProgram,
@@ -652,13 +658,17 @@ namespace Services.Broadcast.ApplicationServices
                         ProgramName = bvsDetail.program_name,
                         SpotLength = bvsDetail.spot_length,
                         Isci = bvsDetail.isci,
-                        Status = 0, //out-of-spec
+                        Status = 0, //out-of-spec,
+                        BvsDate = bvsDetail.date_aired,
+                        BroadcastDate = _GetBroadcastDate(bvsDetail, schedulesAggregate),
+                        TimeAired = new DateTime().AddSeconds(bvsDetail.time_aired),
                         MatchAirTime = bvsDetail.match_airtime,
                         MatchIsci = bvsDetail.match_isci,
                         MatchProgram = bvsDetail.match_program,
                         MatchStation = bvsDetail.match_station,
                         MatchSpotLength = bvsDetail.match_spot_length
                     };
+
                     bvsReportData.SpecStatus = schedulesAggregate.GetSpecStatusText(bvsReportData);
 
                     foreach (var audience in scheduleAudiences)
@@ -715,6 +725,12 @@ namespace Services.Broadcast.ApplicationServices
             return weeklyData;
         }
 
+        private DateTime _GetBroadcastDate(bvs_file_details bvsDetail, SchedulesAggregate schedulesAggregate)
+        {
+            return schedulesAggregate.PostType == SchedulePostType.NSI ? bvsDetail.nsi_date :
+                                                                         bvsDetail.nti_date;
+        }
+
         private Dictionary<string, int> GetMarketRanks(SchedulesAggregate schedulesAggregate)
         {
             var marketRanks = _BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>()
@@ -733,7 +749,6 @@ namespace Services.Broadcast.ApplicationServices
         {
             return string.Join(" / ", names);
         }
-
 
         private static Tuple<List<AudienceImpressionsAndDelivery>, double> GetOutOfScopeTotalDeliveryDetailsByAudienceId(bvs_file_details bfd, int audienceId)
         {
