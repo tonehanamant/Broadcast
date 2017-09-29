@@ -493,17 +493,17 @@ namespace Services.Broadcast.ReportGenerators
                 rowOffset++;
                 columnOffset = 1;
             }
-            // add audience and delivery
-            _SetAudienceData(ws, 1, 12, reportData);
-
-            // impressions/delivery totals 
-            _BuildOutOfSpecToDateTotalRows(ws, includeDateColumns, outOfSpecData.DeliveredSpots(false), reportData.Count);
-
-            // sumarry rows
+            
             columnOffset = 12;
 
             if (includeDateColumns)
-                columnOffset = 14;
+                columnOffset = 15;
+
+            // add audience and delivery
+            _SetAudienceData(ws, 1, columnOffset, reportData);
+
+            // impressions/delivery totals 
+            _BuildOutOfSpecToDateTotalRows(ws, includeDateColumns, outOfSpecData.DeliveredSpots(false), reportData.Count);
 
             var summaryIndexRowCell = reportData.Count + 4;
 
