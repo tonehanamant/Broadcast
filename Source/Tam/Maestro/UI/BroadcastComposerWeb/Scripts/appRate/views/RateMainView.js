@@ -119,6 +119,7 @@ var RateMainView = BaseView.extend({
     initThirdPartyUploadValidationRules: function () {
 
         var thirdPartyUploadformValidator = $('#import_thirdparty_form').validate({
+             ignore: [],
             rules: {
                 //import_thirdparty_daypart: {
                 //    required: true

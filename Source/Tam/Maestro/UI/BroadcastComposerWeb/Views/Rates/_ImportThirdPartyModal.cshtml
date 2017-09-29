@@ -1,4 +1,19 @@
-﻿<div class="modal fade" id="import_thirdparty_modal" role="dialog" data-bind="modal: { show: showModal, open: onOpenModal, hide: onHideModal}">
+﻿<style>
+    #thirdparty_demo_table .input-sm {
+        font-size: 14px;
+    }
+
+
+    #thirdparty_demo_table .form-group {
+        margin-bottom: 0px;
+    }
+
+    #thirdparty_demo_table .help-block {
+        display: none !important;
+    }
+</style>
+
+<div class="modal fade" id="import_thirdparty_modal" role="dialog" data-bind="modal: { show: showModal, open: onOpenModal, hide: onHideModal}">
     <div class=" modal-dialog modal-xlg" id="import_thirdparty_modal_view">
         <div class="modal-content">
             <div class="modal-header">
@@ -39,10 +54,44 @@
                             </div>
                             
                             <div class="col-xs-4">
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <label>Block Name</label>
                                     <input type="text" class="form-control" style="width: 100%;" name="import_thirdparty_blockname" data-bind="value: BlockName" required>
-                                </div>
+                                </div>*@
+                                <table id="thirdparty_demo_table" class="table table-bordered table-condensed" style="margin: -6px 0 0 0;">
+                                    <thead>
+                                        <tr> <th class="active" style="width: 45%;">Demo</th> <th class="active" style="width: 45%;">CPM</th> <th style="width: 10%;"></th> </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach: demos">
+                                        <tr data-bind="if: $parent.allowDemoFixed() && ($index() == 0)">
+                                            <td>
+                                                <div class="form-group">
+                                                    <select class="form-control input-sm" data-bind="options: $parent.demoWithFixedOptions, optionsValue: 'Id', optionsText: 'Display', uniqueName: true, optionsCaption: 'Select Demo...', value: selectedDemo, select2: {placeholder: 'Select Demo...'}" required></select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control input-sm" placeholder="Enter Cpm $" data-bind="value: formattedPrice, uniqueName: true" required>
+                                                </div>
+                                            </td>
+                                            <td style="padding: 6px 0 0 0; text-align: center; min-width: 25px;"><button type="button" class="btn btn-link" style="padding: 0 0 0 0;" data-bind="click: $parent.removeDemo, visible: canDelete()"><span class="glyphicon glyphicon-remove" style="color:red;" aria-hidden="true"></span></button></td>
+                                        </tr>
+                                        <tr data-bind="if: !$parent.allowDemoFixed() || ($index() > 0)">
+                                            <td>
+                                                <div class="form-group">
+                                                    <select class="form-control input-sm" data-bind="options: $parent.demoOptions, optionsValue: 'Id', optionsText: 'Display', uniqueName: true, optionsCaption: 'Select Demo...', value: selectedDemo, select2: {placeholder: 'Select Demo...'}" required></select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control input-sm" placeholder="Enter Cpm $" data-bind="value: formattedPrice, uniqueName: true" required>
+                                                </div>
+                                            </td>
+                                            <td style="padding: 6px 0 0 0; text-align: center;"><button type="button" class="btn btn-link" style="padding: 0 0 0 0;" data-bind="click: $parent.removeDemo, visible: canDelete()"><span class="glyphicon glyphicon-remove" style="color:red;" aria-hidden="true"></span></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button type="button" class="btn btn-link" style="padding: 0 0 0 4px;" data-bind="click: addDemo, visible: !isDemoFixed()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                             </div>
                         </div>
                     </div>

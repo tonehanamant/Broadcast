@@ -1,4 +1,38 @@
-﻿//Import Third party: TVB/CNN etc  View Model - modal form
+﻿//demo sub items with formatted price; selectedDemo value
+function DemoItem(canDelete) {
+    var $scope = this;
+
+    //$scope.Property = ko.observable(property);
+    //$scope.Property.subscribe(function () {
+    //    $scope.Action(null);
+    //    $scope.Values([]);
+    //});
+    //console.log(canDelete);
+    $scope.selectedDemo = ko.observable(null);
+    $scope.cpm = ko.observable(null);
+    $scope.canDelete = ko.observable(canDelete);
+    $scope.formattedPrice = ko.pureComputed({
+        read: function () {
+            if ($scope.cpm()) return numeral($scope.cpm()).format('$0,0[.]00');
+        },
+        write: function (value) {
+            // Strip out unwanted characters, parse as float, then write the 
+            // raw data back to the underlying "price" observable
+            value = parseFloat(value.replace(/[^\.\d]/g, ""));
+            $scope.cpm(isNaN(value) ? 0 : value); // Write to underlying storage
+        },
+        owner: $scope
+    });
+
+};
+
+//1780 todo: 
+//remove block name; remove fligets replace with single effective date; 
+//demo table: handle select2 validation bug; process saved values
+//hook api and initial data for demos with and without fixed
+//upload disabled for testing - renable
+
+//Import Third party: TVB/CNN etc  View Model - modal form
 
 var ImportThirdPartyViewModel = function (controller) {
     //private controller
@@ -24,6 +58,49 @@ var ImportThirdPartyViewModel = function (controller) {
 
     $scope.playbackTypeOptions = ko.observableArray();
     $scope.selectedPlaybackType = ko.observable();
+
+    //DEMO/CPM TABLE
+    //test mock
+    $scope.demoWithFixedOptions = ko.observableArray([{ Id: 1, Display: 'Fixed' }, { Id: 2, Display: 'A25-55' }, { Id: 3, Display: 'A55-65' }]);
+    $scope.demoOptions = ko.observableArray([{ Id: 2, Display: 'A25-55' }, { Id: 3, Display: 'A55-65' }]);
+    $scope.demos = ko.observableArray();
+    //$scope.selectedDemo = ko.observable(null);
+    $scope.isDemoFixed = ko.observable(false);
+    $scope.allowDemoFixed = ko.observable(true);
+
+    //tbd
+    $scope.initDemoItem = function () {
+        var demoItem = new DemoItem(false);
+        $scope.demos.push(demoItem);
+        var parent = $scope;
+        //if allwing fixed handle changes
+        if ($scope.allowDemoFixed()) {
+            demoItem.selectedDemo.subscribe(function (demo) {
+                //if demo 1 set isDemoFixed trues - remove any others below
+                console.log('subscribed Demo', demo);
+                if (demo === 1) {
+                    parent.isDemoFixed(true);
+                    //remove all except first !canDelete
+                    parent.demos.remove(function (item) {
+                        //console.log(item)
+                        return item.canDelete();
+                    });
+                } else {
+                    parent.isDemoFixed(false);
+                }
+            });
+        }
+    };
+
+
+    $scope.addDemo = function () {
+        $scope.demos.push(new DemoItem(true));
+    };
+
+    $scope.removeDemo = function (demo) {
+        $scope.demos.remove(demo);
+    };
+
 
    // modal shown event: disable upload dragging
     $scope.onOpenModal = function () {
@@ -51,6 +128,9 @@ var ImportThirdPartyViewModel = function (controller) {
         $scope.FlightWeeks([]); //tbd base on start /end?
         //$scope.Daypart([]);//set empty
         $scope.BlockName($scope.RateSource() + ' NEWS BLOCK');//defaults
+        //demo todo set context; clear subscribers?
+        $scope.demos([]);
+        $scope.initDemoItem();
         $scope.showModal(true);
         //force apply for flight - so that bound values get updated initially (for save)
         var flightPicker = $("#import_thirdparty_form input[name='import_thirdparty_flights']").data('daterangepicker');
@@ -59,6 +139,7 @@ var ImportThirdPartyViewModel = function (controller) {
         flightPicker.clickApply();
     };
 
+    //todo check demo table and get array of data;
     $scope.uploadFile = function () {
         if (controller.view.isThirdPartyValid()) {
             var file = $scope.ActiveFileRequest;
@@ -69,11 +150,11 @@ var ImportThirdPartyViewModel = function (controller) {
             file.RatingBook = $scope.selectedRatingBook();
             file.PlaybackType = $scope.selectedPlaybackType();
             
-            controller.apiUploadRateFile(file, 
-                function (data) {
-                    $scope.showModal(false);
-                }
-            );
+            //controller.apiUploadRateFile(file, 
+            //    function (data) {
+            //        $scope.showModal(false);
+            //    }
+            //);
         }
     };
 };
