@@ -10,6 +10,7 @@ var TrackerMainView = BaseView.extend({
     activeScheduleData: null,
     scheduleComponents: null,
     activeScheduleRequest: null,  // upload file request or existing schedule data
+    SchedulesTextSearch: null, //now dependent if source was previously active
 
     $ScheduleModal: null,
 
@@ -128,7 +129,7 @@ var TrackerMainView = BaseView.extend({
         }
 
         this.setScheduleFilterSelects(data, setQtrSelects);
-        this.clearScheduleGridSearch(true);
+        //this.clearScheduleGridSearch(true);
     },
 
     // Modifies the data for use in W2UI grid (i.e. adds the 'recid' field to each source element)
@@ -151,6 +152,11 @@ var TrackerMainView = BaseView.extend({
         this.$ScheduleGrid.clear(false);
         this.$ScheduleGrid.add(scheduleData);
         this.$ScheduleGrid.resize();
+
+        if (this.SchedulesTextSearch) {
+            //console.log('filter on load', this.StationsTextSearch);
+            this.$ScheduleGrid.search(this.SchedulesTextSearch, 'OR');
+        }
 
         $('[data-toggle="tooltip"]').tooltip({
             container: 'body'
@@ -192,6 +198,7 @@ var TrackerMainView = BaseView.extend({
             var search = [{ field: 'Estimate', type: 'text', value: [val], operator: 'contains' }, { field: 'Name', type: 'text', value: [val], operator: 'contains' }];
             this.$ScheduleGrid.search(search, 'OR');
             $("#schedule_search_clear_btn").show();
+            this.SchedulesTextSearch = search;
         } else {
             this.clearScheduleGridSearch();
         }
@@ -205,7 +212,7 @@ var TrackerMainView = BaseView.extend({
             this.$ScheduleGrid.removeSearch('Estimate', 'Name'); //this is not working
             this.$ScheduleGrid.search();
         }
-
+        this.SchedulesTextSearch = null;
         $("#schedule_search_filter_input").val('');
         $("#schedule_search_clear_btn").hide();
     },
