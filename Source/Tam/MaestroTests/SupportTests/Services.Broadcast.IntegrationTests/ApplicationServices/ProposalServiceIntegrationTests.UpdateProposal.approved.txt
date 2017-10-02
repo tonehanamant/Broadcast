@@ -268,7 +268,7 @@
   ],
   "Status": 0,
   "TargetBudget": 5999409.21,
-  "TargetCPM": 0.2214703093506589390527520396,
+  "TargetCPM": 221.47,
   "TargetImpressions": 27089000.0,
   "TargetUnits": 4,
   "TotalCost": 0.0,

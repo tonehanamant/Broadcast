@@ -49,7 +49,7 @@ namespace Services.Broadcast.BusinessEngines
             proposalDto.TargetBudget = proposalDto.Details.Sum(detail => detail.TotalCost);
             proposalDto.TargetImpressions = proposalDto.Details.Sum(detail => detail.TotalImpressions);
             proposalDto.TargetUnits = proposalDto.Details.Sum(detail => detail.TotalUnits);
-            proposalDto.TargetCPM = proposalDto.TargetImpressions == 0 ? 0 : proposalDto.TargetBudget / (decimal)proposalDto.TargetImpressions;
+            proposalDto.TargetCPM = ProposalMath.CalculateCpm(proposalDto.TargetBudget.Value, proposalDto.TargetImpressions);
         }
 
         public void SetQuarterTotals(ProposalDetailDto proposalDetailDto)
