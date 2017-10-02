@@ -56,22 +56,23 @@
                     sortable: true,
                     size: '20%',
 
-                   render: function (record, index, column_index) {
+                    render: function (record, index, column_index) {
                         var hiatusWeeks = [];
-                        var html = '<span>' + record.RateDataThrough + '</span>';
+
+                        var html = '<div style="display:inline-block;">' + record.RateDataThrough + '</div>';
                         var tooltipText = '<div><span>Hiatus Weeks</span> <br>';
-                        $.each(record.FlightWeeks, function(idx, week) {
+                        $.each(record.FlightWeeks, function (idx, week) {
                             if (week.IsHiatus == true) {
                                 var hiatusWeekFormated = moment(week.StartDate).format("MM/DD/YYYY") + " - " + moment(week.EndDate).format("MM/DD/YYYY");
                                 hiatusWeeks.push(hiatusWeekFormated);
-                                tooltipText = tooltipText + '<div>' + hiatusWeekFormated + '</div>';
+                                tooltipText += '<div>' + hiatusWeekFormated + '</div>';
                             }
                         });
+                        tooltipText += '</div>';
 
                         if (hiatusWeeks.length > 0) {
-                            tooltipText += '</div>';                            
-                            var mrk = '<span class="glyphicon glyphicon-info-sign" style="" aria-hidden="false"></span>';
-                            html = '<span class="span-block" data-container="body" data-html="true" data-toggle="tooltip" title="' + tooltipText + '">' + html + '&nbsp;' + mrk + '</span>';
+                            var mrk = '<div style="display:inline-block;"><span class="glyphicon glyphicon-info-sign" aria-hidden="false"></span></div>';
+                            html = '<div class="span-block" data-container="body" data-html="true" data-toggle="tooltip" title="' + tooltipText + '">' + html + '&nbsp;' + mrk + '</div>';
                         }
                         return html;
                     }
