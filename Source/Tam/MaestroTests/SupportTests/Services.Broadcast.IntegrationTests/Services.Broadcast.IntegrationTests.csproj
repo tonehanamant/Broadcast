@@ -167,6 +167,7 @@
     <Compile Include="Aggregates\ScheduleAggregateIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BulkRateFileImportTester.cs" />
+    <Compile Include="ApplicationServices\CNNImportTest.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ImpressionAdjustmentEngineIntegrationTests.cs" />
     <Compile Include="ApplicationServices\NsiUniverseServiceIntegrationTests.cs" />
@@ -210,6 +211,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Files\CNNAMPMBarterObligations.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\Assembly Schedule For Mapping.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -328,54 +332,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\Checkers BVS Report_noMarket_Field.DAT">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileHasAllDaypartsInvalid.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileHasAllEntriesInvalid.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileHasAllSpotLengthInvalid.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileHasBlankCpm.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileHasDifferentDemos.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileHasInvalidAudience.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileHasInvalidAudienceAndStation.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileHasInvalidDayPart.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileHasInvalidDaypartCode.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileHasInvalidStations.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileHasValidFlight.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileLoadTest.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileLoadTestDuplicateStation.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileLoadTestInvalidCPM.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileLoadTestInvalidSpothLenght.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNFileLoadTestInvalidStation.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\InventoryCrunch.csv">

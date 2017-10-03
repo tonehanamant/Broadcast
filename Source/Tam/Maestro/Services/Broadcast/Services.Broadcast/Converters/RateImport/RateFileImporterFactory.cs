@@ -30,12 +30,6 @@ namespace Services.Broadcast.Converters.RateImport
             RateFileImporterBase fileImporter;
             switch (rateSource)
             {
-                case RatesFile.RateSourceType.Assembly:
-                    fileImporter = new AssemblyRateImporter();
-                    break;
-                case RatesFile.RateSourceType.TVB:
-                    fileImporter = new TVBFileImporter();
-                    break;
                 case RatesFile.RateSourceType.CNN:
                     fileImporter = new CNNFileImporter();
                     break;

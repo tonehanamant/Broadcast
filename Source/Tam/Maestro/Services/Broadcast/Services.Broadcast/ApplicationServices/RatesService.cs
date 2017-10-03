@@ -134,172 +134,127 @@ namespace Services.Broadcast.ApplicationServices
 
         public RatesFileSaveResult SaveRatesFile(RatesSaveRequest request)
         {
-            //TODO: Fixme or remove.
-            return new RatesFileSaveResult();
-            //var rateSourceType = _ParseRateSourceOrDefault(request.RateSource);
-            //var fileImporter = _rateFileImporterFactory.GetFileImporterInstance(rateSourceType);
-            //fileImporter.LoadFromSaveRequest(request);
-            //fileImporter.CheckFileHash();
+            var rateSourceType = _ParseRateSourceOrDefault(request.RateSource);
+            var fileImporter = _rateFileImporterFactory.GetFileImporterInstance(rateSourceType);
+            fileImporter.LoadFromSaveRequest(request);
+            fileImporter.CheckFileHash();
 
-            //RatesFile ratesFile = fileImporter.GetPendingRatesFile();
-            //ratesFile.Id = _RatesRepository.CreateRatesFile(ratesFile, request.UserName);
+            RatesFile ratesFile = fileImporter.GetPendingRatesFile();
+            ratesFile.Id = _RatesRepository.CreateRatesFile(ratesFile, request.UserName);
 
-            //var stationLocks = new List<IDisposable>();
-            //var lockedStationCodes = new List<int>();
-            //var fileProblems = new List<RatesFileProblem>();
-            //try
-            //{
+            var stationLocks = new List<IDisposable>();
+            var lockedStationCodes = new List<int>();
+            var fileProblems = new List<RatesFileProblem>();
+            try
+            {
+                var startTime = DateTime.Now;
+                fileImporter.ExtractFileData(request.RatesStream, ratesFile, fileProblems);
+                if (ratesFile.StationInventoryManifests == null || ratesFile.StationInventoryManifests.Count == 0)
+                {
+                    throw new ApplicationException("Unable to parse any file records.");
+                }
 
-            //    var startTime = DateTime.Now;
-            //    fileImporter.ExtractFileData(request.RatesStream, ratesFile, fileProblems);
-            //    var endTime = DateTime.Now;
-            //    System.Diagnostics.Debug.WriteLine(string.Format("Completed file parsing in {0}", endTime - startTime));
-            //    startTime = DateTime.Now;
+                var endTime = DateTime.Now;
+                System.Diagnostics.Debug.WriteLine(string.Format("Completed file parsing in {0}", endTime - startTime));
+                startTime = DateTime.Now;
 
-            //    foreach (var program in ratesFile.StationPrograms.ToList())
-            //    {
-            //        try
-            //        {
-            //            var programStationCode = (short)existingfileStations
-            //                .Where(
-            //                    s =>
-            //                        s.LegacyCallLetters.Equals(
-            //                            program.StationLegacyCallLetters,
-            //                            StringComparison.InvariantCultureIgnoreCase))
-            //                .Single(
-            //                    string.Format(
-            //                        "Invalid station: {0}",
-            //                        program.StationLegacyCallLetters)).Code;
-            //            program.StationCode = programStationCode;
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            ratesFile.StationPrograms.Remove(program);
-            //            fileProblems.Add(new RatesFileProblem()
-            //            {
-            //                ProblemDescription = e.Message,
-            //                ProgramName = program.ProgramName,
-            //                StationLetters = program.StationLegacyCallLetters
-            //            });
+                var validationProblems = _ratesFileValidator.ValidateRatesFile(ratesFile);
+                fileProblems.AddRange(validationProblems.RatesFileProblems);
 
-            //        }
-            //    }
+                endTime = DateTime.Now;
+                System.Diagnostics.Debug.WriteLine(string.Format("Completed file validation in {0}", endTime - startTime));
 
-            //    var validationProblems = _ratesFileValidator.ValidateRatesFile(ratesFile);
-            //    fileProblems.AddRange(validationProblems.RatesFileProblems);
-            //    // remove the invalid rates
-            //    ratesFile.StationPrograms.RemoveAll(x => validationProblems.InvalidRates.Contains(x));
+                startTime = DateTime.Now;
 
-            //    endTime = DateTime.Now;
-            //    System.Diagnostics.Debug.WriteLine(string.Format("Completed file validation in {0}", endTime - startTime));
+                var fileStationCodes = ratesFile.StationInventoryManifests.Select(i => (int)i.Station.Code).Distinct().ToList();
+                using (var transaction = new TransactionScopeWrapper(_CreateTransactionScope(TimeSpan.FromMinutes(20))))
+                {
+                    //Lock stations before database operations
+                    foreach (var stationCode in fileStationCodes)
+                    {
+                        var lockResult = LockStation(stationCode);
+                        if (lockResult.Success)
+                        {
+                            lockedStationCodes.Add(stationCode);
+                            stationLocks.Add(new BomsLockManager(_SmsClient, new StationToken(stationCode)));
+                        }
+                        else
+                        {
+                            var stationLetters =
+                                ratesFile.StationInventoryManifests.Where(i => i.Station.Code == stationCode)
+                                    .First()
+                                    .Station.LegacyCallLetters;
+                            throw new ApplicationException(string.Format("Unable to update station. Station locked for editing {0}.", stationLetters));
+                        }
+                    }
 
-            //    startTime = DateTime.Now;
+                    var isThirdParty = rateSourceType == RatesFile.RateSourceType.CNN ||
+                                       rateSourceType == RatesFile.RateSourceType.TTNW ;
 
-            //    var fileStationCodes = ratesFile.StationPrograms.Select(p => (int)p.StationCode).Distinct().ToList();
-            //    //using (var transaction = new TransactionScopeWrapper(new TransactionScope(TransactionScopeOption.Required, TimeSpan.FromMinutes(30))))
-            //    using (var transaction = new TransactionScopeWrapper(_CreateTransactionScope(TimeSpan.FromMinutes(20))))
-            //    {
-            //        //Lock stations before database operations
-            //        foreach (var stationCode in fileStationCodes)
-            //        {
-            //            var lockResult = LockStation(stationCode);
-            //            if (lockResult.Success)
-            //            {
-            //                lockedStationCodes.Add(stationCode);
-            //                stationLocks.Add(new BomsLockManager(_SmsClient, new StationToken(stationCode)));
-            //            }
-            //            else
-            //            {
-            //                var stationLetters =
-            //                    ratesFile.StationPrograms.Where(p => p.StationCode == stationCode)
-            //                        .First()
-            //                        .StationLegacyCallLetters;
-            //                throw new ApplicationException(string.Format("Unable to update station. Station locked for editing {0}.", stationLetters));
-            //            }
-            //        }
+                    if (isThirdParty)
+                    {
+                        if (!request.RatingBook.HasValue)
+                        {
+                            throw new InvalidEnumArgumentException("Ratings book id required for third party rate files.");
+                        }
+                        _ThirdPartySpotCostCalculationEngine.CalculateSpotCost(request, ratesFile);
+                    }
 
-            //        var isThirdParty = rateSourceType == RatesFile.RateSourceType.CNN ||
-            //                           rateSourceType == RatesFile.RateSourceType.TTNW ||
-            //                           rateSourceType == RatesFile.RateSourceType.TVB;
+                    ratesFile.FileStatus = RatesFile.FileStatusEnum.Loaded;
+                    _SaveRateFileManifests(request, ratesFile);
+                    _SaveRateFileContacts(request, ratesFile);
 
-            //        if (isThirdParty)
-            //        {
-            //            if (!request.RatingBook.HasValue)
-            //            {
-            //                throw new InvalidEnumArgumentException("Ratings book id required for third party rate files.");
-            //            }
-            //            _ThirdPartySpotCostCalculationEngine.CalculateSpotCost(request, ratesFile);
-            //        }
+                    transaction.Complete();
 
-            //        ratesFile.FileStatus = RatesFile.FileStatusEnum.Loaded;
-            //        _SaveRateFilePrograms(request, ratesFile);
-            //        _SaveRateFileContacts(request, ratesFile);
+                    //unlock stations
+                    UnloackStations(lockedStationCodes, stationLocks);
 
-            //        // crunch should happen only for ttnw, cnn and tvb and same transaction
-            //        if (isThirdParty)
-            //        {
-            //            var affectedProposals =
-            //                _InventoryCrunchService.CrunchThirdPartyInventory(ratesFile.StationPrograms, rateSourceType,
-            //                    request.FlightWeeks);
+                    endTime = DateTime.Now;
+                    System.Diagnostics.Debug.WriteLine(
+                        string.Format("Completed file saving in {0}", endTime - startTime));
+                }
+            }
+            catch (Exception e)
+            {
+                //Try to update the status of the file if possible
+                try
+                {
+                    UnloackStations(lockedStationCodes, stationLocks);
+                    _RatesRepository.UpdateRatesFileStatus(ratesFile.Id, RatesFile.FileStatusEnum.Failed);
+                }
+                catch
+                {
 
-            //            if (affectedProposals != null && affectedProposals.Any())
-            //            {
-            //                fileProblems.Add(new RatesFileProblem()
-            //                {
-            //                    ProblemDescription = "Import Updated Inventory reserved in the following Proposals",
-            //                    AffectedProposals = affectedProposals.Select(a => a.ProblemDescription).ToList()
-            //                });
-            //            }
-            //        }
+                }
+                throw new BroadcastRateDataException(string.Format("Error loading new rates file: {0}", e.Message),
+                    ratesFile.Id, e);
+            }
 
-
-            //        transaction.Complete();
-
-
-            //        //unlock stations
-            //        foreach (var stationCode in lockedStationCodes)
-            //        {
-            //            UnlockStation(stationCode);
-            //        }
-            //        foreach (var stationLock in stationLocks)
-            //        {
-            //            stationLock.Dispose();
-            //        }
-
-            //        endTime = DateTime.Now;
-            //        System.Diagnostics.Debug.WriteLine(
-            //            string.Format("Completed file saving in {0}", endTime - startTime));
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    //Try to update the status of the file if possible
-            //    try
-            //    {
-            //        foreach (var stationCode in lockedStationCodes)
-            //        {
-            //            UnlockStation(stationCode);
-            //        }
-            //        foreach (var stationLock in stationLocks)
-            //        {
-            //            stationLock.Dispose();
-            //        }
-            //        _RatesRepository.UpdateRatesFileStatus(ratesFile.Id, RatesFile.FileStatusEnum.Failed);
-            //    }
-            //    catch
-            //    {
-
-            //    }
-            //    throw new BroadcastRateDataException(string.Format("Error loading new rates file: {0}", e.Message),
-            //        ratesFile.Id, e);
-            //}
-
-            //return new RatesFileSaveResult()
-            //{
-            //    FileId = ratesFile.Id,
-            //    Problems = fileProblems
-            //};
+            return new RatesFileSaveResult()
+            {
+                FileId = ratesFile.Id,
+                Problems = fileProblems
+            };
         }
+
+        private void UnloackStations(List<int> lockedStationCodes, List<IDisposable> stationLocks)
+        {
+            foreach (var stationCode in lockedStationCodes)
+            {
+                UnlockStation(stationCode);
+            }
+            foreach (var stationLock in stationLocks)
+            {
+                stationLock.Dispose();
+            }
+        }
+
+        private void _SaveRateFileManifests(RatesSaveRequest request, RatesFile ratesFile)
+        {
+            
+        }
+
+
 
         private void _SaveRateFileContacts(RatesSaveRequest request, RatesFile ratesFile)
         {
@@ -327,77 +282,6 @@ namespace Services.Broadcast.ApplicationServices
             var timeStamp = DateTime.Now;
             //fileStationCodes.ForEach(code => _stationRepository.UpdateStation(code, request.UserName, timeStamp));
         }
-
-        private void _SaveRateFilePrograms(RatesSaveRequest request, RatesFile ratesFile)
-        {
-            //TODO: Fixme or remove.
-            //System.Diagnostics.Debug.WriteLine("Going to add programs");
-            //if (ratesFile.RateSource == RatesFile.RateSourceType.TVB ||
-            //    ratesFile.RateSource == RatesFile.RateSourceType.CNN ||
-            //    ratesFile.RateSource == RatesFile.RateSourceType.TTNW)
-            //{
-            //    _SaveThirdPartyFilePrograms(request, ratesFile);
-            //}
-            //else
-            //{
-            //    _stationProgramRepository.AddRateFilePrograms(ratesFile, request.UserName, _SpotLengthMap);
-            //}
-            //System.Diagnostics.Debug.WriteLine("Going to update stations");
-            //var stationCodes = ratesFile.StationPrograms.Select(y => (int)y.StationCode).Distinct().ToList();
-            //_stationRepository.UpdateStationList(stationCodes, request.UserName, DateTime.Now);
-            //System.Diagnostics.Debug.WriteLine("Going to update file record");
-            //_RatesRepository.UpdateRatesFile(ratesFile, request.UserName);
-        }
-
-        private void _SaveThirdPartyFilePrograms(RatesSaveRequest request, RatesFile ratesFile)
-        {
-            //TODO: Fixme or remove.
-            //var currentTime = DateTime.Now;
-            //foreach (var stationProgram in ratesFile.StationPrograms)
-            //{
-            //    var spotLengthId = _SpotLengthMap[stationProgram.SpotLength];
-            //    // check if program exists
-            //    var programId = _stationProgramRepository.GetStationProgramIdByStationProgram(stationProgram, spotLengthId);
-            //    if (programId > 0)
-            //    {
-            //        stationProgram.Id = programId;
-            //        foreach (var flight in stationProgram.FlightWeeks)
-            //        {
-            //            // update the spot for flightweek
-            //            _stationProgramRepository.UpdateFlightWeekSpot(programId, flight, currentTime, request.UserName);
-
-            //            foreach (var programAudience in flight.Audiences)
-            //            {
-            //                var stationProgramFlight =
-            //                    _stationProgramRepository.GetStationProgramFlightByProgramAndWeek(programId, flight.FlightWeek.Id);
-            //                // check audience exists. it will add a audience to an existing fligth week audience or update the value 
-            //                // by its spot
-            //                if (
-            //                    _stationProgramRepository.ProgramFlightAudienceExists(stationProgramFlight.id,
-            //                        programAudience.Audience.Id) && stationProgram.SpotLength > 0)
-            //                {
-            //                    _stationProgramRepository.UpdateProgramFligthAudienceInventory(programId,
-            //                        flight.FlightWeek.Id, stationProgram.SpotLength, programAudience);
-            //                }
-            //                else
-            //                {
-            //                    _stationProgramRepository.AddProgramFligthAudienceInventory(programId,
-            //                        flight.FlightWeek.Id, programAudience, request.UserName, currentTime);
-            //                }
-            //            }
-            //        }
-
-            //        _stationProgramRepository.UpdateStationProgram(programId, currentTime, request.UserName, stationProgram.FixedPrice);
-            //    }
-            //    else
-            //    {
-            //        var station = _stationRepository.GetBroadcastStationByCode(stationProgram.StationCode);
-            //        stationProgram.Id = _stationProgramRepository.CreateStationProgramRate(station, stationProgram, ratesFile.RateSource, spotLengthId,
-            //            request.UserName, ratesFile.Id);
-            //    }
-            //}
-        }
-
 
 
 

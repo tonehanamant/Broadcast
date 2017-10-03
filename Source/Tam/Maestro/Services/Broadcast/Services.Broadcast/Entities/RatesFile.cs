@@ -24,6 +24,11 @@ namespace Services.Broadcast.Entities
             CNN = 5
         }
 
+        public RatesFile()
+        {
+            StationInventoryManifests = new List<StationInventoryManifest>();
+        }
+
         public int Id { get; set; }
         public string FileName { get; set; }
         public string UniqueIdentifier { get; set; }
@@ -50,6 +55,8 @@ namespace Services.Broadcast.Entities
             }
             set { _stationContacts = value;  }
         }
+
+        public List<StationInventoryManifest> StationInventoryManifests { get; set; }
 
     }
 }

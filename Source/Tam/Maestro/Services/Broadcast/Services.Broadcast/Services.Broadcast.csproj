@@ -159,8 +159,11 @@
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryService.cs" />
+    <Compile Include="ApplicationServices\Inventory\CNNStationInventoryGroupService.cs" />
+    <Compile Include="ApplicationServices\Inventory\StationInventoryManifestService.cs" />
     <Compile Include="ApplicationServices\PostingBooksService.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
+    <Compile Include="ApplicationServices\Inventory\StationInventoryGroupService.cs" />
     <Compile Include="BusinessEngines\ImpressionAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailHeaderTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailWeekTotalsCalculationEngine.cs" />
@@ -211,6 +214,8 @@
     <Compile Include="Entities\RateConversionRequest.cs" />
     <Compile Include="Entities\StationDetailDaypart.cs" />
     <Compile Include="Entities\StationImpressions.cs" />
+    <Compile Include="Entities\StationInventoryGroup.cs" />
+    <Compile Include="Entities\StationInventoryManifest.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
     <Compile Include="Entities\ValidationWarningDto.cs" />
     <Compile Include="Extensions\Bvs.cs" />
