@@ -18,6 +18,7 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.station_contacts = new HashSet<station_contacts>();
             this.station_contacts1 = new HashSet<station_contacts>();
+            this.station_inventory_manifest = new HashSet<station_inventory_manifest>();
         }
     
         public int id { get; set; }
@@ -34,5 +35,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual media_months media_months { get; set; }
         public virtual ICollection<station_contacts> station_contacts { get; set; }
         public virtual ICollection<station_contacts> station_contacts1 { get; set; }
+        public virtual ICollection<station_inventory_manifest> station_inventory_manifest { get; set; }
     }
 }

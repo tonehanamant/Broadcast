@@ -22,6 +22,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.schedule_detail_audiences = new HashSet<schedule_detail_audiences>();
             this.proposal_version_audiences = new HashSet<proposal_version_audiences>();
             this.schedule_audiences = new HashSet<schedule_audiences>();
+            this.station_inventory_manifest_audiences = new HashSet<station_inventory_manifest_audiences>();
         }
     
         public int id { get; set; }
@@ -39,5 +40,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<schedule_detail_audiences> schedule_detail_audiences { get; set; }
         public virtual ICollection<proposal_version_audiences> proposal_version_audiences { get; set; }
         public virtual ICollection<schedule_audiences> schedule_audiences { get; set; }
+        public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
     }
 }

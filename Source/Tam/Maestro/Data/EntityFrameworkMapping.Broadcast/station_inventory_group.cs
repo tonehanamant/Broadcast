@@ -12,27 +12,20 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class daypart
+    public partial class station_inventory_group
     {
-        public daypart()
+        public station_inventory_group()
         {
-            this.days = new HashSet<day>();
-            this.schedule_details = new HashSet<schedule_details>();
-            this.proposal_version_details = new HashSet<proposal_version_details>();
             this.station_inventory_manifest = new HashSet<station_inventory_manifest>();
         }
     
         public int id { get; set; }
-        public int timespan_id { get; set; }
-        public string code { get; set; }
         public string name { get; set; }
-        public int tier { get; set; }
-        public string daypart_text { get; set; }
-        public double total_hours { get; set; }
+        public string daypart_code { get; set; }
+        public byte slot_number { get; set; }
+        public int inventory_source_id { get; set; }
     
-        public virtual ICollection<day> days { get; set; }
-        public virtual ICollection<schedule_details> schedule_details { get; set; }
-        public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
+        public virtual inventory_sources inventory_sources { get; set; }
         public virtual ICollection<station_inventory_manifest> station_inventory_manifest { get; set; }
     }
 }

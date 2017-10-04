@@ -269,6 +269,158 @@ END
 
 /*************************************** BCOP-2014 - END *****************************************************/
 
+/*************************************** BCOP-1776/2000 - START *****************************************************/
+
+--- inventory_sources ---
+if Object_ID(N'[dbo].[inventory_sources]') is null
+BEGIN
+	CREATE TABLE [dbo].[inventory_sources](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[name] [varchar](50) NOT NULL,
+		[is_active] [bit] NOT NULL,
+		[inventory_source_type] [tinyint] NOT NULL,
+		CONSTRAINT [PK_inventory_sources] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+END
+GO
+ -------
+
+--- station_inventory_group ---
+if Object_ID(N'[dbo].[station_inventory_group]') is null
+BEGIN
+	CREATE TABLE [dbo].[station_inventory_group](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[name] [varchar](50) NOT NULL,
+		[daypart_code] [varchar](50) NOT NULL,
+		[slot_number] [tinyint] NOT NULL,
+		[inventory_source_id] [int] NOT NULL,
+		CONSTRAINT [PK_station_inventory_group] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+
+	ALTER TABLE [dbo].[station_inventory_group]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_group_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[station_inventory_group] CHECK CONSTRAINT [FK_station_inventory_group_inventory_sources]
+
+END
+GO
+ -------
+
+ 
+-- station_inventory_manifest
+if Object_ID(N'[dbo].[station_inventory_manifest]') is null
+BEGIN
+	CREATE TABLE [dbo].[station_inventory_manifest](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[station_code] [smallint]  NOT NULL,
+		[spot_length_id] [int]  NOT NULL,
+		[spots_per_week] [int]  NOT NULL,
+		[effective_date] [date]  NOT NULL,
+		[inventory_source_id] [int] NOT NULL,
+		[station_inventory_group_id] [int] NOT NULL,
+		[inventory_file_id] [int] NOT NULL,
+		[spots_per_day] [int] NULL,
+	 CONSTRAINT [PK_station_inventory_manifest] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[station_inventory_manifest]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_stations] FOREIGN KEY([station_code])
+	REFERENCES [dbo].[stations] ([station_code])
+
+	ALTER TABLE [dbo].[station_inventory_manifest] CHECK CONSTRAINT [FK_station_inventory_manifest_stations]
+
+
+	ALTER TABLE [dbo].[station_inventory_manifest]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_spot_lengths] FOREIGN KEY([spot_length_id])
+	REFERENCES [dbo].[spot_lengths] ([id])
+
+	ALTER TABLE [dbo].[station_inventory_manifest] CHECK CONSTRAINT [FK_station_inventory_manifest_spot_lengths]
+
+
+	ALTER TABLE [dbo].[station_inventory_manifest]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+
+	ALTER TABLE [dbo].[station_inventory_manifest] CHECK CONSTRAINT [FK_station_inventory_manifest_inventory_sources]
+
+
+	ALTER TABLE [dbo].[station_inventory_manifest]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_station_inventory_group] FOREIGN KEY([station_inventory_group_id])
+	REFERENCES [dbo].[station_inventory_group] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[station_inventory_manifest] CHECK CONSTRAINT [FK_station_inventory_manifest_station_inventory_group]
+
+
+	ALTER TABLE [dbo].[station_inventory_manifest]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_inventory_files] FOREIGN KEY([inventory_file_id])
+	REFERENCES [dbo].[inventory_files] ([id])	
+
+	ALTER TABLE [dbo].[station_inventory_manifest] CHECK CONSTRAINT [FK_station_inventory_manifest_inventory_files]
+
+
+END
+GO
+----------------------
+
+--- station_inventory_manifest_dayparts --
+if Object_ID(N'[dbo].[station_inventory_manifest_dayparts]') is null
+BEGIN
+	CREATE TABLE [dbo].[station_inventory_manifest_dayparts](		
+		[daypart_id] [int] NOT NULL,
+		[station_inventory_manifest_id] [int] NOT NULL)
+
+	ALTER TABLE [dbo].[station_inventory_manifest_dayparts]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_dayparts_station_inventory_manifest] FOREIGN KEY([station_inventory_manifest_id])
+	REFERENCES [dbo].[station_inventory_manifest] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[station_inventory_manifest_dayparts] CHECK CONSTRAINT [FK_station_inventory_manifest_dayparts_station_inventory_manifest]
+
+
+	ALTER TABLE [dbo].[station_inventory_manifest_dayparts]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_dayparts_dayparts] FOREIGN KEY([daypart_id])
+	REFERENCES [dbo].[dayparts] ([id])
+
+	ALTER TABLE [dbo].[station_inventory_manifest_dayparts] CHECK CONSTRAINT [FK_station_inventory_manifest_dayparts_dayparts]
+
+END
+GO
+
+-----------------
+
+--- station_inventory_manifest_audiences --
+if Object_ID(N'[dbo].[station_inventory_manifest_audiences]') is null
+BEGIN
+	CREATE TABLE [dbo].[station_inventory_manifest_audiences](				
+		[station_inventory_manifest_id] [int] NOT NULL,
+		[audience_id] [int] NOT NULL,
+		[impressions] [float] NOT NULL,
+		[rate] [money] NOT NULL
+		)
+
+	ALTER TABLE [dbo].[station_inventory_manifest_audiences]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_audiences_station_inventory_manifest] FOREIGN KEY([station_inventory_manifest_id])
+	REFERENCES [dbo].[station_inventory_manifest] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[station_inventory_manifest_audiences] CHECK CONSTRAINT [FK_station_inventory_manifest_audiences_station_inventory_manifest]
+
+
+	ALTER TABLE [dbo].[station_inventory_manifest_audiences]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_audiences_audiences] FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id])
+
+	ALTER TABLE [dbo].[station_inventory_manifest_audiences] CHECK CONSTRAINT [FK_station_inventory_manifest_audiences_audiences]
+
+END
+GO
+
+
+/*************************************** BCOP-1776/2000 - END *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
