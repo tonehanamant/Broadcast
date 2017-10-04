@@ -55,8 +55,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IDefaultScheduleConverter, DefaultScheduleConverter>();
             unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
             unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>();
-            unityContainer.RegisterType<IRatesService, RatesService>();
-            unityContainer.RegisterType<IRatesFileValidator, RatesFileValidator>();
+            unityContainer.RegisterType<IInventoryFileService, InventoryFileService>();
+            unityContainer.RegisterType<IInventoryFileValidator, InventoryFileValidator>();
             unityContainer.RegisterType<ISchedulesReportService, SchedulesReportService>();
             unityContainer.RegisterType<IScheduleAggregateFactoryService, ScheduleAggregateFactoryService>();
             unityContainer.RegisterType<IScheduleReportDtoFactoryService, ScheduleReportDtoFactoryService>();
@@ -76,7 +76,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IMediaMonthAndWeekAggregateCache, MediaMonthAndWeekAggregateCache>();
             unityContainer.RegisterType<IMediaMonthAndWeekAggregateRepository, MediaMonthAndWeekAggregateAndWeekAggregateRepository>();
 
-            unityContainer.RegisterType<IRateFileImporterFactory, RateFileImporterFactory>();
+            unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
             //unityContainer.RegisterType<fill, fill>();
             unityContainer.RegisterType<IRatingForecastService, RatingForecastService>();
             unityContainer.RegisterType<IStationContactMasterFileImporter, StationContactMasterFileImporter>();

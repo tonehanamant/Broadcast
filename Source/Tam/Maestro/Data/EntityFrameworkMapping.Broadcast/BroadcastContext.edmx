@@ -143,6 +143,21 @@
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="inventory_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
+          <Property Name="identifier" Type="varchar" MaxLength="127" />
+          <Property Name="file_hash" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="status" Type="tinyint" Nullable="false" />
+          <Property Name="inventory_source" Type="tinyint" Nullable="false" />
+          <Property Name="sweep_book_id" Type="int" />
+          <Property Name="play_back_type" Type="tinyint" />
+        </EntityType>
         <EntityType Name="market_dma_map">
           <Key>
             <PropertyRef Name="market_code" />
@@ -392,21 +407,6 @@
           <Property Name="modified_date" Type="datetime" Nullable="false" />
           <Property Name="primary_version_id" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="rate_files">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
-          <Property Name="identifier" Type="varchar" MaxLength="127" />
-          <Property Name="file_hash" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="created_date" Type="datetime" Nullable="false" />
-          <Property Name="status" Type="tinyint" Nullable="false" />
-          <Property Name="rate_source" Type="tinyint" Nullable="false" />
-          <Property Name="sweep_book_id" Type="int" />
-          <Property Name="play_back_type" Type="tinyint" />
-        </EntityType>
         <EntityType Name="rating_adjustments">
           <Key>
             <PropertyRef Name="media_month_id" />
@@ -587,7 +587,7 @@
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_mbh.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -724,6 +724,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="daypart_days">
               <PropertyRef Name="day_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_files_media_months">
+          <End Role="media_months" Type="Self.media_months" Multiplicity="0..1" />
+          <End Role="inventory_files" Type="Self.inventory_files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_files">
+              <PropertyRef Name="sweep_book_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1117,18 +1129,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_rate_files_media_months">
-          <End Role="media_months" Type="Self.media_months" Multiplicity="0..1" />
-          <End Role="rate_files" Type="Self.rate_files" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_months">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="rate_files">
-              <PropertyRef Name="sweep_book_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_rating_adjustments_media_months">
           <End Role="media_months" Type="Self.media_months" Multiplicity="1" />
           <End Role="rating_adjustments" Type="Self.rating_adjustments" Multiplicity="0..1" />
@@ -1335,13 +1335,13 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_station_contacts_rate_files_created">
-          <End Role="rate_files" Type="Self.rate_files" Multiplicity="0..1">
+        <Association Name="FK_station_contacts_inventory_files_created">
+          <End Role="inventory_files" Type="Self.inventory_files" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="station_contacts" Type="Self.station_contacts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="rate_files">
+            <Principal Role="inventory_files">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="station_contacts">
@@ -1349,11 +1349,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_station_contacts_rate_files_modified">
-          <End Role="rate_files" Type="Self.rate_files" Multiplicity="0..1" />
+        <Association Name="FK_station_contacts_inventory_files_modified">
+          <End Role="inventory_files" Type="Self.inventory_files" Multiplicity="0..1" />
           <End Role="station_contacts" Type="Self.station_contacts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="rate_files">
+            <Principal Role="inventory_files">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="station_contacts">
@@ -1397,6 +1397,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="dayparts" EntityType="Self.dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="days" EntityType="Self.days" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genres" EntityType="Self.genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_files" EntityType="Self.inventory_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="market_dma_map" EntityType="Self.market_dma_map" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="markets" EntityType="Self.markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="media_months" EntityType="Self.media_months" Schema="dbo" store:Type="Tables" />
@@ -1417,7 +1418,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="proposal_version_spot_length" EntityType="Self.proposal_version_spot_length" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proposal_versions" EntityType="Self.proposal_versions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proposals" EntityType="Self.proposals" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="rate_files" EntityType="Self.rate_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rating_adjustments" EntityType="Self.rating_adjustments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rep_firms" EntityType="Self.rep_firms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="schedule_audiences" EntityType="Self.schedule_audiences" Schema="dbo" store:Type="Tables" />
@@ -1488,6 +1488,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_daypart_days_days" Association="Self.FK_daypart_days_days">
             <End Role="days" EntitySet="days" />
             <End Role="daypart_days" EntitySet="daypart_days" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_files_media_months" Association="Self.FK_inventory_files_media_months">
+            <End Role="media_months" EntitySet="media_months" />
+            <End Role="inventory_files" EntitySet="inventory_files" />
           </AssociationSet>
           <AssociationSet Name="FK_market_dma_map_market_code" Association="Self.FK_market_dma_map_market_code">
             <End Role="markets" EntitySet="markets" />
@@ -1609,10 +1613,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="proposals" EntitySet="proposals" />
             <End Role="proposal_versions" EntitySet="proposal_versions" />
           </AssociationSet>
-          <AssociationSet Name="FK_rate_files_media_months" Association="Self.FK_rate_files_media_months">
-            <End Role="media_months" EntitySet="media_months" />
-            <End Role="rate_files" EntitySet="rate_files" />
-          </AssociationSet>
           <AssociationSet Name="FK_rating_adjustments_media_months" Association="Self.FK_rating_adjustments_media_months">
             <End Role="media_months" EntitySet="media_months" />
             <End Role="rating_adjustments" EntitySet="rating_adjustments" />
@@ -1677,12 +1677,12 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="spot_length_cost_multipliers" EntitySet="spot_length_cost_multipliers" />
           </AssociationSet>
-          <AssociationSet Name="FK_station_contacts_rate_files_created" Association="Self.FK_station_contacts_rate_files_created">
-            <End Role="rate_files" EntitySet="rate_files" />
+          <AssociationSet Name="FK_station_contacts_inventory_files_created" Association="Self.FK_station_contacts_inventory_files_created">
+            <End Role="inventory_files" EntitySet="inventory_files" />
             <End Role="station_contacts" EntitySet="station_contacts" />
           </AssociationSet>
-          <AssociationSet Name="FK_station_contacts_rate_files_modified" Association="Self.FK_station_contacts_rate_files_modified">
-            <End Role="rate_files" EntitySet="rate_files" />
+          <AssociationSet Name="FK_station_contacts_inventory_files_modified" Association="Self.FK_station_contacts_inventory_files_modified">
+            <End Role="inventory_files" EntitySet="inventory_files" />
             <End Role="station_contacts" EntitySet="station_contacts" />
           </AssociationSet>
           <AssociationSet Name="FK_station_contacts_stations" Association="Self.FK_station_contacts_stations">
@@ -1719,7 +1719,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="proposal_version_markets" EntityType="BroadcastModel.proposal_version_markets" />
           <EntitySet Name="proposal_version_spot_length" EntityType="BroadcastModel.proposal_version_spot_length" />
           <EntitySet Name="proposals" EntityType="BroadcastModel.proposal" />
-          <EntitySet Name="rate_files" EntityType="BroadcastModel.rate_files" />
           <EntitySet Name="rating_adjustments" EntityType="BroadcastModel.rating_adjustments" />
           <EntitySet Name="schedule_detail_audiences" EntityType="BroadcastModel.schedule_detail_audiences" />
           <EntitySet Name="schedule_detail_weeks" EntityType="BroadcastModel.schedule_detail_weeks" />
@@ -1768,14 +1767,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_post_file_details_post_files" Association="BroadcastModel.FK_post_file_details_post_files">
             <End Role="post_files" EntitySet="post_files" />
             <End Role="post_file_details" EntitySet="post_file_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_contacts_rate_files_created" Association="BroadcastModel.FK_station_contacts_rate_files_created">
-            <End Role="rate_files" EntitySet="rate_files" />
-            <End Role="station_contacts" EntitySet="station_contacts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_contacts_rate_files_modified" Association="BroadcastModel.FK_station_contacts_rate_files_modified">
-            <End Role="rate_files" EntitySet="rate_files" />
-            <End Role="station_contacts" EntitySet="station_contacts" />
           </AssociationSet>
           <AssociationSet Name="FK_schedule_detail_audiences_schedule_details" Association="BroadcastModel.FK_schedule_detail_audiences_schedule_details">
             <End Role="schedule_details" EntitySet="schedule_details" />
@@ -1841,10 +1832,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_post_files_media_months" Association="BroadcastModel.FK_post_files_media_months">
             <End Role="media_months" EntitySet="media_months" />
             <End Role="post_files" EntitySet="post_files" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rate_files_media_months" Association="BroadcastModel.FK_rate_files_media_months">
-            <End Role="media_months" EntitySet="media_months" />
-            <End Role="rate_files" EntitySet="rate_files" />
           </AssociationSet>
           <AssociationSet Name="FK_rating_adjustments_media_months" Association="BroadcastModel.FK_rating_adjustments_media_months">
             <End Role="media_months" EntitySet="media_months" />
@@ -1977,6 +1964,19 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_schedule_audiences_schedule" Association="BroadcastModel.FK_schedule_audiences_schedule">
             <End Role="schedule" EntitySet="schedules" />
             <End Role="schedule_audiences" EntitySet="schedule_audiences" />
+          </AssociationSet>
+          <EntitySet Name="inventory_files" EntityType="BroadcastModel.inventory_files" />
+          <AssociationSet Name="FK_inventory_files_media_months" Association="BroadcastModel.FK_inventory_files_media_months">
+            <End Role="media_months" EntitySet="media_months" />
+            <End Role="inventory_files" EntitySet="inventory_files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_contacts_inventory_files_created" Association="BroadcastModel.FK_station_contacts_inventory_files_created">
+            <End Role="inventory_files" EntitySet="inventory_files" />
+            <End Role="station_contacts" EntitySet="station_contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_contacts_inventory_files_modified" Association="BroadcastModel.FK_station_contacts_inventory_files_modified">
+            <End Role="inventory_files" EntitySet="inventory_files" />
+            <End Role="station_contacts" EntitySet="station_contacts" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -2138,12 +2138,12 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_media_weeks_media_months" FromRole="media_months" ToRole="media_weeks" />
           <NavigationProperty Name="post_files" Relationship="BroadcastModel.FK_post_files_media_months" FromRole="media_months" ToRole="post_files" />
-          <NavigationProperty Name="rate_files" Relationship="BroadcastModel.FK_rate_files_media_months" FromRole="media_months" ToRole="rate_files" />
           <NavigationProperty Name="rating_adjustments" Relationship="BroadcastModel.FK_rating_adjustments_media_months" FromRole="media_months" ToRole="rating_adjustments" />
           <NavigationProperty Name="schedules" Relationship="BroadcastModel.FK_schedules_media_months" FromRole="media_months" ToRole="schedule" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_hut_media_months" FromRole="media_months" ToRole="proposal_version_details" />
           <NavigationProperty Name="proposal_version_details1" Relationship="BroadcastModel.FK_proposal_version_details_share_media_months" FromRole="media_months" ToRole="proposal_version_details" />
           <NavigationProperty Name="proposal_version_details2" Relationship="BroadcastModel.FK_proposal_version_details_single_media_months" FromRole="media_months" ToRole="proposal_version_details" />
+          <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_files_media_months" FromRole="media_months" ToRole="inventory_files" />
         </EntityType>
         <EntityType Name="media_weeks">
           <Key>
@@ -2271,24 +2271,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="primary_version_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="proposal_versions" Relationship="BroadcastModel.FK_proposal_versions_proposals" FromRole="proposal" ToRole="proposal_versions" />
-        </EntityType>
-        <EntityType Name="rate_files">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
-          <Property Name="identifier" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
-          <Property Name="file_hash" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="status" Type="Byte" Nullable="false" />
-          <Property Name="rate_source" Type="Byte" Nullable="false" />
-          <Property Name="sweep_book_id" Type="Int32" />
-          <Property Name="play_back_type" Type="Byte" />
-          <NavigationProperty Name="station_contacts" Relationship="BroadcastModel.FK_station_contacts_rate_files_created" FromRole="rate_files" ToRole="station_contacts" />
-          <NavigationProperty Name="station_contacts1" Relationship="BroadcastModel.FK_station_contacts_rate_files_modified" FromRole="rate_files" ToRole="station_contacts" />
-          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_rate_files_media_months" FromRole="rate_files" ToRole="media_months" />
         </EntityType>
         <EntityType Name="rating_adjustments">
           <Key>
@@ -2436,9 +2418,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="created_file_id" Type="Int32" />
           <Property Name="company" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
           <Property Name="modified_file_id" Type="Int32" />
-          <NavigationProperty Name="rate_files" Relationship="BroadcastModel.FK_station_contacts_rate_files_created" FromRole="station_contacts" ToRole="rate_files" />
-          <NavigationProperty Name="rate_files1" Relationship="BroadcastModel.FK_station_contacts_rate_files_modified" FromRole="station_contacts" ToRole="rate_files" />
           <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_contacts_stations" FromRole="station_contacts" ToRole="station" />
+          <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_station_contacts_inventory_files_created" FromRole="station_contacts" ToRole="inventory_files" />
+          <NavigationProperty Name="inventory_files1" Relationship="BroadcastModel.FK_station_contacts_inventory_files_modified" FromRole="station_contacts" ToRole="inventory_files" />
         </EntityType>
         <EntityType Name="station">
           <Key>
@@ -2589,32 +2571,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="post_file_details">
               <PropertyRef Name="post_file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_contacts_rate_files_created">
-          <End Type="BroadcastModel.rate_files" Role="rate_files" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.station_contacts" Role="station_contacts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="rate_files">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_contacts">
-              <PropertyRef Name="created_file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_contacts_rate_files_modified">
-          <End Type="BroadcastModel.rate_files" Role="rate_files" Multiplicity="0..1" />
-          <End Type="BroadcastModel.station_contacts" Role="station_contacts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="rate_files">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_contacts">
-              <PropertyRef Name="modified_file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2828,18 +2784,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="post_files">
               <PropertyRef Name="posting_book_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rate_files_media_months">
-          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
-          <End Type="BroadcastModel.rate_files" Role="rate_files" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_months">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="rate_files">
-              <PropertyRef Name="sweep_book_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3415,6 +3359,62 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="inventory_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="identifier" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="file_hash" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="status" Type="Byte" Nullable="false" />
+          <Property Name="inventory_source" Type="Byte" Nullable="false" />
+          <Property Name="sweep_book_id" Type="Int32" />
+          <Property Name="play_back_type" Type="Byte" />
+          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_inventory_files_media_months" FromRole="inventory_files" ToRole="media_months" />
+          <NavigationProperty Name="station_contacts" Relationship="BroadcastModel.FK_station_contacts_inventory_files_created" FromRole="inventory_files" ToRole="station_contacts" />
+          <NavigationProperty Name="station_contacts1" Relationship="BroadcastModel.FK_station_contacts_inventory_files_modified" FromRole="inventory_files" ToRole="station_contacts" />
+        </EntityType>
+        <Association Name="FK_inventory_files_media_months">
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
+          <End Type="BroadcastModel.inventory_files" Role="inventory_files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_files">
+              <PropertyRef Name="sweep_book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_contacts_inventory_files_created">
+          <End Type="BroadcastModel.inventory_files" Role="inventory_files" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.station_contacts" Role="station_contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_contacts">
+              <PropertyRef Name="created_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_contacts_inventory_files_modified">
+          <End Type="BroadcastModel.inventory_files" Role="inventory_files" Multiplicity="0..1" />
+          <End Type="BroadcastModel.station_contacts" Role="station_contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_contacts">
+              <PropertyRef Name="modified_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3670,22 +3670,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="advertiser_id" ColumnName="advertiser_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="rate_files">
-            <EntityTypeMapping TypeName="BroadcastModel.rate_files">
-              <MappingFragment StoreEntitySet="rate_files">
-                <ScalarProperty Name="play_back_type" ColumnName="play_back_type" />
-                <ScalarProperty Name="sweep_book_id" ColumnName="sweep_book_id" />
-                <ScalarProperty Name="rate_source" ColumnName="rate_source" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="file_hash" ColumnName="file_hash" />
-                <ScalarProperty Name="identifier" ColumnName="identifier" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
@@ -4056,6 +4040,22 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="population" ColumnName="population" />
                 <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_files">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_files">
+              <MappingFragment StoreEntitySet="inventory_files">
+                <ScalarProperty Name="play_back_type" ColumnName="play_back_type" />
+                <ScalarProperty Name="sweep_book_id" ColumnName="sweep_book_id" />
+                <ScalarProperty Name="inventory_source" ColumnName="inventory_source" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="file_hash" ColumnName="file_hash" />
+                <ScalarProperty Name="identifier" ColumnName="identifier" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

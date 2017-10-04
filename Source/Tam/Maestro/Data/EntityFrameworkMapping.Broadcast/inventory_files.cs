@@ -12,9 +12,9 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class rate_files
+    public partial class inventory_files
     {
-        public rate_files()
+        public inventory_files()
         {
             this.station_contacts = new HashSet<station_contacts>();
             this.station_contacts1 = new HashSet<station_contacts>();
@@ -27,12 +27,12 @@ namespace EntityFrameworkMapping.Broadcast
         public string created_by { get; set; }
         public System.DateTime created_date { get; set; }
         public byte status { get; set; }
-        public byte rate_source { get; set; }
+        public byte inventory_source { get; set; }
         public Nullable<int> sweep_book_id { get; set; }
         public Nullable<byte> play_back_type { get; set; }
     
+        public virtual media_months media_months { get; set; }
         public virtual ICollection<station_contacts> station_contacts { get; set; }
         public virtual ICollection<station_contacts> station_contacts1 { get; set; }
-        public virtual media_months media_months { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace BroadcastComposerWeb.Controllers
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
 
-        public ProposalInventoryController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) : base(logger, new ControllerNameRetriever(typeof(RatesApiController).Name))
+        public ProposalInventoryController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) : base(logger, new ControllerNameRetriever(typeof(InventoryFileApiController).Name))
         {
             _ApplicationServiceFactory = applicationServiceFactory;
         }

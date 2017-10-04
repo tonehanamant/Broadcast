@@ -8,9 +8,9 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    class BulkRateFileImportTester
+    class BulkInventoryFileImportTester
     {
-        private IRatesService _ratesService = IntegrationTestApplicationServiceFactory.GetApplicationService<IRatesService>();
+        private IInventoryFileService _inventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryFileService>();
 
         [Test]
         [Ignore]
@@ -31,7 +31,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         try
                         {
-                            var request = new RatesSaveRequest();
+                            var request = new InventoryFileSaveRequest();
 
                             using (request.RatesStream = new FileStream(
                                 filePath,
@@ -39,7 +39,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                 FileAccess.Read))
                             {
                                 request.UserName = "IntegrationTestUser";
-                                _ratesService.SaveRatesFile(request);
+                                _inventoryFileService.SaveInventoryFile(request);
                             }
 
                             var message = string.Format("{0} loaded successfully", filePath);

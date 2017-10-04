@@ -166,7 +166,7 @@
   <ItemGroup>
     <Compile Include="Aggregates\ScheduleAggregateIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\BulkRateFileImportTester.cs" />
+    <Compile Include="ApplicationServices\BulkInventoryFileImportTester.cs" />
     <Compile Include="ApplicationServices\CNNImportTest.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ImpressionAdjustmentEngineIntegrationTests.cs" />
@@ -207,7 +207,7 @@
     <Compile Include="UnitTests\ProposalDetailHeaderTotalsCalculationEngineTests.cs" />
     <Compile Include="UnitTests\ProposalMathTests.cs" />
     <Compile Include="UnitTests\ProposalTotalsCalculationEngineTests.cs" />
-    <Compile Include="UnitTests\RateFileValidatorUnitTests.cs" />
+    <Compile Include="UnitTests\InventoryFileValidatorUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

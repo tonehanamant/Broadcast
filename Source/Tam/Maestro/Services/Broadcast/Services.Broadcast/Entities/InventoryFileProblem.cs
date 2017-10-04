@@ -3,7 +3,7 @@
 namespace Services.Broadcast.Entities
 {
 
-    public class RatesFileProblem
+    public class InventoryFileProblem
     {
         public string StationLetters { get; set; }
         public string ProgramName { get; set; }

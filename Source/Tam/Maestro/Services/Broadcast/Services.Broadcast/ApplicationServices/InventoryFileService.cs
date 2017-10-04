@@ -35,13 +35,13 @@ namespace Services.Broadcast.ApplicationServices
         NEXTQUARTER
     }
 
-    public interface IRatesService : IApplicationService
+    public interface IInventoryFileService : IApplicationService
     {
         List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate);
         List<DisplayBroadcastStation> GetStationsWithFilter(string rateSource, string filterValue, DateTime today);
-        RatesFileSaveResult SaveRatesFile(RatesSaveRequest request);
-        StationDetailDto GetStationDetailByCode(string rateSource, int stationCode);
-        List<StationContact> GetStationContacts(string rateSource, int stationCode);
+        InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request);
+        StationDetailDto GetStationDetailByCode(string inventorySource, int stationCode);
+        List<StationContact> GetStationContacts(string inventorySource, int stationCode);
         bool SaveStationContact(StationContact stationContacts, string userName);
         bool DeleteStationContact(int stationContactId, string userName);
         List<LookupDto> GetAllGenres();
@@ -52,32 +52,32 @@ namespace Services.Broadcast.ApplicationServices
         List<StationContact> FindStationContactsByName(string query);
     }
 
-    public class RatesService : IRatesService
+    public class InventoryFileService : IInventoryFileService
     {
         private readonly IStationRepository _stationRepository;
         private readonly IDataRepositoryFactory _broadcastDataRepositoryFactory;
         private readonly IDaypartCache _daypartCache;
         private readonly IBroadcastAudiencesCache _audiencesCache;
-        private readonly IRatesFileValidator _ratesFileValidator;
+        private readonly IInventoryFileValidator _inventoryFileValidator;
         private readonly IStationContactsRepository _stationContactsRepository;
         private readonly IGenreRepository _genreRepository;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
-        private readonly IRateFileImporterFactory _rateFileImporterFactory;
+        private readonly IInventoryFileImporterFactory _inventoryFileImporterFactory;
         private readonly ISMSClient _SmsClient;
-        private readonly IRatesRepository _RatesRepository;
+        private readonly IInventoryFileRepository _inventoryFileRepository;
         private readonly ILockingManagerApplicationService _LockingManager;
         private readonly IRatingForecastService _RatingForecastService;
         private readonly Dictionary<int, int> _SpotLengthMap;
         private readonly Dictionary<int, double> _SpotLengthCostMultipliers; 
         private readonly IThirdPartySpotCostCalculationEngine _ThirdPartySpotCostCalculationEngine;
 
-        public RatesService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
-                            IRatesFileValidator ratesFileValidator,
+        public InventoryFileService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
+                            IInventoryFileValidator inventoryFileValidator,
                             IDaypartCache daypartCache, IBroadcastAudiencesCache audiencesCache, 
                             IQuarterCalculationEngine quarterCalculationEngine,
                             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, 
-                            IRateFileImporterFactory rateFileImporterFactory,
+                            IInventoryFileImporterFactory inventoryFileImporterFactory,
                             ISMSClient smsClient, 
                             ILockingManagerApplicationService lockingManager,
                             IRatingForecastService ratingForecastService,
@@ -89,12 +89,12 @@ namespace Services.Broadcast.ApplicationServices
             _audiencesCache = audiencesCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
-            _ratesFileValidator = ratesFileValidator;
+            _inventoryFileValidator = inventoryFileValidator;
             _stationContactsRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>();
             _genreRepository = _broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
-            _rateFileImporterFactory = rateFileImporterFactory;
+            _inventoryFileImporterFactory = inventoryFileImporterFactory;
             _SmsClient = smsClient;
-            _RatesRepository = _broadcastDataRepositoryFactory.GetDataRepository<IRatesRepository>();
+            _inventoryFileRepository = _broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _LockingManager = lockingManager;
             _RatingForecastService = ratingForecastService;
             _SpotLengthMap =
@@ -132,24 +132,24 @@ namespace Services.Broadcast.ApplicationServices
             return stations;
         }
 
-        public RatesFileSaveResult SaveRatesFile(RatesSaveRequest request)
+        public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request)
         {
             var rateSourceType = _ParseRateSourceOrDefault(request.RateSource);
-            var fileImporter = _rateFileImporterFactory.GetFileImporterInstance(rateSourceType);
+            var fileImporter = _inventoryFileImporterFactory.GetFileImporterInstance(rateSourceType);
             fileImporter.LoadFromSaveRequest(request);
             fileImporter.CheckFileHash();
 
-            RatesFile ratesFile = fileImporter.GetPendingRatesFile();
-            ratesFile.Id = _RatesRepository.CreateRatesFile(ratesFile, request.UserName);
+            InventoryFile inventoryFile = fileImporter.GetPendingRatesFile();
+            inventoryFile.Id = _inventoryFileRepository.CreateInventoryFile(inventoryFile, request.UserName);
 
             var stationLocks = new List<IDisposable>();
             var lockedStationCodes = new List<int>();
-            var fileProblems = new List<RatesFileProblem>();
+            var fileProblems = new List<InventoryFileProblem>();
             try
             {
                 var startTime = DateTime.Now;
-                fileImporter.ExtractFileData(request.RatesStream, ratesFile, fileProblems);
-                if (ratesFile.StationInventoryManifests == null || ratesFile.StationInventoryManifests.Count == 0)
+                fileImporter.ExtractFileData(request.RatesStream, inventoryFile, fileProblems);
+                if (inventoryFile.StationInventoryManifests == null || inventoryFile.StationInventoryManifests.Count == 0)
                 {
                     throw new ApplicationException("Unable to parse any file records.");
                 }
@@ -158,15 +158,15 @@ namespace Services.Broadcast.ApplicationServices
                 System.Diagnostics.Debug.WriteLine(string.Format("Completed file parsing in {0}", endTime - startTime));
                 startTime = DateTime.Now;
 
-                var validationProblems = _ratesFileValidator.ValidateRatesFile(ratesFile);
-                fileProblems.AddRange(validationProblems.RatesFileProblems);
+                var validationProblems = _inventoryFileValidator.ValidateInventoryFile(inventoryFile);
+                fileProblems.AddRange(validationProblems.InventoryFileProblems);
 
                 endTime = DateTime.Now;
                 System.Diagnostics.Debug.WriteLine(string.Format("Completed file validation in {0}", endTime - startTime));
 
                 startTime = DateTime.Now;
 
-                var fileStationCodes = ratesFile.StationInventoryManifests.Select(i => (int)i.Station.Code).Distinct().ToList();
+                var fileStationCodes = inventoryFile.StationInventoryManifests.Select(i => (int)i.Station.Code).Distinct().ToList();
                 using (var transaction = new TransactionScopeWrapper(_CreateTransactionScope(TimeSpan.FromMinutes(20))))
                 {
                     //Lock stations before database operations
@@ -181,15 +181,15 @@ namespace Services.Broadcast.ApplicationServices
                         else
                         {
                             var stationLetters =
-                                ratesFile.StationInventoryManifests.Where(i => i.Station.Code == stationCode)
+                                inventoryFile.StationInventoryManifests.Where(i => i.Station.Code == stationCode)
                                     .First()
                                     .Station.LegacyCallLetters;
                             throw new ApplicationException(string.Format("Unable to update station. Station locked for editing {0}.", stationLetters));
                         }
                     }
 
-                    var isThirdParty = rateSourceType == RatesFile.RateSourceType.CNN ||
-                                       rateSourceType == RatesFile.RateSourceType.TTNW ;
+                    var isThirdParty = rateSourceType == InventoryFile.InventorySourceType.CNN ||
+                                       rateSourceType == InventoryFile.InventorySourceType.TTNW ;
 
                     if (isThirdParty)
                     {
@@ -197,12 +197,12 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             throw new InvalidEnumArgumentException("Ratings book id required for third party rate files.");
                         }
-                        _ThirdPartySpotCostCalculationEngine.CalculateSpotCost(request, ratesFile);
+                        _ThirdPartySpotCostCalculationEngine.CalculateSpotCost(request, inventoryFile);
                     }
 
-                    ratesFile.FileStatus = RatesFile.FileStatusEnum.Loaded;
-                    _SaveRateFileManifests(request, ratesFile);
-                    _SaveRateFileContacts(request, ratesFile);
+                    inventoryFile.FileStatus = InventoryFile.FileStatusEnum.Loaded;
+                    _SaveInventoryFileManifests(request, inventoryFile);
+                    _SaveInventoryFileContacts(request, inventoryFile);
 
                     transaction.Complete();
 
@@ -220,19 +220,19 @@ namespace Services.Broadcast.ApplicationServices
                 try
                 {
                     UnloackStations(lockedStationCodes, stationLocks);
-                    _RatesRepository.UpdateRatesFileStatus(ratesFile.Id, RatesFile.FileStatusEnum.Failed);
+                    _inventoryFileRepository.UpdateInventoryFileStatus(inventoryFile.Id, InventoryFile.FileStatusEnum.Failed);
                 }
                 catch
                 {
 
                 }
-                throw new BroadcastRateDataException(string.Format("Error loading new rates file: {0}", e.Message),
-                    ratesFile.Id, e);
+                throw new BroadcastInventoryDataException(string.Format("Error loading new rates file: {0}", e.Message),
+                    inventoryFile.Id, e);
             }
 
-            return new RatesFileSaveResult()
+            return new InventoryFileSaveResult()
             {
-                FileId = ratesFile.Id,
+                FileId = inventoryFile.Id,
                 Problems = fileProblems
             };
         }
@@ -249,21 +249,21 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private void _SaveRateFileManifests(RatesSaveRequest request, RatesFile ratesFile)
+        private void _SaveInventoryFileManifests(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
             
         }
 
 
 
-        private void _SaveRateFileContacts(RatesSaveRequest request, RatesFile ratesFile)
+        private void _SaveInventoryFileContacts(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
             //TODO: Fixme or remove.
             //var fileStationCodes = ratesFile.StationPrograms.Select(p => (int)p.StationCode).Distinct().ToList();
             List<StationContact> existingStationContacts = null;//_stationContactsRepository.GetStationContactsByStationCode(fileStationCodes);
 
             var contactsUpdateList =
-                ratesFile.StationContacts.Intersect(existingStationContacts, StationContact.StationContactComparer).ToList();
+                inventoryFile.StationContacts.Intersect(existingStationContacts, StationContact.StationContactComparer).ToList();
 
             //Set the ID for those that exist already
             foreach (var updateContact in contactsUpdateList)
@@ -272,11 +272,11 @@ namespace Services.Broadcast.ApplicationServices
                     existingStationContacts.Single(
                         c => StationContact.StationContactComparer.Equals(c, updateContact)).Id;
             }
-            _stationContactsRepository.UpdateExistingStationContacts(contactsUpdateList, request.UserName, ratesFile.Id);
+            _stationContactsRepository.UpdateExistingStationContacts(contactsUpdateList, request.UserName, inventoryFile.Id);
 
             var contactsCreateList =
-                ratesFile.StationContacts.Except(existingStationContacts, StationContact.StationContactComparer).ToList();
-            _stationContactsRepository.CreateNewStationContacts(contactsCreateList, request.UserName, ratesFile.Id);
+                inventoryFile.StationContacts.Except(existingStationContacts, StationContact.StationContactComparer).ToList();
+            _stationContactsRepository.CreateNewStationContacts(contactsCreateList, request.UserName, inventoryFile.Id);
 
             // update modified date for each station
             var timeStamp = DateTime.Now;
@@ -285,7 +285,7 @@ namespace Services.Broadcast.ApplicationServices
 
 
 
-        public List<StationContact> GetStationContacts(string rateSource, int stationCode)
+        public List<StationContact> GetStationContacts(string inventorySource, int stationCode)
         {
             return _stationContactsRepository.GetStationContactsByStationCode(stationCode);
         }
@@ -371,10 +371,10 @@ namespace Services.Broadcast.ApplicationServices
 
         }
 
-        public StationDetailDto GetStationDetailByCode(string rateSourceString, int stationCode)
+        public StationDetailDto GetStationDetailByCode(string inventorySource, int stationCode)
         {
             return new StationDetailDto();
-            //var rateSource = _ParseRateSource(rateSourceString);
+            //var rateSource = _ParseRateSource(inventorySource);
 
             //var station = _stationRepository.GetBroadcastStationByCode(stationCode);
 
@@ -441,22 +441,22 @@ namespace Services.Broadcast.ApplicationServices
             });
         }
 
-        private RatesFile.RateSourceType _ParseRateSource(string sourceString)
+        private InventoryFile.InventorySourceType _ParseRateSource(string sourceString)
         {
-            RatesFile.RateSourceType rateSource;
-            var parseSuccess = Enum.TryParse(sourceString, true, out rateSource);
+            InventoryFile.InventorySourceType inventorySource;
+            var parseSuccess = Enum.TryParse(sourceString, true, out inventorySource);
             if (!parseSuccess)
             {
                 throw new ArgumentException(string.Format("Invalid rate source parameter: {0}", sourceString));
             }
-            return rateSource;
+            return inventorySource;
         }
 
-        private RatesFile.RateSourceType _ParseRateSourceOrDefault(string sourceString)
+        private InventoryFile.InventorySourceType _ParseRateSourceOrDefault(string sourceString)
         {
             if (String.IsNullOrEmpty(sourceString))
             {
-                return RatesFile.RateSourceType.OpenMarket;
+                return InventoryFile.InventorySourceType.OpenMarket;
             }
             else
             {

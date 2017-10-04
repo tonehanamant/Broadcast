@@ -284,6 +284,9 @@
     <Compile Include="genre.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="inventory_files.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="market.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -346,9 +349,6 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="QueryHintBroadcastContext.cs" />
-    <Compile Include="rate_files.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="rating_adjustments.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

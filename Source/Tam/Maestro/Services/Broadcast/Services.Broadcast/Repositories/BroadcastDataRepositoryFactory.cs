@@ -41,7 +41,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<ITrackerMappingRepository, TrackerMappingRepository>();
             instance.RegisterType<IStationRepository, StationRepository>();
             instance.RegisterType<ISpotLengthRepository, SpotLengthBroadcastRepository>();
-            instance.RegisterType<IRatesRepository, RatesRepository>();
+            instance.RegisterType<IInventoryFileRepository, InventoryFileRepository>();
             instance.RegisterType<IGenreRepository, GenreRepository>();
             instance.RegisterType<IScheduleAggregateRepository, ScheduleAggregateRepository>();
             instance.RegisterType<IStationContactsRepository, StationContactsRepository>();

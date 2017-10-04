@@ -224,6 +224,50 @@ GO
 
 
 
+/*************************************** BCOP-2014 - START *****************************************************/
+
+
+IF EXIsTS(SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE  CONSTRAINT_TYPE = 'PRIMARY KEY'
+    AND TABLE_NAME = 'rate_files' 
+    AND TABLE_SCHEMA ='dbo' 
+	and CONSTRAINT_NAME = 'PK_rate_files')
+BEGIN
+		EXEC sp_rename 'rate_files.PK_rate_files', 'PK_inventory_files';
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'rate_source'
+          AND Object_ID = Object_ID(N'dbo.rate_files'))
+BEGIN
+		EXEC sp_rename 'rate_files.rate_source', 'inventory_source';
+END
+
+IF EXISTS(SELECT *  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_rate_files_media_months')
+BEGIN
+		EXEC sp_rename 'FK_rate_files_media_months', 'FK_inventory_files_media_months';
+END
+
+
+IF EXISTS(SELECT 1  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_station_contacts_rate_files_created')
+BEGIN
+		EXEC sp_rename 'FK_station_contacts_rate_files_created', 'FK_station_contacts_inventory_files_created';
+END
+
+IF EXISTS(SELECT 1  FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_station_contacts_rate_files_modified')
+BEGIN
+		EXEC sp_rename 'FK_station_contacts_rate_files_modified', 'FK_station_contacts_inventory_files_modified';
+END
+
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'dbo' 
+                 AND  TABLE_NAME = 'rate_files'))
+BEGIN
+	EXEC sp_rename 'rate_files', 'inventory_files';
+END
+
+
+/*************************************** BCOP-2014 - END *****************************************************/
 
 
 /*************************************** END UPDATE SCRIPT *******************************************************/

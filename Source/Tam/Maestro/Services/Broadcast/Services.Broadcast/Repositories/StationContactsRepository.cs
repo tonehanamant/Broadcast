@@ -140,7 +140,7 @@ namespace Services.Broadcast.Repositories
                         }
                         else
                         {
-                            throw new BroadcastRateDataException(string.Format("Can't find station contact to update: {0}-{1}", stationContact.Id, stationContact.Name), fileId.GetValueOrDefault());
+                            throw new BroadcastInventoryDataException(string.Format("Can't find station contact to update: {0}-{1}", stationContact.Id, stationContact.Name), fileId.GetValueOrDefault());
                         }
                     }
                     context.SaveChanges();

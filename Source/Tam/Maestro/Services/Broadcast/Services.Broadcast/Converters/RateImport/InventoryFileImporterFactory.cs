@@ -4,19 +4,19 @@ using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public interface IRateFileImporterFactory
+    public interface IInventoryFileImporterFactory
     {
-        RateFileImporterBase GetFileImporterInstance(RatesFile.RateSourceType rateSource);
+        InventoryFileImporterBase GetFileImporterInstance(InventoryFile.InventorySourceType inventorySource);
     }
 
-    public class RateFileImporterFactory : IRateFileImporterFactory
+    public class InventoryFileImporterFactory : IInventoryFileImporterFactory
     {
         private BroadcastDataDataRepositoryFactory _broadcastDataDataRepositoryFactory;
         private readonly IDaypartCache _daypartCache;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
 
-        public RateFileImporterFactory(BroadcastDataDataRepositoryFactory broadcastDataFactory,
+        public InventoryFileImporterFactory(BroadcastDataDataRepositoryFactory broadcastDataFactory,
             IDaypartCache daypartCache, MediaMonthAndWeekAggregateCache mediaWeekCache, IBroadcastAudiencesCache audiencesCache)
         {
             _broadcastDataDataRepositoryFactory = broadcastDataFactory;
@@ -25,15 +25,15 @@ namespace Services.Broadcast.Converters.RateImport
             _AudiencesCache = audiencesCache;
         }
 
-        public RateFileImporterBase GetFileImporterInstance(RatesFile.RateSourceType rateSource)
+        public InventoryFileImporterBase GetFileImporterInstance(InventoryFile.InventorySourceType inventorySource)
         {
-            RateFileImporterBase fileImporter;
-            switch (rateSource)
+            InventoryFileImporterBase fileImporter;
+            switch (inventorySource)
             {
-                case RatesFile.RateSourceType.CNN:
+                case InventoryFile.InventorySourceType.CNN:
                     fileImporter = new CNNFileImporter();
                     break;
-                case RatesFile.RateSourceType.TTNW:
+                case InventoryFile.InventorySourceType.TTNW:
                     fileImporter = new TTNWFileImporter();
                     break;
                 default:

@@ -5,7 +5,7 @@ using System.IO;
 namespace Services.Broadcast.Entities
 {
     [Serializable]
-    public class RatesSaveRequest
+    public class InventoryFileSaveRequest
     {
         private List<FlightWeekDto> _RequestFlightWeeks;
 

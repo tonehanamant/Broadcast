@@ -10,11 +10,11 @@ using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public class AssemblyRateImporter : RateFileImporterBase
+    public class AssemblyInventoryImporter : InventoryFileImporterBase
     {
-        public override RatesFile.RateSourceType RateSource
+        public override InventoryFile.InventorySourceType InventorySource
         {
-            get { return RatesFile.RateSourceType.Assembly; }
+            get { return InventoryFile.InventorySourceType.Assembly; }
         }
 
         private static readonly List<string> CsvFileHeaders = new List<string>()
@@ -36,7 +36,7 @@ namespace Services.Broadcast.Converters.RateImport
         private Dictionary<string, int> _audienceFields;
         private Dictionary<string, DisplayAudience> _audienceMapping; 
 
-        public override void ExtractFileData(Stream rawStream, RatesFile ratesFile, List<RatesFileProblem> fileProblems)
+        public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile, List<InventoryFileProblem> fileProblems)
         {
             //TODO: Fixme or remove.
 
@@ -252,7 +252,7 @@ namespace Services.Broadcast.Converters.RateImport
         //    return true;
         //}
 
-        //private void _SetRateFileDatesFromPeriod(RatesFile ratesFile, string filePeriod)
+        //private void _SetRateFileDatesFromPeriod(RatesFile inventoryFile, string filePeriod)
         //{
         //    var quarter = int.Parse(filePeriod.Substring(0, 1));
         //    var year = int.Parse(filePeriod.Split(' ')[1]);

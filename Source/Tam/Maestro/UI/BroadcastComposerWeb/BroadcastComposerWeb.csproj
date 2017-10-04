@@ -220,7 +220,7 @@
     <Compile Include="Controllers\PostApiController.cs" />
     <Compile Include="Controllers\ProposalController.cs" />
     <Compile Include="Controllers\ProposalInventoryController.cs" />
-    <Compile Include="Controllers\RatesApiController.cs" />
+    <Compile Include="Controllers\InventoryFileApiController.cs" />
     <Compile Include="Controllers\RatesController.cs" />
     <Compile Include="Controllers\PlanningController.cs" />
     <Compile Include="Controllers\TrackerController.cs" />

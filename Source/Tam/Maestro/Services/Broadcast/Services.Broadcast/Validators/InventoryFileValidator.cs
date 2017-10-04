@@ -8,16 +8,16 @@ using System.Linq;
 
 namespace Services.Broadcast.Validators
 {
-    public interface IRatesFileValidator
+    public interface IInventoryFileValidator
     {
-        RatesFileValidatorResult ValidateRatesFile(RatesFile ratesFile);
+        InventoryFileValidatorResult ValidateInventoryFile(InventoryFile inventoryFile);
     }
 
-    public class RatesFileValidator : IRatesFileValidator
+    public class InventoryFileValidator : IInventoryFileValidator
     {
-        public RatesFileValidatorResult ValidateRatesFile(RatesFile ratesFile)
+        public InventoryFileValidatorResult ValidateInventoryFile(InventoryFile inventoryFile)
         {
-            var results = new RatesFileValidatorResult();
+            var results = new InventoryFileValidatorResult();
             // so far, nothing to validate.
             //Todo: if this method and class remains empty upon completion of the new inventory structure, consider removal.
             return results;

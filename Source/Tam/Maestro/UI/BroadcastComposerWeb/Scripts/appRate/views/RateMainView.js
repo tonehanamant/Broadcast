@@ -54,12 +54,12 @@ var RateMainView = BaseView.extend({
     },
 
     //passed from upload manager
-    //intercept via RateSource if TVB/CNN (todo) send to VM for input - add source to request or handle in controller?
+    //intercept via InventorySource if TVB/CNN (todo) send to VM for input - add source to request or handle in controller?
     processUploadFileRequest: function (rateRequest, rateSource) {
         if ((rateSource == 'TVB') || (rateSource == 'CNN') || (rateSource == 'TTNW')) {
             this.controller.thirdPartyViewModel.setActiveImport(rateRequest, rateSource);
         } else {
-            this.controller.apiUploadRateFile(rateRequest);
+            this.controller.apiUploadInventoryFile(rateRequest);
         }
     },
 

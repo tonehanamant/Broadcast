@@ -231,11 +231,11 @@
     <Compile Include="Converters\AssemblyImportHelper.cs" />
     <Compile Include="ReportGenerators\BvsExcelReportGenerator.cs" />
     <Compile Include="Converters\PostFileParser.cs" />
-    <Compile Include="Converters\RateImport\AssemblyRateImporter.cs" />
+    <Compile Include="Converters\RateImport\AssemblyInventoryImporter.cs" />
     <Compile Include="Converters\RateImport\CNNFileImporter.cs" />
     <Compile Include="Converters\RateImport\OpenMarketFileImporter.cs" />
-    <Compile Include="Converters\RateImport\RateFileImporterBase.cs" />
-    <Compile Include="Converters\RateImport\RateFileImporterFactory.cs" />
+    <Compile Include="Converters\RateImport\InventoryFileImporterBase.cs" />
+    <Compile Include="Converters\RateImport\InventoryFileImporterFactory.cs" />
     <Compile Include="Converters\RateImport\TTNWFileImporter.cs" />
     <Compile Include="Converters\RateImport\TVBFileImporter.cs" />
     <Compile Include="Converters\ScheduleConverterBase.cs" />
@@ -282,7 +282,7 @@
     <Compile Include="Entities\CrunchStatus.cs" />
     <Compile Include="ApplicationServices\NsiUniverseService.cs" />
     <Compile Include="ApplicationServices\ProposalService.cs" />
-    <Compile Include="ApplicationServices\RatesService.cs" />
+    <Compile Include="ApplicationServices\InventoryFileService.cs" />
     <Compile Include="Entities\MediaMonthCrunchStatus.cs" />
     <Compile Include="ApplicationServices\RatingForecastService.cs" />
     <Compile Include="ApplicationServices\ScheduleAggregateFactoryService.cs" />
@@ -319,13 +319,13 @@
     <Compile Include="Entities\ProposalProgramFlightWeek.cs" />
     <Compile Include="Entities\ProposalTotalFields.cs" />
     <Compile Include="Entities\QuarterDetailDto.cs" />
-    <Compile Include="Entities\RatesFileValidatorResult.cs" />
+    <Compile Include="Entities\InventoryFileValidatorResult.cs" />
     <Compile Include="Entities\ProposalProgramDto.cs" />
-    <Compile Include="Entities\RatesFile.cs" />
-    <Compile Include="Entities\RatesFileProblem.cs" />
-    <Compile Include="Entities\RatesFileSaveResult.cs" />
+    <Compile Include="Entities\InventoryFile.cs" />
+    <Compile Include="Entities\InventoryFileProblem.cs" />
+    <Compile Include="Entities\InventoryFileSaveResult.cs" />
     <Compile Include="Entities\RatesFileXml.cs" />
-    <Compile Include="Entities\RatesSaveRequest.cs" />
+    <Compile Include="Entities\InventoryFileSaveRequest.cs" />
     <Compile Include="Entities\DisplayBroadcastStation.cs" />
     <Compile Include="Entities\BvsMap.cs" />
     <Compile Include="Entities\BvsPostDetail.cs" />
@@ -346,11 +346,11 @@
     <Compile Include="Entities\NewStationProgramDto.cs" />
     <Compile Include="Entities\StationSummaryDto.cs" />
     <Compile Include="Entities\WeeklyDataDto.cs" />
-    <Compile Include="Exceptions\BroadcastDuplicateRatesFileException.cs" />
+    <Compile Include="Exceptions\BroadcastDuplicateInventoryFileException.cs" />
     <Compile Include="Exceptions\BroadcastProgramFlightException.cs" />
     <Compile Include="Exceptions\BroadcastProposalException.cs" />
-    <Compile Include="Exceptions\BroadcastRateDataException.cs" />
-    <Compile Include="Exceptions\BroadcastRatesFileValidationException.cs" />
+    <Compile Include="Exceptions\BroadcastInventoryDataException.cs" />
+    <Compile Include="Exceptions\BroadcastInventoryFileValidationException.cs" />
     <Compile Include="MediaMonthAndWeekAggregate.cs" />
     <Compile Include="MediaMonthAndWeekAggregateCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -384,7 +384,7 @@
     <Compile Include="Repositories\ProposalRepository.cs" />
     <Compile Include="Entities\ProposalVersion.cs" />
     <Compile Include="Repositories\RatingAdjustmentsRepository.cs" />
-    <Compile Include="Repositories\RatesRepository.cs" />
+    <Compile Include="Repositories\InventoryFileRepository.cs" />
     <Compile Include="Repositories\RatingForecastRepository.cs" />
     <Compile Include="Entities\RatingsForecastStatus.cs" />
     <Compile Include="Repositories\RatingsRepository.cs" />
@@ -408,7 +408,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SystemComponentParameterNames.tt</DependentUpon>
     </Compile>
-    <Compile Include="Validators\RatesFileValidator.cs" />
+    <Compile Include="Validators\InventoryFileValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Schemas\SpotTVCableProposalSample.xml" />

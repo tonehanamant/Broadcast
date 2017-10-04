@@ -15,11 +15,11 @@ namespace Services.Broadcast.Repositories
 {
     public interface IInventoryRepository : IDataRepository
     {
-        InventoryDetail GetInventoryDetailByDaypartCodeAndRateSource(string daypartCode, RatesFile.RateSourceType? rateSource);
-        int GetMaximunNumberOfSpotsAvailableByDaypartCode(string daypartCode, RatesFile.RateSourceType? rateSource,
+        InventoryDetail GetInventoryDetailByDaypartCodeAndRateSource(string daypartCode, InventoryFile.InventorySourceType? inventorySource);
+        int GetMaximunNumberOfSpotsAvailableByDaypartCode(string daypartCode, InventoryFile.InventorySourceType? inventorySource,
             int mediaWeekId, int spotLengthId);
         void SaveInventoryDetail(InventoryDetail inventoryDetail);
-        //List<StationProgram> GetStationProgramsPerSpotAvailable(int? spots, int mediaWeekId, RatesFile.RateSourceType? rateSource, int spotLengthId, string daypartCode);
+        //List<StationProgram> GetStationProgramsPerSpotAvailable(int? spots, int mediaWeekId, RatesFile.RateSourceType? inventorySource, int spotLengthId, string daypartCode);
         void UpdateInventoryDetail(InventoryDetail inventory);
     }
 
@@ -33,13 +33,13 @@ namespace Services.Broadcast.Repositories
         }
 
         public InventoryDetail GetInventoryDetailByDaypartCodeAndRateSource(string daypartCode,
-            RatesFile.RateSourceType? rateSource)
+            InventoryFile.InventorySourceType? inventorySource)
         {
                 return new InventoryDetail();
         }
 
         public int GetMaximunNumberOfSpotsAvailableByDaypartCode(string daypartCode,
-            RatesFile.RateSourceType? rateSource, int mediaWeekId, int spotLengthId)
+            InventoryFile.InventorySourceType? inventorySource, int mediaWeekId, int spotLengthId)
         {
             //TODO: Fixme or remove.
             throw new NotImplementedException();
@@ -74,7 +74,7 @@ namespace Services.Broadcast.Repositories
 
         //TODO: Fixme or remove.
         //public List<StationProgram> GetStationProgramsPerSpotAvailable(int? spots, int mediaWeekId,
-        //    RatesFile.RateSourceType? rateSource, int spotLengthId, string daypartCode)
+        //    RatesFile.RateSourceType? inventorySource, int spotLengthId, string daypartCode)
         //{
         //    return _InReadUncommitedTransaction(
         //        context =>

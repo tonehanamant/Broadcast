@@ -29,8 +29,8 @@ namespace EntityFrameworkMapping.Broadcast
         public string company { get; set; }
         public Nullable<int> modified_file_id { get; set; }
     
-        public virtual rate_files rate_files { get; set; }
-        public virtual rate_files rate_files1 { get; set; }
         public virtual station station { get; set; }
+        public virtual inventory_files inventory_files { get; set; }
+        public virtual inventory_files inventory_files1 { get; set; }
     }
 }

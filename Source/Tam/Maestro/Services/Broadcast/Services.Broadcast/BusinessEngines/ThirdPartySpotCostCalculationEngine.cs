@@ -9,7 +9,7 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IThirdPartySpotCostCalculationEngine
     {
-        void CalculateSpotCost(RatesSaveRequest request, RatesFile ratesFile);
+        void CalculateSpotCost(InventoryFileSaveRequest request, InventoryFile inventoryFile);
     }
 
     public class ThirdPartySpotCostCalculationEngine : IThirdPartySpotCostCalculationEngine
@@ -21,7 +21,7 @@ namespace Services.Broadcast.BusinessEngines
             _RatingsRepository = dataRepositoryFactory.GetDataRepository<IRatingForecastRepository>(); ;
         }
 
-        public void CalculateSpotCost(RatesSaveRequest request, RatesFile ratesFile)
+        public void CalculateSpotCost(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
             //TODO: Fixme or remove.
             //var audiences = (from stationProgram in ratesFile.StationPrograms

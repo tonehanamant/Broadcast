@@ -25,7 +25,7 @@ namespace Services.Broadcast.Aggregates
         private DateTime _EndDate;
 
         public SchedulePostType PostType { get; set; }
-        public RatesFile.RateSourceType InventorySource { get; set; }
+        public InventoryFile.InventorySourceType InventorySource { get; set; }
         public bool IsEquivalized { get; set; }
         private schedule _Schedule;
         private List<DisplayDaypart> _RestrictedDayparts;
@@ -42,7 +42,7 @@ namespace Services.Broadcast.Aggregates
                                     List<bvs_post_details> bvsPostDetails,
                                     List<DisplayMediaWeek> mediaWeeks,
                                     SchedulePostType postType,
-                                    RatesFile.RateSourceType inventorySource,
+                                    InventoryFile.InventorySourceType inventorySource,
                                     bool isEquivalized,
                                     DateTime startDate,
                                     DateTime endDate,
@@ -319,7 +319,7 @@ namespace Services.Broadcast.Aggregates
                      Campaign = (int)estimateId,
                      Advertiser = bfd.advertiser,
                      Brand = String.Join("+", _ScheduleIscis.Where(i => i.house_isci.Equals(bfd.isci, StringComparison.InvariantCultureIgnoreCase)).Select(a => a.brand).Distinct().ToArray()),
-                     InventorySource = (RatesFile.RateSourceType)_Schedule.inventory_source,
+                     InventorySource = (InventoryFile.InventorySourceType)_Schedule.inventory_source,
                      AudienceImpressions = bfd.bvs_post_details
                                                 .Where(bpd => AllowedForReport(bfd.station, bfd.date_aired, bfd.time_aired))
                                                 .Select(bpd => new AudienceImpressionsAndDelivery
@@ -413,7 +413,7 @@ namespace Services.Broadcast.Aggregates
         public string Advertiser { get; set; }
         public int DaypartId { get; set; }
         public string Brand { get; set; }
-        public RatesFile.RateSourceType InventorySource { get; set; }
+        public InventoryFile.InventorySourceType InventorySource { get; set; }
         public List<AudienceImpressionsAndDelivery> AudienceImpressions { get; set; }
 
 

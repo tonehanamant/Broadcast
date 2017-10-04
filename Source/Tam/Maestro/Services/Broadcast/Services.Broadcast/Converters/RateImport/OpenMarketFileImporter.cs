@@ -1,28 +1,20 @@
 ﻿using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.RatesFileXml;
-using Services.Broadcast.Repositories;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Xml;
-using System.Xml.Serialization;
-using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
-using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public class OpenMarketFileImporter : RateFileImporterBase
+    public class OpenMarketFileImporter : InventoryFileImporterBase
     {
         private const int SecondsPerMinute = 60;
 
-        public override RatesFile.RateSourceType RateSource
+        public override InventoryFile.InventorySourceType InventorySource
         {
-            get { return RatesFile.RateSourceType.OpenMarket; }
+            get { return InventoryFile.InventorySourceType.OpenMarket; }
         }
 
 
-        public override void ExtractFileData(Stream rawStream, RatesFile ratesFile, List<RatesFileProblem> fileProblems)
+        public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile, List<InventoryFileProblem> fileProblems)
         {
             //TODO: Fixme or remove.
             //try
@@ -41,7 +33,7 @@ namespace Services.Broadcast.Converters.RateImport
             //}
         }
 
-        //private RatesFile BuildRatesFile(AAAAMessage message, RatesFile ratesFile, List<RatesFileProblem> fileProblems)
+        //private RatesFile BuildRatesFile(AAAAMessage message, InventoryFile inventoryFile, List<RatesFileProblem> fileProblems)
         //{
 
         //    ratesFile.UniqueIdentifier = message.Proposal.uniqueIdentifier;

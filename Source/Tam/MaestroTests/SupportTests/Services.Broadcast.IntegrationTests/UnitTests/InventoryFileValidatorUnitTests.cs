@@ -13,11 +13,11 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
     [TestFixture]
-    class RateFileValidatorUnitTests
+    class InventoryFileValidatorUnitTests
     {
 
         [Test]
-        public void ValidateRatesFile()
+        public void ValidateInventoryFile()
         {
             var _mockStationRepository = new Mock<IStationRepository>();
             _mockStationRepository.Setup(a => a.GetBroadcastStationByLegacyCallLetters("WABC"))
@@ -46,9 +46,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             //_mockDataRepositoryFactory.Setup(a => a.GetDataRepository<ISpotLengthRepository>())
             //    .Returns(_mockSpotLengthRepository.Object);
 
-            //var _ratesFileValidator = new RatesFileValidator(_mockDataRepositoryFactory.Object);
+            //var _ratesFileValidator = new InventoryFileValidator(_mockDataRepositoryFactory.Object);
 
-            //var incomingRatesFile = new RatesFile();
+            //var incomingInventoryFile = new InventoryFile();
 
             //var stationProgram1 = new StationProgram()
             //{
@@ -62,7 +62,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             //    Rate15s = 10,
             //};
             //stationProgram1.FlightWeeks.Add(program1Flight1);
-            //incomingRatesFile.StationPrograms.Add(stationProgram1);
+            //incomingInventoryFile.StationPrograms.Add(stationProgram1);
             //var stationProgram2 = new StationProgram()
             //{
             //    StationLegacyCallLetters = "WDEF",
@@ -75,17 +75,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             //    Rate30s = 15
             //};
             //stationProgram2.FlightWeeks.Add(program2Flight1);
-            //incomingRatesFile.StationPrograms.Add(stationProgram2);
-            //var fileProblems = new List<RatesFileProblem>();
-            //var validationResult =_ratesFileValidator.ValidateRatesFile(incomingRatesFile);
-            //fileProblems.AddRange(validationResult.RatesFileProblems);
+            //incomingInventoryFile.StationPrograms.Add(stationProgram2);
+            //var fileProblems = new List<InventoryFileProblem>();
+            //var validationResult =_ratesFileValidator.ValidateInventoryFile(incomingInventoryFile);
+            //fileProblems.AddRange(validationResult.InventoryFileProblems);
 
         }
 
         [Ignore]
         [Test]
-        [ExpectedException(typeof(BroadcastRatesFileValidationException), ExpectedMessage = "unknown stations", MatchType = MessageMatch.Contains)]
-        public void ValidateRatesFileWithUnknownStation()
+        [ExpectedException(typeof(BroadcastInventoryFileValidationException), ExpectedMessage = "unknown stations", MatchType = MessageMatch.Contains)]
+        public void ValidateInventoryFileWithUnknownStation()
         {
             var _mockStationRepository = new Mock<IStationRepository>();
             _mockStationRepository.Setup(a => a.GetBroadcastStationByLegacyCallLetters("WABC"))
@@ -113,25 +113,25 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             //_mockDataRepositoryFactory.Setup(a => a.GetDataRepository<ISpotLengthRepository>())
             //    .Returns(_mockSpotLengthRepository.Object);
 
-            //var _ratesFileValidator = new RatesFileValidator(_mockDataRepositoryFactory.Object);
+            //var _ratesFileValidator = new InventoryFileValidator(_mockDataRepositoryFactory.Object);
 
-            //var incomingRatesFile = new RatesFile();
+            //var incomingInventoryFile = new InventoryFile();
 
             //var stationProgram1 = new StationProgram()
             //{
             //    StationLegacyCallLetters = "UKNW",
             //};
-            //incomingRatesFile.StationPrograms.Add(stationProgram1);
-            //var fileProblems = new List<RatesFileProblem>();
-            //var validationResult =_ratesFileValidator.ValidateRatesFile(incomingRatesFile);
-            //fileProblems.AddRange(validationResult.RatesFileProblems);
+            //incomingInventoryFile.StationPrograms.Add(stationProgram1);
+            //var fileProblems = new List<InventoryFileProblem>();
+            //var validationResult =_ratesFileValidator.ValidateInventoryFile(incomingInventoryFile);
+            //fileProblems.AddRange(validationResult.InventoryFileProblems);
 
         }
 
         [Ignore]
         [Test]
-        [ExpectedException(typeof(BroadcastRatesFileValidationException), ExpectedMessage = "Invalid rates file dates", MatchType = MessageMatch.Contains)]
-        public void ValidateRatesFileWithInvalidDates()
+        [ExpectedException(typeof(BroadcastInventoryFileValidationException), ExpectedMessage = "Invalid rates file dates", MatchType = MessageMatch.Contains)]
+        public void ValidateInventoryFileWithInvalidDates()
         {
             var _mockSpotLengthRepository = new Mock<ISpotLengthRepository>();
             _mockSpotLengthRepository.Setup(a => a.GetSpotLengthAndIds())
@@ -141,22 +141,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             _mockDataRepositoryFactory.Setup(a => a.GetDataRepository<ISpotLengthRepository>())
                 .Returns(_mockSpotLengthRepository.Object);
 
-            var _ratesFileValidator = new RatesFileValidator();
+            var _ratesFileValidator = new InventoryFileValidator();
 
-            var incomingRatesFile = new RatesFile()
+            var incomingInventoryFile = new InventoryFile()
             {
                 StartDate = DateTime.Now.AddDays(6),
                 EndDate = DateTime.Now
             };
-            var fileProblems = new List<RatesFileProblem>();
-            var validationResult = _ratesFileValidator.ValidateRatesFile(incomingRatesFile);
-            fileProblems.AddRange(validationResult.RatesFileProblems);
+            var fileProblems = new List<InventoryFileProblem>();
+            var validationResult = _ratesFileValidator.ValidateInventoryFile(incomingInventoryFile);
+            fileProblems.AddRange(validationResult.InventoryFileProblems);
 
         }
 
         [Test]
-        //[ExpectedException(typeof(BroadcastRatesFileValidationException), ExpectedMessage = "programs with zero or null rates", MatchType = MessageMatch.Contains)]
-        public void ValidateRatesFileWithInvalidRates()
+        //[ExpectedException(typeof(BroadcastInventoryFileValidationException), ExpectedMessage = "programs with zero or null rates", MatchType = MessageMatch.Contains)]
+        public void ValidateInventoryFileWithInvalidRates()
         {
             var _mockStationRepository = new Mock<IStationRepository>();
             _mockStationRepository.Setup(a => a.GetBroadcastStationByLegacyCallLetters("WABC"))
@@ -184,9 +184,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             //_mockDataRepositoryFactory.Setup(a => a.GetDataRepository<ISpotLengthRepository>())
             //    .Returns(_mockSpotLengthRepository.Object);
 
-            //var _ratesFileValidator = new RatesFileValidator(_mockDataRepositoryFactory.Object);
+            //var _ratesFileValidator = new InventoryFileValidator(_mockDataRepositoryFactory.Object);
 
-            //var incomingRatesFile = new RatesFile();
+            //var incomingInventoryFile = new InventoryFile();
 
             //var stationProgram1 = new StationProgram()
             //{
@@ -200,7 +200,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             //    FlightWeek = new DisplayMediaWeek() { Id = 1 }
             //};
             //stationProgram1.FlightWeeks.Add(program1Flight1);
-            //incomingRatesFile.StationPrograms.Add(stationProgram1);
+            //incomingInventoryFile.StationPrograms.Add(stationProgram1);
             //var stationProgram2 = new StationProgram()
             //{
             //    StationLegacyCallLetters = "WDEF",
@@ -219,16 +219,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             //};
             //stationProgram2.FlightWeeks.Add(program2Flight1);
             //stationProgram2.FlightWeeks.Add(program2Flight2);
-            //incomingRatesFile.StationPrograms.Add(stationProgram2);
-            //var fileProblems = new List<RatesFileProblem>();
-            //var validationResult = _ratesFileValidator.ValidateRatesFile(incomingRatesFile);
-            //fileProblems.AddRange(validationResult.RatesFileProblems);
+            //incomingInventoryFile.StationPrograms.Add(stationProgram2);
+            //var fileProblems = new List<InventoryFileProblem>();
+            //var validationResult = _ratesFileValidator.ValidateInventoryFile(incomingInventoryFile);
+            //fileProblems.AddRange(validationResult.InventoryFileProblems);
             //Assert.AreEqual(1, validationResult.InvalidRates.Count);
 
         }
         [Ignore]
         [Test]
-        public void ValidateRatesFileWithDuplicateRates()
+        public void ValidateInventoryFileWithDuplicateRates()
         {
             var _mockStationRepository = new Mock<IStationRepository>();
             _mockStationRepository.Setup(a => a.GetBroadcastStationByLegacyCallLetters("WABC"))
@@ -288,9 +288,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             //_mockDataRepositoryFactory.Setup(a => a.GetDataRepository<ISpotLengthRepository>())
             //    .Returns(_mockSpotLengthRepository.Object);
 
-            //var _ratesFileValidator = new RatesFileValidator(_mockDataRepositoryFactory.Object);            
+            //var _ratesFileValidator = new InventoryFileValidator(_mockDataRepositoryFactory.Object);            
 
-            //var incomingRatesFile = new RatesFile();
+            //var incomingInventoryFile = new InventoryFile();
 
             //var stationProgram1 = new StationProgram()
             //{
@@ -314,7 +314,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             //};
             //program1Flight1.Audiences.Add(audience1);
             //stationProgram1.FlightWeeks.Add(program1Flight1);
-            //incomingRatesFile.StationPrograms.Add(stationProgram1);
+            //incomingInventoryFile.StationPrograms.Add(stationProgram1);
             //var stationProgram2 = new StationProgram()
             //{
             //    StationLegacyCallLetters = "WDEF",
@@ -337,12 +337,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             //};
             //program2Flight1.Audiences.Add(audience2);
             //stationProgram2.FlightWeeks.Add(program2Flight1);
-            //incomingRatesFile.StationPrograms.Add(stationProgram2);
+            //incomingInventoryFile.StationPrograms.Add(stationProgram2);
 
-            //Assert.IsTrue(incomingRatesFile.StationPrograms.Count == 2, "Should have two programs initially");
-            //var fileProblems = new List<RatesFileProblem>();
-            //var validationResult = _ratesFileValidator.ValidateRatesFile(incomingRatesFile);
-            //fileProblems.AddRange(validationResult.RatesFileProblems);
+            //Assert.IsTrue(incomingInventoryFile.StationPrograms.Count == 2, "Should have two programs initially");
+            //var fileProblems = new List<InventoryFileProblem>();
+            //var validationResult = _ratesFileValidator.ValidateInventoryFile(incomingInventoryFile);
+            //fileProblems.AddRange(validationResult.InventoryFileProblems);
 
             //Assert.IsTrue(fileProblems.Count == 1, "Should have found one duplicate program");
 

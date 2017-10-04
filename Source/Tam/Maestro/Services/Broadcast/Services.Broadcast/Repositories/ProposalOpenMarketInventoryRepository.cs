@@ -219,7 +219,7 @@ namespace Services.Broadcast.Repositories
             //                StartDate = s.start_date,
             //                EndDate = s.end_date,
             //                DaypartCode = s.daypart_code,
-            //                RateSource = (RatesFile.RateSourceType) s.rate_source,
+            //                InventorySource = (RatesFile.RateSourceType) s.rate_source,
             //                DaypartId = s.daypart_id
             //            }).ToList();
             //});

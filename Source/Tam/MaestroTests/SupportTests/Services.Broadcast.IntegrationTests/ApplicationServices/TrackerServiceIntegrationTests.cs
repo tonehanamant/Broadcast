@@ -541,7 +541,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = RatesFile.RateSourceType.CNN;
+                schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
 
                 saveRequest.Schedule = schedule;
 
@@ -946,7 +946,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 schedule.FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - Estimate4401.scx", FileMode.Open,
                     FileAccess.Read);
-                schedule.InventorySource = RatesFile.RateSourceType.TVB;
+                schedule.InventorySource = InventoryFile.InventorySourceType.TVB;
                 schedule.PostType = SchedulePostType.NTI;
                 saveRequest.Schedule = schedule;
 
@@ -1037,7 +1037,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = RatesFile.RateSourceType.CNN;
+                schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
 
                 saveRequest.Schedule = schedule;
 
@@ -1088,7 +1088,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
                 schedule.FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx", FileMode.Open,
                     FileAccess.Read);
-                schedule.InventorySource = RatesFile.RateSourceType.OpenMarket;
+                schedule.InventorySource = InventoryFile.InventorySourceType.OpenMarket;
                 schedule.PostType = SchedulePostType.NSI;
                 saveRequest.Schedule = schedule;
                 var scheduleId = _Sut.SaveSchedule(saveRequest);
@@ -1151,7 +1151,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = RatesFile.RateSourceType.CNN;
+                schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
                 schedule.Audiences = new List<int> { 31, 42 };
                 schedule.StartDate = new DateTime(2017, 1, 20);
                 schedule.EndDate = new DateTime(2018, 1, 20);
@@ -1206,7 +1206,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = RatesFile.RateSourceType.CNN;
+                schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
                 schedule.Audiences = new List<int> { 31, 42 };
                 schedule.StartDate = new DateTime(2016, 3, 28);
                 schedule.EndDate = new DateTime(2016, 4, 24);
@@ -1285,7 +1285,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = RatesFile.RateSourceType.CNN;
+                schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
                 schedule.Audiences = new List<int> { 31, 42 };
                 schedule.StartDate = new DateTime(2017, 1, 20);
                 schedule.EndDate = new DateTime(2018, 1, 20);
@@ -1326,7 +1326,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = RatesFile.RateSourceType.CNN;
+                schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
                 schedule.Audiences = new List<int> { 31 };
                 schedule.StartDate = new DateTime(2017, 1, 20);
                 schedule.EndDate = new DateTime(2018, 1, 20);
@@ -1399,7 +1399,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = RatesFile.RateSourceType.CNN;
+                schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
                 schedule.Audiences = new List<int> { 31, 42 };
                 schedule.StartDate = new DateTime(2017, 1, 20);
                 schedule.EndDate = new DateTime(2018, 1, 20);
@@ -1442,7 +1442,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = RatesFile.RateSourceType.CNN;
+                schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
                 schedule.Audiences = new List<int> { 31, 42 };
                 schedule.StartDate = new DateTime(2017, 1, 20);
                 schedule.EndDate = new DateTime(2018, 1, 20);
@@ -1497,7 +1497,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             schedule.PostType = SchedulePostType.NTI;
-            schedule.InventorySource = RatesFile.RateSourceType.CNN;
+            schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
             schedule.Audiences = new List<int> { 31, 42 };
             schedule.StartDate = new DateTime(2017, 1, 20);
             schedule.EndDate = new DateTime(2018, 1, 20);
@@ -1571,7 +1571,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             schedule.PostType = SchedulePostType.NTI;
-            schedule.InventorySource = RatesFile.RateSourceType.CNN;
+            schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
             schedule.Audiences = new List<int> { 31, 42 };
             schedule.StartDate = new DateTime(2017, 1, 20);
             schedule.EndDate = new DateTime(2018, 1, 20);
@@ -1629,7 +1629,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     schedule.PostType = SchedulePostType.NSI;
                     schedule.Equivalized = false;
                     schedule.Audiences = new List<int> { 31, 42 };
-                    schedule.InventorySource = RatesFile.RateSourceType.OpenMarket;
+                    schedule.InventorySource = InventoryFile.InventorySourceType.OpenMarket;
 
                     saveRequest.Schedule = schedule;
                     _Sut.SaveSchedule(saveRequest);
@@ -1765,7 +1765,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             schedule.PostType = SchedulePostType.NSI;
-            schedule.InventorySource = RatesFile.RateSourceType.Assembly;
+            schedule.InventorySource = InventoryFile.InventorySourceType.Assembly;
             saveRequest.Schedule = schedule;
             var scheduleId = sut.SaveSchedule(saveRequest);
 
@@ -1908,7 +1908,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 schedule.FileStream = new FileStream(@".\Files\SCX Overlapping Fields.scx", FileMode.Open,
                     FileAccess.Read);
-                schedule.InventorySource = RatesFile.RateSourceType.OpenMarket;
+                schedule.InventorySource = InventoryFile.InventorySourceType.OpenMarket;
                 schedule.PostType = SchedulePostType.NTI;
                 saveRequest.Schedule = schedule;
 
@@ -1963,7 +1963,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 schedule.FileStream = new FileStream(@".\Files\" + scxFileName, FileMode.Open,
                     FileAccess.Read);
-                schedule.InventorySource = RatesFile.RateSourceType.OpenMarket;
+                schedule.InventorySource = InventoryFile.InventorySourceType.OpenMarket;
                 schedule.PostType = SchedulePostType.NTI;
                 saveRequest.Schedule = schedule;
 
@@ -2036,7 +2036,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = RatesFile.RateSourceType.OpenMarket;
+                schedule.InventorySource = InventoryFile.InventorySourceType.OpenMarket;
                 saveRequest.Schedule = schedule;
                 int scheduleId = sut.SaveSchedule(saveRequest);
 

@@ -546,7 +546,7 @@ namespace Services.Broadcast.Repositories
                             EndDate = s.end_date,
                             IsEquivalized = s.equivalized,
                             PostType = (SchedulePostType)s.post_type,
-                            InventorySource = (RatesFile.RateSourceType)s.inventory_source,
+                            InventorySource = (InventoryFile.InventorySourceType)s.inventory_source,
 
                             SpotsBooked = (from sd in context.schedule_details
                                            where sd.schedule_id == s.id

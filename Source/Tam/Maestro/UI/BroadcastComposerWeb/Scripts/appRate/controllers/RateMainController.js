@@ -74,11 +74,11 @@ var RateMainController = BaseController.extend({
     },
 
     //upload Rate file
-    apiUploadRateFile: function (rateFileRequest, callback) {
-        var url = baseUrl + 'api/RatesManager/UploadRateFile';
+    apiUploadInventoryFile: function (rateFileRequest, callback) {
+        var url = baseUrl + 'api/RatesManager/UploadInventoryFile';
         var jsonObj = JSON.stringify(rateFileRequest);
         httpService.post(url,
-            this.onApiUploadRateFile.bind(this, callback),
+            this.onApiUploadInventoryFile.bind(this, callback),
             null,
             jsonObj,
             {
@@ -90,7 +90,7 @@ var RateMainController = BaseController.extend({
     },
 
     //handle Rate upload return; show problems in view if present
-    onApiUploadRateFile: function (callback, data) {
+    onApiUploadInventoryFile: function (callback, data) {
         if (data.Problems && data.Problems.length) {
             this.view.showUploadFileIssues(data.Problems);
         }

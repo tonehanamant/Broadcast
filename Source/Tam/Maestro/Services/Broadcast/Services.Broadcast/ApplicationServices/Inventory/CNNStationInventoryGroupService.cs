@@ -17,5 +17,5 @@ namespace Services.Broadcast.ApplicationServices
         {
             return new List<StationInventoryGroup>();
         }
-    }
+    }   
 }

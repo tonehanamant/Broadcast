@@ -11,7 +11,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public abstract class RateFileImporterBase
+    public abstract class InventoryFileImporterBase
     {
         private readonly string _validTimeExpression =
    @"(^([0-9]|[0-1][0-9]|[2][0-3])(:|\-)([0-5][0-9])(\s{0,1})(AM|PM|am|pm|aM|Am|pM|Pm{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})(AM|PM|am|pm|aM|Am|pM|Pm{2,2})$)";
@@ -24,7 +24,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         private string _fileHash;
 
-        public RatesSaveRequest Request { get; private set; }
+        public InventoryFileSaveRequest Request { get; private set; }
 
         public BroadcastDataDataRepositoryFactory BroadcastDataDataRepository
         {
@@ -50,13 +50,13 @@ namespace Services.Broadcast.Converters.RateImport
         {
 
             //check if file has already been loaded
-            if (_BroadcastDataRepositoryFactory.GetDataRepository<IRatesRepository>().GetRateFileIdByHash(_fileHash) > 0)
+            if (_BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>().GetInventoryFileIdByHash(_fileHash) > 0)
             {
-                throw new BroadcastDuplicateRatesFileException("Unable to load rate file. The selected rate file has already been loaded or is already loading.");
+                throw new BroadcastDuplicateInventoryFileException("Unable to load rate file. The selected rate file has already been loaded or is already loading.");
             }
         }
 
-        public void LoadFromSaveRequest(RatesSaveRequest request)
+        public void LoadFromSaveRequest(InventoryFileSaveRequest request)
         {
             Request = request;
             _fileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(request.RatesStream));
@@ -73,16 +73,16 @@ namespace Services.Broadcast.Converters.RateImport
 
         }
 
-        public abstract RatesFile.RateSourceType RateSource { get; }
+        public abstract InventoryFile.InventorySourceType InventorySource { get; }
 
-        public RatesFile GetPendingRatesFile()
+        public InventoryFile GetPendingRatesFile()
         {
-            var result = new RatesFile
+            var result = new InventoryFile
             {
                 FileName = Request.FileName == null ? "unknown" : Request.FileName,
-                FileStatus = RatesFile.FileStatusEnum.Pending,
+                FileStatus = InventoryFile.FileStatusEnum.Pending,
                 Hash = _fileHash,
-                RateSource = RateSource,
+                InventorySource = InventorySource,
                 RatingBook = Request.RatingBook,
                 PlaybackType = Request.PlaybackType
             };
@@ -91,8 +91,8 @@ namespace Services.Broadcast.Converters.RateImport
 
         public abstract void ExtractFileData(
             System.IO.Stream stream,
-            RatesFile ratesFile,
-            System.Collections.Generic.List<RatesFileProblem> fileProblems);
+            InventoryFile inventoryFile,
+            System.Collections.Generic.List<InventoryFileProblem> fileProblems);
 
         private Dictionary<int, double> GetSpotLengthAndMultipliers()
         {

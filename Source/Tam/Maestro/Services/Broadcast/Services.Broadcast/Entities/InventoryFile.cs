@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
-    public class RatesFile
+    public class InventoryFile
     {
         public enum FileStatusEnum
         {
@@ -14,7 +14,7 @@ namespace Services.Broadcast.Entities
             Failed = 3
         }
 
-        public enum RateSourceType
+        public enum InventorySourceType
         {
             Blank = 0,
             OpenMarket = 1,
@@ -24,7 +24,7 @@ namespace Services.Broadcast.Entities
             CNN = 5
         }
 
-        public RatesFile()
+        public InventoryFile()
         {
             StationInventoryManifests = new List<StationInventoryManifest>();
         }
@@ -40,7 +40,7 @@ namespace Services.Broadcast.Entities
         public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public RateSourceType RateSource { get; set; }
+        public InventorySourceType InventorySource { get; set; }
         private List<StationContact> _stationContacts; 
 
         public List<StationContact> StationContacts

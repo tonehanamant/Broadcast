@@ -2,9 +2,9 @@
 
 namespace Services.Broadcast.Entities
 {
-    public class RatesFileSaveResult
+    public class InventoryFileSaveResult
     {
         public int FileId { get; set; }
-        public List<RatesFileProblem> Problems { get; set; } 
+        public List<InventoryFileProblem> Problems { get; set; } 
     }
 }

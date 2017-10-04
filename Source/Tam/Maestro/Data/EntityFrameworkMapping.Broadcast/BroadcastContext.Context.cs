@@ -45,7 +45,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<proposal_version_markets> proposal_version_markets { get; set; }
         public virtual DbSet<proposal_version_spot_length> proposal_version_spot_length { get; set; }
         public virtual DbSet<proposal> proposals { get; set; }
-        public virtual DbSet<rate_files> rate_files { get; set; }
         public virtual DbSet<rating_adjustments> rating_adjustments { get; set; }
         public virtual DbSet<schedule_detail_audiences> schedule_detail_audiences { get; set; }
         public virtual DbSet<schedule_detail_weeks> schedule_detail_weeks { get; set; }
@@ -72,5 +71,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<rep_firms> rep_firms { get; set; }
         public virtual DbSet<bvs_map_types> bvs_map_types { get; set; }
         public virtual DbSet<schedule_audiences> schedule_audiences { get; set; }
+        public virtual DbSet<inventory_files> inventory_files { get; set; }
     }
 }

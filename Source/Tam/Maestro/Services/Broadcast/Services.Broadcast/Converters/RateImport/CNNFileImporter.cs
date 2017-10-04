@@ -13,7 +13,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public class CNNFileImporter : RateFileImporterBase
+    public class CNNFileImporter : InventoryFileImporterBase
     {
         private static readonly List<string> XlsFileHeaders = new List<string>()
         {
@@ -37,7 +37,7 @@ namespace Services.Broadcast.Converters.RateImport
         };
         private Dictionary<int, int> _SpothLengths = null;
 
-        List<RatesFileProblem> _FileProblems = new List<RatesFileProblem>();
+        List<InventoryFileProblem> _FileProblems = new List<InventoryFileProblem>();
         private OfficeOpenXml.ExcelWorksheet _Worksheet;
         private Dictionary<string, int> _Headers;
 
@@ -47,12 +47,12 @@ namespace Services.Broadcast.Converters.RateImport
         
         private bool _FoundGoodDaypart;
 
-        public override Entities.RatesFile.RateSourceType RateSource
+        public override Entities.InventoryFile.InventorySourceType InventorySource
         {
-            get { return RatesFile.RateSourceType.CNN; }
+            get { return InventoryFile.InventorySourceType.CNN; }
         }
 
-        public override void ExtractFileData(Stream stream, RatesFile ratesFile, List<RatesFileProblem> fileProblems)
+        public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, List<InventoryFileProblem> fileProblems)
         {
             _FileProblems = fileProblems;
             try
@@ -97,7 +97,7 @@ namespace Services.Broadcast.Converters.RateImport
                         //var stationContact = _ParseStationContact(contactInfo, contactEmail);
                         //var comments = _GetCellValue(row, "Comments").ToUpper();
 
-                        ratesFile.StationInventoryManifests.Add(new StationInventoryManifest()
+                        inventoryFile.StationInventoryManifests.Add(new StationInventoryManifest()
                         {
                             Station = station,
                             DaypartCode = daypartCode,
@@ -112,7 +112,7 @@ namespace Services.Broadcast.Converters.RateImport
             catch (Exception e)
             {
                 throw new Exception(
-                    string.Format("Unable to parse rate file: {0} The file may be invalid: {1}", e.Message,ratesFile.FileName), e);
+                    string.Format("Unable to parse rate file: {0} The file may be invalid: {1}", e.Message,inventoryFile.FileName), e);
             }
             if (!_FoundGoodDaypart)
                 throw new Exception("There are no valid dayparts in the file");
@@ -121,7 +121,7 @@ namespace Services.Broadcast.Converters.RateImport
         private void _AddProblem(string description, string stationLetters = null, string programName = null,
             List<string> affectedProposals = null)
         {
-            _FileProblems.Add(new RatesFileProblem()
+            _FileProblems.Add(new InventoryFileProblem()
             {
                 AffectedProposals = affectedProposals,
                 ProblemDescription = description,

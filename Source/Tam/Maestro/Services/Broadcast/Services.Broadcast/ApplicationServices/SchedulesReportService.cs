@@ -196,10 +196,10 @@ namespace Services.Broadcast.ApplicationServices
                     });
                 });
             // add sources excluding blank sources
-            deliveryBySource.AddRange(scheduleReportDto.SpotsAndImpressionsBySource.Where(si => si.Source != RatesFile.RateSourceType.Blank));
+            deliveryBySource.AddRange(scheduleReportDto.SpotsAndImpressionsBySource.Where(si => si.Source != InventoryFile.InventorySourceType.Blank));
             foreach (var reportDto in relatedScheduleReportDtoList)
             {
-                deliveryBySource.AddRange(reportDto.SpotsAndImpressionsBySource.Where(si => si.Source != RatesFile.RateSourceType.Blank));
+                deliveryBySource.AddRange(reportDto.SpotsAndImpressionsBySource.Where(si => si.Source != InventoryFile.InventorySourceType.Blank));
             }
 
             var combinedDeliveryBySource =

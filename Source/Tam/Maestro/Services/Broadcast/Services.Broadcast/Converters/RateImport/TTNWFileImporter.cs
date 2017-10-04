@@ -9,7 +9,7 @@ using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public class TTNWFileImporter : RateFileImporterBase
+    public class TTNWFileImporter : InventoryFileImporterBase
     {
         private static readonly List<string> CsvFileHeaders = new List<string>()
         {
@@ -32,12 +32,12 @@ namespace Services.Broadcast.Converters.RateImport
         private Dictionary<string, int> _audienceFields;
         private Dictionary<string, DisplayAudience> _audienceMapping;
 
-        public override Entities.RatesFile.RateSourceType RateSource
+        public override Entities.InventoryFile.InventorySourceType InventorySource
         {
-            get { return RatesFile.RateSourceType.TTNW; }
+            get { return InventoryFile.InventorySourceType.TTNW; }
         }
 
-        public override void ExtractFileData(System.IO.Stream stream, Entities.RatesFile ratesFile, List<Entities.RatesFileProblem> fileProblems)
+        public override void ExtractFileData(System.IO.Stream stream, Entities.InventoryFile inventoryFile, List<Entities.InventoryFileProblem> fileProblems)
         {
             //TODO: Fixme or remove.
             //try
@@ -276,7 +276,7 @@ namespace Services.Broadcast.Converters.RateImport
         //    program.StationLegacyCallLetters = stationCallLetters;
         //    program.SpotLength = spotLength;
         //    program.DaypartCode = daypartCode;
-        //    program.RateSource = RateSource;
+        //    program.RateSource = InventorySource;
         //    program.FixedPrice = ParseFixedPrice(currentData, "Fixed");
 
         //    return program;

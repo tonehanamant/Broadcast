@@ -13,12 +13,12 @@ namespace Services.Broadcast.Repositories
 {
     public interface IStationRepository : IDataRepository
     {
-        List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(RatesFile.RateSourceType rateSource);
+        List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(InventoryFile.InventorySourceType inventorySource);
         DisplayBroadcastStation GetBroadcastStationByCode(int code);
         DisplayBroadcastStation GetBroadcastStationByLegacyCallLetters(string callLetters);
         DisplayBroadcastStation GetBroadcastStationByCallLetters(string stationCallLetters);
         List<DisplayBroadcastStation> GetBroadcastStationListByLegacyCallLetters(List<string> stationNameList);
-        List<DisplayBroadcastStation> GetBroadcastStationsByFlightWeek(RatesFile.RateSourceType rateSource, int mediaWeekId, bool isIncluded);
+        List<DisplayBroadcastStation> GetBroadcastStationsByFlightWeek(InventoryFile.InventorySourceType inventorySource, int mediaWeekId, bool isIncluded);
         List<DisplayBroadcastStation> GetBroadcastStationListByStationCode(List<int> fileStationCodes);
         int GetBroadcastStationCodeByContactId(int stationContactId);
         void UpdateStation(int code, string user, DateTime timeStamp);
@@ -33,7 +33,7 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(RatesFile.RateSourceType rateSource)
+        public List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(InventoryFile.InventorySourceType inventorySource)
         {
             return new List<DisplayBroadcastStation>();
             //return _InReadUncommitedTransaction(
@@ -61,7 +61,7 @@ namespace Services.Broadcast.Repositories
             //    });
         }
 
-        public List<DisplayBroadcastStation> GetBroadcastStationsByFlightWeek(RatesFile.RateSourceType rateSource, int mediaWeekId, bool isIncluded)
+        public List<DisplayBroadcastStation> GetBroadcastStationsByFlightWeek(InventoryFile.InventorySourceType inventorySource, int mediaWeekId, bool isIncluded)
         {
             //TODO: Fixme or remove.
             return new List<DisplayBroadcastStation>();

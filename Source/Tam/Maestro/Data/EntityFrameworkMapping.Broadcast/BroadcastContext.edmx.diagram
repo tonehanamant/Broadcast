@@ -25,7 +25,6 @@
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_markets" Width="1.5" PointX="8.25" PointY="15.875" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_spot_length" Width="1.5" PointX="5.25" PointY="6.625" />
         <EntityTypeShape EntityType="BroadcastModel.proposal" Width="1.5" PointX="0.75" PointY="15.5" />
-        <EntityTypeShape EntityType="BroadcastModel.rate_files" Width="1.5" PointX="11.25" PointY="12.25" />
         <EntityTypeShape EntityType="BroadcastModel.rating_adjustments" Width="1.5" PointX="17.75" PointY="9.25" />
         <EntityTypeShape EntityType="BroadcastModel.schedule_detail_audiences" Width="1.5" PointX="12.75" PointY="40.5" />
         <EntityTypeShape EntityType="BroadcastModel.schedule_detail_weeks" Width="1.5" PointX="12.75" PointY="37" />
@@ -48,8 +47,6 @@
         <AssociationConnector Association="BroadcastModel.FK_post_file_demos_post_files" />
         <AssociationConnector Association="BroadcastModel.FK_post_file_details_impressions_post_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_post_file_details_post_files" />
-        <AssociationConnector Association="BroadcastModel.FK_station_contacts_rate_files_created" />
-        <AssociationConnector Association="BroadcastModel.FK_station_contacts_rate_files_modified" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_detail_audiences_schedule_details" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_detail_weeks_schedule_details" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_details_schedule" />
@@ -67,7 +64,6 @@
         <AssociationConnector Association="BroadcastModel.FK_schedule_details_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_media_weeks_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_post_files_media_months" />
-        <AssociationConnector Association="BroadcastModel.FK_rate_files_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_rating_adjustments_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_schedules_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_flight_weeks_media_weeks" />
@@ -110,6 +106,10 @@
         <EntityTypeShape EntityType="BroadcastModel.schedule_audiences" Width="1.5" PointX="5.25" PointY="39" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_audiences_schedule" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_files" Width="1.5" PointX="3" PointY="9.375" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_files_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_station_contacts_inventory_files_created" />
+        <AssociationConnector Association="BroadcastModel.FK_station_contacts_inventory_files_modified" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

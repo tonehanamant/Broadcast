@@ -20,13 +20,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var filename = @".\Files\CNNAMPMBarterObligations.xlsx";
 
-            var factory = IntegrationTestApplicationServiceFactory.Instance.Resolve<IRateFileImporterFactory>();
-            var importer = factory.GetFileImporterInstance(RatesFile.RateSourceType.CNN);
+            var factory = IntegrationTestApplicationServiceFactory.Instance.Resolve<IInventoryFileImporterFactory>();
+            var importer = factory.GetFileImporterInstance(InventoryFile.InventorySourceType.CNN);
 
             var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-            var ratesFile = new RatesFile();
+            var ratesFile = new InventoryFile();
 
-            List<RatesFileProblem> fileProblems = new List<RatesFileProblem>();
+            List<InventoryFileProblem> fileProblems = new List<InventoryFileProblem>();
 
             var flightWeeks = new List<FlightWeekDto>();
             flightWeeks.Add(new FlightWeekDto()
@@ -36,7 +36,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IsHiatus = false
             });
             
-            var request = new RatesSaveRequest()
+            var request = new InventoryFileSaveRequest()
             {
                 FileName = filename,
                 RatesStream = stream,
