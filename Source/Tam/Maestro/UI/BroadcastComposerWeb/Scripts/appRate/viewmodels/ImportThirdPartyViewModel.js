@@ -1,25 +1,35 @@
 ﻿//demo sub items with formatted price; selectedDemo value
 function DemoItem(canDelete) {
     var $scope = this;
-
-    //$scope.Property = ko.observable(property);
-    //$scope.Property.subscribe(function () {
-    //    $scope.Action(null);
-    //    $scope.Values([]);
-    //});
-    //console.log(canDelete);
     $scope.selectedDemo = ko.observable(null);
     $scope.cpm = ko.observable(null);
+    //scope.cpm.extend({ notify: 'always' });//does not work in computed context without subscriber
     $scope.canDelete = ko.observable(canDelete);
     $scope.formattedPrice = ko.pureComputed({
         read: function () {
-            if ($scope.cpm()) return numeral($scope.cpm()).format('$0,0[.]00');
+            //console.log($scope.cpm());
+            if ($scope.cpm()) {
+                return numeral($scope.cpm()).format('$0,0[.]00');
+            } else {
+                return null;
+            }
         },
+
+        //revise need to strip completely if not number/float
+        //does not evaluate initially as returns null - need to force a chagne
         write: function (value) {
             // Strip out unwanted characters, parse as float, then write the 
-            // raw data back to the underlying "price" observable
+            // raw data back to the underlying "cpm" observable
             value = parseFloat(value.replace(/[^\.\d]/g, ""));
-            $scope.cpm(isNaN(value) ? 0 : value); // Write to underlying storage
+            //console.log('write', value);
+            //$scope.cpm(isNaN(value) ? null : value); // does not reevaluate if no original value
+            //hack: issues at https://github.com/knockout/knockout/issues/1019
+            if (isNaN(value)) {
+                $scope.cpm(-1);
+                $scope.cpm(null);
+            } else {
+                $scope.cpm(value);
+            }
         },
         owner: $scope
     });
@@ -44,11 +54,13 @@ var ImportThirdPartyViewModel = function (controller) {
 
     /*** FILE FORM RELATED ***/
     $scope.FileName = ko.observable();
-    $scope.FlightStartDate = ko.observable();
-    $scope.FlightEndDate = ko.observable();
-    $scope.FlightWeeks = ko.observable();//array
+    $scope.EffectiveDate = ko.observable();
+    //TODO Remove Flights; block name
+   // $scope.FlightStartDate = ko.observable();
+    //$scope.FlightEndDate = ko.observable();
+    //$scope.FlightWeeks = ko.observable();//array
     // $scope.Daypart = ko.observableArray([]);
-    $scope.BlockName = ko.observable();
+    //$scope.BlockName = ko.observable();
     //active request from upload manager - not observed //file reader: object{FileName: file.name,  RawData: b64, UserName: "user"}
     $scope.ActiveFileRequest = null;
     $scope.showModal = ko.observable(false);
@@ -60,10 +72,12 @@ var ImportThirdPartyViewModel = function (controller) {
     $scope.selectedPlaybackType = ko.observable();
 
     //DEMO/CPM TABLE
+
+    $scope.demos = ko.observableArray();
     //test mock
     $scope.demoWithFixedOptions = ko.observableArray([{ Id: 1, Display: 'Fixed' }, { Id: 2, Display: 'A25-55' }, { Id: 3, Display: 'A55-65' }]);
     $scope.demoOptions = ko.observableArray([{ Id: 2, Display: 'A25-55' }, { Id: 3, Display: 'A55-65' }]);
-    $scope.demos = ko.observableArray();
+    
     //$scope.selectedDemo = ko.observable(null);
     $scope.isDemoFixed = ko.observable(false);
     $scope.allowDemoFixed = ko.observable(true);
@@ -101,6 +115,20 @@ var ImportThirdPartyViewModel = function (controller) {
         $scope.demos.remove(demo);
     };
 
+    //effective date wrapper - to set EffectiveDate
+
+    $scope.effectiveDateWrap = null;
+
+    $scope.initEffectiveDateWrapper = function () {
+        $scope.effectiveDateWrap = new wrappers.datePickerSingleWrapper($("#import_thirdparty_effective_date"), $scope.onEffectiveDateChange.bind($scope));
+        $scope.effectiveDateWrap.init();
+    };
+
+    //callback from wrap picker apply
+    $scope.onEffectiveDateChange = function (start) {
+        console.log('onEffectiveDateChange', start);
+        $scope.EffectiveDate(start);
+    };
 
    // modal shown event: disable upload dragging
     $scope.onOpenModal = function () {
@@ -112,43 +140,67 @@ var ImportThirdPartyViewModel = function (controller) {
         controller.view.setUploadDragEnabled(true);
     };
 
+    //init from initial data api
+    $scope.initOptions = function (options) {
+        $scope.ratingBookOptions(options.RatingBooks);
+        $scope.playbackTypeOptions(options.PlaybackTypes);
+        $scope.selectedPlaybackType(options.DefaultPlaybackType);
+        $scope.initEffectiveDateWrapper();
+    };
+
     //set based on file request - with initial defaults
+    //todo no flights/block name
     $scope.setActiveImport = function (fileRequest, rateSource) {
-        controller.view.clearThirdPartyValidation();
+        $("#import_thirdparty_form").valid();
         $scope.ActiveFileRequest = fileRequest;
         $scope.RateSource(rateSource);
         $scope.FileName(fileRequest.FileName);
         //Default start date to today, end date to one month from today. 
         //to get current minus offsets - moment has changed
-        var current = moment().startOf('day').format('MM/DD/YYYY');
-        var future = moment(current).add(1, 'M').format('MM/DD/YYYY');
+        //var current = moment().startOf('day').format('MM/DD/YYYY');
+        //var future = moment(current).add(1, 'M').format('MM/DD/YYYY');
         //console.log(current, future);
-        $scope.FlightStartDate(current);
-        $scope.FlightEndDate(future);
-        $scope.FlightWeeks([]); //tbd base on start /end?
+        //$scope.FlightStartDate(current);
+        //$scope.FlightEndDate(future);
+        //$scope.FlightWeeks([]); //tbd base on start /end?
         //$scope.Daypart([]);//set empty
-        $scope.BlockName($scope.RateSource() + ' NEWS BLOCK');//defaults
+        //$scope.BlockName($scope.RateSource() + ' NEWS BLOCK');//defaults
         //demo todo set context; clear subscribers?
+        $scope.EffectiveDate(null);
         $scope.demos([]);
         $scope.initDemoItem();
         $scope.showModal(true);
         //force apply for flight - so that bound values get updated initially (for save)
-        var flightPicker = $("#import_thirdparty_form input[name='import_thirdparty_flights']").data('daterangepicker');
+        //var flightPicker = $("#import_thirdparty_form input[name='import_thirdparty_flights']").data('daterangepicker');
         //console.log(flightPicker);
         //flightPicker.trigger('apply.daterangepicker');
-        flightPicker.clickApply();
+        //flightPicker.clickApply();
+
+        $scope.effectiveDateWrap.updateDisplay();
+        //date picker does not clear previsously validate error class
+        $scope.effectiveDateWrap.input.closest('.form-group').removeClass('has-error');
     };
 
-    //todo check demo table and get array of data;
+    //todo check demo table and get array of data; remove flights/block; add EffectiveDate
     $scope.uploadFile = function () {
         if (controller.view.isThirdPartyValid()) {
             var file = $scope.ActiveFileRequest;
-            file.FlightWeeks = $scope.FlightWeeks();
-            file.FlightStartDate = $scope.FlightStartDate();
-            file.FlightEndDate = $scope.FlightEndDate();
-            file.BlockName = $scope.BlockName();
+            //file.FlightWeeks = $scope.FlightWeeks();
+            //file.FlightStartDate = $scope.FlightStartDate();
+            //file.FlightEndDate = $scope.FlightEndDate();
+            //file.BlockName = $scope.BlockName();
             file.RatingBook = $scope.selectedRatingBook();
             file.PlaybackType = $scope.selectedPlaybackType();
+            file.EffectiveDate = $scope.EffectiveDate().format('MM-DD-YYYY'); //convert from moment
+            var activeDemos = [];
+            $scope.demos().forEach(function (item) {
+                //todo
+                //if (item.active) {  }
+                var ret = { DemoId: item.selectedDemo(), Price: item.cpm() };
+                activeDemos.push(ret);
+            });
+            file.Demos = activeDemos;
+            console.log('uploadFile', file);
             
             //controller.apiUploadRateFile(file, 
             //    function (data) {

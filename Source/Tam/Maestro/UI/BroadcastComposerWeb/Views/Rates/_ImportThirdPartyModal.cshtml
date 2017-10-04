@@ -18,7 +18,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <span class="modal-title" data-bind="text: 'Upload ' +  InventorySource() + ' File'"></span>
+                <span class="modal-title" data-bind="text: 'Upload ' +  RateSource() + ' File'"></span>
             </div>
 
             <div class="modal-body">
@@ -47,9 +47,13 @@
                             </div>
 
                             <div class="col-xs-2">
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <label>Flight</label>
                                     <input type="text" class="form-control read-only-picker" readonly style="width: 100%;" name="import_thirdparty_flights" data-bind="flightWeekPicker: { startDate: FlightStartDate, endDate: FlightEndDate, weekSelection: FlightWeeks, noMinimum: true }" required>
+                                </div>*@
+                                <div class="form-group">
+                                    <label>Effective Date</label>
+                                    <input type="text" class="form-control input-sm read-only-picker" readonly style="width: 100%;" name="import_thirdparty_effective_date" id="import_thirdparty_effective_date" required>
                                 </div>
                             </div>
                             
@@ -63,15 +67,15 @@
                                         <tr> <th class="active" style="width: 45%;">Demo</th> <th class="active" style="width: 45%;">CPM</th> <th style="width: 10%;"></th> </tr>
                                     </thead>
                                     <tbody data-bind="foreach: demos">
-                                        <tr data-bind="if: $parent.allowDemoFixed() && ($index() == 0)">
+                                        <tr data-bind="if: $parent.allowDemoFixed() && ($index() === 0)">
                                             <td>
                                                 <div class="form-group">
-                                                    <select class="form-control input-sm" data-bind="options: $parent.demoWithFixedOptions, optionsValue: 'Id', optionsText: 'Display', uniqueName: true, optionsCaption: 'Select Demo...', value: selectedDemo, select2: {placeholder: 'Select Demo...'}" required></select>
+                                                    <select class="form-control input-sm" data-bind="options: $parent.demoWithFixedOptions, optionsValue: 'Id', optionsText: 'Display', uniqueName: true, optionsCaption: 'Select Demo...', value: selectedDemo, select2: {placeholder: 'Select Demo...', validate: true}" required></select>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control input-sm" placeholder="Enter Cpm $" data-bind="value: formattedPrice, uniqueName: true" required>
+                                                    <input type="text" class="form-control input-sm" placeholder="Enter $" data-bind="value: formattedPrice, uniqueName: true" required>
                                                 </div>
                                             </td>
                                             <td style="padding: 6px 0 0 0; text-align: center; min-width: 25px;"><button type="button" class="btn btn-link" style="padding: 0 0 0 0;" data-bind="click: $parent.removeDemo, visible: canDelete()"><span class="glyphicon glyphicon-remove" style="color:red;" aria-hidden="true"></span></button></td>
@@ -79,12 +83,12 @@
                                         <tr data-bind="if: !$parent.allowDemoFixed() || ($index() > 0)">
                                             <td>
                                                 <div class="form-group">
-                                                    <select class="form-control input-sm" data-bind="options: $parent.demoOptions, optionsValue: 'Id', optionsText: 'Display', uniqueName: true, optionsCaption: 'Select Demo...', value: selectedDemo, select2: {placeholder: 'Select Demo...'}" required></select>
+                                                    <select class="form-control input-sm" data-bind="options: $parent.demoOptions, optionsValue: 'Id', optionsText: 'Display', uniqueName: true, optionsCaption: 'Select Demo...', value: selectedDemo, select2: {placeholder: 'Select Demo...', validate: true}" required></select>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control input-sm" placeholder="Enter Cpm $" data-bind="value: formattedPrice, uniqueName: true" required>
+                                                    <input type="text" class="form-control input-sm" placeholder="Enter $" data-bind="value: formattedPrice, uniqueName: true" required>
                                                 </div>
                                             </td>
                                             <td style="padding: 6px 0 0 0; text-align: center;"><button type="button" class="btn btn-link" style="padding: 0 0 0 0;" data-bind="click: $parent.removeDemo, visible: canDelete()"><span class="glyphicon glyphicon-remove" style="color:red;" aria-hidden="true"></span></button></td>

@@ -46,7 +46,8 @@ var wrappers = {
                 }
                 this.updateDisplay(start);
 
-            }
+            },
+
         };
 
     },

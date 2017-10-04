@@ -28,6 +28,13 @@
             $(el).select2(select2Config);
 
             /*** event handlers ***/
+            //workaround for select 2 and jquery validation
+            select2Config.validate = select2Config.validate || false;
+            if (select2Config.validate) {
+                $(el).on("select2:select", function (event) {
+                    $(this).valid(); // trigger validation on this element
+                });
+            }
 
             if (select2Config.stopPropagation) {
                 $(el).on("change select2:open select2:close select2:select select2:unselect", function (event) {

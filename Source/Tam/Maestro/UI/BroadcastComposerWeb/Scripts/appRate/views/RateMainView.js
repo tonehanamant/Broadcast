@@ -115,19 +115,21 @@ var RateMainView = BaseView.extend({
     setUploadDragEnabled: function (enable) {
         this.uploadManager.dragEnabled = enable;
     },
-
+    //uses required in fields not needed here?
     initThirdPartyUploadValidationRules: function () {
 
         var thirdPartyUploadformValidator = $('#import_thirdparty_form').validate({
-             ignore: [],
             rules: {
                 //import_thirdparty_daypart: {
                 //    required: true
                 //},
-                import_thirdparty_flights: {
-                    required: true
-                },
-                import_thirdparty_blockname: {
+                //import_thirdparty_flights: {
+                //    required: true
+                //},
+                //import_thirdparty_blockname: {
+                //    required: true
+                //}
+                import_thirdparty_effective_date: {
                     required: true
                 }
             }
@@ -269,9 +271,7 @@ var RateMainView = BaseView.extend({
     initializeFileImportOptions: function () {
         var me = this;
         me.controller.apiGetFileImportOptions(function (options) {
-            me.controller.thirdPartyViewModel.ratingBookOptions(options.RatingBooks);
-            me.controller.thirdPartyViewModel.playbackTypeOptions(options.PlaybackTypes);
-            me.controller.thirdPartyViewModel.selectedPlaybackType(options.DefaultPlaybackType);
+            me.controller.thirdPartyViewModel.initOptions(options);
         });
     }
 });
