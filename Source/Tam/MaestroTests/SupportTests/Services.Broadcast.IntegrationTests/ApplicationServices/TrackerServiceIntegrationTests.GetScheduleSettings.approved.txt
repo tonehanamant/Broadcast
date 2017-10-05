@@ -2,8 +2,14 @@
   "Advertiser": null,
   "AdvertiserId": 39279,
   "Audiences": [
-    31,
-    42
+    {
+      "AudienceId": 31,
+      "Rank": 0
+    },
+    {
+      "AudienceId": 42,
+      "Rank": 0
+    }
   ],
   "DaypartRestriction": {
     "endTime": 86399,

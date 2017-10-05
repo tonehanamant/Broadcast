@@ -1152,7 +1152,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 schedule.PostType = SchedulePostType.NTI;
                 schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
-                schedule.Audiences = new List<int> { 31, 42 };
+                schedule.Audiences = new List<BvsTrackingAudience>
+                {
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
+                };
                 schedule.StartDate = new DateTime(2017, 1, 20);
                 schedule.EndDate = new DateTime(2018, 1, 20);
                 schedule.IsBlank = true;
@@ -1207,7 +1211,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 schedule.PostType = SchedulePostType.NTI;
                 schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
-                schedule.Audiences = new List<int> { 31, 42 };
+                schedule.Audiences = new List<BvsTrackingAudience>
+                {
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
+                };
                 schedule.StartDate = new DateTime(2016, 3, 28);
                 schedule.EndDate = new DateTime(2016, 4, 24);
                 schedule.IsBlank = true;
@@ -1286,7 +1294,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
                 schedule.PostType = SchedulePostType.NTI;
                 schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
-                schedule.Audiences = new List<int> { 31, 42 };
+                schedule.Audiences = new List<BvsTrackingAudience>
+                {
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
+                };
                 schedule.StartDate = new DateTime(2017, 1, 20);
                 schedule.EndDate = new DateTime(2018, 1, 20);
                 schedule.IsBlank = true;
@@ -1327,7 +1339,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
                 schedule.PostType = SchedulePostType.NTI;
                 schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
-                schedule.Audiences = new List<int> { 31 };
+                schedule.Audiences = new List<BvsTrackingAudience>
+                {
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}
+                };
                 schedule.StartDate = new DateTime(2017, 1, 20);
                 schedule.EndDate = new DateTime(2018, 1, 20);
                 schedule.IsBlank = true;
@@ -1400,7 +1415,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 schedule.PostType = SchedulePostType.NTI;
                 schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
-                schedule.Audiences = new List<int> { 31, 42 };
+                schedule.Audiences = new List<BvsTrackingAudience>
+                {
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
+                };
                 schedule.StartDate = new DateTime(2017, 1, 20);
                 schedule.EndDate = new DateTime(2018, 1, 20);
                 schedule.IsBlank = true;
@@ -1443,7 +1462,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 schedule.PostType = SchedulePostType.NTI;
                 schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
-                schedule.Audiences = new List<int> { 31, 42 };
+                schedule.Audiences = new List<BvsTrackingAudience>
+                {
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
+                };
                 schedule.StartDate = new DateTime(2017, 1, 20);
                 schedule.EndDate = new DateTime(2018, 1, 20);
                 schedule.IsBlank = true;
@@ -1498,7 +1521,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             schedule.PostType = SchedulePostType.NTI;
             schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
-            schedule.Audiences = new List<int> { 31, 42 };
+            schedule.Audiences = new List<BvsTrackingAudience>
+                {
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
+                };
             schedule.StartDate = new DateTime(2017, 1, 20);
             schedule.EndDate = new DateTime(2018, 1, 20);
             schedule.IsBlank = true;
@@ -1572,7 +1599,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             schedule.PostType = SchedulePostType.NTI;
             schedule.InventorySource = InventoryFile.InventorySourceType.CNN;
-            schedule.Audiences = new List<int> { 31, 42 };
+            schedule.Audiences = new List<BvsTrackingAudience>
+                {
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
+                };
             schedule.StartDate = new DateTime(2017, 1, 20);
             schedule.EndDate = new DateTime(2018, 1, 20);
             schedule.IsBlank = true;
@@ -1628,7 +1659,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     };
                     schedule.PostType = SchedulePostType.NSI;
                     schedule.Equivalized = false;
-                    schedule.Audiences = new List<int> { 31, 42 };
+                    schedule.Audiences = new List<BvsTrackingAudience>
+                    {
+                        new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
+                        new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
+                    };
                     schedule.InventorySource = InventoryFile.InventorySourceType.OpenMarket;
 
                     saveRequest.Schedule = schedule;
@@ -2040,7 +2075,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 saveRequest.Schedule = schedule;
                 int scheduleId = sut.SaveSchedule(saveRequest);
 
-                schedule.Audiences = new List<int>() { 31 };
+                schedule.Audiences = new List<BvsTrackingAudience>
+                {
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}
+                };
                 schedule.FileStream = null;
                 schedule.FileName = null;
                 scheduleId = sut.SaveSchedule(saveRequest);

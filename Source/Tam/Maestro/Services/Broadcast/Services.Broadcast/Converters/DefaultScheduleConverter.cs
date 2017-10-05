@@ -30,23 +30,22 @@ namespace Services.Broadcast.Converters
             return convertedSchedule;
         }
 
-        // merges existing audiences with new ones -- population is kept and rank is determined by the order (index + 1) in which they were entered
+        // merges existing audiences with new ones -- population is kept and rank is determined by the order user selected on FE
         private List<schedule_audiences> _MapAudiences(int scheduleId, ScheduleDTO scheduleDto)
         {
             var audiences = new List<schedule_audiences>();
             var existingAudiences = _DataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleAudiences(scheduleDto.Id);
 
-            for (var i = 0; i < scheduleDto.Audiences.Count; i++)
+            foreach (var demoAudience in scheduleDto.Audiences)
             {
-                var informedAudienceId = scheduleDto.Audiences[i];
                 var audience = new schedule_audiences
                 {
-                    audience_id = informedAudienceId,
-                    rank = i + 1,
+                    audience_id = demoAudience.AudienceId,
+                    rank = demoAudience.Rank,
                     schedule_id = scheduleId
                 };
-
-                var existingAudience = existingAudiences.FirstOrDefault(e => e.audience_id == informedAudienceId);
+                
+                var existingAudience = existingAudiences.FirstOrDefault(e => e.audience_id == demoAudience.AudienceId);
                 if (existingAudience != null)
                 {
                     audience.population = existingAudience.population;
