@@ -56,7 +56,7 @@ namespace Services.Broadcast.Entities
         public SchedulePostType PostType { get; set; }
         public RatesFile.RateSourceType? InventorySource { get; set; }
         public bool Equivalized { get; set; }
-        public List<int> Audiences { get; set; }
+        public List<BvsTrackingAudience> Audiences { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public bool IsBlank { get; set; }

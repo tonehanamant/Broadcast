@@ -2,8 +2,14 @@
   "Advertiser": null,
   "AdvertiserId": 37674,
   "Audiences": [
-    31,
-    42
+    {
+      "AudienceId": 31,
+      "Rank": 1
+    },
+    {
+      "AudienceId": 42,
+      "Rank": 2
+    }
   ],
   "DaypartRestriction": null,
   "DaypartRestrictionId": 63335,

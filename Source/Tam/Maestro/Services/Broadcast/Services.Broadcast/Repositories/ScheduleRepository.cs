@@ -579,7 +579,11 @@ namespace Services.Broadcast.Repositories
                                                     select d.daypart_id).FirstOrDefault(),
 
                             Audiences = (from a in s.schedule_audiences
-                                         select a.audience_id).ToList()
+                                         orderby a.rank
+                                         select new BvsTrackingAudience()
+                                         {
+                                             AudienceId = a.audience_id, Rank = a.rank
+                                         }).ToList()
                         }).First();
 
                     var efIscis = (from si in context.schedule_iscis

@@ -176,6 +176,7 @@
     <Compile Include="Converters\ProposalScxConverter.cs" />
     <Compile Include="DaypartCache.cs" />
     <Compile Include="Entities\BroadcastAudience.cs" />
+    <Compile Include="Entities\BvsTrackingAudience.cs" />
     <Compile Include="Entities\IHavePostingBooks.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
     <Compile Include="Entities\OpenMarketInventoryAllocationSnapshotDto.cs" />

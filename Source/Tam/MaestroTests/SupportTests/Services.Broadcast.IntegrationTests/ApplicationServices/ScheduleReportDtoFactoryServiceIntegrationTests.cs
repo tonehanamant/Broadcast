@@ -403,7 +403,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}
             };
             schedule.PostType = SchedulePostType.NTI;
-            schedule.Audiences = new List<int> {33, 61, 53};
+            schedule.Audiences = new List<BvsTrackingAudience>
+            {
+                new BvsTrackingAudience() {AudienceId = 33, Rank = 0}, 
+                new BvsTrackingAudience() {AudienceId = 61, Rank = 1},
+                new BvsTrackingAudience() {AudienceId = 53, Rank = 3}
+            };
             schedule.StartDate = new DateTime(2017, 1, 20);
             schedule.EndDate = new DateTime(2018, 1, 20);
             schedule.IsBlank = true;
