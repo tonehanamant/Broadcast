@@ -337,7 +337,7 @@ var TrackerScheduleViewModel = function (controller) {
             schedule.Audiences = $scope.DemoInputs().map(function(demo, index) {
                 return {
                     AudienceId: demo,
-                    Rank: index
+                    Rank: index + 1
                 }
             });
         }
