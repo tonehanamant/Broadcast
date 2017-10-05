@@ -1,10 +1,11 @@
-﻿//demo sub items with formatted price; selectedDemo value
-function DemoItem(canDelete) {
+﻿//demo sub items with formatted price; selectedDemo value; active/canDelete for state handling
+function DemoItem(canDelete, active) {
     var $scope = this;
     $scope.selectedDemo = ko.observable(null);
     $scope.cpm = ko.observable(null);
     //scope.cpm.extend({ notify: 'always' });//does not work in computed context without subscriber
     $scope.canDelete = ko.observable(canDelete);
+    $scope.active = ko.observable(active);
     $scope.formattedPrice = ko.pureComputed({
         read: function () {
             //console.log($scope.cpm());
@@ -37,9 +38,8 @@ function DemoItem(canDelete) {
 };
 
 //1780 todo: 
-//remove block name; remove fligets replace with single effective date; 
-//demo table: handle select2 validation bug; process saved values
-//hook api and initial data for demos with and without fixed
+//handle demoWithFixedOptions, demoOptions form initialData from BE (currently mocked)
+//hook up to API whjen BE completes
 //upload disabled for testing - renable
 
 //Import Third party: TVB/CNN etc  View Model - modal form
@@ -49,7 +49,6 @@ var ImportThirdPartyViewModel = function (controller) {
     var $scope = this;
     var controller = controller; //leave private
 
-    //tbd to distuinguish types TVB/CNN (display, etc)
     $scope.RateSource = ko.observable();
 
     /*** FILE FORM RELATED ***/
@@ -78,20 +77,19 @@ var ImportThirdPartyViewModel = function (controller) {
     $scope.demoWithFixedOptions = ko.observableArray([{ Id: 1, Display: 'Fixed' }, { Id: 2, Display: 'A25-55' }, { Id: 3, Display: 'A55-65' }]);
     $scope.demoOptions = ko.observableArray([{ Id: 2, Display: 'A25-55' }, { Id: 3, Display: 'A55-65' }]);
     
-    //$scope.selectedDemo = ko.observable(null);
     $scope.isDemoFixed = ko.observable(false);
     $scope.allowDemoFixed = ko.observable(true);
 
-    //tbd
+    //start initial demo item based on allowDemoFixed
     $scope.initDemoItem = function () {
-        var demoItem = new DemoItem(false);
+        var demoItem = new DemoItem(false, true);
         $scope.demos.push(demoItem);
         var parent = $scope;
         //if allwing fixed handle changes
         if ($scope.allowDemoFixed()) {
             demoItem.selectedDemo.subscribe(function (demo) {
                 //if demo 1 set isDemoFixed trues - remove any others below
-                console.log('subscribed Demo', demo);
+                //console.log('subscribed Demo', demo);
                 if (demo === 1) {
                     parent.isDemoFixed(true);
                     //remove all except first !canDelete
@@ -101,18 +99,41 @@ var ImportThirdPartyViewModel = function (controller) {
                     });
                 } else {
                     parent.isDemoFixed(false);
+                    parent.checkActive();
                 }
+            });
+        } else {
+            demoItem.selectedDemo.subscribe(function (demo) {
+                 parent.checkActive();
             });
         }
     };
 
-
+    //add a demo item; subcribe to set active/checkActive
     $scope.addDemo = function () {
-        $scope.demos.push(new DemoItem(true));
+        var demoItem = new DemoItem(true, false);
+        $scope.demos.push(demoItem);
+        var parent = $scope;
+        demoItem.selectedDemo.subscribe(function (demo) {
+            demoItem.active(true);
+            //console.log('demo item select', demoItem);
+            parent.checkActive();
+
+        });
     };
 
+    //remove a demo item
     $scope.removeDemo = function (demo) {
         $scope.demos.remove(demo);
+    };
+
+    //check active to add additinal inactive demo when needed
+    $scope.checkActive = function () {
+        var last = $scope.demos()[$scope.demos().length - 1];
+        //console.log('check active', last.active());
+        if (last.active()) {
+            $scope.addDemo();
+        }
     };
 
     //effective date wrapper - to set EffectiveDate
@@ -126,7 +147,7 @@ var ImportThirdPartyViewModel = function (controller) {
 
     //callback from wrap picker apply
     $scope.onEffectiveDateChange = function (start) {
-        console.log('onEffectiveDateChange', start);
+        //console.log('onEffectiveDateChange', start);
         $scope.EffectiveDate(start);
     };
 
@@ -141,6 +162,7 @@ var ImportThirdPartyViewModel = function (controller) {
     };
 
     //init from initial data api
+    //TODO : set demo options
     $scope.initOptions = function (options) {
         $scope.ratingBookOptions(options.RatingBooks);
         $scope.playbackTypeOptions(options.PlaybackTypes);
@@ -149,11 +171,15 @@ var ImportThirdPartyViewModel = function (controller) {
     };
 
     //set based on file request - with initial defaults
-    //todo no flights/block name
+    //TODO no flights/block name
     $scope.setActiveImport = function (fileRequest, rateSource) {
         $("#import_thirdparty_form").valid();
         $scope.ActiveFileRequest = fileRequest;
         $scope.RateSource(rateSource);
+        //console.log('rateSource', $scope.RateSource());
+        //set fixed functionaly by source
+        $scope.allowDemoFixed(($scope.RateSource() == 'CNN') ? true : false);
+
         $scope.FileName(fileRequest.FileName);
         //Default start date to today, end date to one month from today. 
         //to get current minus offsets - moment has changed
@@ -181,28 +207,30 @@ var ImportThirdPartyViewModel = function (controller) {
         $scope.effectiveDateWrap.input.closest('.form-group').removeClass('has-error');
     };
 
-    //todo check demo table and get array of data; remove flights/block; add EffectiveDate
+    //upload a file - with form data
     $scope.uploadFile = function () {
         if (controller.view.isThirdPartyValid()) {
-            var file = $scope.ActiveFileRequest;
-            //file.FlightWeeks = $scope.FlightWeeks();
-            //file.FlightStartDate = $scope.FlightStartDate();
-            //file.FlightEndDate = $scope.FlightEndDate();
-            //file.BlockName = $scope.BlockName();
-            file.RatingBook = $scope.selectedRatingBook();
-            file.PlaybackType = $scope.selectedPlaybackType();
-            file.EffectiveDate = $scope.EffectiveDate().format('MM-DD-YYYY'); //convert from moment
+            var fileData = $scope.ActiveFileRequest;
+            //fileData.FlightWeeks = $scope.FlightWeeks();
+            //fileData.FlightStartDate = $scope.FlightStartDate();
+            //fileData.FlightEndDate = $scope.FlightEndDate();
+            //fileData.BlockName = $scope.BlockName();
+            fileData.RatingBook = $scope.selectedRatingBook();
+            fileData.PlaybackType = $scope.selectedPlaybackType();
+            fileData.EffectiveDate = $scope.EffectiveDate().format('MM-DD-YYYY'); //convert from moment
             var activeDemos = [];
             $scope.demos().forEach(function (item) {
-                //todo
-                //if (item.active) {  }
-                var ret = { DemoId: item.selectedDemo(), Price: item.cpm() };
-                activeDemos.push(ret);
+                //only set active items
+                if (item.active()) {  
+                    var ret = { DemoId: item.selectedDemo(), Price: item.cpm() };
+                    activeDemos.push(ret);
+                }
             });
-            file.Demos = activeDemos;
-            console.log('uploadFile', file);
-            
-            //controller.apiUploadRateFile(file, 
+            fileData.Demos = activeDemos;
+            //console.log('uploadFile', JSON.stringify(fileData));
+            console.log('uploadFile', fileData);
+            //TODO REENABLE WHEN BE READY
+            //controller.apiUploadRateFile(fileData, 
             //    function (data) {
             //        $scope.showModal(false);
             //    }
