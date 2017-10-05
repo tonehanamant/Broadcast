@@ -48,7 +48,7 @@
                                     <label>Block Name</label>
                                     <input type="text" class="form-control" style="width: 100%;" name="import_thirdparty_blockname" data-bind="value: BlockName" required>
                                 </div>*@
-                                <table id="thirdparty_demo_table" class="table table-condensed" style="margin: -6px 0 0 0;">
+                                <table id="thirdparty_demo_table" class="table table-condensed" style="margin: -5px 0 0 0;">
                                     <thead>
                                         <tr> <th style="width: 45%;">Pricing</th> <th style="width: 45%;"></th> <th style="width: 10%;"></th> </tr>
                                     </thead>
@@ -61,7 +61,7 @@
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control input-sm" placeholder="Enter $" data-bind="value: formattedPrice, uniqueName: true" required>
+                                                    <input type="text" class="form-control input-sm" placeholder="$" data-bind="value: formattedPrice, uniqueName: true" required>
                                                 </div>
                                             </td>
                                             <td style="padding: 6px 0 0 0; text-align: center; min-width: 25px;"><button type="button" class="btn btn-link" style="padding: 0 0 0 0;" data-bind="click: $parent.removeDemo, visible: canDelete()"><span class="glyphicon glyphicon-remove" style="color:red;" aria-hidden="true"></span></button></td>
@@ -74,7 +74,7 @@
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control input-sm" placeholder="Enter $" data-bind="visible: active, value: formattedPrice, uniqueName: true, attr: { required: active }" required>
+                                                    <input type="text" class="form-control input-sm" placeholder="$" data-bind="visible: active, value: formattedPrice, uniqueName: true, attr: { required: active }" required>
                                                 </div>
                                             </td>
                                             <td style="padding: 6px 0 0 0; text-align: center;"><button type="button" class="btn btn-link" style="padding: 0 0 0 0;" data-bind="click: $parent.removeDemo, visible: canDelete() && active()"><span class="glyphicon glyphicon-remove" style="color:red;" aria-hidden="true"></span></button></td>
