@@ -273,26 +273,30 @@ var TrackerScheduleViewModel = function (controller) {
         }
     };
 
-    //edit existing schedule advertiser blank 
-    //tbd from BE call or existing record
     $scope.editScheduleAdvertiser = function () {
-        //TODO set initial form values & $scope.ScheduleId(Id)
         var schedule = $scope.activeSchedule;
+
         $scope.ScheduleName(schedule.Name);
-        $scope.Iscis(schedule.Iscis);//get Iscis for Brand update
+        $scope.Iscis(schedule.Iscis);
         $scope.AdvertiserId(schedule.AdvertiserId);
         $scope.PostingBookId(schedule.PostingBookId);
         $scope.MarketRestrictions(schedule.MarketRestrictions);
         $scope.DaypartRestriction(schedule.DaypartRestriction);
-        //set with converted values if exist; else empty
         $scope.daypartWrap.init(schedule.DaypartRestriction, true);
-
         $scope.PostTypeId(schedule.PostType);
-        //$scope.InventorySourceId(schedule.InventorySource);
-        $scope.DemoInputs(schedule.Audiences);
+        
+        // sort by rank before initializing observable
+        schedule.Audiences.sort(function (audience1, audience2) {
+            return audience1.Rank - audience2.Rank;
+        });
+
+        var rankedScheduleIds = schedule.Audiences.map(function (audience) {
+            return audience.AudienceId;
+        });
+
+        $scope.DemoInputs(rankedScheduleIds);
         $scope.Equivalized(schedule.IsEquivalized);
 
-        //handle dates
         if (schedule.StartDate) {
             var start = moment(schedule.StartDate);
             $scope.startDateWrap.setStart(start);
@@ -328,10 +332,16 @@ var TrackerScheduleViewModel = function (controller) {
         if (isEdit) {
             schedule.Id = $scope.activeSchedule.Id;
         }
-        //demos for advertiser and upload if edit
+        
         if (isBlank || isEdit) {
-            schedule.Audiences = $scope.DemoInputs();
+            schedule.Audiences = $scope.DemoInputs().map(function(demo, index) {
+                return {
+                    AudienceId: demo,
+                    Rank: index + 1
+                }
+            });
         }
+
         //blank advertiser specific
         if (isBlank) {
             schedule.StartDate = $scope.StartDate().format('MM-DD-YYYY'); //convert from moment
