@@ -291,7 +291,7 @@ var TrackerScheduleViewModel = function (controller) {
         });
 
         var rankedScheduleIds = schedule.Audiences.map(function (audience) {
-            return audience.audienceId;
+            return audience.AudienceId;
         });
 
         $scope.DemoInputs(rankedScheduleIds);

@@ -37,13 +37,6 @@ var TrackerMainView = BaseView.extend({
         //Add advertiser
         $("#tracker_add_adverisers_btn").on('click', this.addAdvertiser.bind(this));
 
-        // prevent sorting when selecting a tag
-        $("#schedule_input_demos").on('select2:select', function (e) {
-            var element = $(this).find('[value="' + e.params.data.id + '"]');
-            $(this).append(element);
-            $(this).trigger('change');
-        });
-
         this.setupGridEventHandlers();
         this.initUpload();
     },

@@ -39,6 +39,13 @@
                 });
             }
 
+            // prevents sorting when inserting a new element
+            $(el).on('select2:select', function (e) {
+                var element = $(this).find('[value="' + e.params.data.id + '"]');
+                $(this).append(element);
+                $(this).trigger('change');
+            });
+
             ko.utils.domNodeDisposal.addDisposeCallback(el, function () {
                 $(el).select2('destroy');
             });
@@ -50,17 +57,18 @@
             if ("selectedOptions" in allBindings && (allBindings.select2.multiple || el.multiple)) {
                 var selectedOptions = allBindings.selectedOptions();
                 if (selectedOptions.constructor === Array) {
-                    var selected = [];
+                    var element;
+
                     for (var i = 0; i < selectedOptions.length; i++) {
                         var item = selectedOptions[i];
                         if (typeof item === 'object') {
-                            selected.push(item[allBindings.optionsValue]);
+                            element = $(el).find('[value="' + item[allBindings.optionsValue] + '"]');
                         } else {
-                            selected.push(item)
+                            element = $(el).find('[value="' + item + '"]');
                         }
-                    }
 
-                    $(el).val(selected);
+                        $(el).append(element);
+                    }
                 }
             } else if ("value" in allBindings && allBindings.value && allBindings.value()) {
                 if ((allBindings.select2.multiple || el.multiple) && allBindings.value().constructor != Array) {
