@@ -51,6 +51,7 @@ namespace Services.Broadcast.Repositories
                                                                 Population = sa.population
                                                             })
                                                         .OrderByDescending(a => a.IsHouseHold)
+                                                        .ThenBy(a => a.Rank)
                                                         .ToList();
 
                     var scheduleDetails = schedule.schedule_details.ToList();
