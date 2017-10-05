@@ -233,24 +233,30 @@ var TrackerScheduleViewModel = function (controller) {
     };
 
 
-    //edit existing schedule upload
     $scope.editScheduleUpload = function () {
         var schedule = $scope.activeSchedule;
         $scope.ScheduleName(schedule.Name);
-        $scope.Iscis(schedule.Iscis);//get Iscis for Brand update
+        $scope.Iscis(schedule.Iscis);
         $scope.EstimateId(schedule.Estimate);
         $scope.AdvertiserId(schedule.AdvertiserId);
         $scope.PostingBookId(schedule.PostingBookId);
         $scope.MarketRestrictions(schedule.MarketRestrictions);
-
         $scope.DaypartRestriction(schedule.DaypartRestriction);
-        //set with converted values if exist; else empty
         $scope.daypartWrap.init(schedule.DaypartRestriction, true);
-
         $scope.PostTypeId(schedule.PostType);
         $scope.InventorySourceId(schedule.InventorySource);
-        $scope.DemoInputs(schedule.Audiences);
         $scope.Equivalized(schedule.IsEquivalized);
+
+        // sort by rank before initializing observable
+        schedule.Audiences.sort(function (audience1, audience2) {
+            return audience1.Rank - audience2.Rank;
+        });
+
+        var rankedScheduleIds = schedule.Audiences.map(function (audience) {
+            return audience.AudienceId;
+        });
+
+        $scope.DemoInputs(rankedScheduleIds);
     };
 
     //ADVERTISER
