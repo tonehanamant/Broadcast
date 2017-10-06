@@ -1,4 +1,5 @@
 ﻿using Common.Services;
+using Microsoft.Practices.Unity.InterceptionExtension;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
@@ -14,7 +15,7 @@ namespace Services.Broadcast.Converters.RateImport
     public abstract class InventoryFileImporterBase
     {
         private readonly string _validTimeExpression =
-   @"(^([0-9]|[0-1][0-9]|[2][0-3])(:|\-)([0-5][0-9])(\s{0,1})(AM|PM|am|pm|aM|Am|pM|Pm{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})(AM|PM|am|pm|aM|Am|pM|Pm{2,2})$)";
+   @"(^([0-9]|[0-1][0-9]|[2][0-3])(:)?([0-5][0-9])(\s{0,1})(A|AM|P|PM|a|am|p|pm|aM|Am|pM|Pm{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})(A|AM|P|PM|a|am|p|pm|aM|Am|pM|Pm{2,2})$)";
 
         protected BroadcastDataDataRepositoryFactory _BroadcastDataRepositoryFactory;
         protected IDaypartCache _DaypartCache;
@@ -166,6 +167,46 @@ namespace Services.Broadcast.Converters.RateImport
                 #endregion
                 #region Times
                 #region Start Time
+
+                string startMeridiem = null;
+                string endMeridiem = null;
+                if (lTimesSplit[0].EndsWith("am", StringComparison.InvariantCultureIgnoreCase)
+                    || lTimesSplit[0].EndsWith("a", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    startMeridiem = "am";
+                }
+                else if (lTimesSplit[0].EndsWith("pm", StringComparison.InvariantCultureIgnoreCase)
+                   || lTimesSplit[0].EndsWith("p", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    startMeridiem = "pm";
+                }
+
+                if (lTimesSplit[1].EndsWith("am", StringComparison.InvariantCultureIgnoreCase)
+                    || lTimesSplit[1].EndsWith("a", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    endMeridiem = "am";
+                }
+                else if (lTimesSplit[1].EndsWith("pm", StringComparison.InvariantCultureIgnoreCase)
+                   || lTimesSplit[1].EndsWith("p", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    endMeridiem = "pm";
+                }
+
+                if (startMeridiem == null && endMeridiem == null)
+                {
+                    return false;
+                }
+
+                if (startMeridiem == null)
+                {
+                    lTimesSplit[0] = lTimesSplit[0] + endMeridiem;
+                }
+
+                if (endMeridiem == null)
+                {
+                    lTimesSplit[1] = lTimesSplit[1] + startMeridiem;
+                }
+
                 int? lStartTime = ParseTime(lTimesSplit[0]);
                 if (!lStartTime.HasValue)
                     return false;
@@ -209,7 +250,7 @@ namespace Services.Broadcast.Converters.RateImport
                     for (int i = 0; i < lSplitDays.Length; i++)
                         lSplitDays[i] = lSplitDays[i].Trim();
 
-                    for (int i = 0; i < 7; i++)
+                    for (int i = 0; i < 7; i++) //7 -> days of the week
                     {
                         if (lDayConstants1[i] == lSplitDays[0].ToUpper() ||
                             lDayConstants2[i] == lSplitDays[0].ToUpper() ||
@@ -310,8 +351,8 @@ namespace Services.Broadcast.Converters.RateImport
                 int lMinute;
                 int lSecond;
 
-                bool AM = pTimeString.Contains("A") || pTimeString.Contains("AM");
-                bool PM = pTimeString.Contains("P") || pTimeString.Contains("PM");
+                bool AM = pTimeString.EndsWith("A", StringComparison.InvariantCultureIgnoreCase) || pTimeString.EndsWith("AM", StringComparison.InvariantCultureIgnoreCase);
+                bool PM = pTimeString.EndsWith("P", StringComparison.InvariantCultureIgnoreCase) || pTimeString.EndsWith("PM", StringComparison.InvariantCultureIgnoreCase);
 
                 pTimeString =
                     pTimeString.Replace("A", "")
@@ -320,6 +361,12 @@ namespace Services.Broadcast.Converters.RateImport
                         .Replace("p", "")
                         .Replace("M", "")
                         .Replace("m", "");
+
+                //ad colon separating minutes and hours if missing
+                if (!pTimeString.Contains(":") && pTimeString.Length > 2)
+                {
+                    pTimeString = pTimeString.Substring(0, pTimeString.Length - 2) + ":" + pTimeString.Substring(pTimeString.Length - 2);
+                }
 
                 if (pTimeString.Contains(":"))
                 {

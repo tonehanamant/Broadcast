@@ -149,7 +149,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var startTime = DateTime.Now;
                 fileImporter.ExtractFileData(request.RatesStream, inventoryFile, fileProblems);
-                if (inventoryFile.StationInventoryManifests == null || inventoryFile.StationInventoryManifests.Count == 0)
+                if (inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0)
                 {
                     throw new ApplicationException("Unable to parse any file records.");
                 }
@@ -166,7 +166,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 startTime = DateTime.Now;
 
-                var fileStationCodes = inventoryFile.StationInventoryManifests.Select(i => (int)i.Station.Code).Distinct().ToList();
+                var fileStationCodes = inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Select(i => (int)i.Station.Code).Distinct().ToList();
                 using (var transaction = new TransactionScopeWrapper(_CreateTransactionScope(TimeSpan.FromMinutes(20))))
                 {
                     //Lock stations before database operations
@@ -181,7 +181,7 @@ namespace Services.Broadcast.ApplicationServices
                         else
                         {
                             var stationLetters =
-                                inventoryFile.StationInventoryManifests.Where(i => i.Station.Code == stationCode)
+                                inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Where(i => i.Station.Code == stationCode)
                                     .First()
                                     .Station.LegacyCallLetters;
                             throw new ApplicationException(string.Format("Unable to update station. Station locked for editing {0}.", stationLetters));
@@ -207,7 +207,7 @@ namespace Services.Broadcast.ApplicationServices
                     transaction.Complete();
 
                     //unlock stations
-                    UnloackStations(lockedStationCodes, stationLocks);
+                    UnlockStations(lockedStationCodes, stationLocks);
 
                     endTime = DateTime.Now;
                     System.Diagnostics.Debug.WriteLine(
@@ -219,7 +219,7 @@ namespace Services.Broadcast.ApplicationServices
                 //Try to update the status of the file if possible
                 try
                 {
-                    UnloackStations(lockedStationCodes, stationLocks);
+                    UnlockStations(lockedStationCodes, stationLocks);
                     _inventoryFileRepository.UpdateInventoryFileStatus(inventoryFile.Id, InventoryFile.FileStatusEnum.Failed);
                 }
                 catch
@@ -237,7 +237,7 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private void UnloackStations(List<int> lockedStationCodes, List<IDisposable> stationLocks)
+        private void UnlockStations(List<int> lockedStationCodes, List<IDisposable> stationLocks)
         {
             foreach (var stationCode in lockedStationCodes)
             {

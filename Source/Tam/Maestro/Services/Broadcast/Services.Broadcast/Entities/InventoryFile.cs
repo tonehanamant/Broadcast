@@ -26,7 +26,7 @@ namespace Services.Broadcast.Entities
 
         public InventoryFile()
         {
-            StationInventoryManifests = new List<StationInventoryManifest>();
+            InventoryGroups = new List<StationInventoryGroup>();
         }
 
         public int Id { get; set; }
@@ -56,7 +56,7 @@ namespace Services.Broadcast.Entities
             set { _stationContacts = value;  }
         }
 
-        public List<StationInventoryManifest> StationInventoryManifests { get; set; }
+        public List<StationInventoryGroup> InventoryGroups { get; set; }
 
     }
 }

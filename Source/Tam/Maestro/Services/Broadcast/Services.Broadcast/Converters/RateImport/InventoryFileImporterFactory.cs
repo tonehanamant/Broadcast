@@ -34,7 +34,7 @@ namespace Services.Broadcast.Converters.RateImport
                     fileImporter = new CNNFileImporter();
                     break;
                 case InventoryFile.InventorySourceType.TTNW:
-                    fileImporter = new TTNWFileImporter();
+                    fileImporter = new TTNWExcelFileImporter();
                     break;
                 default:
                     fileImporter = new OpenMarketFileImporter();

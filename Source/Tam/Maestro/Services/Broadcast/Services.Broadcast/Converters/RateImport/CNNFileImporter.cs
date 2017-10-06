@@ -92,20 +92,15 @@ namespace Services.Broadcast.Converters.RateImport
                         var dps = _GetCellValue(row, "Time Periods").ToUpper();
                         var dayparts = _ParseDayparts(dps, stationName);
 
-                        //var contactInfo = _GetCellValue(row, "Traffic Contact Info").ToUpper();
-                        //var contactEmail = _GetCellValue(row, "Traffic Contact Email").ToUpper();
-                        //var stationContact = _ParseStationContact(contactInfo, contactEmail);
-                        //var comments = _GetCellValue(row, "Comments").ToUpper();
-
-                        inventoryFile.StationInventoryManifests.Add(new StationInventoryManifest()
-                        {
-                            Station = station,
-                            DaypartCode = daypartCode,
-                            SpotLengthId = spotLengthId,
-                            SpotsPerWeek = spots,
-                            SpotsPerDay = spotsPerday,
-                            Dayparts = dayparts                        
-                        });
+//                        inventoryFile.StationInventoryManifests.Add(new StationInventoryManifest()
+//                        {
+//                            Station = station,
+//                            DaypartCode = daypartCode,
+//                            SpotLengthId = spotLengthId,
+//                            SpotsPerWeek = spots,
+//                            SpotsPerDay = spotsPerday,
+//                            Dayparts = dayparts                        
+//                        });
                     }
                 }
             }
@@ -212,7 +207,6 @@ namespace Services.Broadcast.Converters.RateImport
                         dayOfWeekPart = dayOfWeekPart.Replace(";", ",");
 
                         var timeOfDayPart = daypart.Substring(0, lastColon);
-                        timeOfDayPart = timeOfDayPart.Replace("A", "AM").Replace("P", "PM");
 
                         daypart = string.Format("{1} {0}", timeOfDayPart, dayOfWeekPart);
                         dayparts.Add(ParseStringToDaypart(daypart, station));

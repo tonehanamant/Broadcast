@@ -177,6 +177,7 @@
     <Compile Include="Converters\PlaybackTypeConverter.cs" />
     <Compile Include="Converters\ProposalScxDataPrep.cs" />
     <Compile Include="Converters\ProposalScxConverter.cs" />
+    <Compile Include="Converters\RateImport\TTNWExcelFileImporter.cs" />
     <Compile Include="DaypartCache.cs" />
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\BvsTrackingAudience.cs" />

@@ -1679,6 +1679,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Ignore]
+        public void LoadTTNWExcelFile()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var filename = @".\Files\TTWN_06.09.17.xlsx";
+                var request = new InventoryFileSaveRequest();
+                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+                request.FileName = filename;
+                request.UserName = "IntegrationTestUser";
+                request.RateSource = "TTNW";
+                request.BlockName = "Integration Test";
+
+                var flightWeeks = new List<FlightWeekDto>();
+                flightWeeks.Add(new FlightWeekDto()
+                {
+                    StartDate = new DateTime(2016, 10, 31),
+                    EndDate = new DateTime(2016, 11, 06),
+                    IsHiatus = false
+                });
+
+                request.FlightEndDate = new DateTime(2016, 11, 06);
+                request.FlightStartDate = new DateTime(2016, 11, 27);
+                request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
+
+                var result = _inventoryFileService.SaveInventoryFile(request);
+                Assert.IsEmpty(result.Problems);
+            }
+        }
+
+        [Test]
+        [Ignore]
         public void CanLoadTTNWFile()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
