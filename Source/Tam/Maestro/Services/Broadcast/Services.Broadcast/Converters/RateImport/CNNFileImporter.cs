@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using Services.Broadcast.Entities;
+﻿using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Practices.ObjectBuilder2;
+using Services.Broadcast.ApplicationServices;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -15,6 +15,7 @@ namespace Services.Broadcast.Converters.RateImport
 {
     public class CNNFileImporter : InventoryFileImporterBase
     {
+        public const string NoGoodDaypartsFound = "There are no valid dayparts in the file";
         private static readonly List<string> XlsFileHeaders = new List<string>()
         {
             "Customer Name",
@@ -28,6 +29,13 @@ namespace Services.Broadcast.Converters.RateImport
             "Traffic Contact Email",
             "Comments"
         };
+
+        private ICNNStationInventoryGroupService _CNNStationInventoryGroupService;
+
+        public CNNFileImporter(ICNNStationInventoryGroupService CNNStationInventoryGroupService)
+        {
+            _CNNStationInventoryGroupService = CNNStationInventoryGroupService;
+        }
 
         private static readonly List<string> _ValidDaypartCodes = new List<string>()
         {
@@ -59,6 +67,9 @@ namespace Services.Broadcast.Converters.RateImport
             {
                 _ValidateInputFileParams();
 
+                DateTime nextMondaysDate =
+                    DateTime.Today.AddDays(7 + ((int) DateTime.Today.DayOfWeek - (int) DayOfWeek.Monday));
+
                 using (var excelPackage = new OfficeOpenXml.ExcelPackage(stream))
                 {
                     _Worksheet = excelPackage.Workbook.Worksheets.First();
@@ -70,10 +81,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                         var stationName = _GetCellValue(row, "Customer Name").ToUpper();
                         var station = _ParseStationCallLetters(stationName);
-                        if (station == null)
-                        {
-                            _AddProblem(string.Format("Invalid station: {0}", stationName));
-                        }
+
                         var daypartCode = _GetCellValue(row, "Barter Network");
                         if (!_ValidDaypartCodes.Contains(daypartCode))
                         {
@@ -92,15 +100,33 @@ namespace Services.Broadcast.Converters.RateImport
                         var dps = _GetCellValue(row, "Time Periods").ToUpper();
                         var dayparts = _ParseDayparts(dps, stationName);
 
-//                        inventoryFile.StationInventoryManifests.Add(new StationInventoryManifest()
-//                        {
-//                            Station = station,
-//                            DaypartCode = daypartCode,
-//                            SpotLengthId = spotLengthId,
-//                            SpotsPerWeek = spots,
-//                            SpotsPerDay = spotsPerday,
-//                            Dayparts = dayparts                        
-//                        });
+                        var effectiveDateValue = _GetCellValue(row, "Effective Date of New Barter Added").ToUpper();
+
+                        DateTime effectiveDate;
+                        if (!string.IsNullOrEmpty(effectiveDateValue))
+                        {
+                            if (!DateTime.TryParse(effectiveDateValue, out effectiveDate))
+                                throw new Exception(string.Format("Invalid effective date {0} found.",effectiveDateValue));
+                        }
+                        else
+                        {
+                            effectiveDate = nextMondaysDate;
+                        }
+
+                        if (!_FileProblems.Any())
+                        {
+                            AddToGroup(new StationInventoryManifest()
+                            {
+                                Station = station,
+                                EffectiveDate = effectiveDate,
+                                DaypartCode = daypartCode,
+                                SpotLengthId = spotLengthId,
+                                SpotsPerWeek = spots,
+                                SpotsPerDay = spotsPerday,
+                                Dayparts = dayparts
+
+                            });
+                        }
                     }
                 }
             }
@@ -110,7 +136,78 @@ namespace Services.Broadcast.Converters.RateImport
                     string.Format("Unable to parse rate file: {0} The file may be invalid: {1}", e.Message,inventoryFile.FileName), e);
             }
             if (!_FoundGoodDaypart)
-                throw new Exception("There are no valid dayparts in the file");
+                throw new Exception(NoGoodDaypartsFound);
+
+            inventoryFile.InventoryGroups = _InventoryGroups.Values.SelectMany(v => v).ToList();
+        }
+
+        private Dictionary<string, List<StationInventoryGroup>> _InventoryGroups = new Dictionary<string, List<StationInventoryGroup>>();
+        private void AddToGroup(StationInventoryManifest manifest)
+        {
+            string dpCode = manifest.DaypartCode;
+            var groups = EnsureGroup(dpCode);
+            int maxSlots = _CNNStationInventoryGroupService.GetSlotCount(dpCode);
+
+            var manifests = groups.SelectMany(g => g.Manifests)
+                .Where(m =>    m != null 
+                            && m.Dayparts.All(dp => manifest.Dayparts.Any(mdp => mdp == dp))
+                            && m.Station.Code == manifest.Station.Code
+                            && m.SpotLengthId == manifest.SpotLengthId).ToList();
+
+            int slotToUse = manifests.Count()%maxSlots + 1;
+            for (int c = 1; c <= manifest.SpotsPerWeek; c++)
+            {
+                var group = groups.Single(g => g.SlotNumber == slotToUse);
+                manifests = group.Manifests.Where(m => m != null
+                                    && m.Dayparts.All(dp => manifest.Dayparts.Any(mdp => mdp == dp))
+                                    && m.Station.Code == manifest.Station.Code
+                                    && m.SpotLengthId == manifest.SpotLengthId)
+                                    .ToList();
+                if (!manifests.Any())
+                {
+                    var mani = new StationInventoryManifest()
+                    {
+                        DaypartCode = manifest.DaypartCode,
+                        SpotLengthId = manifest.SpotLengthId,
+                        Dayparts = manifest.Dayparts,
+                        SpotsPerDay = manifest.SpotsPerDay,
+                        Station = manifest.Station,
+                        SpotsPerWeek = 0
+                    };
+                    manifests.Add(mani);
+                    group.Manifests.Add(mani);
+                }
+                manifests.First().SpotsPerWeek++;
+
+                slotToUse++;
+                if (slotToUse > maxSlots)
+                    slotToUse = 1;
+            }
+        }
+
+        /// <summary>
+        /// Gets StationInventoryGroups for the given daypart.  Creates new ones if needed.
+        /// </summary>
+        private List<StationInventoryGroup> EnsureGroup(string dpCode)
+        {
+            List<StationInventoryGroup> groups;
+            if (!_InventoryGroups.TryGetValue(dpCode, out groups))
+            {
+                groups = new List<StationInventoryGroup>();
+
+                int slotCount = _CNNStationInventoryGroupService.GetSlotCount(dpCode);
+                for (int slotNumber = 1; slotNumber <= slotCount; slotNumber++)
+                {
+                    groups.Add(new StationInventoryGroup()
+                    {
+                        DaypartCode = dpCode,
+                        SlotNumber = slotNumber,
+                        Name = _CNNStationInventoryGroupService.GenerateGroupName(dpCode, slotNumber)
+                    });
+                }
+                _InventoryGroups.Add(dpCode, groups);
+            }
+            return groups;
         }
 
         private void _AddProblem(string description, string stationLetters = null, string programName = null,
@@ -187,7 +284,6 @@ namespace Services.Broadcast.Converters.RateImport
         private List<DisplayDaypart> _ParseDayparts(string daypartInput, string station)
         {
             List<DisplayDaypart> dayparts = new List<DisplayDaypart>();
-            bool badDaypart = false;
             try
             {
                 var dps = Regex.Replace(daypartInput, "\\s+", "\r\n");
@@ -206,25 +302,29 @@ namespace Services.Broadcast.Converters.RateImport
                         var dayOfWeekPart = daypart.Substring(lastColon + 1);
                         dayOfWeekPart = dayOfWeekPart.Replace(";", ",");
 
-                        var timeOfDayPart = daypart.Substring(0, lastColon);
+                        var timeOfDaypart = daypart.Substring(0, lastColon);
+                        var splitTimeOfDaypart = timeOfDaypart.Split('-');
+                        if (splitTimeOfDaypart.Length != 2 ||
+                            (!splitTimeOfDaypart[0].ToUpper().EndsWith("A") && !splitTimeOfDaypart[0].ToUpper().EndsWith("P"))
+                            ||
+                            (!splitTimeOfDaypart[1].ToUpper().EndsWith("A") && !splitTimeOfDaypart[1].ToUpper().EndsWith("P")))
+                            throw new Exception();
 
-                        daypart = string.Format("{1} {0}", timeOfDayPart, dayOfWeekPart);
+                        daypart = string.Format("{1} {0}", timeOfDaypart, dayOfWeekPart);
                         dayparts.Add(ParseStringToDaypart(daypart, station));
+                        _FoundGoodDaypart = true;
                     }
                     catch (Exception e)
                     {
-                        _AddProblem(e.Message);
+                        _AddProblem(string.Format("Invalid daypart '{0}' on Station {1}.", dp, station));
                     }
                 });
 
             }
             catch (Exception)
             {
-                badDaypart = true;
                 _AddProblem(string.Format("Invalid daypart for station: {0}",station));
             }
-            if (!badDaypart)
-                _FoundGoodDaypart = true;
 
             return dayparts;
         }

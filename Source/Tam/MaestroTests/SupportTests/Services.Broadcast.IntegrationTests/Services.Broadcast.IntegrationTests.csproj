@@ -211,7 +211,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Files\CNNAMPMBarterObligations.xlsx">
+    <None Include="Files\CNNAMPMBarterObligations_AllBadDayparts.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\CNNAMPMBarterObligations_BadDayparts.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\CNNAMPMBarterObligations_BadStations.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\CNNAMPMBarterObligations_Clean.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\Assembly Schedule For Mapping.csv">

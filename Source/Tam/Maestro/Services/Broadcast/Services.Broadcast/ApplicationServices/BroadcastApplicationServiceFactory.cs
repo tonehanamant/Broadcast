@@ -3,6 +3,7 @@ using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
+using Services.Broadcast.ApplicationServices.Inventory;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Converters.RateImport;
@@ -97,6 +98,9 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalDetailWeekTotalsCalculationEngine, ProposalDetailWeekTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalTotalsCalculationEngine, ProposalTotalsCalculationEngine>();
 
+            unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();
+            unityContainer.RegisterType<IStationInventoryManifestService, StationInventoryManifestService>();
+            
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
             var daypartRepo = repoFactory.GetDataRepository<IDisplayDaypartRepository>();

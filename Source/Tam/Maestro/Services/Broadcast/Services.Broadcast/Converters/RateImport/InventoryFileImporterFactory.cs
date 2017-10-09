@@ -1,4 +1,5 @@
 ﻿using Common.Services;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 
@@ -16,13 +17,19 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
 
+        private ICNNStationInventoryGroupService _CNNStationInventoryGroupService;
+
         public InventoryFileImporterFactory(BroadcastDataDataRepositoryFactory broadcastDataFactory,
-            IDaypartCache daypartCache, MediaMonthAndWeekAggregateCache mediaWeekCache, IBroadcastAudiencesCache audiencesCache)
+                                            IDaypartCache daypartCache, 
+                                            MediaMonthAndWeekAggregateCache mediaWeekCache, 
+                                            IBroadcastAudiencesCache audiencesCache,
+                                            ICNNStationInventoryGroupService CNNStationInventoryGroupService)
         {
             _broadcastDataDataRepositoryFactory = broadcastDataFactory;
             _daypartCache = daypartCache;
             _MediaMonthAndWeekAggregateCache = mediaWeekCache;
             _AudiencesCache = audiencesCache;
+            _CNNStationInventoryGroupService = CNNStationInventoryGroupService;
         }
 
         public InventoryFileImporterBase GetFileImporterInstance(InventoryFile.InventorySourceType inventorySource)
@@ -31,7 +38,7 @@ namespace Services.Broadcast.Converters.RateImport
             switch (inventorySource)
             {
                 case InventoryFile.InventorySourceType.CNN:
-                    fileImporter = new CNNFileImporter();
+                    fileImporter = new CNNFileImporter(_CNNStationInventoryGroupService);
                     break;
                 case InventoryFile.InventorySourceType.TTNW:
                     fileImporter = new TTNWExcelFileImporter();

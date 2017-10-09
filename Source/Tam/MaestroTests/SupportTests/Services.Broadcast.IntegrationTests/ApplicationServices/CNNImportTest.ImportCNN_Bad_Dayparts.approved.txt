@@ -1,0 +1,20 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Invalid daypart '5:30:A-6A:M-F' on Station KABY.",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Invalid daypart '6-6:30P:M-F' on Station KAEF.",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Invalid daypart '10P-10:35P:M-FASD' on Station KAMC.",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

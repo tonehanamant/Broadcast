@@ -164,6 +164,10 @@ namespace Services.Broadcast.ApplicationServices
                 endTime = DateTime.Now;
                 System.Diagnostics.Debug.WriteLine(string.Format("Completed file validation in {0}", endTime - startTime));
 
+                if (fileProblems.Any())
+                {
+                    
+                }
                 startTime = DateTime.Now;
 
                 var fileStationCodes = inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Select(i => (int)i.Station.Code).Distinct().ToList();
@@ -199,7 +203,7 @@ namespace Services.Broadcast.ApplicationServices
                         }
                         _ThirdPartySpotCostCalculationEngine.CalculateSpotCost(request, inventoryFile);
                     }
-
+                    
                     inventoryFile.FileStatus = InventoryFile.FileStatusEnum.Loaded;
                     _SaveInventoryFileManifests(request, inventoryFile);
                     _SaveInventoryFileContacts(request, inventoryFile);

@@ -1,0 +1,14 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Invalid station: DSF",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Invalid station: AF",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

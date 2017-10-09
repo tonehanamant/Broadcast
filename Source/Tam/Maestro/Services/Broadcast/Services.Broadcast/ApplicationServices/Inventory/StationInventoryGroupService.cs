@@ -8,10 +8,7 @@ namespace Services.Broadcast.ApplicationServices
 
     public interface IStationInventoryGroupService : IApplicationService
     {
-        /// <summary>
-        /// just an idea to kick around
-        /// </summary>
-        List<StationInventoryGroup> EnsureGroupsByCode(string daypartCode);
+        string GenerateGroupName(string daypartCode, int slotNumber);
     }
-    
+
 }

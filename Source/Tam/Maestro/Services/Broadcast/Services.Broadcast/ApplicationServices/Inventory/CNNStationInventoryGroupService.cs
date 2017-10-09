@@ -5,7 +5,7 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface ICNNStationInventoryGroupService : IStationInventoryGroupService
     {
-        
+        int GetSlotCount(string daypartCode);
     }
     public class CNNStationInventoryGroupService : ICNNStationInventoryGroupService
     {
@@ -13,9 +13,17 @@ namespace Services.Broadcast.ApplicationServices
         public CNNStationInventoryGroupService()
         {
         }
-        public List<StationInventoryGroup> EnsureGroupsByCode(string daypartCode)
+
+        public int GetSlotCount(string daypartCode)
         {
-            return new List<StationInventoryGroup>();
+            return 5;
         }
-    }   
+
+        public string GenerateGroupName(string daypartCode,int slotNumber)
+        {
+            return daypartCode + slotNumber;
+        }
+
+
+    }
 }

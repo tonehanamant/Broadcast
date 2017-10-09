@@ -183,7 +183,6 @@
     <Compile Include="Entities\BvsTrackingAudience.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
     <Compile Include="Entities\IHavePostingBooks.cs" />
-    <Compile Include="Entities\InventorySource.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
     <Compile Include="Entities\OpenMarketInventoryAllocationSnapshotDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\BaseProposalInventoryWeekDto.cs" />
@@ -218,6 +217,7 @@
     <Compile Include="Entities\StationDetailDaypart.cs" />
     <Compile Include="Entities\StationImpressions.cs" />
     <Compile Include="Entities\StationInventoryGroup.cs" />
+    <Compile Include="Entities\InventorySource.cs" />
     <Compile Include="Entities\StationInventoryManifest.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
     <Compile Include="Entities\ValidationWarningDto.cs" />
