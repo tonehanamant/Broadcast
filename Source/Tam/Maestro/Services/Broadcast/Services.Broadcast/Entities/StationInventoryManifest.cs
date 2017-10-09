@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Entities
@@ -10,7 +11,12 @@ namespace Services.Broadcast.Entities
         public string DaypartCode { get; set; }
         public int SpotLengthId { get; set; } 
         public int SpotsPerWeek { get; set; }
-        public int SpotsPerDay { get; set; }
+        public int? SpotsPerDay { get; set; }
         public List<DisplayDaypart> Dayparts { get; set; }
+
+        // todo: need to fill in
+        public int InvetoryFileId { get; set; }
+        public int InventorySourceId { get; set; }
+        public DateTime EffectiveDate { get; set; }
     }
 }

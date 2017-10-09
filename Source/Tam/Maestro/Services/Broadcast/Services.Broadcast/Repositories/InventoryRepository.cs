@@ -15,12 +15,12 @@ namespace Services.Broadcast.Repositories
 {
     public interface IInventoryRepository : IDataRepository
     {
-        InventoryDetail GetInventoryDetailByDaypartCodeAndRateSource(string daypartCode, InventoryFile.InventorySourceType? inventorySource);
-        int GetMaximunNumberOfSpotsAvailableByDaypartCode(string daypartCode, InventoryFile.InventorySourceType? inventorySource,
-            int mediaWeekId, int spotLengthId);
-        void SaveInventoryDetail(InventoryDetail inventoryDetail);
-        //List<StationProgram> GetStationProgramsPerSpotAvailable(int? spots, int mediaWeekId, RatesFile.RateSourceType? inventorySource, int spotLengthId, string daypartCode);
-        void UpdateInventoryDetail(InventoryDetail inventory);
+        List<InventorySource> GetInventorySources();
+        int InventoryExists(string daypartCode, short stationCode, int spotLengthId, int spotsPerWeek, DateTime effectiveDate);
+        void SaveInventoryGroups(List<StationInventoryGroup> inventoryGroups);
+        void UpdateInventoryGroups(List<StationInventoryGroup> inventoryGroups);
+        List<StationInventoryGroup> GetInventoryGroupsById(int id);
+        List<StationInventoryGroup> GetInventoryGroupsByDaypartCode(string daypartCode);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -32,38 +32,71 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public InventoryDetail GetInventoryDetailByDaypartCodeAndRateSource(string daypartCode,
-            InventoryFile.InventorySourceType? inventorySource)
+        public List<InventorySource> GetInventorySources()
         {
-                return new InventoryDetail();
+            return _InReadUncommitedTransaction(
+                context => (from a in context.inventory_sources
+                    select new InventorySource()
+                    {
+                        Id = a.id,
+                        InventorySourceType = (InventoryFile.InventorySourceType) a.inventory_source_type,
+                        IsActive = a.is_active,
+                        Name = a.name
+                    }).ToList());
         }
 
-        public int GetMaximunNumberOfSpotsAvailableByDaypartCode(string daypartCode,
-            InventoryFile.InventorySourceType? inventorySource, int mediaWeekId, int spotLengthId)
+
+        public int InventoryExists(string daypartCode, short stationCode, int spotLengthId, int spotsPerWeek,
+            DateTime effectiveDate)
         {
-            //TODO: Fixme or remove.
-            throw new NotImplementedException();
-            //return _InReadUncommitedTransaction(
-            //    context =>
-            //    {
-            //        //Taking all the programs that match the daypart(s) included in the file, group by daypart, week, station and find maximum spots. 
-            //        //That will be the maximum number of spots available.
-            //        var programsMatch = (from p in context.station_programs
-            //            join f in context.station_program_flights on p.id equals f.station_program_id
-            //            where string.Compare(p.daypart_code, daypartCode, StringComparison.OrdinalIgnoreCase) == 0 &&
-            //                  p.rate_source == (byte?) rateSource.Value &&
-            //                  f.media_week_id == mediaWeekId &&
-            //                  p.spot_length_id == spotLengthId
-            //            select new {p.daypart_code, f.media_week_id, p.station_code, f.spots}).GroupBy(
-            //                a => new {a.daypart_code, a.media_week_id, a.station_code}).ToList();
-                    
-            //        return programsMatch.Any()
-            //            ? programsMatch.Select(z => z.ToList().Max(a => a.spots ?? 0)).Max()
-            //            : 0;
-            //    });
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var inventoryId = (from i in context.station_inventory_group
+                        join m in context.station_inventory_manifest on i.id equals m.station_inventory_group_id
+                        where i.daypart_code == daypartCode &&
+                              m.station_code == stationCode &&
+                              m.spot_length_id == spotLengthId &&
+                              m.spots_per_week == spotsPerWeek &&
+                              m.effective_date == effectiveDate
+                        select i.id).SingleOrDefault();
+
+                    return inventoryId;
+                });
         }
 
-        public void SaveInventoryDetail(InventoryDetail inventoryDetail)
+        public void SaveInventoryGroups(List<StationInventoryGroup> inventoryGroups)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    // todo: finish retrieval
+                    //var newGroups = inventoryGroups.Select(inventoryGroup => new station_inventory_group()
+                    //{
+                    //    daypart_code = inventoryGroup.DaypartCode, 
+                    //    inventory_source_id = 0, 
+                    //    inventory_sources = null, 
+                    //    name = inventoryGroup.Name, 
+                    //    slot_number = (byte) inventoryGroup.SlotNumber, 
+                    //    station_inventory_manifest = inventoryGroup.Manifests.Select(manifest => new station_inventory_manifest()
+                    //    {
+                    //        station_code = (short)manifest.Station.Code,
+                    //        spot_length_id = manifest.SpotLengthId,
+                    //        spots_per_day = manifest.SpotsPerDay,
+                    //        spots_per_week = manifest.SpotsPerWeek,
+                    //        effective_date = manifest.EffectiveDate,
+                    //        inventory_file_id = manifest.InvetoryFileId,
+                    //        inventory_source_id = manifest.InventorySourceId
+                    //        // audiences and dayparts neeed to be done
+                    //    }).ToList()
+                    //}).ToList();
+
+                    //context.station_inventory_group.AddRange(newGroups);
+                    //context.SaveChanges();
+                });
+        }
+
+        public void UpdateInventoryGroups(List<StationInventoryGroup> inventoryGroups)
         {
             _InReadUncommitedTransaction(
                 context =>
@@ -72,56 +105,56 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        //TODO: Fixme or remove.
-        //public List<StationProgram> GetStationProgramsPerSpotAvailable(int? spots, int mediaWeekId,
-        //    RatesFile.RateSourceType? inventorySource, int spotLengthId, string daypartCode)
-        //{
-        //    return _InReadUncommitedTransaction(
-        //        context =>
-        //        {
-        //            // For each slot and week combination (looking at the weeks specified during file upload) calculate the total number of stations 
-        //            // that have same or more spots available as that slot level. Create slot/week records.
-        //            return (from p in context.station_programs
-        //                    join f in context.station_program_flights on p.id equals f.station_program_id
-        //                    where f.media_week_id == mediaWeekId &&
-        //                          p.daypart_code == daypartCode &&
-        //                          p.rate_source == (byte?)rateSource &&
-        //                          p.spot_length_id == spotLengthId &&
-        //                          f.spots >= spots
-        //                    select new StationProgram()
-        //                    {
-        //                        DaypartCode = p.daypart_code,
-        //                        StationCode = p.station_code,
-        //                        Daypart = new DisplayDaypart()
-        //                        {
-        //                            Id = p.daypart_id
-        //                        },
-        //                        FixedPrice = p.fixed_price,
-        //                        FlightWeeks = p.station_program_flights.Select(flight => new StationProgramFlightWeek()
-        //                        {
-        //                            Id = flight.id,
-        //                            Rate15s = flight.C15s_rate,
-        //                            Rate30s = flight.C30s_rate,
-        //                            Rate60s = flight.C60s_rate,
-        //                            Rate90s = flight.C90s_rate,
-        //                            Rate120s = flight.C120s_rate,
-        //                            FlightWeek = new DisplayMediaWeek()
-        //                            {
-        //                                Id = flight.media_week_id
-        //                            }
-        //                        }).ToList()
-        //                    }).ToList();
-        //        });
-        //}
-
-        public void UpdateInventoryDetail(InventoryDetail inventory)
+        public List<StationInventoryGroup> GetInventoryGroupsById(int id)
         {
-            _InReadUncommitedTransaction(
+            return _InReadUncommitedTransaction(
                 context =>
                 {
-                    
-                });
+                    // todo: to be finished
+                    return (from g in context.station_inventory_group
+                        join m in context.station_inventory_manifest on g.id equals m.station_inventory_group_id
+                        join l in context.station_inventory_manifest_audiences on m.id equals
+                            l.station_inventory_manifest_id
+                        where g.id == id
+                        select new StationInventoryGroup()
+                        {
+                            Id = m.id,
+                            Name = g.name,
+                            DaypartCode = g.daypart_code,
+                            SlotNumber = g.slot_number,
+                            Manifests = g.station_inventory_manifest.Select(manifest => new StationInventoryManifest()
+                            {
+                                Id = manifest.id,
+                                Station =
+                                    new DisplayBroadcastStation()
+                                    {
+                                        Affiliation = manifest.station.affiliation,
+                                        Code = manifest.station_code,
+                                        CallLetters = manifest.station.station_call_letters,
+                                        LegacyCallLetters = manifest.station.legacy_call_letters,
+                                        MarketCode = manifest.station.market_code
+                                    },
+                                DaypartCode = g.daypart_code,
+                                SpotLengthId = manifest.spot_length_id,
+                                SpotsPerWeek = manifest.spots_per_week,
+                                SpotsPerDay = manifest.spots_per_day,
+                                //Dayparts = ??
+
+                                InvetoryFileId = manifest.inventory_file_id,
+                                InventorySourceId = manifest.inventory_source_id,
+                                EffectiveDate = manifest.effective_date
+                            }).ToList()
+                        }).ToList();
+                });            
         }
 
+        public List<StationInventoryGroup> GetInventoryGroupsByDaypartCode(string daypartCode)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return new List<StationInventoryGroup>();
+                });                        
+        }
     }
 }

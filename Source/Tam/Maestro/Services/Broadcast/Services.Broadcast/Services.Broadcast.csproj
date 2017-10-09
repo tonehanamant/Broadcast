@@ -183,6 +183,7 @@
     <Compile Include="Entities\BvsTrackingAudience.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
     <Compile Include="Entities\IHavePostingBooks.cs" />
+    <Compile Include="Entities\InventorySource.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
     <Compile Include="Entities\OpenMarketInventoryAllocationSnapshotDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\BaseProposalInventoryWeekDto.cs" />
