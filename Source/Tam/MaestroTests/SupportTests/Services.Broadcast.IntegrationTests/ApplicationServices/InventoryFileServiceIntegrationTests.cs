@@ -18,7 +18,6 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
-    [Ignore]
     [TestFixture]
     public class InventoryFileServiceIntegrationTests
     {
@@ -30,15 +29,80 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var request = new InventoryFileSaveRequest();
-                
-                request.RatesStream = new FileStream(@".\Files\CNNAMPMBarterObligations_Clean.xlsx",
+                var flightWeeks = new List<FlightWeekDto>();
+                flightWeeks.Add(new FlightWeekDto()
+                {
+                    StartDate = new DateTime(2016, 10, 31),
+                    EndDate = new DateTime(2016, 11, 06),
+                    IsHiatus = false
+                });
+
+                request.RatesStream = new FileStream(
+                    @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
                     FileMode.Open,
                     FileAccess.Read);
-                request.InventorySource =
+                request.FileName = "CNNAMPMBarterObligations_Clean.xlsx";
+                request.InventorySource = "CNN";
                 request.UserName = "IntegrationTestUser";
+                request.BlockName = "IntegrationTest Block";
+                request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
                 _InventoryFileService.SaveInventoryFile(request);
+            }
+        }
+
+
+        [Test]
+        [ExpectedException(typeof(BroadcastDuplicateInventoryFileException))]
+        public void ThrowsExceptionWhenLoadingSameInventoryFileAgain()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest();
+                var request2 = new InventoryFileSaveRequest();
+                var flightWeeks = new List<FlightWeekDto>();
+                flightWeeks.Add(new FlightWeekDto()
+                {
+                    StartDate = new DateTime(2016, 10, 31),
+                    EndDate = new DateTime(2016, 11, 06),
+                    IsHiatus = false
+                });
+
+                request.RatesStream = new FileStream(
+                    @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
+                    FileMode.Open,
+                    FileAccess.Read);
+                request.FileName = "CNNAMPMBarterObligations_Clean.xlsx";
+                request.InventorySource = "CNN";
+                request.UserName = "IntegrationTestUser";
+                request.BlockName = "IntegrationTest Block";
+                request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
+
+                _InventoryFileService.SaveInventoryFile(request);
+
+                request2.RatesStream = new FileStream(
+                    @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
+                    FileMode.Open,
+                    FileAccess.Read);
+                request2.FileName = "CNNAMPMBarterObligations_Clean.xlsx";
+                request2.InventorySource = "CNN";
+                request2.UserName = "IntegrationTestUser";
+                request2.BlockName = "IntegrationTest Block";
+                request2.FlightWeeks = flightWeeks;
+                _InventoryFileService.SaveInventoryFile(request);
+            }
+        }
+
+    
+        [Test]
+        public void CanLoadGenres()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var genres = _InventoryFileService.GetAllGenres();
+                Assert.IsTrue(genres.Any());
             }
         }
 
@@ -72,37 +136,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     _InventoryFileService.UnlockStation(stationCode);
                 }
-                
+
             }
         }
 
-        [Test]
-        [ExpectedException(typeof(BroadcastDuplicateInventoryFileException))]
-        public void ThrowsExceptionWhenLoadingSameInventoryFileAgain()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest();
-                var request2 = new InventoryFileSaveRequest();
-
-                request.RatesStream = new FileStream(
-                    @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.UserName = "IntegrationTestUser";
-                request.RatingBook = 416;
-
-                _InventoryFileService.SaveInventoryFile(request);
-
-                request2.RatesStream = new FileStream(
-                    @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request2.UserName = "IntegrationTestUser";
-                _InventoryFileService.SaveInventoryFile(request);
-            }
-        }
-
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetAllStations()
@@ -123,6 +161,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetAllStationsWithTodaysData()
@@ -144,6 +183,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetAllStationsWithoutTodaysData()
@@ -166,6 +206,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetStationDetailsByCode()
@@ -201,7 +242,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
 
-
+        [Ignore]
         [Test]
         [UseReporter(typeof (DiffReporter))]
         public void FindContacts()
@@ -221,6 +262,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ImportNewStationContact()
@@ -295,6 +337,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         public void SaveStationContact()
         {
@@ -324,6 +367,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [ExpectedException(typeof(Exception))]
         public void ThrowsExceptionWhenSavingContactWithEmptyName()
@@ -391,6 +435,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         public void CanDeleteStationContact()
         {
@@ -444,6 +489,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void LoadsInventoryFileWithKnownAndUnknownStations()
@@ -474,6 +520,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void LoadsInventoryFileWithUnknownSpotLength()
@@ -500,36 +547,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void LoadsProgramsWithoutRates()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest();
-
-                request.RatesStream = new FileStream(
-                    @".\Files\programs_without_rates_or_flights_wvtm.xml",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.UserName = "IntegrationTestUser";
-                request.FileName = "programs_without_rates_or_flights_wvtm.xml";
-                request.RatingBook = 416;
-
-                var result = _InventoryFileService.SaveInventoryFile(request);
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
-
             }
         }
 
@@ -606,15 +623,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Test]
-        public void CanLoadGenres()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var genres = _InventoryFileService.GetAllGenres();
-                Assert.IsTrue(genres.Any());
-            }
-        }
 
         [Ignore]
         [Test]
@@ -677,6 +685,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void LoadInventoryFileWithOverlapingFlightWeeks()
@@ -817,7 +826,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadInventoryFileAndFillAllSpotLegnthsWhenSpotLengthIs30()
@@ -1737,14 +1746,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
-
+        [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no known stations in the file", MatchType = MessageMatch.Contains)]
         public void CNNFileHasAllStationsUnknown()
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\CNNFileHasInvalidStations.csv";
+                var filename = @".\Files\";
                 var request = new InventoryFileSaveRequest();
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
@@ -1887,6 +1896,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no valid dayparts in the file ", MatchType = MessageMatch.Contains)]
         public void TTNWFileHasAllDaypartInvalid()
@@ -1917,35 +1927,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Test]
-        [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no valid dayparts in the file ", MatchType = MessageMatch.Contains)]
-        public void CNNFileHasAllDaypartInvalid()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var filename = @".\Files\CNNFileHasAllDaypartsInvalid.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
-                {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
-
-                var result = _InventoryFileService.SaveInventoryFile(request);
-            }
-        }
 
         [Ignore]
         [Test]
@@ -1979,6 +1960,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
 
+        [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no valid spot length in the file", MatchType = MessageMatch.Contains)]
         public void TTNWFileHasAllSpotLengthInvalid()
@@ -2040,6 +2022,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no valid spot length in the file", MatchType = MessageMatch.Contains)]
         public void CNNFileHasAllSpotLengthInvalid()
@@ -2070,6 +2053,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "Unable to parse any file records", MatchType = MessageMatch.Contains)]
         public void CNNFileHasAllEntriesInvalid()
@@ -2131,6 +2115,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "Unable to parse any file records", MatchType = MessageMatch.Contains)]
         public void TTNWFileHasAllEntriesInvalid()
@@ -2722,6 +2707,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadInitialRatesData()
@@ -2930,6 +2916,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "Daypart code", MatchType = MessageMatch.Contains)]
         public void CNNThrowExceptionWhenMultipleFixedPriceForSameDaypart()

@@ -267,6 +267,7 @@ namespace Services.Broadcast.ApplicationServices
         private void _SaveInventoryFileContacts(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
             //TODO: Fixme or remove.
+            return;
             //var fileStationCodes = ratesFile.StationPrograms.Select(p => (int)p.StationCode).Distinct().ToList();
             List<StationContact> existingStationContacts = null;//_stationContactsRepository.GetStationContactsByStationCode(fileStationCodes);
 

@@ -12,6 +12,7 @@ using NUnit.Framework;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
+using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -211,6 +212,58 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.Catch(() => importer.ExtractFileData(stream, ratesFile, fileProblems),
                 CNNFileImporter.NoGoodDaypartsFound);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void LoadInventoryFile_Duplicate_Inventory()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filename = @".\Files\CNNAMPMBarterObligations_Duplicate_Inventory.xlsx";
+
+                var factory = IntegrationTestApplicationServiceFactory.Instance.Resolve<IInventoryFileImporterFactory>();
+                var importer = factory.GetFileImporterInstance(InventoryFile.InventorySourceType.CNN);
+
+                var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+                var ratesFile = new InventoryFile();
+
+                List<InventoryFileProblem> fileProblems = new List<InventoryFileProblem>();
+
+                var flightWeeks = new List<FlightWeekDto>();
+                flightWeeks.Add(new FlightWeekDto()
+                {
+                    StartDate = new DateTime(2016, 10, 31),
+                    EndDate = new DateTime(2016, 11, 06),
+                    IsHiatus = false
+                });
+
+                var request = new InventoryFileSaveRequest()
+                {
+                    FileName = filename,
+                    RatesStream = stream,
+                    BlockName = "integration Test",
+                    FlightWeeks = flightWeeks,
+                    FlightEndDate = new DateTime(2016, 10, 31),
+                    FlightStartDate = new DateTime(2016, 11, 27)
+                };
+                importer.LoadFromSaveRequest(request);
+                importer.ExtractFileData(stream, ratesFile, fileProblems);
+
+                if (!fileProblems.Any())
+                {
+                    throw new Exception("Duplicates expected, but not found :(");
+                }
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(fileProblems, jsonSettings);
+                Approvals.Verify(json);
+            }
         }
 
     }

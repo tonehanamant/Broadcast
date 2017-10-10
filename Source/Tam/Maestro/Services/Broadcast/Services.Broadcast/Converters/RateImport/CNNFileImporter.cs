@@ -7,8 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Practices.ObjectBuilder2;
 using Services.Broadcast.ApplicationServices;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
+using Services.Broadcast.Validators;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Converters.RateImport
@@ -30,11 +29,26 @@ namespace Services.Broadcast.Converters.RateImport
             "Comments"
         };
 
-        private ICNNStationInventoryGroupService _CNNStationInventoryGroupService;
+        protected class CNNFileDto
+        {
+            public int RowNumber { get; set; }
+            public DisplayBroadcastStation Station { get; set; }
+            public DateTime EffectiveDate { get; set; }
+            public string DaypartCode { get; set; }
+            public int SpotLengthId { get; set; }
+            public int SpotsPerWeek { get; set; }
+            public int SpotsPerDay { get; set; }
+            public List<DisplayDaypart> Dayparts { get; set; }
+        }
 
-        public CNNFileImporter(ICNNStationInventoryGroupService CNNStationInventoryGroupService)
+        private ICNNStationInventoryGroupService _CNNStationInventoryGroupService;
+        private readonly IInventoryFileValidator _InventoryFileValidator;
+
+        public CNNFileImporter(ICNNStationInventoryGroupService CNNStationInventoryGroupService,
+                                        IInventoryFileValidator inventoryFileValidator)
         {
             _CNNStationInventoryGroupService = CNNStationInventoryGroupService;
+            _InventoryFileValidator = inventoryFileValidator;
         }
 
         private static readonly List<string> _ValidDaypartCodes = new List<string>()
@@ -66,7 +80,7 @@ namespace Services.Broadcast.Converters.RateImport
             try
             {
                 _ValidateInputFileParams();
-
+                List<CNNFileDto> dtos = new List<CNNFileDto>();
                 DateTime defaultEffectiveDate = DateTime.Today;
 
                 using (var excelPackage = new OfficeOpenXml.ExcelPackage(stream))
@@ -111,28 +125,35 @@ namespace Services.Broadcast.Converters.RateImport
                         {
                             effectiveDate = defaultEffectiveDate;
                         }
-
-                        if (!_FileProblems.Any())
+                        dtos.Add(new CNNFileDto()
                         {
-                            AddToGroup(new StationInventoryManifest()
-                            {
-                                Station = station,
-                                EffectiveDate = effectiveDate,
-                                DaypartCode = daypartCode,
-                                SpotLengthId = spotLengthId,
-                                SpotsPerWeek = spots,
-                                SpotsPerDay = spotsPerday,
-                                Dayparts = dayparts
-
-                            });
-                        }
+                            RowNumber = row,
+                            Station = station,
+                            EffectiveDate = effectiveDate,
+                            DaypartCode = daypartCode,
+                            SpotLengthId = spotLengthId,
+                            SpotsPerWeek = spots,
+                            SpotsPerDay = spotsPerday,
+                            Dayparts = dayparts
+                        });
                     }
+                    if (!_FileProblems.Any())
+                    {
+                        var dupProblems = CheckDups(dtos);
+                        _FileProblems.AddRange(dupProblems);
+                    }
+
+                    if (!_FileProblems.Any())
+                    {
+                        dtos.ForEach(dto => AddToGroup(dto));
+                    }
+
                 }
             }
             catch (Exception e)
             {
                 throw new Exception(
-                    string.Format("Unable to parse rate file: {0} The file may be invalid: {1}", e.Message,inventoryFile.FileName), e);
+                    string.Format("Unable to parse inventory file: {0} The file may be invalid: {1}", e.Message,inventoryFile.FileName), e);
             }
             if (!_FoundGoodDaypart)
                 throw new Exception(NoGoodDaypartsFound);
@@ -140,38 +161,58 @@ namespace Services.Broadcast.Converters.RateImport
             inventoryFile.InventoryGroups = _InventoryGroups.Values.SelectMany(v => v).ToList();
         }
 
-        private Dictionary<string, List<StationInventoryGroup>> _InventoryGroups = new Dictionary<string, List<StationInventoryGroup>>();
-        private void AddToGroup(StationInventoryManifest manifest)
+        private List<InventoryFileProblem> CheckDups(List<CNNFileDto> dtos)
         {
-            string dpCode = manifest.DaypartCode;
+            var dups =
+                dtos.GroupBy(
+                    d =>
+                        new
+                        {
+                            d.Station.LegacyCallLetters,
+                            d.SpotLengthId,
+                            dayparts =
+                            d.Dayparts.Select(dp => dp.ToUniqueString())
+                                .OrderBy(dp => dp)
+                                .Aggregate((current, next) => current + "," + next)
+                        });
+
+            var dupProblems = dups.Where(d => d.Count() > 1)
+                .Select(d => _InventoryFileValidator.DuplicateRecordValidation(d.Key.LegacyCallLetters)).ToList();
+            return dupProblems;
+        }
+
+        private Dictionary<string, List<StationInventoryGroup>> _InventoryGroups = new Dictionary<string, List<StationInventoryGroup>>();
+        private void AddToGroup(CNNFileDto dto)
+        {
+            string dpCode = dto.DaypartCode;
             var groups = EnsureGroup(dpCode);
             int maxSlots = _CNNStationInventoryGroupService.GetSlotCount(dpCode);
 
             var manifests = groups.SelectMany(g => g.Manifests)
                 .Where(m =>    m != null 
-                            && m.Dayparts.All(dp => manifest.Dayparts.Any(mdp => mdp == dp))
-                            && m.Station.Code == manifest.Station.Code
-                            && m.SpotLengthId == manifest.SpotLengthId).ToList();
+                            && m.Dayparts.All(dp => dto.Dayparts.Any(mdp => mdp == dp))
+                            && m.Station.Code == dto.Station.Code
+                            && m.SpotLengthId == dto.SpotLengthId).ToList();
 
             int slotToUse = manifests.Count()%maxSlots + 1;
-            for (int c = 1; c <= manifest.SpotsPerWeek; c++)
+            for (int c = 1; c <= dto.SpotsPerWeek; c++)
             {
                 var group = groups.Single(g => g.SlotNumber == slotToUse);
                 manifests = group.Manifests.Where(m => m != null
-                                    && m.Dayparts.All(dp => manifest.Dayparts.Any(mdp => mdp == dp))
-                                    && m.Station.Code == manifest.Station.Code
-                                    && m.SpotLengthId == manifest.SpotLengthId)
+                                    && m.Dayparts.All(dp => dto.Dayparts.Any(mdp => mdp == dp))
+                                    && m.Station.Code == dto.Station.Code
+                                    && m.SpotLengthId == dto.SpotLengthId)
                                     .ToList();
                 if (!manifests.Any())
                 {
                     var mani = new StationInventoryManifest()
                     {
-                        DaypartCode = manifest.DaypartCode,
-                        SpotLengthId = manifest.SpotLengthId,
-                        Dayparts = manifest.Dayparts,
-                        SpotsPerDay = manifest.SpotsPerDay,
-                        EffectiveDate = manifest.EffectiveDate,
-                        Station = manifest.Station,
+                        DaypartCode = dto.DaypartCode,
+                        SpotLengthId = dto.SpotLengthId,
+                        Dayparts = dto.Dayparts,
+                        SpotsPerDay = dto.SpotsPerDay,
+                        EffectiveDate = dto.EffectiveDate,
+                        Station = dto.Station,
                         SpotsPerWeek = 0
                     };
                     manifests.Add(mani);
@@ -265,18 +306,18 @@ namespace Services.Broadcast.Converters.RateImport
         private void _ValidateInputFileParams()
         {
             if (string.IsNullOrEmpty(Request.FileName))
-                throw new Exception(string.Format("Unable to parse rate file: {0}. The name of the file is invalid.",
+                throw new Exception(string.Format("Unable to parse inventory file: {0}. The name of the file is invalid.",
                     Request.FileName));
 
             if (Request.RatesStream.Length == 0)
-                throw new Exception(string.Format("Unable to parse rate file: {0}. Invalid file size.", Request.FileName));
+                throw new Exception(string.Format("Unable to parse inventory file: {0}. Invalid file size.", Request.FileName));
 
             if (string.IsNullOrEmpty(Request.BlockName))
-                throw new Exception(string.Format("Unable to parse rate file: {0}. The block name is invalid.",
+                throw new Exception(string.Format("Unable to parse inventory file: {0}. The block name is invalid.",
                     Request.FileName));
 
             if (!Request.FlightWeeks.Any())
-                throw new Exception(string.Format("Unable to parse rate file: {0}. Invalid flight weeks.",
+                throw new Exception(string.Format("Unable to parse inventory file: {0}. Invalid flight weeks.",
                     Request.FileName));
         }
 

@@ -12,6 +12,8 @@ namespace Services.Broadcast.Validators
     public interface IInventoryFileValidator
     {
         InventoryFileValidatorResult ValidateInventoryFile(InventoryFile inventoryFile);
+
+        InventoryFileProblem DuplicateRecordValidation(string station);
     }
 
     public class InventoryFileValidator : IInventoryFileValidator
@@ -40,7 +42,7 @@ namespace Services.Broadcast.Validators
                         spotLenghtStationGroup.SelectMany(g => g.Dayparts)
                             .GroupBy(d => d.ToLongString())
                             .Where(g => g.Count() > 1)
-                            .Select(d => new InventoryFileProblem(string.Format("Invalid data for Station {0}, duplicate entry for same spot length", spotLenghtStationGroup.Key.LegacyCallLetters))).ToList();
+                            .Select(d => DuplicateRecordValidation(spotLenghtStationGroup.Key.LegacyCallLetters)).ToList();
 
                     if (duplicateProblems.Count > 0)
                     {
@@ -50,6 +52,13 @@ namespace Services.Broadcast.Validators
                 }
             }
             return validationProblems;
+        }
+
+        public InventoryFileProblem DuplicateRecordValidation(string station)
+        {
+            return
+                new InventoryFileProblem(
+                    string.Format("Invalid data for Station {0}, duplicate entry for same spot length", station));
         }
     }
 }

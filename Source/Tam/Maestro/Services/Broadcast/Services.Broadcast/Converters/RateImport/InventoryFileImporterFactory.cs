@@ -3,6 +3,7 @@ using Common.Services;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
+using Services.Broadcast.Validators;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -17,6 +18,7 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IDaypartCache _daypartCache;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly IInventoryFileValidator _InventoryFileValidator;
 
         private ICNNStationInventoryGroupService _CNNStationInventoryGroupService;
 
@@ -24,13 +26,15 @@ namespace Services.Broadcast.Converters.RateImport
                                             IDaypartCache daypartCache, 
                                             MediaMonthAndWeekAggregateCache mediaWeekCache, 
                                             IBroadcastAudiencesCache audiencesCache,
-                                            ICNNStationInventoryGroupService CNNStationInventoryGroupService)
+                                            ICNNStationInventoryGroupService CNNStationInventoryGroupService,
+                                            IInventoryFileValidator inventoryFileValidator)
         {
             _broadcastDataDataRepositoryFactory = broadcastDataFactory;
             _daypartCache = daypartCache;
             _MediaMonthAndWeekAggregateCache = mediaWeekCache;
             _AudiencesCache = audiencesCache;
             _CNNStationInventoryGroupService = CNNStationInventoryGroupService;
+            _InventoryFileValidator = inventoryFileValidator;
         }
 
         public InventoryFileImporterBase GetFileImporterInstance(InventoryFile.InventorySourceType inventorySource)
@@ -39,7 +43,7 @@ namespace Services.Broadcast.Converters.RateImport
             switch (inventorySource)
             {
                 case InventoryFile.InventorySourceType.CNN:
-                    fileImporter = new CNNFileImporter(_CNNStationInventoryGroupService);
+                    fileImporter = new CNNFileImporter(_CNNStationInventoryGroupService,_InventoryFileValidator);
                     break;
                 case InventoryFile.InventorySourceType.TTNW:
                     fileImporter = new TTNWExcelFileImporter();
