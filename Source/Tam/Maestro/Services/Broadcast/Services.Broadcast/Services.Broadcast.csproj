@@ -219,6 +219,7 @@
     <Compile Include="Entities\StationInventoryGroup.cs" />
     <Compile Include="Entities\InventorySource.cs" />
     <Compile Include="Entities\StationInventoryManifest.cs" />
+    <Compile Include="Entities\StationInventoryManifestAudience.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
     <Compile Include="Entities\ValidationWarningDto.cs" />
     <Compile Include="Extensions\Bvs.cs" />

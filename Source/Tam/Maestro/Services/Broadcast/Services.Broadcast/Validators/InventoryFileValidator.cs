@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using System.Text.RegularExpressions;
+using Common.Services.Repositories;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
@@ -18,9 +19,37 @@ namespace Services.Broadcast.Validators
         public InventoryFileValidatorResult ValidateInventoryFile(InventoryFile inventoryFile)
         {
             var results = new InventoryFileValidatorResult();
-            // so far, nothing to validate.
-            //Todo: if this method and class remains empty upon completion of the new inventory structure, consider removal.
+            results.InventoryFileProblems = _CheckForDuplicateRecords(inventoryFile);
             return results;
+        }
+
+        private List<InventoryFileProblem> _CheckForDuplicateRecords(InventoryFile inventoryFile)
+        {
+            var validationProblems = new List<InventoryFileProblem>();
+            foreach (var inventoryGroup in inventoryFile.InventoryGroups)
+            {
+                var spotLenghtStationGroups = inventoryGroup.Manifests.GroupBy(
+                    m => new
+                    {
+                        m.SpotLengthId,
+                        m.Station.LegacyCallLetters
+                    });
+                foreach (var spotLenghtStationGroup in spotLenghtStationGroups)
+                {
+                    var duplicateProblems =
+                        spotLenghtStationGroup.SelectMany(g => g.Dayparts)
+                            .GroupBy(d => d.ToLongString())
+                            .Where(g => g.Count() > 1)
+                            .Select(d => new InventoryFileProblem(string.Format("Invalid data for Station {0}, duplicate entry for same spot length", spotLenghtStationGroup.Key.LegacyCallLetters))).ToList();
+
+                    if (duplicateProblems.Count > 0)
+                    {
+                        validationProblems.AddRange(duplicateProblems);
+                    }
+
+                }
+            }
+            return validationProblems;
         }
     }
 }

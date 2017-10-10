@@ -73,8 +73,6 @@ namespace Services.Broadcast.Converters.RateImport
                     return;
                 }
 
-                //TODO: check duplicate records
-
                 var inventoryGroups = new Dictionary<string, StationInventoryGroup>();
                 foreach (var ttnwRecord in ttnwRecords)
                 {
@@ -90,6 +88,8 @@ namespace Services.Broadcast.Converters.RateImport
                     {
                         fileProblems.Add(new InventoryFileProblem(string.Format("Invalid dayparts: {0}", ttnwRecord.DaypartsString)));
                     }
+
+                    var manifestAudiences = _ParseManifestAudiences(ttnwRecord.AudienceImpressions);
 
                     foreach (var daypartCodeSpots in ttnwRecord.Spots)
                     {
@@ -119,7 +119,8 @@ namespace Services.Broadcast.Converters.RateImport
                             DaypartCode = daypartCodeSpots.Key,
                             SpotsPerWeek = daypartCodeSpots.Value,
                             SpotLengthId = spotLengthId,
-                            Dayparts = dayparts
+                            Dayparts = dayparts,
+                            ManifestAudiences = manifestAudiences
                         });
                     }
 
@@ -128,6 +129,30 @@ namespace Services.Broadcast.Converters.RateImport
                 inventoryFile.InventoryGroups.AddRange(inventoryGroups.Values);
 
             }
+        }
+
+        private List<StationInventoryManifestAudience> _ParseManifestAudiences(Dictionary<string, double> audiencesWithImpressions)
+        {
+            var manifestAudiences = new List<StationInventoryManifestAudience>();
+
+            var audienceRepo = _BroadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
+
+            foreach (var audience in audiencesWithImpressions)
+            {
+                var audienceCode = audience.Key;
+                if (audienceCode.Length == 5 && !audienceCode.Contains("-"))
+                {
+                    audienceCode = audienceCode.Substring(0, 3) + "-" + audienceCode.Substring(3);
+                }
+                var displayAudience = audienceRepo.GetDisplayAudienceByCode(audience.Key);
+                manifestAudiences.Add(new StationInventoryManifestAudience()
+                {
+                    Audience = displayAudience,
+                    Impressions = audience.Value * 1000
+                });
+            }
+
+            return manifestAudiences;
         }
 
         private List<DisplayDaypart> _ParseDayparts(string daypartInput, string station)

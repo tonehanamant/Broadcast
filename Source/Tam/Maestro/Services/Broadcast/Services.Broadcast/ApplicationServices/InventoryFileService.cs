@@ -149,7 +149,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var startTime = DateTime.Now;
                 fileImporter.ExtractFileData(request.RatesStream, inventoryFile, fileProblems);
-                if (inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0)
+                if (inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 || inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Count() == 0)
                 {
                     throw new ApplicationException("Unable to parse any file records.");
                 }
@@ -166,7 +166,11 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (fileProblems.Any())
                 {
-                    
+                    return new InventoryFileSaveResult()
+                    {
+                        Problems = fileProblems,
+                        FileId = inventoryFile.Id
+                    };
                 }
                 startTime = DateTime.Now;
 

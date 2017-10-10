@@ -18,5 +18,12 @@ namespace Services.Broadcast.Entities
         public int InvetoryFileId { get; set; }
         public int InventorySourceId { get; set; }
         public DateTime EffectiveDate { get; set; }
+        public List<StationInventoryManifestAudience> ManifestAudiences { get; set; }
+
+        public StationInventoryManifest()
+        {
+            Dayparts = new List<DisplayDaypart>();
+            ManifestAudiences = new List<StationInventoryManifestAudience>();
+        }
     }
 }
