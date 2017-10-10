@@ -235,7 +235,6 @@
     <Compile Include="Converters\AssemblyImportHelper.cs" />
     <Compile Include="ReportGenerators\BvsExcelReportGenerator.cs" />
     <Compile Include="Converters\PostFileParser.cs" />
-    <Compile Include="Converters\RateImport\AssemblyInventoryImporter.cs" />
     <Compile Include="Converters\RateImport\CNNFileImporter.cs" />
     <Compile Include="Converters\RateImport\OpenMarketFileImporter.cs" />
     <Compile Include="Converters\RateImport\InventoryFileImporterBase.cs" />

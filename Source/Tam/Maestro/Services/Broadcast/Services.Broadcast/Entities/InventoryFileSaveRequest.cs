@@ -13,7 +13,7 @@ namespace Services.Broadcast.Entities
         public string UserName { get; set; }
         public string FileName { get; set; }
         public string RawData { get; set; }
-        public string RateSource { get; set; }
+        public string InventorySource { get; set; }
 
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }

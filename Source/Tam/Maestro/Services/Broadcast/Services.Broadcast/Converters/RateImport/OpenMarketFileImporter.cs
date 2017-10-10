@@ -24,7 +24,7 @@ namespace Services.Broadcast.Converters.RateImport
             //    System.Diagnostics.Debug.WriteLine(message.Proposal.uniqueIdentifier + " parsed successfully !");
 
             //    var resultFile = BuildRatesFile(message, ratesFile, fileProblems);
-            //    resultFile.StationContacts = ExtractContactData(message, ratesFile.RateSource);
+            //    resultFile.StationContacts = ExtractContactData(message, ratesFile.InventorySource);
 
             //}
             //catch (Exception e)

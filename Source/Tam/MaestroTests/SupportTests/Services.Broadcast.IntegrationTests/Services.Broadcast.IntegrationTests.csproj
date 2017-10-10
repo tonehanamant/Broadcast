@@ -193,7 +193,7 @@
     <Compile Include="ApplicationServices\ProposalServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\QuarterCalculationEngineTests.cs" />
     <Compile Include="ApplicationServices\RatesServiceRatesFilterIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\RatesServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\InventoryFileServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ScheduleReportDtoFactoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\SchedulesReportServiceIntegrationTest.cs" />
     <Compile Include="ApplicationServices\BvsConverterTests.cs" />
@@ -245,24 +245,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\Assembly Schedule Template.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\AssemblyFileHasBlankRateValue.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\AssemblyFileHasInvalidRateValue.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\AssemblyFileHasZeroRateValue.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\assembly_rate_file_missing_data.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\assembly_rate_file_unknown_audience.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\assembly_rate_file.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\BVS Assembly Schedule For Tracking.csv">

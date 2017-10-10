@@ -35,30 +35,20 @@ namespace Services.Broadcast.Repositories
 
         public List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(InventoryFile.InventorySourceType inventorySource)
         {
-            return new List<DisplayBroadcastStation>();
-            //return _InReadUncommitedTransaction(
-            //    context =>
-            //    {
-            //        return (from s in context.stations
-            //                select new DisplayBroadcastStation
-            //                {
-            //                    Code = s.station_code,
-            //                    Affiliation = s.affiliation,
-            //                    CallLetters = s.station_call_letters,
-            //                    LegacyCallLetters = s.legacy_call_letters,
-            //                    OriginMarket = s.market.geography_name,
-            //                    ModifiedDate = s.modified_date,
-            //                    FlightWeeks =
-            //                    (from pf in context.station_program_flights
-            //                     join sp in context.station_programs on pf.station_program_id equals sp.id
-            //                     where sp.station_code == s.station_code && sp.rate_source == (byte) rateSource
-            //                     select new FlightWeekDto
-            //                     {
-            //                         Id = pf.media_week_id,
-            //                         IsHiatus = !pf.active
-            //                     }).Distinct().OrderBy(fw => fw.Id)
-            //                }).ToList();
-            //    });
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return (from s in context.stations
+                            select new DisplayBroadcastStation
+                            {
+                                Code = s.station_code,
+                                Affiliation = s.affiliation,
+                                CallLetters = s.station_call_letters,
+                                LegacyCallLetters = s.legacy_call_letters,
+                                OriginMarket = s.market.geography_name,
+                                ModifiedDate = s.modified_date
+                            }).ToList();
+                });
         }
 
         public List<DisplayBroadcastStation> GetBroadcastStationsByFlightWeek(InventoryFile.InventorySourceType inventorySource, int mediaWeekId, bool isIncluded)

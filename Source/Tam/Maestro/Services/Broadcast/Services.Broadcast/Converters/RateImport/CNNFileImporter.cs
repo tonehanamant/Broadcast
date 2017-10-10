@@ -67,8 +67,7 @@ namespace Services.Broadcast.Converters.RateImport
             {
                 _ValidateInputFileParams();
 
-                DateTime nextMondaysDate =
-                    DateTime.Today.AddDays(7 + ((int) DateTime.Today.DayOfWeek - (int) DayOfWeek.Monday));
+                DateTime defaultEffectiveDate = DateTime.Today;
 
                 using (var excelPackage = new OfficeOpenXml.ExcelPackage(stream))
                 {
@@ -110,7 +109,7 @@ namespace Services.Broadcast.Converters.RateImport
                         }
                         else
                         {
-                            effectiveDate = nextMondaysDate;
+                            effectiveDate = defaultEffectiveDate;
                         }
 
                         if (!_FileProblems.Any())
@@ -171,6 +170,7 @@ namespace Services.Broadcast.Converters.RateImport
                         SpotLengthId = manifest.SpotLengthId,
                         Dayparts = manifest.Dayparts,
                         SpotsPerDay = manifest.SpotsPerDay,
+                        EffectiveDate = manifest.EffectiveDate,
                         Station = manifest.Station,
                         SpotsPerWeek = 0
                     };

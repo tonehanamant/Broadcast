@@ -176,7 +176,7 @@ var ImportThirdPartyViewModel = function (controller) {
         $("#import_thirdparty_form").valid();
         $scope.ActiveFileRequest = fileRequest;
         $scope.RateSource(rateSource);
-        //console.log('rateSource', $scope.RateSource());
+        //console.log('rateSource', $scope.InventorySource());
         //set fixed functionaly by source
         $scope.allowDemoFixed(($scope.RateSource() == 'CNN') ? true : false);
 
@@ -190,7 +190,7 @@ var ImportThirdPartyViewModel = function (controller) {
         //$scope.FlightEndDate(future);
         //$scope.FlightWeeks([]); //tbd base on start /end?
         //$scope.Daypart([]);//set empty
-        //$scope.BlockName($scope.RateSource() + ' NEWS BLOCK');//defaults
+        //$scope.BlockName($scope.InventorySource() + ' NEWS BLOCK');//defaults
         //demo todo set context; clear subscribers?
         $scope.EffectiveDate(null);
         $scope.demos([]);

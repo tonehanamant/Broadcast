@@ -27,9 +27,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -65,9 +65,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -119,9 +119,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -157,9 +157,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 4,
           "SpotsPerWeek": 1,
@@ -195,9 +195,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 2,
           "SpotsPerWeek": 1,
@@ -240,9 +240,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -278,9 +278,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -332,9 +332,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -370,9 +370,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 4,
           "SpotsPerWeek": 1,
@@ -408,9 +408,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 2,
           "SpotsPerWeek": 1,
@@ -453,9 +453,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -491,9 +491,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -545,9 +545,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -583,9 +583,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 4,
           "SpotsPerWeek": 1,
@@ -628,9 +628,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -666,9 +666,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -720,9 +720,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -758,9 +758,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 4,
           "SpotsPerWeek": 1,
@@ -803,9 +803,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -841,9 +841,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -895,9 +895,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -956,9 +956,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1010,9 +1010,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1064,9 +1064,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1150,9 +1150,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1188,9 +1188,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1274,9 +1274,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 8,
           "SpotsPerWeek": 2,
@@ -1335,9 +1335,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1389,9 +1389,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1443,9 +1443,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1529,9 +1529,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1567,9 +1567,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1653,9 +1653,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 8,
           "SpotsPerWeek": 2,
@@ -1714,9 +1714,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1768,9 +1768,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1822,9 +1822,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1908,9 +1908,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -1946,9 +1946,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -2032,9 +2032,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 8,
           "SpotsPerWeek": 2,
@@ -2093,9 +2093,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -2147,9 +2147,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -2201,9 +2201,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -2287,9 +2287,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -2325,9 +2325,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -2411,9 +2411,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 8,
           "SpotsPerWeek": 1,
@@ -2472,9 +2472,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -2526,9 +2526,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -2580,9 +2580,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -2666,9 +2666,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -2704,9 +2704,9 @@
               "_Wednesday": true
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
           "SpotsPerWeek": 1,
@@ -2790,9 +2790,9 @@
               "_Wednesday": false
             }
           ],
-          "EffectiveDate": "0001-01-01T00:00:00",
           "InventorySourceId": 0,
           "InvetoryFileId": 0,
+          "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 8,
           "SpotsPerWeek": 1,

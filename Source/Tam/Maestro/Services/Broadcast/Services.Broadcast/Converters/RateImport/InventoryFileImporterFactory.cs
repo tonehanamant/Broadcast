@@ -1,4 +1,5 @@
-﻿using Common.Services;
+﻿using System;
+using Common.Services;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
@@ -44,8 +45,7 @@ namespace Services.Broadcast.Converters.RateImport
                     fileImporter = new TTNWExcelFileImporter();
                     break;
                 default:
-                    fileImporter = new OpenMarketFileImporter();
-                    break;
+                    throw new NotImplementedException("Open market imports not supported.");
             }
 
             fileImporter.BroadcastDataDataRepository = _broadcastDataDataRepositoryFactory;

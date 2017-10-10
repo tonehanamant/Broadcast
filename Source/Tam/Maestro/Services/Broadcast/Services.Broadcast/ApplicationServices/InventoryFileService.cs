@@ -108,7 +108,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
         {
-            var stations = _stationRepository.GetBroadcastStationsWithFlightWeeksForRateSource(_ParseRateSource(rateSource));
+            var stations = _stationRepository.GetBroadcastStationsWithFlightWeeksForRateSource(_ParseInventorySource(rateSource));
             _SetFlightData(stations, currentDate);
             return stations;
         }
@@ -125,7 +125,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var isIncluded = (filter == DisplayBroadcastStation.StationFilter.WithTodaysData);
             var mediaWeekId = _MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDate(today).Id;
-            var stations = _stationRepository.GetBroadcastStationsByFlightWeek(_ParseRateSource(rateSource), mediaWeekId, isIncluded);
+            var stations = _stationRepository.GetBroadcastStationsByFlightWeek(_ParseInventorySource(rateSource), mediaWeekId, isIncluded);
 
             _SetFlightData(stations, today);
 
@@ -134,8 +134,8 @@ namespace Services.Broadcast.ApplicationServices
 
         public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request)
         {
-            var rateSourceType = _ParseRateSourceOrDefault(request.RateSource);
-            var fileImporter = _inventoryFileImporterFactory.GetFileImporterInstance(rateSourceType);
+            var inventorySourceType = _ParseInventorySourceOrDefault(request.InventorySource);
+            var fileImporter = _inventoryFileImporterFactory.GetFileImporterInstance(inventorySourceType);
             fileImporter.LoadFromSaveRequest(request);
             fileImporter.CheckFileHash();
 
@@ -196,8 +196,8 @@ namespace Services.Broadcast.ApplicationServices
                         }
                     }
 
-                    var isThirdParty = rateSourceType == InventoryFile.InventorySourceType.CNN ||
-                                       rateSourceType == InventoryFile.InventorySourceType.TTNW ;
+                    var isThirdParty = inventorySourceType == InventoryFile.InventorySourceType.CNN ||
+                                       inventorySourceType == InventoryFile.InventorySourceType.TTNW ;
 
                     if (isThirdParty)
                     {
@@ -382,7 +382,7 @@ namespace Services.Broadcast.ApplicationServices
         public StationDetailDto GetStationDetailByCode(string inventorySource, int stationCode)
         {
             return new StationDetailDto();
-            //var rateSource = _ParseRateSource(inventorySource);
+            //var rateSource = _ParseInventorySource(inventorySource);
 
             //var station = _stationRepository.GetBroadcastStationByCode(stationCode);
 
@@ -449,18 +449,18 @@ namespace Services.Broadcast.ApplicationServices
             });
         }
 
-        private InventoryFile.InventorySourceType _ParseRateSource(string sourceString)
+        private InventoryFile.InventorySourceType _ParseInventorySource(string sourceString)
         {
             InventoryFile.InventorySourceType inventorySource;
             var parseSuccess = Enum.TryParse(sourceString, true, out inventorySource);
             if (!parseSuccess)
             {
-                throw new ArgumentException(string.Format("Invalid rate source parameter: {0}", sourceString));
+                throw new ArgumentException(string.Format("Invalid inventory source parameter: {0}", sourceString));
             }
             return inventorySource;
         }
 
-        private InventoryFile.InventorySourceType _ParseRateSourceOrDefault(string sourceString)
+        private InventoryFile.InventorySourceType _ParseInventorySourceOrDefault(string sourceString)
         {
             if (String.IsNullOrEmpty(sourceString))
             {
@@ -468,7 +468,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             else
             {
-                return _ParseRateSource(sourceString);
+                return _ParseInventorySource(sourceString);
             }
         }
 

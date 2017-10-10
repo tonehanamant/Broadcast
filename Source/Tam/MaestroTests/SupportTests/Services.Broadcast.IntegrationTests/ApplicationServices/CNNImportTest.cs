@@ -61,10 +61,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(fileProblems.Any(), "Problems in file found.");
             }
 
+            // we're going to ignore effective date in json compare, but first we'll ensure
+            // at least one known "blank" effective date is set to the proper default value of today
+            var effectiveDate = ratesFile.InventoryGroups.First().Manifests[2].EffectiveDate;
+            Assert.AreEqual(DateTime.Today,effectiveDate,string.Format("The effective date for KAEF is expected to be today, but was \'{0}\'",effectiveDate));
+
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
             jsonResolver.Ignore(typeof(InventoryFile), "Id");
             var jsonSettings = new JsonSerializerSettings
             {

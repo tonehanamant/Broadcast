@@ -276,7 +276,7 @@ namespace Services.Broadcast.Converters.RateImport
         //    program.StationLegacyCallLetters = stationCallLetters;
         //    program.SpotLength = spotLength;
         //    program.DaypartCode = daypartCode;
-        //    program.RateSource = InventorySource;
+        //    program.InventorySource = InventorySource;
         //    program.FixedPrice = ParseFixedPrice(currentData, "Fixed");
 
         //    return program;

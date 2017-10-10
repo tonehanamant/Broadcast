@@ -20,30 +20,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [Ignore]
     [TestFixture]
-    public class RatesServiceIntegrationTests
+    public class InventoryFileServiceIntegrationTests
     {
-        private IInventoryFileService _inventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryFileService>();
+        private IInventoryFileService _InventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryFileService>();
 
         [Test]
-        public void LoadInventoryFile()
+        public void LoadInventoryFileCNN()
         {
             using (new TransactionScopeWrapper())
             {
                 var request = new InventoryFileSaveRequest();
                 
-                request.RatesStream = new FileStream(
-                    @".\Files\single_program_rate_file_wvtm.xml",
+                request.RatesStream = new FileStream(@".\Files\CNNAMPMBarterObligations_Clean.xlsx",
                     FileMode.Open,
                     FileAccess.Read);
+                request.InventorySource =
                 request.UserName = "IntegrationTestUser";
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
         [Test]
         [Ignore] //Locking does not work in an integration test.
+        //todo: someone figure out if this test is needed since it was alway ignored.
         public void CantLoadInventoryFileWhileStationLocked()
         {
             using (new TransactionScopeWrapper())
@@ -57,10 +58,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
 
-                _inventoryFileService.LockStation(stationCode);
+                _InventoryFileService.LockStation(stationCode);
                 try
                 {
-                    _inventoryFileService.SaveInventoryFile(request);
+                    _InventoryFileService.SaveInventoryFile(request);
                     Assert.Fail("Should have thrown a lock exception.");
                 }
                 catch (Exception e)
@@ -69,200 +70,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
                 finally
                 {
-                    _inventoryFileService.UnlockStation(stationCode);
+                    _InventoryFileService.UnlockStation(stationCode);
                 }
                 
             }
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void LoadAssemblyInventoryFile()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var filename = @".\Files\assembly_rate_file.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.RateSource = "Assembly";
-                request.RatingBook = 416;
-
-                var result = _inventoryFileService.SaveInventoryFile(request);
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void LoadAssemblyInventoryFileWithMissingData()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var filename = @".\Files\assembly_rate_file_missing_data.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.RateSource = "Assembly";
-                request.RatingBook = 416;
-
-                var result = _inventoryFileService.SaveInventoryFile(request);
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [Ignore]
-        [UseReporter(typeof(DiffReporter))]
-        public void ValidateSavedAssemblyInventoryFile()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var filename = @".\Files\assembly_rate_file.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.RateSource = "Assembly";
-                var response = _inventoryFileService.SaveInventoryFile(request);
-                var result = _inventoryFileService.GetStations("Assembly", new DateTime(2017, 1, 1));
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void LoadAssemblyInventoryFileWithUnknownAudience()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var filename = @".\Files\assembly_rate_file_unknown_audience.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.RateSource = "Assembly";
-                request.RatingBook = 416;
-
-                var result = _inventoryFileService.SaveInventoryFile(request);
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void LoadAssemblyInventoryFileWithInvalidRate()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var filename = @".\Files\AssemblyFileHasInvalidRateValue.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.RateSource = "Assembly";
-                request.RatingBook = 416;
-
-                var result = _inventoryFileService.SaveInventoryFile(request);
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void LoadAssemblyInventoryFileWithBlankRateValues()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var filename = @".\Files\AssemblyFileHasBlankRateValue.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.RateSource = "Assembly";
-                request.RatingBook = 416;
-
-                var result = _inventoryFileService.SaveInventoryFile(request);
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void LoadAssemblyInventoryFileWithZeroRateValues()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var filename = @".\Files\AssemblyFileHasZeroRateValue.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.RateSource = "Assembly";
-                request.RatingBook = 416;
-
-                var result = _inventoryFileService.SaveInventoryFile(request);
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
-            }
-        }
-
-        [Ignore]
-        [Test]
-        [ExpectedException(typeof
-            (BroadcastDuplicateInventoryFileException))]
+        [ExpectedException(typeof(BroadcastDuplicateInventoryFileException))]
         public void ThrowsExceptionWhenLoadingSameInventoryFileAgain()
         {
             using (new TransactionScopeWrapper())
@@ -271,20 +86,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request2 = new InventoryFileSaveRequest();
 
                 request.RatesStream = new FileStream(
-                    @".\Files\single_program_rate_file_wvtm.xml",
+                    @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
                 request2.RatesStream = new FileStream(
-                    @".\Files\single_program_rate_file_wvtm.xml",
+                    @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
                     FileMode.Open,
                     FileAccess.Read);
                 request2.UserName = "IntegrationTestUser";
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -293,7 +108,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void GetAllStations()
         {
             var currentDate = new DateTime(2016, 11, 1);
-            var response = _inventoryFileService.GetStations("OpenMarket", currentDate);
+            var response = _InventoryFileService.GetStations("OpenMarket", currentDate);
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
@@ -313,7 +128,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void GetAllStationsWithTodaysData()
         {
             var currentDate = new DateTime(2016, 11, 1);
-            var response = _inventoryFileService.GetStationsWithFilter(
+            var response = _InventoryFileService.GetStationsWithFilter(
                 "OpenMarket",
                 "WithTodaysData",
                 new DateTime(2017, 03, 06));
@@ -334,7 +149,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void GetAllStationsWithoutTodaysData()
         {
             var currentDate = new DateTime(2016, 11, 1);
-            var response = _inventoryFileService.GetStationsWithFilter(
+            var response = _InventoryFileService.GetStationsWithFilter(
                 "OpenMarket",
                 "WithoutTodaysData",
                 new DateTime(2017, 03, 06));
@@ -368,8 +183,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.UserName = "IntegrationTestUser";
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
-                var response = _inventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
+                _InventoryFileService.SaveInventoryFile(request);
+                var response = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
 
                 //Ignore the Id on each Rate record
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -401,7 +216,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ContractResolver = jsonResolver
             };
 
-            var result = _inventoryFileService.FindStationContactsByName(contactQueryString);
+            var result = _InventoryFileService.FindStationContactsByName(contactQueryString);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
 
         }
@@ -424,7 +239,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 //first make sure the contacts don't exist
-                var stationContacts = _inventoryFileService.GetStationContacts("OpenMarket", stationCodeWVTM);
+                var stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", stationCodeWVTM);
                 Assert.AreEqual(0, stationContacts.Count); //make sure there are no contacts initially
 
                 request.RatesStream = new FileStream(
@@ -434,10 +249,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.UserName = "IntegrationTestUser";
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
                 //then confirm the contacts are added
-                stationContacts = _inventoryFileService.GetStationContacts("OpenMarket", stationCodeWVTM);
+                stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", stationCodeWVTM);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(stationContacts, jsonSettings));
             }
         }
@@ -467,15 +282,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.UserName = "IntegrationTestUser";
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
                 request.RatesStream = new FileStream(
                     @".\Files\station_contact_update_rate_file_wvtm.xml",
                     FileMode.Open,
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
-                var stationContacts = _inventoryFileService.GetStationContacts("OpenMarket", stationCodeWVTM);
+                var stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", stationCodeWVTM);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(stationContacts, jsonSettings));
             }
         }
@@ -486,7 +301,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var currentDate = new DateTime(2016, 11, 1);
-                var stationCode = _inventoryFileService.GetStations("OpenMarket", currentDate).First().Code;
+                var stationCode = _InventoryFileService.GetStations("OpenMarket", currentDate).First().Code;
                 var stationContactName = "Unit Test " + DateTime.Now.Ticks;
 
                 var contact = new StationContact()
@@ -501,11 +316,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Type = StationContact.StationContactType.Station
                 };
 
-                var saved = _inventoryFileService.SaveStationContact(contact, "");
+                var saved = _InventoryFileService.SaveStationContact(contact, "");
                 Assert.IsTrue(saved);
                 var stationContact =
-                    _inventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == stationContactName);
-                _inventoryFileService.DeleteStationContact(stationContact.Id, "system");
+                    _InventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == stationContactName);
+                _InventoryFileService.DeleteStationContact(stationContact.Id, "system");
             }
         }
 
@@ -517,7 +332,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var currentDate = new DateTime(2016, 11, 1);
-                var stationCode = _inventoryFileService.GetStations("OpenMarket", currentDate).First().Code;
+                var stationCode = _InventoryFileService.GetStations("OpenMarket", currentDate).First().Code;
                 var contact = new StationContact()
                 {
                     Id = 0,
@@ -530,7 +345,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Type = StationContact.StationContactType.Station
                 };
 
-                _inventoryFileService.SaveStationContact(contact, "");
+                _InventoryFileService.SaveStationContact(contact, "");
             }
         }
 
@@ -542,7 +357,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 //get station code and fill in initial data
                 var currentDate = new DateTime(2016, 11, 1);
-                var stationCode = _inventoryFileService.GetStations("OpenMarket", currentDate).First().Code;
+                var stationCode = _InventoryFileService.GetStations("OpenMarket", currentDate).First().Code;
                 var name = "Unit Test " + DateTime.Now.Ticks;
                 var company = "Company Test " + DateTime.Now.Ticks;
                 var contact = new StationContact()
@@ -560,19 +375,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 StationContact returnContact = null;
 
                 //save and return station contact
-                _inventoryFileService.SaveStationContact(contact, "");
-                returnContact = _inventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == name);
+                _InventoryFileService.SaveStationContact(contact, "");
+                returnContact = _InventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == name);
 
                 // modify a property, save
                 company = "Modified Company " + DateTime.Now.Ticks;
                 returnContact.Company = company;
-                _inventoryFileService.SaveStationContact(returnContact, "");
+                _InventoryFileService.SaveStationContact(returnContact, "");
 
                 // return the updated contacts to check if the values are equal
-                returnContact = _inventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == name);
+                returnContact = _InventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == name);
 
                 Assert.AreEqual(returnContact.Company, company);
-                _inventoryFileService.DeleteStationContact(returnContact.Id, "system");
+                _InventoryFileService.DeleteStationContact(returnContact.Id, "system");
             }
         }
 
@@ -582,7 +397,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var currentDate = new DateTime(2016, 11, 1);
-                var stationCode = _inventoryFileService.GetStations("OpenMarket", currentDate).First().Code;
+                var stationCode = _InventoryFileService.GetStations("OpenMarket", currentDate).First().Code;
                 var stationContactName = "Unit Test " + DateTime.Now.Ticks;
                 var contact = new StationContact()
                 {
@@ -596,12 +411,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Type = StationContact.StationContactType.Station
                 };
 
-                _inventoryFileService.SaveStationContact(contact, "");
+                _InventoryFileService.SaveStationContact(contact, "");
 
                 // remove 
                 var stationContact =
-                    _inventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == stationContactName);
-                var deleted = _inventoryFileService.DeleteStationContact(stationContact.Id, "system");
+                    _InventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == stationContactName);
+                var deleted = _InventoryFileService.DeleteStationContact(stationContact.Id, "system");
 
                 Assert.IsTrue(deleted);
             }
@@ -624,7 +439,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = "unknown_station_rate_file_zyxw.xml";
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
             }
         }
@@ -645,7 +460,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = "known_and_unknown_station_rate_file_zyxw.xml";
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
@@ -675,7 +490,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = "unknown_spot_length_rate_file_wvtm.xml";
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
@@ -704,7 +519,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = "programs_without_rates_or_flights_wvtm.xml";
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
@@ -735,7 +550,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = "rate-file-invalid-schema.xml";
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -756,10 +571,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
             };
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
                 var stationCodeWVTM = 1027;
                 var endDate = DateFormatter.AdjustEndDate(new DateTime(2017, 01, 20));
-                var stationDetails = _inventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
+                var stationDetails = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
                 //var program = stationDetails.Rates.Single(q => q.Program == "TR_WVTM-TV_TEST_1 11:30AM");
                 //_ratesService.TrimProgramFlight(program.Id, endDate, endDate.AddDays(-7), "IntegrationTestUser");
             }
@@ -782,10 +597,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
             };
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
                 var stationCodeWVTM = 1027;
                 var endDate = DateFormatter.AdjustEndDate(new DateTime(1988, 01, 20));
-                var stationDetails = _inventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
+                var stationDetails = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
                 //var program = stationDetails.Rates.Single(q => q.Program == "TR_WVTM-TV_TEST_1 11:30AM");
                 //_ratesService.TrimProgramFlight(program.Id, endDate, endDate, "IntegrationTestUser");
             }
@@ -796,7 +611,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var genres = _inventoryFileService.GetAllGenres();
+                var genres = _InventoryFileService.GetAllGenres();
                 Assert.IsTrue(genres.Any());
             }
         }
@@ -817,7 +632,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
                 var stationCodeWVTM = 5044;
                 var startDate = new DateTime(2016, 9, 26);
                 var endDate = new DateTime(2016, 10, 09);
@@ -845,7 +660,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileName = "simple_period_rate_file_wvtm.xml"
             };
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
                 //var result = _ratesService.GetStationDetailByCode("OpenMarket", stationCodeWVTM).Rates.Where(p => p.Program == "Simple Period News").ToList();
 
                 //var jsonResolver = new IgnorableSerializerContractResolver();
@@ -887,7 +702,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
                 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
 
@@ -910,9 +725,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.UserName = "IntegrationTestUser";
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
-                var stationDetails = _inventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
+                var stationDetails = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
 
                 //if (stationDetails.Rates.Count > 0)
                 //{
@@ -953,10 +768,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 request.UserName = "IntegrationTestUser";
                 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
                 // it seems datetime.now has some resolution issues when the time is updated. using utcnow seems to have a higher resolution
-                var stationLastModifiedDate = _inventoryFileService.GetStations("OpenMarket", new DateTime(2016, 09, 26)).Single(q => q.Code == stationCodeWVTM).ModifiedDate.ToUniversalTime();
+                var stationLastModifiedDate = _InventoryFileService.GetStations("OpenMarket", new DateTime(2016, 09, 26)).Single(q => q.Code == stationCodeWVTM).ModifiedDate.ToUniversalTime();
                 
                 Assert.IsTrue(stationLastModifiedDate != default(DateTime));
                 var dateToCompare = DateTime.UtcNow;
@@ -983,9 +798,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.UserName = "IntegrationTestUser";
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
-                var stationDetails = _inventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
+                var stationDetails = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Id");
@@ -1019,9 +834,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.UserName = "IntegrationTestUser";
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
-                var stationDetails = _inventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
+                var stationDetails = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Id");
@@ -1049,7 +864,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1083,7 +898,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 Assert.IsEmpty(result.Problems);
             }
         }
@@ -1100,7 +915,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1116,7 +931,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1140,7 +955,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1156,7 +971,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
                // there is no method that brings all stations with audiences. this test will bring only one valid audience
                 //var wwupStation = _ratesService.GetAllStationRates("TVB", 5667).SelectMany(a => a.Audiences);
@@ -1184,7 +999,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1200,7 +1015,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1224,7 +1039,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1240,7 +1055,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1265,7 +1080,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1281,7 +1096,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1305,7 +1120,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1321,7 +1136,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -1346,7 +1161,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1362,7 +1177,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1385,7 +1200,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1401,15 +1216,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
                 filename = @".\Files\TVBFileLoadTestUpdate.csv";
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
-                var stationDetails = _inventoryFileService.GetStationDetailByCode("TVB", 7295);
+                var stationDetails = _InventoryFileService.GetStationDetailByCode("TVB", 7295);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Id");
@@ -1438,7 +1253,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1454,9 +1269,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
-                var stationDetails = _inventoryFileService.GetStationDetailByCode("TVB", 5139);
+                var stationDetails = _InventoryFileService.GetStationDetailByCode("TVB", 5139);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Id");
@@ -1485,7 +1300,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1501,9 +1316,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
-                var stationDetails = _inventoryFileService.GetStationDetailByCode("CNN", 5139);
+                var stationDetails = _InventoryFileService.GetStationDetailByCode("CNN", 5139);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Id");
@@ -1531,7 +1346,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1547,7 +1362,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 Assert.IsEmpty(result.Problems);
             }
 
@@ -1565,7 +1380,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1581,7 +1396,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -1607,7 +1422,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1623,7 +1438,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -1648,7 +1463,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1664,7 +1479,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -1688,7 +1503,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1704,7 +1519,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 Assert.IsEmpty(result.Problems);
             }
         }
@@ -1720,7 +1535,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1736,7 +1551,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 Assert.IsEmpty(result.Problems);
             }
         }
@@ -1753,7 +1568,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -1769,7 +1584,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
@@ -1795,7 +1610,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -1810,7 +1625,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1834,7 +1649,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -1849,7 +1664,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1873,7 +1688,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -1888,7 +1703,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -1904,7 +1719,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -1919,7 +1734,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -1934,7 +1749,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -1949,7 +1764,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -1965,7 +1780,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -1980,7 +1795,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2005,7 +1820,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2020,7 +1835,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2044,7 +1859,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2059,7 +1874,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -2083,7 +1898,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2098,7 +1913,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -2113,7 +1928,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2128,7 +1943,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -2144,7 +1959,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2159,7 +1974,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -2175,7 +1990,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2190,7 +2005,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -2206,7 +2021,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2221,7 +2036,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -2236,7 +2051,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2251,7 +2066,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -2266,7 +2081,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2281,7 +2096,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -2297,7 +2112,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2312,7 +2127,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -2327,7 +2142,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2342,7 +2157,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -2358,7 +2173,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2373,7 +2188,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2397,7 +2212,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2412,7 +2227,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -2438,7 +2253,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2453,7 +2268,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2477,7 +2292,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2492,7 +2307,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2516,7 +2331,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2531,7 +2346,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2555,7 +2370,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2570,7 +2385,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -2595,7 +2410,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2610,7 +2425,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -2635,7 +2450,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
                 var flightWeeks = new List<FlightWeekDto>();
                 flightWeeks.Add(new FlightWeekDto()
@@ -2668,8 +2483,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                _inventoryFileService.SaveInventoryFile(request);
-                var stationRates = _inventoryFileService.GetStationDetailByCode("CNN", 1039);
+                _InventoryFileService.SaveInventoryFile(request);
+                var stationRates = _InventoryFileService.GetStationDetailByCode("CNN", 1039);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                // jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Id");
@@ -2697,7 +2512,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -2713,7 +2528,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -2739,7 +2554,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -2755,7 +2570,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2780,7 +2595,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -2796,7 +2611,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2819,7 +2634,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -2835,7 +2650,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 Assert.IsEmpty(result.Problems);
             }
 
@@ -2852,7 +2667,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -2868,7 +2683,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 Assert.IsEmpty(result.Problems);
             }
 
@@ -2885,7 +2700,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -2901,7 +2716,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 Assert.IsEmpty(result.Problems);
             }
 
@@ -2913,7 +2728,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                var initialRatesData = _inventoryFileService.GetInitialRatesData();
+                var initialRatesData = _InventoryFileService.GetInitialRatesData();
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(initialRatesData));
             }
         }
@@ -2934,7 +2749,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
                         FileName = filename,
                         UserName = "IntegrationTestUser",
-                        RateSource = "TTNW",
+                        InventorySource = "TTNW",
                         BlockName = "Integration Test",
                         RatingBook = 413
                     };
@@ -2953,7 +2768,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     request.FlightStartDate = new DateTime(2016, 11, 27);
                     request.FlightWeeks = flightWeeks;
 
-                    _inventoryFileService.SaveInventoryFile(request);
+                    _InventoryFileService.SaveInventoryFile(request);
 
                     //var rates = _ratesService.GetAllStationRates("TTNW", 1003);
 
@@ -2975,7 +2790,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    RateSource = "TTNW",
+                    InventorySource = "TTNW",
                     BlockName = "Integration Test"
                 };
 
@@ -2994,7 +2809,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
 
                 Assert.IsEmpty(result.Problems);
             }
@@ -3013,7 +2828,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    RateSource = "CNN",
+                    InventorySource = "CNN",
                     BlockName = "Integration Test"
                 };
 
@@ -3032,7 +2847,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
 
                 Assert.IsEmpty(result.Problems);
             }
@@ -3051,7 +2866,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    RateSource = "TVB",
+                    InventorySource = "TVB",
                     BlockName = "Integration Test"
                 };
 
@@ -3070,7 +2885,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
                 
                 Assert.IsEmpty(result.Problems);
             }
@@ -3090,7 +2905,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    RateSource = "TTNW",
+                    InventorySource = "TTNW",
                     BlockName = "Integration Test"
                 };
 
@@ -3109,7 +2924,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
 
                 Assert.IsEmpty(result.Problems);
             }
@@ -3128,7 +2943,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    RateSource = "CNN",
+                    InventorySource = "CNN",
                     BlockName = "Integration Test"
                 };
 
@@ -3147,7 +2962,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
 
                 Assert.IsEmpty(result.Problems);
             }
@@ -3167,7 +2982,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    RateSource = "TVB",
+                    InventorySource = "TVB",
                     BlockName = "Integration Test"
                 };
 
@@ -3186,7 +3001,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
 
                 Assert.IsEmpty(result.Problems);
             }
@@ -3203,7 +3018,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TVB";
+                request.InventorySource = "TVB";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -3219,7 +3034,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
                 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
 
                 Assert.IsEmpty(result.Problems);
             }
@@ -3236,7 +3051,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "TTNW";
+                request.InventorySource = "TTNW";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -3252,7 +3067,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
 
                 Assert.IsEmpty(result.Problems);
             }
@@ -3269,7 +3084,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.RateSource = "CNN";
+                request.InventorySource = "CNN";
                 request.BlockName = "Integration Test";
 
                 var flightWeeks = new List<FlightWeekDto>();
@@ -3285,7 +3100,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                var result = _inventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
 
                 Assert.IsEmpty(result.Problems);
             }
@@ -3304,7 +3119,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatesStream = new FileStream(path, FileMode.Open, FileAccess.Read),
                     FileName = path,
                     UserName = "IntegrationTestUser",
-                    RateSource = "TVB",
+                    InventorySource = "TVB",
                     BlockName = "Integration Test 2"
                 };
 
@@ -3326,7 +3141,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //TODO: get rate info for comparison
                 //var stationBeforeUpdate = _stationProgramRepository.GetStationProgramById(320136);
 
-                _inventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request);
 
                 //var stationAfterUpdate = _stationProgramRepository.GetStationProgramById(320136);
 
@@ -3339,7 +3154,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         public void CanConvert30sRateTo15sRate()
         {
-            var result = _inventoryFileService.ConvertRateForSpotLength(10, 15);
+            var result = _InventoryFileService.ConvertRateForSpotLength(10, 15);
             Assert.AreEqual(6.5, result);
         }
     }
