@@ -651,6 +651,51 @@
       {
         "Advertiser": "BEIERS HERSHEY",
         "Affiliate": "IND",
+        "AirTime": 82680,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 33,
+            "Delivery": 6744.905,
+            "Impressions": 0.0,
+            "NsiDelivery": 6744.905
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 1001.2525,
+            "Impressions": 0.0,
+            "NsiDelivery": 1001.2525
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 4550.025,
+            "Impressions": 0.0,
+            "NsiDelivery": 4550.025
+          }
+        ],
+        "Brand": "",
+        "Campaign": 794613,
+        "Date": "2017-03-14T00:00:00",
+        "DateAired": "03/14/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "CO_N_RR",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "CO_N_RR",
+            "House": "O_N_RR"
+          }
+        ],
+        "Length": 30,
+        "Market": "CHICAGO",
+        "ProgramName": "JUDGE ALEX ON 2",
+        "Rank": 3,
+        "Station": "WMOR",
+        "TimeAired": "10:58 PM"
+      },
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "IND",
         "AirTime": 86100,
         "AudienceImpressions": [
           {
@@ -782,51 +827,6 @@
         "Rank": 11,
         "Station": "WMOR",
         "TimeAired": "3:00 AM"
-      },
-      {
-        "Advertiser": "BEIERS HERSHEY",
-        "Affiliate": "IND",
-        "AirTime": 82680,
-        "AudienceImpressions": [
-          {
-            "AudienceId": 33,
-            "Delivery": 6744.905,
-            "Impressions": 0.0,
-            "NsiDelivery": 6744.905
-          },
-          {
-            "AudienceId": 53,
-            "Delivery": 1001.2525,
-            "Impressions": 0.0,
-            "NsiDelivery": 1001.2525
-          },
-          {
-            "AudienceId": 61,
-            "Delivery": 4550.025,
-            "Impressions": 0.0,
-            "NsiDelivery": 4550.025
-          }
-        ],
-        "Brand": "",
-        "Campaign": 794613,
-        "Date": "2017-03-14T00:00:00",
-        "DateAired": "03/14/2017",
-        "DaypartId": 0,
-        "InventorySource": 2,
-        "Isci": "CO_N_RR",
-        "IsciDto": [
-          {
-            "Brand": null,
-            "Client": "CO_N_RR",
-            "House": "O_N_RR"
-          }
-        ],
-        "Length": 30,
-        "Market": "CHICAGO",
-        "ProgramName": "JUDGE ALEX ON 2",
-        "Rank": 12,
-        "Station": "WMOR",
-        "TimeAired": "10:58 PM"
       },
       {
         "Advertiser": "BEIERS HERSHEY",

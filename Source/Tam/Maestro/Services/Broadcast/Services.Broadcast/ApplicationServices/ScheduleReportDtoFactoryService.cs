@@ -445,16 +445,15 @@ namespace Services.Broadcast.ApplicationServices
                                                   List<AdvertiserCoreData> coreDataList)
         {
             var marketNamedRanks = GetMarketRanks(schedulesAggregate);
-
             var spotLengthRepo = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             var bvsDetailList = schedulesAggregate.GetBvsDetails();
-
             var details = schedulesAggregate.GetScheduleDetails();
+
             foreach (var scheduleDetail in details) //in-spec
             {
                 int rank;
-                string aff = schedulesAggregate.GetDetailAffiliateFromScheduleDetailId(scheduleDetail.network);
-                int spotLength = spotLengthRepo.GetSpotLengthById(scheduleDetail.spot_length_id.Value);
+                var affiliate = schedulesAggregate.GetDetailAffiliateFromScheduleDetailId(scheduleDetail.network);
+                var spotLength = spotLengthRepo.GetSpotLengthById(scheduleDetail.spot_length_id.Value);
 
                 var bvsDetails = schedulesAggregate.GetBvsDetailsByScheduleId(scheduleDetail.id);
 
@@ -467,18 +466,27 @@ namespace Services.Broadcast.ApplicationServices
                     Rank = rank,
                     Market = scheduleDetail.market,
                     Station = scheduleDetail.network,
-                    Affiliate = aff,
+                    Affiliate = affiliate,
                     ProgramName = scheduleDetail.program,
                     GroupedByName = scheduleDetail.program,
                     SpotLength = spotLength,
                     ScheduleDetail = scheduleDetail,
                     BvsDetails = bvsDetails
                 };
+
                 coreDataList.Add(coreReportData);
             }
+
+            foreach (var bvsFileDetail in bvsDetailList)
+            {
+                int rank;
+
+                if (marketNamedRanks.TryGetValue(bvsFileDetail.market.ToLower(), out rank))
+                    bvsFileDetail.rank = rank;
+            }
+
             return bvsDetailList;
         }
-
 
         private void _GatherAdvertiserData(SchedulesAggregate schedulesAggregate,
                                                             List<ScheduleAudience> scheduleAudiences,
