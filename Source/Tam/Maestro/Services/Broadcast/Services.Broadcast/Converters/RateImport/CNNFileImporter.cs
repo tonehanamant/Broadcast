@@ -39,6 +39,11 @@ namespace Services.Broadcast.Converters.RateImport
             public int SpotsPerWeek { get; set; }
             public int SpotsPerDay { get; set; }
             public List<DisplayDaypart> Dayparts { get; set; }
+
+            public override string ToString()
+            {
+                return "R:" + RowNumber + ";S:" + Station.LegacyCallLetters + ";DPC:" + DaypartCode + ";SPW:" + SpotsPerWeek;
+            }
         }
 
         private ICNNStationInventoryGroupService _CNNStationInventoryGroupService;

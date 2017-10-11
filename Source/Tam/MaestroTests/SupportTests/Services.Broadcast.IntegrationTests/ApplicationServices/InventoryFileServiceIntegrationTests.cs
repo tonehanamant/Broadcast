@@ -48,11 +48,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
-                _InventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request);
+
+                Assert.IsNotNull(result.FileId);
             }
         }
 
-
+            
         [Test]
         [ExpectedException(typeof(BroadcastDuplicateInventoryFileException))]
         public void ThrowsExceptionWhenLoadingSameInventoryFileAgain()

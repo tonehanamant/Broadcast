@@ -179,24 +179,7 @@ namespace Services.Broadcast.ApplicationServices
                 var fileStationCodes = inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Select(i => (int)i.Station.Code).Distinct().ToList();
                 using (var transaction = new TransactionScopeWrapper(_CreateTransactionScope(TimeSpan.FromMinutes(20))))
                 {
-                    //Lock stations before database operations
-                    foreach (var stationCode in fileStationCodes)
-                    {
-                        var lockResult = LockStation(stationCode);
-                        if (lockResult.Success)
-                        {
-                            lockedStationCodes.Add(stationCode);
-                            stationLocks.Add(new BomsLockManager(_SmsClient, new StationToken(stationCode)));
-                        }
-                        else
-                        {
-                            var stationLetters =
-                                inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Where(i => i.Station.Code == stationCode)
-                                    .First()
-                                    .Station.LegacyCallLetters;
-                            throw new ApplicationException(string.Format("Unable to update station. Station locked for editing {0}.", stationLetters));
-                        }
-                    }
+                    LockStations(fileStationCodes, lockedStationCodes, stationLocks, inventoryFile);
 
                     var isThirdParty = inventorySourceType == InventoryFile.InventorySourceType.CNN ||
                                        inventorySourceType == InventoryFile.InventorySourceType.TTNW ;
@@ -245,6 +228,29 @@ namespace Services.Broadcast.ApplicationServices
                 FileId = inventoryFile.Id,
                 Problems = fileProblems
             };
+        }
+
+        private void LockStations(List<int> fileStationCodes, List<int> lockedStationCodes, List<IDisposable> stationLocks, InventoryFile inventoryFile)
+        {
+            //Lock stations before database operations
+            foreach (var stationCode in fileStationCodes)
+            {
+                var lockResult = LockStation(stationCode);
+                if (lockResult.Success)
+                {
+                    lockedStationCodes.Add(stationCode);
+                    stationLocks.Add(new BomsLockManager(_SmsClient, new StationToken(stationCode)));
+                }
+                else
+                {
+                    var stationLetters =
+                        inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Where(i => i.Station.Code == stationCode)
+                            .First()
+                            .Station.LegacyCallLetters;
+                    throw new ApplicationException(string.Format("Unable to update station. Station locked for editing {0}.",
+                        stationLetters));
+                }
+            }
         }
 
         private void UnlockStations(List<int> lockedStationCodes, List<IDisposable> stationLocks)

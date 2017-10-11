@@ -9,11 +9,6 @@ namespace Services.Broadcast.ApplicationServices
     }
     public class CNNStationInventoryGroupService : ICNNStationInventoryGroupService
     {
-        //private IStationGroupInventoryRepository _InventoryGroupRepository;
-        public CNNStationInventoryGroupService()
-        {
-        }
-
         public int GetSlotCount(string daypartCode)
         {
             return 5;
@@ -23,7 +18,5 @@ namespace Services.Broadcast.ApplicationServices
         {
             return daypartCode + slotNumber;
         }
-
-
     }
 }
