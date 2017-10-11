@@ -71,7 +71,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly Dictionary<int, int> _SpotLengthMap;
         private readonly Dictionary<int, double> _SpotLengthCostMultipliers; 
         private readonly IThirdPartySpotCostCalculationEngine _ThirdPartySpotCostCalculationEngine;
-        private readonly IInventoryRepository _inventoryRepository;
+        private readonly IStationInventoryGroupService _stationInventoryGroupService;
 
         public InventoryFileService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
                             IInventoryFileValidator inventoryFileValidator,
@@ -82,7 +82,8 @@ namespace Services.Broadcast.ApplicationServices
                             ISMSClient smsClient, 
                             ILockingManagerApplicationService lockingManager,
                             IRatingForecastService ratingForecastService,
-                            IThirdPartySpotCostCalculationEngine thirdPartySpotCostCalculationEngine)
+                            IThirdPartySpotCostCalculationEngine thirdPartySpotCostCalculationEngine,
+                            IStationInventoryGroupService stationInventoryGroupService)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _stationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -105,7 +106,7 @@ namespace Services.Broadcast.ApplicationServices
                 broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthMultiplierRepository>()
                     .GetSpotLengthIdsAndCostMultipliers();
             _ThirdPartySpotCostCalculationEngine = thirdPartySpotCostCalculationEngine;
-            _inventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+            _stationInventoryGroupService = stationInventoryGroupService;
         }
 
         public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
@@ -267,20 +268,13 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SaveStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
-            var inventorySource = _inventoryRepository.GetInventorySourceByInventoryType(inventoryFile.InventorySource);
-
-            if (inventorySource == null || !inventorySource.IsActive)
-                throw new Exception(string.Format("The selected source type is invalid or inactive."));
-
-            inventoryFile.InventorySourceId = inventorySource.Id;
-
             // set daypart id
-            inventoryFile.InventoryGroups.SelectMany(m=>m.Manifests.SelectMany(d=>d.Dayparts)).ForEach(dd =>
+            inventoryFile.InventoryGroups.SelectMany(m => m.Manifests.SelectMany(d => d.Dayparts)).ForEach(dd =>
             {
                 dd.Id = _daypartCache.GetIdByDaypart(dd);
             });
 
-            _inventoryRepository.SaveStationInventoryGroups(inventoryFile);
+            _stationInventoryGroupService.SaveStationInventoryGroups(request, inventoryFile);
         }
 
 

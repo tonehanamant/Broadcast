@@ -22,6 +22,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class InventoryFileServiceIntegrationTests
     {
         private IInventoryFileService _InventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryFileService>();
+        private IStationInventoryGroupService _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
 
         [Test]
         public void LoadInventoryFileCNN()
@@ -54,7 +55,42 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-            
+
+        [Test]
+        public void LoadInventoryStationGroupsAfterSavingCNNFile()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var request = new InventoryFileSaveRequest();
+                var flightWeeks = new List<FlightWeekDto>();
+                flightWeeks.Add(new FlightWeekDto()
+                {
+                    StartDate = new DateTime(2016, 10, 31),
+                    EndDate = new DateTime(2016, 11, 06),
+                    IsHiatus = false
+                });
+
+                request.RatesStream = new FileStream(
+                    @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
+                    FileMode.Open,
+                    FileAccess.Read);
+                request.FileName = "CNNAMPMBarterObligations_Clean.xlsx";
+                request.InventorySource = "CNN";
+                request.UserName = "IntegrationTestUser";
+                request.BlockName = "IntegrationTest Block";
+                request.FlightWeeks = flightWeeks;
+                request.RatingBook = 416;
+
+                var savedInventoryFile = _InventoryFileService.SaveInventoryFile(request);
+                var stationGroups =
+                    _StationInventoryGroupService.GetStationInventoryGroupsByFileId(savedInventoryFile.FileId);
+
+                Assert.IsNotEmpty(stationGroups);
+            }
+        }
+
+
+
         [Test]
         [ExpectedException(typeof(BroadcastDuplicateInventoryFileException))]
         public void ThrowsExceptionWhenLoadingSameInventoryFileAgain()

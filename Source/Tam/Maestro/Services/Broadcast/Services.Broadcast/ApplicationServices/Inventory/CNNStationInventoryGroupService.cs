@@ -3,9 +3,10 @@ using Services.Broadcast.Entities;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public interface ICNNStationInventoryGroupService : IStationInventoryGroupService
+    public interface ICNNStationInventoryGroupService 
     {
         int GetSlotCount(string daypartCode);
+        string GenerateGroupName(string daypartCode, int slotNumber);
     }
     public class CNNStationInventoryGroupService : ICNNStationInventoryGroupService
     {

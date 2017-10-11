@@ -1,4 +1,5 @@
-﻿using Common.Services.Extensions;
+﻿using System.Data.Entity;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
@@ -21,8 +22,7 @@ namespace Services.Broadcast.Repositories
         int InventoryExists(string daypartCode, short stationCode, int spotLengthId, int spotsPerWeek, DateTime effectiveDate);
         void SaveStationInventoryGroups(InventoryFile inventoryFile);
         void UpdateInventoryGroups(List<StationInventoryGroup> inventoryGroups);
-        List<StationInventoryGroup> GetInventoryGroupsById(int id);
-        List<StationInventoryGroup> GetInventoryGroupsByDaypartCode(string daypartCode);
+        List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -51,16 +51,15 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context => (from a in context.inventory_sources
-                            where a.inventory_source_type == (byte)sourceType
-                            select new InventorySource()
-                            {
-                                Id = a.id,
-                                InventorySourceType = (InventoryFile.InventorySourceType)a.inventory_source_type,
-                                IsActive = a.is_active,
-                                Name = a.name
-                            }).SingleOrDefault());            
+                    where a.inventory_source_type == (byte) sourceType
+                    select new InventorySource()
+                    {
+                        Id = a.id,
+                        InventorySourceType = (InventoryFile.InventorySourceType) a.inventory_source_type,
+                        IsActive = a.is_active,
+                        Name = a.name
+                    }).SingleOrDefault());
         }
-
 
         public int InventoryExists(string daypartCode, short stationCode, int spotLengthId, int spotsPerWeek,
             DateTime effectiveDate)
@@ -87,37 +86,41 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var inventoryGroups = inventoryFile.InventoryGroups;
-                    
+
                     var newGroups = inventoryGroups.Select(inventoryGroup => new station_inventory_group()
                     {
                         daypart_code = inventoryGroup.DaypartCode,
-                        inventory_source_id = inventoryFile.InventorySourceId, 
-                        name = inventoryGroup.Name, 
-                        slot_number = (byte) inventoryGroup.SlotNumber, 
-                        station_inventory_manifest = inventoryGroup.Manifests.Select(manifest => new station_inventory_manifest()
-                        {
-                            station_code = (short)manifest.Station.Code,
-                            spot_length_id = manifest.SpotLengthId,
-                            spots_per_day = manifest.SpotsPerDay,
-                            spots_per_week = manifest.SpotsPerWeek,
-                            effective_date = manifest.EffectiveDate,
-                            inventory_file_id = inventoryFile.Id,
-                            inventory_source_id = inventoryFile.InventorySourceId,
-                            station_inventory_manifest_audiences = manifest.ManifestAudiences.Select(audience=> new station_inventory_manifest_audiences()
+                        inventory_source_id = inventoryFile.InventorySourceId,
+                        name = inventoryGroup.Name,
+                        slot_number = (byte) inventoryGroup.SlotNumber,
+                        station_inventory_manifest =
+                            inventoryGroup.Manifests.Select(manifest => new station_inventory_manifest()
                             {
-                                audience_id = audience.Audience.Id,
-                                impressions = audience.Impressions,
-                                rate = audience.Rate
-                            }).ToList(),
-                            station_inventory_manifest_dayparts = manifest.Dayparts.Select(d=> new station_inventory_manifest_dayparts()
-                            {
-                                daypart_id = d.Id
+                                station_code = (short) manifest.Station.Code,
+                                spot_length_id = manifest.SpotLengthId,
+                                spots_per_day = manifest.SpotsPerDay,
+                                spots_per_week = manifest.SpotsPerWeek,
+                                effective_date = manifest.EffectiveDate,
+                                inventory_file_id = inventoryFile.Id,
+                                inventory_source_id = inventoryFile.InventorySourceId,
+                                station_inventory_manifest_audiences =
+                                    manifest.ManifestAudiences.Select(
+                                        audience => new station_inventory_manifest_audiences()
+                                        {
+                                            audience_id = audience.Audience.Id,
+                                            impressions = audience.Impressions,
+                                            rate = audience.Rate
+                                        }).ToList(),
+                                station_inventory_manifest_dayparts =
+                                    manifest.Dayparts.Select(d => new station_inventory_manifest_dayparts()
+                                    {
+                                        daypart_id = d.Id
+                                    }).ToList()
                             }).ToList()
-                        }).ToList()
                     }).ToList();
 
                     context.station_inventory_group.AddRange(newGroups);
-                    
+
                     context.SaveChanges();
                 });
         }
@@ -131,63 +134,66 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public List<StationInventoryGroup> GetInventoryGroupsById(int id)
+        public List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId)
         {
-            return _InReadUncommitedTransaction(
+            return  _InReadUncommitedTransaction(
                 context =>
                 {
-                    return (from g in context.station_inventory_group
-                        join m in context.station_inventory_manifest on g.id equals m.station_inventory_group_id
-                        join l in context.station_inventory_manifest_audiences on m.id equals
-                            l.station_inventory_manifest_id
-                        where g.id == id
-                        select new StationInventoryGroup()
-                        {
-                            Id = m.id,
-                            Name = g.name,
-                            DaypartCode = g.daypart_code,
-                            SlotNumber = g.slot_number,
-                            Manifests = g.station_inventory_manifest.Select(manifest => new StationInventoryManifest()
+                    var manifests =
+                        (from m in
+                            context.station_inventory_manifest.Include(l => l.station_inventory_manifest_audiences)
+                                .Include(s => s.station)
+                            join g in context.station_inventory_group on m.station_inventory_group_id equals g.id
+                            where m.inventory_file_id == fileId
+                            select new {g, m}).ToList();
+
+                    return manifests.Select(pv => _MapToInventoryGroup(pv.g, pv.m)).ToList();
+                });
+        }
+
+        private StationInventoryGroup _MapToInventoryGroup(station_inventory_group stationInventoryGroup,
+            station_inventory_manifest stationInventoryManifest)
+        {
+            return new StationInventoryGroup()
+            {
+                Id = stationInventoryManifest.id,
+                Name = stationInventoryGroup.name,
+                DaypartCode = stationInventoryGroup.daypart_code,
+                SlotNumber = stationInventoryGroup.slot_number,
+                Manifests =
+                    stationInventoryGroup.station_inventory_manifest.Select(manifest => new StationInventoryManifest()
+                    {
+                        Id = manifest.id,
+                        Station =
+                            new DisplayBroadcastStation()
                             {
-                                Id = manifest.id,
-                                Station =
-                                    new DisplayBroadcastStation()
-                                    {
-                                        Affiliation = manifest.station.affiliation,
-                                        Code = manifest.station_code,
-                                        CallLetters = manifest.station.station_call_letters,
-                                        LegacyCallLetters = manifest.station.legacy_call_letters,
-                                        MarketCode = manifest.station.market_code
-                                    },
-                                DaypartCode = g.daypart_code,
-                                SpotLengthId = manifest.spot_length_id,
-                                SpotsPerWeek = manifest.spots_per_week,
-                                SpotsPerDay = manifest.spots_per_day,
-                                Dayparts = manifest.station_inventory_manifest_dayparts.Select(d=> new DisplayDaypart()
+                                Affiliation = manifest.station.affiliation,
+                                Code = manifest.station_code,
+                                CallLetters = manifest.station.station_call_letters,
+                                LegacyCallLetters = manifest.station.legacy_call_letters,
+                                MarketCode = manifest.station.market_code
+                            },
+                        DaypartCode = stationInventoryGroup.daypart_code,
+                        SpotLengthId = manifest.spot_length_id,
+                        SpotsPerWeek = manifest.spots_per_week,
+                        SpotsPerDay = manifest.spots_per_day,
+                        Dayparts = manifest.station_inventory_manifest_dayparts.Select(d => new DisplayDaypart()
+                        {
+                            Id = d.daypart_id,
+                        }).ToList(),
+                        ManifestAudiences =
+                            manifest.station_inventory_manifest_audiences.Select(
+                                audience => new StationInventoryManifestAudience()
                                 {
-                                    Id = d.id
-                                }).ToList(),
-                                ManifestAudiences = manifest.station_inventory_manifest_audiences.Select(audience=> new StationInventoryManifestAudience()
-                                {
-                                    Audience = new DisplayAudience() { Id = audience.id},
+                                    Audience = new DisplayAudience() {Id = audience.id},
                                     Impressions = audience.impressions,
                                     Rate = audience.rate
                                 }).ToList(),
-                                InvetoryFileId = manifest.inventory_file_id,
-                                InventorySourceId = manifest.inventory_source_id,
-                                EffectiveDate = manifest.effective_date
-                            }).ToList()
-                        }).ToList();
-                });            
-        }
-
-        public List<StationInventoryGroup> GetInventoryGroupsByDaypartCode(string daypartCode)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    return new List<StationInventoryGroup>();
-                });                        
+                        InvetoryFileId = manifest.inventory_file_id,
+                        InventorySourceId = manifest.inventory_source_id,
+                        EffectiveDate = manifest.effective_date
+                    }).ToList()
+            };
         }
     }
 }

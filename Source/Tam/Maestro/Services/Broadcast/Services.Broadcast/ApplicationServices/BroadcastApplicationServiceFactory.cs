@@ -66,6 +66,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalOpenMarketInventoryService, ProposalOpenMarketInventoryService>();
             unityContainer.RegisterType<IProposalWeeklyTotalCalculationEngine, ProposalProprietaryTotalsCalculationEngine>();
             unityContainer.RegisterType<ITrafficService, TrafficService>();
+            unityContainer.RegisterType<IStationInventoryGroupService, StationInventoryGroupService>();
 
             unityContainer.RegisterType<IProposalScxConverter, ProposalScxConverter>();
             unityContainer.RegisterType<IProposalScxDataPrep, ProposalScxDataPrep>();
