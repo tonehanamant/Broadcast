@@ -17,7 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public station_inventory_manifest()
         {
             this.station_inventory_manifest_audiences = new HashSet<station_inventory_manifest_audiences>();
-            this.dayparts = new HashSet<daypart>();
+            this.station_inventory_manifest_dayparts = new HashSet<station_inventory_manifest_dayparts>();
         }
     
         public int id { get; set; }
@@ -34,8 +34,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
         public virtual station_inventory_group station_inventory_group { get; set; }
-        public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual station station { get; set; }
-        public virtual ICollection<daypart> dayparts { get; set; }
+        public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
+        public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
     }
 }

@@ -14,7 +14,6 @@ namespace Services.Broadcast.Entities
         public int? SpotsPerDay { get; set; }
         public List<DisplayDaypart> Dayparts { get; set; }
 
-        // todo: need to fill in
         public int InvetoryFileId { get; set; }
         public int InventorySourceId { get; set; }
         public DateTime EffectiveDate { get; set; }

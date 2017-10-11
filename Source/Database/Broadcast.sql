@@ -422,6 +422,31 @@ GO
 
 /*************************************** BCOP-1776/2000 - END *****************************************************/
 
+/*************************************** BCOP-1776/2043 - END *****************************************************/
+if Object_ID(N'[dbo].[station_inventory_manifest_dayparts]') is not null and 
+  not EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'id'
+          AND Object_ID = Object_ID(N'dbo.station_inventory_manifest_dayparts'))
+BEGIN
+	ALTER TABLE [dbo].[station_inventory_manifest_dayparts] ADD id int not null identity (1,1)
+	
+	ALTER TABLE [dbo].[station_inventory_manifest_dayparts] ADD CONSTRAINT [PK_station_inventory_manifest_dayparts] PRIMARY KEY CLUSTERED (id)
+END
+GO
+
+if Object_ID(N'[dbo].[station_inventory_manifest_audiences]') is not null and 
+  not EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'id'
+          AND Object_ID = Object_ID(N'dbo.station_inventory_manifest_audiences'))
+BEGIN
+  ALTER TABLE [dbo].[station_inventory_manifest_audiences] ADD id int not null identity (1,1)
+  
+  ALTER TABLE [dbo].[station_inventory_manifest_audiences] ADD CONSTRAINT [PK_station_inventory_manifest_audiences] PRIMARY KEY CLUSTERED (id) 
+END
+GO
+
+/*************************************** BCOP-1776/2043 - END *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

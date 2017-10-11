@@ -12,15 +12,13 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class station_inventory_manifest_audiences
+    public partial class station_inventory_manifest_dayparts
     {
+        public int daypart_id { get; set; }
         public int station_inventory_manifest_id { get; set; }
-        public int audience_id { get; set; }
-        public double impressions { get; set; }
-        public decimal rate { get; set; }
         public int id { get; set; }
     
-        public virtual audience audience { get; set; }
+        public virtual daypart daypart { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }
     }
 }

@@ -41,6 +41,7 @@ namespace Services.Broadcast.Entities
 
         [JsonConverter(typeof(StringEnumConverter))]
         public InventorySourceType InventorySource { get; set; }
+        public int InventorySourceId { get; set; }
         private List<StationContact> _stationContacts; 
 
         public List<StationContact> StationContacts
