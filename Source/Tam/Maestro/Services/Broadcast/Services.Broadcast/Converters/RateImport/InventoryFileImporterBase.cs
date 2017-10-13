@@ -118,14 +118,14 @@ namespace Services.Broadcast.Converters.RateImport
         //    flightWeek.Rate120s = periodRate * (decimal) _SpotLengthMultipliers[120];
         //}
 
-        protected DisplayDaypart ParseStringToDaypart(string dayPartText, string station)
+        protected DisplayDaypart ParseStringToDaypart(string daypartText, string station)
         {
             DisplayDaypart displayDaypart;
 
-            if (!TryParse(dayPartText, out displayDaypart))
-                throw new Exception(string.Format("Invalid daypart '{0}' for program '{1}' on Station {2}.", dayPartText, this.Request.BlockName, station));
+            if (!TryParse(daypartText, out displayDaypart))
+                throw new Exception(string.Format("Invalid daypart '{0}' on Station {1}.", daypartText, station));
             if (displayDaypart == null || (displayDaypart != null && !displayDaypart.IsValid))
-                throw new Exception(string.Format("Invalid daypart '{0}' for program '{1}' on Station {2}.", dayPartText, this.Request.BlockName, station));
+                throw new Exception(string.Format("Invalid daypart '{0}' on Station {1}.", daypartText, station));
 
             return displayDaypart;
         }

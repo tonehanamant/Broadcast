@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Common.Services;
+﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
@@ -17,13 +16,9 @@ using System.Reflection;
 using System.Transactions;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Common.Formatters;
-using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
-using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
-using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -57,7 +52,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationRepository _stationRepository;
         private readonly IDataRepositoryFactory _broadcastDataRepositoryFactory;
         private readonly IDaypartCache _daypartCache;
-        private readonly IBroadcastAudiencesCache _audiencesCache;
+        private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly IInventoryFileValidator _inventoryFileValidator;
         private readonly IStationContactsRepository _stationContactsRepository;
         private readonly IGenreRepository _genreRepository;
@@ -75,7 +70,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public InventoryFileService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
                             IInventoryFileValidator inventoryFileValidator,
-                            IDaypartCache daypartCache, IBroadcastAudiencesCache audiencesCache, 
+                            IDaypartCache daypartCache,
                             IQuarterCalculationEngine quarterCalculationEngine,
                             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, 
                             IInventoryFileImporterFactory inventoryFileImporterFactory,
@@ -83,12 +78,13 @@ namespace Services.Broadcast.ApplicationServices
                             ILockingManagerApplicationService lockingManager,
                             IRatingForecastService ratingForecastService,
                             IThirdPartySpotCostCalculationEngine thirdPartySpotCostCalculationEngine,
-                            IStationInventoryGroupService stationInventoryGroupService)
+                            IStationInventoryGroupService stationInventoryGroupService,
+                            IBroadcastAudiencesCache audiencesCache)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _stationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _daypartCache = daypartCache;
-            _audiencesCache = audiencesCache;
+            _AudiencesCache = audiencesCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _inventoryFileValidator = inventoryFileValidator;
@@ -139,45 +135,56 @@ namespace Services.Broadcast.ApplicationServices
         {
             var inventorySourceType = _ParseInventorySourceOrDefault(request.InventorySource);
             var fileImporter = _inventoryFileImporterFactory.GetFileImporterInstance(inventorySourceType);
+            
             fileImporter.LoadFromSaveRequest(request);
             fileImporter.CheckFileHash();
 
-            InventoryFile inventoryFile = fileImporter.GetPendingRatesFile();
+            var inventoryFile = fileImporter.GetPendingRatesFile();
+            
             inventoryFile.Id = _inventoryFileRepository.CreateInventoryFile(inventoryFile, request.UserName);
 
             var stationLocks = new List<IDisposable>();
             var lockedStationCodes = new List<int>();
             var fileProblems = new List<InventoryFileProblem>();
+            
             try
             {
                 var startTime = DateTime.Now;
+
                 fileImporter.ExtractFileData(request.RatesStream, inventoryFile, fileProblems);
-                if (inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 || inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Count() == 0)
+
+                if (inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 || !inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Any())
                 {
                     throw new ApplicationException("Unable to parse any file records.");
                 }
 
                 var endTime = DateTime.Now;
-                System.Diagnostics.Debug.WriteLine(string.Format("Completed file parsing in {0}", endTime - startTime));
+
+                System.Diagnostics.Debug.WriteLine("Completed file parsing in {0}", endTime - startTime);
+                
                 startTime = DateTime.Now;
 
                 var validationProblems = _inventoryFileValidator.ValidateInventoryFile(inventoryFile);
+                
                 fileProblems.AddRange(validationProblems.InventoryFileProblems);
 
                 endTime = DateTime.Now;
-                System.Diagnostics.Debug.WriteLine(string.Format("Completed file validation in {0}", endTime - startTime));
+                
+                System.Diagnostics.Debug.WriteLine("Completed file validation in {0}", endTime - startTime);
 
                 if (fileProblems.Any())
                 {
-                    return new InventoryFileSaveResult()
+                    return new InventoryFileSaveResult
                     {
                         Problems = fileProblems,
                         FileId = inventoryFile.Id
                     };
                 }
+
                 startTime = DateTime.Now;
 
-                var fileStationCodes = inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Select(i => (int)i.Station.Code).Distinct().ToList();
+                var fileStationCodes = inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Select(i => i.Station.Code).Distinct().ToList();
+                
                 using (var transaction = new TransactionScopeWrapper(_CreateTransactionScope(TimeSpan.FromMinutes(20))))
                 {
                     LockStations(fileStationCodes, lockedStationCodes, stationLocks, inventoryFile);
@@ -187,30 +194,26 @@ namespace Services.Broadcast.ApplicationServices
 
                     if (isThirdParty)
                     {
-                        if (!request.RatingBook.HasValue)
-                        {
-                            throw new InvalidEnumArgumentException("Ratings book id required for third party rate files.");
-                        }
                         _ThirdPartySpotCostCalculationEngine.CalculateSpotCost(request, inventoryFile);
                     }
                     
                     inventoryFile.FileStatus = InventoryFile.FileStatusEnum.Loaded;
+
                     _SaveStationInventoryGroups(request, inventoryFile);
                     _SaveInventoryFileContacts(request, inventoryFile);
 
                     transaction.Complete();
 
-                    //unlock stations
                     UnlockStations(lockedStationCodes, stationLocks);
 
                     endTime = DateTime.Now;
-                    System.Diagnostics.Debug.WriteLine(
-                        string.Format("Completed file saving in {0}", endTime - startTime));
+
+                    System.Diagnostics.Debug.WriteLine("Completed file saving in {0}", endTime - startTime);
                 }
             }
             catch (Exception e)
             {
-                //Try to update the status of the file if possible
+                // Try to update the status of the file if possible.
                 try
                 {
                     UnlockStations(lockedStationCodes, stationLocks);
@@ -218,13 +221,13 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 catch
                 {
-
                 }
+
                 throw new BroadcastInventoryDataException(string.Format("Error loading new rates file: {0}", e.Message),
                     inventoryFile.Id, e);
             }
 
-            return new InventoryFileSaveResult()
+            return new InventoryFileSaveResult
             {
                 FileId = inventoryFile.Id,
                 Problems = fileProblems
@@ -525,6 +528,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 RatingBooks = GetRatingBooks(),
                 PlaybackTypes = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalPlaybackType>(),
+                Audiences = _AudiencesCache.GetAllLookups(),
                 DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3
             };
 

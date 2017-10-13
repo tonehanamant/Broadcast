@@ -316,14 +316,6 @@ namespace Services.Broadcast.Converters.RateImport
 
             if (Request.RatesStream.Length == 0)
                 throw new Exception(string.Format("Unable to parse inventory file: {0}. Invalid file size.", Request.FileName));
-
-            if (string.IsNullOrEmpty(Request.BlockName))
-                throw new Exception(string.Format("Unable to parse inventory file: {0}. The block name is invalid.",
-                    Request.FileName));
-
-            if (!Request.FlightWeeks.Any())
-                throw new Exception(string.Format("Unable to parse inventory file: {0}. Invalid flight weeks.",
-                    Request.FileName));
         }
 
 
@@ -399,9 +391,9 @@ namespace Services.Broadcast.Converters.RateImport
             if (station!=null) stationName = station.LegacyCallLetters;
             
             if (!int.TryParse(length, out spotLength))
-                _AddProblem(string.Format("Invalid spot length for program '{0}' on Station '{1}'",this.Request.BlockName, stationName));
+                _AddProblem(string.Format("Invalid spot length on Station '{0}'", stationName));
             if (!_IsValidSpotLenght(spotLength))
-                _AddProblem(string.Format("Invalid spot length for program '{0}' on Station '{1}'", this.Request.BlockName, stationName));
+                _AddProblem(string.Format("Invalid spot length on Station '{0}'", stationName));
 
 
             if (_SpothLengths == null)
@@ -412,7 +404,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             int spotLengthId;
             if (!_SpothLengths.TryGetValue(spotLength,out spotLengthId))
-                _AddProblem(string.Format("Invalid spot length for program '{0}' on Station '{1}'", this.Request.BlockName, stationName));
+                _AddProblem(string.Format("Invalid spot length on Station '{0}'", stationName));
 
             return spotLengthId;
         }

@@ -1,4 +1,5 @@
-﻿using ApprovalTests;
+﻿
+using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
@@ -27,27 +28,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void LoadInventoryFileCNN()
         {
-            using (new TransactionScopeWrapper())
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var request = new InventoryFileSaveRequest();
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.RatesStream = new FileStream(
-                    @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.FileName = "CNNAMPMBarterObligations_Clean.xlsx";
-                request.InventorySource = "CNN";
-                request.UserName = "IntegrationTestUser";
-                request.BlockName = "IntegrationTest Block";
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(
+                        @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
+                        FileMode.Open,
+                        FileAccess.Read),
+                    FileName = "CNNAMPMBarterObligations_Clean.xlsx",
+                    InventorySource = "CNN",
+                    UserName = "IntegrationTestUser",
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
@@ -61,25 +54,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var request = new InventoryFileSaveRequest();
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.RatesStream = new FileStream(
-                    @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.FileName = "CNNAMPMBarterObligations_Clean.xlsx";
-                request.InventorySource = "CNN";
-                request.UserName = "IntegrationTestUser";
-                request.BlockName = "IntegrationTest Block";
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(
+                        @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
+                        FileMode.Open,
+                        FileAccess.Read),
+                    FileName = "CNNAMPMBarterObligations_Clean.xlsx",
+                    InventorySource = "CNN",
+                    UserName = "IntegrationTestUser",
+                    RatingBook = 416
+                };
 
                 var savedInventoryFile = _InventoryFileService.SaveInventoryFile(request);
                 var stationGroups =
@@ -99,13 +84,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = new InventoryFileSaveRequest();
                 var request2 = new InventoryFileSaveRequest();
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
-                {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
 
                 request.RatesStream = new FileStream(
                     @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
@@ -114,8 +92,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = "CNNAMPMBarterObligations_Clean.xlsx";
                 request.InventorySource = "CNN";
                 request.UserName = "IntegrationTestUser";
-                request.BlockName = "IntegrationTest Block";
-                request.FlightWeeks = flightWeeks;
                 request.RatingBook = 416;
 
                 _InventoryFileService.SaveInventoryFile(request);
@@ -127,8 +103,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request2.FileName = "CNNAMPMBarterObligations_Clean.xlsx";
                 request2.InventorySource = "CNN";
                 request2.UserName = "IntegrationTestUser";
-                request2.BlockName = "IntegrationTest Block";
-                request2.FlightWeeks = flightWeeks;
+
                 _InventoryFileService.SaveInventoryFile(request);
             }
         }
@@ -906,44 +881,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TVBFileLoadTest.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileLoadTest.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-                flightWeeks.Add(new FlightWeekDto()
-                {
-                    StartDate = new DateTime(2016, 11, 07),
-                    EndDate = new DateTime(2016, 11, 13),
-                    IsHiatus = false
-                });
-                flightWeeks.Add(new FlightWeekDto()
-                {
-                    StartDate = new DateTime(2016, 11, 14),
-                    EndDate = new DateTime(2016, 11, 20),
-                    IsHiatus = false
-                });
-                flightWeeks.Add(new FlightWeekDto()
-                {
-                    StartDate = new DateTime(2016, 11, 21),
-                    EndDate = new DateTime(2016, 11, 27),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 10, 31);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 10, 31),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 Assert.IsEmpty(result.Problems);
@@ -957,26 +905,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TVBFileLoadTestInvalidSpothLenght.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileLoadTestInvalidSpothLenght.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -997,26 +936,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TVBFileHasValidAudienceCPM.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileHasValidAudienceCPM.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 _InventoryFileService.SaveInventoryFile(request);
 
@@ -1041,35 +971,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TVBFileLoadTestDuplicateStation.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileLoadTestDuplicateStation.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
+                
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
+                
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
+
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
             }
         }
@@ -1081,26 +1005,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TVBFileLoadTestInvalidCPM.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileLoadTestInvalidCPM.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1122,35 +1037,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TTNWFileLoadTestInvalidCPM.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TTNWFileLoadTestInvalidCPM.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
+               
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
+                
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
+
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
             }
         }
@@ -1162,31 +1071,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\CNNFileLoadTestInvalidCPM.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileLoadTestInvalidCPM.csv";
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -1203,26 +1101,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TVBFileLoadTestInvalidStation.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileLoadTestInvalidStation.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1242,32 +1131,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TVBFileLoadTest.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
+                const string firstFileName = @".\Files\TVBFileLoadTest.csv";
+                const string updateFilename = @".\Files\TVBFileLoadTestUpdate.csv";
 
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(firstFileName, FileMode.Open, FileAccess.Read),
+                    FileName = firstFileName,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 _InventoryFileService.SaveInventoryFile(request);
 
-                filename = @".\Files\TVBFileLoadTestUpdate.csv";
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
+                request.RatesStream = new FileStream(updateFilename, FileMode.Open, FileAccess.Read);
+                request.FileName = updateFilename;
 
                 _InventoryFileService.SaveInventoryFile(request);
 
@@ -1295,26 +1175,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TVBFileHasDifferentDemos.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileHasDifferentDemos.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 _InventoryFileService.SaveInventoryFile(request);
 
@@ -1342,26 +1213,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\CNNFileHasDifferentDemos.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileHasDifferentDemos.csv";
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 _InventoryFileService.SaveInventoryFile(request);
 
@@ -1388,26 +1249,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\CNNFileLoadTest.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileLoadTest.csv";
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 Assert.IsEmpty(result.Problems);
@@ -1422,26 +1273,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\CNNFileLoadTestDuplicateStation.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileLoadTestDuplicateStation.csv";
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1464,26 +1305,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\CNNFileLoadTestInvalidSpothLenght.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileLoadTestInvalidSpothLenght.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1505,26 +1337,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\CNNFileLoadTestInvalidStation.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileLoadTestInvalidStation.csv";
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1545,26 +1367,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TTWN_06.09.17.xlsx";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TTWN_06.09.17.xlsx";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 Assert.IsEmpty(result.Problems);
@@ -1577,26 +1390,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TTNWFileLoadTest.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
+                const string filename = @".\Files\TTNWFileLoadTest.csv";
 
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 Assert.IsEmpty(result.Problems);
@@ -1610,26 +1414,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TTNWFileLoadTestDuplicateStation.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TTNWFileLoadTestDuplicateStation.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
@@ -1652,25 +1447,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TTNWBFileLoadTestInvalidSpothLenght.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TTNWBFileLoadTestInvalidSpothLenght.csv";
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1691,25 +1477,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TTNWFileLoadTestInvalidStation.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TTNWFileLoadTestInvalidStation.csv";
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1730,25 +1507,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TTNWFileHasInvalidStations.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TTNWFileHasInvalidStations.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
             }
@@ -1761,25 +1530,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TVBFileHasInvalidStations.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileHasInvalidStations.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
             }
@@ -1791,25 +1552,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
             }
@@ -1822,25 +1575,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TTNWFileHasInvalidDayPart.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TTNWFileHasInvalidDayPart.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1862,25 +1607,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TVBFileHasInvalidDayPart.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileHasInvalidDayPart.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1901,25 +1638,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\CNNFileHasInvalidDayPart.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileHasInvalidDayPart.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1941,25 +1670,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TTNWFileHasAllDaypartsInvalid.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TTNWFileHasAllDaypartsInvalid.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
             }
@@ -1973,25 +1694,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TVBFileHasAllDaypartsInvalid.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileHasAllDaypartsInvalid.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
             }
@@ -2005,25 +1718,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TTNWFileHasAllSpotLengthInvalid.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TTNWFileHasAllSpotLengthInvalid.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
             }
@@ -2036,25 +1741,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TVBFileHasAllSpotLengthInvalid.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileHasAllSpotLengthInvalid.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
             }
@@ -2067,25 +1764,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\CNNFileHasAllSpotLengthInvalid.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileHasAllSpotLengthInvalid.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
             }
@@ -2098,25 +1787,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\CNNFileHasAllEntriesInvalid.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileHasAllEntriesInvalid.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
             }
@@ -2129,25 +1810,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TVBFileHasAllEntriesInvalid.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileHasAllEntriesInvalid.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
             }
@@ -2160,25 +1833,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TTNWFileHasAllEntriesInvalid.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
-                {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
+                const string filename = @".\Files\TTNWFileHasAllEntriesInvalid.csv";
 
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                var request = new InventoryFileSaveRequest
+                {
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
             }
@@ -2191,25 +1856,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TTNWFileHasInvalidAudience.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TTNWFileHasInvalidAudience.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2230,25 +1887,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\CNNFileHasInvalidAudience.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileHasInvalidAudience.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2271,25 +1920,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TVBFileHasInvalidAudience.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileHasInvalidAudience.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2310,25 +1951,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TVBFileHasInvalidAudienceAndStation.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileHasInvalidAudienceAndStation.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2349,25 +1982,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\TTNWFileHasInvalidAudienceAndStation.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TTNWFileHasInvalidAudienceAndStation.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2388,25 +2013,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\CNNFileHasInvalidAudienceAndStation.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileHasInvalidAudienceAndStation.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2428,25 +2045,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\CNNFileHasBlankCpm.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileHasBlankCpm.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2468,43 +2077,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var filename = @".\Files\CNNFileHasValidFlight.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileHasValidFlight.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-                flightWeeks.Add(new FlightWeekDto()
-                {
-                    StartDate = new DateTime(2016, 11, 07),
-                    EndDate = new DateTime(2016, 11, 13),
-                    IsHiatus = false
-                });
-                flightWeeks.Add(new FlightWeekDto()
-                {
-                    StartDate = new DateTime(2016, 11, 14),
-                    EndDate = new DateTime(2016, 11, 20),
-                    IsHiatus = false
-                });
-                flightWeeks.Add(new FlightWeekDto()
-                {
-                    StartDate = new DateTime(2016, 11, 21),
-                    EndDate = new DateTime(2016, 11, 27),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 10, 31);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 10, 31),
+                    RatingBook = 416
+                };
 
                 _InventoryFileService.SaveInventoryFile(request);
                 var stationRates = _InventoryFileService.GetStationDetailByCode("CNN", 1039);
@@ -2530,26 +2113,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\CNNFileHasInvalidDaypartCode.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\CNNFileHasInvalidDaypartCode.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2572,26 +2146,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TTNWFileHasInvalidDaypartCode.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TTNWFileHasInvalidDaypartCode.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2613,26 +2178,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TVBFileHasInvalidDaypartCode.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\TVBFileHasInvalidDaypartCode.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2652,26 +2208,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\ThirdPartyFileWithDaypartCodeWithSpace.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\ThirdPartyFileWithDaypartCodeWithSpace.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 Assert.IsEmpty(result.Problems);
@@ -2685,28 +2232,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\ThirdPartyFileWithDaypartCodeWithSpace.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\ThirdPartyFileWithDaypartCodeWithSpace.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
+                
                 Assert.IsEmpty(result.Problems);
             }
 
@@ -2718,26 +2257,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\ThirdPartyFileWithDaypartCodeWithSpace.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\ThirdPartyFileWithDaypartCodeWithSpace.csv";
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 Assert.IsEmpty(result.Problems);
@@ -2762,42 +2291,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void CanCalculateSpotCost()
         {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+                const string filename = @".\Files\TTNWFileLoadTest.csv";
+
+                var request = new InventoryFileSaveRequest
                 {
-                    const string filename = @".\Files\TTNWFileLoadTest.csv";
-                    
-                    var request = new InventoryFileSaveRequest
-                    {
-                        RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                        FileName = filename,
-                        UserName = "IntegrationTestUser",
-                        InventorySource = "TTNW",
-                        BlockName = "Integration Test",
-                        RatingBook = 413
-                    };
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    RatingBook = 413,
+                    EffectiveDate = new DateTime(2016, 11, 06)
+                };
 
-                    var flightWeeks = new List<FlightWeekDto>
-                    {
-                        new FlightWeekDto
-                        {
-                            StartDate = new DateTime(2016, 10, 31),
-                            EndDate = new DateTime(2016, 11, 06),
-                            IsHiatus = false
-                        }
-                    };
+                _InventoryFileService.SaveInventoryFile(request);
 
-                    request.FlightEndDate = new DateTime(2016, 11, 06);
-                    request.FlightStartDate = new DateTime(2016, 11, 27);
-                    request.FlightWeeks = flightWeeks;
+                //var rates = _ratesService.GetAllStationRates("TTNW", 1003);
 
-                    _InventoryFileService.SaveInventoryFile(request);
-
-                    //var rates = _ratesService.GetAllStationRates("TTNW", 1003);
-
-                    //Approvals.Verify(IntegrationTestHelper.ConvertToJson(rates));
-                }
+                //Approvals.Verify(IntegrationTestHelper.ConvertToJson(rates));
             }
         }
 
@@ -2815,23 +2327,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
-                    BlockName = "Integration Test"
+                    EffectiveDate = new DateTime(2017, 11, 06),
+                    RatingBook = 416
                 };
-
-                var flightWeeks = new List<FlightWeekDto>
-                {
-                    new FlightWeekDto
-                    {
-                        StartDate = new DateTime(2017, 10, 31),
-                        EndDate = new DateTime(2017, 11, 06),
-                        IsHiatus = false
-                    }
-                };
-
-                request.FlightEndDate = new DateTime(2017, 11, 06);
-                request.FlightStartDate = new DateTime(2017, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
@@ -2853,23 +2351,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
-                    BlockName = "Integration Test"
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
                 };
-
-                var flightWeeks = new List<FlightWeekDto>
-                {
-                    new FlightWeekDto
-                    {
-                        StartDate = new DateTime(2016, 10, 31),
-                        EndDate = new DateTime(2016, 11, 06),
-                        IsHiatus = false
-                    }
-                };
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
@@ -2891,23 +2375,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
-                    BlockName = "Integration Test"
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
                 };
-
-                var flightWeeks = new List<FlightWeekDto>
-                {
-                    new FlightWeekDto
-                    {
-                        StartDate = new DateTime(2016, 10, 31),
-                        EndDate = new DateTime(2016, 11, 06),
-                        IsHiatus = false
-                    }
-                };
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
                 
@@ -2930,23 +2400,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
-                    BlockName = "Integration Test"
+                    EffectiveDate = new DateTime(2017, 11, 06),
+                    RatingBook = 416
                 };
-
-                var flightWeeks = new List<FlightWeekDto>
-                {
-                    new FlightWeekDto
-                    {
-                        StartDate = new DateTime(2017, 10, 31),
-                        EndDate = new DateTime(2017, 11, 06),
-                        IsHiatus = false
-                    }
-                };
-
-                request.FlightEndDate = new DateTime(2017, 11, 06);
-                request.FlightStartDate = new DateTime(2017, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
@@ -2969,23 +2425,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
-                    BlockName = "Integration Test"
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
                 };
-
-                var flightWeeks = new List<FlightWeekDto>
-                {
-                    new FlightWeekDto
-                    {
-                        StartDate = new DateTime(2016, 10, 31),
-                        EndDate = new DateTime(2016, 11, 06),
-                        IsHiatus = false
-                    }
-                };
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
@@ -3008,23 +2450,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
-                    BlockName = "Integration Test"
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
                 };
-
-                var flightWeeks = new List<FlightWeekDto>
-                {
-                    new FlightWeekDto
-                    {
-                        StartDate = new DateTime(2016, 10, 31),
-                        EndDate = new DateTime(2016, 11, 06),
-                        IsHiatus = false
-                    }
-                };
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
@@ -3038,27 +2466,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TVB";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
-                {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                const string filename = @".\Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv";
                 
+                var request = new InventoryFileSaveRequest
+                {
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TVB",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
+
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
                 Assert.IsEmpty(result.Problems);
@@ -3071,26 +2490,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
@@ -3104,26 +2514,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "CNN";
-                request.BlockName = "Integration Test";
-
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
+                const string filename = @".\Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv";
+                
+                var request = new InventoryFileSaveRequest
                 {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.FlightEndDate = new DateTime(2016, 11, 06);
-                request.FlightStartDate = new DateTime(2016, 11, 27);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
+                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "CNN",
+                    EffectiveDate = new DateTime(2016, 11, 06),
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
@@ -3145,23 +2546,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileName = path,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
-                    BlockName = "Integration Test 2"
+                    EffectiveDate = new DateTime(2017, 04, 02),
+                    RatingBook = 416
                 };
-
-                var flightWeeks = new List<FlightWeekDto>
-                {
-                    new FlightWeekDto
-                    {
-                        StartDate = new DateTime(2017, 04, 02),
-                        EndDate = new DateTime(2017, 04, 08),
-                        IsHiatus = false
-                    }
-                };
-
-                request.FlightEndDate = new DateTime(2017, 04, 02);
-                request.FlightStartDate = new DateTime(2017, 04, 08);
-                request.FlightWeeks = flightWeeks;
-                request.RatingBook = 416;
 
                 //TODO: get rate info for comparison
                 //var stationBeforeUpdate = _stationProgramRepository.GetStationProgramById(320136);

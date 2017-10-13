@@ -7,6 +7,7 @@ namespace Services.Broadcast.Entities
     {
         public List<LookupDto> RatingBooks { get; set; }
         public List<LookupDto> PlaybackTypes { get; set; }
-        public ProposalEnums.ProposalPlaybackType DefaultPlaybackType { get; set; }
+        public List<LookupDto> Audiences { get; set; }
+        public ProposalEnums.ProposalPlaybackType DefaultPlaybackType { get; set; }   
     }
 }

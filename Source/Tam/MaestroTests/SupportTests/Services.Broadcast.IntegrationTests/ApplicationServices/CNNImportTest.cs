@@ -48,10 +48,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 FileName = filename,
                 RatesStream = stream,
-                BlockName = "integration Test",
-                FlightWeeks = flightWeeks,
-                FlightEndDate = new DateTime(2016, 10, 31),
-                FlightStartDate = new DateTime(2016, 11, 27)
+                EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
             importer.ExtractFileData(stream, ratesFile, fileProblems);
@@ -109,11 +106,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new InventoryFileSaveRequest()
             {
                 FileName = filename,
-                RatesStream = stream,
-                BlockName = "integration Test",
-                FlightWeeks = flightWeeks,
-                FlightEndDate = new DateTime(2016, 10, 31),
-                FlightStartDate = new DateTime(2016, 11, 27)
+                RatesStream = stream,                
+                EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
             importer.ExtractFileData(stream, ratesFile, fileProblems);
@@ -155,10 +149,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 FileName = filename,
                 RatesStream = stream,
-                BlockName = "integration Test",
-                FlightWeeks = flightWeeks,
-                FlightEndDate = new DateTime(2016, 10, 31),
-                FlightStartDate = new DateTime(2016, 11, 27)
+                EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
             importer.ExtractFileData(stream, ratesFile, fileProblems);
@@ -205,10 +196,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 FileName = filename,
                 RatesStream = stream,
-                BlockName = "integration Test",
-                FlightWeeks = flightWeeks,
-                FlightEndDate = new DateTime(2016, 10, 31),
-                FlightStartDate = new DateTime(2016, 11, 27)
+                EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
 
@@ -244,10 +232,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     FileName = filename,
                     RatesStream = stream,
-                    BlockName = "integration Test",
-                    FlightWeeks = flightWeeks,
-                    FlightEndDate = new DateTime(2016, 10, 31),
-                    FlightStartDate = new DateTime(2016, 11, 27)
+                    EffectiveDate = new DateTime(2016, 10, 31)
                 };
                 importer.LoadFromSaveRequest(request);
                 importer.ExtractFileData(stream, ratesFile, fileProblems);
