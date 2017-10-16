@@ -100,7 +100,7 @@ var RateUploadManager = UploadManager.extend({
 
                             var rateRequest = {
                                 UserName: "user",
-                                RateSource: source.name, //add here or use controller?
+                                InventorySource: source.name, //add here or use controller?
                                 FileName: file.name,
                                 RawData: b64
                             };

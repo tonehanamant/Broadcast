@@ -44,7 +44,7 @@ var ImportThirdPartyViewModel = function (controller) {
     var $scope = this;
     var controller = controller; //leave private
 
-    $scope.RateSource = ko.observable();
+    $scope.InventorySource = ko.observable();
 
     /*** FILE FORM RELATED ***/
     $scope.FileName = ko.observable();
@@ -168,12 +168,12 @@ var ImportThirdPartyViewModel = function (controller) {
     };
 
     //set based on file request - with initial defaults
-    $scope.setActiveImport = function (fileRequest, rateSource) {
+    $scope.setActiveImport = function (fileRequest, inventorySource) {
         $("#import_thirdparty_form").valid();
         $scope.ActiveFileRequest = fileRequest;
-        $scope.RateSource(rateSource);
+        $scope.InventorySource(inventorySource);
         //set fixed functionaly by source
-        $scope.allowDemoFixed(($scope.RateSource() == 'CNN') ? true : false);
+        $scope.allowDemoFixed(($scope.InventorySource() == 'CNN') ? true : false);
 
         $scope.FileName(fileRequest.FileName);
        
@@ -212,11 +212,11 @@ var ImportThirdPartyViewModel = function (controller) {
             fileData.FixedPrice = fixed;
             //console.log('uploadFile', JSON.stringify(fileData));
             console.log('uploadFile', fileData);
-            controller.apiUploadInventoryFile(fileData,
-                function (data) {
-                    $scope.showModal(false);
-                }
-            );
+            //controller.apiUploadInventoryFile(fileData,
+            //    function (data) {
+            //        $scope.showModal(false);
+            //    }
+            //);
         }
     };
 };
