@@ -190,7 +190,7 @@ namespace Services.Broadcast.ApplicationServices
                     LockStations(fileStationCodes, lockedStationCodes, stationLocks, inventoryFile);
 
                     var isThirdParty = inventorySourceType == InventoryFile.InventorySourceType.CNN ||
-                                       inventorySourceType == InventoryFile.InventorySourceType.TTNW ;
+                                       inventorySourceType == InventoryFile.InventorySourceType.TTNW;
 
                     if (isThirdParty)
                     {

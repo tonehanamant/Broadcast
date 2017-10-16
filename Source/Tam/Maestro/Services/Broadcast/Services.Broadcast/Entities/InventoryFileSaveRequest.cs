@@ -18,6 +18,7 @@ namespace Services.Broadcast.Entities
         public int RatingBook { get; set; }
         public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
         public AudiencePricingDto AudiencePricing { get; set; }
+        public decimal FixedPrice { get; set; }
         public Stream RatesStream
         {
             get
