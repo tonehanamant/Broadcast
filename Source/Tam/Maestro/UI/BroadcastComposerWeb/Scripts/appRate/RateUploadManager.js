@@ -43,9 +43,9 @@ var RateUploadManager = UploadManager.extend({
             name: 'CNN',
             enabled: true,
             isSingleFile: true,//single file only
-            fileType: 'csv',
+            fileType: 'xls',
             checkType: function (fileExt) {
-                return fileExt == 'csv';
+                return fileExt == 'xls' || fileExt == 'xlsx';
             }
         },
         TTNW: {
