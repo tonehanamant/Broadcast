@@ -481,14 +481,12 @@ namespace Services.Broadcast.ApplicationServices
 
         private InventoryFile.InventorySourceType _ParseInventorySourceOrDefault(string sourceString)
         {
-            if (String.IsNullOrEmpty(sourceString))
+            if (string.IsNullOrEmpty(sourceString))
             {
                 return InventoryFile.InventorySourceType.OpenMarket;
             }
-            else
-            {
-                return _ParseInventorySource(sourceString);
-            }
+
+            return _ParseInventorySource(sourceString);
         }
 
         private void _SetTransactionManagerField(string fieldName, object value)

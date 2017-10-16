@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Security;
 
 namespace Services.Broadcast.Entities
 {
@@ -17,8 +17,8 @@ namespace Services.Broadcast.Entities
         public DaypartDto Daypart { get; set; }
         public int RatingBook { get; set; }
         public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
-        public AudiencePricingDto AudiencePricing { get; set; }
-        public decimal FixedPrice { get; set; }
+        public List<AudiencePricingDto> AudiencePricing { get; set; }
+        public decimal? FixedPrice { get; set; }
         public Stream RatesStream
         {
             get
