@@ -180,6 +180,7 @@
     <Compile Include="ApplicationServices\ProposalTestHelper.cs" />
     <Compile Include="ApplicationServices\ProposalWeeklyTotalCalculationEngineTests.cs" />
     <Compile Include="ApplicationServices\TrafficServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\TTNWFileImporterTests.cs" />
     <Compile Include="AttributeIgnorer.cs" />
     <Compile Include="Repositories\ProposalInventoryRepositoryIntegrationTests.cs" />
     <Compile Include="Repositories\ScheduleRepositoryTests.cs" />
@@ -377,6 +378,9 @@
     <None Include="Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\TTNW_AMNews-06.09.17.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\TTNWBFileLoadTestInvalidSpothLenght.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -416,7 +420,25 @@
     <None Include="Files\TTNWFileLoadTestInvalidStation.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTWN_06.09.17.xlsx">
+    <None Include="Files\TTNW_06.09.17.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\TTNW_EN_06.09.17.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\TTNW_InvalidDaypart.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\TTNW_InvalidDaypartSpots.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\TTNW_InvalidStation.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\TTNW_NoKnownStations.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\TTNW_ValidDayparts.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\TVBFileHasAllDaypartsInvalid.csv">

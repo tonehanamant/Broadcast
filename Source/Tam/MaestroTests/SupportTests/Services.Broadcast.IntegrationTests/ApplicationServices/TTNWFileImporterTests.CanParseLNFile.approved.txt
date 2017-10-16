@@ -1,0 +1,4668 @@
+﻿{
+  "fileProblems": [],
+  "inventoryFile": {
+    "EndDate": "0001-01-01T00:00:00",
+    "FileName": null,
+    "FileStatus": 0,
+    "Hash": null,
+    "Id": 0,
+    "InventoryGroups": [
+      {
+        "DaypartCode": "LN",
+        "Id": null,
+        "Manifests": [
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 7199,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 37000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 20000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 31000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 34000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 16000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 17000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WNBC 4.1",
+              "Code": 5013,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WNBC",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "New York",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 79199,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 75600,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 76000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 35000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 52000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 56000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 28000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 31000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "KDFW 4.1",
+              "Code": 5035,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KDFW",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Dallas-Ft. Worth",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84899,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 82800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 35000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 10000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 18000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 20000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 4000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WUSA 9.1",
+              "Code": 5098,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WUSA",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Washington, DC (Hagrstwn)",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 79200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              },
+              {
+                "_Code": "CUS",
+                "_EndTime": 82799,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 51000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 25000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 37000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 40000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 16000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 16000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WFXT-DT 25.1",
+              "Code": 6705,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WFXT",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Boston (Manchester)",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 82739,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 98000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 57000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 73000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 80000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 38000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 42000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WAGA-TV 5.1",
+              "Code": 5045,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WAGA",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 86339,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 84600,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 71000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 38000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 50000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 55000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 26000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 28000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WAGA-TV 5.1",
+              "Code": 5045,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WAGA",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 80999,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 45000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 24000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 32000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 34000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 18000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 19000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "IND",
+              "CallLetters": "WATL 36.1",
+              "Code": 6797,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WATL",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:06:47.123",
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84899,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 35000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 14000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 23000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 25000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 8000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 10000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WGCL-TV 46.1",
+              "Code": 5893,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WGCL",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 41000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 23000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 32000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 35000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 18000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 21000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WXIA-TV 11.1",
+              "Code": 5117,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WXIA",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 82799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 79200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 194000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 115000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 150000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 167000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 77000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 84000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WJBK 2.1",
+              "Code": 5075,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WJBK",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Detroit",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 80999,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 25000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 15000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 18000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 22000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 12000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "KCPQ 13.1",
+              "Code": 6019,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KCPQ",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:01:02.687",
+              "OriginMarket": "Seattle-Tacoma",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 82799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 79200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              },
+              {
+                "_Code": "CUS",
+                "_EndTime": 80999,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 24000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 15000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 17000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 20000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "KCPQ 13.1",
+              "Code": 6019,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KCPQ",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:01:02.687",
+              "OriginMarket": "Seattle-Tacoma",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 79139,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 75600,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              },
+              {
+                "_Code": "CUS",
+                "_EndTime": 77339,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 75600,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 13000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 6000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 10000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 12000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 4000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "IND",
+              "CallLetters": "KZJO 22.1",
+              "Code": 6193,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KZJO",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:02:08.623",
+              "OriginMarket": "Seattle-Tacoma",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84899,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 39000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 17000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 27000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 29000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 10000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WPLG 10.1",
+              "Code": 5412,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WPLG",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Miami-Ft. Lauderdale",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 70000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 40000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 52000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 60000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 28000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 30000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WSVN 7.1",
+              "Code": 5375,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WSVN",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Miami-Ft. Lauderdale",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84899,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 82800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 32000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 15000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 23000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 27000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 10000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 10000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WTVJ 6.1",
+              "Code": 5111,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WTVJ",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Miami-Ft. Lauderdale",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 82799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 79200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              },
+              {
+                "_Code": "CUS",
+                "_EndTime": 82799,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 34000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 14000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 24000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 28000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WOFL 35.1",
+              "Code": 6818,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WOFL",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Orlando-Daytona Bch-Melbrn",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 82799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 79200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              },
+              {
+                "_Code": "CUS",
+                "_EndTime": 82799,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 24000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 13000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 16000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 19000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 10000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CW",
+              "CallLetters": "WCCB 18.1",
+              "Code": 5765,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WCCB",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T17:59:31.417",
+              "OriginMarket": "Charlotte",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84899,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 26000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 8000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 12000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 12000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "KFMB-TV 8.1",
+              "Code": 5024,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KFMB",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:02:11.387",
+              "OriginMarket": "San Diego",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84899,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 21000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 6000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 4000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "KFMB-TV 8.1",
+              "Code": 5024,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KFMB",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:02:11.387",
+              "OriginMarket": "San Diego",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 80999,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 30000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 10000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 18000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 20000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "IND",
+              "CallLetters": "WCTX 59.1",
+              "Code": 5593,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WCTX",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T17:59:39.287",
+              "OriginMarket": "Hartford & New Haven",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 82799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 45000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 19000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 29000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 33000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 14000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 16000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WTTE 28.1",
+              "Code": 6995,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WTTE",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Columbus, OH",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 81299,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 79200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 57000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 17000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 37000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 41000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 13000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "KMBC-TV 9.1",
+              "Code": 5163,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KMBC",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:00:30.21",
+              "OriginMarket": "Kansas City",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84899,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 82800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 32000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 15000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 16000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WLOS 13.1",
+              "Code": 5289,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WLOS",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Greenvll-Spart-Ashevll-And",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84599,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 85000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 30000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 49000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 52000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 21000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 23000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WLOS 13.1",
+              "Code": 5289,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WLOS",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Greenvll-Spart-Ashevll-And",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 78599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 75600,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 17000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 14000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 16000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 8000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "KOKH-TV 25.1",
+              "Code": 6704,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KOKH",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Oklahoma City",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 78299,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 75600,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 28000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 15000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 20000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 24000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 13000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "KOKH-TV 25.1",
+              "Code": 6704,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KOKH",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Oklahoma City",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 82800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 12000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 6000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 6000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WHP-TV 21.1",
+              "Code": 5734,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WHP",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Harrisburg-Lncstr-Leb-York",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84899,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 15000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 4000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 8000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WHP-TV 21.1",
+              "Code": 5734,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WHP",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Harrisburg-Lncstr-Leb-York",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 82799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 53000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 22000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 31000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 36000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 19000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 20000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 4,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WPMT 43.1",
+              "Code": 5717,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WPMT",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Harrisburg-Lncstr-Leb-York",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 80999,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 75600,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 97000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 41000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 68000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 73000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 26000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 29000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WBRC 6.1",
+              "Code": 5052,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WBRC",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Birmingham (Ann and Tusc)",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 81299,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 33000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 14000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 22000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 25000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 10000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 12000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WWL-TV 4.1",
+              "Code": 5417,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WWL",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "New Orleans",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 82799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 33000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 17000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 24000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 26000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 12000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WNAC-TV 64.1",
+              "Code": 6924,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WNAC",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T17:59:30.487",
+              "OriginMarket": "Providence-New Bedford",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84899,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 20000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 12000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 6000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WPRI-TV 12.1",
+              "Code": 5208,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WPRI",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T17:59:30.487",
+              "OriginMarket": "Providence-New Bedford",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 82800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 6000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WFTX-TV 36.1",
+              "Code": 6247,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WFTX",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Ft. Myers-Naples",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 80999,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 4000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 6000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WFTX-TV 36.1",
+              "Code": 6247,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WFTX",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Ft. Myers-Naples",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 82799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 81000,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 4000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 2000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 2000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WFTX-TV 36.1",
+              "Code": 6247,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WFTX",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Ft. Myers-Naples",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 82799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 79200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 6000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 10000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WRGT-TV 45.1",
+              "Code": 6154,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WRGT",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Dayton",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 80999,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 6000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 4000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 4000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WRGT-TV 45.1",
+              "Code": 6154,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WRGT",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Dayton",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 82800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 2000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 1000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 2000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 2000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 1000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 1000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WACH 57.1",
+              "Code": 6873,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WACH",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T17:58:30.077",
+              "OriginMarket": "Columbia, SC",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84599,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 2000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 2000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WACH 57.1",
+              "Code": 6873,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WACH",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T17:58:30.077",
+              "OriginMarket": "Columbia, SC",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 80939,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 55000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 19000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 36000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 39000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 3,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "KKTV 11.1",
+              "Code": 5130,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KKTV",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Colorado Springs-Pueblo",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 81299,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 79200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              },
+              {
+                "_Code": "CUS",
+                "_EndTime": 81299,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 79200,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 17000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 20000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 21000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "KOAA-TV 5.1",
+              "Code": 5151,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KOAA",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:02:14.263",
+              "OriginMarket": "Colorado Springs-Pueblo",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 82800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 13000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 8000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 10000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 6000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 6000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WTVC 9.1",
+              "Code": 5437,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WTVC",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Chattanooga",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84599,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 24000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 14000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 20000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 23000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 11000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WTVC 9.1",
+              "Code": 5437,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WTVC",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Chattanooga",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 82800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 2000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 1000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 1000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WCIV 36.2",
+              "Code": 5672,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "ECIV",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Charleston, SC",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84599,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 14000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 6000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 10000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 4000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WCIV 36.2",
+              "Code": 5672,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "ECIV",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Charleston, SC",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 82739,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 79200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 8000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 3000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WTAT-TV 24.1",
+              "Code": 6239,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WTAT",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Charleston, SC",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 32000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 10000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 18000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 20000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 7000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WANE-TV 15.1",
+              "Code": 5848,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WANE",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Ft. Wayne",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84539,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 82800,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 12000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 5000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 9000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 4000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 4000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WILX-TV 10.1",
+              "Code": 5494,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WILX",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Lansing",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "LN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 84899,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 82800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 1000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 1000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 1000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 1000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 1000.0,
+                "Rate": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 1000.0,
+                "Rate": 0.0
+              }
+            ],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WVII-TV 7.1",
+              "Code": 5452,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WVII",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:00:22.617",
+              "OriginMarket": "Bangor",
+              "RateDataThrough": null
+            }
+          }
+        ],
+        "Name": "LN1",
+        "SlotNumber": 1
+      }
+    ],
+    "InventorySource": "Blank",
+    "InventorySourceId": 0,
+    "PlaybackType": 0,
+    "RatingBook": null,
+    "StartDate": "0001-01-01T00:00:00",
+    "StationContacts": [],
+    "UniqueIdentifier": null
+  }
+}

@@ -1,0 +1,1984 @@
+﻿{
+  "fileProblems": [
+    {
+      "AffectedProposals": null,
+      "ProblemDescription": "Invalid daypart for station: KKTV",
+      "ProgramName": null,
+      "StationLetters": null
+    },
+    {
+      "AffectedProposals": null,
+      "ProblemDescription": "Invalid station: WCIV-DT",
+      "ProgramName": null,
+      "StationLetters": null
+    }
+  ],
+  "inventoryFile": {
+    "EndDate": "0001-01-01T00:00:00",
+    "FileName": null,
+    "FileStatus": 0,
+    "Hash": null,
+    "Id": 0,
+    "InventoryGroups": [
+      {
+        "DaypartCode": "EN",
+        "Id": null,
+        "Manifests": [
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WCBS-TV 2.1",
+              "Code": 5012,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WCBS",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "New York",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 64800,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WNYW 5.1",
+              "Code": 5010,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WNYW",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "New York",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WUSA 9.1",
+              "Code": 5098,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WUSA",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Washington, DC (Hagrstwn)",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 70199,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 64800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WUSA 9.1",
+              "Code": 5098,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WUSA",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Washington, DC (Hagrstwn)",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WBZ-TV 4.1",
+              "Code": 5054,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WBZ",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Boston (Manchester)",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 3,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WCVB-TV 5.1",
+              "Code": 5420,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WCVB",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Boston (Manchester)",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 61139,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 57600,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WGCL-TV 46.1",
+              "Code": 5893,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WGCL",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66539,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 64800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WGCL-TV 46.1",
+              "Code": 5893,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WGCL",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 64799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WXIA-TV 11.1",
+              "Code": 5117,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WXIA",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 64800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 3,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WXIA-TV 11.1",
+              "Code": 5117,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WXIA",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 64800,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WDIV-TV 4.1",
+              "Code": 5114,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WDIV",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Detroit",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66539,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 3,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WJBK 2.1",
+              "Code": 5075,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WJBK",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Detroit",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 61139,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 57600,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "KCPQ 13.1",
+              "Code": 6019,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KCPQ",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:01:02.687",
+              "OriginMarket": "Seattle-Tacoma",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 64739,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "KCPQ 13.1",
+              "Code": 6019,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KCPQ",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:01:02.687",
+              "OriginMarket": "Seattle-Tacoma",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WFOR-TV 4.1",
+              "Code": 5508,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WFOR",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Miami-Ft. Lauderdale",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 64739,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WSVN 7.1",
+              "Code": 5375,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WSVN",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Miami-Ft. Lauderdale",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 68339,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 64800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WSVN 7.1",
+              "Code": 5375,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WSVN",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Miami-Ft. Lauderdale",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 68399,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 64800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WTVJ 6.1",
+              "Code": 5111,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WTVJ",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Miami-Ft. Lauderdale",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 57600,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WESH 2.1",
+              "Code": 5376,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WESH",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Orlando-Daytona Bch-Melbrn",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 61200,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WESH 2.1",
+              "Code": 5376,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WESH",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Orlando-Daytona Bch-Melbrn",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 64800,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CW",
+              "CallLetters": "WCCB 18.1",
+              "Code": 5765,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WCCB",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T17:59:31.417",
+              "OriginMarket": "Charlotte",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 68399,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 61200,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "KFMB-TV 8.1",
+              "Code": 5024,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KFMB",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:02:11.387",
+              "OriginMarket": "San Diego",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 68399,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 64800,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "IND",
+              "CallLetters": "KUSI-TV 51.1",
+              "Code": 6907,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KUSI",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T17:59:38.447",
+              "OriginMarket": "San Diego",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 68399,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 3,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WTNH 8.1",
+              "Code": 5094,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WTNH",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T17:59:39.287",
+              "OriginMarket": "Hartford & New Haven",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "KMBC-TV 9.1",
+              "Code": 5163,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KMBC",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:00:30.21",
+              "OriginMarket": "Kansas City",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WLOS 13.1",
+              "Code": 5289,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WLOS",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Greenvll-Spart-Ashevll-And",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 64799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "KOKH-TV 25.1",
+              "Code": 6704,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KOKH",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Oklahoma City",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WHP-TV 21.1",
+              "Code": 5734,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WHP",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Harrisburg-Lncstr-Leb-York",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 68399,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              },
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 64800,
+                "_Sunday": false,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              },
+              {
+                "_Code": "CUS",
+                "_EndTime": 68399,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 64800,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WOOD-TV 8.1",
+              "Code": 5081,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WOOD",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 63000,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WZZM 13.1",
+              "Code": 5681,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WZZM",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": false,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": false,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 61200,
+                "_Sunday": true,
+                "_Thursday": false,
+                "_Tuesday": false,
+                "_Wednesday": false
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WWL-TV 4.1",
+              "Code": 5417,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WWL",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "New Orleans",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 64799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 3,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WLNE-TV 6.1",
+              "Code": 5696,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WLNE",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Providence-New Bedford",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 64799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WPRI-TV 12.1",
+              "Code": 5208,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WPRI",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T17:59:30.487",
+              "OriginMarket": "Providence-New Bedford",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 61200,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WIVB-TV 4.1",
+              "Code": 5049,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WIVB",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Buffalo",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 57600,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WBBH-TV 20.1",
+              "Code": 5974,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WBBH",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Ft. Myers-Naples",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 70199,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 64800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WZVN-TV 26.1",
+              "Code": 5712,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WZVN",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Ft. Myers-Naples",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 64800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WKEF 22.1",
+              "Code": 5777,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WKEF",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Dayton",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 61199,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 59400,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "KKTV 11.1",
+              "Code": 5130,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KKTV",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Colorado Springs-Pueblo",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 64799,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 3,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "KKTV 11.1",
+              "Code": 5130,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KKTV",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Colorado Springs-Pueblo",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WTVC 9.1",
+              "Code": 5437,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WTVC",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Chattanooga",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 64800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": null
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 62999,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WANE-TV 15.1",
+              "Code": 5848,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WANE",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Ft. Wayne",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 68399,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 64800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WANE-TV 15.1",
+              "Code": 5848,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WANE",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Ft. Wayne",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 59339,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 57600,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WILX-TV 10.1",
+              "Code": 5494,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WILX",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Lansing",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 62939,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WILX-TV 10.1",
+              "Code": 5494,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WILX",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Lansing",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66539,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": true,
+                "_StartTime": 64800,
+                "_Sunday": true,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WILX-TV 10.1",
+              "Code": 5494,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WILX",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Lansing",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 68399,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 61200,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "KSBW 8.1",
+              "Code": 5180,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "KSBW",
+              "MarketCode": 0,
+              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "OriginMarket": "Monterey-Salinas",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "DaypartCode": "EN",
+            "Dayparts": [
+              {
+                "_Code": "CUS",
+                "_EndTime": 66599,
+                "_Friday": true,
+                "_Id": -1,
+                "_Is24Hour": false,
+                "_LastEndTime": 0,
+                "_LastStartTime": 0,
+                "_Monday": true,
+                "_Name": "Custom",
+                "_Saturday": false,
+                "_StartTime": 64800,
+                "_Sunday": false,
+                "_Thursday": true,
+                "_Tuesday": true,
+                "_Wednesday": true
+              }
+            ],
+            "Id": null,
+            "InventorySourceId": 0,
+            "InvetoryFileId": 0,
+            "ManifestAudiences": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WVII-TV 7.1",
+              "Code": 5452,
+              "FlightWeeks": null,
+              "LegacyCallLetters": "WVII",
+              "MarketCode": 0,
+              "ModifiedDate": "2017-08-17T18:00:22.617",
+              "OriginMarket": "Bangor",
+              "RateDataThrough": null
+            }
+          }
+        ],
+        "Name": "EN1",
+        "SlotNumber": 1
+      }
+    ],
+    "InventorySource": "Blank",
+    "InventorySourceId": 0,
+    "PlaybackType": 0,
+    "RatingBook": null,
+    "StartDate": "0001-01-01T00:00:00",
+    "StationContacts": [],
+    "UniqueIdentifier": null
+  }
+}

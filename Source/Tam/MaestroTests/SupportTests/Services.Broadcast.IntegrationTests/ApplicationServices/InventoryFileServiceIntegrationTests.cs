@@ -57,8 +57,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(
-                        @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
-                        FileMode.Open,
+                    @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
+                    FileMode.Open,
                         FileAccess.Read),
                     FileName = "CNNAMPMBarterObligations_Clean.xlsx",
                     InventorySource = "CNN",
@@ -71,6 +71,36 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     _StationInventoryGroupService.GetStationInventoryGroupsByFileId(savedInventoryFile.FileId);
 
                 Assert.IsNotEmpty(stationGroups);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadTTNWFile()
+        {
+            using (var tran = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var filename = @".\Files\TTNW_06.09.17.xlsx";
+                var request = new InventoryFileSaveRequest();
+                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+                request.FileName = filename;
+                request.UserName = "IntegrationTestUser";
+                request.InventorySource = "TTNW";
+
+                request.RatingBook = 416;
+
+                var result = _InventoryFileService.SaveInventoryFile(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+                Approvals.Verify(json);
+
             }
         }
 
@@ -882,7 +912,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TVBFileLoadTest.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -906,7 +936,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TVBFileLoadTestInvalidSpothLenght.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -937,7 +967,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TVBFileHasValidAudienceCPM.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -972,7 +1002,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TVBFileLoadTestDuplicateStation.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1006,7 +1036,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TVBFileLoadTestInvalidCPM.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1038,7 +1068,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TTNWFileLoadTestInvalidCPM.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1102,7 +1132,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TVBFileLoadTestInvalidStation.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1176,7 +1206,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 const string filename = @".\Files\TVBFileHasDifferentDemos.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1306,7 +1336,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\CNNFileLoadTestInvalidSpothLenght.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1368,7 +1398,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 const string filename = @".\Files\TTWN_06.09.17.xlsx";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1386,7 +1416,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Ignore]
-        public void CanLoadTTNWFile()
+        public void CanLoadTTNWFileCsv()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
@@ -1415,7 +1445,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TTNWFileLoadTestDuplicateStation.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1695,7 +1725,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TVBFileHasAllDaypartsInvalid.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1719,7 +1749,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TTNWFileHasAllSpotLengthInvalid.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1742,7 +1772,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TVBFileHasAllSpotLengthInvalid.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1765,7 +1795,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\CNNFileHasAllSpotLengthInvalid.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1788,7 +1818,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\CNNFileHasAllEntriesInvalid.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1811,7 +1841,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TVBFileHasAllEntriesInvalid.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1857,7 +1887,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TTNWFileHasInvalidAudience.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1888,7 +1918,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\CNNFileHasInvalidAudience.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1921,7 +1951,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TVBFileHasInvalidAudience.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1952,7 +1982,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TVBFileHasInvalidAudienceAndStation.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -1983,7 +2013,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\TTNWFileHasInvalidAudienceAndStation.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -2014,7 +2044,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\CNNFileHasInvalidAudienceAndStation.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -2046,7 +2076,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\CNNFileHasBlankCpm.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -2078,7 +2108,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 const string filename = @".\Files\CNNFileHasValidFlight.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -2114,7 +2144,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 const string filename = @".\Files\CNNFileHasInvalidDaypartCode.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -2147,7 +2177,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 const string filename = @".\Files\TTNWFileHasInvalidDaypartCode.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -2179,7 +2209,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 const string filename = @".\Files\TVBFileHasInvalidDaypartCode.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -2209,7 +2239,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 const string filename = @".\Files\ThirdPartyFileWithDaypartCodeWithSpace.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -2233,7 +2263,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 const string filename = @".\Files\ThirdPartyFileWithDaypartCodeWithSpace.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -2291,27 +2321,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void CanCalculateSpotCost()
         {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                const string filename = @".\Files\TTNWFileLoadTest.csv";
-
-                var request = new InventoryFileSaveRequest
+                using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    const string filename = @".\Files\TTNWFileLoadTest.csv";
+                    
+                    var request = new InventoryFileSaveRequest
+                    {
+                        RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                        FileName = filename,
+                        UserName = "IntegrationTestUser",
+                        InventorySource = "TTNW",
                     RatingBook = 413,
                     EffectiveDate = new DateTime(2016, 11, 06)
-                };
+                    };
 
-                _InventoryFileService.SaveInventoryFile(request);
+                    _InventoryFileService.SaveInventoryFile(request);
 
-                //var rates = _ratesService.GetAllStationRates("TTNW", 1003);
+                    //var rates = _ratesService.GetAllStationRates("TTNW", 1003);
 
-                //Approvals.Verify(IntegrationTestHelper.ConvertToJson(rates));
+                    //Approvals.Verify(IntegrationTestHelper.ConvertToJson(rates));
+                }
             }
-        }
 
         [Test]
         [Ignore]
@@ -2467,7 +2497,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 const string filename = @".\Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -2477,7 +2507,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
-
+                
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
                 Assert.IsEmpty(result.Problems);
@@ -2491,7 +2521,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 const string filename = @".\Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
@@ -2515,7 +2545,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 const string filename = @".\Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv";
-                
+
                 var request = new InventoryFileSaveRequest
                 {
                     RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),

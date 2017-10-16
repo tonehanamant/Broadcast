@@ -159,8 +159,16 @@ namespace Services.Broadcast.ApplicationServices
                 }
 
                 var endTime = DateTime.Now;
+                System.Diagnostics.Debug.WriteLine(string.Format("Completed file parsing in {0}", endTime - startTime));
 
-                System.Diagnostics.Debug.WriteLine("Completed file parsing in {0}", endTime - startTime);
+                if (fileProblems.Any())
+                {
+                    return new InventoryFileSaveResult()
+                    {
+                        Problems = fileProblems,
+                        FileId = inventoryFile.Id
+                    };
+                }
                 
                 startTime = DateTime.Now;
 
@@ -169,7 +177,7 @@ namespace Services.Broadcast.ApplicationServices
                 fileProblems.AddRange(validationProblems.InventoryFileProblems);
 
                 endTime = DateTime.Now;
-                
+
                 System.Diagnostics.Debug.WriteLine("Completed file validation in {0}", endTime - startTime);
 
                 if (fileProblems.Any())

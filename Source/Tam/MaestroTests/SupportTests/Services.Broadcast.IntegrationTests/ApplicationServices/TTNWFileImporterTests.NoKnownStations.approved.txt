@@ -1,0 +1,8 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "There are no known stations in the file",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

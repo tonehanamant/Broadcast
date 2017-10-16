@@ -35,7 +35,7 @@ namespace Services.Broadcast.Validators
                     {
                         m.SpotLengthId,
                         m.Station.LegacyCallLetters
-                    });
+                    }).Select(g => g).ToList();
                 foreach (var spotLenghtStationGroup in spotLenghtStationGroups)
                 {
                     var duplicateProblems =

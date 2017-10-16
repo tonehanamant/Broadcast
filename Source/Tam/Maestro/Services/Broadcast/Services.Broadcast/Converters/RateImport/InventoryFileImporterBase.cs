@@ -133,6 +133,7 @@ namespace Services.Broadcast.Converters.RateImport
         private bool TryParse(string value, out DisplayDaypart result)
         {
             result = null;
+            value = value.Trim();
 
             if (!string.IsNullOrEmpty(value))
             {

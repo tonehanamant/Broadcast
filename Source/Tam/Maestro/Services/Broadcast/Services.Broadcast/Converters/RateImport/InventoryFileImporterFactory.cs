@@ -46,7 +46,7 @@ namespace Services.Broadcast.Converters.RateImport
                     fileImporter = new CNNFileImporter(_CNNStationInventoryGroupService,_InventoryFileValidator);
                     break;
                 case InventoryFile.InventorySourceType.TTNW:
-                    fileImporter = new TTNWExcelFileImporter();
+                    fileImporter = new TTNWFileImporter();
                     break;
                 default:
                     throw new NotImplementedException("Open market imports not supported.");
