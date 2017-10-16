@@ -212,11 +212,11 @@ var ImportThirdPartyViewModel = function (controller) {
             fileData.FixedPrice = fixed;
             //console.log('uploadFile', JSON.stringify(fileData));
             console.log('uploadFile', fileData);
-            //controller.apiUploadInventoryFile(fileData,
-            //    function (data) {
-            //        $scope.showModal(false);
-            //    }
-            //);
+            controller.apiUploadInventoryFile(fileData,
+                function (data) {
+                    $scope.showModal(false);
+                }
+            );
         }
     };
 };
