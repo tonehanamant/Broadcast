@@ -115,7 +115,7 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells[rowOffset, columnOffset++].Value = row.Weekstart.ToString(@"M\/d\/yyyy");
                 ws.Cells[rowOffset, columnOffset++].Value = row.Day;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Date.ToString(@"M\/d\/yyyy");
-                ws.Cells[rowOffset, columnOffset++].Value = row.Date.Add(TimeSpan.FromSeconds(row.TimeAired)).ToString(@"h\:m\:ss tt");
+                ws.Cells[rowOffset, columnOffset++].Value = row.Date.Add(TimeSpan.FromSeconds(row.TimeAired)).ToString(@"h\:mm\:ss tt");
                 ws.Cells[rowOffset, columnOffset++].Value = row.ProgramName;
                 ws.Cells[rowOffset, columnOffset++].Value = row.SpotLength;
                 ws.Cells[rowOffset, columnOffset++].Value = row.HouseISCI;
