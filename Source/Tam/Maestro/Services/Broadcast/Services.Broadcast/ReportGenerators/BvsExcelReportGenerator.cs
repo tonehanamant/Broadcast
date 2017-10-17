@@ -143,12 +143,12 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells.Style.Font.Name = "Calibri";
 
             var columnOffset = 1;
-            _BuildCommonHeader(ws, 1, ref columnOffset, reportData.Count, false, false);
+            _BuildAdvertiserHeader(ws, 1, ref columnOffset, reportData.Count, false, false);
 
             // tables
             var rowOffset = 2;
             columnOffset = 1;
-            //ws.Cells[2, 1].LoadFromCollection(reportData);
+            
             foreach (var row in reportData)
             {
                 ws.Cells[rowOffset, columnOffset++].Value = row.Rank;
@@ -168,7 +168,7 @@ namespace Services.Broadcast.ReportGenerators
             }
 
             // add audience and delivery
-            _SetAudienceData(ws, 1, 13, reportData);
+            _SetAudienceData(ws, 1, 13, reportData, false);
 
             _BuildCommonTotalsRow(ws, "J", "K", "L", _ScheduleReportDto.AdvertiserData.OrderedSpots, _ScheduleReportDto.AdvertiserData.DeliveredSpots, reportData.Count);
 
@@ -200,29 +200,28 @@ namespace Services.Broadcast.ReportGenerators
                     package.Workbook.Worksheets.Delete(sheetName);
 
                 var wsInspec = package.Workbook.Worksheets.Add(sheetName);
-                _SetWeeklyTab(wsInspec, weeklyData, true, includeDateColumns);
+                _SetWeeklyInSpecTab(wsInspec, weeklyData, includeDateColumns);
 
                 sheetName = "Week Out of Spec - " + weeklyData.Week.Display.Replace('/', '.');
                 if (package.Workbook.Worksheets[sheetName] != null)
                     package.Workbook.Worksheets.Delete(sheetName);
 
                 var wsOutofSpec = package.Workbook.Worksheets.Add(sheetName);
-                _SetWeeklyTab(wsOutofSpec, weeklyData, false, includeDateColumns);
+                _SetWeeklyOutSpecTab(wsOutofSpec, weeklyData, includeDateColumns);
             }
         }
 
-        private void _SetWeeklyTab(ExcelWorksheet ws, WeeklyImpressionAndDeliveryDto weeklyData, bool isInSpec, bool includeDateColumns)
+        private void _SetWeeklyInSpecTab(ExcelWorksheet ws, WeeklyImpressionAndDeliveryDto weeklyData, bool includeDateColumns)
         {
             ws.Cells.Style.Font.Size = 9;
             ws.Cells.Style.Font.Name = "Calibri";
 
             ws.Row(1).Height = 25.5;
             ws.View.ShowGridLines = true;
-            var reportData = weeklyData.GetReportData(isInSpec);
-            var isOutOfSpec = !isInSpec;
+            var reportData = weeklyData.GetReportData(true);
 
             int columnOffset = 1;
-            _BuildCommonHeader(ws, 1, ref columnOffset, reportData.Count(), isOutOfSpec, includeDateColumns);
+            _BuildWeeklyInSpecHeader(ws, 1, ref columnOffset, reportData.Count(), includeDateColumns);
             ws.Cells[1, columnOffset].Value = "Spec Status";
 
             // tables
@@ -237,18 +236,14 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells[rowOffset, columnOffset++].Value = row.SpotLength;
                 ws.Cells[rowOffset, columnOffset++].Value = row.ProgramName;
                 ws.Cells[rowOffset, columnOffset++].Value = row.DisplayDaypart;
-                if (isOutOfSpec)
-                {
-                    ws.Cells[rowOffset, columnOffset++].Value = row.Isci;
-                }
-                if (isOutOfSpec && includeDateColumns)
+                if (includeDateColumns)
                 {
                     ws.Cells[rowOffset, columnOffset++].Value = row.BvsDate.ToString(DateFormat);
                     ws.Cells[rowOffset, columnOffset++].Value = row.BroadcastDate.ToString(DateFormat);
                     ws.Cells[rowOffset, columnOffset++].Value = row.TimeAired.ToShortTimeString();
                 }
                 ws.Cells[rowOffset, columnOffset++].Value = row.Cost;
-                ws.Cells[rowOffset, columnOffset++].Value = isOutOfSpec ? null : row.SpotCost;
+                ws.Cells[rowOffset, columnOffset++].Value = row.SpotCost;
                 ws.Cells[rowOffset, columnOffset++].Value = row.OrderedSpots;
                 ws.Cells[rowOffset, columnOffset++].Value = row.DeliveredSpots;
                 ws.Cells[rowOffset, columnOffset++].Value = row.SpotClearance;
@@ -260,36 +255,97 @@ namespace Services.Broadcast.ReportGenerators
                 rowOffset++;
                 columnOffset = 1;
             }
-            
-                columnOffset = 13;
-            if (isOutOfSpec)
-                columnOffset = 14;
 
-            if (isOutOfSpec)
-                columnOffset = 14;
+            columnOffset = 13;
 
-            if (isOutOfSpec && includeDateColumns)
-                columnOffset = 17;
+            if (includeDateColumns)
+                columnOffset = 16;
 
             // add audience and delivery
-            _SetAudienceData(ws, 1, columnOffset, reportData);
+            _SetAudienceData(ws, 1, columnOffset, reportData, false);
 
-            var orderedSpots = isInSpec ? weeklyData.OrderedSpots() : 0;
+            var orderedSpots = weeklyData.OrderedSpots() ;
 
-            _BuildWeeklyTabTotalRows(ws, isOutOfSpec, includeDateColumns, orderedSpots, weeklyData.DeliveredSpots(isInSpec),
-                    reportData.Count);
+            _BuildWeeklyInSpecTabTotalRows(ws, includeDateColumns, orderedSpots, weeklyData.DeliveredSpots(true), reportData.Count);
 
             // sumarry rows
             var summaryIndexRowCell = reportData.Count + 4;
 
             foreach (var impressionsAndDelivery in weeklyData.ImpressionsAndDelivery)
             {
-                _BuildAudienceAndDeliveryTotalsRow(ws, impressionsAndDelivery, reportData.Count, isInSpec, ref columnOffset);
-                if (isInSpec)
-                    _BuildSummaryRow(ws, impressionsAndDelivery, impressionsAndDelivery.AudienceName, "Weekly Delivery", ref summaryIndexRowCell);
-                else
-                    _BuildOutOfSpecSummaryRow(ws, impressionsAndDelivery, impressionsAndDelivery.AudienceName, "Out of spec Weekly Delivery",
-                        summaryIndexRowCell++);
+                _BuildAudienceAndDeliveryTotalsRow(ws, impressionsAndDelivery, reportData.Count, true, ref columnOffset);
+                _BuildSummaryRow(ws, impressionsAndDelivery, impressionsAndDelivery.AudienceName, "Weekly Delivery",
+                    ref summaryIndexRowCell);
+            }
+
+            for (var i = 1; i <= columnOffset; i++)
+            {
+                ws.Cells[reportData.Count + 2, i].Style.Border.Top.Style = ExcelBorderStyle.Thick;
+            }
+
+            ws.Cells.AutoFitColumns();
+        }
+        private void _SetWeeklyOutSpecTab(ExcelWorksheet ws, WeeklyImpressionAndDeliveryDto weeklyData, bool includeDateColumns)
+        {
+            ws.Cells.Style.Font.Size = 9;
+            ws.Cells.Style.Font.Name = "Calibri";
+
+            ws.Row(1).Height = 25.5;
+            ws.View.ShowGridLines = true;
+            var reportData = weeklyData.GetReportData(false);
+
+            int columnOffset = 1;
+            _BuildWeeklyOutOfSpectHeader(ws, 1, ref columnOffset,  includeDateColumns);
+            ws.Cells[1, columnOffset].Value = "Spec Status";
+
+            // tables
+            var rowOffset = 2;
+            columnOffset = 1;
+            foreach (BvsReportData row in reportData)
+            {
+                ws.Cells[rowOffset, columnOffset++].Value = row.Rank;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Market;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Station;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Affiliate;
+                ws.Cells[rowOffset, columnOffset++].Value = row.SpotLength;
+                ws.Cells[rowOffset, columnOffset++].Value = row.ProgramName;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Isci;
+                if (includeDateColumns)
+                {
+                    ws.Cells[rowOffset, columnOffset++].Value = row.BvsDate.ToString(DateFormat);
+                    ws.Cells[rowOffset, columnOffset++].Value = row.BroadcastDate.ToString(DateFormat);
+                    ws.Cells[rowOffset, columnOffset++].Value = row.TimeAired.ToShortTimeString();
+                }
+                ws.Cells[rowOffset, columnOffset + _ScheduleReportDto.WeeklyData.ScheduleAudiences.Count()].Value = row.SpecStatus;
+                if (!row.SpecStatus.Equals("Match"))
+                    ws.Cells[rowOffset, columnOffset + _ScheduleReportDto.WeeklyData.ScheduleAudiences.Count()].Style.Font.Color.SetColor(Color.Red);
+
+                rowOffset++;
+                columnOffset = 1;
+            }
+
+            columnOffset = 8;
+
+            if (includeDateColumns)
+                columnOffset = 11;
+
+            // add audience and delivery
+            _SetAudienceData(ws, 1, columnOffset, reportData, true);
+
+            // totals row
+            ws.Cells[reportData.Count + 2, 1].Value = "Totals";
+            ws.Cells[reportData.Count + 2, 1].Style.Font.Bold = true;
+
+
+            // sumarry rows
+            var summaryIndexRowCell = reportData.Count + 4;
+
+            foreach (var impressionsAndDelivery in weeklyData.ImpressionsAndDelivery)
+            {
+                _BuildAudienceAndDeliveryTotalsRow(ws, impressionsAndDelivery, reportData.Count, false, ref columnOffset);
+                _BuildOutOfSpecSummaryRow(ws, impressionsAndDelivery, impressionsAndDelivery.AudienceName,
+                    "Out of spec Weekly Delivery",
+                    summaryIndexRowCell++);
             }
 
             for (var i = 1; i <= columnOffset; i++)
@@ -303,30 +359,21 @@ namespace Services.Broadcast.ReportGenerators
         /// <summary>
         /// Build the total columns for the weekly tabs. The total values are shifted forward if extra columns are to be displayed to the spreadsheet.
         /// </summary>
-        private void _BuildWeeklyTabTotalRows(ExcelWorksheet ws, bool isOutOfSpec, bool includeDateColumns, int? orderedSpots, int? deliveredSpots, int count)
+        private void _BuildWeeklyInSpecTabTotalRows(ExcelWorksheet ws, bool includeDateColumns, int? orderedSpots, int? deliveredSpots, int count)
         {
             var orderedSpotsColumn = "J";
             var deliveredSpotsColumn = "K";
             var spotClearanceColumn = "L";
 
-            if (isOutOfSpec)
+            if (includeDateColumns)
             {
-                orderedSpotsColumn = "K";
-                deliveredSpotsColumn = "L";
-                spotClearanceColumn = "M";
+                orderedSpotsColumn = "M";
+                deliveredSpotsColumn = "N";
+                spotClearanceColumn = "O";
             }
 
-            if (isOutOfSpec && includeDateColumns)
-            {
-                orderedSpotsColumn = "N";
-                deliveredSpotsColumn = "O";
-                spotClearanceColumn = "P";
-            }
-
-            _BuildCommonTotalsRow(ws, orderedSpotsColumn, deliveredSpotsColumn, spotClearanceColumn, orderedSpots, deliveredSpots,
-                    count);
+            _BuildCommonTotalsRow(ws, orderedSpotsColumn, deliveredSpotsColumn, spotClearanceColumn, orderedSpots, deliveredSpots, count);
         }
-
         private void _GenerateStationSummaryDataSheet(ExcelPackage package)
         {
             if (package.Workbook.Worksheets["Station Summary"] != null)
@@ -358,7 +405,7 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells["H2:H" + (reportData.Count + 1)].Style.Numberformat.Format = "0.00%";// spot clearance column format             
             }
 
-            _SetOrderedAndDeliveredImpressionsColumn(1, ref columnOffset, ws);
+            _SetOrderedAndDeliveredImpressionsColumn(1, ref columnOffset, ws, false);
 
             ws.Cells[1, columnOffset++].Value = "Spec Status";
             ws.Cells[1, columnOffset].Value = "Out of Spec Spots";
@@ -391,8 +438,7 @@ namespace Services.Broadcast.ReportGenerators
             }
 
             // add audience and delivery
-            _SetAudienceData(ws, 1, 9, reportData);
-
+            _SetAudienceData(ws, 1, 9, reportData, false);
 
             // impressions/delivery totals 
             var orderedSpots = stationSummary.OrderedSpots();
@@ -438,7 +484,6 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells[1, columnOffset++].Value = "Station";
             ws.Cells[1, columnOffset++].Value = "Affiliate";
             ws.Cells[1, columnOffset++].Value = "Program Name";
-            ws.Cells[1, columnOffset++].Value = "Daypart";
             ws.Cells[1, columnOffset++].Value = "Spot Length";
             ws.Cells[1, columnOffset++].Value = "Isci";
             if (includeDateColumns)
@@ -447,12 +492,14 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells[1, columnOffset++].Value = "Broadcast Date";
                 ws.Cells[1, columnOffset++].Value = "Time Aired";
             }
-            ws.Cells[1, columnOffset++].Value = "Ordered Spots";
-            ws.Cells[1, columnOffset++].Value = "Delivered Spots";
-            ws.Cells[1, columnOffset++].Value = "Spot Clearance";
 
-            //
-            _SetOrderedAndDeliveredImpressionsColumn(1, ref columnOffset, ws);
+            // set delivered impressions column names
+            foreach (var audience in _ScheduleReportDto.StationSummaryData.ScheduleAudiences)
+            {
+                var columnIndex = columnOffset++;
+                ws.Cells[1, columnIndex].Value = "Delivered Impressions (" + audience.AudienceName + ")";
+                ws.Column(columnIndex).Style.Numberformat.Format = "#,0";
+            }
 
             ws.Cells[1, columnOffset++].Value = "Out of spec Reason";
             ws.Cells[1, columnOffset].Value = "Out of Spec Spots";
@@ -473,7 +520,6 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells[rowOffset, columnOffset++].Value = row.Station;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Affiliate;
                 ws.Cells[rowOffset, columnOffset++].Value = row.ProgramName;
-                ws.Cells[rowOffset, columnOffset++].Value = string.Empty;
                 ws.Cells[rowOffset, columnOffset++].Value = row.SpotLength;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Isci;
                 if (includeDateColumns)
@@ -482,31 +528,41 @@ namespace Services.Broadcast.ReportGenerators
                     ws.Cells[rowOffset, columnOffset++].Value = row.BroadcastDate.ToString(DateFormat);
                     ws.Cells[rowOffset, columnOffset++].Value = row.TimeAired.ToShortTimeString();
                 }
-                ws.Cells[rowOffset, columnOffset++].Value = row.OrderedSpots;
-                ws.Cells[rowOffset, columnOffset++].Value = row.DeliveredSpots;
-                ws.Cells[rowOffset, columnOffset++].Value = row.SpotClearance;
-                ws.Cells[rowOffset, columnOffset + _ScheduleReportDto.StationSummaryData.ScheduleAudiences.Count() * 2].Value = row.SpecStatus;
-                ws.Cells[rowOffset, columnOffset + _ScheduleReportDto.StationSummaryData.ScheduleAudiences.Count() * 2].Style.Font.Color.SetColor(Color.Red);
+                ws.Cells[rowOffset, columnOffset + _ScheduleReportDto.StationSummaryData.ScheduleAudiences.Count()].Value = row.SpecStatus;
+                ws.Cells[rowOffset, columnOffset + _ScheduleReportDto.StationSummaryData.ScheduleAudiences.Count()].Style.Font.Color.SetColor(Color.Red);
                 columnOffset++;
-                ws.Cells[rowOffset, columnOffset + _ScheduleReportDto.StationSummaryData.ScheduleAudiences.Count() * 2].Value = row.OutOfSpecSpots;
+                ws.Cells[rowOffset, columnOffset + _ScheduleReportDto.StationSummaryData.ScheduleAudiences.Count()].Value = row.OutOfSpecSpots;
 
                 rowOffset++;
                 columnOffset = 1;
             }
-            
-            columnOffset = 12;
+
+            columnOffset = 8;
 
             if (includeDateColumns)
-                columnOffset = 15;
+                columnOffset = 11;
 
-            // add audience and delivery
-            _SetAudienceData(ws, 1, columnOffset, reportData);
+            // add delievered impressions 
+            var rowIndex = 1;
+            var originalOffset = columnOffset;
+            foreach (var reportRow in reportData)
+            {
+                rowIndex++;
+                foreach (var audience in _ScheduleReportDto.AdvertiserData.ScheduleAudiences)
+                {
+                    ws.Cells[rowIndex, columnOffset++].Value = _FormatImpressionsValue(reportRow.GetDeliveredImpressions(audience.AudienceId));
+                }
+                columnOffset = originalOffset;
+            }
+
 
             // impressions/delivery totals 
-            _BuildOutOfSpecToDateTotalRows(ws, includeDateColumns, outOfSpecData.DeliveredSpots(false), reportData.Count);
+            ws.Cells[reportData.Count + 2, 1].Value = "Totals";
+            ws.Cells[reportData.Count + 2, 1].Style.Font.Bold = true;
 
             var summaryIndexRowCell = reportData.Count + 4;
 
+            // set total values and summary
             foreach (var impressionsAndDelivery in outOfSpecData.ImpressionsAndDelivery)
             {
                 _BuildAudienceAndDeliveryTotalsRow(ws, impressionsAndDelivery, reportData.Count, false, ref columnOffset);
@@ -522,39 +578,29 @@ namespace Services.Broadcast.ReportGenerators
             }
 
             ws.Cells.AutoFitColumns();
+
+
         }
 
         /// <summary>
         /// Set name and excel number format for ordered/delievered impressions columns
         /// </summary>
-        private void _SetOrderedAndDeliveredImpressionsColumn(int row, ref int columnOffset, ExcelWorksheet ws)
+        private void _SetOrderedAndDeliveredImpressionsColumn(int row, ref int columnOffset, ExcelWorksheet ws, bool isOutOfSpec)
         {
             foreach (var audience in _ScheduleReportDto.StationSummaryData.ScheduleAudiences)
             {
-                var columIndex = columnOffset++;
-                ws.Cells[row, columIndex].Value = "Ordered Impressions (" + audience.AudienceName + ")";
-                ws.Column(columIndex).Style.Numberformat.Format = "#,0";
+                int columnIndex;
+                if (!isOutOfSpec)
+                {
+                    columnIndex = columnOffset++;
+                    ws.Cells[row, columnIndex].Value = "Ordered Impressions (" + audience.AudienceName + ")";
+                    ws.Column(columnIndex).Style.Numberformat.Format = "#,0";
+                }
 
-                columIndex = columnOffset++;
-                ws.Cells[row, columIndex].Value = "Delivered Impressions (" + audience.AudienceName + ")";
-                ws.Column(columIndex).Style.Numberformat.Format = "#,0";
+                columnIndex = columnOffset++;
+                ws.Cells[row, columnIndex].Value = "Delivered Impressions (" + audience.AudienceName + ")";
+                ws.Column(columnIndex).Style.Numberformat.Format = "#,0";
             }
-        }
-
-        private void _BuildOutOfSpecToDateTotalRows(ExcelWorksheet ws, bool includeDateColumns, int? deliveredSpots, int count)
-        {
-            var orderedSpotsColumn = "I";
-            var deliveredSpotsColumn = "J";
-            var spotClearanceColumn = "K";
-
-            if (includeDateColumns)
-            {
-                orderedSpotsColumn = "L";
-                deliveredSpotsColumn = "M";
-                spotClearanceColumn = "N";
-            }
-
-            _BuildCommonTotalsRow(ws, orderedSpotsColumn, deliveredSpotsColumn, spotClearanceColumn, 0, deliveredSpots, count);
         }
 
         private void _GenerateDeliveryBySourceSheet(ExcelPackage package)
@@ -711,12 +757,10 @@ namespace Services.Broadcast.ReportGenerators
             }
             else
             {
-                ++columnOffset;
                 ws.Cells[count + 2, columnOffset++].Value = _FormatImpressionsValue(impressionAndDeliveryDto.OutOfSpecDeliveredImpressions);
-                
             }
         }
-        private void _BuildCommonHeader(ExcelWorksheet ws, int rowOffset, ref int columnOffset, int reportDataRowCount, bool isOutOfSpec, bool includeDateColumns)
+        private void _BuildAdvertiserHeader(ExcelWorksheet ws, int rowOffset, ref int columnOffset, int reportDataRowCount, bool isOutOfSpec, bool includeDateColumns)
         {
             // header
             ws.Cells[rowOffset, columnOffset++].Value = "Rank";
@@ -752,7 +796,83 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells["L2:L" + (reportDataRowCount + 1)].Style.Numberformat.Format = "0.00%";
             }
 
-            _SetOrderedAndDeliveredImpressionsColumn(rowOffset, ref columnOffset, ws);
+            _SetOrderedAndDeliveredImpressionsColumn(rowOffset, ref columnOffset, ws, false);
+
+            for (int i = 1; i <= columnOffset; i++)
+            {
+                ws.Cells[rowOffset, i].Style.Font.Bold = true;
+                ws.Cells[rowOffset, i].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+            }
+        }
+        private void _BuildWeeklyInSpecHeader(ExcelWorksheet ws, int rowOffset, ref int columnOffset, int reportDataRowCount, bool includeDateColumns)
+        {
+            // header
+            ws.Cells[rowOffset, columnOffset++].Value = "Rank";
+            ws.Cells[rowOffset, columnOffset++].Value = "Market";
+            ws.Cells[rowOffset, columnOffset++].Value = "Station";
+            ws.Cells[rowOffset, columnOffset++].Value = "Affiliate";
+            ws.Cells[rowOffset, columnOffset++].Value = "Spot Length";
+            ws.Cells[rowOffset, columnOffset++].Value = "Program";
+            ws.Cells[rowOffset, columnOffset++].Value = "Daypart";
+            if (includeDateColumns)
+            {
+                ws.Cells[rowOffset, columnOffset++].Value = "BVS Date";
+                ws.Cells[rowOffset, columnOffset++].Value = "Broadcast Date";
+                ws.Cells[rowOffset, columnOffset++].Value = "Time Aired";
+            }
+            ws.Cells[rowOffset, columnOffset++].Value = "Cost";
+            ws.Cells[rowOffset, columnOffset++].Value = "Spot Cost";
+            ws.Cells[rowOffset, columnOffset++].Value = "Ordered Spots";
+            ws.Cells[rowOffset, columnOffset++].Value = "Delivered Spots";
+            ws.Cells[rowOffset, columnOffset++].Value = "Spot Clearance";
+
+            if (reportDataRowCount != 0)
+            {
+                if (includeDateColumns)
+                {
+                    // Cost
+                    ws.Cells["K2:K" + (reportDataRowCount + 1)].Style.Numberformat.Format = "$0.00";
+                    // spot cost
+                    ws.Cells["L2:L" + (reportDataRowCount + 1)].Style.Numberformat.Format = "$0.00";
+                    // Spot Clearance
+                    ws.Cells["O2:O" + (reportDataRowCount + 1)].Style.Numberformat.Format = "0.00%";
+                }
+                else
+                {
+                    ws.Cells["H2:H" + (reportDataRowCount + 1)].Style.Numberformat.Format = "$0.00";
+                    // spot cost
+                    ws.Cells["I2:I" + (reportDataRowCount + 1)].Style.Numberformat.Format = "$0.00";
+                    // Spot Clearance
+                    ws.Cells["L2:L" + (reportDataRowCount + 1)].Style.Numberformat.Format = "0.00%";
+                }
+            }
+
+            _SetOrderedAndDeliveredImpressionsColumn(rowOffset, ref columnOffset, ws, false);
+
+            for (int i = 1; i <= columnOffset; i++)
+            {
+                ws.Cells[rowOffset, i].Style.Font.Bold = true;
+                ws.Cells[rowOffset, i].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+            }
+        }
+        private void _BuildWeeklyOutOfSpectHeader(ExcelWorksheet ws, int rowOffset, ref int columnOffset, bool includeDateColumns)
+        {
+            // header
+            ws.Cells[rowOffset, columnOffset++].Value = "Rank";
+            ws.Cells[rowOffset, columnOffset++].Value = "Market";
+            ws.Cells[rowOffset, columnOffset++].Value = "Station";
+            ws.Cells[rowOffset, columnOffset++].Value = "Affiliate";
+            ws.Cells[rowOffset, columnOffset++].Value = "Spot Length";
+            ws.Cells[rowOffset, columnOffset++].Value = "Program";
+            ws.Cells[rowOffset, columnOffset++].Value = "Isci";
+            if (includeDateColumns)
+            {
+                ws.Cells[rowOffset, columnOffset++].Value = "BVS Date";
+                ws.Cells[rowOffset, columnOffset++].Value = "Broadcast Date";
+                ws.Cells[rowOffset, columnOffset++].Value = "Time Aired";
+            }
+
+            _SetOrderedAndDeliveredImpressionsColumn(rowOffset, ref columnOffset, ws, true);
 
             for (int i = 1; i <= columnOffset; i++)
             {
@@ -772,7 +892,8 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells[string.Format("{0}{1}", spotClearanceColumn, reportDataRowCount + 2)].Value = (double)totalDeliveredSpots / (double)totalOrderedSpots;
             ws.Cells[string.Format("{0}{1}", spotClearanceColumn, reportDataRowCount + 2)].Style.Numberformat.Format = "0.00%";
         }
-        private void _SetAudienceData(ExcelWorksheet ws, int rowOffset, int columnOffset, IEnumerable<BvsReportData> reportData)
+
+        private void _SetAudienceData(ExcelWorksheet ws, int rowOffset, int columnOffset, IEnumerable<BvsReportData> reportData, bool isOutOfSpect)
         {
             var originalOffset = columnOffset;
             foreach (var reportRow in reportData)
@@ -780,7 +901,9 @@ namespace Services.Broadcast.ReportGenerators
                 rowOffset++;
                 foreach (var audience in _ScheduleReportDto.AdvertiserData.ScheduleAudiences)
                 {
-                    ws.Cells[rowOffset, columnOffset++].Value = _FormatImpressionsValue(reportRow.GetOrderedImpressions(audience.AudienceId));
+                    if (!isOutOfSpect)
+                        ws.Cells[rowOffset, columnOffset++].Value =
+                            _FormatImpressionsValue(reportRow.GetOrderedImpressions(audience.AudienceId));
                     ws.Cells[rowOffset, columnOffset++].Value = _FormatImpressionsValue(reportRow.GetDeliveredImpressions(audience.AudienceId));
                 }
                 columnOffset = originalOffset;
