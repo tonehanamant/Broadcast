@@ -46,6 +46,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public void SaveStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
+            //TODO: GetInventorySourceByName needs to change to make the inventory source and inventory type compatible
             var inventorySource = _inventoryRepository.GetInventorySourceByName(inventoryFile.Source.ToString());
 
             if (inventorySource == null || !inventorySource.IsActive)

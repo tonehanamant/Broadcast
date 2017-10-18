@@ -9,6 +9,7 @@
     "InventoryGroups": [
       {
         "DaypartCode": "LN",
+        "EndDate": null,
         "Id": null,
         "Manifests": [
           {
@@ -32,9 +33,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -121,9 +122,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -210,9 +211,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -316,9 +317,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -405,9 +406,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -494,9 +495,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -583,9 +584,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -672,9 +673,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -761,9 +762,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -850,9 +851,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -939,9 +940,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -1045,9 +1046,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -1151,9 +1152,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -1240,9 +1241,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -1329,9 +1330,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -1418,9 +1419,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -1524,9 +1525,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -1630,9 +1631,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -1719,9 +1720,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -1808,9 +1809,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -1897,9 +1898,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -1986,9 +1987,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -2075,9 +2076,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -2164,9 +2165,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -2253,9 +2254,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -2342,9 +2343,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -2431,9 +2432,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -2520,9 +2521,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -2609,9 +2610,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -2698,9 +2699,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -2787,9 +2788,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -2876,9 +2877,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -2965,9 +2966,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -3054,9 +3055,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -3143,9 +3144,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -3232,9 +3233,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -3321,9 +3322,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -3410,9 +3411,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -3499,9 +3500,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -3588,9 +3589,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -3677,9 +3678,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -3766,9 +3767,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -3872,9 +3873,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -3961,9 +3962,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -4050,9 +4051,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -4139,9 +4140,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -4228,9 +4229,9 @@
                 "_Wednesday": false
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -4317,9 +4318,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -4406,9 +4407,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -4495,9 +4496,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -4584,9 +4585,9 @@
                 "_Wednesday": true
               }
             ],
+            "EndDate": "0001-01-01T00:00:00",
             "Id": null,
             "InventorySourceId": 0,
-            "InvetoryFileId": 0,
             "ManifestAudiences": [
               {
                 "Audience": {
@@ -4654,7 +4655,8 @@
           }
         ],
         "Name": "LN1",
-        "SlotNumber": 1
+        "SlotNumber": 1,
+        "StartDate": "0001-01-01T00:00:00"
       }
     ],
     "InventorySourceId": 0,

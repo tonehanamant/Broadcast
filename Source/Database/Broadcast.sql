@@ -447,6 +447,95 @@ GO
 
 /*************************************** BCOP-1776/2043 - END *****************************************************/
 
+/*************************************** BCOP-1776/2100 - START *****************************************************/
+
+IF NOT EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_group'
+	AND COLUMN_NAME = 'start_date')
+BEGIN
+	ALTER TABLE [dbo].[station_inventory_group] ADD [start_date] DATE
+END
+GO
+
+IF EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_group'
+	AND COLUMN_NAME = 'start_date')
+BEGIN
+	UPDATE [dbo].[station_inventory_group]
+	SET [start_date] = GETDATE()
+	WHERE [start_date] is null
+END
+GO
+
+IF EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_group'
+	AND COLUMN_NAME = 'start_date')
+BEGIN
+	ALTER TABLE [dbo].[station_inventory_group] ALTER COLUMN [start_date] DATE NOT NULL
+END
+GO
+
+IF NOT EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_group'
+	AND COLUMN_NAME = 'end_date')
+BEGIN
+	ALTER TABLE [dbo].[station_inventory_group] ADD [end_date] DATE
+END
+GO
+
+IF NOT EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_manifest'
+	AND COLUMN_NAME = 'end_date')
+BEGIN
+	ALTER TABLE [dbo].[station_inventory_manifest] ADD [end_date] DATE 
+END
+GO
+
+IF EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_manifest'
+	AND COLUMN_NAME = 'end_date')
+BEGIN
+	UPDATE [dbo].[station_inventory_manifest]
+	SET [end_date] = GETDATE()
+	WHERE [end_date] is null
+END
+GO
+
+IF EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_manifest'
+	AND COLUMN_NAME = 'end_date')
+BEGIN
+	ALTER TABLE [station_inventory_manifest] ALTER COLUMN [end_date] DATE NOT NULL
+END
+GO
+
+IF EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_manifest'
+	AND COLUMN_NAME = 'inventory_file_id')
+BEGIN	
+	EXEC sp_rename 'dbo.station_inventory_manifest.inventory_file_id', 'file_id', 'COLUMN'
+END
+GO
+
+IF EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_manifest'
+	AND COLUMN_NAME = 'file_id')
+BEGIN
+	ALTER TABLE [station_inventory_manifest] ALTER COLUMN [file_id] INT NULL
+END
+GO
+
+/*************************************** BCOP-1776/2100 - END *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

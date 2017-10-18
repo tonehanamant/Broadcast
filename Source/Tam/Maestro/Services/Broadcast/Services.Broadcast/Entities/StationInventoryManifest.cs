@@ -14,7 +14,7 @@ namespace Services.Broadcast.Entities
         public int? SpotsPerDay { get; set; }
         public List<DisplayDaypart> Dayparts { get; set; }
 
-        public int InvetoryFileId { get; set; }
+        public int? FileId { get; set; }
         public int InventorySourceId { get; set; }
         public DateTime EffectiveDate { get; set; }
         public List<StationInventoryManifestAudience> ManifestAudiences { get; set; }
@@ -24,5 +24,7 @@ namespace Services.Broadcast.Entities
             Dayparts = new List<DisplayDaypart>();
             ManifestAudiences = new List<StationInventoryManifestAudience>();
         }
+        // todo: this date needs to be populated
+        public DateTime EndDate { get; set; }
     }
 }

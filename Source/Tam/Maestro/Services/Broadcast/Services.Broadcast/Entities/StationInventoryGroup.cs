@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Entities
@@ -13,6 +14,9 @@ namespace Services.Broadcast.Entities
         public string Name { get; set; }
         public string DaypartCode { get; set; }
         public int SlotNumber { get; set; }
-        public List<StationInventoryManifest> Manifests { get; set; } 
+        public List<StationInventoryManifest> Manifests { get; set; }
+        // todo: both start and end dates need to be populated
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

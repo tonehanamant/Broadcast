@@ -93,6 +93,8 @@ namespace Services.Broadcast.Repositories
                         inventory_source_id = inventoryFile.InventorySourceId,
                         name = inventoryGroup.Name,
                         slot_number = (byte) inventoryGroup.SlotNumber,
+                        start_date = inventoryGroup.StartDate,
+                        end_date = inventoryGroup.EndDate,
                         station_inventory_manifest =
                             inventoryGroup.Manifests.Select(manifest => new station_inventory_manifest()
                             {
@@ -101,8 +103,9 @@ namespace Services.Broadcast.Repositories
                                 spots_per_day = manifest.SpotsPerDay,
                                 spots_per_week = manifest.SpotsPerWeek,
                                 effective_date = manifest.EffectiveDate,
-                                inventory_file_id = inventoryFile.Id,
+                                file_id = inventoryFile.Id,
                                 inventory_source_id = inventoryFile.InventorySourceId,
+                                end_date = manifest.EndDate,
                                 station_inventory_manifest_audiences =
                                     manifest.ManifestAudiences.Select(
                                         audience => new station_inventory_manifest_audiences()
@@ -144,7 +147,7 @@ namespace Services.Broadcast.Repositories
                             context.station_inventory_manifest.Include(l => l.station_inventory_manifest_audiences)
                                 .Include(s => s.station)
                             join g in context.station_inventory_group on m.station_inventory_group_id equals g.id
-                            where m.inventory_file_id == fileId
+                            where m.file_id == fileId
                             select new {g, m}).ToList();
 
                     return manifests.Select(pv => _MapToInventoryGroup(pv.g, pv.m)).ToList();
@@ -189,7 +192,7 @@ namespace Services.Broadcast.Repositories
                                     Impressions = audience.impressions,
                                     Rate = audience.rate
                                 }).ToList(),
-                        InvetoryFileId = manifest.inventory_file_id,
+                        FileId = manifest.file_id,
                         InventorySourceId = manifest.inventory_source_id,
                         EffectiveDate = manifest.effective_date
                     }).ToList()
