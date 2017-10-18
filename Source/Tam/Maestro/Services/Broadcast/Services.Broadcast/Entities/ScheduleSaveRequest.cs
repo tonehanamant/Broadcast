@@ -54,7 +54,7 @@ namespace Services.Broadcast.Entities
         public List<int> MarketRestrictions { get; set; }
         public DaypartDto DaypartRestriction { get; set; }
         public SchedulePostType PostType { get; set; }
-        public InventoryFile.InventorySourceType? InventorySource { get; set; }
+        public InventoryFile.InventorySource? InventorySource { get; set; }
         public bool Equivalized { get; set; }
         public List<BvsTrackingAudience> Audiences { get; set; }
         public DateTime? StartDate { get; set; }

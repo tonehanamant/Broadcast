@@ -52,7 +52,7 @@ namespace Services.Broadcast.Repositories
                     file.file_hash = inventoryFile.Hash;
                     file.created_by = userName;
                     file.created_date = DateTime.Now;
-                    file.inventory_source = (byte) inventoryFile.InventorySource;
+                    file.inventory_source = (byte)inventoryFile.Source;
                     file.sweep_book_id = inventoryFile.RatingBook;
                     file.play_back_type = (byte)inventoryFile.PlaybackType;
                     context.inventory_files.Add(file);

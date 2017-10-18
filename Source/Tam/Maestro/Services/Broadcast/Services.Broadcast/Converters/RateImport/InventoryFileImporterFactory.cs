@@ -9,7 +9,7 @@ namespace Services.Broadcast.Converters.RateImport
 {
     public interface IInventoryFileImporterFactory
     {
-        InventoryFileImporterBase GetFileImporterInstance(InventoryFile.InventorySourceType inventorySource);
+        InventoryFileImporterBase GetFileImporterInstance(InventoryFile.InventorySource inventorySource);
     }
 
     public class InventoryFileImporterFactory : IInventoryFileImporterFactory
@@ -37,15 +37,15 @@ namespace Services.Broadcast.Converters.RateImport
             _InventoryFileValidator = inventoryFileValidator;
         }
 
-        public InventoryFileImporterBase GetFileImporterInstance(InventoryFile.InventorySourceType inventorySource)
+        public InventoryFileImporterBase GetFileImporterInstance(InventoryFile.InventorySource inventorySource)
         {
             InventoryFileImporterBase fileImporter;
             switch (inventorySource)
             {
-                case InventoryFile.InventorySourceType.CNN:
+                case InventoryFile.InventorySource.CNN:
                     fileImporter = new CNNFileImporter(_CNNStationInventoryGroupService,_InventoryFileValidator);
                     break;
-                case InventoryFile.InventorySourceType.TTNW:
+                case InventoryFile.InventorySource.TTNW:
                     fileImporter = new TTNWFileImporter();
                     break;
                 default:

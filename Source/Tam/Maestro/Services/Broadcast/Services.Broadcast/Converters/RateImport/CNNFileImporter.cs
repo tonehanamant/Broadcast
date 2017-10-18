@@ -74,9 +74,9 @@ namespace Services.Broadcast.Converters.RateImport
         
         private bool _FoundGoodDaypart;
 
-        public override Entities.InventoryFile.InventorySourceType InventorySource
+        public override Entities.InventoryFile.InventorySource InventoryFileSource
         {
-            get { return InventoryFile.InventorySourceType.CNN; }
+            get { return InventoryFile.InventorySource.CNN; }
         }
 
         public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, List<InventoryFileProblem> fileProblems)

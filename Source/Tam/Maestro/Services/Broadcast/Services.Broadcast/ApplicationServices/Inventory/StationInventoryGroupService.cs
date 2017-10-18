@@ -46,7 +46,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public void SaveStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
-            var inventorySource = _inventoryRepository.GetInventorySourceByInventoryType(inventoryFile.InventorySource);
+            var inventorySource = _inventoryRepository.GetInventorySourceByName(inventoryFile.Source.ToString());
 
             if (inventorySource == null || !inventorySource.IsActive)
                 throw new Exception(string.Format("The selected source type is invalid or inactive."));

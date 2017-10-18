@@ -21,7 +21,7 @@ namespace Services.Broadcast.Entities
         public double? PrimaryDemoBooked { get; set; }
         public double PrimaryDemoDelivered { get; set; }
         public SchedulePostType PostType { get; set; }
-        public InventoryFile.InventorySourceType InventorySource { get; set; }
+        public InventoryFile.InventorySource InventorySource { get; set; }
         public bool IsEquivalized { get; set; }
         public List<short> MarketRestrictions { get; set; }
         public int DaypartRestrictionId { get; set; }

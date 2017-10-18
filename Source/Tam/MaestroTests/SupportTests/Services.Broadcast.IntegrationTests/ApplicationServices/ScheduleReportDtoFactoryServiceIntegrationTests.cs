@@ -325,7 +325,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             schedule.PostType = SchedulePostType.NTI;
-            schedule.InventorySource = InventoryFile.InventorySourceType.Assembly;
+            schedule.InventorySource = InventoryFile.InventorySource.Assembly;
             saveRequest.Schedule = schedule;
             sut.SaveSchedule(saveRequest);
 
@@ -365,7 +365,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             schedule.PostType = SchedulePostType.NTI;
-            schedule.InventorySource = InventoryFile.InventorySourceType.Assembly;
+            schedule.InventorySource = InventoryFile.InventorySource.Assembly;
             saveRequest.Schedule = schedule;
             sut.SaveSchedule(saveRequest);
 
@@ -461,7 +461,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             schedule.PostType = SchedulePostType.NTI;
-            schedule.InventorySource = InventoryFile.InventorySourceType.Assembly;
+            schedule.InventorySource = InventoryFile.InventorySource.Assembly;
             saveRequest.Schedule = schedule;
             int scheduleId = sut.SaveSchedule(saveRequest);
 
@@ -508,7 +508,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             schedule.PostType = SchedulePostType.NTI;
-            schedule.InventorySource = InventoryFile.InventorySourceType.Assembly;
+            schedule.InventorySource = InventoryFile.InventorySource.Assembly;
             saveRequest.Schedule = schedule;
             int scheduleId = sut.SaveSchedule(saveRequest);
 
@@ -605,7 +605,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = InventoryFile.InventorySourceType.OpenMarket;
+                schedule.InventorySource = InventoryFile.InventorySource.OpenMarket;
                 saveRequest.Schedule = schedule;
                 int scheduleId = sut.SaveSchedule(saveRequest);
 
@@ -683,7 +683,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = InventoryFile.InventorySourceType.Assembly;
+                schedule.InventorySource = InventoryFile.InventorySource.Assembly;
                 saveRequest.Schedule = schedule;
                 var scheduleId = sut.SaveSchedule(saveRequest);
 

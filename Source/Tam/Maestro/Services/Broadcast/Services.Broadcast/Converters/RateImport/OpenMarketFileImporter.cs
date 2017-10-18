@@ -8,9 +8,9 @@ namespace Services.Broadcast.Converters.RateImport
     {
         private const int SecondsPerMinute = 60;
 
-        public override InventoryFile.InventorySourceType InventorySource
+        public override InventoryFile.InventorySource InventoryFileSource
         {
-            get { return InventoryFile.InventorySourceType.OpenMarket; }
+            get { return InventoryFile.InventorySource.OpenMarket; }
         }
 
 

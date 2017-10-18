@@ -74,7 +74,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         }
 
-        public abstract InventoryFile.InventorySourceType InventorySource { get; }
+        public abstract InventoryFile.InventorySource InventoryFileSource { get; }
 
         public InventoryFile GetPendingRatesFile()
         {
@@ -83,7 +83,7 @@ namespace Services.Broadcast.Converters.RateImport
                 FileName = Request.FileName == null ? "unknown" : Request.FileName,
                 FileStatus = InventoryFile.FileStatusEnum.Pending,
                 Hash = _fileHash,
-                InventorySource = InventorySource,
+                Source = InventoryFileSource,
                 RatingBook = Request.RatingBook,
                 PlaybackType = Request.PlaybackType
             };

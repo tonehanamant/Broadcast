@@ -11,7 +11,7 @@ namespace Services.Broadcast.Entities
         public int Id { get; set; }
         public int StationCode { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
-        public InventoryFile.InventorySourceType InventorySource { get; set; }
+        public InventoryFile.InventorySource InventorySource { get; set; }
         public DaypartDto Airtime { get; set; }
         public string Program { get; set; }
         public List<LookupDto> Genres { get; set; }

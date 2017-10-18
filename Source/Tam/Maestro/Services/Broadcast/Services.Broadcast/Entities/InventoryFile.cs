@@ -14,7 +14,7 @@ namespace Services.Broadcast.Entities
             Failed = 3
         }
 
-        public enum InventorySourceType
+        public enum InventorySource
         {
             Blank = 0,
             OpenMarket = 1,
@@ -22,6 +22,12 @@ namespace Services.Broadcast.Entities
             TVB = 3,
             TTNW = 4,
             CNN = 5
+        }
+
+        public enum InventoryType
+        {
+            NationalUnit = 1,
+            Station = 2
         }
 
         public InventoryFile()
@@ -40,7 +46,7 @@ namespace Services.Broadcast.Entities
         public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public InventorySourceType InventorySource { get; set; }
+        public InventorySource Source { get; set; }
         public int InventorySourceId { get; set; }
         private List<StationContact> _stationContacts; 
 

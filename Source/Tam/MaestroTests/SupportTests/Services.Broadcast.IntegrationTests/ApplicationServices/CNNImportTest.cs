@@ -29,7 +29,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var filename = @".\Files\CNNAMPMBarterObligations_Clean.xlsx";
 
             var factory = IntegrationTestApplicationServiceFactory.Instance.Resolve<IInventoryFileImporterFactory>();
-            var importer = factory.GetFileImporterInstance(InventoryFile.InventorySourceType.CNN);
+            var importer = factory.GetFileImporterInstance(InventoryFile.InventorySource.CNN);
 
             var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
             var ratesFile = new InventoryFile();
@@ -88,7 +88,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var filename = @".\Files\CNNAMPMBarterObligations_BadDayparts.xlsx";
 
             var factory = IntegrationTestApplicationServiceFactory.Instance.Resolve<IInventoryFileImporterFactory>();
-            var importer = factory.GetFileImporterInstance(InventoryFile.InventorySourceType.CNN);
+            var importer = factory.GetFileImporterInstance(InventoryFile.InventorySource.CNN);
 
             var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
             var ratesFile = new InventoryFile();
@@ -130,7 +130,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var filename = @".\Files\CNNAMPMBarterObligations_BadStations.xlsx";
 
             var factory = IntegrationTestApplicationServiceFactory.Instance.Resolve<IInventoryFileImporterFactory>();
-            var importer = factory.GetFileImporterInstance(InventoryFile.InventorySourceType.CNN);
+            var importer = factory.GetFileImporterInstance(InventoryFile.InventorySource.CNN);
 
             var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
             var ratesFile = new InventoryFile();
@@ -177,7 +177,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var filename = @".\Files\CNNAMPMBarterObligations_AllBadDayparts.xlsx";
 
             var factory = IntegrationTestApplicationServiceFactory.Instance.Resolve<IInventoryFileImporterFactory>();
-            var importer = factory.GetFileImporterInstance(InventoryFile.InventorySourceType.CNN);
+            var importer = factory.GetFileImporterInstance(InventoryFile.InventorySource.CNN);
 
             var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
             var ratesFile = new InventoryFile();
@@ -213,7 +213,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filename = @".\Files\CNNAMPMBarterObligations_Duplicate_Inventory.xlsx";
 
                 var factory = IntegrationTestApplicationServiceFactory.Instance.Resolve<IInventoryFileImporterFactory>();
-                var importer = factory.GetFileImporterInstance(InventoryFile.InventorySourceType.CNN);
+                var importer = factory.GetFileImporterInstance(InventoryFile.InventorySource.CNN);
 
                 var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 var ratesFile = new InventoryFile();

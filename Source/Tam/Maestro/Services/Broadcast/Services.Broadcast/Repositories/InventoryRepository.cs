@@ -18,7 +18,7 @@ namespace Services.Broadcast.Repositories
     public interface IInventoryRepository : IDataRepository
     {
         List<InventorySource> GetInventorySources();
-        InventorySource GetInventorySourceByInventoryType(InventoryFile.InventorySourceType sourceType);
+        InventorySource GetInventorySourceByName(string sourceName);
         int InventoryExists(string daypartCode, short stationCode, int spotLengthId, int spotsPerWeek, DateTime effectiveDate);
         void SaveStationInventoryGroups(InventoryFile inventoryFile);
         void UpdateInventoryGroups(List<StationInventoryGroup> inventoryGroups);
@@ -41,21 +41,21 @@ namespace Services.Broadcast.Repositories
                     select new InventorySource()
                     {
                         Id = a.id,
-                        InventorySourceType = (InventoryFile.InventorySourceType) a.inventory_source_type,
+                        InventoryType = (InventoryFile.InventoryType)a.inventory_source_type,
                         IsActive = a.is_active,
                         Name = a.name
                     }).ToList());
         }
 
-        public InventorySource GetInventorySourceByInventoryType(InventoryFile.InventorySourceType sourceType)
+        public InventorySource GetInventorySourceByName(string sourceName)
         {
             return _InReadUncommitedTransaction(
                 context => (from a in context.inventory_sources
-                    where a.inventory_source_type == (byte) sourceType
+                    where a.name.ToLower().Equals(sourceName.ToLower())
                     select new InventorySource()
                     {
                         Id = a.id,
-                        InventorySourceType = (InventoryFile.InventorySourceType) a.inventory_source_type,
+                        InventoryType = (InventoryFile.InventoryType)a.inventory_source_type,
                         IsActive = a.is_active,
                         Name = a.name
                     }).SingleOrDefault());

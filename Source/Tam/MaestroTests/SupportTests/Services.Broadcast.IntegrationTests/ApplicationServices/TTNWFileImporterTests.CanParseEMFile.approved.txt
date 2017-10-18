@@ -37644,10 +37644,10 @@
         "SlotNumber": 2
       }
     ],
-    "InventorySource": "Blank",
     "InventorySourceId": 0,
     "PlaybackType": 0,
     "RatingBook": null,
+    "Source": "Blank",
     "StartDate": "0001-01-01T00:00:00",
     "StationContacts": [],
     "UniqueIdentifier": null

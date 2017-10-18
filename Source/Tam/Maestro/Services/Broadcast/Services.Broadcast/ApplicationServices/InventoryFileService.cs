@@ -197,8 +197,8 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     LockStations(fileStationCodes, lockedStationCodes, stationLocks, inventoryFile);
 
-                    var isThirdParty = inventorySourceType == InventoryFile.InventorySourceType.CNN ||
-                                       inventorySourceType == InventoryFile.InventorySourceType.TTNW;
+                    var isThirdParty = inventorySourceType == InventoryFile.InventorySource.CNN ||
+                                       inventorySourceType == InventoryFile.InventorySource.TTNW;
 
                     if (isThirdParty)
                     {
@@ -476,9 +476,9 @@ namespace Services.Broadcast.ApplicationServices
             });
         }
 
-        private InventoryFile.InventorySourceType _ParseInventorySource(string sourceString)
+        private InventoryFile.InventorySource _ParseInventorySource(string sourceString)
         {
-            InventoryFile.InventorySourceType inventorySource;
+            InventoryFile.InventorySource inventorySource;
             var parseSuccess = Enum.TryParse(sourceString, true, out inventorySource);
             if (!parseSuccess)
             {
@@ -487,11 +487,11 @@ namespace Services.Broadcast.ApplicationServices
             return inventorySource;
         }
 
-        private InventoryFile.InventorySourceType _ParseInventorySourceOrDefault(string sourceString)
+        private InventoryFile.InventorySource _ParseInventorySourceOrDefault(string sourceString)
         {
             if (string.IsNullOrEmpty(sourceString))
             {
-                return InventoryFile.InventorySourceType.OpenMarket;
+                return InventoryFile.InventorySource.OpenMarket;
             }
 
             return _ParseInventorySource(sourceString);
