@@ -536,6 +536,45 @@ GO
 
 /*************************************** BCOP-1776/2100 - END *****************************************************/
 
+
+/*************************************** BCOP-1782/2097 - START *****************************************************/
+
+-- fix old data in case it exists
+IF EXISTS(select 1 from [dbo].[inventory_sources] where name = 'TTNW' and inventory_source_type = 4)
+begin
+   UPDATE [dbo].[inventory_sources] 
+      SET inventory_source_type = 1
+   WHERE name = 'TTNW' AND inventory_source_type = 4
+END ELSE BEGIN
+  -- insert ttnw source
+  IF NOT EXISTS(select 1 from [dbo].[inventory_sources] where name = 'TTNW' and inventory_source_type = 1)
+  BEGIN
+	  SET IDENTITY_INSERT [dbo].[inventory_sources] ON
+	  INSERT INTO [dbo].[inventory_sources] (id, name, is_active, inventory_source_type) VALUES (1, 'TTNW', 1, 1)
+	  SET IDENTITY_INSERT [dbo].[inventory_sources] OFF
+  END
+END
+GO
+
+-- fix old data
+IF EXISTS(select 1 from [dbo].[inventory_sources] where name = 'CNN' and inventory_source_type = 5)
+BEGIN
+   UPDATE [dbo].[inventory_sources] 
+      SET inventory_source_type = 1
+   WHERE name = 'CNN' AND inventory_source_type = 5
+END ELSE BEGIN
+  -- insert cnn source
+  IF NOT EXISTS(select 1 from [dbo].[inventory_sources] where name = 'CNN' and inventory_source_type = 1)
+  BEGIN
+	  SET IDENTITY_INSERT [dbo].[inventory_sources] ON
+	  INSERT INTO [dbo].[inventory_sources] (id, name, is_active, inventory_source_type) VALUES (2, 'CNN', 1, 1)
+	  SET IDENTITY_INSERT [dbo].[inventory_sources] OFF
+  END
+END
+GO
+
+/*************************************** BCOP-1782/2097 - END *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------
