@@ -181,8 +181,11 @@ var ImportThirdPartyViewModel = function (controller) {
         $scope.demos([]);
         $scope.initDemoItem();
         $scope.showModal(true);
-
-        $scope.effectiveDateWrap.updateDisplay();
+        //set to first monday from today
+        var today = moment();
+        var startDate = today.day() > 0 ? today.add(1, "week").startOf('week').weekday(1) : today.startOf('week').weekday(1);
+        $scope.effectiveDateWrap.setStart(startDate);
+        $scope.EffectiveDate(startDate);
         //date picker does not clear previsously validate error class
         $scope.effectiveDateWrap.input.closest('.form-group').removeClass('has-error');
     };
@@ -212,11 +215,11 @@ var ImportThirdPartyViewModel = function (controller) {
             fileData.FixedPrice = fixed;
             //console.log('uploadFile', JSON.stringify(fileData));
             console.log('uploadFile', fileData);
-            controller.apiUploadInventoryFile(fileData,
-                function (data) {
-                    $scope.showModal(false);
-                }
-            );
+            //controller.apiUploadInventoryFile(fileData,
+            //    function (data) {
+            //        $scope.showModal(false);
+            //    }
+            //);
         }
     };
 };
