@@ -29,7 +29,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int station_inventory_group_id { get; set; }
         public Nullable<int> file_id { get; set; }
         public Nullable<int> spots_per_day { get; set; }
-        public System.DateTime end_date { get; set; }
+        public Nullable<System.DateTime> end_date { get; set; }
     
         public virtual inventory_files inventory_files { get; set; }
         public virtual inventory_sources inventory_sources { get; set; }

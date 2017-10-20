@@ -28,7 +28,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -65,7 +65,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -118,7 +118,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -155,7 +155,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 4,
@@ -192,7 +192,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 2,
@@ -238,7 +238,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -275,7 +275,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -328,7 +328,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -365,7 +365,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 4,
@@ -402,7 +402,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 2,
@@ -448,7 +448,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -485,7 +485,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -538,7 +538,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -575,7 +575,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 4,
@@ -621,7 +621,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -658,7 +658,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -711,7 +711,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -748,7 +748,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 4,
@@ -794,7 +794,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -831,7 +831,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -884,7 +884,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -946,7 +946,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -999,7 +999,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -1052,7 +1052,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -1137,7 +1137,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -1174,7 +1174,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -1259,7 +1259,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 8,
@@ -1321,7 +1321,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -1374,7 +1374,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -1427,7 +1427,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -1512,7 +1512,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -1549,7 +1549,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -1634,7 +1634,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 8,
@@ -1696,7 +1696,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -1749,7 +1749,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -1802,7 +1802,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -1887,7 +1887,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -1924,7 +1924,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -2009,7 +2009,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 8,
@@ -2071,7 +2071,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -2124,7 +2124,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -2177,7 +2177,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -2262,7 +2262,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -2299,7 +2299,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -2384,7 +2384,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 8,
@@ -2446,7 +2446,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -2499,7 +2499,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -2552,7 +2552,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -2637,7 +2637,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -2674,7 +2674,7 @@
               "_Wednesday": true
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 5,
@@ -2759,7 +2759,7 @@
               "_Wednesday": false
             }
           ],
-          "EndDate": "0001-01-01T00:00:00",
+          "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
           "SpotsPerDay": 8,

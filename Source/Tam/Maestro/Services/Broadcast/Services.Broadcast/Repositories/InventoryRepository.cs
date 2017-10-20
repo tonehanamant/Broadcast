@@ -163,6 +163,8 @@ namespace Services.Broadcast.Repositories
                 Name = stationInventoryGroup.name,
                 DaypartCode = stationInventoryGroup.daypart_code,
                 SlotNumber = stationInventoryGroup.slot_number,
+                StartDate = stationInventoryGroup.start_date,
+                EndDate = stationInventoryGroup.end_date,
                 Manifests =
                     stationInventoryGroup.station_inventory_manifest.Select(manifest => new StationInventoryManifest()
                     {
@@ -194,7 +196,8 @@ namespace Services.Broadcast.Repositories
                                 }).ToList(),
                         FileId = manifest.file_id,
                         InventorySourceId = manifest.inventory_source_id,
-                        EffectiveDate = manifest.effective_date
+                        EffectiveDate = manifest.effective_date,
+                        EndDate = manifest.end_date
                     }).ToList()
             };
         }

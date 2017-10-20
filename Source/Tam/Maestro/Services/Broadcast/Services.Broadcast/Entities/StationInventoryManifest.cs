@@ -25,6 +25,6 @@ namespace Services.Broadcast.Entities
             ManifestAudiences = new List<StationInventoryManifestAudience>();
         }
         // todo: this date needs to be populated
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

@@ -117,7 +117,7 @@
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" />
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_group" Width="1.5" PointX="3.625" PointY="40.875" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_group_inventory_sources" />
-        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest" Width="1.5" PointX="3.5" PointY="35" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest" Width="1.5" PointX="3.625" PointY="34.375" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_inventory_files" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_inventory_sources" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_spot_lengths" />

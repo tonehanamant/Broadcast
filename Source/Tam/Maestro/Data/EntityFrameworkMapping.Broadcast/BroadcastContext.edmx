@@ -243,7 +243,7 @@
           <Property Name="inventory_source_daypart" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="inventory_out_of_spec_reason" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="estimate_id" Type="int" Nullable="false" />
-          <Property Name="detected_via" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="detected_via" Type="varchar" MaxLength="255" />
           <Property Name="spot" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="post_files">
@@ -588,7 +588,7 @@
           <Property Name="station_inventory_group_id" Type="int" Nullable="false" />
           <Property Name="file_id" Type="int" />
           <Property Name="spots_per_day" Type="int" />
-          <Property Name="end_date" Type="date" Nullable="false" />
+          <Property Name="end_date" Type="date" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_audiences">
           <Key>
@@ -2477,7 +2477,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="inventory_source_daypart" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="inventory_out_of_spec_reason" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="estimate_id" Type="Int32" Nullable="false" />
-          <Property Name="detected_via" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="detected_via" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="spot" Type="Int32" Nullable="false" />
           <NavigationProperty Name="post_file_detail_impressions" Relationship="BroadcastModel.FK_post_file_details_impressions_post_file_details" FromRole="post_file_details" ToRole="post_file_detail_impressions" />
           <NavigationProperty Name="post_files" Relationship="BroadcastModel.FK_post_file_details_post_files" FromRole="post_file_details" ToRole="post_files" />
@@ -3790,7 +3790,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="station_inventory_group_id" Type="Int32" Nullable="false" />
           <Property Name="file_id" Type="Int32" />
           <Property Name="spots_per_day" Type="Int32" />
-          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_station_inventory_manifest_inventory_files" FromRole="station_inventory_manifest" ToRole="inventory_files" />
           <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_station_inventory_manifest_inventory_sources" FromRole="station_inventory_manifest" ToRole="inventory_sources" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_station_inventory_manifest_spot_lengths" FromRole="station_inventory_manifest" ToRole="spot_lengths" />
