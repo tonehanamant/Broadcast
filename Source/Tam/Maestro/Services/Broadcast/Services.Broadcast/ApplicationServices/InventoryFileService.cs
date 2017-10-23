@@ -62,7 +62,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ISMSClient _SmsClient;
         private readonly IInventoryFileRepository _inventoryFileRepository;
         private readonly ILockingManagerApplicationService _LockingManager;
-        private readonly IRatingForecastService _RatingForecastService;
         private readonly Dictionary<int, int> _SpotLengthMap;
         private readonly Dictionary<int, double> _SpotLengthCostMultipliers; 
         private readonly IThirdPartySpotCostCalculationEngine _ThirdPartySpotCostCalculationEngine;
@@ -76,7 +75,6 @@ namespace Services.Broadcast.ApplicationServices
                             IInventoryFileImporterFactory inventoryFileImporterFactory,
                             ISMSClient smsClient, 
                             ILockingManagerApplicationService lockingManager,
-                            IRatingForecastService ratingForecastService,
                             IThirdPartySpotCostCalculationEngine thirdPartySpotCostCalculationEngine,
                             IStationInventoryGroupService stationInventoryGroupService,
                             IBroadcastAudiencesCache audiencesCache)
@@ -94,7 +92,6 @@ namespace Services.Broadcast.ApplicationServices
             _SmsClient = smsClient;
             _inventoryFileRepository = _broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _LockingManager = lockingManager;
-            _RatingForecastService = ratingForecastService;
             _SpotLengthMap =
                 broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
             _SpotLengthMap.Add(0, 0);
@@ -105,7 +102,7 @@ namespace Services.Broadcast.ApplicationServices
             _stationInventoryGroupService = stationInventoryGroupService;
         }
 
-        public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
+    public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
         {
             var stations = _stationRepository.GetBroadcastStationsWithFlightWeeksForRateSource(_ParseInventorySource(rateSource));
             _SetFlightData(stations, currentDate);
@@ -139,21 +136,21 @@ namespace Services.Broadcast.ApplicationServices
             fileImporter.LoadFromSaveRequest(request);
             fileImporter.CheckFileHash();
 
-            var inventoryFile = fileImporter.GetPendingRatesFile();
-            
+            InventoryFile inventoryFile = fileImporter.GetPendingInventoryFile();
             inventoryFile.Id = _inventoryFileRepository.CreateInventoryFile(inventoryFile, request.UserName);
 
             var stationLocks = new List<IDisposable>();
             var lockedStationCodes = new List<int>();
             var fileProblems = new List<InventoryFileProblem>();
-            
+
             try
             {
                 var startTime = DateTime.Now;
 
-                fileImporter.ExtractFileData(request.RatesStream, inventoryFile, fileProblems);
+                fileImporter.ExtractFileData(request.RatesStream, inventoryFile, request.EffectiveDate, fileProblems);
 
-                if (inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 || !inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Any())
+                if (inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 ||
+                    !inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Any())
                 {
                     throw new ApplicationException("Unable to parse any file records.");
                 }
@@ -169,11 +166,11 @@ namespace Services.Broadcast.ApplicationServices
                         FileId = inventoryFile.Id
                     };
                 }
-                
+
                 startTime = DateTime.Now;
 
                 var validationProblems = _inventoryFileValidator.ValidateInventoryFile(inventoryFile);
-                
+
                 fileProblems.AddRange(validationProblems.InventoryFileProblems);
 
                 endTime = DateTime.Now;
@@ -191,8 +188,12 @@ namespace Services.Broadcast.ApplicationServices
 
                 startTime = DateTime.Now;
 
-                var fileStationCodes = inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Select(i => i.Station.Code).Distinct().ToList();
-                
+                var fileStationCodes =
+                    inventoryFile.InventoryGroups.SelectMany(g => g.Manifests)
+                        .Select(i => i.Station.Code)
+                        .Distinct()
+                        .ToList();
+
                 using (var transaction = new TransactionScopeWrapper(_CreateTransactionScope(TimeSpan.FromMinutes(20))))
                 {
                     LockStations(fileStationCodes, lockedStationCodes, stationLocks, inventoryFile);
@@ -204,7 +205,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         _ThirdPartySpotCostCalculationEngine.CalculateSpotCost(request, inventoryFile);
                     }
-                    
+
                     inventoryFile.FileStatus = InventoryFile.FileStatusEnum.Loaded;
 
                     _SaveStationInventoryGroups(request, inventoryFile);
@@ -219,13 +220,18 @@ namespace Services.Broadcast.ApplicationServices
                     System.Diagnostics.Debug.WriteLine("Completed file saving in {0}", endTime - startTime);
                 }
             }
+            catch (BroadcastDuplicateInventoryFileException)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 // Try to update the status of the file if possible.
                 try
                 {
                     UnlockStations(lockedStationCodes, stationLocks);
-                    _inventoryFileRepository.UpdateInventoryFileStatus(inventoryFile.Id, InventoryFile.FileStatusEnum.Failed);
+                    _inventoryFileRepository.UpdateInventoryFileStatus(inventoryFile.Id,
+                        InventoryFile.FileStatusEnum.Failed);
                 }
                 catch
                 {
@@ -234,7 +240,6 @@ namespace Services.Broadcast.ApplicationServices
                 throw new BroadcastInventoryDataException(string.Format("Error loading new rates file: {0}", e.Message),
                     inventoryFile.Id, e);
             }
-
             return new InventoryFileSaveResult
             {
                 FileId = inventoryFile.Id,
@@ -287,7 +292,6 @@ namespace Services.Broadcast.ApplicationServices
 
             _stationInventoryGroupService.SaveStationInventoryGroups(request, inventoryFile);
         }
-
 
 
         private void _SaveInventoryFileContacts(InventoryFileSaveRequest request, InventoryFile inventoryFile)

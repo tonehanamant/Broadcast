@@ -18,5 +18,6 @@ namespace Services.Broadcast.Entities
         // todo: both start and end dates need to be populated
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public InventorySource InventorySource { get; set; }
     }
 }

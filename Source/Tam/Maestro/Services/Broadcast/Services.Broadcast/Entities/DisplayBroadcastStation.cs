@@ -20,5 +20,10 @@ namespace Services.Broadcast.Entities
         public string RateDataThrough { get; set; }
         public IEnumerable<FlightWeekDto> FlightWeeks { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("lcl={0};mc={1}; DisplayBroadcastStation", LegacyCallLetters,MarketCode);
+        }
     }
 }

@@ -50,8 +50,9 @@ namespace Services.Broadcast.Converters.RateImport
         {
             get { return InventoryFile.InventorySource.TTNW; }
         }
+        public override InventorySource InventorySource { get; set; }
 
-        public override void ExtractFileData(System.IO.Stream stream, InventoryFile inventoryFile, List<InventoryFileProblem> fileProblems)
+        public override void ExtractFileData(System.IO.Stream stream, InventoryFile inventoryFile, DateTime effectiveDate,List<InventoryFileProblem> fileProblems)
         {
 
             var spotLengthId = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds()[_TTNWStandardSpotLength];
@@ -117,7 +118,6 @@ namespace Services.Broadcast.Converters.RateImport
                             inventoryGroups.Add(daypartCode + slotNumber, inventoryGroup);
                         }
 
-                        var effectiveDate = DateTime.Now;
                         inventoryGroup.Manifests.Add(new StationInventoryManifest()
                         {
                             Station = station,

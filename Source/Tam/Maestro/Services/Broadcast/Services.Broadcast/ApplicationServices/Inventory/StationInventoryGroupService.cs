@@ -25,15 +25,14 @@ namespace Services.Broadcast.ApplicationServices
 
     public class StationInventoryGroupService : IStationInventoryGroupService
     {
-        private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IInventoryRepository _inventoryRepository;
         private readonly IDaypartCache _daypartCache;
         private readonly IBroadcastAudiencesCache _audiencesCache;
 
-        public StationInventoryGroupService(IDataRepositoryFactory broadcastDataRepositoryFactory,
-                                            IDaypartCache daypartCache, IBroadcastAudiencesCache audiencesCache)
+        public StationInventoryGroupService(IDataRepositoryFactory broadcastDataRepositoryFactory
+                                            ,IDaypartCache daypartCache
+                                            , IBroadcastAudiencesCache audiencesCache)
         {
-            _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _inventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _daypartCache = daypartCache;
             _audiencesCache = audiencesCache;
@@ -53,8 +52,8 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception(string.Format("The selected source type is invalid or inactive."));
 
             inventoryFile.InventorySourceId = inventorySource.Id;
-
-            _inventoryRepository.SaveStationInventoryGroups(inventoryFile);
+            _inventoryRepository.SaveInventoryGroups(inventoryFile);
+            _inventoryRepository.UpdateInventoryGroups(inventoryFile.InventoryGroups);
         }
 
         public List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId)

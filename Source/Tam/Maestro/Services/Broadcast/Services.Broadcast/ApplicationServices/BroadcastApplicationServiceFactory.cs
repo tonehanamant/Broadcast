@@ -79,7 +79,6 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IMediaMonthAndWeekAggregateCache, MediaMonthAndWeekAggregateCache>();
             unityContainer.RegisterType<IMediaMonthAndWeekAggregateRepository, MediaMonthAndWeekAggregateAndWeekAggregateRepository>();
 
-            unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
             //unityContainer.RegisterType<fill, fill>();
             unityContainer.RegisterType<IRatingForecastService, RatingForecastService>();
             unityContainer.RegisterType<IStationContactMasterFileImporter, StationContactMasterFileImporter>();
@@ -101,9 +100,10 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalDetailWeekTotalsCalculationEngine, ProposalDetailWeekTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalTotalsCalculationEngine, ProposalTotalsCalculationEngine>();
 
+            unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
             unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();
             unityContainer.RegisterType<IStationInventoryManifestService, StationInventoryManifestService>();
-            
+
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
             var daypartRepo = repoFactory.GetDataRepository<IDisplayDaypartRepository>();

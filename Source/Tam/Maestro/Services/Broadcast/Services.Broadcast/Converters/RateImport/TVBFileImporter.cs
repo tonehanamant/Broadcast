@@ -36,8 +36,9 @@ namespace Services.Broadcast.Converters.RateImport
         {
             get { return InventoryFile.InventorySource.TVB; }
         }
+        public override InventorySource InventorySource { get; set; }
 
-        public override void ExtractFileData(System.IO.Stream stream, Entities.InventoryFile inventoryFile, List<Entities.InventoryFileProblem> fileProblems)
+        public override void ExtractFileData(System.IO.Stream stream, Entities.InventoryFile inventoryFile, DateTime effecitveDate,List<Entities.InventoryFileProblem> fileProblems)
         {
             //TODO: Fixme or remove.
             //try

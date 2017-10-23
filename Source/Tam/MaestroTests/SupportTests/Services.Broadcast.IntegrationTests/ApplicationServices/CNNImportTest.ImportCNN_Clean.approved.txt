@@ -7,6 +7,12 @@
     {
       "DaypartCode": "PM News",
       "EndDate": null,
+      "InventorySource": {
+        "Id": 2,
+        "InventoryType": 1,
+        "IsActive": true,
+        "Name": "CNN"
+      },
       "Manifests": [
         {
           "DaypartCode": "PM News",
@@ -28,6 +34,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -65,6 +72,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -118,6 +126,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -155,6 +164,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -192,6 +202,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -212,11 +223,17 @@
       ],
       "Name": "PM News1",
       "SlotNumber": 1,
-      "StartDate": "0001-01-01T00:00:00"
+      "StartDate": "2016-10-31T00:00:00"
     },
     {
       "DaypartCode": "PM News",
       "EndDate": null,
+      "InventorySource": {
+        "Id": 2,
+        "InventoryType": 1,
+        "IsActive": true,
+        "Name": "CNN"
+      },
       "Manifests": [
         {
           "DaypartCode": "PM News",
@@ -238,6 +255,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -275,6 +293,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -328,6 +347,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -365,6 +385,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -402,6 +423,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -422,11 +444,17 @@
       ],
       "Name": "PM News2",
       "SlotNumber": 2,
-      "StartDate": "0001-01-01T00:00:00"
+      "StartDate": "2016-10-31T00:00:00"
     },
     {
       "DaypartCode": "PM News",
       "EndDate": null,
+      "InventorySource": {
+        "Id": 2,
+        "InventoryType": 1,
+        "IsActive": true,
+        "Name": "CNN"
+      },
       "Manifests": [
         {
           "DaypartCode": "PM News",
@@ -448,6 +476,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -485,6 +514,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -538,6 +568,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -575,6 +606,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -595,11 +627,17 @@
       ],
       "Name": "PM News3",
       "SlotNumber": 3,
-      "StartDate": "0001-01-01T00:00:00"
+      "StartDate": "2016-10-31T00:00:00"
     },
     {
       "DaypartCode": "PM News",
       "EndDate": null,
+      "InventorySource": {
+        "Id": 2,
+        "InventoryType": 1,
+        "IsActive": true,
+        "Name": "CNN"
+      },
       "Manifests": [
         {
           "DaypartCode": "PM News",
@@ -621,6 +659,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -658,6 +697,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -711,6 +751,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -748,6 +789,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -768,11 +810,17 @@
       ],
       "Name": "PM News4",
       "SlotNumber": 4,
-      "StartDate": "0001-01-01T00:00:00"
+      "StartDate": "2016-10-31T00:00:00"
     },
     {
       "DaypartCode": "PM News",
       "EndDate": null,
+      "InventorySource": {
+        "Id": 2,
+        "InventoryType": 1,
+        "IsActive": true,
+        "Name": "CNN"
+      },
       "Manifests": [
         {
           "DaypartCode": "PM News",
@@ -794,6 +842,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -831,6 +880,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -884,6 +934,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -904,11 +955,17 @@
       ],
       "Name": "PM News5",
       "SlotNumber": 5,
-      "StartDate": "0001-01-01T00:00:00"
+      "StartDate": "2016-10-31T00:00:00"
     },
     {
       "DaypartCode": "AM News",
       "EndDate": null,
+      "InventorySource": {
+        "Id": 2,
+        "InventoryType": 1,
+        "IsActive": true,
+        "Name": "CNN"
+      },
       "Manifests": [
         {
           "DaypartCode": "AM News",
@@ -946,6 +1003,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -999,10 +1057,11 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 3,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1052,6 +1111,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -1137,6 +1197,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -1174,6 +1235,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -1259,6 +1321,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -1279,11 +1342,17 @@
       ],
       "Name": "AM News1",
       "SlotNumber": 1,
-      "StartDate": "0001-01-01T00:00:00"
+      "StartDate": "2016-10-31T00:00:00"
     },
     {
       "DaypartCode": "AM News",
       "EndDate": null,
+      "InventorySource": {
+        "Id": 2,
+        "InventoryType": 1,
+        "IsActive": true,
+        "Name": "CNN"
+      },
       "Manifests": [
         {
           "DaypartCode": "AM News",
@@ -1321,6 +1390,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -1374,10 +1444,11 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 3,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1427,6 +1498,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -1512,6 +1584,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -1549,6 +1622,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -1634,6 +1708,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -1654,11 +1729,17 @@
       ],
       "Name": "AM News2",
       "SlotNumber": 2,
-      "StartDate": "0001-01-01T00:00:00"
+      "StartDate": "2016-10-31T00:00:00"
     },
     {
       "DaypartCode": "AM News",
       "EndDate": null,
+      "InventorySource": {
+        "Id": 2,
+        "InventoryType": 1,
+        "IsActive": true,
+        "Name": "CNN"
+      },
       "Manifests": [
         {
           "DaypartCode": "AM News",
@@ -1696,6 +1777,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -1749,10 +1831,11 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 3,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1802,6 +1885,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -1887,6 +1971,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -1924,6 +2009,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -2009,6 +2095,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -2029,11 +2116,17 @@
       ],
       "Name": "AM News3",
       "SlotNumber": 3,
-      "StartDate": "0001-01-01T00:00:00"
+      "StartDate": "2016-10-31T00:00:00"
     },
     {
       "DaypartCode": "AM News",
       "EndDate": null,
+      "InventorySource": {
+        "Id": 2,
+        "InventoryType": 1,
+        "IsActive": true,
+        "Name": "CNN"
+      },
       "Manifests": [
         {
           "DaypartCode": "AM News",
@@ -2071,6 +2164,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -2085,59 +2179,6 @@
             "MarketCode": 0,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Sioux Falls(Mitchell)",
-            "RateDataThrough": null
-          }
-        },
-        {
-          "DaypartCode": "AM News",
-          "Dayparts": [
-            {
-              "_Code": "CUS",
-              "_EndTime": 32399,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": false,
-              "_StartTime": 18000,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            {
-              "_Code": "CUS",
-              "_EndTime": 28799,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "Custom",
-              "_Saturday": true,
-              "_StartTime": 25200,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            }
-          ],
-          "EndDate": null,
-          "ManifestAudiences": [],
-          "SpotLengthId": 1,
-          "SpotsPerDay": 5,
-          "SpotsPerWeek": 1,
-          "Station": {
-            "Affiliation": "ABC",
-            "CallLetters": "KAIT 8.1",
-            "Code": 5160,
-            "FlightWeeks": null,
-            "LegacyCallLetters": "KAIT",
-            "MarketCode": 0,
-            "ModifiedDate": "2016-11-16T05:55:10.86",
-            "OriginMarket": "Jonesboro",
             "RateDataThrough": null
           }
         },
@@ -2177,6 +2218,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -2262,6 +2304,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -2299,6 +2342,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -2384,6 +2428,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -2404,11 +2449,17 @@
       ],
       "Name": "AM News4",
       "SlotNumber": 4,
-      "StartDate": "0001-01-01T00:00:00"
+      "StartDate": "2016-10-31T00:00:00"
     },
     {
       "DaypartCode": "AM News",
       "EndDate": null,
+      "InventorySource": {
+        "Id": 2,
+        "InventoryType": 1,
+        "IsActive": true,
+        "Name": "CNN"
+      },
       "Manifests": [
         {
           "DaypartCode": "AM News",
@@ -2446,6 +2497,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -2460,59 +2512,6 @@
             "MarketCode": 0,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Sioux Falls(Mitchell)",
-            "RateDataThrough": null
-          }
-        },
-        {
-          "DaypartCode": "AM News",
-          "Dayparts": [
-            {
-              "_Code": "CUS",
-              "_EndTime": 32399,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": false,
-              "_StartTime": 18000,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            {
-              "_Code": "CUS",
-              "_EndTime": 28799,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "Custom",
-              "_Saturday": true,
-              "_StartTime": 25200,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            }
-          ],
-          "EndDate": null,
-          "ManifestAudiences": [],
-          "SpotLengthId": 1,
-          "SpotsPerDay": 5,
-          "SpotsPerWeek": 1,
-          "Station": {
-            "Affiliation": "ABC",
-            "CallLetters": "KAIT 8.1",
-            "Code": 5160,
-            "FlightWeeks": null,
-            "LegacyCallLetters": "KAIT",
-            "MarketCode": 0,
-            "ModifiedDate": "2016-11-16T05:55:10.86",
-            "OriginMarket": "Jonesboro",
             "RateDataThrough": null
           }
         },
@@ -2552,6 +2551,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -2637,6 +2637,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -2674,6 +2675,7 @@
               "_Wednesday": true
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -2759,6 +2761,7 @@
               "_Wednesday": false
             }
           ],
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "SpotLengthId": 1,
@@ -2779,7 +2782,7 @@
       ],
       "Name": "AM News5",
       "SlotNumber": 5,
-      "StartDate": "0001-01-01T00:00:00"
+      "StartDate": "2016-10-31T00:00:00"
     }
   ],
   "InventorySourceId": 0,

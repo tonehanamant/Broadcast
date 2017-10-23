@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities;
+﻿using System;
+using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.IO;
 
@@ -12,9 +13,10 @@ namespace Services.Broadcast.Converters.RateImport
         {
             get { return InventoryFile.InventorySource.OpenMarket; }
         }
+        public override InventorySource InventorySource { get; set; }
 
 
-        public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile, List<InventoryFileProblem> fileProblems)
+        public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile, DateTime effecitveDate, List<InventoryFileProblem> fileProblems)
         {
             //TODO: Fixme or remove.
             //try

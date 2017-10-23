@@ -21,6 +21,7 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IInventoryFileValidator _InventoryFileValidator;
 
         private ICNNStationInventoryGroupService _CNNStationInventoryGroupService;
+        private readonly IInventoryRepository _inventoryRepository;
 
         public InventoryFileImporterFactory(BroadcastDataDataRepositoryFactory broadcastDataFactory,
                                             IDaypartCache daypartCache, 
@@ -35,6 +36,7 @@ namespace Services.Broadcast.Converters.RateImport
             _AudiencesCache = audiencesCache;
             _CNNStationInventoryGroupService = CNNStationInventoryGroupService;
             _InventoryFileValidator = inventoryFileValidator;
+            _inventoryRepository = _broadcastDataDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
 
         public InventoryFileImporterBase GetFileImporterInstance(InventoryFile.InventorySource inventorySource)
@@ -43,19 +45,22 @@ namespace Services.Broadcast.Converters.RateImport
             switch (inventorySource)
             {
                 case InventoryFile.InventorySource.CNN:
-                    fileImporter = new CNNFileImporter(_CNNStationInventoryGroupService,_InventoryFileValidator);
+                    fileImporter = new CNNFileImporter(_CNNStationInventoryGroupService,_InventoryFileValidator, _broadcastDataDataRepositoryFactory);
                     break;
                 case InventoryFile.InventorySource.TTNW:
                     fileImporter = new TTNWFileImporter();
+
                     break;
                 default:
                     throw new NotImplementedException("Open market imports not supported.");
             }
+            var source = _inventoryRepository.GetInventorySourceByName(inventorySource.ToString());
 
             fileImporter.BroadcastDataDataRepository = _broadcastDataDataRepositoryFactory;
             fileImporter.DaypartCache = _daypartCache;
             fileImporter.MediaMonthAndWeekAggregateCache = _MediaMonthAndWeekAggregateCache;
             fileImporter.AudiencesCache = _AudiencesCache;
+            fileImporter.InventorySource = source;
 
             return fileImporter;
         }

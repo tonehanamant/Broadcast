@@ -16,6 +16,7 @@ using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Common.Formatters;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -24,9 +25,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private IInventoryFileService _InventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryFileService>();
         private IStationInventoryGroupService _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
+        private IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
 
         [Test]
-        public void LoadInventoryFileCNN()
+        [UseReporter(typeof(DiffReporter))]
+        public void InventoryFileLoadCNN()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
@@ -41,39 +44,91 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     UserName = "IntegrationTestUser",
                     RatingBook = 416
                 };
-
+                request.EffectiveDate = DateTime.Parse("10/1/2017");
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
                 Assert.IsNotNull(result.FileId);
+                // for this we are only concern with "AM New"
+                var daypartCodes = new List<string>() { "AM News","PM News"};
+                VerifyInventory(daypartCodes);
             }
         }
-
 
         [Test]
-        public void LoadInventoryStationGroupsAfterSavingCNNFile()
+        [UseReporter(typeof(DiffReporter))]
+        public void InventoryFileUpdateCNN()
         {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
+                var request = new InventoryFileSaveRequest();
+                var flightWeeks = new List<FlightWeekDto>();
+                flightWeeks.Add(new FlightWeekDto()
                 {
-                    RatesStream = new FileStream(
+                    StartDate = new DateTime(2016, 10, 31),
+                    EndDate = new DateTime(2016, 11, 06),
+                    IsHiatus = false
+                });
+
+                request.RatesStream = new FileStream(
                     @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
                     FileMode.Open,
-                        FileAccess.Read),
-                    FileName = "CNNAMPMBarterObligations_Clean.xlsx",
-                    InventorySource = "CNN",
-                    UserName = "IntegrationTestUser",
-                    RatingBook = 416
-                };
+                    FileAccess.Read);
+                request.FileName = "CNNAMPMBarterObligations_Clean.xlsx";
+                request.InventorySource = "CNN";
+                request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
 
-                var savedInventoryFile = _InventoryFileService.SaveInventoryFile(request);
-                var stationGroups =
-                    _StationInventoryGroupService.GetStationInventoryGroupsByFileId(savedInventoryFile.FileId);
+                request.EffectiveDate = DateTime.Parse("10/1/2017");
+                var results = _InventoryFileService.SaveInventoryFile(request);
+                if (results.Problems.Any())
+                    throw new Exception("Could not load base records");
 
-                Assert.IsNotEmpty(stationGroups);
+                request = new InventoryFileSaveRequest();
+                flightWeeks = new List<FlightWeekDto>();
+                flightWeeks.Add(new FlightWeekDto()
+                {
+                    StartDate = new DateTime(2016, 10, 31),
+                    EndDate = new DateTime(2016, 11, 06),
+                    IsHiatus = false
+                });
+
+                request.RatesStream = new FileStream(
+                    @".\Files\CNNAMPMBarterObligations_ForUpdate.xlsx",
+                    FileMode.Open,
+                    FileAccess.Read);
+                request.FileName = "CNNAMPMBarterObligations_ForUpdate.xlsx";
+                request.InventorySource = "CNN";
+                request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
+
+                request.EffectiveDate = DateTime.Parse("11/01/2017");
+                var result = _InventoryFileService.SaveInventoryFile(request);
+
+                var daypartCodes = new List<string>() { "AM News","PM News" };
+                VerifyInventory(daypartCodes);
             }
         }
 
+        private void VerifyInventory(List<string> daypartCodes)
+        {
+            var inventory = _InventoryRepository.GetActiveInventoryByTypeAndDapartCodes(InventoryFile.InventorySource.CNN,daypartCodes);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
+            jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            var json = IntegrationTestHelper.ConvertToJson(inventory, jsonSettings);
+            Approvals.Verify(json);
+        }
+
+
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadTTNWFile()
@@ -123,7 +178,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.InventorySource = "CNN";
                 request.UserName = "IntegrationTestUser";
                 request.RatingBook = 416;
-
+                request.EffectiveDate = DateTime.Parse("10/1/2017");
                 _InventoryFileService.SaveInventoryFile(request);
 
                 request2.RatesStream = new FileStream(
@@ -133,6 +188,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request2.FileName = "CNNAMPMBarterObligations_Clean.xlsx";
                 request2.InventorySource = "CNN";
                 request2.UserName = "IntegrationTestUser";
+                request2.EffectiveDate = DateTime.Parse("10/1/2017");
 
                 _InventoryFileService.SaveInventoryFile(request);
             }

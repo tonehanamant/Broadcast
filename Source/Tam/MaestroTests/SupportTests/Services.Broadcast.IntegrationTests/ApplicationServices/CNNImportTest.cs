@@ -51,7 +51,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
-            importer.ExtractFileData(stream, ratesFile, fileProblems);
+            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate,fileProblems);
 
             if (fileProblems.Any())
             {
@@ -59,16 +59,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(fileProblems.Any(), "Problems in file found.");
             }
 
-            // we're going to ignore effective date in json compare, but first we'll ensure
-            // at least one known "blank" effective date is set to the proper default value of today
-            var effectiveDate = ratesFile.InventoryGroups.First().Manifests[2].EffectiveDate;
-            Assert.AreEqual(DateTime.Today,effectiveDate,string.Format("The effective date for KAEF is expected to be today, but was \'{0}\'",effectiveDate));
-
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
-            jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
             jsonResolver.Ignore(typeof (StationInventoryManifest), "InventorySourceId");
             jsonResolver.Ignore(typeof (StationInventoryManifest), "FileId");
             jsonResolver.Ignore(typeof(InventoryFile), "Id");
@@ -110,7 +104,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
-            importer.ExtractFileData(stream, ratesFile, fileProblems);
+            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate, fileProblems);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
@@ -152,7 +146,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
-            importer.ExtractFileData(stream, ratesFile, fileProblems);
+            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate,fileProblems);
 
             if (!fileProblems.Any())
             {
@@ -200,7 +194,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             importer.LoadFromSaveRequest(request);
 
-            Assert.Catch(() => importer.ExtractFileData(stream, ratesFile, fileProblems),
+            Assert.Catch(() => importer.ExtractFileData(stream, ratesFile, request.EffectiveDate, fileProblems),
                 CNNFileImporter.NoGoodDaypartsFound);
         }
 
@@ -235,7 +229,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     EffectiveDate = new DateTime(2016, 10, 31)
                 };
                 importer.LoadFromSaveRequest(request);
-                importer.ExtractFileData(stream, ratesFile, fileProblems);
+                importer.ExtractFileData(stream, ratesFile, request.EffectiveDate, fileProblems);
 
                 if (!fileProblems.Any())
                 {

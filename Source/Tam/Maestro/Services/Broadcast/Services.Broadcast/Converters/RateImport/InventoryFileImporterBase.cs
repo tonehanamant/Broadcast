@@ -5,6 +5,7 @@ using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Tam.Maestro.Common;
@@ -15,7 +16,7 @@ namespace Services.Broadcast.Converters.RateImport
     public abstract class InventoryFileImporterBase
     {
         private readonly string _validTimeExpression =
-   @"(^([0-9]|[0-1][0-9]|[2][0-3])(:)?([0-5][0-9])(\s{0,1})(A|AM|P|PM|a|am|p|pm|aM|Am|pM|Pm{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})(A|AM|P|PM|a|am|p|pm|aM|Am|pM|Pm{2,2})$)";
+            @"(^([0-9]|[0-1][0-9]|[2][0-3])(:)?([0-5][0-9])(\s{0,1})(A|AM|P|PM|a|am|p|pm|aM|Am|pM|Pm{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})(A|AM|P|PM|a|am|p|pm|aM|Am|pM|Pm{2,2})$)";
 
         protected BroadcastDataDataRepositoryFactory _BroadcastDataRepositoryFactory;
         protected IDaypartCache _DaypartCache;
@@ -51,9 +52,11 @@ namespace Services.Broadcast.Converters.RateImport
         {
 
             //check if file has already been loaded
-            if (_BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>().GetInventoryFileIdByHash(_fileHash) > 0)
+            if (_BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>()
+                    .GetInventoryFileIdByHash(_fileHash) > 0)
             {
-                throw new BroadcastDuplicateInventoryFileException("Unable to load rate file. The selected rate file has already been loaded or is already loading.");
+                throw new BroadcastDuplicateInventoryFileException(
+                    "Unable to load rate file. The selected rate file has already been loaded or is already loading.");
             }
         }
 
@@ -66,33 +69,35 @@ namespace Services.Broadcast.Converters.RateImport
 
         public string FileHash
         {
-            get
-            {
-                return _fileHash;
-                
-            }
+            get { return _fileHash; }
 
         }
 
         public abstract InventoryFile.InventorySource InventoryFileSource { get; }
+        public abstract InventorySource InventorySource { get; set; }
 
-        public InventoryFile GetPendingRatesFile()
+        public virtual InventoryFile GetPendingInventoryFile()
         {
-            var result = new InventoryFile
-            {
-                FileName = Request.FileName == null ? "unknown" : Request.FileName,
-                FileStatus = InventoryFile.FileStatusEnum.Pending,
-                Hash = _fileHash,
-                Source = InventoryFileSource,
-                RatingBook = Request.RatingBook,
-                PlaybackType = Request.PlaybackType
-            };
-            return result;
+            var result = new InventoryFile();
+            return HydrateInventoryFile(result);
+        }
+
+        protected InventoryFile HydrateInventoryFile(InventoryFile inventoryFileToHydrate)
+        {
+            inventoryFileToHydrate.FileName = Request.FileName == null ? "unknown" : Request.FileName;
+            inventoryFileToHydrate.FileStatus = InventoryFile.FileStatusEnum.Pending;
+            inventoryFileToHydrate.Hash = _fileHash;
+            inventoryFileToHydrate.InventorySourceId = inventoryFileToHydrate.InventorySourceId;
+            inventoryFileToHydrate.RatingBook = Request.RatingBook;
+            inventoryFileToHydrate.PlaybackType = Request.PlaybackType;
+            inventoryFileToHydrate.Source = this.InventoryFileSource;
+            return inventoryFileToHydrate;
         }
 
         public abstract void ExtractFileData(
             System.IO.Stream stream,
             InventoryFile inventoryFile,
+            DateTime effectiveDate,
             System.Collections.Generic.List<InventoryFileProblem> fileProblems);
 
         private Dictionary<int, double> GetSpotLengthAndMultipliers()

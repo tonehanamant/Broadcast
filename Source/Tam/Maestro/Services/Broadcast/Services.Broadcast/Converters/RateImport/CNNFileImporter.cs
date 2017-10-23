@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Common.Services.Extensions;
+using Common.Services.Repositories;
 using Microsoft.Practices.ObjectBuilder2;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Validators;
@@ -12,6 +14,23 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Converters.RateImport
 {
+    public class CNNFileDto
+    {
+        public int RowNumber { get; set; }
+        public DisplayBroadcastStation Station { get; set; }
+        public DateTime EffectiveDate { get; set; }
+        public string DaypartCode { get; set; }
+        public int SpotLengthId { get; set; }
+        public int SpotsPerWeek { get; set; }
+        public int SpotsPerDay { get; set; }
+        public List<DisplayDaypart> Dayparts { get; set; }
+
+        public override string ToString()
+        {
+            return "R:" + RowNumber + ";S:" + Station.LegacyCallLetters + ";DPC:" + DaypartCode + ";SPW:" + SpotsPerWeek;
+        }
+    }
+
     public class CNNFileImporter : InventoryFileImporterBase
     {
         public const string NoGoodDaypartsFound = "There are no valid dayparts in the file";
@@ -29,31 +48,19 @@ namespace Services.Broadcast.Converters.RateImport
             "Comments"
         };
 
-        protected class CNNFileDto
-        {
-            public int RowNumber { get; set; }
-            public DisplayBroadcastStation Station { get; set; }
-            public DateTime EffectiveDate { get; set; }
-            public string DaypartCode { get; set; }
-            public int SpotLengthId { get; set; }
-            public int SpotsPerWeek { get; set; }
-            public int SpotsPerDay { get; set; }
-            public List<DisplayDaypart> Dayparts { get; set; }
-
-            public override string ToString()
-            {
-                return "R:" + RowNumber + ";S:" + Station.LegacyCallLetters + ";DPC:" + DaypartCode + ";SPW:" + SpotsPerWeek;
-            }
-        }
-
+        private DateTime _ExpireDate;
+        private DateTime _EffectiveDate;
         private ICNNStationInventoryGroupService _CNNStationInventoryGroupService;
         private readonly IInventoryFileValidator _InventoryFileValidator;
+        private IInventoryRepository _InventoryRepository;
 
         public CNNFileImporter(ICNNStationInventoryGroupService CNNStationInventoryGroupService,
-                                        IInventoryFileValidator inventoryFileValidator)
+                                        IInventoryFileValidator inventoryFileValidator,
+                                        IDataRepositoryFactory dataRepositoryFactory)
         {
             _CNNStationInventoryGroupService = CNNStationInventoryGroupService;
             _InventoryFileValidator = inventoryFileValidator;
+            _InventoryRepository = dataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
 
         private static readonly List<string> _ValidDaypartCodes = new List<string>()
@@ -79,14 +86,25 @@ namespace Services.Broadcast.Converters.RateImport
             get { return InventoryFile.InventorySource.CNN; }
         }
 
-        public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, List<InventoryFileProblem> fileProblems)
+        public override InventorySource InventorySource { get; set; }
+
+        public override InventoryFile GetPendingInventoryFile()
         {
+            var result = new InventoryFile();
+            return HydrateInventoryFile(result);
+        }
+
+        public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, DateTime effectiveDate,List<InventoryFileProblem> fileProblems)
+        {
+            List<StationInventoryGroup> expiredInventory = null;
+            _ExpireDate = effectiveDate.AddDays(-1);
+            _EffectiveDate = effectiveDate;
+
             _FileProblems = fileProblems;
             try
             {
                 _ValidateInputFileParams();
                 List<CNNFileDto> dtos = new List<CNNFileDto>();
-                DateTime defaultEffectiveDate = DateTime.Today;
 
                 using (var excelPackage = new OfficeOpenXml.ExcelPackage(stream))
                 {
@@ -120,7 +138,6 @@ namespace Services.Broadcast.Converters.RateImport
 
                         var effectiveDateValue = _GetCellValue(row, "Effective Date of New Barter Added").ToUpper();
 
-                        DateTime effectiveDate;
                         if (!string.IsNullOrEmpty(effectiveDateValue))
                         {
                             if (!DateTime.TryParse(effectiveDateValue, out effectiveDate))
@@ -128,7 +145,7 @@ namespace Services.Broadcast.Converters.RateImport
                         }
                         else
                         {
-                            effectiveDate = defaultEffectiveDate;
+                            effectiveDate = _EffectiveDate;
                         }
                         dtos.Add(new CNNFileDto()
                         {
@@ -150,9 +167,9 @@ namespace Services.Broadcast.Converters.RateImport
 
                     if (!_FileProblems.Any())
                     {
-                        dtos.ForEach(dto => AddToGroup(dto));
+                        expiredInventory = ExpireExistingInventory(dtos);
+                        dtos.ForEach(_AddNewInventory);
                     }
-
                 }
             }
             catch (Exception e)
@@ -164,6 +181,8 @@ namespace Services.Broadcast.Converters.RateImport
                 throw new Exception(NoGoodDaypartsFound);
 
             inventoryFile.InventoryGroups = _InventoryGroups.Values.SelectMany(v => v).ToList();
+            if (!expiredInventory.IsNullOrEmpty())
+                inventoryFile.InventoryGroups.AddRange(expiredInventory);
         }
 
         private List<InventoryFileProblem> CheckDups(List<CNNFileDto> dtos)
@@ -187,30 +206,23 @@ namespace Services.Broadcast.Converters.RateImport
         }
 
         private Dictionary<string, List<StationInventoryGroup>> _InventoryGroups = new Dictionary<string, List<StationInventoryGroup>>();
-        private void AddToGroup(CNNFileDto dto)
+        private void _AddNewInventory(CNNFileDto dto)
         {
-            string dpCode = dto.DaypartCode;
-            var groups = EnsureGroup(dpCode);
-            int maxSlots = _CNNStationInventoryGroupService.GetSlotCount(dpCode);
+            var groups = EnsureGroup(dto.DaypartCode);
 
-            var manifests = groups.SelectMany(g => g.Manifests)
-                .Where(m =>    m != null 
-                            && m.Dayparts.All(dp => dto.Dayparts.Any(mdp => mdp == dp))
-                            && m.Station.Code == dto.Station.Code
-                            && m.SpotLengthId == dto.SpotLengthId).ToList();
-
-            int slotToUse = manifests.Count()%maxSlots + 1;
+            int maxSlots = _CNNStationInventoryGroupService.GetSlotCount(dto.DaypartCode);
+            int slotToUse = 1;
             for (int c = 1; c <= dto.SpotsPerWeek; c++)
             {
                 var group = groups.Single(g => g.SlotNumber == slotToUse);
-                manifests = group.Manifests.Where(m => m != null
+                var manifest = group.Manifests.FirstOrDefault(m => m.EndDate == null
                                     && m.Dayparts.All(dp => dto.Dayparts.Any(mdp => mdp == dp))
                                     && m.Station.Code == dto.Station.Code
-                                    && m.SpotLengthId == dto.SpotLengthId)
-                                    .ToList();
-                if (!manifests.Any())
+                                    && m.SpotLengthId == dto.SpotLengthId);
+
+                if (manifest == null)
                 {
-                    var mani = new StationInventoryManifest()
+                    manifest = new StationInventoryManifest()
                     {
                         DaypartCode = dto.DaypartCode,
                         SpotLengthId = dto.SpotLengthId,
@@ -220,15 +232,42 @@ namespace Services.Broadcast.Converters.RateImport
                         Station = dto.Station,
                         SpotsPerWeek = 0
                     };
-                    manifests.Add(mani);
-                    group.Manifests.Add(mani);
+                    group.Manifests.Add(manifest);
                 }
-                manifests.First().SpotsPerWeek++;
+                manifest.SpotsPerWeek++;
 
                 slotToUse++;
                 if (slotToUse > maxSlots)
                     slotToUse = 1;
             }
+        }
+
+
+        private List<StationInventoryGroup> _ExpiredInventoyGroups;
+        private List<StationInventoryGroup> ExpireExistingInventory(List<CNNFileDto> dtos)
+        {
+            var daypartCodes = dtos.Select(g => g.DaypartCode).Distinct().ToList();
+            var existingInventory = _InventoryRepository.GetActiveInventoryByTypeAndDapartCodes(InventoryFile.InventorySource.CNN, daypartCodes);
+
+            if (!existingInventory.Any())
+                return existingInventory;
+
+            existingInventory.ForEach(g =>
+            {
+                g.Manifests.Clear();    // clear since no need to update
+                g.EndDate = _ExpireDate;
+            });
+            return existingInventory;
+        }
+
+        public void AddGroup(StationInventoryGroup group)
+        {
+            List<StationInventoryGroup> groups;
+            if (!_InventoryGroups.TryGetValue(group.DaypartCode, out groups))
+            {
+                throw new Exception("Daypart Code not found in group; disaster");
+            }
+            groups.Add(group);
         }
 
         /// <summary>
@@ -248,7 +287,9 @@ namespace Services.Broadcast.Converters.RateImport
                     {
                         DaypartCode = dpCode,
                         SlotNumber = slotNumber,
-                        Name = _CNNStationInventoryGroupService.GenerateGroupName(dpCode, slotNumber)
+                        Name = _CNNStationInventoryGroupService.GenerateGroupName(dpCode, slotNumber),
+                        InventorySource = this.InventorySource,
+                        StartDate = _EffectiveDate
                     });
                 }
                 _InventoryGroups.Add(dpCode, groups);
@@ -266,14 +307,6 @@ namespace Services.Broadcast.Converters.RateImport
                 ProgramName = programName,
                 StationLetters = stationLetters
             });
-        }
-
-        private StationContact _ParseStationContact(string contactInfo, string contactEmail)
-        {
-            StationContact stationContact = new StationContact();
-
-
-            return stationContact;
         }
 
         private Dictionary<string, int> _SetupHeadersValidateSheet()

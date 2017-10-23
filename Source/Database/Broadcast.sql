@@ -266,7 +266,12 @@ BEGIN
 	EXEC sp_rename 'rate_files', 'inventory_files';
 END
 
+GO
+-- should have been added the day this block of sql was added
+DELETE inventory_files
+where created_date < '10/4/2017'
 
+GO
 /*************************************** BCOP-2014 - END *****************************************************/
 
 /*************************************** BCOP-1776/2000 - START *****************************************************/
