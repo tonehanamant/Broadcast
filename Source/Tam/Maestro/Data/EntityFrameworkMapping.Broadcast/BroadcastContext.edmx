@@ -379,6 +379,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="proposal_id" Type="int" Nullable="false" />
           <Property Name="proposal_version" Type="smallint" Nullable="false" />
           <Property Name="start_date" Type="date" />
@@ -389,7 +390,6 @@
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="target_budget" Type="money" />
           <Property Name="target_units" Type="int" />
           <Property Name="target_impressions" Type="float" Nullable="false" />
@@ -641,7 +641,7 @@
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />

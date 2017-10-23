@@ -175,6 +175,10 @@
     <Compile Include="BusinessEngines\ProposalPostingBooksEngine.cs" />
     <Compile Include="BusinessEngines\ProposalProprietaryTotalsCalculationEngine.cs" />
     <Compile Include="Converters\PlaybackTypeConverter.cs" />
+    <Compile Include="Converters\Post\BasePostFileParser.cs" />
+    <Compile Include="Converters\Post\BvsPostFileParser.cs" />
+    <Compile Include="Converters\Post\PostFileParserFactory.cs" />
+    <Compile Include="Converters\Post\PostParsingException.cs" />
     <Compile Include="Converters\ProposalScxDataPrep.cs" />
     <Compile Include="Converters\ProposalScxConverter.cs" />
     <Compile Include="DaypartCache.cs" />
@@ -233,7 +237,7 @@
     <Compile Include="BusinessEngines\ProposalCalculationEngine.cs" />
     <Compile Include="Converters\AssemblyImportHelper.cs" />
     <Compile Include="ReportGenerators\BvsExcelReportGenerator.cs" />
-    <Compile Include="Converters\PostFileParser.cs" />
+    <Compile Include="Converters\Post\PostFileParser.cs" />
     <Compile Include="Converters\RateImport\CNNFileImporter.cs" />
     <Compile Include="Converters\RateImport\OpenMarketFileImporter.cs" />
     <Compile Include="Converters\RateImport\InventoryFileImporterBase.cs" />

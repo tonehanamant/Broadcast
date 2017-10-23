@@ -6,6 +6,7 @@ using Microsoft.Practices.Unity.InterceptionExtension;
 using Services.Broadcast.ApplicationServices.Inventory;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Converters;
+using Services.Broadcast.Converters.Post;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
 using Services.Broadcast.ReportGenerators;
@@ -90,6 +91,7 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IPostEngine, PostEngine>();
             unityContainer.RegisterType<IPostFileParser, PostFileParser>();
+            unityContainer.RegisterType<IPostFileParserFactory, PostFileParserFactory>();
             unityContainer.RegisterType<IReportGenerator<PostFile>, PostExcelReportGenerator>();
             unityContainer.RegisterType<IPostService, PostService>();
             unityContainer.RegisterType<IThirdPartySpotCostCalculationEngine, ThirdPartySpotCostCalculationEngine>();

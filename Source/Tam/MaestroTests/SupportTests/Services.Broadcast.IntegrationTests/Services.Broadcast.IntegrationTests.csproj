@@ -186,7 +186,10 @@
     <Compile Include="Repositories\ScheduleRepositoryTests.cs" />
     <Compile Include="Repositories\DisplayDaypartRepositoryTests.cs" />
     <Compile Include="StubbedSMSClient.cs" />
-    <Compile Include="UnitTests\PostFileParserTests.cs" />
+    <Compile Include="UnitTests\Post\BvsPostFileParserTests.cs" />
+    <Compile Include="UnitTests\Post\BvsPostFileRow.cs" />
+    <Compile Include="UnitTests\Post\PostFileParserFactoryTests.cs" />
+    <Compile Include="UnitTests\Post\PostFileParserTests.cs" />
     <Compile Include="ApplicationServices\PostExcelReportGeneratorTests.cs" />
     <Compile Include="ApplicationServices\PostEngineIntegrationTests.cs" />
     <Compile Include="UnitTests\PostingServiceTests.cs" />
@@ -204,6 +207,7 @@
     <Compile Include="MediaMonthAndWeekAggregateTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApplicationServices\RatingForecastServiceTests.cs" />
+    <Compile Include="UnitTests\Post\PostFileRow.cs" />
     <Compile Include="UnitTests\ProposalCalculationEngineUnitTests.cs" />
     <Compile Include="UnitTests\ProposalDetailHeaderTotalsCalculationEngineTests.cs" />
     <Compile Include="UnitTests\ProposalMathTests.cs" />

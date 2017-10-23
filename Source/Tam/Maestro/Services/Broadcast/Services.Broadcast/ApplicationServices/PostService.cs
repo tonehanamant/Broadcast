@@ -2,8 +2,10 @@
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Converters;
+using Services.Broadcast.Converters.Post;
 using Services.Broadcast.Entities;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
@@ -29,7 +31,7 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IPostEngine _PostEngine;
-        private readonly IPostFileParser _PostFileParser;
+        private readonly IPostFileParserFactory _PostFileParserFactory;
         private readonly IReportGenerator<PostFile> _PostReportGenerator;
         private readonly IRatingForecastService _RatingForecastService;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
@@ -39,11 +41,11 @@ namespace Services.Broadcast.ApplicationServices
         internal static readonly string MissingId = "File missing Id.";
         internal static readonly string DuplicateFileErrorMessage = "Could not import file, it has been imported. Delete existing file if needed";
 
-        public PostService(IDataRepositoryFactory broadcastDataRepositoryFactory, IPostEngine postEngine, IPostFileParser postFileParser, IReportGenerator<PostFile> postReportGenerator, IRatingForecastService ratingForecastService, IBroadcastAudiencesCache audiencesCache)
+        public PostService(IDataRepositoryFactory broadcastDataRepositoryFactory, IPostEngine postEngine, IPostFileParserFactory postFileParserFactoryFactory, IReportGenerator<PostFile> postReportGenerator, IRatingForecastService ratingForecastService, IBroadcastAudiencesCache audiencesCache)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _PostEngine = postEngine;
-            _PostFileParser = postFileParser;
+            _PostFileParserFactory = postFileParserFactoryFactory;
             _PostReportGenerator = postReportGenerator;
             _RatingForecastService = ratingForecastService;
             _AudiencesCache = audiencesCache;
@@ -56,25 +58,30 @@ namespace Services.Broadcast.ApplicationServices
 
             ValidateRequest(request);
 
-            var postFileDetails = _PostFileParser.ParseExcel(request.PostStream);
-
-            var postFile = new post_files
+            using (var excelPackage = new ExcelPackage(request.PostStream))
             {
-                equivalized = request.Equivalized,
-                posting_book_id = request.PostingBookId,
-                playback_type = (byte)request.PlaybackType,
-                file_name = request.FileName,
-                upload_date = DateTime.Now,
-                modified_date = DateTime.Now,
-                post_file_details = postFileDetails,
-                post_file_demos = request.Audiences.Select(a => new post_file_demos { demo = a }).ToList()
-            };
+                var postFileParser = _PostFileParserFactory.CreateParser(excelPackage);
 
-            var id = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>().SavePost(postFile);
+                var postFileDetails = postFileParser.ParseExcel(excelPackage);
 
-            _PostEngine.Post(postFile);
+                var postFile = new post_files
+                {
+                    equivalized = request.Equivalized,
+                    posting_book_id = request.PostingBookId,
+                    playback_type = (byte) request.PlaybackType,
+                    file_name = request.FileName,
+                    upload_date = DateTime.Now,
+                    modified_date = DateTime.Now,
+                    post_file_details = postFileDetails,
+                    post_file_demos = request.Audiences.Select(a => new post_file_demos {demo = a}).ToList()
+                };
 
-            return id;
+                var id = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>().SavePost(postFile);
+
+                _PostEngine.Post(postFile);
+
+                return id;
+            }
         }
 
         public int EditPost(PostRequest request)
