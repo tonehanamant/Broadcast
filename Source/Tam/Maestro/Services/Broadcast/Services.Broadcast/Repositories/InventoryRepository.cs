@@ -1,19 +1,16 @@
 ﻿using System.Data.Entity;
-using Common.Services.Extensions;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
 using Common.Services;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
-using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Repositories
 {
@@ -27,6 +24,7 @@ namespace Services.Broadcast.Repositories
         void UpdateInventoryManifests(List<StationInventoryManifest> inventoryManifests);
         List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId);
         List<StationInventoryGroup> GetActiveInventoryByTypeAndDapartCodes(InventoryFile.InventorySource sourceType, List<string> daypartCodes);
+        List<StationInventoryGroup> GetActiveInventoryByTypeAndName(InventoryFile.InventorySource sourceType, List<string> groupNames);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -237,6 +235,27 @@ namespace Services.Broadcast.Repositories
             return sig;
         }
 
+        public List<StationInventoryGroup> GetActiveInventoryByTypeAndName(
+                                                InventoryFile.InventorySource sourceType,
+                                                List<string> groupNames)
+        {
+            return _InReadUncommitedTransaction(
+                c =>
+                {
+                    var inventory = (from g in
+                                c.station_inventory_group
+                                    .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_dayparts))
+                                    .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_group))
+                                    .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_audiences))
+                                     join s in c.inventory_sources on g.inventory_source_id equals s.id
+                                     where s.name == sourceType.ToString() 
+                                           && groupNames.Contains(g.name)
+                                           && g.end_date == null
+                                     select g).ToList();
+
+                    return inventory.Select(i => _MapToInventoryGroup(i)).ToList();
+                });
+        }
         public List<StationInventoryGroup> GetActiveInventoryByTypeAndDapartCodes(
                                             InventoryFile.InventorySource sourceType, 
                                             List<string> daypartCodes)
@@ -249,8 +268,11 @@ namespace Services.Broadcast.Repositories
                                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_dayparts))
                                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_group))
                                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_audiences))
-                              where daypartCodes.Contains(g.daypart_code) 
+                                join s in c.inventory_sources on g.inventory_source_id equals s.id
+                                where s.name == sourceType.ToString()
+                                    && daypartCodes.Contains(g.daypart_code) 
                                     && g.end_date == null
+                                    
                              select g).ToList();
 
                     return inventory.Select(i => _MapToInventoryGroup(i)).ToList();

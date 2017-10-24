@@ -1,16 +1,12 @@
-﻿using System.IO;
-using System.Web.UI.WebControls;
-using EntityFrameworkMapping.Broadcast;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using System.Text.RegularExpressions;
+using Common.Services.Repositories;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -113,7 +109,8 @@ namespace Services.Broadcast.Converters.RateImport
                                 DaypartCode = daypartCode,
                                 Name = daypartCode + slotNumber,
                                 Manifests = new List<StationInventoryManifest>(),
-                                SlotNumber = slotNumber
+                                SlotNumber = slotNumber,
+                                InventorySource = this.InventorySource
                             };
                             inventoryGroups.Add(daypartCode + slotNumber, inventoryGroup);
                         }
@@ -126,7 +123,7 @@ namespace Services.Broadcast.Converters.RateImport
                             SpotLengthId = spotLengthId,
                             Dayparts = dayparts,
                             ManifestAudiences = manifestAudiences,
-                            EffectiveDate = effectiveDate
+                            EffectiveDate = effectiveDate,
                         });
                     }
 

@@ -237,7 +237,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                 }
 
-                throw new BroadcastInventoryDataException(string.Format("Error loading new rates file: {0}", e.Message),
+                throw new BroadcastInventoryDataException(string.Format("Error loading new inventory file: {0}", e.Message),
                     inventoryFile.Id, e);
             }
             return new InventoryFileSaveResult

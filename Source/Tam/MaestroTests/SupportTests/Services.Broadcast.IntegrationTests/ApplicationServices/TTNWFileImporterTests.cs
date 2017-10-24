@@ -25,8 +25,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private TTNWFileImporter _ttnwFileImporter = new TTNWFileImporter();
 
-        private IInventoryFileService _inventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryFileService>();
-
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanParseLNFile()

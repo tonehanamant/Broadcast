@@ -16,6 +16,7 @@ using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Common.Formatters;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -50,7 +51,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsNotNull(result.FileId);
                 // for this we are only concern with "AM New"
                 var daypartCodes = new List<string>() { "AM News","PM News"};
-                VerifyInventory(daypartCodes);
+                VerifyInventory(InventoryFile.InventorySource.CNN,daypartCodes);
             }
         }
 
@@ -105,19 +106,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
                 var daypartCodes = new List<string>() { "AM News","PM News" };
-                VerifyInventory(daypartCodes);
+                VerifyInventory(InventoryFile.InventorySource.CNN ,daypartCodes);
             }
         }
 
-        private void VerifyInventory(List<string> daypartCodes)
+        private void VerifyInventory(InventoryFile.InventorySource source,List<string> daypartCodes)
         {
-            var inventory = _InventoryRepository.GetActiveInventoryByTypeAndDapartCodes(InventoryFile.InventorySource.CNN,daypartCodes);
+            var inventory = _InventoryRepository.GetActiveInventoryByTypeAndDapartCodes(source,daypartCodes);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
             jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
             jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
+            jsonResolver.Ignore(typeof(DisplayAudience), "Id");
             var jsonSettings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -131,7 +133,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CanLoadTTNWFile()
+        public void TTNWCanLoadFile()
         {
             using (var tran = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
@@ -141,21 +143,50 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
                 request.InventorySource = "TTNW";
+                request.EffectiveDate = DateTime.Parse("10/1/2017");
 
                 request.RatingBook = 416;
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                var json = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
-                Approvals.Verify(json);
+                var daypartCodes = new List<string>() { "LN" };
+                VerifyInventory(InventoryFile.InventorySource.TTNW, daypartCodes);
+            }
+        }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void TTNWCanUpdateInventory()
+        {
+            using (var tran = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                // first do initial load
+                var filename = @".\Files\TTNW_06.09.17.xlsx";
+                var request = new InventoryFileSaveRequest();
+                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+                request.FileName = filename;
+                request.UserName = "IntegrationTestUser";
+                request.InventorySource = "TTNW";
+                request.EffectiveDate = DateTime.Parse("10/1/2017");
+
+                request.RatingBook = 416;
+
+                var result = _InventoryFileService.SaveInventoryFile(request);
+
+                filename = @".\Files\TTNW_UPDATE_06.09.17.xlsx";
+                request = new InventoryFileSaveRequest();
+                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+                request.FileName = filename;
+                request.UserName = "IntegrationTestUser";
+                request.InventorySource = "TTNW";
+                request.EffectiveDate = DateTime.Parse("10/10/2017");
+
+                request.RatingBook = 416;
+
+                result = _InventoryFileService.SaveInventoryFile(request);
+
+                var daypartCodes = new List<string>() {"LN"};
+                VerifyInventory(InventoryFile.InventorySource.TTNW,daypartCodes);
             }
         }
 
@@ -1454,29 +1485,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 const string filename = @".\Files\TTWN_06.09.17.xlsx";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
-                    EffectiveDate = new DateTime(2016, 11, 06),
-                    RatingBook = 416
-                };
-
-                var result = _InventoryFileService.SaveInventoryFile(request);
-                Assert.IsEmpty(result.Problems);
-            }
-        }
-
-        [Test]
-        [Ignore]
-        public void CanLoadTTNWFileCsv()
-        {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                const string filename = @".\Files\TTNWFileLoadTest.csv";
 
                 var request = new InventoryFileSaveRequest
                 {

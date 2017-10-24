@@ -14,25 +14,26 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public class CNNFileDto
-    {
-        public int RowNumber { get; set; }
-        public DisplayBroadcastStation Station { get; set; }
-        public DateTime EffectiveDate { get; set; }
-        public string DaypartCode { get; set; }
-        public int SpotLengthId { get; set; }
-        public int SpotsPerWeek { get; set; }
-        public int SpotsPerDay { get; set; }
-        public List<DisplayDaypart> Dayparts { get; set; }
-
-        public override string ToString()
-        {
-            return "R:" + RowNumber + ";S:" + Station.LegacyCallLetters + ";DPC:" + DaypartCode + ";SPW:" + SpotsPerWeek;
-        }
-    }
 
     public class CNNFileImporter : InventoryFileImporterBase
     {
+        private class CNNFileDto
+        {
+            public int RowNumber { get; set; }
+            public DisplayBroadcastStation Station { get; set; }
+            public DateTime EffectiveDate { get; set; }
+            public string DaypartCode { get; set; }
+            public int SpotLengthId { get; set; }
+            public int SpotsPerWeek { get; set; }
+            public int SpotsPerDay { get; set; }
+            public List<DisplayDaypart> Dayparts { get; set; }
+
+            public override string ToString()
+            {
+                return "R:" + RowNumber + ";S:" + Station.LegacyCallLetters + ";DPC:" + DaypartCode + ";SPW:" + SpotsPerWeek;
+            }
+        }
+
         public const string NoGoodDaypartsFound = "There are no valid dayparts in the file";
         private static readonly List<string> XlsFileHeaders = new List<string>()
         {
@@ -48,19 +49,15 @@ namespace Services.Broadcast.Converters.RateImport
             "Comments"
         };
 
-        private DateTime _ExpireDate;
         private DateTime _EffectiveDate;
         private ICNNStationInventoryGroupService _CNNStationInventoryGroupService;
         private readonly IInventoryFileValidator _InventoryFileValidator;
-        private IInventoryRepository _InventoryRepository;
 
         public CNNFileImporter(ICNNStationInventoryGroupService CNNStationInventoryGroupService,
-                                        IInventoryFileValidator inventoryFileValidator,
-                                        IDataRepositoryFactory dataRepositoryFactory)
+                                        IInventoryFileValidator inventoryFileValidator)
         {
             _CNNStationInventoryGroupService = CNNStationInventoryGroupService;
             _InventoryFileValidator = inventoryFileValidator;
-            _InventoryRepository = dataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
 
         private static readonly List<string> _ValidDaypartCodes = new List<string>()
@@ -96,8 +93,6 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, DateTime effectiveDate,List<InventoryFileProblem> fileProblems)
         {
-            List<StationInventoryGroup> expiredInventory = null;
-            _ExpireDate = effectiveDate.AddDays(-1);
             _EffectiveDate = effectiveDate;
 
             _FileProblems = fileProblems;
@@ -167,7 +162,6 @@ namespace Services.Broadcast.Converters.RateImport
 
                     if (!_FileProblems.Any())
                     {
-                        expiredInventory = ExpireExistingInventory(dtos);
                         dtos.ForEach(_AddNewInventory);
                     }
                 }
@@ -181,8 +175,6 @@ namespace Services.Broadcast.Converters.RateImport
                 throw new Exception(NoGoodDaypartsFound);
 
             inventoryFile.InventoryGroups = _InventoryGroups.Values.SelectMany(v => v).ToList();
-            if (!expiredInventory.IsNullOrEmpty())
-                inventoryFile.InventoryGroups.AddRange(expiredInventory);
         }
 
         private List<InventoryFileProblem> CheckDups(List<CNNFileDto> dtos)
@@ -240,24 +232,6 @@ namespace Services.Broadcast.Converters.RateImport
                 if (slotToUse > maxSlots)
                     slotToUse = 1;
             }
-        }
-
-
-        private List<StationInventoryGroup> _ExpiredInventoyGroups;
-        private List<StationInventoryGroup> ExpireExistingInventory(List<CNNFileDto> dtos)
-        {
-            var daypartCodes = dtos.Select(g => g.DaypartCode).Distinct().ToList();
-            var existingInventory = _InventoryRepository.GetActiveInventoryByTypeAndDapartCodes(InventoryFile.InventorySource.CNN, daypartCodes);
-
-            if (!existingInventory.Any())
-                return existingInventory;
-
-            existingInventory.ForEach(g =>
-            {
-                g.Manifests.Clear();    // clear since no need to update
-                g.EndDate = _ExpireDate;
-            });
-            return existingInventory;
         }
 
         public void AddGroup(StationInventoryGroup group)

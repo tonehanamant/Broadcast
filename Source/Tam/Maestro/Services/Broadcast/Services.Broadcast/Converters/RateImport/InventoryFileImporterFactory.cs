@@ -45,7 +45,7 @@ namespace Services.Broadcast.Converters.RateImport
             switch (inventorySource)
             {
                 case InventoryFile.InventorySource.CNN:
-                    fileImporter = new CNNFileImporter(_CNNStationInventoryGroupService,_InventoryFileValidator, _broadcastDataDataRepositoryFactory);
+                    fileImporter = new CNNFileImporter(_CNNStationInventoryGroupService,_InventoryFileValidator);
                     break;
                 case InventoryFile.InventorySource.TTNW:
                     fileImporter = new TTNWFileImporter();

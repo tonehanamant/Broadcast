@@ -51,9 +51,30 @@ namespace Services.Broadcast.ApplicationServices
             if (inventorySource == null || !inventorySource.IsActive)
                 throw new Exception(string.Format("The selected source type is invalid or inactive."));
 
+            var expireDate = request.EffectiveDate.AddDays(-1);
+            _ExpireExistingInventory(inventoryFile.InventoryGroups,inventoryFile.Source,expireDate);
+
             inventoryFile.InventorySourceId = inventorySource.Id;
             _inventoryRepository.SaveInventoryGroups(inventoryFile);
-            _inventoryRepository.UpdateInventoryGroups(inventoryFile.InventoryGroups);
+        }
+
+        private List<StationInventoryGroup> _ExpireExistingInventory(List<StationInventoryGroup> groups, InventoryFile.InventorySource source,DateTime expireDate)
+        {
+            var groupNames = groups.Select(g => g.Name).Distinct().ToList();
+            var existingInventory = _inventoryRepository.GetActiveInventoryByTypeAndName(source,groupNames);
+
+            if (!existingInventory.Any())
+                return existingInventory;
+
+            existingInventory.ForEach(g =>
+            {
+                g.Manifests.Clear();    // clear since no need to update
+                g.EndDate = expireDate;
+            });
+
+            _inventoryRepository.UpdateInventoryGroups(existingInventory);
+
+            return existingInventory;
         }
 
         public List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId)
