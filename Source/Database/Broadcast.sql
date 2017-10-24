@@ -601,19 +601,6 @@ ALTER COLUMN detected_via VARCHAR(255) NULL
 
 /*************************************** BCOP-1953 - END *****************************************************/
 
-/*************************************** BCOP-1944/2107 - START *****************************************************/
-
-IF EXISTS(SELECT *
-	FROM INFORMATION_SCHEMA.COLUMNS
-	WHERE TABLE_NAME = 'station_inventory_manifest'
-	AND COLUMN_NAME = 'end_date')
-BEGIN
-	ALTER TABLE [station_inventory_manifest] ALTER COLUMN [end_date] DATE NULL
-END
-GO
-
-/*************************************** BCOP-1944/2107 - end *****************************************************/
-
 /*************************************** BCOP-2052 - START ***************************************************/
 
 IF NOT EXISTS(SELECT *
