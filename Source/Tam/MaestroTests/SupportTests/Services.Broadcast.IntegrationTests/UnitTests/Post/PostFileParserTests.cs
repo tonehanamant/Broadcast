@@ -20,10 +20,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Post
         [SetUp]
         public void Setup()
         {
-            _ValidRow = new PostFileRow("93", "BATON ROUGE", "WAFB", "CBS", "2/20/2017", "THU", "2/23/2017", "2/23/2017 4:56:08 AM", "WAFB 9 NEWS THIS MORNING: EARLY EDIT", "15", "", "NNVA0045000", "BEIERSDORF", "ASSEMBLY", "EMN", "", "7196", "BVS Cadent", "1");
+            _ValidRow = new PostFileRow("93", "BATON ROUGE", "WAFB", "CBS", "2/20/2017", "THU", "2/23/2017", "2/23/2017 4:56:08 AM", "WAFB 9 NEWS THIS MORNING: EARLY EDIT", "15", "", "NNVA0045000", "BEIERSDORF", "ASSEMBLY", "EMN", "", "Testing", "7196", "BVS Cadent", "1");
             _Package = new ExcelPackage();
             _Package.Workbook.Worksheets.Add("Default");
             _Worksheet = _Package.Workbook.Worksheets.First();
+        }
+
+        [Test]
+        public void Parse_Advertiser_Out_Of_Spec_Reason()
+        {
+            _Worksheet.Cells.LoadFromCollection(new List<PostFileRow> { _ValidRow }, true);
+
+            var postDetails = _PostFileParser.Parse(_Package);
+
+            var firstRow = postDetails.First();
+
+            Assert.AreEqual("Testing", firstRow.advertiser_out_of_spec_reason);
         }
 
         [Test]
@@ -93,7 +105,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Post
        [Test]
         public void Parse_Throws_When_Weekstart_Not_Monday()
         {
-            //Wednesday
+            // Wednesday.
             _ValidRow.Weekstart = "5/17/2017";
 
             _Worksheet.Cells.LoadFromCollection(new List<PostFileRow> { _ValidRow }, true);
@@ -229,7 +241,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Post
         [Test]
         public void Parse_DoesNotReturn_WhenAnyErrors()
         {
-            var invalidRow = new PostFileRow("93NOTVALIDVALUE", "BATON ROUGE", "WAFB", "CBS", "2/20/2017", "THU", "2/23/2017", "2/23/2017 4:56:08 AM", "WAFB 9 NEWS THIS MORNING: EARLY EDIT", "15", "", "NNVA0045000", "BEIERSDORF", "ASSEMBLY", "EMN", "", "7196", "BVS Cadent", "1");
+            var invalidRow = new PostFileRow("93NOTVALIDVALUE", "BATON ROUGE", "WAFB", "CBS", "2/20/2017", "THU", "2/23/2017", "2/23/2017 4:56:08 AM", "WAFB 9 NEWS THIS MORNING: EARLY EDIT", "15", "", "NNVA0045000", "BEIERSDORF", "ASSEMBLY", "EMN", "", "Testing", "7196", "BVS Cadent", "1");
 
             _Worksheet.Cells.LoadFromCollection(new List<PostFileRow> { _ValidRow, invalidRow }, true);
 

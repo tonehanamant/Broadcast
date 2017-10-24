@@ -28,12 +28,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Post
         public string InventorySourceDaypart { get; set; }
         [DisplayName("Inventory Out of Spec Reason")]
         public string InventoryOutofSpecReason { get; set; }
+        [DisplayName("Advertiser Out of Spec Reason")]
+        public string AdvertiserOutofSpecReason { get; set; }
         public string Estimate { get; set; }
         [DisplayName("Detected Via")]
         public string DetectedVia { get; set; }
         public string Spot { get; set; }
 
-        public PostFileRow(string rank, string market, string station, string affiliate, string weekstart, string day, string date, string timeAired, string programName, string length, string houseISCI, string clientISCI, string advertiser, string inventorySource, string inventorySourceDaypart, string inventoryOutofSpecReason, string estimate, string detectedVia, string spot)
+        public PostFileRow(string rank, string market, string station, string affiliate, string weekstart, string day, string date, string timeAired, string programName, string length, string houseISCI, string clientISCI, string advertiser, string inventorySource, string inventorySourceDaypart, string inventoryOutofSpecReason, string advertiserOutofSpecReason, string estimate, string detectedVia, string spot)
         {
             Rank = rank;
             Market = market;
@@ -51,6 +53,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Post
             InventorySource = inventorySource;
             InventorySourceDaypart = inventorySourceDaypart;
             InventoryOutofSpecReason = inventoryOutofSpecReason;
+            AdvertiserOutofSpecReason = advertiserOutofSpecReason;
             Estimate = estimate;
             DetectedVia = detectedVia;
             Spot = spot;

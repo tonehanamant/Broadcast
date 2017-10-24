@@ -8,6 +8,7 @@
   "FileDetails": [
     {
       "Advertiser": "BEIERSDORF",
+      "AdvertiserOutOfSpecReason": "Advertiser In Spec",
       "Affiliate": "CBS",
       "ClientISCI": "NNVA0045000",
       "Date": "2017-02-23T00:00:00",
@@ -25,7 +26,7 @@
           "Impression": 7399.9
         }
       ],
-      "InventoryOutOfSpecReason": "",
+      "InventoryOutOfSpecReason": "Inventory In Spec",
       "InventorySource": "ASSEMBLY",
       "InventorySourceDaypart": "EMN",
       "Market": "BATON ROUGE",
@@ -40,6 +41,7 @@
     },
     {
       "Advertiser": "BEIERSDORF",
+      "AdvertiserOutOfSpecReason": "Advertiser In Spec",
       "Affiliate": "CBS",
       "ClientISCI": "NNVA0045000",
       "Date": "2017-02-23T00:00:00",
@@ -48,7 +50,7 @@
       "EstimateID": 7196,
       "HouseISCI": "",
       "Impressions": [],
-      "InventoryOutOfSpecReason": "",
+      "InventoryOutOfSpecReason": "Inventory In Spec",
       "InventorySource": "ASSEMBLY",
       "InventorySourceDaypart": "EMN",
       "Market": "BATON ROUGE",

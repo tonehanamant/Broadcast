@@ -41,6 +41,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int estimate_id { get; set; }
         public string detected_via { get; set; }
         public int spot { get; set; }
+        public string advertiser_out_of_spec_reason { get; set; }
     
         public virtual ICollection<post_file_detail_impressions> post_file_detail_impressions { get; set; }
         public virtual post_files post_files { get; set; }

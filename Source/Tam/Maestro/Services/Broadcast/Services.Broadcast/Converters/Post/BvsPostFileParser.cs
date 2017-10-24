@@ -193,6 +193,8 @@ namespace Services.Broadcast.Converters.Post
 
                 bvsDetail.inventory_out_of_spec_reason = GetCellValue(row, headers[INVENTORYOUTOFSPECREASON], worksheet);
 
+                bvsDetail.advertiser_out_of_spec_reason = GetCellValue(row, headers[ADVERTISEROUTOFSPECREASON], worksheet);
+
                 if (!string.IsNullOrEmpty(errorMessage))
                     allParsingExceptions.Add(errorMessageHeader + errorMessage);
                 else

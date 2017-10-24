@@ -8,6 +8,7 @@
   "FileDetails": [
     {
       "Advertiser": "BEIERSDORF",
+      "AdvertiserOutOfSpecReason": "Advertiser In Spec",
       "Affiliate": "CBS",
       "ClientISCI": "NNVA0045000",
       "Date": "2017-02-24T00:00:00",
@@ -25,7 +26,7 @@
           "Impression": 7399.9
         }
       ],
-      "InventoryOutOfSpecReason": "",
+      "InventoryOutOfSpecReason": "Inventory In Spec",
       "InventorySource": "ASSEMBLY",
       "InventorySourceDaypart": "EMN",
       "Market": "BATON ROUGE",

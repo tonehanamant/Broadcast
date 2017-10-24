@@ -32,6 +32,7 @@ namespace Services.Broadcast.ReportGenerators
             ADVERTISER,
             INVENTORYSOURCE,
             INVENTORYSOURCEDAYPART,
+            ADVERTISEROUTOFSPECREASON,
             INVENTORYOUTOFSPECREASON,
             ESTIMATE,
             DETECTEDVIA,
@@ -46,7 +47,8 @@ namespace Services.Broadcast.ReportGenerators
         private const string SPOT = "Spot";
         private const string DETECTEDVIA = "Detected Via";
         private const string ESTIMATE = "Estimate";
-        private const string INVENTORYOUTOFSPECREASON = "Out of Spec Reason";
+        private const string ADVERTISEROUTOFSPECREASON = "Advertiser Out of Spec Reason";
+        private const string INVENTORYOUTOFSPECREASON = "Inventory Out of Spec Reason";
         private const string INVENTORYSOURCEDAYPART = "Daypart";
         private const string INVENTORYSOURCE = "Inventory Source";
         private const string ADVERTISER = "Advertiser";
@@ -123,6 +125,7 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells[rowOffset, columnOffset++].Value = row.Advertiser;
                 ws.Cells[rowOffset, columnOffset++].Value = row.InventorySource;
                 ws.Cells[rowOffset, columnOffset++].Value = row.InventorySourceDaypart;
+                ws.Cells[rowOffset, columnOffset++].Value = row.AdvertiserOutOfSpecReason;
                 ws.Cells[rowOffset, columnOffset++].Value = row.InventoryOutOfSpecReason;
                 ws.Cells[rowOffset, columnOffset++].Value = row.EstimateID;
                 ws.Cells[rowOffset, columnOffset++].Value = row.DetectedVia;

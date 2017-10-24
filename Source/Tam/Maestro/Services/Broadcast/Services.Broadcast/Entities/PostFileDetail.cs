@@ -23,13 +23,14 @@ namespace Services.Broadcast.Entities
         public string Advertiser;
         public string InventorySource;
         public string InventorySourceDaypart;
+        public string AdvertiserOutOfSpecReason;
         public string InventoryOutOfSpecReason;
         public int EstimateID;
         public string DetectedVia;
         public int Spot;
         public List<PostFileDetailImpression> Impressions;
 
-        public PostFileDetail(int xID, int postFileId, int? rank, string market, string station, string affiliate, DateTime weekstart, string day, DateTime date, int timeAired, string programName, int spotLength, int spotLengthID, string houseISCI, string clientISCI, string advertiser, string inventorySource, string inventorySourceDaypart, string inventoryOutOfSpecReason, int estimateID, string detectedVia, int spot)
+        public PostFileDetail(int xID, int postFileId, int? rank, string market, string station, string affiliate, DateTime weekstart, string day, DateTime date, int timeAired, string programName, int spotLength, int spotLengthID, string houseISCI, string clientISCI, string advertiser, string inventorySource, string inventorySourceDaypart, string advertiserOutOfSpecReason, string inventoryOutOfSpecReason, int estimateID, string detectedVia, int spot)
         {
             Id = xID;
             PostFileId = postFileId;
@@ -49,13 +50,14 @@ namespace Services.Broadcast.Entities
             Advertiser = advertiser;
             InventorySource = inventorySource;
             InventorySourceDaypart = inventorySourceDaypart;
+            AdvertiserOutOfSpecReason = advertiserOutOfSpecReason;
             InventoryOutOfSpecReason = inventoryOutOfSpecReason;
             EstimateID = estimateID;
             DetectedVia = detectedVia;
             Spot = spot;
         }
 
-        public PostFileDetail(int xID, int postFileId, int? rank, string market, string station, string affiliate, DateTime weekstart, string day, DateTime date, int timeAired, string programName, int spotLength, int spotLengthID, string houseISCI, string clientISCI, string advertiser, string inventorySource, string inventorySourceDaypart, string inventoryOutOfSpecReason, int estimateID, string detectedVia, int spot, List<PostFileDetailImpression> impressions)
+        public PostFileDetail(int xID, int postFileId, int? rank, string market, string station, string affiliate, DateTime weekstart, string day, DateTime date, int timeAired, string programName, int spotLength, int spotLengthID, string houseISCI, string clientISCI, string advertiser, string inventorySource, string inventorySourceDaypart, string advertiserOutOfSpecReason, string inventoryOutOfSpecReason, int estimateID, string detectedVia, int spot, List<PostFileDetailImpression> impressions)
         {
             Id = xID;
             PostFileId = postFileId;
@@ -75,6 +77,7 @@ namespace Services.Broadcast.Entities
             Advertiser = advertiser;
             InventorySource = inventorySource;
             InventorySourceDaypart = inventorySourceDaypart;
+            AdvertiserOutOfSpecReason = advertiserOutOfSpecReason;
             InventoryOutOfSpecReason = inventoryOutOfSpecReason;
             EstimateID = estimateID;
             DetectedVia = detectedVia;

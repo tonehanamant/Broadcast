@@ -28,18 +28,20 @@ namespace Services.Broadcast.Converters.Post
             INVENTORYSOURCE,
             INVENTORYSOURCEDAYPART,
             INVENTORYOUTOFSPECREASON,
+            ADVERTISEROUTOFSPECREASON,
             ESTIMATE,
             DETECTEDVIA,
             SPOT
         };
 
+        internal const string RANK = "Rank";
         internal const string MARKET = "Market";
         internal const string STATION = "Station";
-        internal const string RANK = "Rank";
         internal const string SPOT = "Spot";
         internal const string DETECTEDVIA = "Detected Via";
         internal const string ESTIMATE = "Estimate";
         internal const string INVENTORYOUTOFSPECREASON = "Inventory Out of Spec Reason";
+        internal const string ADVERTISEROUTOFSPECREASON = "Advertiser Out of Spec Reason";
         internal const string INVENTORYSOURCEDAYPART = "Inventory Source Daypart";
         internal const string INVENTORYSOURCE = "Inventory Source";
         internal const string ADVERTISER = "Advertiser";
@@ -205,6 +207,8 @@ namespace Services.Broadcast.Converters.Post
                 bvsDetail.inventory_source_daypart = GetCellValue(row, headers[INVENTORYSOURCEDAYPART], worksheet);
 
                 bvsDetail.inventory_out_of_spec_reason = GetCellValue(row, headers[INVENTORYOUTOFSPECREASON], worksheet);
+
+                bvsDetail.advertiser_out_of_spec_reason = GetCellValue(row, headers[ADVERTISEROUTOFSPECREASON], worksheet);
 
                 var estimateId = GetCellValue(row, headers[ESTIMATE], worksheet);
                 

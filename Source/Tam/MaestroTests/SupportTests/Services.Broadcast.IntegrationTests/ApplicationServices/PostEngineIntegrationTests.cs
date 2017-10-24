@@ -187,7 +187,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             detail.advertiser = "BEIERSDORF";
             detail.inventory_source = "ASSEMBLY";
             detail.inventory_source_daypart = "EMN";
-            detail.inventory_out_of_spec_reason = "";
+            detail.inventory_out_of_spec_reason = "Inventory In Spec";
+            detail.advertiser_out_of_spec_reason = "Advertiser In Spec";
             detail.estimate_id = 7196;
             detail.detected_via = "BVS Cadent";
             detail.spot = 1;

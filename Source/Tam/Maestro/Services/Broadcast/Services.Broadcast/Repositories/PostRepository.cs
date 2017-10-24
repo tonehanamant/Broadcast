@@ -153,7 +153,7 @@ namespace Services.Broadcast.Repositories
 
         public static PostFileDetail Convert(this post_file_details x)
         {
-            var postUpload = new PostFileDetail(x.id, x.post_file_id, x.rank, x.market, x.station, x.affiliate, x.weekstart, x.day, x.date, x.time_aired, x.program_name, x.spot_length, x.spot_length_id, x.house_isci, x.client_isci, x.advertiser, x.inventory_source, x.inventory_source_daypart, x.inventory_out_of_spec_reason, x.estimate_id, x.detected_via, x.spot, x.post_file_detail_impressions.Select(i => i.Convert()).ToList());
+            var postUpload = new PostFileDetail(x.id, x.post_file_id, x.rank, x.market, x.station, x.affiliate, x.weekstart, x.day, x.date, x.time_aired, x.program_name, x.spot_length, x.spot_length_id, x.house_isci, x.client_isci, x.advertiser, x.inventory_source, x.inventory_source_daypart, x.advertiser_out_of_spec_reason, x.inventory_out_of_spec_reason, x.estimate_id, x.detected_via, x.spot, x.post_file_detail_impressions.Select(i => i.Convert()).ToList());
             return postUpload;
         }
 

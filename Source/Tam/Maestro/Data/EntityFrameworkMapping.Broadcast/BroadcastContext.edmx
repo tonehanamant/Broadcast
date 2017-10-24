@@ -245,6 +245,7 @@
           <Property Name="estimate_id" Type="int" Nullable="false" />
           <Property Name="detected_via" Type="varchar" MaxLength="255" />
           <Property Name="spot" Type="int" Nullable="false" />
+          <Property Name="advertiser_out_of_spec_reason" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="post_files">
           <Key>
@@ -2482,6 +2483,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="post_file_detail_impressions" Relationship="BroadcastModel.FK_post_file_details_impressions_post_file_details" FromRole="post_file_details" ToRole="post_file_detail_impressions" />
           <NavigationProperty Name="post_files" Relationship="BroadcastModel.FK_post_file_details_post_files" FromRole="post_file_details" ToRole="post_files" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_post_file_details_spot_lengths" FromRole="post_file_details" ToRole="spot_lengths" />
+          <Property Name="advertiser_out_of_spec_reason" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="post_files">
           <Key>
@@ -4066,6 +4068,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="post_file_details">
             <EntityTypeMapping TypeName="BroadcastModel.post_file_details">
               <MappingFragment StoreEntitySet="post_file_details">
+                <ScalarProperty Name="advertiser_out_of_spec_reason" ColumnName="advertiser_out_of_spec_reason" />
                 <ScalarProperty Name="spot" ColumnName="spot" />
                 <ScalarProperty Name="detected_via" ColumnName="detected_via" />
                 <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />

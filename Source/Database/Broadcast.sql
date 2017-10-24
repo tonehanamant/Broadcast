@@ -601,6 +601,37 @@ ALTER COLUMN detected_via VARCHAR(255) NULL
 
 /*************************************** BCOP-1953 - END *****************************************************/
 
+/*************************************** BCOP-1944/2107 - START *****************************************************/
+
+IF EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_manifest'
+	AND COLUMN_NAME = 'end_date')
+BEGIN
+	ALTER TABLE [station_inventory_manifest] ALTER COLUMN [end_date] DATE NULL
+END
+GO
+
+/*************************************** BCOP-1944/2107 - end *****************************************************/
+
+/*************************************** BCOP-2052 - START ***************************************************/
+
+IF NOT EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'post_file_details'
+	AND COLUMN_NAME = 'advertiser_out_of_spec_reason')
+BEGIN
+	ALTER TABLE post_file_details ADD advertiser_out_of_spec_reason VARCHAR(255) NULL
+	
+	EXEC('UPDATE post_file_details
+	      SET advertiser_out_of_spec_reason = ''''')
+
+	ALTER TABLE post_file_details ALTER COLUMN advertiser_out_of_spec_reason VARCHAR(255) NOT NULL
+END
+GO
+
+/*************************************** BCOP-2052 - END *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------
