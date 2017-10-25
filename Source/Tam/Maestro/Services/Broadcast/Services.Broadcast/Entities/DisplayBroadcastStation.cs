@@ -5,6 +5,11 @@ namespace Services.Broadcast.Entities
 {
     public class DisplayBroadcastStation
     {
+        public DisplayBroadcastStation()
+        {
+            FlightWeeks = new List<FlightWeekDto>();
+        }
+            
         public enum StationFilter
         {
             WithTodaysData,
@@ -18,7 +23,7 @@ namespace Services.Broadcast.Entities
         public int MarketCode { get; set; }
         public string Affiliation { get; set; }
         public string RateDataThrough { get; set; }
-        public IEnumerable<FlightWeekDto> FlightWeeks { get; set; }
+        public List<FlightWeekDto> FlightWeeks { get; set; }
         public DateTime ModifiedDate { get; set; }
 
         public override string ToString()

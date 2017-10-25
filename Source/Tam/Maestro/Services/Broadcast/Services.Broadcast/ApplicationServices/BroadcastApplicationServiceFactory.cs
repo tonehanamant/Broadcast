@@ -57,7 +57,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IDefaultScheduleConverter, DefaultScheduleConverter>();
             unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
             unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>();
-            unityContainer.RegisterType<IInventoryFileService, InventoryFileService>();
+            unityContainer.RegisterType<IInventoryService, InventoryService>();
             unityContainer.RegisterType<IInventoryFileValidator, InventoryFileValidator>();
             unityContainer.RegisterType<ISchedulesReportService, SchedulesReportService>();
             unityContainer.RegisterType<IScheduleAggregateFactoryService, ScheduleAggregateFactoryService>();

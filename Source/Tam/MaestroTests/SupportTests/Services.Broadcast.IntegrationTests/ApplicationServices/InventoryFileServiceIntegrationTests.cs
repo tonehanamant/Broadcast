@@ -24,7 +24,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class InventoryFileServiceIntegrationTests
     {
-        private IInventoryFileService _InventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryFileService>();
+        private IInventoryService _InventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
         private IStationInventoryGroupService _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
         private IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
 
@@ -120,6 +120,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
             jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
             jsonResolver.Ignore(typeof(DisplayAudience), "Id");
+            
             var jsonSettings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

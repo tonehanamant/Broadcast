@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using System.Data.Entity.Core;
+using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System;
@@ -8,6 +9,7 @@ using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
+using System.Data.Entity;
 
 namespace Services.Broadcast.Repositories
 {
@@ -38,16 +40,27 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    return (from s in context.stations
-                            select new DisplayBroadcastStation
-                            {
-                                Code = s.station_code,
-                                Affiliation = s.affiliation,
-                                CallLetters = s.station_call_letters,
-                                LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market.geography_name,
-                                ModifiedDate = s.modified_date
-                            }).ToList();
+
+                    return (from s in context.stations.Include(sa=>sa.station_inventory_manifest)
+                        select new DisplayBroadcastStation
+                        {
+                            Code = s.station_code,
+                            Affiliation = s.affiliation,
+                            CallLetters = s.station_call_letters,
+                            LegacyCallLetters = s.legacy_call_letters,
+                            OriginMarket = s.market.geography_name,
+                            MarketCode = s.market_code,
+                            ModifiedDate = s.modified_date,
+                            FlightWeeks = (from m in s.station_inventory_manifest
+                                           join g in context.inventory_sources on m.inventory_source_id equals g.id
+                                           join p in context.station_inventory_manifest_generation on m.id equals p.station_inventory_manifest_id
+                                           // todo: review this equality
+                                where g.name.ToLower().Equals(inventorySource.ToString().ToLower())
+                                select new FlightWeekDto
+                                {
+                                    Id = p.media_week_id
+                                }).Distinct().OrderBy(a=>a.Id).ToList()
+                        }).ToList();
                 });
         }
 

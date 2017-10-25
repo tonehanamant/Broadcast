@@ -288,7 +288,7 @@
     <Compile Include="Entities\CrunchStatus.cs" />
     <Compile Include="ApplicationServices\NsiUniverseService.cs" />
     <Compile Include="ApplicationServices\ProposalService.cs" />
-    <Compile Include="ApplicationServices\InventoryFileService.cs" />
+    <Compile Include="ApplicationServices\InventoryService.cs" />
     <Compile Include="Entities\MediaMonthCrunchStatus.cs" />
     <Compile Include="ApplicationServices\RatingForecastService.cs" />
     <Compile Include="ApplicationServices\ScheduleAggregateFactoryService.cs" />

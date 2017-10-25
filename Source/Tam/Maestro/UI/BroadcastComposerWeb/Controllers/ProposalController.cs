@@ -26,7 +26,7 @@ namespace BroadcastComposerWeb.Controllers
         public ProposalController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(InventoryFileApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(ProposalController).Name))
         {
             _Logger = logger;
             _ApplicationServiceFactory = applicationServiceFactory;

@@ -16,8 +16,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     class RatesServiceRatesFilterIntegrationTests
     {
-        private IInventoryFileService _inventoryFileService =
-            IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryFileService>();
+        private IInventoryService _inventoryService =
+            IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
 
         private IInventoryFileRepository _inventoryFileRepository =
             IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
@@ -37,7 +37,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             request.FileName = testName;
             request.RatingBook = 416;
 
-            var result = _inventoryFileService.SaveInventoryFile(request);
+            var result = _inventoryService.SaveInventoryFile(request);
             return result.FileId;
         }
 
@@ -208,7 +208,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _Setup(MethodBase.GetCurrentMethod().Name);
                 var today = new DateTime(2016, 01, 01);
-                var response = _inventoryFileService.GetStationsWithFilter("OpenMarket", "withtodaysdata", today);
+                var response = _inventoryService.GetStationsWithFilter("OpenMarket", "withtodaysdata", today);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
@@ -231,7 +231,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _Setup(MethodBase.GetCurrentMethod().Name);
                 var today = new DateTime(2016, 01, 01);
-                var response = _inventoryFileService.GetStationsWithFilter("OpenMarket", "withouttodaysdata", today);
+                var response = _inventoryService.GetStationsWithFilter("OpenMarket", "withouttodaysdata", today);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
@@ -254,7 +254,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var fileId =_Setup(MethodBase.GetCurrentMethod().Name);
                 _inventoryFileRepository.UpdateInventoryFileStatus(fileId, InventoryFile.FileStatusEnum.Failed);
                 var today = new DateTime(2016, 01, 01);
-                var response = _inventoryFileService.GetStationsWithFilter("OpenMarket", "withtodaysdata", today);
+                var response = _inventoryService.GetStationsWithFilter("OpenMarket", "withtodaysdata", today);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
 
             }

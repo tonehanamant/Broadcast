@@ -10,7 +10,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     class BulkInventoryFileImportTester
     {
-        private IInventoryFileService _inventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryFileService>();
+        private IInventoryService _inventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
 
         [Test]
         [Ignore]
@@ -39,7 +39,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                 FileAccess.Read))
                             {
                                 request.UserName = "IntegrationTestUser";
-                                _inventoryFileService.SaveInventoryFile(request);
+                                _inventoryService.SaveInventoryFile(request);
                             }
 
                             var message = string.Format("{0} loaded successfully", filePath);

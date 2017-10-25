@@ -30,7 +30,7 @@ namespace Services.Broadcast.ApplicationServices
         NEXTQUARTER
     }
 
-    public interface IInventoryFileService : IApplicationService
+    public interface IInventoryService : IApplicationService
     {
         List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate);
         List<DisplayBroadcastStation> GetStationsWithFilter(string rateSource, string filterValue, DateTime today);
@@ -47,7 +47,7 @@ namespace Services.Broadcast.ApplicationServices
         List<StationContact> FindStationContactsByName(string query);
     }
 
-    public class InventoryFileService : IInventoryFileService
+    public class InventoryService : IInventoryService
     {
         private readonly IStationRepository _stationRepository;
         private readonly IDataRepositoryFactory _broadcastDataRepositoryFactory;
@@ -67,7 +67,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IThirdPartySpotCostCalculationEngine _ThirdPartySpotCostCalculationEngine;
         private readonly IStationInventoryGroupService _stationInventoryGroupService;
 
-        public InventoryFileService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
+        public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
                             IInventoryFileValidator inventoryFileValidator,
                             IDaypartCache daypartCache,
                             IQuarterCalculationEngine quarterCalculationEngine,
@@ -102,9 +102,10 @@ namespace Services.Broadcast.ApplicationServices
             _stationInventoryGroupService = stationInventoryGroupService;
         }
 
-    public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
+        public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
         {
-            var stations = _stationRepository.GetBroadcastStationsWithFlightWeeksForRateSource(_ParseInventorySource(rateSource));
+            var stations =
+                _stationRepository.GetBroadcastStationsWithFlightWeeksForRateSource(_ParseInventorySource(rateSource));
             _SetFlightData(stations, currentDate);
             return stations;
         }
@@ -450,26 +451,30 @@ namespace Services.Broadcast.ApplicationServices
         private void _SetFlightData(List<DisplayBroadcastStation> stations, DateTime currentDate)
         {
 
-            var dateRangeThisQuarter = _QuarterCalculationEngine.GetDatesForTimeframe(RatesTimeframe.THISQUARTER, currentDate);
-            var dateRangeNextQuarter = _QuarterCalculationEngine.GetDatesForTimeframe(RatesTimeframe.NEXTQUARTER, currentDate);
+            var dateRangeThisQuarter = _QuarterCalculationEngine.GetDatesForTimeframe(RatesTimeframe.THISQUARTER,
+                currentDate);
+            var dateRangeNextQuarter = _QuarterCalculationEngine.GetDatesForTimeframe(RatesTimeframe.NEXTQUARTER,
+                currentDate);
 
             stations.ForEach(s =>
             {
-                s.FlightWeeks.ForEach(
-                    fw =>
-                    {
-                        var mediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(fw.Id);
-                        fw.StartDate = mediaWeek.StartDate;
-                        fw.EndDate = mediaWeek.EndDate;
-                    });
-
-                if (s.FlightWeeks.Any())
+                if (s.FlightWeeks != null && s.FlightWeeks.Any())
                 {
+                    s.FlightWeeks.ForEach(
+                        fw =>
+                        {
+                            var mediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(fw.Id);
+                            fw.StartDate = mediaWeek.StartDate;
+                            fw.EndDate = mediaWeek.EndDate;
+                        });
+
                     if (s.FlightWeeks.Last().EndDate.Date == dateRangeThisQuarter.Item2.Date)
                         s.RateDataThrough = "This Quarter";
                     else
                     {
-                        s.RateDataThrough = s.FlightWeeks.Last().EndDate.Date == dateRangeNextQuarter.Item2.Date ? "Next Quarter" : s.FlightWeeks.Last().EndDate.ToShortDateString();
+                        s.RateDataThrough = s.FlightWeeks.Last().EndDate.Date == dateRangeNextQuarter.Item2.Date
+                            ? "Next Quarter"
+                            : s.FlightWeeks.Last().EndDate.ToShortDateString();
                     }
                 }
                 else

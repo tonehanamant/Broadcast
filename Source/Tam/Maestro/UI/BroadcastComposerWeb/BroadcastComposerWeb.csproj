@@ -220,7 +220,7 @@
     <Compile Include="Controllers\PostApiController.cs" />
     <Compile Include="Controllers\ProposalController.cs" />
     <Compile Include="Controllers\ProposalInventoryController.cs" />
-    <Compile Include="Controllers\InventoryFileApiController.cs" />
+    <Compile Include="Controllers\InventoryApiController.cs" />
     <Compile Include="Controllers\RatesController.cs" />
     <Compile Include="Controllers\PlanningController.cs" />
     <Compile Include="Controllers\TrackerController.cs" />
@@ -575,7 +575,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61942/</IISUrl>
+          <IISUrl>http://localhost:63940/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

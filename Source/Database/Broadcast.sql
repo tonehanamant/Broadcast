@@ -619,6 +619,36 @@ GO
 
 /*************************************** BCOP-2052 - END *****************************************************/
 
+/*************************************** BCOP-2024/2112 - START *****************************************************/
+if Object_ID(N'[dbo].[station_inventory_manifest_generation]') is null
+BEGIN
+	CREATE TABLE [dbo].[station_inventory_manifest_generation](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[station_inventory_manifest_id] [int] NOT NULL,
+		[media_week_id] [int] NOT NULL,
+		CONSTRAINT [PK_station_inventory_manifest_generation] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+
+	ALTER TABLE [dbo].[station_inventory_manifest_generation]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_generation_station_inventory_manifest] FOREIGN KEY([station_inventory_manifest_id])
+	REFERENCES [dbo].[station_inventory_manifest] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[station_inventory_manifest_generation] CHECK CONSTRAINT [FK_station_inventory_manifest_generation_station_inventory_manifest]
+
+	ALTER TABLE [dbo].[station_inventory_manifest_generation]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_generation_media_weeks] FOREIGN KEY([media_week_id])
+	REFERENCES [dbo].[media_weeks] ([id])	
+
+	ALTER TABLE [dbo].[station_inventory_manifest_generation] CHECK CONSTRAINT [FK_station_inventory_manifest_generation_media_weeks]
+	
+END
+GO
+/*************************************** BCOP-2024/2112 - END *****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

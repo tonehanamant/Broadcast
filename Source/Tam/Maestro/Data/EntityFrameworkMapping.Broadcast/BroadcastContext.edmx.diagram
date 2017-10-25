@@ -125,6 +125,9 @@
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_dayparts_station_inventory_manifest" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_stations" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_generation" Width="1.5" PointX="0.5" PointY="32.375" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_generation_media_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_generation_station_inventory_manifest" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

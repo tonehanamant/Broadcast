@@ -19,6 +19,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_flight_weeks = new HashSet<proposal_version_flight_weeks>();
             this.schedule_detail_weeks = new HashSet<schedule_detail_weeks>();
             this.proposal_version_detail_quarter_weeks = new HashSet<proposal_version_detail_quarter_weeks>();
+            this.station_inventory_manifest_generation = new HashSet<station_inventory_manifest_generation>();
         }
     
         public int id { get; set; }
@@ -31,5 +32,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_version_flight_weeks> proposal_version_flight_weeks { get; set; }
         public virtual ICollection<schedule_detail_weeks> schedule_detail_weeks { get; set; }
         public virtual ICollection<proposal_version_detail_quarter_weeks> proposal_version_detail_quarter_weeks { get; set; }
+        public virtual ICollection<station_inventory_manifest_generation> station_inventory_manifest_generation { get; set; }
     }
 }

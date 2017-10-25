@@ -17,15 +17,15 @@ namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/RatesManager")]
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-    public class InventoryFileApiController : ControllerBase
+    public class InventoryApiController : ControllerBase
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IWebLogger _Logger;
 
-        public InventoryFileApiController(
+        public InventoryApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(InventoryFileApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(InventoryApiController).Name))
         {
             _Logger = logger;
             _ApplicationServiceFactory = applicationServiceFactory;
@@ -37,14 +37,14 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryFileService>().FindStationContactsByName(query));
+                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().FindStationContactsByName(query));
         }
 
         [HttpGet]
         [Route("{inventorySource}/Stations")]
-        public BaseResponse<List<DisplayBroadcastStation>> GetAllStations(string rateSource)
+        public BaseResponse<List<DisplayBroadcastStation>> GetAllStations(string inventorySource)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryFileService>().GetStations(rateSource, DateTime.Now));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().GetStations(inventorySource, DateTime.Now));
         }
 
         [HttpGet]
@@ -54,7 +54,7 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(
                     () =>
-                        _ApplicationServiceFactory.GetApplicationService<IInventoryFileService>()
+                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                             .GetStationsWithFilter(rateSource, filter, DateTime.Now));
         }
 
@@ -65,7 +65,7 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(
                     () =>
-                        _ApplicationServiceFactory.GetApplicationService<IInventoryFileService>()
+                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                             .GetStationDetailByCode(rateSource, stationCode));
         }
 
@@ -76,7 +76,7 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(
                     () =>
-                        _ApplicationServiceFactory.GetApplicationService<IInventoryFileService>()
+                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                             .GetStationContacts(rateSource, stationCode));
         }
 
@@ -87,7 +87,7 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(
                     () =>
-                        _ApplicationServiceFactory.GetApplicationService<IInventoryFileService>()
+                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                             .SaveStationContact(stationContact, User.Identity.Name));
         }
 
@@ -97,7 +97,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryFileService>()
+                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                         .DeleteStationContact(stationContactId, User.Identity.Name));
         }
 
@@ -113,7 +113,7 @@ namespace BroadcastComposerWeb.Controllers
 
             var ratesSaveRequest = JsonConvert.DeserializeObject<InventoryFileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
             ratesSaveRequest.UserName = User.Identity.Name;
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryFileService>().SaveInventoryFile(ratesSaveRequest));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(ratesSaveRequest));
         }
 
 
@@ -124,7 +124,7 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(
                     () =>
-                        _ApplicationServiceFactory.GetApplicationService<IInventoryFileService>()
+                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                             .GetAllGenres());
         }
 
@@ -134,7 +134,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryFileService>().GetInitialRatesData());
+                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().GetInitialRatesData());
         }
 
         [HttpGet]
@@ -142,7 +142,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<LockResponse> LockStation(int stationCode)
         {
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<IInventoryFileService>().LockStation(stationCode));
+                () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().LockStation(stationCode));
         }
 
         [HttpGet]
@@ -150,7 +150,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<ReleaseLockResponse> UnlockStation(int stationCode)
         {
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<IInventoryFileService>().UnlockStation(stationCode));
+                () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().UnlockStation(stationCode));
         }
 
         [HttpPost]
@@ -160,7 +160,7 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(
                     () =>
-                        _ApplicationServiceFactory.GetApplicationService<IInventoryFileService>()
+                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                             .ConvertRateForSpotLength(request.Rate30, request.SpotLength));
         }
     }
