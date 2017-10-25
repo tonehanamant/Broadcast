@@ -114,6 +114,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var inventory = _InventoryRepository.GetActiveInventoryByTypeAndDapartCodes(source,daypartCodes);
 
+            VerifyInventoryRaw(inventory);
+        }
+
+        private static void VerifyInventoryRaw(List<StationInventoryGroup> inventory)
+        {
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
@@ -130,8 +135,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(json);
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ExpireInventory()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var filename = @".\Files\TTNW_06.09.17.xlsx";
+                var request = new InventoryFileSaveRequest();
+                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+                request.FileName = filename;
+                request.UserName = "IntegrationTestUser";
+                request.InventorySource = "TTNW";
+                request.EffectiveDate = DateTime.Parse("10/1/2017");
+                var expireDate = request.EffectiveDate.AddDays(-1);
 
-        
+                request.RatingBook = 416;
+
+                var result = _InventoryFileService.SaveInventoryFile(request);
+
+                var daypartCodes = new List<string>() { "LN1" };
+                var inventoryGroups = _InventoryRepository.GetActiveInventoryBySourceAndName(InventoryFile.InventorySource.TTNW, daypartCodes);
+
+                _InventoryRepository.ExpireInventoryGroupsAndManifests(inventoryGroups,expireDate);
+
+                inventoryGroups = _InventoryRepository.GetInventoryBySourceAndName(InventoryFile.InventorySource.TTNW,daypartCodes);
+
+                VerifyInventoryRaw(inventoryGroups);
+            }
+
+        }
+
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void TTNWCanLoadFile()

@@ -61,18 +61,12 @@ namespace Services.Broadcast.ApplicationServices
         private List<StationInventoryGroup> _ExpireExistingInventory(List<StationInventoryGroup> groups, InventoryFile.InventorySource source,DateTime expireDate)
         {
             var groupNames = groups.Select(g => g.Name).Distinct().ToList();
-            var existingInventory = _inventoryRepository.GetActiveInventoryByTypeAndName(source,groupNames);
+            var existingInventory = _inventoryRepository.GetActiveInventoryBySourceAndName(source,groupNames);
 
             if (!existingInventory.Any())
                 return existingInventory;
 
-            existingInventory.ForEach(g =>
-            {
-                g.Manifests.Clear();    // clear since no need to update
-                g.EndDate = expireDate;
-            });
-
-            _inventoryRepository.UpdateInventoryGroups(existingInventory);
+            _inventoryRepository.ExpireInventoryGroupsAndManifests(existingInventory,expireDate);
 
             return existingInventory;
         }

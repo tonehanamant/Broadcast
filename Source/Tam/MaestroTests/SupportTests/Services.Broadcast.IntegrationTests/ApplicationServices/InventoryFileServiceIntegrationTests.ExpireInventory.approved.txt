@@ -1,7 +1,7 @@
 ﻿[
   {
     "DaypartCode": "LN",
-    "EndDate": null,
+    "EndDate": "2017-09-30T00:00:00",
     "InventorySource": {
       "Id": 1,
       "InventoryType": 1,
@@ -29,61 +29,61 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
             "Audience": {
               "AudienceString": null
             },
-            "Impressions": 55000.0,
+            "Impressions": 37000.0,
             "Rate": 0.0000
           },
           {
             "Audience": {
               "AudienceString": null
             },
-            "Impressions": 56000.0,
+            "Impressions": 20000.0,
             "Rate": 0.0000
           },
           {
             "Audience": {
               "AudienceString": null
             },
-            "Impressions": 57000.0,
+            "Impressions": 31000.0,
             "Rate": 0.0000
           },
           {
             "Audience": {
               "AudienceString": null
             },
-            "Impressions": 58000.0,
+            "Impressions": 34000.0,
             "Rate": 0.0000
           },
           {
             "Audience": {
               "AudienceString": null
             },
-            "Impressions": 59000.0,
+            "Impressions": 16000.0,
             "Rate": 0.0000
           },
           {
             "Audience": {
               "AudienceString": null
             },
-            "Impressions": 60000.0,
+            "Impressions": 17000.0,
             "Rate": 0.0000
           }
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 2,
+        "SpotsPerWeek": 1,
         "Station": {
           "Affiliation": "NBC",
           "CallLetters": "WNBC 4.1",
           "Code": 5013,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WNBC",
           "MarketCode": 101,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -111,8 +111,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -160,12 +160,12 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 3,
+        "SpotsPerWeek": 1,
         "Station": {
           "Affiliation": "FOX",
           "CallLetters": "KDFW 4.1",
           "Code": 5035,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "KDFW",
           "MarketCode": 223,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -193,8 +193,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -247,7 +247,7 @@
           "Affiliation": "CBS",
           "CallLetters": "WUSA 9.1",
           "Code": 5098,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WUSA",
           "MarketCode": 111,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -291,8 +291,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -345,7 +345,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WFXT-DT 25.1",
           "Code": 6705,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WFXT",
           "MarketCode": 106,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -373,8 +373,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -422,12 +422,12 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 4,
+        "SpotsPerWeek": 1,
         "Station": {
           "Affiliation": "FOX",
           "CallLetters": "WAGA-TV 5.1",
           "Code": 5045,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WAGA",
           "MarketCode": 124,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -455,8 +455,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -509,7 +509,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WAGA-TV 5.1",
           "Code": 5045,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WAGA",
           "MarketCode": 124,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -537,8 +537,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -591,7 +591,7 @@
           "Affiliation": "IND",
           "CallLetters": "WATL 36.1",
           "Code": 6797,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WATL",
           "MarketCode": 124,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -619,8 +619,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -673,7 +673,7 @@
           "Affiliation": "CBS",
           "CallLetters": "WGCL-TV 46.1",
           "Code": 5893,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WGCL",
           "MarketCode": 124,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -701,8 +701,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -755,7 +755,7 @@
           "Affiliation": "NBC",
           "CallLetters": "WXIA-TV 11.1",
           "Code": 5117,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WXIA",
           "MarketCode": 124,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -783,8 +783,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -837,7 +837,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WJBK 2.1",
           "Code": 5075,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WJBK",
           "MarketCode": 105,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -865,8 +865,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -919,7 +919,7 @@
           "Affiliation": "FOX",
           "CallLetters": "KCPQ 13.1",
           "Code": 6019,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "KCPQ",
           "MarketCode": 419,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -963,8 +963,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -1017,7 +1017,7 @@
           "Affiliation": "FOX",
           "CallLetters": "KCPQ 13.1",
           "Code": 6019,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "KCPQ",
           "MarketCode": 419,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -1061,8 +1061,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -1115,7 +1115,7 @@
           "Affiliation": "IND",
           "CallLetters": "KZJO 22.1",
           "Code": 6193,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "KZJO",
           "MarketCode": 419,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -1143,8 +1143,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -1197,7 +1197,7 @@
           "Affiliation": "ABC",
           "CallLetters": "WPLG 10.1",
           "Code": 5412,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WPLG",
           "MarketCode": 128,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -1225,8 +1225,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -1279,7 +1279,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WSVN 7.1",
           "Code": 5375,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WSVN",
           "MarketCode": 128,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -1307,8 +1307,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -1361,7 +1361,7 @@
           "Affiliation": "NBC",
           "CallLetters": "WTVJ 6.1",
           "Code": 5111,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WTVJ",
           "MarketCode": 128,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -1405,8 +1405,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -1459,7 +1459,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WOFL 35.1",
           "Code": 6818,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WOFL",
           "MarketCode": 134,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -1503,8 +1503,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -1557,7 +1557,7 @@
           "Affiliation": "CW",
           "CallLetters": "WCCB 18.1",
           "Code": 5765,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WCCB",
           "MarketCode": 117,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -1585,8 +1585,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -1639,7 +1639,7 @@
           "Affiliation": "CBS",
           "CallLetters": "KFMB-TV 8.1",
           "Code": 5024,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "KFMB",
           "MarketCode": 425,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -1667,8 +1667,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -1721,7 +1721,7 @@
           "Affiliation": "CBS",
           "CallLetters": "KFMB-TV 8.1",
           "Code": 5024,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "KFMB",
           "MarketCode": 425,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -1749,8 +1749,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -1803,7 +1803,7 @@
           "Affiliation": "IND",
           "CallLetters": "WCTX 59.1",
           "Code": 5593,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WCTX",
           "MarketCode": 133,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -1831,8 +1831,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -1885,7 +1885,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WTTE 28.1",
           "Code": 6995,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WTTE",
           "MarketCode": 135,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -1913,8 +1913,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -1967,7 +1967,7 @@
           "Affiliation": "ABC",
           "CallLetters": "KMBC-TV 9.1",
           "Code": 5163,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "KMBC",
           "MarketCode": 216,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -1995,8 +1995,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -2049,7 +2049,7 @@
           "Affiliation": "ABC",
           "CallLetters": "WLOS 13.1",
           "Code": 5289,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WLOS",
           "MarketCode": 167,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -2077,8 +2077,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -2131,7 +2131,7 @@
           "Affiliation": "ABC",
           "CallLetters": "WLOS 13.1",
           "Code": 5289,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WLOS",
           "MarketCode": 167,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -2159,8 +2159,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -2213,7 +2213,7 @@
           "Affiliation": "FOX",
           "CallLetters": "KOKH-TV 25.1",
           "Code": 6704,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "KOKH",
           "MarketCode": 250,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -2241,8 +2241,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -2295,7 +2295,7 @@
           "Affiliation": "FOX",
           "CallLetters": "KOKH-TV 25.1",
           "Code": 6704,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "KOKH",
           "MarketCode": 250,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -2323,8 +2323,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -2377,7 +2377,7 @@
           "Affiliation": "CBS",
           "CallLetters": "WHP-TV 21.1",
           "Code": 5734,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WHP",
           "MarketCode": 166,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -2405,8 +2405,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -2459,7 +2459,7 @@
           "Affiliation": "CBS",
           "CallLetters": "WHP-TV 21.1",
           "Code": 5734,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WHP",
           "MarketCode": 166,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -2487,8 +2487,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -2541,7 +2541,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WPMT 43.1",
           "Code": 5717,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WPMT",
           "MarketCode": 166,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -2569,8 +2569,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -2623,7 +2623,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WBRC 6.1",
           "Code": 5052,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WBRC",
           "MarketCode": 230,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -2651,8 +2651,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -2705,7 +2705,7 @@
           "Affiliation": "CBS",
           "CallLetters": "WWL-TV 4.1",
           "Code": 5417,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WWL",
           "MarketCode": 222,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -2733,8 +2733,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -2787,7 +2787,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WNAC-TV 64.1",
           "Code": 6924,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WNAC",
           "MarketCode": 121,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -2815,8 +2815,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -2869,7 +2869,7 @@
           "Affiliation": "CBS",
           "CallLetters": "WPRI-TV 12.1",
           "Code": 5208,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WPRI",
           "MarketCode": 121,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -2897,8 +2897,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -2951,7 +2951,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WFTX-TV 36.1",
           "Code": 6247,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WFTX",
           "MarketCode": 171,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -2979,8 +2979,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -3033,7 +3033,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WFTX-TV 36.1",
           "Code": 6247,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WFTX",
           "MarketCode": 171,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -3061,8 +3061,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -3115,7 +3115,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WFTX-TV 36.1",
           "Code": 6247,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WFTX",
           "MarketCode": 171,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -3143,8 +3143,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -3197,7 +3197,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WRGT-TV 45.1",
           "Code": 6154,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WRGT",
           "MarketCode": 142,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -3225,8 +3225,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -3279,7 +3279,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WRGT-TV 45.1",
           "Code": 6154,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WRGT",
           "MarketCode": 142,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -3307,8 +3307,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -3361,7 +3361,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WACH 57.1",
           "Code": 6873,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WACH",
           "MarketCode": 146,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -3389,8 +3389,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -3443,7 +3443,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WACH 57.1",
           "Code": 6873,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WACH",
           "MarketCode": 146,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -3471,8 +3471,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -3525,7 +3525,7 @@
           "Affiliation": "CBS",
           "CallLetters": "KKTV 11.1",
           "Code": 5130,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "KKTV",
           "MarketCode": 352,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -3569,8 +3569,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -3623,7 +3623,7 @@
           "Affiliation": "NBC",
           "CallLetters": "KOAA-TV 5.1",
           "Code": 5151,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "KOAA",
           "MarketCode": 352,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -3651,8 +3651,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -3705,7 +3705,7 @@
           "Affiliation": "ABC",
           "CallLetters": "WTVC 9.1",
           "Code": 5437,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WTVC",
           "MarketCode": 175,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -3733,8 +3733,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -3787,7 +3787,7 @@
           "Affiliation": "ABC",
           "CallLetters": "WTVC 9.1",
           "Code": 5437,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WTVC",
           "MarketCode": 175,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -3815,8 +3815,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -3869,7 +3869,7 @@
           "Affiliation": "ABC",
           "CallLetters": "WCIV 36.2",
           "Code": 5672,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "ECIV",
           "MarketCode": 119,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -3897,8 +3897,8 @@
             "_Wednesday": false
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -3951,7 +3951,7 @@
           "Affiliation": "ABC",
           "CallLetters": "WCIV 36.2",
           "Code": 5672,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "ECIV",
           "MarketCode": 119,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -3979,8 +3979,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -4033,7 +4033,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WTAT-TV 24.1",
           "Code": 6239,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WTAT",
           "MarketCode": 119,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -4061,8 +4061,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -4115,7 +4115,7 @@
           "Affiliation": "CBS",
           "CallLetters": "WANE-TV 15.1",
           "Code": 5848,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WANE",
           "MarketCode": 109,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -4143,8 +4143,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -4197,7 +4197,7 @@
           "Affiliation": "NBC",
           "CallLetters": "WILX-TV 10.1",
           "Code": 5494,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WILX",
           "MarketCode": 151,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -4225,8 +4225,8 @@
             "_Wednesday": true
           }
         ],
-        "EffectiveDate": "2017-10-10T00:00:00",
-        "EndDate": null,
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": "2017-09-30T00:00:00",
         "InventorySourceId": 1,
         "ManifestAudiences": [
           {
@@ -4279,7 +4279,7 @@
           "Affiliation": "ABC",
           "CallLetters": "WVII-TV 7.1",
           "Code": 5452,
-          "FlightWeeks": [],
+          "FlightWeeks": null,
           "LegacyCallLetters": "WVII",
           "MarketCode": 137,
           "ModifiedDate": "0001-01-01T00:00:00",
@@ -4290,6 +4290,6 @@
     ],
     "Name": "LN1",
     "SlotNumber": 1,
-    "StartDate": "2017-10-10T00:00:00"
+    "StartDate": "2017-10-01T00:00:00"
   }
 ]

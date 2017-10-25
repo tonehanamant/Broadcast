@@ -110,7 +110,8 @@ namespace Services.Broadcast.Converters.RateImport
                                 Name = daypartCode + slotNumber,
                                 Manifests = new List<StationInventoryManifest>(),
                                 SlotNumber = slotNumber,
-                                InventorySource = this.InventorySource
+                                InventorySource = this.InventorySource,
+                                StartDate = effectiveDate
                             };
                             inventoryGroups.Add(daypartCode + slotNumber, inventoryGroup);
                         }
