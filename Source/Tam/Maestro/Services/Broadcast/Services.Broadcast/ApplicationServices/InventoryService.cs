@@ -291,7 +291,7 @@ namespace Services.Broadcast.ApplicationServices
             // set daypart id
             inventoryFile.InventoryGroups.SelectMany(ig => ig.Manifests.SelectMany(m => m.ManifestDayparts.Select(md => md.Daypart))).ForEach(dd =>
             {
-                dd.Daypart.Id = _daypartCache.GetIdByDaypart(dd.Daypart);
+                dd.Id = _daypartCache.GetIdByDaypart(dd);
             });
 
             _stationInventoryGroupService.SaveStationInventoryGroups(request, inventoryFile);
@@ -439,7 +439,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SetDisplayDaypartForInventoryManifest(List<StationInventoryManifest> manifests)
         {
-            manifests.SelectMany(m => m.Dayparts).ForEach(d =>
+            manifests.SelectMany(m => m.ManifestDayparts).ForEach(d =>
             {
                 d.Daypart = _daypartCache.GetDisplayDaypart(d.Daypart.Id);
             });            
@@ -457,7 +457,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             // todo: still some properties missing
             return (from manifest in stationManifests
-                from daypart in manifest.Dayparts
+                from daypart in manifest.ManifestDayparts
                 select new StationProgram()
                 {
                     ProgramName = daypart.ProgramName,
