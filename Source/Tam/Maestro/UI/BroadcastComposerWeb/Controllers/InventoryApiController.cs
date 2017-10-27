@@ -49,35 +49,35 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("{inventorySource}/Stations")]
-        public BaseResponse<List<DisplayBroadcastStation>> GetAllStationsWithFilter(string rateSource, [FromUri] string filter)
+        public BaseResponse<List<DisplayBroadcastStation>> GetAllStationsWithFilter(string inventorySource, [FromUri] string filter)
         {
             return
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                            .GetStationsWithFilter(rateSource, filter, DateTime.Now));
+                            .GetStationsWithFilter(inventorySource, filter, DateTime.Now));
         }
 
         [HttpGet]
         [Route("{inventorySource}/Stations/{stationCode}")]
-        public BaseResponse<StationDetailDto> GetStationPrograms(string rateSource, int stationCode)
+        public BaseResponse<StationDetailDto> GetStationPrograms(string inventorySource, int stationCode)
         {
             return
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                            .GetStationDetailByCode(rateSource, stationCode));
+                            .GetStationDetailByCode(inventorySource, stationCode));
         }
 
         [HttpGet]
         [Route("{inventorySource}/Stations/{stationCode}/Contacts")]
-        public BaseResponse<List<StationContact>> GetStationContacts(string rateSource, int stationCode)
+        public BaseResponse<List<StationContact>> GetStationContacts(string inventorySource, int stationCode)
         {
             return
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                            .GetStationContacts(rateSource, stationCode));
+                            .GetStationContacts(inventorySource, stationCode));
         }
 
         [HttpPost]

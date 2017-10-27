@@ -9,5 +9,6 @@ namespace Services.Broadcast.Entities
         public string Market { get; set; }
         public int StationCode { get; set; }
         public List<StationContact> Contacts { get; set; }
+        public List<StationProgram> Programs { get; set; } 
     }
 }

@@ -19,6 +19,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
+using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -66,6 +67,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly Dictionary<int, double> _SpotLengthCostMultipliers; 
         private readonly IThirdPartySpotCostCalculationEngine _ThirdPartySpotCostCalculationEngine;
         private readonly IStationInventoryGroupService _stationInventoryGroupService;
+        private readonly IInventoryRepository _inventoryRepository;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
                             IInventoryFileValidator inventoryFileValidator,
@@ -100,6 +102,7 @@ namespace Services.Broadcast.ApplicationServices
                     .GetSpotLengthIdsAndCostMultipliers();
             _ThirdPartySpotCostCalculationEngine = thirdPartySpotCostCalculationEngine;
             _stationInventoryGroupService = stationInventoryGroupService;
+            _inventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
 
         public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
@@ -286,13 +289,14 @@ namespace Services.Broadcast.ApplicationServices
         private void _SaveStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
             // set daypart id
-            inventoryFile.InventoryGroups.SelectMany(ig => ig.Manifests.SelectMany(m => m.Dayparts.Select(md => md.Daypart))).ForEach(dd =>
+            inventoryFile.InventoryGroups.SelectMany(m => m.Manifests.SelectMany(d => d.Dayparts)).ForEach(dd =>
             {
-                dd.Id = _daypartCache.GetIdByDaypart(dd);
+                dd.Daypart.Id = _daypartCache.GetIdByDaypart(dd.Daypart);
             });
 
             _stationInventoryGroupService.SaveStationInventoryGroups(request, inventoryFile);
         }
+
 
         private void _SaveInventoryFileContacts(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
@@ -412,33 +416,55 @@ namespace Services.Broadcast.ApplicationServices
 
         public StationDetailDto GetStationDetailByCode(string inventorySource, int stationCode)
         {
-            return new StationDetailDto();
-            //var rateSource = _ParseInventorySource(inventorySource);
+            var rateSource = _ParseInventorySource(inventorySource);
 
-            //var station = _stationRepository.GetBroadcastStationByCode(stationCode);
+            var station = _stationRepository.GetBroadcastStationByCode(stationCode);
 
-            //if (station == null)
-            //{
-            //    throw new BroadcastRateDataException("No station found with code: " + stationCode);
-            //}
+            var stationManifests = _inventoryRepository.GetStationManifestsBySourceAndStationCode(rateSource,
+                stationCode);
+            _SetDisplayDaypartForInventoryManifest(stationManifests);
+            _SetAudienceForInventoryManifest(stationManifests);
 
-            //var programs = _stationProgramRepository.GetStationProgramsWithPrimaryAudienceRatesByStationCode(rateSource, stationCode);
+            return new StationDetailDto()
+            {
+                Affiliate = station.Affiliation,
+                Market = station.OriginMarket,
+                StationCode = stationCode,
+                StationName = station.LegacyCallLetters,
+                Programs = GetStationProgramsFromStationInventoryManifest(stationManifests),
+                Contacts = _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
+                    .GetStationContactsByStationCode(stationCode)
+            };
+        }
 
-            //var contacts =
-            //    _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
-            //        .GetStationContactsByStationCode(stationCode);
+        private void _SetDisplayDaypartForInventoryManifest(List<StationInventoryManifest> manifests)
+        {
+            manifests.SelectMany(m => m.Dayparts).ForEach(d =>
+            {
+                d.Daypart = _daypartCache.GetDisplayDaypart(d.Daypart.Id);
+            });            
+        }
 
-            //var stationDto = new StationDetailDto()
-            //{
-            //    Affiliate = station.Affiliation,
-            //    Market = station.OriginMarket,
-            //    StationCode = stationCode,
-            //    StationName = station.LegacyCallLetters,
-            //    Rates = GetStationProgramAudienceRates(programs),
-            //    Contacts = contacts
-            //};
+        private void _SetAudienceForInventoryManifest(List<StationInventoryManifest> manifests)
+        {
+            manifests.SelectMany(m=>m.ManifestAudiences).ForEach(a =>
+            {
+                a.Audience = _AudiencesCache.GetDisplayAudienceById(a.Audience.Id);
+            });
+        }
 
-            //return stationDto;
+        private List<StationProgram> GetStationProgramsFromStationInventoryManifest(List<StationInventoryManifest> stationManifests)
+        {
+            // todo: still some properties missing
+            return (from manifest in stationManifests
+                from daypart in manifest.Dayparts
+                select new StationProgram()
+                {
+                    ProgramName = daypart.ProgramName,
+                    Airtime = daypart.Daypart.Preview,
+                    StartDate = manifest.EffectiveDate,
+                    EndDate = manifest.EndDate
+                }).ToList();
         }
 
 

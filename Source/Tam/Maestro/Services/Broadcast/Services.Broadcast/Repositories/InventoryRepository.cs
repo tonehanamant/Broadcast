@@ -11,6 +11,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Repositories
 {
@@ -27,6 +28,9 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryGroup> GetActiveInventoryByTypeAndDapartCodes(InventoryFile.InventorySource sourceType, List<string> daypartCodes);
         List<StationInventoryGroup> GetActiveInventoryBySourceAndName(InventoryFile.InventorySource sourceType, List<string> groupNames);
         List<StationInventoryGroup> GetInventoryBySourceAndName(InventoryFile.InventorySource sourceType, List<string> groupNames);
+
+        List<StationInventoryManifest> GetStationManifestsBySourceAndStationCode(
+            InventoryFile.InventorySource rateSource, int stationCode);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -325,6 +329,52 @@ namespace Services.Broadcast.Repositories
 
                     return inventory.Select(i => _MapToInventoryGroup(i)).ToList();
                 });
+        }
+
+        public List<StationInventoryManifest> GetStationManifestsBySourceAndStationCode(InventoryFile.InventorySource rateSource, int stationCode)
+        {
+            return _InReadUncommitedTransaction(
+                context => (
+                    from sp in 
+                        context.station_inventory_manifest.Include(sa => sa.station_inventory_manifest_dayparts)
+                            .Include(ss => ss.station)
+                            .Include(m => m.station_inventory_manifest_audiences)
+                    join g in context.station_inventory_group on sp.station_inventory_group_id equals g.id
+                    join so in context.inventory_sources on g.inventory_source_id equals so.id
+                    where sp.station_code == (short) stationCode
+                      && so.name.ToLower().Equals(rateSource.ToString().ToLower())
+                    select new StationInventoryManifest()
+                    {
+                        Id = sp.id,
+                        Station =
+                            new DisplayBroadcastStation()
+                            {
+                                Code = sp.station.station_code,
+                                Affiliation = sp.station.affiliation,
+                                CallLetters = sp.station.station_call_letters,
+                                LegacyCallLetters = sp.station.legacy_call_letters,
+                                MarketCode = sp.station.market_code,
+                                OriginMarket = sp.station.market.geography_name
+                            },
+                        DaypartCode = g.daypart_code,
+                        SpotLengthId = sp.spot_length_id,
+                        SpotsPerWeek = sp.spots_per_week,
+                        SpotsPerDay = sp.spots_per_day,
+                        Dayparts = sp.station_inventory_manifest_dayparts.Select(d => new StationInventoryManifestDaypart() 
+                        {
+                            Daypart = new DisplayDaypart() { Id = d.daypart_id}
+                        }).ToList(),
+                        InventorySourceId = sp.inventory_source_id,
+                        EffectiveDate = sp.effective_date,
+                        ManifestAudiences =
+                            sp.station_inventory_manifest_audiences.Select(ma => new StationInventoryManifestAudience()
+                            {
+                                Impressions = ma.impressions,
+                                Rate = ma.rate,
+                                Audience = new DisplayAudience() { Id = ma.audience_id}
+                            }).ToList(),
+                        EndDate = sp.end_date
+                    }).ToList());
         }
 
     }

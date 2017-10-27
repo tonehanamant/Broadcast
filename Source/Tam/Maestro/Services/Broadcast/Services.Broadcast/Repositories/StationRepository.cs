@@ -1,4 +1,4 @@
-﻿using System.Data.Entity.Core;
+﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
@@ -107,21 +107,18 @@ namespace Services.Broadcast.Repositories
         public DisplayBroadcastStation GetBroadcastStationByCode(int code)
         {
             return _InReadUncommitedTransaction(
-                context =>
-                {
-                    return (from s in context.stations
-                            where s.station_code == code
-                            select new DisplayBroadcastStation
-                            {
-                                Code = s.station_code,
-                                Affiliation = s.affiliation,
-                                CallLetters = s.station_call_letters,
-                                LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market.geography_name,
-                                MarketCode = s.market_code,
-                                ModifiedDate = s.modified_date
-                            }).FirstOrDefault();
-                });
+                context => (from s in context.stations
+                    where s.station_code == code
+                    select new DisplayBroadcastStation
+                    {
+                        Code = s.station_code,
+                        Affiliation = s.affiliation,
+                        CallLetters = s.station_call_letters,
+                        LegacyCallLetters = s.legacy_call_letters,
+                        OriginMarket = s.market.geography_name,
+                        MarketCode = s.market_code,
+                        ModifiedDate = s.modified_date
+                    }).Single("No station found with code: " + code));
         }
 
         public DisplayBroadcastStation GetBroadcastStationByLegacyCallLetters(string callLetters)
