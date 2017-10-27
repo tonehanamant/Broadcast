@@ -1,6 +1,7 @@
 ﻿using Moq;
 using NUnit.Framework;
 using OfficeOpenXml;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using Services.Broadcast.Converters.Post;
 using Services.Broadcast.Repositories;
 using System;
@@ -25,6 +26,49 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Post
             _Package = new ExcelPackage();
             _Package.Workbook.Worksheets.Add("Default");
             _Worksheet = _Package.Workbook.Worksheets.First();
+        }
+
+        [Test]
+        public void Weekstart_Is_Monday()
+        {
+            // Sunday.
+            var date = new DateTime(2017, 10, 4, 12, 0, 0);
+
+            // Previous Monday.
+            var weekstart = new DateTime(2017, 10, 2, 0, 0, 0);
+
+            _ValidRow.Date = date.ToString("d");
+            _ValidRow.TimeAired = date.ToString("G");
+
+            _Worksheet.Cells.LoadFromCollection(new List<BvsPostFileRow> { _ValidRow }, true);
+
+            var result = _BvsPostFileParser.Parse(_Package);
+
+            var firstRow = result.First();
+
+            Assert.AreEqual(weekstart, firstRow.weekstart);
+            Assert.AreEqual(DayOfWeek.Monday, firstRow.weekstart.DayOfWeek);
+        }
+
+        [Test]
+        public void Weekstart_Is_Correct_When_Date_Is_Sunday()
+        {
+            // Sunday.
+            var date = new DateTime(2017, 10, 1, 12, 0 , 0);
+            
+            // Previous Monday.
+            var weekstart = new DateTime(2017, 09, 25, 0, 0, 0);
+
+            _ValidRow.Date = date.ToString("d");
+            _ValidRow.TimeAired = date.ToString("G");
+
+            _Worksheet.Cells.LoadFromCollection(new List<BvsPostFileRow> { _ValidRow }, true);
+
+            var result = _BvsPostFileParser.Parse(_Package);
+
+            var firstRow = result.First();
+
+            Assert.AreEqual(weekstart, firstRow.weekstart);
         }
 
         [Test]

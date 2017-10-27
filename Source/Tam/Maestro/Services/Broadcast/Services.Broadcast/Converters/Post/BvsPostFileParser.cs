@@ -235,7 +235,12 @@ namespace Services.Broadcast.Converters.Post
 
         private DateTime _GetWeekStartDate(DateTime date)
         {
-            return date.AddDays(-(int)(date.DayOfWeek) + 1);
+            var differenceToMonday = (date.DayOfWeek - DayOfWeek.Monday);
+
+            if (differenceToMonday < 0)
+                differenceToMonday += 7;
+
+            return date.AddDays(-differenceToMonday);
         }
 
         private string _GetDayOfWeek(DateTime date)
