@@ -13,20 +13,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 7199,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "Custom",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 7199,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -38,42 +41,48 @@
               "AudienceString": null
             },
             "Impressions": 37000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 20000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 31000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 34000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 16000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 17000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -95,20 +104,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 79199,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 75600,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 79199,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 75600,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -120,42 +132,48 @@
               "AudienceString": null
             },
             "Impressions": 76000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 35000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 52000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 56000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 28000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 31000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -177,20 +195,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 84899,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "",
-            "_Saturday": false,
-            "_StartTime": 82800,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -202,42 +223,48 @@
               "AudienceString": null
             },
             "Impressions": 35000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 10000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 18000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 20000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 4000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -259,36 +286,42 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84599,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "Custom",
-            "_Saturday": false,
-            "_StartTime": 79200,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           },
           {
-            "_Code": "CUS",
-            "_EndTime": 82799,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "Custom",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -300,42 +333,48 @@
               "AudienceString": null
             },
             "Impressions": 51000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 25000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 37000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 40000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 16000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 16000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -357,20 +396,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 82739,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "Custom",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82739,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -382,42 +424,48 @@
               "AudienceString": null
             },
             "Impressions": 98000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 57000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 73000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 80000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 38000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 42000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -439,20 +487,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 86339,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "Custom",
-            "_Saturday": false,
-            "_StartTime": 84600,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 86339,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 84600,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -464,42 +515,48 @@
               "AudienceString": null
             },
             "Impressions": 71000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 38000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 50000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 55000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 26000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 28000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -521,20 +578,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 80999,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -546,42 +606,48 @@
               "AudienceString": null
             },
             "Impressions": 45000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 24000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 32000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 34000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 18000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 19000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -603,20 +669,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 84899,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -628,42 +697,48 @@
               "AudienceString": null
             },
             "Impressions": 35000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 14000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 23000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 25000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 8000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 10000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -685,20 +760,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84599,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -710,42 +788,48 @@
               "AudienceString": null
             },
             "Impressions": 41000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 23000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 32000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 35000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 18000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 21000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -767,20 +851,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 82799,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": false,
-            "_StartTime": 79200,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -792,42 +879,48 @@
               "AudienceString": null
             },
             "Impressions": 194000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 115000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 150000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 167000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 77000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 84000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -849,20 +942,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 80999,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -874,42 +970,48 @@
               "AudienceString": null
             },
             "Impressions": 25000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 15000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 18000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 22000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 12000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -931,36 +1033,42 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 82799,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": false,
-            "_StartTime": 79200,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           },
           {
-            "_Code": "CUS",
-            "_EndTime": 80999,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "Custom",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -972,42 +1080,48 @@
               "AudienceString": null
             },
             "Impressions": 24000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 15000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 17000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 20000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -1029,36 +1143,42 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 79139,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "Custom",
-            "_Saturday": false,
-            "_StartTime": 75600,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 79139,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 75600,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           },
           {
-            "_Code": "CUS",
-            "_EndTime": 77339,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "Custom",
-            "_Saturday": true,
-            "_StartTime": 75600,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 77339,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 75600,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -1070,42 +1190,48 @@
               "AudienceString": null
             },
             "Impressions": 13000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 6000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 10000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 12000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 4000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -1127,20 +1253,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 84899,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -1152,42 +1281,48 @@
               "AudienceString": null
             },
             "Impressions": 39000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 17000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 27000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 29000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 10000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -1209,20 +1344,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84599,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "Custom",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -1234,42 +1372,48 @@
               "AudienceString": null
             },
             "Impressions": 70000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 40000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 52000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 60000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 28000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 30000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -1291,20 +1435,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 84899,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "",
-            "_Saturday": false,
-            "_StartTime": 82800,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -1316,42 +1463,48 @@
               "AudienceString": null
             },
             "Impressions": 32000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 15000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 23000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 27000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 10000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 10000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -1373,36 +1526,42 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 82799,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": false,
-            "_StartTime": 79200,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           },
           {
-            "_Code": "CUS",
-            "_EndTime": 82799,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "Custom",
-            "_Saturday": false,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -1414,42 +1573,48 @@
               "AudienceString": null
             },
             "Impressions": 34000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 14000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 24000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 28000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -1471,36 +1636,42 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 82799,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": false,
-            "_StartTime": 79200,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           },
           {
-            "_Code": "CUS",
-            "_EndTime": 82799,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "Custom",
-            "_Saturday": false,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -1512,42 +1683,48 @@
               "AudienceString": null
             },
             "Impressions": 24000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 13000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 16000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 19000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 10000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -1569,20 +1746,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 84899,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -1594,42 +1774,48 @@
               "AudienceString": null
             },
             "Impressions": 26000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 8000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 12000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 12000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -1651,20 +1837,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 84899,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -1676,42 +1865,48 @@
               "AudienceString": null
             },
             "Impressions": 21000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 6000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 4000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -1733,20 +1928,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 80999,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -1758,42 +1956,48 @@
               "AudienceString": null
             },
             "Impressions": 30000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 10000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 18000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 20000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -1815,20 +2019,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 82799,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -1840,42 +2047,48 @@
               "AudienceString": null
             },
             "Impressions": 45000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 19000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 29000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 33000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 14000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 16000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -1897,20 +2110,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 81299,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "",
-            "_Saturday": false,
-            "_StartTime": 79200,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 81299,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -1922,42 +2138,48 @@
               "AudienceString": null
             },
             "Impressions": 57000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 17000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 37000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 41000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 13000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -1979,20 +2201,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 84899,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "",
-            "_Saturday": false,
-            "_StartTime": 82800,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -2004,42 +2229,48 @@
               "AudienceString": null
             },
             "Impressions": 32000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 15000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 16000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -2061,20 +2292,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84599,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -2086,42 +2320,48 @@
               "AudienceString": null
             },
             "Impressions": 85000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 30000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 49000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 52000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 21000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 23000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -2143,20 +2383,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 78599,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "",
-            "_Saturday": false,
-            "_StartTime": 75600,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 78599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 75600,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -2168,42 +2411,48 @@
               "AudienceString": null
             },
             "Impressions": 17000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 14000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 16000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 8000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -2225,20 +2474,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 78299,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 75600,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 78299,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 75600,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -2250,42 +2502,48 @@
               "AudienceString": null
             },
             "Impressions": 28000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 15000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 20000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 24000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 13000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -2307,20 +2565,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84599,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": false,
-            "_StartTime": 82800,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -2332,42 +2593,48 @@
               "AudienceString": null
             },
             "Impressions": 12000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 6000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 6000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -2389,20 +2656,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 84899,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -2414,42 +2684,48 @@
               "AudienceString": null
             },
             "Impressions": 15000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 4000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 8000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -2471,20 +2747,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 82799,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -2496,42 +2775,48 @@
               "AudienceString": null
             },
             "Impressions": 53000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 22000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 31000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 36000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 19000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 20000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -2553,20 +2838,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 80999,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP365",
-            "_Saturday": false,
-            "_StartTime": 75600,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP365",
+              "_Saturday": false,
+              "_StartTime": 75600,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -2578,42 +2866,48 @@
               "AudienceString": null
             },
             "Impressions": 97000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 41000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 68000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 73000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 26000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 29000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -2635,20 +2929,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 81299,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 81299,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -2660,42 +2957,48 @@
               "AudienceString": null
             },
             "Impressions": 33000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 14000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 22000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 25000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 10000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 12000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -2717,20 +3020,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 82799,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -2742,42 +3048,48 @@
               "AudienceString": null
             },
             "Impressions": 33000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 17000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 24000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 26000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 12000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -2799,20 +3111,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 84899,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -2824,42 +3139,48 @@
               "AudienceString": null
             },
             "Impressions": 20000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 12000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 6000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -2881,20 +3202,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84599,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": false,
-            "_StartTime": 82800,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -2906,42 +3230,48 @@
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 6000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -2963,20 +3293,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 80999,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -2988,42 +3321,48 @@
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 4000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 6000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -3045,20 +3384,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 82799,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 81000,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 81000,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -3070,42 +3412,48 @@
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 4000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 2000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 2000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -3127,20 +3475,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 82799,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": false,
-            "_StartTime": 79200,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -3152,42 +3503,48 @@
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 6000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 10000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -3209,20 +3566,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 80999,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "Custom",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -3234,42 +3594,48 @@
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 6000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 4000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 4000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -3291,20 +3657,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84599,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": false,
-            "_StartTime": 82800,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -3316,42 +3685,48 @@
               "AudienceString": null
             },
             "Impressions": 2000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 1000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 2000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 2000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 1000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 1000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -3373,20 +3748,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84599,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -3398,42 +3776,48 @@
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 2000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 2000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -3455,20 +3839,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 80939,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "Custom",
-            "_Saturday": true,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80939,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -3480,42 +3867,48 @@
               "AudienceString": null
             },
             "Impressions": 55000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 19000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 36000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 39000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -3537,36 +3930,42 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 81299,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "",
-            "_Saturday": false,
-            "_StartTime": 79200,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 81299,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           },
           {
-            "_Code": "",
-            "_EndTime": 81299,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "",
-            "_Saturday": false,
-            "_StartTime": 79200,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 81299,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -3578,42 +3977,48 @@
               "AudienceString": null
             },
             "Impressions": 17000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 20000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 21000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -3635,20 +4040,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84599,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": false,
-            "_StartTime": 82800,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -3660,42 +4068,48 @@
               "AudienceString": null
             },
             "Impressions": 13000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 8000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 10000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 6000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 6000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -3717,20 +4131,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84599,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -3742,42 +4159,48 @@
               "AudienceString": null
             },
             "Impressions": 24000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 14000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 20000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 23000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 11000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -3799,20 +4222,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84599,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": false,
-            "_StartTime": 82800,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -3824,42 +4250,48 @@
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 2000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 1000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 1000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -3881,20 +4313,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84599,
-            "_Friday": false,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": false,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": false,
-            "_Tuesday": false,
-            "_Wednesday": false
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -3906,42 +4341,48 @@
               "AudienceString": null
             },
             "Impressions": 14000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 6000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 10000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 4000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -3963,20 +4404,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 82739,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "Custom",
-            "_Saturday": false,
-            "_StartTime": 79200,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82739,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -3988,42 +4432,48 @@
               "AudienceString": null
             },
             "Impressions": 8000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 3000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -4045,20 +4495,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84599,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "BRDCST DP362",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -4070,42 +4523,48 @@
               "AudienceString": null
             },
             "Impressions": 32000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 10000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 18000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 20000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 7000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -4127,20 +4586,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "CUS",
-            "_EndTime": 84539,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "Custom",
-            "_Saturday": true,
-            "_StartTime": 82800,
-            "_Sunday": true,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84539,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -4152,42 +4614,48 @@
               "AudienceString": null
             },
             "Impressions": 12000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 5000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 9000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 4000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 4000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,
@@ -4209,20 +4677,23 @@
         "DaypartCode": "LN",
         "Dayparts": [
           {
-            "_Code": "",
-            "_EndTime": 84899,
-            "_Friday": true,
-            "_Is24Hour": false,
-            "_LastEndTime": 0,
-            "_LastStartTime": 0,
-            "_Monday": true,
-            "_Name": "",
-            "_Saturday": false,
-            "_StartTime": 82800,
-            "_Sunday": false,
-            "_Thursday": true,
-            "_Tuesday": true,
-            "_Wednesday": true
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
           }
         ],
         "EffectiveDate": "2017-10-01T00:00:00",
@@ -4234,42 +4705,48 @@
               "AudienceString": null
             },
             "Impressions": 1000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 1000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 1000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 1000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 1000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           },
           {
             "Audience": {
               "AudienceString": null
             },
             "Impressions": 1000.0,
-            "Rate": 0.0000
+            "Rate": 0.0000,
+            "Rating": 0.0
           }
         ],
         "SpotLengthId": 1,

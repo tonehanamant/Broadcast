@@ -91,7 +91,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SetInventoryGroupsDayparts(List<StationInventoryGroup> stationInventoryGroups)
         {
-            var dayparts = stationInventoryGroups.SelectMany(m => m.Manifests.SelectMany(d => d.Dayparts));
+            var dayparts = stationInventoryGroups.SelectMany(ig => ig.Manifests.SelectMany(m => m.Dayparts.Select(md => md.Daypart)));
 
             dayparts.ForEach(d=> d = _daypartCache.GetDisplayDaypart(d.Id));
         }

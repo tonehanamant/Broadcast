@@ -107,7 +107,7 @@ namespace Services.Broadcast.Repositories
                                 station_code = (short) manifest.Station.Code,
                                 spot_length_id = manifest.SpotLengthId,
                                 spots_per_day = manifest.SpotsPerDay,
-                                spots_per_week = manifest.SpotsPerWeek,
+                                spots_per_week = manifest.SpotsPerWeek.GetValueOrDefault(), //TODO: Update database and make field nullable
                                 effective_date = manifest.EffectiveDate,
                                 file_id = inventoryFile.Id,
                                 inventory_source_id = inventoryFile.InventorySourceId,
@@ -121,9 +121,9 @@ namespace Services.Broadcast.Repositories
                                             rate = audience.Rate
                                         }).ToList(),
                                 station_inventory_manifest_dayparts =
-                                    manifest.Dayparts.Select(d => new station_inventory_manifest_dayparts()
+                                    manifest.Dayparts.Select(md => new station_inventory_manifest_dayparts()
                                     {
-                                        daypart_id = d.Id
+                                        daypart_id = md.Daypart.Id
                                     }).ToList()
                             }).ToList()
                     }).ToList();
@@ -243,7 +243,10 @@ namespace Services.Broadcast.Repositories
                         SpotLengthId = manifest.spot_length_id,
                         SpotsPerWeek = manifest.spots_per_week,
                         SpotsPerDay = manifest.spots_per_day,
-                        Dayparts = manifest.station_inventory_manifest_dayparts.Select(d => DaypartCache.Instance.GetDisplayDaypart(d.daypart_id)).ToList(),
+                        Dayparts = manifest.station_inventory_manifest_dayparts.Select(md => new StationInventoryManifestDaypart()
+                        {
+                            Daypart = DaypartCache.Instance.GetDisplayDaypart(md.daypart_id),
+                        }).ToList(),
                         ManifestAudiences =
                             manifest.station_inventory_manifest_audiences.Select(
                                 audience => new StationInventoryManifestAudience()

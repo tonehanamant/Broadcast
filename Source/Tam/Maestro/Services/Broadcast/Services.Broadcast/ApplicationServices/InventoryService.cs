@@ -286,14 +286,13 @@ namespace Services.Broadcast.ApplicationServices
         private void _SaveStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
             // set daypart id
-            inventoryFile.InventoryGroups.SelectMany(m => m.Manifests.SelectMany(d => d.Dayparts)).ForEach(dd =>
+            inventoryFile.InventoryGroups.SelectMany(ig => ig.Manifests.SelectMany(m => m.Dayparts.Select(md => md.Daypart))).ForEach(dd =>
             {
                 dd.Id = _daypartCache.GetIdByDaypart(dd);
             });
 
             _stationInventoryGroupService.SaveStationInventoryGroups(request, inventoryFile);
         }
-
 
         private void _SaveInventoryFileContacts(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {

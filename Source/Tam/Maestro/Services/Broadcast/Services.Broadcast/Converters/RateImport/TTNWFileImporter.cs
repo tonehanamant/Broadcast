@@ -1,4 +1,5 @@
-﻿using OfficeOpenXml;
+﻿using EntityFrameworkMapping.Broadcast;
+using OfficeOpenXml;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
@@ -87,6 +88,11 @@ namespace Services.Broadcast.Converters.RateImport
                     }
 
                     var dayparts = _ParseDayparts(ttnwRecord.DaypartsString, ttnwRecord.StationLetters, fileProblems);
+                    var manifestDayparts = dayparts.Select(
+                        d => new StationInventoryManifestDaypart()
+                        {
+                            Daypart = d
+                        }).ToList();
 
                     var manifestAudiences = _ParseManifestAudiences(ttnwRecord.AudienceImpressions);
 
@@ -122,7 +128,7 @@ namespace Services.Broadcast.Converters.RateImport
                             DaypartCode = daypartCode,
                             SpotsPerWeek = daypartCodeSpots.Value,
                             SpotLengthId = spotLengthId,
-                            Dayparts = dayparts,
+                            Dayparts = manifestDayparts,
                             ManifestAudiences = manifestAudiences,
                             EffectiveDate = effectiveDate,
                         });

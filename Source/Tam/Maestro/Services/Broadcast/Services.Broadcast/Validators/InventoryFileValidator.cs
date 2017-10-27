@@ -40,7 +40,7 @@ namespace Services.Broadcast.Validators
                 {
                     var duplicateProblems =
                         spotLenghtStationGroup.SelectMany(g => g.Dayparts)
-                            .GroupBy(d => d.ToLongString())
+                            .GroupBy(d => d.Daypart.ToLongString())
                             .Where(g => g.Count() > 1)
                             .Select(d => DuplicateRecordValidation(spotLenghtStationGroup.Key.LegacyCallLetters)).ToList();
 

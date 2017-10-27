@@ -223,6 +223,7 @@
     <Compile Include="Entities\InventorySource.cs" />
     <Compile Include="Entities\StationInventoryManifest.cs" />
     <Compile Include="Entities\StationInventoryManifestAudience.cs" />
+    <Compile Include="Entities\StationInventoryManifestDaypart.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
     <Compile Include="Entities\ValidationWarningDto.cs" />
     <Compile Include="Extensions\Bvs.cs" />
@@ -330,7 +331,7 @@
     <Compile Include="Entities\InventoryFile.cs" />
     <Compile Include="Entities\InventoryFileProblem.cs" />
     <Compile Include="Entities\InventoryFileSaveResult.cs" />
-    <Compile Include="Entities\RatesFileXml.cs" />
+    <Compile Include="Entities\InventoryOpenMarketFileXml.cs" />
     <Compile Include="Entities\InventoryFileSaveRequest.cs" />
     <Compile Include="Entities\DisplayBroadcastStation.cs" />
     <Compile Include="Entities\BvsMap.cs" />

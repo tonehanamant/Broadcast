@@ -208,17 +208,22 @@ namespace Services.Broadcast.Converters.RateImport
             {
                 var group = groups.Single(g => g.SlotNumber == slotToUse);
                 var manifest = group.Manifests.FirstOrDefault(m => m.EndDate == null
-                                    && m.Dayparts.All(dp => dto.Dayparts.Any(mdp => mdp == dp))
+                                    && m.Dayparts.All(dp => dto.Dayparts.Any(mdp => mdp == dp.Daypart))
                                     && m.Station.Code == dto.Station.Code
                                     && m.SpotLengthId == dto.SpotLengthId);
 
                 if (manifest == null)
                 {
+                    var manifestDayparts = dto.Dayparts.Select(
+                        d => new StationInventoryManifestDaypart()
+                        {
+                            Daypart = d
+                        }).ToList();
                     manifest = new StationInventoryManifest()
                     {
                         DaypartCode = dto.DaypartCode,
                         SpotLengthId = dto.SpotLengthId,
-                        Dayparts = dto.Dayparts,
+                        Dayparts = manifestDayparts,
                         SpotsPerDay = dto.SpotsPerDay,
                         EffectiveDate = dto.EffectiveDate,
                         Station = dto.Station,

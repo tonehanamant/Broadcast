@@ -1,4 +1,4 @@
-﻿namespace Services.Broadcast.Entities.RatesFileXml
+﻿namespace Services.Broadcast.Entities.InventoryOpenMarketFileXml
 {
 
 
