@@ -208,7 +208,7 @@ namespace Services.Broadcast.Converters.RateImport
             {
                 var group = groups.Single(g => g.SlotNumber == slotToUse);
                 var manifest = group.Manifests.FirstOrDefault(m => m.EndDate == null
-                                    && m.Dayparts.All(dp => dto.Dayparts.Any(mdp => mdp == dp.Daypart))
+                                    && m.ManifestDayparts.All(dp => dto.Dayparts.Any(mdp => mdp == dp.Daypart))
                                     && m.Station.Code == dto.Station.Code
                                     && m.SpotLengthId == dto.SpotLengthId);
 
@@ -223,7 +223,7 @@ namespace Services.Broadcast.Converters.RateImport
                     {
                         DaypartCode = dto.DaypartCode,
                         SpotLengthId = dto.SpotLengthId,
-                        Dayparts = manifestDayparts,
+                        ManifestDayparts = manifestDayparts,
                         SpotsPerDay = dto.SpotsPerDay,
                         EffectiveDate = dto.EffectiveDate,
                         Station = dto.Station,

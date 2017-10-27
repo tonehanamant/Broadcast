@@ -11,7 +11,11 @@
     "Manifests": [
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-06-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -32,10 +36,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-06-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -53,7 +54,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -74,10 +79,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -95,7 +97,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -135,10 +141,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -156,7 +159,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -177,10 +184,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 4,
         "SpotsPerWeek": 1,
@@ -198,7 +202,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -219,10 +227,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 2,
         "SpotsPerWeek": 1,
@@ -255,7 +260,11 @@
     "Manifests": [
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-06-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -276,10 +285,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-06-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -297,7 +303,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -318,10 +328,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -339,7 +346,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -379,10 +390,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -400,7 +408,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -421,10 +433,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 4,
         "SpotsPerWeek": 1,
@@ -442,7 +451,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -463,10 +476,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 2,
         "SpotsPerWeek": 1,
@@ -499,7 +509,11 @@
     "Manifests": [
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-06-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -520,10 +534,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-06-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -541,7 +552,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -562,10 +577,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -583,7 +595,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -623,10 +639,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -644,7 +657,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -665,10 +682,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 4,
         "SpotsPerWeek": 1,
@@ -701,7 +715,11 @@
     "Manifests": [
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-06-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -722,10 +740,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-06-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -743,7 +758,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -764,10 +783,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -785,7 +801,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -825,10 +845,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -846,7 +863,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -867,10 +888,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 4,
         "SpotsPerWeek": 1,
@@ -903,7 +921,11 @@
     "Manifests": [
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-06-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -924,10 +946,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-06-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -945,7 +964,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -966,10 +989,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -987,7 +1007,11 @@
       },
       {
         "DaypartCode": "PM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -1027,10 +1051,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -1063,7 +1084,11 @@
     "Manifests": [
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-04-17T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -1103,10 +1128,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-04-17T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -1124,7 +1146,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -1164,10 +1190,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 3,
         "SpotsPerWeek": 1,
@@ -1185,7 +1208,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -1225,10 +1252,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -1246,7 +1270,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -1324,10 +1352,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -1345,7 +1370,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "EAM",
@@ -1366,10 +1395,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -1387,7 +1413,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -1465,10 +1495,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 8,
         "SpotsPerWeek": 2,
@@ -1501,7 +1528,11 @@
     "Manifests": [
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-04-17T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -1541,10 +1572,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-04-17T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -1562,7 +1590,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -1602,10 +1634,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 3,
         "SpotsPerWeek": 1,
@@ -1623,7 +1652,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -1663,10 +1696,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -1684,7 +1714,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -1762,10 +1796,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -1783,7 +1814,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "EAM",
@@ -1804,10 +1839,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -1825,7 +1857,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -1903,10 +1939,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 8,
         "SpotsPerWeek": 2,
@@ -1939,7 +1972,11 @@
     "Manifests": [
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-04-17T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -1979,10 +2016,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-04-17T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -2000,7 +2034,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -2040,10 +2078,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 3,
         "SpotsPerWeek": 1,
@@ -2061,7 +2096,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -2101,10 +2140,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -2122,7 +2158,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -2200,10 +2240,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -2221,7 +2258,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "EAM",
@@ -2242,10 +2283,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -2263,7 +2301,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -2341,10 +2383,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 8,
         "SpotsPerWeek": 2,
@@ -2377,7 +2416,11 @@
     "Manifests": [
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-04-17T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -2417,10 +2460,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-04-17T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -2438,7 +2478,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -2478,10 +2522,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -2499,7 +2540,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -2577,10 +2622,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -2598,7 +2640,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "EAM",
@@ -2619,10 +2665,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -2640,7 +2683,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -2718,10 +2765,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 8,
         "SpotsPerWeek": 1,
@@ -2754,7 +2798,11 @@
     "Manifests": [
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-04-17T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -2794,10 +2842,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-04-17T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -2815,7 +2860,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -2855,10 +2904,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -2876,7 +2922,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -2954,10 +3004,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -2975,7 +3022,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "EAM",
@@ -2996,10 +3047,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 5,
         "SpotsPerWeek": 1,
@@ -3017,7 +3065,11 @@
       },
       {
         "DaypartCode": "AM News",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 2,
+        "ManifestAudiences": [],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -3095,10 +3147,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 2,
-        "ManifestAudiences": [],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": 8,
         "SpotsPerWeek": 1,

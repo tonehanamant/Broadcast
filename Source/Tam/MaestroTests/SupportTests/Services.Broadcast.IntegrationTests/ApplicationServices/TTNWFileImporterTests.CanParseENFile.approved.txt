@@ -27,7 +27,11 @@
         "Manifests": [
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -49,10 +53,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -70,7 +71,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -92,10 +97,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -113,7 +115,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -135,10 +141,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -156,7 +159,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -178,10 +185,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -199,7 +203,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -221,10 +229,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -242,7 +247,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -264,10 +273,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 3,
@@ -285,7 +291,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -307,10 +317,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -328,7 +335,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -350,10 +361,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -371,7 +379,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -393,10 +405,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -414,7 +423,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -436,10 +449,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 3,
@@ -457,7 +467,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -479,10 +493,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -500,7 +511,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -522,10 +537,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 3,
@@ -543,7 +555,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -565,10 +581,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -586,7 +599,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -608,10 +625,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -629,7 +643,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -651,10 +669,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -672,7 +687,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -694,10 +713,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -715,7 +731,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -737,10 +757,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -758,7 +775,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -780,10 +801,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -801,7 +819,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -823,10 +845,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -844,7 +863,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -866,10 +889,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -887,7 +907,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -909,10 +933,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -930,7 +951,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -952,10 +977,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -973,7 +995,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -995,10 +1021,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1016,7 +1039,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1038,10 +1065,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 3,
@@ -1059,7 +1083,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1081,10 +1109,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1102,7 +1127,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1124,10 +1153,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1145,7 +1171,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1167,10 +1197,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1188,7 +1215,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1210,10 +1241,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1231,7 +1259,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1293,10 +1325,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1314,7 +1343,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1336,10 +1369,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1357,7 +1387,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1379,10 +1413,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1400,7 +1431,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1422,10 +1457,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 3,
@@ -1443,7 +1475,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1465,10 +1501,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1486,7 +1519,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1508,10 +1545,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1529,7 +1563,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1551,10 +1589,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1572,7 +1607,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1594,10 +1633,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -1615,7 +1651,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1637,10 +1677,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -1658,7 +1695,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1680,10 +1721,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1701,7 +1739,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1723,10 +1765,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 3,
@@ -1744,7 +1783,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1766,10 +1809,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1787,7 +1827,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1809,10 +1853,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1820,7 +1861,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1842,10 +1887,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -1863,7 +1905,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1885,10 +1931,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -1906,7 +1949,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1928,10 +1975,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -1949,7 +1993,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -1971,10 +2019,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1992,7 +2037,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -2014,10 +2063,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -2035,7 +2081,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -2057,10 +2107,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -2078,7 +2125,11 @@
           },
           {
             "DaypartCode": "EN",
-            "Dayparts": [
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestDayparts": [
               {
                 "Daypart": {
                   "_Code": "CUS",
@@ -2100,10 +2151,7 @@
                 "ProgramName": null
               }
             ],
-            "EndDate": null,
-            "Id": null,
-            "InventorySourceId": 0,
-            "ManifestAudiences": [],
+            "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,

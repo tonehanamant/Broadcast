@@ -128,7 +128,7 @@ namespace Services.Broadcast.Converters.RateImport
                             DaypartCode = daypartCode,
                             SpotsPerWeek = daypartCodeSpots.Value,
                             SpotLengthId = spotLengthId,
-                            Dayparts = manifestDayparts,
+                            ManifestDayparts = manifestDayparts,
                             ManifestAudiences = manifestAudiences,
                             EffectiveDate = effectiveDate,
                         });

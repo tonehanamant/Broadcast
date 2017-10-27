@@ -289,7 +289,7 @@ namespace Services.Broadcast.ApplicationServices
         private void _SaveStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
             // set daypart id
-            inventoryFile.InventoryGroups.SelectMany(m => m.Manifests.SelectMany(d => d.Dayparts)).ForEach(dd =>
+            inventoryFile.InventoryGroups.SelectMany(ig => ig.Manifests.SelectMany(m => m.ManifestDayparts.Select(md => md.Daypart))).ForEach(dd =>
             {
                 dd.Daypart.Id = _daypartCache.GetIdByDaypart(dd.Daypart);
             });

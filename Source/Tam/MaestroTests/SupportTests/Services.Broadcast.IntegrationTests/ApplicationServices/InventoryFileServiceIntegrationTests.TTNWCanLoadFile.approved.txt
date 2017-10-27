@@ -11,27 +11,6 @@
     "Manifests": [
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 7199,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": true,
-              "_StartTime": 82800,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -85,6 +64,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 7199,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -102,27 +103,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 79199,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 75600,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -176,6 +156,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 79199,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 75600,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -193,27 +195,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 84899,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": false,
-              "_StartTime": 82800,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -267,6 +248,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -284,46 +287,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 84599,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": false,
-              "_StartTime": 79200,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          },
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 82799,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "Custom",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -377,6 +340,47 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          },
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -394,27 +398,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 82739,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -468,6 +451,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82739,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -485,27 +490,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 86339,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": false,
-              "_StartTime": 84600,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -559,6 +543,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 86339,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 84600,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -576,27 +582,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 80999,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -650,6 +635,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -667,27 +674,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 84899,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": true,
-              "_StartTime": 82800,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -741,6 +727,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -758,27 +766,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 84599,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 82800,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -832,6 +819,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -849,27 +858,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 82799,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 79200,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -923,6 +911,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -940,27 +950,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 80999,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -1014,6 +1003,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1031,46 +1042,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 82799,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 79200,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          },
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 80999,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "Custom",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -1124,6 +1095,47 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          },
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1141,46 +1153,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 79139,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": false,
-              "_StartTime": 75600,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          },
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 77339,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "Custom",
-              "_Saturday": true,
-              "_StartTime": 75600,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -1234,6 +1206,47 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 79139,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 75600,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          },
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 77339,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 75600,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1251,27 +1264,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 84899,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": true,
-              "_StartTime": 82800,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -1325,6 +1317,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1342,27 +1356,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 84599,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -1416,6 +1409,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -1433,27 +1448,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 84899,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": false,
-              "_StartTime": 82800,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -1507,6 +1501,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1524,46 +1540,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 82799,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 79200,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          },
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 82799,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "Custom",
-              "_Saturday": false,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -1617,24 +1593,7 @@
             "Rating": 0.0
           }
         ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": 2,
-        "Station": {
-          "Affiliation": "FOX",
-          "CallLetters": "WOFL 35.1",
-          "Code": 6818,
-          "FlightWeeks": [],
-          "LegacyCallLetters": "WOFL",
-          "MarketCode": 134,
-          "ModifiedDate": "0001-01-01T00:00:00",
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      },
-      {
-        "DaypartCode": "LN",
-        "Dayparts": [
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -1674,6 +1633,24 @@
             "ProgramName": null
           }
         ],
+        "ManifestRates": [],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": 2,
+        "Station": {
+          "Affiliation": "FOX",
+          "CallLetters": "WOFL 35.1",
+          "Code": 6818,
+          "FlightWeeks": [],
+          "LegacyCallLetters": "WOFL",
+          "MarketCode": 134,
+          "ModifiedDate": "0001-01-01T00:00:00",
+          "OriginMarket": null,
+          "RateDataThrough": null
+        }
+      },
+      {
+        "DaypartCode": "LN",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -1727,6 +1704,47 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          },
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -1744,27 +1762,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 84899,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": true,
-              "_StartTime": 82800,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -1818,6 +1815,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1835,27 +1854,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 84899,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "",
-              "_Saturday": true,
-              "_StartTime": 82800,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -1909,6 +1907,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1926,27 +1946,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 80999,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -2000,6 +1999,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2017,27 +2038,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 82799,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -2091,6 +2091,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2108,27 +2130,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 81299,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": false,
-              "_StartTime": 79200,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -2182,6 +2183,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 81299,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2199,27 +2222,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 84899,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": false,
-              "_StartTime": 82800,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -2273,6 +2275,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2290,27 +2314,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 84599,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 82800,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -2364,6 +2367,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2381,27 +2406,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 78599,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": false,
-              "_StartTime": 75600,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -2455,6 +2459,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 78599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 75600,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2472,27 +2498,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 78299,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 75600,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -2546,6 +2551,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 78299,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 75600,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2563,27 +2590,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 84599,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 82800,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -2637,6 +2643,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2654,27 +2682,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 84899,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "",
-              "_Saturday": true,
-              "_StartTime": 82800,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -2728,6 +2735,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2745,27 +2774,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 82799,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -2819,6 +2827,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 4,
@@ -2836,27 +2866,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 80999,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP365",
-              "_Saturday": false,
-              "_StartTime": 75600,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -2910,6 +2919,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP365",
+              "_Saturday": false,
+              "_StartTime": 75600,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2927,27 +2958,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 81299,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -3001,6 +3011,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 81299,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3018,27 +3050,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 82799,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -3092,6 +3103,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -3109,27 +3142,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 84899,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": true,
-              "_StartTime": 82800,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -3183,6 +3195,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3200,27 +3234,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 84599,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 82800,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -3274,6 +3287,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3291,27 +3326,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 80999,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -3365,6 +3379,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3382,27 +3418,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 82799,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 81000,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -3456,6 +3471,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 81000,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3473,27 +3510,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 82799,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 79200,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -3547,6 +3563,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3564,27 +3602,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 80999,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "Custom",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -3638,6 +3655,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80999,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3655,7 +3694,60 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 1,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": null
+            },
+            "Impressions": 2000.0,
+            "Rate": 0.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": null
+            },
+            "Impressions": 1000.0,
+            "Rate": 0.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": null
+            },
+            "Impressions": 2000.0,
+            "Rate": 0.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": null
+            },
+            "Impressions": 2000.0,
+            "Rate": 0.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": null
+            },
+            "Impressions": 1000.0,
+            "Rate": 0.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": null
+            },
+            "Impressions": 1000.0,
+            "Rate": 0.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -3676,59 +3768,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 1,
-        "ManifestAudiences": [
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 2000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 2000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 2000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          }
-        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3746,7 +3786,60 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
+        "EffectiveDate": "2017-10-01T00:00:00",
+        "EndDate": null,
+        "InventorySourceId": 1,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": null
+            },
+            "Impressions": 3000.0,
+            "Rate": 0.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": null
+            },
+            "Impressions": 2000.0,
+            "Rate": 0.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": null
+            },
+            "Impressions": 3000.0,
+            "Rate": 0.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": null
+            },
+            "Impressions": 3000.0,
+            "Rate": 0.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": null
+            },
+            "Impressions": 2000.0,
+            "Rate": 0.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": null
+            },
+            "Impressions": 3000.0,
+            "Rate": 0.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestDayparts": [
           {
             "Daypart": {
               "_Code": "CUS",
@@ -3767,59 +3860,7 @@
             "ProgramName": null
           }
         ],
-        "EffectiveDate": "2017-10-01T00:00:00",
-        "EndDate": null,
-        "InventorySourceId": 1,
-        "ManifestAudiences": [
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 2000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 2000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          }
-        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -3837,27 +3878,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 80939,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": true,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -3911,6 +3931,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 80939,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 3,
@@ -3928,46 +3970,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 81299,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": false,
-              "_StartTime": 79200,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          },
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 81299,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "",
-              "_Saturday": false,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -4021,6 +4023,47 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 81299,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          },
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 81299,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4038,27 +4081,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 84599,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 82800,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -4112,6 +4134,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4129,27 +4173,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 84599,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 82800,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -4203,6 +4226,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -4220,27 +4265,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 84599,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 82800,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -4294,6 +4318,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4311,27 +4357,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 84599,
-              "_Friday": false,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 82800,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -4385,6 +4410,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": false,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -4402,27 +4449,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 82739,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": false,
-              "_StartTime": 79200,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -4476,6 +4502,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 82739,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4493,27 +4541,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 84599,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 82800,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -4567,6 +4594,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84599,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -4584,27 +4633,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 84539,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": true,
-              "_StartTime": 82800,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -4658,6 +4686,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 84539,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": true,
+              "_StartTime": 82800,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4675,27 +4725,6 @@
       },
       {
         "DaypartCode": "LN",
-        "Dayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 84899,
-              "_Friday": true,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": false,
-              "_StartTime": 82800,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "ProgramName": null
-          }
-        ],
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 1,
@@ -4749,6 +4778,28 @@
             "Rating": 0.0
           }
         ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 84899,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 82800,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,

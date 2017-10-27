@@ -125,7 +125,7 @@ namespace Services.Broadcast.Repositories
                                             rate = audience.Rate
                                         }).ToList(),
                                 station_inventory_manifest_dayparts =
-                                    manifest.Dayparts.Select(md => new station_inventory_manifest_dayparts()
+                                    manifest.ManifestDayparts.Select(md => new station_inventory_manifest_dayparts()
                                     {
                                         daypart_id = md.Daypart.Id
                                     }).ToList()
@@ -247,7 +247,7 @@ namespace Services.Broadcast.Repositories
                         SpotLengthId = manifest.spot_length_id,
                         SpotsPerWeek = manifest.spots_per_week,
                         SpotsPerDay = manifest.spots_per_day,
-                        Dayparts = manifest.station_inventory_manifest_dayparts.Select(md => new StationInventoryManifestDaypart()
+                        ManifestDayparts = manifest.station_inventory_manifest_dayparts.Select(md => new StationInventoryManifestDaypart()
                         {
                             Daypart = DaypartCache.Instance.GetDisplayDaypart(md.daypart_id),
                         }).ToList(),
@@ -360,7 +360,7 @@ namespace Services.Broadcast.Repositories
                         SpotLengthId = sp.spot_length_id,
                         SpotsPerWeek = sp.spots_per_week,
                         SpotsPerDay = sp.spots_per_day,
-                        Dayparts = sp.station_inventory_manifest_dayparts.Select(d => new StationInventoryManifestDaypart() 
+                        ManifestDayparts = sp.station_inventory_manifest_dayparts.Select(d => new StationInventoryManifestDaypart() 
                         {
                             Daypart = new DisplayDaypart() { Id = d.daypart_id}
                         }).ToList(),
