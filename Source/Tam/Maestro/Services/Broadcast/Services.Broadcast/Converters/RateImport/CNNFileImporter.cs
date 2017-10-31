@@ -378,6 +378,7 @@ namespace Services.Broadcast.Converters.RateImport
         private int _ParseNumericPositiveInt(string value,string errorMessage)
         {
             int num;
+
             if (!int.TryParse(value, out num) || num <= 0)
             {
                 _AddProblem(string.Format(errorMessage,value));
