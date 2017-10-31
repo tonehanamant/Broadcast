@@ -125,7 +125,7 @@ namespace Services.Broadcast.Converters.RateImport
                         var spotPerWeeks = _GetCellValue(row, "# Spots").ToUpper();
                         var spots = _ParseNumericPositiveInt(spotPerWeeks, "Invalid Spots Per Week \"{0}\"");
 
-                        var spotPerDay = _GetCellValue(row, "# Spots").ToUpper();
+                        var spotPerDay = _GetCellValue(row, "Spots Per Day").ToUpper();
                         var spotsPerday = _ParseNumericPositiveInt(spotPerDay, "Invalid Spots Per Day \"{0}\"");
 
                         var dps = _GetCellValue(row, "Time Periods").ToUpper();
