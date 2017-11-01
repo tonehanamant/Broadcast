@@ -6,7 +6,7 @@ namespace Services.Broadcast.Entities
     {
         public int Spots { get; set; }
         private Dictionary<int, double> _AudienceImpressions;
-        public InventoryFile.InventorySource Source { get; set; }
+        public InventorySourceEnum Source { get; set; }
 
         public Dictionary<int, double> AudienceImpressions
         {

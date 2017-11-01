@@ -71,12 +71,12 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<rep_firms> rep_firms { get; set; }
         public virtual DbSet<bvs_map_types> bvs_map_types { get; set; }
         public virtual DbSet<schedule_audiences> schedule_audiences { get; set; }
-        public virtual DbSet<inventory_files> inventory_files { get; set; }
         public virtual DbSet<inventory_sources> inventory_sources { get; set; }
         public virtual DbSet<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual DbSet<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual DbSet<station_inventory_group> station_inventory_group { get; set; }
         public virtual DbSet<station_inventory_manifest> station_inventory_manifest { get; set; }
         public virtual DbSet<station_inventory_manifest_generation> station_inventory_manifest_generation { get; set; }
+        public virtual DbSet<inventory_files> inventory_files { get; set; }
     }
 }

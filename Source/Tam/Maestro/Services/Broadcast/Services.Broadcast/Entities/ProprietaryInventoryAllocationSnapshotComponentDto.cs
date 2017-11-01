@@ -12,7 +12,7 @@ namespace Services.Broadcast.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string DaypartCode { get; set; }
-        public InventoryFile.InventorySource InventorySource { get; set; }
+        public InventorySourceEnum InventorySource { get; set; }
         public int Order { get; set; }
     }
 }

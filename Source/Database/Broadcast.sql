@@ -648,6 +648,110 @@ END
 GO
 /*************************************** BCOP-2024/2112 - END *****************************************************/
 
+/*************************************** BCOP-1782/2097 - START *****************************************************/
+
+IF NOT EXISTS(SELECT * FROM inventory_sources
+			  WHERE name = 'TVB')
+BEGIN
+	SET IDENTITY_INSERT inventory_sources ON 
+
+	INSERT INTO inventory_sources  (id, name, is_active, inventory_source_type)
+	VALUES (3, 'TVB', 1, 1)
+
+	SET IDENTITY_INSERT inventory_sources OFF
+END
+
+IF NOT EXISTS(SELECT * FROM inventory_sources
+			  WHERE name = 'Open Market')
+BEGIN
+	SET IDENTITY_INSERT inventory_sources ON
+
+	INSERT INTO inventory_sources  (id, name, is_active, inventory_source_type)
+	VALUES (4, 'Open Market', 1, 1)
+
+	SET IDENTITY_INSERT inventory_sources OFF
+END
+
+IF NOT EXISTS(SELECT * FROM inventory_sources
+			  WHERE name = 'Assembly')
+BEGIN
+	SET IDENTITY_INSERT inventory_sources ON
+
+	INSERT INTO inventory_sources  (id, name, is_active, inventory_source_type)
+	VALUES (5, 'Assembly', 1, 1)
+
+	SET IDENTITY_INSERT inventory_sources OFF
+END
+
+GO
+
+IF (SELECT id FROM inventory_sources
+	WHERE name = 'TTNW') = 1
+BEGIN
+	UPDATE inventory_sources
+	SET name = 'TTNW'
+	WHERE id = 4
+
+	UPDATE inventory_sources
+	SET name = 'Open Market'
+	WHERE id = 1
+
+	UPDATE station_inventory_group
+	SET inventory_source_id = 4
+	WHERE inventory_source_id = 1
+
+	UPDATE station_inventory_manifest
+	SET inventory_source_id = 4
+	WHERE inventory_source_id = 1
+END
+
+GO
+
+IF (SELECT id FROM inventory_sources
+	WHERE name = 'CNN') = 2
+BEGIN
+	UPDATE inventory_sources
+	SET name = 'CNN'
+	WHERE id = 5
+
+	UPDATE inventory_sources
+	SET name = 'Assembly'
+	WHERE id = 2
+
+	UPDATE station_inventory_group
+	SET inventory_source_id = 5
+	WHERE inventory_source_id = 2
+
+	UPDATE station_inventory_manifest
+	SET inventory_source_id = 5
+	WHERE inventory_source_id = 2
+END
+
+GO
+
+IF NOT EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'inventory_files'
+	AND COLUMN_NAME = 'inventory_source_id')
+BEGIN
+	ALTER TABLE inventory_files
+	ADD inventory_source_id INT NULL
+
+	EXEC('UPDATE inventory_files
+		  SET inventory_source_id = inventory_source')
+
+    ALTER TABLE inventory_files
+	ALTER COLUMN inventory_source_id INT NOT NULL
+
+	ALTER TABLE inventory_files
+	DROP COLUMN inventory_source
+
+	ALTER TABLE inventory_files
+	ADD CONSTRAINT FK_inventory_files_inventory_source FOREIGN KEY (inventory_source_id)
+	REFERENCES inventory_sources (id)
+END
+
+/*************************************** BCOP-1782/2097 - END *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

@@ -3,7 +3,7 @@
     "DaypartCode": "LN",
     "EndDate": null,
     "InventorySource": {
-      "Id": 1,
+      "Id": 4,
       "InventoryType": 1,
       "IsActive": true,
       "Name": "TTNW"
@@ -13,7 +13,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -105,7 +105,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -197,7 +197,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -289,7 +289,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -400,7 +400,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -492,7 +492,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -584,7 +584,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -676,7 +676,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -768,7 +768,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -860,7 +860,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -952,7 +952,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -1044,7 +1044,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -1155,7 +1155,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -1266,7 +1266,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -1358,7 +1358,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -1450,7 +1450,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -1542,7 +1542,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -1653,7 +1653,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -1764,7 +1764,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -1856,7 +1856,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -1948,7 +1948,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -2040,7 +2040,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -2132,7 +2132,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -2224,7 +2224,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -2316,7 +2316,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -2408,7 +2408,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -2500,7 +2500,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -2592,7 +2592,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -2684,7 +2684,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -2776,7 +2776,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -2868,7 +2868,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -2960,7 +2960,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -3052,7 +3052,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -3144,7 +3144,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -3236,7 +3236,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -3328,7 +3328,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -3420,7 +3420,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -3512,7 +3512,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -3604,7 +3604,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -3696,7 +3696,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -3788,7 +3788,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -3880,7 +3880,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -3972,7 +3972,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -4083,7 +4083,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -4175,7 +4175,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -4267,7 +4267,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -4359,7 +4359,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -4451,7 +4451,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -4543,7 +4543,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -4635,7 +4635,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
@@ -4727,7 +4727,7 @@
         "DaypartCode": "LN",
         "EffectiveDate": "2017-10-10T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 1,
+        "InventorySourceId": 4,
         "ManifestAudiences": [
           {
             "Audience": {
