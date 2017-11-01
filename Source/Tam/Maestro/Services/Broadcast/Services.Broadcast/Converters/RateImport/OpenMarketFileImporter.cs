@@ -17,12 +17,7 @@ namespace Services.Broadcast.Converters.RateImport
     {
         private const int SecondsPerMinute = 60;
 
-        public override InventoryFile.InventorySource InventoryFileSource
-        {
-            get { return InventoryFile.InventorySource.OpenMarket; }
-        }
         public override InventorySource InventorySource { get; set; }
-
 
         public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile, DateTime effecitveDate, List<InventoryFileProblem> fileProblems)
         {
@@ -34,7 +29,7 @@ namespace Services.Broadcast.Converters.RateImport
                 System.Diagnostics.Debug.WriteLine(message.Proposal.uniqueIdentifier + " parsed successfully !");
 
                 var resultFile = BuildRatesFile(message, inventoryFile, fileProblems);
-                resultFile.StationContacts = ExtractContactData(message, inventoryFile.InventorySourceId);
+                resultFile.StationContacts = ExtractContactData(message);
 
         }
             catch (Exception e)
@@ -628,7 +623,7 @@ namespace Services.Broadcast.Converters.RateImport
                 return message;
             }
 
-            private List<StationContact> ExtractContactData(AAAAMessage message, int inventorySourceId)
+            private List<StationContact> ExtractContactData(AAAAMessage message)
             {
                 var contacts = new List<StationContact>();
                 var stationLetters = message.Proposal.Outlets.Select(s => s.callLetters).ToList();

@@ -78,11 +78,6 @@ namespace Services.Broadcast.Converters.RateImport
         
         private bool _FoundGoodDaypart;
 
-        public override Entities.InventoryFile.InventorySource InventoryFileSource
-        {
-            get { return InventoryFile.InventorySource.CNN; }
-        }
-
         public override InventorySource InventorySource { get; set; }
 
         public override InventoryFile GetPendingInventoryFile()

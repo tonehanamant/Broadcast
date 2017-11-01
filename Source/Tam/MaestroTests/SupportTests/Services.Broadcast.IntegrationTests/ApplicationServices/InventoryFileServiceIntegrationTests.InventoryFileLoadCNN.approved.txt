@@ -3,7 +3,7 @@
     "DaypartCode": "PM News",
     "EndDate": null,
     "InventorySource": {
-      "Id": 2,
+      "Id": 5,
       "InventoryType": 1,
       "IsActive": true,
       "Name": "CNN"
@@ -13,7 +13,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-06-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -56,7 +56,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -99,7 +99,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -161,7 +161,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -204,7 +204,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -252,7 +252,7 @@
     "DaypartCode": "PM News",
     "EndDate": null,
     "InventorySource": {
-      "Id": 2,
+      "Id": 5,
       "InventoryType": 1,
       "IsActive": true,
       "Name": "CNN"
@@ -262,7 +262,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-06-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -305,7 +305,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -348,7 +348,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -410,7 +410,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -453,7 +453,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -501,7 +501,7 @@
     "DaypartCode": "PM News",
     "EndDate": null,
     "InventorySource": {
-      "Id": 2,
+      "Id": 5,
       "InventoryType": 1,
       "IsActive": true,
       "Name": "CNN"
@@ -511,7 +511,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-06-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -554,7 +554,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -597,7 +597,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -659,7 +659,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -707,7 +707,7 @@
     "DaypartCode": "PM News",
     "EndDate": null,
     "InventorySource": {
-      "Id": 2,
+      "Id": 5,
       "InventoryType": 1,
       "IsActive": true,
       "Name": "CNN"
@@ -717,7 +717,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-06-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -760,7 +760,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -803,7 +803,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -865,7 +865,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -913,7 +913,7 @@
     "DaypartCode": "PM News",
     "EndDate": null,
     "InventorySource": {
-      "Id": 2,
+      "Id": 5,
       "InventoryType": 1,
       "IsActive": true,
       "Name": "CNN"
@@ -923,7 +923,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-06-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -966,7 +966,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1009,7 +1009,7 @@
         "DaypartCode": "PM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1076,7 +1076,7 @@
     "DaypartCode": "AM News",
     "EndDate": null,
     "InventorySource": {
-      "Id": 2,
+      "Id": 5,
       "InventoryType": 1,
       "IsActive": true,
       "Name": "CNN"
@@ -1086,7 +1086,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1148,7 +1148,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1210,7 +1210,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1272,7 +1272,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1372,7 +1372,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1415,7 +1415,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1520,7 +1520,7 @@
     "DaypartCode": "AM News",
     "EndDate": null,
     "InventorySource": {
-      "Id": 2,
+      "Id": 5,
       "InventoryType": 1,
       "IsActive": true,
       "Name": "CNN"
@@ -1530,7 +1530,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1592,7 +1592,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1654,7 +1654,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1716,7 +1716,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1816,7 +1816,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1859,7 +1859,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -1964,7 +1964,7 @@
     "DaypartCode": "AM News",
     "EndDate": null,
     "InventorySource": {
-      "Id": 2,
+      "Id": 5,
       "InventoryType": 1,
       "IsActive": true,
       "Name": "CNN"
@@ -1974,7 +1974,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -2036,7 +2036,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -2098,7 +2098,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -2160,7 +2160,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -2260,7 +2260,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -2303,7 +2303,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -2408,7 +2408,7 @@
     "DaypartCode": "AM News",
     "EndDate": null,
     "InventorySource": {
-      "Id": 2,
+      "Id": 5,
       "InventoryType": 1,
       "IsActive": true,
       "Name": "CNN"
@@ -2418,7 +2418,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -2480,7 +2480,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -2542,7 +2542,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -2642,7 +2642,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -2685,7 +2685,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -2790,7 +2790,7 @@
     "DaypartCode": "AM News",
     "EndDate": null,
     "InventorySource": {
-      "Id": 2,
+      "Id": 5,
       "InventoryType": 1,
       "IsActive": true,
       "Name": "CNN"
@@ -2800,7 +2800,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -2862,7 +2862,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -2924,7 +2924,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -3024,7 +3024,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {
@@ -3067,7 +3067,7 @@
         "DaypartCode": "AM News",
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
-        "InventorySourceId": 2,
+        "InventorySourceId": 5,
         "ManifestAudiences": [],
         "ManifestDayparts": [
           {

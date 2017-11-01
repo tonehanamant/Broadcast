@@ -8,7 +8,7 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -252,7 +252,7 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -496,7 +496,7 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -698,7 +698,7 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -900,7 +900,7 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -1060,7 +1060,7 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -1498,7 +1498,7 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -1936,7 +1936,7 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -2374,7 +2374,7 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -2751,7 +2751,7 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -3125,10 +3125,9 @@
       "StartDate": "2016-10-31T00:00:00"
     }
   ],
-  "InventorySourceId": 0,
+  "InventorySource": null,
   "PlaybackType": 0,
   "RatingBook": null,
-  "Source": "Blank",
   "StartDate": "0001-01-01T00:00:00",
   "StationContacts": [],
   "UniqueIdentifier": null

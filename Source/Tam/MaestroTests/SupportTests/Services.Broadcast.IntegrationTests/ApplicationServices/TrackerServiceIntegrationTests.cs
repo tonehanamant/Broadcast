@@ -541,7 +541,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = InventoryFile.InventorySource.CNN;
+                schedule.InventorySource = InventorySourceEnum.CNN;
 
                 saveRequest.Schedule = schedule;
 
@@ -946,7 +946,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 schedule.FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - Estimate4401.scx", FileMode.Open,
                     FileAccess.Read);
-                schedule.InventorySource = InventoryFile.InventorySource.TVB;
+                schedule.InventorySource = InventorySourceEnum.TVB;
                 schedule.PostType = SchedulePostType.NTI;
                 saveRequest.Schedule = schedule;
 
@@ -1037,7 +1037,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = InventoryFile.InventorySource.CNN;
+                schedule.InventorySource = InventorySourceEnum.CNN;
 
                 saveRequest.Schedule = schedule;
 
@@ -1088,7 +1088,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
                 schedule.FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx", FileMode.Open,
                     FileAccess.Read);
-                schedule.InventorySource = InventoryFile.InventorySource.OpenMarket;
+                schedule.InventorySource = InventorySourceEnum.OpenMarket;
                 schedule.PostType = SchedulePostType.NSI;
                 saveRequest.Schedule = schedule;
                 var scheduleId = _Sut.SaveSchedule(saveRequest);
@@ -1151,7 +1151,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = InventoryFile.InventorySource.CNN;
+                schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
                    new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
@@ -1210,7 +1210,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = InventoryFile.InventorySource.CNN;
+                schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
                    new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
@@ -1293,7 +1293,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = InventoryFile.InventorySource.CNN;
+                schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
                    new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
@@ -1338,7 +1338,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = InventoryFile.InventorySource.CNN;
+                schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
                    new BvsTrackingAudience() {AudienceId = 31, Rank = 1}
@@ -1414,7 +1414,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = InventoryFile.InventorySource.CNN;
+                schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
                    new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
@@ -1461,7 +1461,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = InventoryFile.InventorySource.CNN;
+                schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
                    new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
@@ -1520,7 +1520,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             schedule.PostType = SchedulePostType.NTI;
-            schedule.InventorySource = InventoryFile.InventorySource.CNN;
+            schedule.InventorySource = InventorySourceEnum.CNN;
             schedule.Audiences = new List<BvsTrackingAudience>
                 {
                    new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
@@ -1598,7 +1598,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             schedule.PostType = SchedulePostType.NTI;
-            schedule.InventorySource = InventoryFile.InventorySource.CNN;
+            schedule.InventorySource = InventorySourceEnum.CNN;
             schedule.Audiences = new List<BvsTrackingAudience>
                 {
                    new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
@@ -1664,7 +1664,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
                         new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
                     };
-                    schedule.InventorySource = InventoryFile.InventorySource.OpenMarket;
+                    schedule.InventorySource = InventorySourceEnum.OpenMarket;
 
                     saveRequest.Schedule = schedule;
                     _Sut.SaveSchedule(saveRequest);
@@ -1800,7 +1800,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             schedule.PostType = SchedulePostType.NSI;
-            schedule.InventorySource = InventoryFile.InventorySource.Assembly;
+            schedule.InventorySource = InventorySourceEnum.Assembly;
             saveRequest.Schedule = schedule;
             var scheduleId = sut.SaveSchedule(saveRequest);
 
@@ -1943,7 +1943,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 schedule.FileStream = new FileStream(@".\Files\SCX Overlapping Fields.scx", FileMode.Open,
                     FileAccess.Read);
-                schedule.InventorySource = InventoryFile.InventorySource.OpenMarket;
+                schedule.InventorySource = InventorySourceEnum.OpenMarket;
                 schedule.PostType = SchedulePostType.NTI;
                 saveRequest.Schedule = schedule;
 
@@ -1998,7 +1998,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 schedule.FileStream = new FileStream(@".\Files\" + scxFileName, FileMode.Open,
                     FileAccess.Read);
-                schedule.InventorySource = InventoryFile.InventorySource.OpenMarket;
+                schedule.InventorySource = InventorySourceEnum.OpenMarket;
                 schedule.PostType = SchedulePostType.NTI;
                 saveRequest.Schedule = schedule;
 
@@ -2071,7 +2071,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = InventoryFile.InventorySource.OpenMarket;
+                schedule.InventorySource = InventorySourceEnum.OpenMarket;
                 saveRequest.Schedule = schedule;
                 int scheduleId = sut.SaveSchedule(saveRequest);
 
