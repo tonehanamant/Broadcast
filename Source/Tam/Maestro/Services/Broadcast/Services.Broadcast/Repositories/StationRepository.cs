@@ -15,12 +15,12 @@ namespace Services.Broadcast.Repositories
 {
     public interface IStationRepository : IDataRepository
     {
-        List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(InventoryFile.InventorySource inventorySource);
+        List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(InventorySource inventorySource);
         DisplayBroadcastStation GetBroadcastStationByCode(int code);
         DisplayBroadcastStation GetBroadcastStationByLegacyCallLetters(string callLetters);
         DisplayBroadcastStation GetBroadcastStationByCallLetters(string stationCallLetters);
         List<DisplayBroadcastStation> GetBroadcastStationListByLegacyCallLetters(List<string> stationNameList);
-        List<DisplayBroadcastStation> GetBroadcastStationsByFlightWeek(InventoryFile.InventorySource inventorySource, int mediaWeekId, bool isIncluded);
+        List<DisplayBroadcastStation> GetBroadcastStationsByFlightWeek(InventorySource inventorySource, int mediaWeekId, bool isIncluded);
         List<DisplayBroadcastStation> GetBroadcastStationListByStationCode(List<int> fileStationCodes);
         int GetBroadcastStationCodeByContactId(int stationContactId);
         void UpdateStation(int code, string user, DateTime timeStamp);
@@ -35,7 +35,7 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(InventoryFile.InventorySource inventorySource)
+        public List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(InventorySource inventorySource)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -52,19 +52,19 @@ namespace Services.Broadcast.Repositories
                             MarketCode = s.market_code,
                             ModifiedDate = s.modified_date,
                             FlightWeeks = (from m in s.station_inventory_manifest
-                                           join g in context.inventory_sources on m.inventory_source_id equals g.id
                                            join p in context.station_inventory_manifest_generation on m.id equals p.station_inventory_manifest_id
-                                           // todo: review this equality
-                                where g.name.ToLower().Equals(inventorySource.ToString().ToLower())
-                                select new FlightWeekDto
-                                {
-                                    Id = p.media_week_id
-                                }).Distinct().OrderBy(a=>a.Id).ToList()
+                                           where m.inventory_source_id == inventorySource.Id
+                                           select new FlightWeekDto
+                                           {
+                                               Id = p.media_week_id
+                                           }).Distinct().
+                                              OrderBy(a => a.Id).
+                                              ToList()
                         }).ToList();
                 });
         }
 
-        public List<DisplayBroadcastStation> GetBroadcastStationsByFlightWeek(InventoryFile.InventorySource inventorySource, int mediaWeekId, bool isIncluded)
+        public List<DisplayBroadcastStation> GetBroadcastStationsByFlightWeek(InventorySource inventorySource, int mediaWeekId, bool isIncluded)
         {
             //TODO: Fixme or remove.
             return new List<DisplayBroadcastStation>();

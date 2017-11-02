@@ -9,18 +9,18 @@ namespace Services.Broadcast.Converters.RateImport
 {
     public interface IInventoryFileImporterFactory
     {
-        InventoryFileImporterBase GetFileImporterInstance(InventoryFile.InventorySource inventorySource);
+        InventoryFileImporterBase GetFileImporterInstance(InventorySource inventorySource);
     }
 
     public class InventoryFileImporterFactory : IInventoryFileImporterFactory
     {
-        private BroadcastDataDataRepositoryFactory _broadcastDataDataRepositoryFactory;
+        private readonly BroadcastDataDataRepositoryFactory _broadcastDataDataRepositoryFactory;
         private readonly IDaypartCache _daypartCache;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IInventoryFileValidator _InventoryFileValidator;
 
-        private ICNNStationInventoryGroupService _CNNStationInventoryGroupService;
+        private readonly ICNNStationInventoryGroupService _CNNStationInventoryGroupService;
         private readonly IInventoryRepository _inventoryRepository;
 
         public InventoryFileImporterFactory(BroadcastDataDataRepositoryFactory broadcastDataFactory,
@@ -39,28 +39,27 @@ namespace Services.Broadcast.Converters.RateImport
             _inventoryRepository = _broadcastDataDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
 
-        public InventoryFileImporterBase GetFileImporterInstance(InventoryFile.InventorySource inventorySource)
+        public InventoryFileImporterBase GetFileImporterInstance(InventorySource inventorySource)
         {
             InventoryFileImporterBase fileImporter;
-            switch (inventorySource)
+            
+            switch (inventorySource.Name)
             {
-                case InventoryFile.InventorySource.CNN:
+                case "CNN":
                     fileImporter = new CNNFileImporter(_CNNStationInventoryGroupService,_InventoryFileValidator);
                     break;
-                case InventoryFile.InventorySource.TTNW:
+                case "TTNW":
                     fileImporter = new TTNWFileImporter();
-
                     break;
                 default:
                     throw new NotImplementedException("Open market imports not supported.");
             }
-            var source = _inventoryRepository.GetInventorySourceByName(inventorySource.ToString());
 
             fileImporter.BroadcastDataDataRepository = _broadcastDataDataRepositoryFactory;
             fileImporter.DaypartCache = _daypartCache;
             fileImporter.MediaMonthAndWeekAggregateCache = _MediaMonthAndWeekAggregateCache;
             fileImporter.AudiencesCache = _AudiencesCache;
-            fileImporter.InventorySource = source;
+            fileImporter.InventorySource = inventorySource;
 
             return fileImporter;
         }

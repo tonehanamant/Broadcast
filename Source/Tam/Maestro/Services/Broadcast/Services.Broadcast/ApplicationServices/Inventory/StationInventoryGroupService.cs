@@ -45,28 +45,25 @@ namespace Services.Broadcast.ApplicationServices
 
         public void SaveStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
-            //TODO: GetInventorySourceByName needs to change to make the inventory source and inventory type compatible
-            var inventorySource = _inventoryRepository.GetInventorySourceByName(inventoryFile.Source.ToString());
-
-            if (inventorySource == null || !inventorySource.IsActive)
+            if (inventoryFile.InventorySource == null || !inventoryFile.InventorySource.IsActive)
                 throw new Exception(string.Format("The selected source type is invalid or inactive."));
 
             var expireDate = request.EffectiveDate.AddDays(-1);
-            _ExpireExistingInventory(inventoryFile.InventoryGroups,inventoryFile.Source,expireDate);
+            
+            _ExpireExistingInventory(inventoryFile.InventoryGroups, inventoryFile.InventorySource, expireDate);
 
-            inventoryFile.InventorySourceId = inventorySource.Id;
             _inventoryRepository.SaveInventoryGroups(inventoryFile);
         }
 
-        private List<StationInventoryGroup> _ExpireExistingInventory(List<StationInventoryGroup> groups, InventoryFile.InventorySource source,DateTime expireDate)
+        private List<StationInventoryGroup> _ExpireExistingInventory(IEnumerable<StationInventoryGroup> groups, InventorySource source, DateTime expireDate)
         {
             var groupNames = groups.Select(g => g.Name).Distinct().ToList();
-            var existingInventory = _inventoryRepository.GetActiveInventoryBySourceAndName(source,groupNames);
+            var existingInventory = _inventoryRepository.GetActiveInventoryBySourceAndName(source, groupNames);
 
             if (!existingInventory.Any())
                 return existingInventory;
 
-            _inventoryRepository.ExpireInventoryGroupsAndManifests(existingInventory,expireDate);
+            _inventoryRepository.ExpireInventoryGroupsAndManifests(existingInventory, expireDate);
 
             return existingInventory;
         }

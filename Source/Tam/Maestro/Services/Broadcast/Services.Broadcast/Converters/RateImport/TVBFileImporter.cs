@@ -32,10 +32,6 @@ namespace Services.Broadcast.Converters.RateImport
         private Dictionary<string, int> _audienceFields;
         private Dictionary<string, DisplayAudience> _audienceMapping;
 
-        public override Entities.InventoryFile.InventorySource InventoryFileSource
-        {
-            get { return InventoryFile.InventorySource.TVB; }
-        }
         public override InventorySource InventorySource { get; set; }
 
         public override void ExtractFileData(System.IO.Stream stream, Entities.InventoryFile inventoryFile, DateTime effecitveDate,List<Entities.InventoryFileProblem> fileProblems)
