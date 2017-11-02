@@ -43,10 +43,6 @@ namespace Services.Broadcast.Converters.RateImport
 
         }
 
-        public override InventoryFile.InventorySource InventoryFileSource
-        {
-            get { return InventoryFile.InventorySource.TTNW; }
-        }
         public override InventorySource InventorySource { get; set; }
 
         public override void ExtractFileData(System.IO.Stream stream, InventoryFile inventoryFile, DateTime effectiveDate,List<InventoryFileProblem> fileProblems)

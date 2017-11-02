@@ -27,6 +27,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IInventoryService _InventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
         private IStationInventoryGroupService _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
         private IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+        private static InventorySource _ttnwInventorySource;
+        private static InventorySource _cnnInventorySource;
+
+        public InventoryFileServiceIntegrationTests()
+        {
+            var inventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+
+            _ttnwInventorySource = inventoryRepository.GetInventorySourceByName("TTNW");
+            _cnnInventorySource = inventoryRepository.GetInventorySourceByName("CNN");
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -51,7 +61,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsNotNull(result.FileId);
                 // for this we are only concern with "AM New"
                 var daypartCodes = new List<string>() { "AM News","PM News"};
-                VerifyInventory(InventoryFile.InventorySource.CNN,daypartCodes);
+                VerifyInventory(_cnnInventorySource, daypartCodes);
             }
         }
 
@@ -106,13 +116,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
                 var daypartCodes = new List<string>() { "AM News","PM News" };
-                VerifyInventory(InventoryFile.InventorySource.CNN ,daypartCodes);
+                VerifyInventory(_cnnInventorySource, daypartCodes);
             }
         }
 
-        private void VerifyInventory(InventoryFile.InventorySource source,List<string> daypartCodes)
+        private void VerifyInventory(InventorySource source,List<string> daypartCodes)
         {
-            var inventory = _InventoryRepository.GetActiveInventoryByTypeAndDapartCodes(source,daypartCodes);
+            var inventory = _InventoryRepository.GetActiveInventoryByTypeAndDapartCodes(source, daypartCodes);
 
             VerifyInventoryRaw(inventory);
         }
@@ -155,11 +165,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
                 var daypartCodes = new List<string>() { "LN1" };
-                var inventoryGroups = _InventoryRepository.GetActiveInventoryBySourceAndName(InventoryFile.InventorySource.TTNW, daypartCodes);
+                var inventoryGroups = _InventoryRepository.GetActiveInventoryBySourceAndName(_ttnwInventorySource, daypartCodes);
 
                 _InventoryRepository.ExpireInventoryGroupsAndManifests(inventoryGroups,expireDate);
 
-                inventoryGroups = _InventoryRepository.GetInventoryBySourceAndName(InventoryFile.InventorySource.TTNW,daypartCodes);
+                inventoryGroups = _InventoryRepository.GetInventoryBySourceAndName(_ttnwInventorySource, daypartCodes);
 
                 VerifyInventoryRaw(inventoryGroups);
             }
@@ -186,7 +196,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
                 var daypartCodes = new List<string>() { "LN" };
-                VerifyInventory(InventoryFile.InventorySource.TTNW, daypartCodes);
+                VerifyInventory(_ttnwInventorySource, daypartCodes);
             }
         }
 
@@ -222,11 +232,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 result = _InventoryFileService.SaveInventoryFile(request);
 
                 var daypartCodes = new List<string>() {"LN"};
-                VerifyInventory(InventoryFile.InventorySource.TTNW,daypartCodes);
+                VerifyInventory(_ttnwInventorySource, daypartCodes);
             }
         }
-
-
 
         [Test]
         [ExpectedException(typeof(BroadcastDuplicateInventoryFileException))]

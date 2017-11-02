@@ -83,7 +83,7 @@ namespace Services.Broadcast.Repositories
                         bvsPostDetails,
                         mediaWeeks,
                         (SchedulePostType)schedule.post_type,
-                        (InventoryFile.InventorySource)schedule.inventory_source,
+                        (InventorySourceEnum)schedule.inventory_source,
                         schedule.equivalized,
                         schedule.start_date,
                         schedule.end_date,

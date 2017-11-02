@@ -33,12 +33,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-
                 //var filename = @".\Files\TTNW_AMNews-06.09.17.xlsx";
                 var filename = @".\Files\TTNW_06.09.17.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
-                var inventoryFile = new InventoryFile();
+                var inventoryFile = new InventoryFile
+                {
+                    InventorySource = GetTtnwInventorySource()
+                };
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
@@ -66,11 +68,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-
                 var filename = @".\Files\TTNW_AMNews-06.09.17.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
-                var inventoryFile = new InventoryFile();
+                var inventoryFile = new InventoryFile
+                {
+                    InventorySource = GetTtnwInventorySource()
+                };
 
                 var  effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
@@ -89,7 +93,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var json = IntegrationTestHelper.ConvertToJson(new {inventoryFile, fileProblems}, jsonSettings);
                 Approvals.Verify(json);
             }
-        }
+        }     
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -99,11 +103,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-
                 var filename = @".\Files\TTNW_EN_06.09.17.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
-                var inventoryFile = new InventoryFile();
+                var inventoryFile = new InventoryFile
+                {
+                    InventorySource = GetTtnwInventorySource()
+                };
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
@@ -132,7 +138,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-
                 var filename = @".\Files\TTNW_InvalidStation.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
@@ -163,7 +168,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-
                 var filename = @".\Files\TTNW_NoKnownStations.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
@@ -193,7 +197,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-
                 var filename = @".\Files\TTNW_InvalidDaypartSpots.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
@@ -223,11 +226,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-
                 var filename = @".\Files\TTNW_ValidDayparts.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
-                var inventoryFile = new InventoryFile();
+                var inventoryFile = new InventoryFile
+                {
+                    InventorySource = GetTtnwInventorySource()
+                };
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
@@ -279,5 +284,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        private static InventorySource GetTtnwInventorySource()
+        {
+            return new InventorySource
+            {
+                Id = 4,
+                InventoryType = InventoryType.NationalUnit,
+                IsActive = true,
+                Name = "TTNW"
+            };
+        }
     }
 }

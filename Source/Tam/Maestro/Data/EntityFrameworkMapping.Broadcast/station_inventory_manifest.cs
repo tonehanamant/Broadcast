@@ -32,7 +32,6 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> spots_per_day { get; set; }
         public Nullable<System.DateTime> end_date { get; set; }
     
-        public virtual inventory_files inventory_files { get; set; }
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
         public virtual station_inventory_group station_inventory_group { get; set; }
@@ -40,5 +39,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual station station { get; set; }
         public virtual ICollection<station_inventory_manifest_generation> station_inventory_manifest_generation { get; set; }
+        public virtual inventory_files inventory_files { get; set; }
     }
 }
