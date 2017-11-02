@@ -59,6 +59,10 @@ var ImportThirdPartyViewModel = function (controller) {
     $scope.playbackTypeOptions = ko.observableArray();
     $scope.selectedPlaybackType = ko.observable();
 
+    //store variables for resetting - not observables
+    $scope.defaultPlaybackType = null;
+    $scope.defaultRatingBook = null;
+
     //DEMO/CPM TABLE
 
     $scope.demos = ko.observableArray();
@@ -156,7 +160,11 @@ var ImportThirdPartyViewModel = function (controller) {
     $scope.initOptions = function (options) {
         $scope.ratingBookOptions(options.RatingBooks);
         $scope.playbackTypeOptions(options.PlaybackTypes);
-        $scope.selectedPlaybackType(options.DefaultPlaybackType);
+        //problematic as only set once here - not on subsequent activations
+        //store the defaults for defaultPlaybackType and defaultRatingBook (use first) to use when activate
+        //$scope.selectedPlaybackType(options.DefaultPlaybackType);
+        $scope.defaultPlaybackType = options.DefaultPlaybackType;
+        $scope.defaultRatingBook = options.RatingBooks[0].Id;
         //sort alphabetically
         options.Audiences = _.sortBy(options.Audiences, ['Display']);
         $scope.demoOptions(options.Audiences);
@@ -176,7 +184,11 @@ var ImportThirdPartyViewModel = function (controller) {
         $scope.allowDemoFixed(($scope.InventorySource() == 'CNN') ? true : false);
 
         $scope.FileName(fileRequest.FileName);
-       
+
+        //reset these here per stored defaults
+        $scope.selectedPlaybackType($scope.defaultPlaybackType);
+        $scope.selectedRatingBook($scope.defaultRatingBook);
+
         $scope.EffectiveDate(null);
         $scope.demos([]);
         $scope.initDemoItem();
