@@ -751,7 +751,23 @@ BEGIN
 	REFERENCES inventory_sources (id)
 END
 
+GO
+
 /*************************************** BCOP-1782/2097 - END *****************************************************/
+
+/*************************************** BCOP-2149 - START *****************************************************/
+
+IF EXISTS (SELECT * FROM inventory_sources
+		   WHERE name = 'Open Market')
+BEGIN
+	UPDATE inventory_sources
+	SET name = 'OpenMarket'
+	WHERE name = 'Open Market'
+END
+
+GO
+
+/*************************************** BCOP-2149 - END *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

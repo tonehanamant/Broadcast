@@ -526,7 +526,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private InventorySource _ParseInventorySourceOrDefault(string sourceString)
         {
-            const string defaultInventorySource = "Open Market";
+            const string defaultInventorySource = "OpenMarket";
 
             if (string.IsNullOrEmpty(sourceString))
             {
