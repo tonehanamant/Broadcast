@@ -42,7 +42,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -84,7 +84,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -145,7 +145,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -187,7 +187,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 4,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "IND",
@@ -229,7 +229,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 2,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -286,7 +286,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -328,7 +328,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -389,7 +389,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -431,7 +431,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 4,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "IND",
@@ -473,7 +473,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 2,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -530,7 +530,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -572,7 +572,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -633,7 +633,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -675,7 +675,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 4,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "IND",
@@ -732,7 +732,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -774,7 +774,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -835,7 +835,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -877,7 +877,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 4,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "IND",
@@ -934,7 +934,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -976,7 +976,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1037,7 +1037,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1113,7 +1113,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1174,7 +1174,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 3,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1235,7 +1235,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1334,7 +1334,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "NBC",
@@ -1376,7 +1376,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1475,7 +1475,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 8,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 2,
           "Station": {
             "Affiliation": "FOX",
@@ -1551,7 +1551,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1612,7 +1612,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 3,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1673,7 +1673,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1772,7 +1772,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "NBC",
@@ -1814,7 +1814,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1913,7 +1913,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 8,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 2,
           "Station": {
             "Affiliation": "FOX",
@@ -1989,7 +1989,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2050,7 +2050,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 3,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2111,7 +2111,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2210,7 +2210,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "NBC",
@@ -2252,7 +2252,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2351,7 +2351,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 8,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 2,
           "Station": {
             "Affiliation": "FOX",
@@ -2427,7 +2427,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2488,7 +2488,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2587,7 +2587,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "NBC",
@@ -2629,7 +2629,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2728,7 +2728,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 8,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "FOX",
@@ -2804,7 +2804,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2865,7 +2865,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2964,7 +2964,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "NBC",
@@ -3006,7 +3006,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -3105,7 +3105,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 8,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "FOX",
