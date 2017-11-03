@@ -33,6 +33,7 @@ namespace Services.Broadcast.Entities
         public InventoryFile()
         {
             InventoryGroups = new List<StationInventoryGroup>();
+            InventoryManifests = new List<StationInventoryManifest>();
         }
 
         public int Id { get; set; }
@@ -64,6 +65,7 @@ namespace Services.Broadcast.Entities
         }
 
         public List<StationInventoryGroup> InventoryGroups { get; set; }
+        public List<StationInventoryManifest> InventoryManifests { get; set; } //Only used for OpenMarket
 
     }
 }

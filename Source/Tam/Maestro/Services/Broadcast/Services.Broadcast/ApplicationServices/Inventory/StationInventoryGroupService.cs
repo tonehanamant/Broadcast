@@ -55,7 +55,7 @@ namespace Services.Broadcast.ApplicationServices
             _ExpireExistingInventory(inventoryFile.InventoryGroups,inventoryFile.Source,expireDate);
 
             inventoryFile.InventorySourceId = inventorySource.Id;
-            _inventoryRepository.SaveInventoryGroups(inventoryFile);
+            _inventoryRepository.SaveInventory(inventoryFile);
         }
 
         private List<StationInventoryGroup> _ExpireExistingInventory(List<StationInventoryGroup> groups, InventoryFile.InventorySource source,DateTime expireDate)

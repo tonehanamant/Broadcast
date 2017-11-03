@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System;
+using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventoryOpenMarketFileXml;
 using System;
@@ -49,9 +50,8 @@ namespace Services.Broadcast.Converters.RateImport
             inventoryFile.UniqueIdentifier = message.Proposal.uniqueIdentifier;
             inventoryFile.StartDate = message.Proposal.startDate;
             inventoryFile.EndDate = message.Proposal.endDate;
-            inventoryFile.InventoryGroups.Add(new StationInventoryGroup());
 
-            inventoryFile.InventoryGroups.First().Manifests.AddRange(BuildStationProgramList(message.Proposal, fileProblems));
+            inventoryFile.InventoryManifests.AddRange(BuildStationProgramList(message.Proposal, fileProblems));
 
             return inventoryFile;
         }
@@ -69,9 +69,6 @@ namespace Services.Broadcast.Converters.RateImport
                     return manifests;
                 }
 
-                var spotLengths =
-                    _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
-
                 if (proposal.AvailList == null || (proposal.AvailList.AvailLineWithDetailedPeriods == null && proposal.AvailList.AvailLineWithPeriods == null))
                 {
                     throw new Exception("Can't find XML elements in order to build station programs from.");
@@ -79,12 +76,12 @@ namespace Services.Broadcast.Converters.RateImport
 
                 if (proposal.AvailList.AvailLineWithDetailedPeriods != null)
                 {
-                    BuildProgramsFromAvailLineWithDetailedPeriods(proposal, fileProblems, audienceMap, validStations, spotLengths, manifests);
+                    BuildProgramsFromAvailLineWithDetailedPeriods(proposal, fileProblems, audienceMap, validStations, manifests);
                 }
 
                 if (proposal.AvailList.AvailLineWithPeriods != null)
                 {
-                    BuildProgramsFromAvailLineWithPeriods(proposal, fileProblems, audienceMap, validStations, spotLengths, manifests);
+                    BuildProgramsFromAvailLineWithPeriods(proposal, fileProblems, audienceMap, validStations, manifests);
                 }
 
                 return manifests;
@@ -129,7 +126,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             private void BuildProgramsFromAvailLineWithDetailedPeriods(AAAAMessageProposal proposal, List<InventoryFileProblem> fileProblems,
-                Dictionary<string, DisplayAudience> audienceMap, Dictionary<string, DisplayBroadcastStation> validStations, Dictionary<int, int> spotLengths,
+                Dictionary<string, DisplayAudience> audienceMap, Dictionary<string, DisplayBroadcastStation> validStations,
                 List<StationInventoryManifest> manifests)
             {
                 var effectiveDate = DateTime.Now;
@@ -150,9 +147,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                         var spotLength = availLine.SpotLength.Minute * SecondsPerMinute +
                                              availLine.SpotLength.Second;
-                        var spotLengthId = spotLengths[spotLength];
-
-                        var manifestRates = _GetManifestRatesforAvailLineWithPeriods(spotLengthId, availLine);
+                        var spotLengthId = SpotLengthIdsByLength[spotLength];
 
                         if (availLine.Periods != null && availLine.Periods.Count() > 0)
                         {
@@ -160,6 +155,8 @@ namespace Services.Broadcast.Converters.RateImport
                             //create a manifest for each period
                             foreach (var availLinePeriod in availLine.Periods)
                             {
+                                var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, availLinePeriod, programName, callLetters, fileProblems);
+
                                 var manifestAudiences = _GetManifestAudienceListForAvailLineWithPeriods(
                                     proposal,
                                     audienceMap,
@@ -194,21 +191,98 @@ namespace Services.Broadcast.Converters.RateImport
 
             }
 
-            private List<StationInventoryManifestRate> _GetManifestRatesforAvailLineWithPeriods(int spotLengthId, AAAAMessageProposalAvailListAvailLineWithDetailedPeriods availLine)
+            private List<StationInventoryManifestRate> _GetManifestRatesforAvailLineWithPeriods(int spotLengthId,
+                AAAAMessageProposalAvailListAvailLineWithPeriods availLine, string stationCallLetters, List<InventoryFileProblem> fileProblems)
             {
                 var manifestRates = new List<StationInventoryManifestRate>();
+                var spotLength = SpotLengthsById[spotLengthId];
 
-                var manifestRate = new StationInventoryManifestRate()
+                var availLineRate = string.IsNullOrEmpty(availLine.Rate) ? 0 : decimal.Parse(availLine.Rate);
+
+                if (spotLength == 30)
                 {
+                    manifestRates.AddRange(_GetManifestRatesFromMultipliers(availLineRate));
+                }
+                else
+                {
+                    switch (spotLength)
+                    {
+                        case 15:
+                        case 60:
+                        case 90:
+                        case 120:
+                            var manifestRate = new StationInventoryManifestRate()
+                            {
+                                SpotLengthId = spotLengthId,
+                                Rate = availLineRate
+                            };
+                            manifestRates.Add(manifestRate);
+                            break;
+                        default:
+                            fileProblems.Add(
+                                new InventoryFileProblem()
+                                {
+                                    ProblemDescription =
+                                        string.Format(
+                                            "Unknown spot length found: {0}",
+                                            spotLength),
+                                    ProgramName = availLine.AvailName,
+                                    StationLetters = stationCallLetters
+                                });
+                            break;
+                    }
+                }
 
-                };
+                return manifestRates;
+            }
 
-                manifestRates.Add(manifestRate);
+            private List<StationInventoryManifestRate> _GetManifestRatesforAvailLineWithDetailedPeriods(int spotLengthId,
+                AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriod detailedPeriod, string programName, string stationCallLetters, List<InventoryFileProblem> fileProblems)
+            {
+                var manifestRates = new List<StationInventoryManifestRate>();
+                var spotLength = SpotLengthsById[spotLengthId];
+
+                var availLineRate = string.IsNullOrEmpty(detailedPeriod.Rate) ? 0 : decimal.Parse(detailedPeriod.Rate);
+
+                if (spotLength == 30)
+                {
+                    manifestRates.AddRange(_GetManifestRatesFromMultipliers(availLineRate));
+                }
+                else
+                {
+                    switch (spotLength)
+                    {
+                        case 15:
+                        case 60:
+                        case 90:
+                        case 120:
+                            var manifestRate = new StationInventoryManifestRate()
+                            {
+                                SpotLengthId = spotLengthId,
+                                Rate = availLineRate
+                            };
+                            manifestRates.Add(manifestRate);
+                            break;
+                        default:
+                            fileProblems.Add(
+                                new InventoryFileProblem()
+                                {
+                                    ProblemDescription =
+                                        string.Format(
+                                            "Unknown spot length found: {0}",
+                                            spotLength),
+                                    ProgramName = programName,
+                                    StationLetters = stationCallLetters
+                                });
+                            break;
+                    }
+                }
+
                 return manifestRates;
             }
 
             private void BuildProgramsFromAvailLineWithPeriods(AAAAMessageProposal proposal, List<InventoryFileProblem> fileProblems,
-                Dictionary<string, DisplayAudience> audienceMap, Dictionary<string, DisplayBroadcastStation> validStations, Dictionary<int ,int> spotLengths, 
+                Dictionary<string, DisplayAudience> audienceMap, Dictionary<string, DisplayBroadcastStation> validStations,
                 List<StationInventoryManifest> manifests)
             {
                 var effectiveDate = DateTime.Now;
@@ -229,7 +303,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                         var spotLength = availLine.SpotLength.Minute * SecondsPerMinute +
                                              availLine.SpotLength.Second;
-                        var spotLengthId = spotLengths[spotLength];
+                        var spotLengthId = SpotLengthIdsByLength[spotLength];
 
                         var manifestAudiences = _GetManifestAudienceListForAvailLineWithPeriods(
                             proposal,
@@ -379,140 +453,6 @@ namespace Services.Broadcast.Converters.RateImport
 
                 return result;
             }
-
-//            private List<StationProgramFlightWeek> BuildFlightWeeksFromDetailedPeriods(AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriod[] detailedPeriods,
-//                int spotLength, AAAAMessageProposal proposal, Dictionary<string, DisplayAudience> audienceMap, StationProgram program, List<RatesFileProblem> fileProblems)
-        //            {
-//                List<StationProgramFlightWeek> flightWeeks = new List<StationProgramFlightWeek>();
-//                foreach (var detailPeriod in detailedPeriods)
-//                {
-//                    var rate = string.IsNullOrEmpty(detailPeriod.Rate) ? 0 : decimal.Parse(detailPeriod.Rate);
-//                    var periodFlightWeeks = BuildFlightWeeks(detailPeriod.startDate, detailPeriod.endDate, rate,
-//                                                            ToDemoValueDict(detailPeriod.DemoValues), spotLength, proposal, audienceMap,
-//                                                            program, fileProblems);
-//                    if (periodFlightWeeks != null && periodFlightWeeks.Count() > 0)
-//                    {
-//                        flightWeeks.AddRange(periodFlightWeeks);
-//                    }
-//                }
-//                return flightWeeks;
-//
-        //            }
-
-//            private List<StationProgramFlightWeek> BuildFlightWeeksFromPeriods(AAAAMessageProposalAvailListAvailLineWithPeriodsPeriod[] periods, decimal programRate, Dictionary<string, decimal> demoValues,
-//        int spotLength, AAAAMessageProposal proposal, Dictionary<string, DisplayAudience> audienceMap, StationProgram program, List<RatesFileProblem> fileProblems)
-        //            {
-//                List<StationProgramFlightWeek> flightWeeks = new List<StationProgramFlightWeek>();
-//                foreach (var period in periods)
-//                {
-//                    var periodFlightWeeks = BuildFlightWeeks(period.startDate, period.endDate, programRate, demoValues, spotLength, proposal,
-//                                                            audienceMap, program, fileProblems);
-//                    if (periodFlightWeeks != null && periodFlightWeeks.Count() > 0)
-//                    {
-//                        flightWeeks.AddRange(periodFlightWeeks);
-//                    }
-//                }
-//                return flightWeeks;
-//
-        //            }
-
-//            private List<StationProgramFlightWeek> BuildFlightWeeks(DateTime periodStart, DateTime PeriodEnd, decimal periodRate, Dictionary<string, decimal> demoValues,
-//                int spotLength, AAAAMessageProposal proposal, Dictionary<string, DisplayAudience> audienceMap, StationProgram program, List<RatesFileProblem> fileProblems)
-        //            {
-//                List<StationProgramFlightWeek> flightWeeks = new List<StationProgramFlightWeek>();
-//                var mediaWeeks = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(periodStart, PeriodEnd);
-//
-//                foreach (var mediaWeek in mediaWeeks)
-//                {
-//                    var flightWeek = new StationProgramFlightWeek();
-//                    flightWeek.Active = true;
-//                    flightWeek.FlightWeek = mediaWeek;
-//
-//                    // fill in all spots when spotlength is 30
-//                    if (spotLength == 30)
-//                    {
-//                        _ApplySpotLengthRateMultipliers(flightWeek, periodRate);
-//                    }
-//                    else
-//                    {
-//                        switch (spotLength)
-//                        {
-//                            case 15:
-//                                flightWeek.Rate15s = periodRate;
-//                                break;
-//                            case 60:
-//                                flightWeek.Rate60s = periodRate;
-//                                break;
-//                            case 90:
-//                                flightWeek.Rate90s = periodRate;
-//                                break;
-//                            case 120:
-//                                flightWeek.Rate120s = periodRate;
-//                                break;
-//                            default:
-//                                fileProblems.Add(
-//                                    new RatesFileProblem()
-//                                    {
-//                                        ProblemDescription =
-//                                            string.Format(
-//                                                "Unknown spot length found: {0}",
-//                                                spotLength),
-//                                        ProgramName = program.ProgramName,
-//                                        StationLetters = program.StationLegacyCallLetters
-//                                    });
-//                                return new List<StationProgramFlightWeek>(); //returning empty list of flight weeks if any of the weeks has unknown spot length;
-//                        }
-//                    }
-//
-//
-//                    flightWeek.Audiences = BuildFlightWeekAudiences(demoValues, proposal, audienceMap);
-//                    flightWeeks.Add(flightWeek);
-//                }
-//
-//                return flightWeeks;
-        //            }
-
-//            private List<StationProgramFlightWeekAudience> BuildFlightWeekAudiences(Dictionary<string, decimal> demoValues,
-//                AAAAMessageProposal proposal, Dictionary<string, DisplayAudience> audienceMap)
-//            {
-//                List<StationProgramFlightWeekAudience> audiences = new List<StationProgramFlightWeekAudience>();
-//
-//                foreach (var demoValue in demoValues)
-//                {
-//
-//                    var demo = proposal.AvailList.DemoCategories.Where(a => a.DemoId == demoValue.Key).First();
-//                    var audience = audienceMap[demo.DemoId];
-//
-//                    var flightWeekAudience = audiences.Where(a => a.Audience.Id == audience.Id).FirstOrDefault();
-//
-//                    var newFlightWeekAudience = false;
-//                    if (flightWeekAudience == null)
-//                    {
-//                        newFlightWeekAudience = true;
-//                        flightWeekAudience = new StationProgramFlightWeekAudience();
-//                        flightWeekAudience.Audience = audience;
-//                    }
-//
-//                    switch (demo.DemoType)
-//                    {
-//                        case "Impression":
-//                            flightWeekAudience.Impressions = (double) demoValue.Value;
-//                            break;
-//                        case "Rating":
-//                            flightWeekAudience.Rating = (double?) demoValue.Value;
-//                            break;
-//                        default:
-//                            throw new Exception("Unknown DemoType [" + demo.DemoType + "] in rate file.");
-//                    }
-//
-//                    if (newFlightWeekAudience)
-//                    {
-//                        audiences.Add(flightWeekAudience);
-//                    }
-//                }
-//
-//                return audiences;
-//            }
 
             private DisplayAudience GetAudienceForDemo(AAAAMessageProposalAvailListDemoCategory demo)
             {

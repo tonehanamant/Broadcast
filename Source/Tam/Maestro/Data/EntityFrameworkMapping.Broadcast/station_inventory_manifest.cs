@@ -19,12 +19,13 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_manifest_audiences = new HashSet<station_inventory_manifest_audiences>();
             this.station_inventory_manifest_dayparts = new HashSet<station_inventory_manifest_dayparts>();
             this.station_inventory_manifest_generation = new HashSet<station_inventory_manifest_generation>();
+            this.station_inventory_manifest_rates = new HashSet<station_inventory_manifest_rates>();
         }
     
         public int id { get; set; }
         public short station_code { get; set; }
         public int spot_length_id { get; set; }
-        public int spots_per_week { get; set; }
+        public Nullable<int> spots_per_week { get; set; }
         public System.DateTime effective_date { get; set; }
         public int inventory_source_id { get; set; }
         public int station_inventory_group_id { get; set; }
@@ -38,7 +39,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual station_inventory_group station_inventory_group { get; set; }
         public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
-        public virtual station station { get; set; }
         public virtual ICollection<station_inventory_manifest_generation> station_inventory_manifest_generation { get; set; }
+        public virtual ICollection<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
+        public virtual station station { get; set; }
     }
 }

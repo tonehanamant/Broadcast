@@ -649,6 +649,67 @@ GO
 /*************************************** BCOP-2024/2112 - END *****************************************************/
 
 
+/*************************************** BCOP-1945 - START *****************************************************/
+
+-- Spots per week are not available for open market inventory
+ALTER TABLE station_inventory_manifest
+ALTER COLUMN spots_per_week int null
+GO
+-- Updates to manifest audiences
+ALTER TABLE station_inventory_manifest_audiences
+ALTER COLUMN impressions float null
+GO
+IF NOT EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_manifest_audiences'
+	AND COLUMN_NAME = 'rating')
+BEGIN
+	ALTER TABLE station_inventory_manifest_audiences 
+	ADD rating float null
+END
+GO
+
+-- Add program name
+IF NOT EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_manifest_dayparts'
+	AND COLUMN_NAME = 'program_name')
+BEGIN
+	ALTER TABLE station_inventory_manifest_dayparts
+	ADD program_name varchar(63) null
+END
+GO
+
+-- manifest rates table
+if Object_ID(N'[dbo].[station_inventory_manifest_rates]') is null
+BEGIN
+
+	CREATE TABLE [dbo].[station_inventory_manifest_rates](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[station_inventory_manifest_id] [int] NOT NULL,
+		[spot_length_id] [int] NOT NULL,
+		[rate] [money] NOT NULL,
+	 CONSTRAINT [PK_station_inventory_manifest_rates] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[station_inventory_manifest_rates]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_rates_spot_lengths] FOREIGN KEY([spot_length_id])
+	REFERENCES [dbo].[spot_lengths] ([id])
+
+	ALTER TABLE [dbo].[station_inventory_manifest_rates] CHECK CONSTRAINT [FK_station_inventory_manifest_rates_spot_lengths]
+
+	ALTER TABLE [dbo].[station_inventory_manifest_rates]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_rates_station_inventory_manifest] FOREIGN KEY([station_inventory_manifest_id])
+	REFERENCES [dbo].[station_inventory_manifest] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[station_inventory_manifest_rates] CHECK CONSTRAINT [FK_station_inventory_manifest_rates_station_inventory_manifest]
+END
+GO
+
+/*************************************** BCOP-1953 - END *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------
