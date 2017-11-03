@@ -28,10 +28,11 @@ namespace EntityFrameworkMapping.Broadcast
         public string created_by { get; set; }
         public System.DateTime created_date { get; set; }
         public byte status { get; set; }
-        public byte inventory_source { get; set; }
         public Nullable<int> sweep_book_id { get; set; }
         public Nullable<byte> play_back_type { get; set; }
+        public int inventory_source_id { get; set; }
     
+        public virtual inventory_sources inventory_sources { get; set; }
         public virtual media_months media_months { get; set; }
         public virtual ICollection<station_contacts> station_contacts { get; set; }
         public virtual ICollection<station_contacts> station_contacts1 { get; set; }

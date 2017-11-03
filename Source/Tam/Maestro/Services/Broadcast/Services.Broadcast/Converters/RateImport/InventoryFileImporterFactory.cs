@@ -49,10 +49,12 @@ namespace Services.Broadcast.Converters.RateImport
                     break;
                 case InventoryFile.InventorySource.TTNW:
                     fileImporter = new TTNWFileImporter();
-
+                    break;
+                case InventoryFile.InventorySource.OpenMarket:
+                    fileImporter = new OpenMarketFileImporter();
                     break;
                 default:
-                    throw new NotImplementedException("Open market imports not supported.");
+                    throw new NotImplementedException("Unsupported inventory type.");
             }
             var source = _inventoryRepository.GetInventorySourceByName(inventorySource.ToString());
 
