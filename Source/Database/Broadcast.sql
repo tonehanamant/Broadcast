@@ -662,12 +662,12 @@ BEGIN
 END
 
 IF NOT EXISTS(SELECT * FROM inventory_sources
-			  WHERE name = 'Open Market')
+			  WHERE name = 'OpenMarket')
 BEGIN
 	SET IDENTITY_INSERT inventory_sources ON
 
 	INSERT INTO inventory_sources  (id, name, is_active, inventory_source_type)
-	VALUES (4, 'Open Market', 1, 1)
+	VALUES (4, 'OpenMarket', 1, 1)
 
 	SET IDENTITY_INSERT inventory_sources OFF
 END
@@ -693,7 +693,7 @@ BEGIN
 	WHERE id = 4
 
 	UPDATE inventory_sources
-	SET name = 'Open Market'
+	SET name = 'OpenMarket'
 	WHERE id = 1
 
 	UPDATE station_inventory_group
