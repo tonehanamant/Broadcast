@@ -78,11 +78,6 @@ namespace Services.Broadcast.Converters.RateImport
         
         private bool _FoundGoodDaypart;
 
-        public override Entities.InventoryFile.InventorySource InventoryFileSource
-        {
-            get { return InventoryFile.InventorySource.CNN; }
-        }
-
         public override InventorySource InventorySource { get; set; }
 
         public override InventoryFile GetPendingInventoryFile()
@@ -125,7 +120,7 @@ namespace Services.Broadcast.Converters.RateImport
                         var spotPerWeeks = _GetCellValue(row, "# Spots").ToUpper();
                         var spots = _ParseNumericPositiveInt(spotPerWeeks, "Invalid Spots Per Week \"{0}\"");
 
-                        var spotPerDay = _GetCellValue(row, "# Spots").ToUpper();
+                        var spotPerDay = _GetCellValue(row, "Spots Per Day").ToUpper();
                         var spotsPerday = _ParseNumericPositiveInt(spotPerDay, "Invalid Spots Per Day \"{0}\"");
 
                         var dps = _GetCellValue(row, "Time Periods").ToUpper();

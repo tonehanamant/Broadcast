@@ -45,19 +45,22 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var file = new inventory_files();
-                    file.identifier = inventoryFile.UniqueIdentifier;
-                    file.name = inventoryFile.FileName;
-                    file.status = (byte) inventoryFile.FileStatus;
-                    file.file_hash = inventoryFile.Hash;
-                    file.created_by = userName;
-                    file.created_date = DateTime.Now;
-                    //file.inventory_source = (byte)inventoryFile.Source; FIXME
-                    file.sweep_book_id = inventoryFile.RatingBook;
-                    file.play_back_type = (byte)inventoryFile.PlaybackType;
+                    var file = new inventory_files
+                    {
+                        identifier = inventoryFile.UniqueIdentifier,
+                        name = inventoryFile.FileName,
+                        status = (byte) inventoryFile.FileStatus,
+                        file_hash = inventoryFile.Hash,
+                        created_by = userName,
+                        created_date = DateTime.Now,
+                        inventory_source_id = inventoryFile.InventorySource.Id,
+                        sweep_book_id = inventoryFile.RatingBook,
+                        play_back_type = (byte) inventoryFile.PlaybackType
+                    };
+
                     context.inventory_files.Add(file);
-                    
                     context.SaveChanges();
+                    
                     return file.id;
                 });
 

@@ -136,9 +136,9 @@ namespace Services.Broadcast.ApplicationServices
             ret.PostingBooks = GetNsiPostingBookMonths();
 
             ret.InventorySources =
-                Enum.GetValues(typeof(InventoryFile.InventorySource))
-                    .Cast<InventoryFile.InventorySource>()
-                    .Where(e => e != InventoryFile.InventorySource.Blank)
+                Enum.GetValues(typeof(InventorySourceEnum))
+                    .Cast<InventorySourceEnum>()
+                    .Where(e => e != InventorySourceEnum.Blank)
                     .Select(e => new LookupDto { Display = e.ToString(), Id = (int)e })
                     .ToList();
 

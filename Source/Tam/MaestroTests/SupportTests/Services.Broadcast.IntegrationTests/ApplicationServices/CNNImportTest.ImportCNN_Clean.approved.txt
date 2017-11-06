@@ -8,7 +8,7 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -42,7 +42,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -84,7 +84,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -145,7 +145,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -187,7 +187,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 4,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "IND",
@@ -229,7 +229,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 2,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -252,7 +252,7 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -286,7 +286,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -328,7 +328,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -389,7 +389,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -431,7 +431,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 4,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "IND",
@@ -473,7 +473,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 2,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -496,7 +496,7 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -530,7 +530,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -572,7 +572,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -633,7 +633,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -675,7 +675,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 4,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "IND",
@@ -698,7 +698,7 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -732,7 +732,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -774,7 +774,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -835,7 +835,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -877,7 +877,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 4,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "IND",
@@ -900,7 +900,7 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -934,7 +934,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "CW",
@@ -976,7 +976,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1037,7 +1037,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1060,7 +1060,7 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -1113,7 +1113,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1174,7 +1174,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 3,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1235,7 +1235,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1334,7 +1334,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "NBC",
@@ -1376,7 +1376,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1475,7 +1475,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 8,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 2,
           "Station": {
             "Affiliation": "FOX",
@@ -1498,7 +1498,7 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -1551,7 +1551,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1612,7 +1612,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 3,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1673,7 +1673,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1772,7 +1772,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "NBC",
@@ -1814,7 +1814,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -1913,7 +1913,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 8,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 2,
           "Station": {
             "Affiliation": "FOX",
@@ -1936,7 +1936,7 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -1989,7 +1989,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2050,7 +2050,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 3,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2111,7 +2111,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2210,7 +2210,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "NBC",
@@ -2252,7 +2252,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2351,7 +2351,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 8,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 2,
           "Station": {
             "Affiliation": "FOX",
@@ -2374,7 +2374,7 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -2427,7 +2427,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2488,7 +2488,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2587,7 +2587,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "NBC",
@@ -2629,7 +2629,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2728,7 +2728,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 8,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "FOX",
@@ -2751,7 +2751,7 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 2,
+        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -2804,7 +2804,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2865,7 +2865,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -2964,7 +2964,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "NBC",
@@ -3006,7 +3006,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 5,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
@@ -3105,7 +3105,7 @@
           ],
           "ManifestRates": [],
           "SpotLengthId": 1,
-          "SpotsPerDay": 8,
+          "SpotsPerDay": 1,
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "FOX",
@@ -3125,10 +3125,9 @@
       "StartDate": "2016-10-31T00:00:00"
     }
   ],
-  "InventorySourceId": 0,
+  "InventorySource": null,
   "PlaybackType": 0,
   "RatingBook": null,
-  "Source": "Blank",
   "StartDate": "0001-01-01T00:00:00",
   "StationContacts": [],
   "UniqueIdentifier": null

@@ -99,7 +99,6 @@ namespace Services.Broadcast.Converters.RateImport
 
         }
 
-        public abstract InventoryFile.InventorySource InventoryFileSource { get; }
         public abstract InventorySource InventorySource { get; set; }
 
         public virtual InventoryFile GetPendingInventoryFile()
@@ -113,10 +112,9 @@ namespace Services.Broadcast.Converters.RateImport
             inventoryFileToHydrate.FileName = Request.FileName == null ? "unknown" : Request.FileName;
             inventoryFileToHydrate.FileStatus = InventoryFile.FileStatusEnum.Pending;
             inventoryFileToHydrate.Hash = _fileHash;
-            inventoryFileToHydrate.InventorySourceId = inventoryFileToHydrate.InventorySourceId;
             inventoryFileToHydrate.RatingBook = Request.RatingBook;
             inventoryFileToHydrate.PlaybackType = Request.PlaybackType;
-            inventoryFileToHydrate.Source = this.InventoryFileSource;
+            inventoryFileToHydrate.InventorySource = InventorySource;
             return inventoryFileToHydrate;
         }
 

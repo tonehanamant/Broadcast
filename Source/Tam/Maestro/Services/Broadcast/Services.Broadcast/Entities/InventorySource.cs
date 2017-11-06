@@ -11,6 +11,12 @@ namespace Services.Broadcast.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
-        public InventoryFile.InventoryType InventoryType { get; set; }
+        public InventoryType InventoryType { get; set; }
+    }
+
+    public enum InventoryType
+    {
+        NationalUnit = 1,
+        Station = 2
     }
 }

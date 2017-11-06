@@ -14,22 +14,6 @@ namespace Services.Broadcast.Entities
             Failed = 3
         }
 
-        public enum InventorySource
-        {
-            Blank = 0,
-            OpenMarket = 1,
-            Assembly = 2,
-            TVB = 3,
-            TTNW = 4,
-            CNN = 5
-        }
-
-        public enum InventoryType
-        {
-            NationalUnit = 1,
-            Station = 2
-        }
-
         public InventoryFile()
         {
             InventoryGroups = new List<StationInventoryGroup>();
@@ -45,10 +29,7 @@ namespace Services.Broadcast.Entities
         public DateTime EndDate { get; set; }
         public int? RatingBook { get; set; }
         public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
-
-        [JsonConverter(typeof(StringEnumConverter))]
-        public InventorySource Source { get; set; }
-        public int InventorySourceId { get; set; }
+        public InventorySource InventorySource { get; set; }
         private List<StationContact> _stationContacts; 
 
         public List<StationContact> StationContacts

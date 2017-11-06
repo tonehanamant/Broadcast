@@ -134,13 +134,14 @@ namespace Services.Broadcast.ApplicationServices
 
         public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request)
         {
-            var inventorySourceType = _ParseInventorySourceOrDefault(request.InventorySource);
-            var fileImporter = _inventoryFileImporterFactory.GetFileImporterInstance(inventorySourceType);
+            var inventorySource = _ParseInventorySourceOrDefault(request.InventorySource);
+            var fileImporter = _inventoryFileImporterFactory.GetFileImporterInstance(inventorySource);
             
             fileImporter.LoadFromSaveRequest(request);
             fileImporter.CheckFileHash();
 
-            InventoryFile inventoryFile = fileImporter.GetPendingInventoryFile();
+            var inventoryFile = fileImporter.GetPendingInventoryFile();
+
             inventoryFile.Id = _inventoryFileRepository.CreateInventoryFile(inventoryFile, request.UserName);
 
             var stationLocks = new List<IDisposable>();
@@ -160,7 +161,8 @@ namespace Services.Broadcast.ApplicationServices
                 }
 
                 var endTime = DateTime.Now;
-                System.Diagnostics.Debug.WriteLine(string.Format("Completed file parsing in {0}", endTime - startTime));
+
+                System.Diagnostics.Debug.WriteLine("Completed file parsing in {0}", endTime - startTime);
 
                 if (fileProblems.Any())
                 {
@@ -202,8 +204,8 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     LockStations(fileStationCodes, lockedStationCodes, stationLocks, inventoryFile);
 
-                    var isThirdParty = inventorySourceType == InventoryFile.InventorySource.CNN ||
-                                       inventorySourceType == InventoryFile.InventorySource.TTNW;
+                    var isThirdParty = inventorySource.Name == "CNN" ||
+                                       inventorySource.Name == "TTNW";
 
                     if (isThirdParty)
                     {
@@ -510,25 +512,28 @@ namespace Services.Broadcast.ApplicationServices
             });
         }
 
-        private InventoryFile.InventorySource _ParseInventorySource(string sourceString)
+        private InventorySource _ParseInventorySource(string sourceString)
         {
-            InventoryFile.InventorySource inventorySource;
-            var parseSuccess = Enum.TryParse(sourceString, true, out inventorySource);
-            if (!parseSuccess)
+            var inventorySource = _inventoryRepository.GetInventorySourceByName(sourceString);
+
+            if (inventorySource == null)
             {
-                throw new ArgumentException(string.Format("Invalid inventory source parameter: {0}", sourceString));
+                throw new ArgumentException("Invalid inventory source string");
             }
+
             return inventorySource;
         }
 
-        private InventoryFile.InventorySource _ParseInventorySourceOrDefault(string sourceString)
+        private InventorySource _ParseInventorySourceOrDefault(string sourceString)
         {
+            const string defaultInventorySource = "OpenMarket";
+
             if (string.IsNullOrEmpty(sourceString))
             {
-                return InventoryFile.InventorySource.OpenMarket;
+                return _inventoryRepository.GetInventorySourceByName(defaultInventorySource);
             }
 
-            return _ParseInventorySource(sourceString);
+            return _inventoryRepository.GetInventorySourceByName(sourceString);
         }
 
         private void _SetTransactionManagerField(string fieldName, object value)

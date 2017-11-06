@@ -25,12 +25,12 @@ namespace Services.Broadcast.Repositories
         void UpdateInventoryManifests(List<StationInventoryManifest> inventoryManifests);
         void ExpireInventoryGroupsAndManifests(List<StationInventoryGroup> inventoryGroups,DateTime expireDate);
         List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId);
-        List<StationInventoryGroup> GetActiveInventoryByTypeAndDapartCodes(InventoryFile.InventorySource sourceType, List<string> daypartCodes);
-        List<StationInventoryGroup> GetActiveInventoryBySourceAndName(InventoryFile.InventorySource sourceType, List<string> groupNames);
-        List<StationInventoryGroup> GetInventoryBySourceAndName(InventoryFile.InventorySource sourceType, List<string> groupNames);
+        List<StationInventoryGroup> GetActiveInventoryByTypeAndDapartCodes(InventorySource inventorySource, List<string> daypartCodes);
+        List<StationInventoryGroup> GetActiveInventoryBySourceAndName(InventorySource inventorySource, List<string> groupNames);
+        List<StationInventoryGroup> GetInventoryBySourceAndName(InventorySource inventorySource, List<string> groupNames);
 
         List<StationInventoryManifest> GetStationManifestsBySourceAndStationCode(
-            InventoryFile.InventorySource rateSource, int stationCode);
+            InventorySource rateSource, int stationCode);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -49,7 +49,7 @@ namespace Services.Broadcast.Repositories
                     select new InventorySource()
                     {
                         Id = a.id,
-                        InventoryType = (InventoryFile.InventoryType)a.inventory_source_type,
+                        InventoryType = (InventoryType)a.inventory_source_type,
                         IsActive = a.is_active,
                         Name = a.name
                     }).ToList());
@@ -63,7 +63,7 @@ namespace Services.Broadcast.Repositories
                     select new InventorySource()
                     {
                         Id = a.id,
-                        InventoryType = (InventoryFile.InventoryType)a.inventory_source_type,
+                        InventoryType = (InventoryType)a.inventory_source_type,
                         IsActive = a.is_active,
                         Name = a.name
                     }).SingleOrDefault());
@@ -98,7 +98,7 @@ namespace Services.Broadcast.Repositories
                     var newGroups = inventoryGroups.Where(g => g.Id == null).Select(inventoryGroup => new station_inventory_group()
                     {
                         daypart_code = inventoryGroup.DaypartCode,
-                        inventory_source_id = inventoryFile.InventorySourceId,
+                        inventory_source_id = inventoryFile.InventorySource.Id,
                         name = inventoryGroup.Name,
                         slot_number = (byte) inventoryGroup.SlotNumber,
                         start_date = inventoryGroup.StartDate,
@@ -114,7 +114,7 @@ namespace Services.Broadcast.Repositories
                                 spots_per_week = manifest.SpotsPerWeek,
                                 effective_date = manifest.EffectiveDate,
                                 file_id = inventoryFile.Id,
-                                inventory_source_id = inventoryFile.InventorySourceId,
+                                inventory_source_id = inventoryFile.InventorySource.Id,
                                 end_date = manifest.EndDate,
                                 station_inventory_manifest_audiences =
                                     manifest.ManifestAudiences.Select(
@@ -145,7 +145,7 @@ namespace Services.Broadcast.Repositories
                                     spots_per_week = null,
                                     effective_date = manifest.EffectiveDate,
                                     file_id = inventoryFile.Id,
-                                    inventory_source_id = inventoryFile.InventorySourceId,
+                                    inventory_source_id = inventoryFile.InventorySource.Id,
                                     end_date = manifest.EndDate,
                                     station_inventory_manifest_audiences =
                                         manifest.ManifestAudiences.Select(
@@ -257,7 +257,7 @@ namespace Services.Broadcast.Repositories
                 InventorySource = new InventorySource()
                 {
                     Id = stationInventoryGroup.inventory_sources.id,
-                    InventoryType = (InventoryFile.InventoryType)stationInventoryGroup.inventory_sources.inventory_source_type,
+                    InventoryType = (InventoryType)stationInventoryGroup.inventory_sources.inventory_source_type,
                     Name = stationInventoryGroup.inventory_sources.name,
                     IsActive = stationInventoryGroup.inventory_sources.is_active
                 },
@@ -300,13 +300,13 @@ namespace Services.Broadcast.Repositories
         }
 
         public List<StationInventoryGroup> GetActiveInventoryBySourceAndName(
-                                                InventoryFile.InventorySource sourceType,
+                                                InventorySource inventorySource,
                                                 List<string> groupNames)
         {
             return _InReadUncommitedTransaction(
                 c =>
                 {
-                    var inventory = GetInventoryGroupQuery(sourceType, groupNames, c);
+                    var inventory = GetInventoryGroupQuery(inventorySource, groupNames, c);
 
                     var output = inventory.Where(i => i.end_date == null).ToList();
 
@@ -314,33 +314,32 @@ namespace Services.Broadcast.Repositories
                 });
         }
         public List<StationInventoryGroup> GetInventoryBySourceAndName(
-                                                InventoryFile.InventorySource sourceType,
+                                                InventorySource inventorySource,
                                                 List<string> groupNames)
         {
             return _InReadUncommitedTransaction(
                 c =>
                 {
-                    var inventory = GetInventoryGroupQuery(sourceType, groupNames, c).ToList();
+                    var inventory = GetInventoryGroupQuery(inventorySource, groupNames, c).ToList();
                     return inventory.Select(_MapToInventoryGroup).ToList();
                 });
         }
 
-        private static IQueryable<station_inventory_group> GetInventoryGroupQuery(InventoryFile.InventorySource sourceType, List<string> groupNames, QueryHintBroadcastContext c)
+        private static IQueryable<station_inventory_group> GetInventoryGroupQuery(InventorySource inventorySource, List<string> groupNames, QueryHintBroadcastContext c)
         {
             var inventory = (from g in
                 c.station_inventory_group
                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_dayparts))
                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_group))
                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_audiences))
-                join s in c.inventory_sources on g.inventory_source_id equals s.id
-                where s.name == sourceType.ToString()
+                where g.inventory_source_id == inventorySource.Id
                       && groupNames.Contains(g.name)
                 select g);
             return inventory;
         }
 
         public List<StationInventoryGroup> GetActiveInventoryByTypeAndDapartCodes(
-                                            InventoryFile.InventorySource sourceType, 
+                                            InventorySource inventorySource, 
                                             List<string> daypartCodes)
         {
             return _InReadUncommitedTransaction(
@@ -351,8 +350,7 @@ namespace Services.Broadcast.Repositories
                                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_dayparts))
                                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_group))
                                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_audiences))
-                                join s in c.inventory_sources on g.inventory_source_id equals s.id
-                                where s.name == sourceType.ToString()
+                                where g.inventory_source_id == inventorySource.Id
                                     && daypartCodes.Contains(g.daypart_code) 
                                     && g.end_date == null
                                     
@@ -362,7 +360,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public List<StationInventoryManifest> GetStationManifestsBySourceAndStationCode(InventoryFile.InventorySource rateSource, int stationCode)
+        public List<StationInventoryManifest> GetStationManifestsBySourceAndStationCode(InventorySource rateSource, int stationCode)
         {
             return _InReadUncommitedTransaction(
                 context => (
@@ -371,14 +369,13 @@ namespace Services.Broadcast.Repositories
                             .Include(ss => ss.station)
                             .Include(m => m.station_inventory_manifest_audiences)
                     join g in context.station_inventory_group on sp.station_inventory_group_id equals g.id
-                    join so in context.inventory_sources on g.inventory_source_id equals so.id
-                    where sp.station_code == (short) stationCode
-                      && so.name.ToLower().Equals(rateSource.ToString().ToLower())
-                    select new StationInventoryManifest()
+                    where sp.station_code == (short) stationCode &&
+                           g.inventory_source_id == rateSource.Id
+                    select new StationInventoryManifest
                     {
                         Id = sp.id,
                         Station =
-                            new DisplayBroadcastStation()
+                            new DisplayBroadcastStation
                             {
                                 Code = sp.station.station_code,
                                 Affiliation = sp.station.affiliation,
@@ -393,7 +390,7 @@ namespace Services.Broadcast.Repositories
                         SpotsPerDay = sp.spots_per_day,
                         ManifestDayparts = sp.station_inventory_manifest_dayparts.Select(d => new StationInventoryManifestDaypart() 
                         {
-                            Daypart = new DisplayDaypart() { Id = d.daypart_id}
+                            Daypart = new DisplayDaypart { Id = d.daypart_id}
                         }).ToList(),
                         InventorySourceId = sp.inventory_source_id,
                         EffectiveDate = sp.effective_date,
@@ -402,7 +399,7 @@ namespace Services.Broadcast.Repositories
                             {
                                 Impressions = ma.impressions,
                                 Rate = ma.rate,
-                                Audience = new DisplayAudience() { Id = ma.audience_id}
+                                Audience = new DisplayAudience { Id = ma.audience_id}
                             }).ToList(),
                         EndDate = sp.end_date
                     }).ToList());
