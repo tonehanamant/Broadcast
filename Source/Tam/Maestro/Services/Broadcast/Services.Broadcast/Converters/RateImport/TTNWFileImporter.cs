@@ -125,7 +125,7 @@ namespace Services.Broadcast.Converters.RateImport
                             SpotsPerWeek = daypartCodeSpots.Value,
                             SpotLengthId = spotLengthId,
                             ManifestDayparts = manifestDayparts,
-                            ManifestAudiences = manifestAudiences,
+                            ManifestAudiencesReferences = manifestAudiences,
                             EffectiveDate = effectiveDate,
                         });
                     }
@@ -168,7 +168,8 @@ namespace Services.Broadcast.Converters.RateImport
                 manifestAudiences.Add(new StationInventoryManifestAudience()
                 {
                     Audience = displayAudience,
-                    Impressions = audience.Value * 1000
+                    Impressions = audience.Value * 1000,
+                    IsReference = true
                 });
             }
 

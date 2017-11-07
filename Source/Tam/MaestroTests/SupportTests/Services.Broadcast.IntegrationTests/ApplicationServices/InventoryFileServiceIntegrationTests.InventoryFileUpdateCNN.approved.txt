@@ -14,7 +14,29 @@
         "EffectiveDate": "2017-06-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -36,7 +58,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 736.2600,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -57,7 +84,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -79,7 +128,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 527.7300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -100,7 +154,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -141,7 +217,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2999.3500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -162,7 +243,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -184,7 +287,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1354.9200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -205,7 +313,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -227,7 +357,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 425.5100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -263,7 +398,29 @@
         "EffectiveDate": "2017-06-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -285,7 +442,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 736.2600,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -306,7 +468,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -328,7 +512,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 527.7300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -349,7 +538,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -390,7 +601,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2999.3500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -411,7 +627,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -433,7 +671,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1354.9200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -454,7 +697,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -476,7 +741,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 425.5100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -512,7 +782,29 @@
         "EffectiveDate": "2017-06-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -534,7 +826,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 736.2600,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -555,7 +852,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -577,7 +896,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 527.7300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -598,7 +922,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -639,7 +985,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2999.3500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -660,7 +1011,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -682,7 +1055,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1354.9200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -718,7 +1096,29 @@
         "EffectiveDate": "2017-06-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -740,7 +1140,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 736.2600,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -761,7 +1166,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -783,7 +1210,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 527.7300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -804,7 +1236,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -845,7 +1299,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2999.3500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -866,7 +1325,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -888,7 +1369,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1354.9200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -924,7 +1410,29 @@
         "EffectiveDate": "2017-06-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -946,7 +1454,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 736.2600,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -967,7 +1480,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -989,7 +1524,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 527.7300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -1010,7 +1550,29 @@
         "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1051,7 +1613,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2999.3500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -1087,7 +1654,29 @@
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1149,7 +1738,29 @@
         "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1228,7 +1839,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 15224.5300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 2,
@@ -1249,7 +1865,29 @@
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1311,7 +1949,29 @@
         "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1352,7 +2012,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 3129.7400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -1373,7 +2038,29 @@
         "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1414,7 +2101,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 12037.4900,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 2,
@@ -1450,7 +2142,29 @@
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1512,7 +2226,29 @@
         "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1591,7 +2327,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 15224.5300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 2,
@@ -1612,7 +2353,29 @@
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1674,7 +2437,29 @@
         "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1715,7 +2500,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 3129.7400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -1736,7 +2526,29 @@
         "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1777,7 +2589,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 12037.4900,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 2,
@@ -1813,7 +2630,29 @@
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1875,7 +2714,29 @@
         "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1954,7 +2815,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 15224.5300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 2,
@@ -1975,7 +2841,29 @@
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2037,7 +2925,29 @@
         "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2078,7 +2988,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 12037.4900,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -2114,7 +3029,29 @@
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2176,7 +3113,29 @@
         "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2255,7 +3214,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 15224.5300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -2276,7 +3240,29 @@
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2338,7 +3324,29 @@
         "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2379,7 +3387,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 12037.4900,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -2415,7 +3428,29 @@
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2477,7 +3512,29 @@
         "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2556,7 +3613,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 15224.5300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,
@@ -2577,7 +3639,29 @@
         "EffectiveDate": "2017-04-17T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2639,7 +3723,29 @@
         "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
-        "ManifestAudiences": [],
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2680,7 +3786,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 12037.4900,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": 1,
         "SpotsPerWeek": 1,

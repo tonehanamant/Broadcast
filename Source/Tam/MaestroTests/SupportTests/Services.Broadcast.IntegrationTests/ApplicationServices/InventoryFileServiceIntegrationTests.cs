@@ -53,7 +53,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileName = "CNNAMPMBarterObligations_Clean.xlsx",
                     InventorySource = "CNN",
                     UserName = "IntegrationTestUser",
-                    RatingBook = 416
+                    RatingBook = 416,
+                    AudiencePricing = new List<AudiencePricingDto>() { new AudiencePricingDto() { AudienceId = 13, Price = 210 }, new AudiencePricingDto() { AudienceId = 14, Price = 131 } }
                 };
                 request.EffectiveDate = DateTime.Parse("10/1/2017");
                 var result = _InventoryFileService.SaveInventoryFile(request);
@@ -88,6 +89,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.InventorySource = "CNN";
                 request.UserName = "IntegrationTestUser";
                 request.RatingBook = 416;
+                request.AudiencePricing = new List<AudiencePricingDto>()
+                {
+                    new AudiencePricingDto() { AudienceId = 13, Price = 210 },
+                    new AudiencePricingDto() { AudienceId = 14, Price = 131 } 
+                };
 
                 request.EffectiveDate = DateTime.Parse("10/1/2017");
                 var results = _InventoryFileService.SaveInventoryFile(request);
@@ -113,6 +119,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatingBook = 416;
 
                 request.EffectiveDate = DateTime.Parse("11/01/2017");
+                request.AudiencePricing = new List<AudiencePricingDto>()
+                {
+                    new AudiencePricingDto() { AudienceId = 13, Price = 210 },
+                    new AudiencePricingDto() { AudienceId = 14, Price = 131 }
+                };
+
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
                 var daypartCodes = new List<string>() { "AM News","PM News" };
@@ -134,8 +146,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
             jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
             jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
-            jsonResolver.Ignore(typeof(DisplayAudience), "Id");
-            
+            jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
+            //jsonResolver.Ignore(typeof(DisplayAudience), "Id");
+
             var jsonSettings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -158,6 +172,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.UserName = "IntegrationTestUser";
                 request.InventorySource = "TTNW";
                 request.EffectiveDate = DateTime.Parse("10/1/2017");
+                request.AudiencePricing = new List<AudiencePricingDto>()
+                {
+                    new AudiencePricingDto() { AudienceId = 13, Price = 210 },
+                    new AudiencePricingDto() { AudienceId = 14, Price = 131 }
+                };
+
                 var expireDate = request.EffectiveDate.AddDays(-1);
 
                 request.RatingBook = 416;
@@ -190,6 +210,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.UserName = "IntegrationTestUser";
                 request.InventorySource = "TTNW";
                 request.EffectiveDate = DateTime.Parse("10/1/2017");
+                request.AudiencePricing = new List<AudiencePricingDto>()
+                {
+                    new AudiencePricingDto() { AudienceId = 13, Price = 210 },
+                    new AudiencePricingDto() { AudienceId = 14, Price = 131 }
+                };
 
                 request.RatingBook = 416;
 
@@ -216,6 +241,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.EffectiveDate = DateTime.Parse("10/1/2017");
 
                 request.RatingBook = 416;
+                request.AudiencePricing = new List<AudiencePricingDto>()
+                {
+                    new AudiencePricingDto() { AudienceId = 13, Price = 210 },
+                    new AudiencePricingDto() { AudienceId = 14, Price = 131 }
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
@@ -226,6 +256,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.UserName = "IntegrationTestUser";
                 request.InventorySource = "TTNW";
                 request.EffectiveDate = DateTime.Parse("10/10/2017");
+                request.AudiencePricing = new List<AudiencePricingDto>()
+                {
+                    new AudiencePricingDto() { AudienceId = 13, Price = 210 },
+                    new AudiencePricingDto() { AudienceId = 14, Price = 131 }
+                };
 
                 request.RatingBook = 416;
 

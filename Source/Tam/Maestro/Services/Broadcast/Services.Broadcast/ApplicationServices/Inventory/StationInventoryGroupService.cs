@@ -18,7 +18,7 @@ namespace Services.Broadcast.ApplicationServices
 
     public interface IStationInventoryGroupService : IApplicationService
     {
-        void SaveStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile);
+        void AddNewStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile);
         List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId);
     }
 
@@ -43,7 +43,7 @@ namespace Services.Broadcast.ApplicationServices
            return null;    
         }
 
-        public void SaveStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
+        public void AddNewStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
             if (inventoryFile.InventorySource == null || !inventoryFile.InventorySource.IsActive)
                 throw new Exception(string.Format("The selected source type is invalid or inactive."));
@@ -51,8 +51,7 @@ namespace Services.Broadcast.ApplicationServices
             var expireDate = request.EffectiveDate.AddDays(-1);
             
             _ExpireExistingInventory(inventoryFile.InventoryGroups, inventoryFile.InventorySource, expireDate);
-
-            _inventoryRepository.SaveInventoryGroups(inventoryFile);
+            _inventoryRepository.AddNewInventoryGroups(inventoryFile);
         }
 
         private List<StationInventoryGroup> _ExpireExistingInventory(IEnumerable<StationInventoryGroup> groups, InventorySource source, DateTime expireDate)

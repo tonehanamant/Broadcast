@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
 using Tam.Maestro.Common;
@@ -168,6 +169,24 @@ namespace Services.Broadcast.Repositories
                         p.DisplayDaypart.Sunday,
                         p.DisplayDaypart.StartTime,
                         p.DisplayDaypart.EndTime));
+
+                    stationDetails
+                        .Distinct()
+                        .ForEach(p =>
+                            Debug.WriteLine(
+                                string.Format(
+                                    "INSERT INTO @ratings_request SELECT {0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
+                                    p.Id,
+                                    p.Code,
+                                    p.DisplayDaypart.Monday ? "1" : "0",
+                                    p.DisplayDaypart.Tuesday ? "1" : "0",
+                                    p.DisplayDaypart.Wednesday ? "1" : "0",
+                                    p.DisplayDaypart.Thursday ? "1" : "0",
+                                    p.DisplayDaypart.Friday ? "1" : "0",
+                                    p.DisplayDaypart.Saturday ? "1" : "0",
+                                    p.DisplayDaypart.Sunday ? "1" : "0",
+                                    p.DisplayDaypart.StartTime,
+                                    p.DisplayDaypart.EndTime)));
 
                     var ratingsRequest = new SqlParameter("ratings_request", SqlDbType.Structured) { Value = ratingsInput, TypeName = "RatingsInputWithId" };
 
