@@ -40,9 +40,10 @@
   "PostingBookDate": null,
   "PostingBookId": 413,
   "PostType": 2,
-  "PrimaryDemoBooked": null,
+  "PrimaryDemoBooked": 0.0,
   "PrimaryDemoDelivered": 0.0,
   "SpotsBooked": null,
   "SpotsDelivered": 0,
-  "StartDate": "2017-01-20T00:00:00"
+  "StartDate": "2017-01-20T00:00:00",
+  "TrackingDetails": null
 }
