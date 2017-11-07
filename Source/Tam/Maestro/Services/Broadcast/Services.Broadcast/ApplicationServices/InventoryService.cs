@@ -154,16 +154,6 @@ namespace Services.Broadcast.ApplicationServices
 
                 fileImporter.ExtractFileData(request.RatesStream, inventoryFile, request.EffectiveDate, fileProblems);
 
-                if (inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 ||
-                    !inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Any())
-                {
-                    throw new ApplicationException("Unable to parse any file records.");
-                }
-
-                var endTime = DateTime.Now;
-
-                System.Diagnostics.Debug.WriteLine("Completed file parsing in {0}", endTime - startTime);
-
                 if (fileProblems.Any())
                 {
                     return new InventoryFileSaveResult()
@@ -172,6 +162,15 @@ namespace Services.Broadcast.ApplicationServices
                         FileId = inventoryFile.Id
                     };
                 }
+
+                if (inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 ||
+                    !inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Any())
+                {
+                    throw new ApplicationException("Unable to parse any file records.");
+                }
+
+                var endTime = DateTime.Now;
+
 
                 startTime = DateTime.Now;
 
