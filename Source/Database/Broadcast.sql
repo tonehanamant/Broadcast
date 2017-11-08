@@ -769,6 +769,48 @@ GO
 
 /*************************************** BCOP-2149 - END *****************************************************/
 
+/*************************************** BCOP-BCOP-2134 - START *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'is_reference'
+          AND Object_ID = Object_ID(N'dbo.station_inventory_manifest_audiences'))
+BEGIN
+	ALTER TABLE station_inventory_manifest_audiences ADD is_reference bit;
+	exec('update station_inventory_manifest_audiences SET is_reference = 1 WHERE is_reference is null')
+	exec('ALTER TABLE station_inventory_manifest_audiences ADD CONSTRAINT DF_station_inventory_manifest_audiences_is_reference DEFAULT 0 FOR is_reference; ');
+	exec('ALTER TABLE station_inventory_manifest_audiences ALTER COLUMN is_reference bit NOT NULL')
+END
+
+
+-- manifest rates table
+if Object_ID(N'[dbo].[station_inventory_manifest_rates]') is null
+BEGIN
+
+	CREATE TABLE [dbo].[station_inventory_manifest_rates](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[station_inventory_manifest_id] [int] NOT NULL,
+		[spot_length_id] [int] NOT NULL,
+		[rate] [money] NOT NULL,
+	 CONSTRAINT [PK_station_inventory_manifest_rates] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[station_inventory_manifest_rates]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_rates_spot_lengths] FOREIGN KEY([spot_length_id])
+	REFERENCES [dbo].[spot_lengths] ([id])
+
+	ALTER TABLE [dbo].[station_inventory_manifest_rates] CHECK CONSTRAINT [FK_station_inventory_manifest_rates_spot_lengths]
+
+	ALTER TABLE [dbo].[station_inventory_manifest_rates]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_manifest_rates_station_inventory_manifest] FOREIGN KEY([station_inventory_manifest_id])
+	REFERENCES [dbo].[station_inventory_manifest] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[station_inventory_manifest_rates] CHECK CONSTRAINT [FK_station_inventory_manifest_rates_station_inventory_manifest]
+END
+GO
+
+/*************************************** BCOP-BCOP-2134 - END *****************************************************/
+GO
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

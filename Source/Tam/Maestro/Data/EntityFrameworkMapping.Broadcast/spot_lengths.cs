@@ -23,6 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.spot_length_cost_multipliers = new HashSet<spot_length_cost_multipliers>();
             this.proposal_version_details = new HashSet<proposal_version_details>();
             this.station_inventory_manifest = new HashSet<station_inventory_manifest>();
+            this.station_inventory_manifest_rates = new HashSet<station_inventory_manifest_rates>();
         }
     
         public int id { get; set; }
@@ -38,5 +39,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<spot_length_cost_multipliers> spot_length_cost_multipliers { get; set; }
         public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
         public virtual ICollection<station_inventory_manifest> station_inventory_manifest { get; set; }
+        public virtual ICollection<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
     }
 }

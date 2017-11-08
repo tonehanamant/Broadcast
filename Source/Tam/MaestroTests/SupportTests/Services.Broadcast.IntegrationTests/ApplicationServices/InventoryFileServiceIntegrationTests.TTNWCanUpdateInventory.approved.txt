@@ -17,53 +17,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 55000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 56000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 57000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 58000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 59000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 60000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -109,53 +82,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 76000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 35000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 52000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 56000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 28000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 31000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -177,7 +123,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 15254.4000,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 3,
@@ -201,53 +152,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 35000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 10000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 18000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 20000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 4000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -269,7 +193,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 14801.0100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -293,53 +222,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 51000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 25000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 37000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 40000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 16000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 16000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -380,7 +282,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 27862.0900,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -404,53 +311,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 98000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 57000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 73000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 80000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 38000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 42000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -472,7 +352,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 92683.7100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 4,
@@ -496,53 +381,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 71000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 38000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 50000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 55000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 26000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 28000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -564,7 +422,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 18788.9100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -588,53 +451,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 45000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 24000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 32000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 34000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 18000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 19000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -656,7 +492,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 3430.1400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -680,53 +521,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 35000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 14000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 23000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 25000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 8000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 10000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -748,7 +562,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 10848.0200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -772,53 +591,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 41000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 23000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 32000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 35000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 18000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 21000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -840,7 +632,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 4584.5600,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -864,53 +661,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 194000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 115000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 150000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 167000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 77000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 84000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -932,7 +702,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 59239.4800,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -956,53 +731,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 25000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 15000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 18000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 22000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 12000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1024,7 +772,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 7421.0800,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1048,53 +801,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 24000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 15000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 17000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 20000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1135,7 +861,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 5910.6300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1159,53 +890,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 13000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 6000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 10000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 12000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 4000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1246,7 +950,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 12573.5400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1270,53 +979,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 39000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 17000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 27000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 29000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 10000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1338,7 +1020,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 22348.9900,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1362,53 +1049,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 70000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 40000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 52000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 60000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 28000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 30000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1430,7 +1090,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 31272.3100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -1454,53 +1119,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 32000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 15000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 23000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 27000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 10000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 10000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1522,7 +1160,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 6670.4400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1546,53 +1189,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 34000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 14000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 24000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 28000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1633,7 +1249,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 3240.1300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -1657,53 +1278,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 24000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 13000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 16000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 19000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 10000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1744,7 +1338,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1372.0400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -1768,53 +1367,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 26000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 8000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 12000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 12000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1836,7 +1408,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 4116.4200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1860,53 +1437,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 21000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 6000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 4000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1928,7 +1478,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1243.6200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1952,53 +1507,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 30000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 10000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 18000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 20000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2020,7 +1548,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2050.6500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2044,53 +1577,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 45000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 19000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 29000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 33000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 14000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 16000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2112,7 +1618,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 19189.5400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2136,53 +1647,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 57000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 17000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 37000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 41000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 13000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2204,7 +1688,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 12846.7000,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2228,53 +1717,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 32000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 15000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 16000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2296,7 +1758,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 5416.6900,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2320,53 +1787,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 85000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 30000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 49000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 52000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 21000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 23000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2388,7 +1828,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1460.1300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2412,53 +1857,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 17000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 14000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 16000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 8000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2480,7 +1898,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 3747.9200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2504,53 +1927,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 28000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 15000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 20000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 24000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 13000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2572,7 +1968,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 969.1500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2596,53 +1997,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 12000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 6000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 6000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2664,7 +2038,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2532.5000,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2688,53 +2067,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 15000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 4000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 8000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2756,7 +2108,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1965.6500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2780,53 +2137,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 53000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 22000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 31000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 36000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 19000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 20000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2848,7 +2178,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 4241.8400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 4,
@@ -2872,53 +2207,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 97000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 41000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 68000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 73000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 26000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 29000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2940,7 +2248,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 35419.6500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2964,53 +2277,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 33000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 14000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 22000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 25000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 10000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 12000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -3032,7 +2318,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 11089.2100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3056,53 +2347,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 33000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 17000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 24000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 26000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 12000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -3124,7 +2388,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 10991.4500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -3148,53 +2417,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 20000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 12000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 6000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -3216,7 +2458,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 5361.0400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3240,53 +2487,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 6000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -3308,7 +2528,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 916.5400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3332,53 +2557,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 4000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 6000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -3400,7 +2598,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2196.5000,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3424,53 +2627,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 4000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 2000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 2000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -3492,7 +2668,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2055.0600,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3516,53 +2697,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 6000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 10000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -3584,7 +2738,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 5924.5200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3608,53 +2767,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 6000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 4000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 4000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -3676,7 +2808,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 757.1600,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3700,53 +2837,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 2000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 2000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 2000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -3768,7 +2878,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 376.1100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3792,53 +2907,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 2000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 2000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -3860,7 +2948,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 250.5800,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -3884,53 +2977,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 55000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 19000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 36000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 39000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -3952,7 +3018,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1895.5100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 3,
@@ -3976,53 +3047,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 17000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 20000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 21000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -4063,7 +3107,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1612.9800,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4087,53 +3136,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 13000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 8000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 10000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 6000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 6000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -4155,7 +3177,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2287.4800,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4179,53 +3206,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 24000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 14000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 20000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 23000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 11000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -4247,7 +3247,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 564.0600,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -4271,53 +3276,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 2000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -4339,7 +3317,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1487.7400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4363,53 +3346,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 14000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 6000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 10000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 4000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -4431,7 +3387,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 265.3900,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -4455,53 +3416,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 8000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 3000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -4523,7 +3457,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2282.7000,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4547,53 +3486,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 32000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 10000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 18000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 20000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 7000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -4615,7 +3527,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2854.5300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -4639,53 +3556,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 12000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 5000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 9000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 4000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 4000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -4707,7 +3597,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2830.6400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4731,53 +3626,26 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
             },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 55-64",
+              "Id": 14
             },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
-            "Rating": 0.0
-          },
-          {
-            "Audience": {
-              "AudienceString": null
-            },
-            "Impressions": 1000.0,
-            "Rate": 0.0000,
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
             "Rating": 0.0
           }
         ],
+        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -4799,7 +3667,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 0.0000,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,

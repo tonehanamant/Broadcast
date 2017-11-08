@@ -20,7 +20,7 @@ namespace Services.Broadcast.Repositories
         List<InventorySource> GetInventorySources();
         InventorySource GetInventorySourceByName(string sourceName);
         int InventoryExists(string daypartCode, short stationCode, int spotLengthId, int spotsPerWeek, DateTime effectiveDate);
-        void SaveInventoryGroups(InventoryFile inventoryFile);
+        void AddNewInventoryGroups(InventoryFile inventoryFile);
         void UpdateInventoryGroups(List<StationInventoryGroup> inventoryGroups);
         void UpdateInventoryManifests(List<StationInventoryManifest> inventoryManifests);
         void ExpireInventoryGroupsAndManifests(List<StationInventoryGroup> inventoryGroups,DateTime expireDate);
@@ -28,9 +28,8 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryGroup> GetActiveInventoryByTypeAndDapartCodes(InventorySource inventorySource, List<string> daypartCodes);
         List<StationInventoryGroup> GetActiveInventoryBySourceAndName(InventorySource inventorySource, List<string> groupNames);
         List<StationInventoryGroup> GetInventoryBySourceAndName(InventorySource inventorySource, List<string> groupNames);
-
         List<StationInventoryManifest> GetStationManifestsBySourceAndStationCode(
-            InventorySource rateSource, int stationCode);
+                                            InventorySource rateSource, int stationCode);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -88,7 +87,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void SaveInventoryGroups(InventoryFile inventoryFile)
+        public void AddNewInventoryGroups(InventoryFile inventoryFile)
         {
             _InReadUncommitedTransaction(
                 context =>
@@ -106,30 +105,42 @@ namespace Services.Broadcast.Repositories
                         station_inventory_manifest =
                             inventoryGroup.Manifests
                             .Where(m => m.Id == null)
-                            .Select(manifest => new station_inventory_manifest()
-                            {
-                                station_code = (short) manifest.Station.Code,
-                                spot_length_id = manifest.SpotLengthId,
-                                spots_per_day = manifest.SpotsPerDay,
-                                spots_per_week = manifest.SpotsPerWeek.GetValueOrDefault(), //TODO: Update database and make field nullable
-                                effective_date = manifest.EffectiveDate,
-                                file_id = inventoryFile.Id,
-                                inventory_source_id = inventoryFile.InventorySource.Id,
-                                end_date = manifest.EndDate,
-                                station_inventory_manifest_audiences =
-                                    manifest.ManifestAudiences.Select(
-                                        audience => new station_inventory_manifest_audiences()
-                                        {
-                                            audience_id = audience.Audience.Id,
-                                            impressions = audience.Impressions,
-                                            rate = audience.Rate
-                                        }).ToList(),
-                                station_inventory_manifest_dayparts =
-                                    manifest.ManifestDayparts.Select(md => new station_inventory_manifest_dayparts()
+                            .Select(manifest =>
+                                {
+                                    return new station_inventory_manifest()
                                     {
-                                        daypart_id = md.Daypart.Id
-                                    }).ToList()
-                            }).ToList()
+                                        station_code = (short) manifest.Station.Code,
+                                        spot_length_id = manifest.SpotLengthId,
+                                        spots_per_day = manifest.SpotsPerDay,
+                                        spots_per_week = manifest.SpotsPerWeek.GetValueOrDefault(),
+                                        //TODO: Update database and make field nullable
+                                        effective_date = manifest.EffectiveDate,
+                                        file_id = inventoryFile.Id,
+                                inventory_source_id = inventoryFile.InventorySource.Id,
+                                        end_date = manifest.EndDate,
+                                        station_inventory_manifest_audiences =
+                                            manifest.ManifestAudiences.Select(
+                                                audience => new station_inventory_manifest_audiences()
+                                                {
+                                                    audience_id = audience.Audience.Id,
+                                                    impressions = audience.Impressions,
+                                                    rate = audience.Rate,
+                                                    is_reference = audience.IsReference
+                                                }).ToList(),
+                                        station_inventory_manifest_dayparts =
+                                            manifest.ManifestDayparts.Select(
+                                                md => new station_inventory_manifest_dayparts()
+                                                {
+                                                    daypart_id = md.Daypart.Id
+                                                }).ToList(),
+                                        station_inventory_manifest_rates = manifest.ManifestRates.Select(
+                                                r => new station_inventory_manifest_rates()
+                                                {
+                                                     spot_length_id = r.SpotLengthId,
+                                                     rate = r.Rate
+                                                }).ToList()
+                                    };
+                                }).ToList()
                     }).ToList();
 
                     context.station_inventory_group.AddRange(newGroups);
@@ -249,20 +260,40 @@ namespace Services.Broadcast.Repositories
                         SpotsPerDay = manifest.spots_per_day,
                         ManifestDayparts = manifest.station_inventory_manifest_dayparts.Select(md => new StationInventoryManifestDaypart()
                         {
+                            Id = md.id,
                             Daypart = DaypartCache.Instance.GetDisplayDaypart(md.daypart_id),
                         }).ToList(),
                         ManifestAudiences =
-                            manifest.station_inventory_manifest_audiences.Select(
+                            manifest.station_inventory_manifest_audiences.Where(ma => ma.is_reference == false).Select(
                                 audience => new StationInventoryManifestAudience()
                                 {
-                                    Audience = new DisplayAudience() {Id = audience.id},
+                                    Audience = new DisplayAudience()
+                                    { Id = audience.audience_id,AudienceString = audience.audience.name},
+                                    IsReference = false,
+                                    Impressions = audience.impressions,
+                                    Rate = audience.rate
+                                }).ToList(),
+                        ManifestAudiencesReferences = 
+                            manifest.station_inventory_manifest_audiences.Where(ma => ma.is_reference == true).Select(
+                                audience => new StationInventoryManifestAudience()
+                                {
+                                    Audience = new DisplayAudience()
+                                    { Id = audience.audience_id, AudienceString = audience.audience.name },
+                                    IsReference = true,
                                     Impressions = audience.impressions,
                                     Rate = audience.rate
                                 }).ToList(),
                         FileId = manifest.file_id,
                         InventorySourceId = manifest.inventory_source_id,
                         EffectiveDate = manifest.effective_date,
-                        EndDate = manifest.end_date
+                        EndDate = manifest.end_date,
+                        ManifestRates = manifest.station_inventory_manifest_rates
+                                .Select(r => new StationInventoryManifestRate()
+                                {
+                                    Id = r.id,
+                                    Rate = r.rate,
+                                    SpotLengthId = r.spot_length_id
+                                }).ToList()
                     }).ToList()
             };
             return sig;
@@ -301,6 +332,7 @@ namespace Services.Broadcast.Repositories
                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_dayparts))
                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_group))
                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_audiences))
+                    .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_rates))
                 where g.inventory_source_id == inventorySource.Id
                       && groupNames.Contains(g.name)
                 select g);
@@ -319,7 +351,8 @@ namespace Services.Broadcast.Repositories
                                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_dayparts))
                                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_group))
                                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_audiences))
-                                where g.inventory_source_id == inventorySource.Id
+                                    .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_rates))
+                                     where g.inventory_source_id == inventorySource.Id
                                     && daypartCodes.Contains(g.daypart_code) 
                                     && g.end_date == null
                                     
@@ -359,16 +392,26 @@ namespace Services.Broadcast.Repositories
                         SpotsPerDay = sp.spots_per_day,
                         ManifestDayparts = sp.station_inventory_manifest_dayparts.Select(d => new StationInventoryManifestDaypart() 
                         {
+                            Id = d.id,
                             Daypart = new DisplayDaypart { Id = d.daypart_id}
                         }).ToList(),
                         InventorySourceId = sp.inventory_source_id,
                         EffectiveDate = sp.effective_date,
-                        ManifestAudiences =
-                            sp.station_inventory_manifest_audiences.Select(ma => new StationInventoryManifestAudience()
+                        ManifestAudiencesReferences =
+                            sp.station_inventory_manifest_audiences.Where(ma => ma.is_reference == true).Select(ma => new StationInventoryManifestAudience()
                             {
                                 Impressions = ma.impressions,
                                 Rate = ma.rate,
-                                Audience = new DisplayAudience { Id = ma.audience_id}
+                                Audience = new DisplayAudience() { Id = ma.audience_id, AudienceString = ma.audience.name },
+                                IsReference = true
+                            }).ToList(),
+                        ManifestAudiences =
+                            sp.station_inventory_manifest_audiences.Where(ma => ma.is_reference == false).Select(ma => new StationInventoryManifestAudience()
+                            {
+                                Impressions = ma.impressions,
+                                Rate = ma.rate,
+                                Audience = new DisplayAudience() { Id = ma.audience_id ,AudienceString = ma.audience.name },
+                                IsReference = false
                             }).ToList(),
                         EndDate = sp.end_date
                     }).ToList());

@@ -18,6 +18,7 @@ namespace Services.Broadcast.Entities
         public int InventorySourceId { get; set; }
         public DateTime EffectiveDate { get; set; }
         public List<StationInventoryManifestAudience> ManifestAudiences { get; set; }
+        public List<StationInventoryManifestAudience> ManifestAudiencesReferences { get; set; }
 
         public List<StationInventoryManifestRate> ManifestRates { get; set; } 
 

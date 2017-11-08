@@ -78,5 +78,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_manifest> station_inventory_manifest { get; set; }
         public virtual DbSet<station_inventory_manifest_generation> station_inventory_manifest_generation { get; set; }
         public virtual DbSet<inventory_files> inventory_files { get; set; }
+        public virtual DbSet<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
     }
 }
