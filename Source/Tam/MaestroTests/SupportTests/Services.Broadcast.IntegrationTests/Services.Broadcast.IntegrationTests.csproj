@@ -451,6 +451,9 @@
     <None Include="Files\TTNW_ValidDayparts.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\TTNW_ZeroInDaypartSpot.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\TVBFileHasAllDaypartsInvalid.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

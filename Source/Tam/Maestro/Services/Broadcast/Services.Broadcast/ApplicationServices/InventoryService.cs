@@ -150,8 +150,6 @@ namespace Services.Broadcast.ApplicationServices
 
             try
             {
-                var startTime = DateTime.Now;
-
                 fileImporter.ExtractFileData(request.RatesStream, inventoryFile, request.EffectiveDate, fileProblems);
 
                 if (fileProblems.Any())
@@ -169,16 +167,13 @@ namespace Services.Broadcast.ApplicationServices
                     throw new ApplicationException("Unable to parse any file records.");
                 }
 
-                var endTime = DateTime.Now;
-
-
-                startTime = DateTime.Now;
+                var startTime = DateTime.Now;
 
                 var validationProblems = _inventoryFileValidator.ValidateInventoryFile(inventoryFile);
 
                 fileProblems.AddRange(validationProblems.InventoryFileProblems);
 
-                endTime = DateTime.Now;
+                var endTime = DateTime.Now;
 
                 System.Diagnostics.Debug.WriteLine("Completed file validation in {0}", endTime - startTime);
 

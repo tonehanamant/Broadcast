@@ -28512,7 +28512,7 @@
             "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
-            "SpotsPerWeek": 0,
+            "SpotsPerWeek": 1,
             "Station": {
               "Affiliation": "IND",
               "CallLetters": "KZJO 22.1",
@@ -32943,7 +32943,7 @@
             "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
-            "SpotsPerWeek": 0,
+            "SpotsPerWeek": 1,
             "Station": {
               "Affiliation": "CBS",
               "CallLetters": "WUSA 9.1",
@@ -34543,7 +34543,7 @@
             "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
-            "SpotsPerWeek": 0,
+            "SpotsPerWeek": 1,
             "Station": {
               "Affiliation": "IND",
               "CallLetters": "KZJO 22.1",
@@ -39302,7 +39302,7 @@
             "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
-            "SpotsPerWeek": 0,
+            "SpotsPerWeek": 1,
             "Station": {
               "Affiliation": "CBS",
               "CallLetters": "WUSA 9.1",
@@ -40902,7 +40902,7 @@
             "ManifestRates": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
-            "SpotsPerWeek": 0,
+            "SpotsPerWeek": 1,
             "Station": {
               "Affiliation": "IND",
               "CallLetters": "KZJO 22.1",
