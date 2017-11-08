@@ -343,12 +343,13 @@ namespace Services.Broadcast.Converters.RateImport
         {
             tableDescriptor.AudienceImpressionsColumns = new Dictionary<string, int>();
 
-            //TODO: make headerRow as part of the table descriptors
+            // TODO: make headerRow as part of the table descriptors.
             var headerRow = tableDescriptor.StartRow - 3;
 
-            //Find end of main data table
+            // Find end of main data table.
             int lastTableCol = tableDescriptor.StartCol;
-            for (int i = tableDescriptor.StartCol; i <= sheet.Dimension.End.Column; i++)
+
+            for (int i = tableDescriptor.StartCol + 1; i <= sheet.Dimension.End.Column; i++)
             {
                 if (string.IsNullOrEmpty(sheet.Cells[headerRow, i].Text))
                 {
@@ -358,11 +359,13 @@ namespace Services.Broadcast.Converters.RateImport
 
             }
 
-            //find first column with audience impressions
+            // Find first column with audience impressions.
             int impressionsFirstCol = 0;
+            
             for (int i = lastTableCol + 1; i <= sheet.Dimension.End.Column; i++)
             {
                 var columnName = sheet.Cells[headerRow, i].Text;
+
                 if (!string.IsNullOrEmpty(columnName) && !sheet.Column(i).Hidden && columnName.Equals("HH", StringComparison.InvariantCultureIgnoreCase))
                 {
                     impressionsFirstCol = i;
@@ -370,7 +373,25 @@ namespace Services.Broadcast.Converters.RateImport
                 }
             }
 
-            //No impressions found
+            // Try again, but one row below. 
+            // TTNW EN tables audience header data is one row below the other two formats.
+            if (impressionsFirstCol == 0)
+            {
+                for (int i = lastTableCol + 1; i <= sheet.Dimension.End.Column; i++)
+                {
+                    var columnName = sheet.Cells[headerRow + 1, i].Text;
+
+                    if (!string.IsNullOrEmpty(columnName) && !sheet.Column(i).Hidden && columnName.Equals("HH", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        impressionsFirstCol = i;
+                        // Increment header row so the next loop is able to find the impressions data.
+                        headerRow += 1;
+                        break;
+                    }
+                }
+            }
+
+            // No impressions found.
             if (impressionsFirstCol == 0)
             {
                 return tableDescriptor;
@@ -382,6 +403,7 @@ namespace Services.Broadcast.Converters.RateImport
                 {
                     break;
                 }
+
                 tableDescriptor.AudienceImpressionsColumns.Add(sheet.Cells[headerRow, i].Text.ToUpper(), i);
             }
 

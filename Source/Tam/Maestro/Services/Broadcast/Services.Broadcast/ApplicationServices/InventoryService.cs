@@ -243,6 +243,7 @@ namespace Services.Broadcast.ApplicationServices
                 throw new BroadcastInventoryDataException(string.Format("Error loading new inventory file: {0}", e.Message),
                     inventoryFile.Id, e);
             }
+
             return new InventoryFileSaveResult
             {
                 FileId = inventoryFile.Id,
@@ -303,6 +304,7 @@ namespace Services.Broadcast.ApplicationServices
                             Rate = ap.Price
                         })));
         }
+
         private void _AddNewStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
             _EnsureInventoryDaypartIds(inventoryFile);

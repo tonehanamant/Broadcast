@@ -31,7 +31,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 460000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 143000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 243000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 261000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 70000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 79000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -76,7 +137,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 31000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 21000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 23000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -121,7 +243,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 50000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 29000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 31000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -166,7 +349,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 90000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 28000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 62000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 66000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 15000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 16000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -211,7 +455,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 65000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 15000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 33000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 36000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -256,7 +561,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 254000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 70000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 123000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 130000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 46000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 49000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -301,7 +667,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 51000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 34000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 35000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 16000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -346,7 +773,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 13000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -391,7 +879,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 40000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 15000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 25000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 27000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -436,7 +985,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 178000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 61000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 102000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 109000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 30000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 34000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -481,7 +1091,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 76000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 17000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 40000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 40000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -526,7 +1197,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 206000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 102000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 153000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 168000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 69000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 77000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -571,7 +1303,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -616,7 +1409,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 13000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -661,7 +1515,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 40000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 22000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 24000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -706,7 +1621,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 29000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 13000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 18000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 21000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -751,7 +1727,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 33000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 17000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 23000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 28000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 13000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -796,7 +1833,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 79000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 32000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 54000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 57000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 22000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 24000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -841,7 +1939,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 38000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 21000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -886,7 +2045,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 38000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 21000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -931,7 +2151,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -976,7 +2257,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 51000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 21000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1021,7 +2363,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1066,7 +2469,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 131000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 40000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 70000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 76000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 28000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 34000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1111,7 +2575,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 61000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 16000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 33000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 35000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 15000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1156,7 +2681,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 52000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 25000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 26000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1201,7 +2787,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1246,7 +2893,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 13000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1291,7 +2999,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 42000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 28000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 30000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1376,7 +3145,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 30000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 19000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 19000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1421,7 +3251,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 30000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 18000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1466,7 +3357,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1511,7 +3463,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 34000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 23000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 23000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1556,7 +3569,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 30000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 15000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 16000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1601,7 +3675,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 25000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1646,7 +3781,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 22000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 15000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1691,7 +3887,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 16000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1736,7 +3993,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1781,7 +4099,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 53000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 15000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 26000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 28000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1826,7 +4205,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 29000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 18000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 21000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1871,7 +4311,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1906,7 +4407,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 45000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 17000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 31000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 33000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 13000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 13000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1951,7 +4513,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 62000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 23000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 40000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 42000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 17000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 19000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -1996,7 +4619,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -2041,7 +4725,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -2086,7 +4831,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 40000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 19000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -2131,7 +4937,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 46000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 27000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 31000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
@@ -2176,7 +5043,68 @@
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
-            "ManifestAudiencesReferences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rate": 0.0,
+                "Rating": 0.0
+              }
+            ],
             "ManifestDayparts": [
               {
                 "Daypart": {
