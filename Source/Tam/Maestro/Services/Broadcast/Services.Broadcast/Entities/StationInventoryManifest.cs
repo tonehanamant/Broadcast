@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Entities
 {
@@ -26,6 +25,7 @@ namespace Services.Broadcast.Entities
         {
             ManifestDayparts = new List<StationInventoryManifestDaypart>();
             ManifestAudiences = new List<StationInventoryManifestAudience>();
+            ManifestAudiencesReferences = new List<StationInventoryManifestAudience>();
             ManifestRates = new List<StationInventoryManifestRate>();
         }
         // todo: this date needs to be populated

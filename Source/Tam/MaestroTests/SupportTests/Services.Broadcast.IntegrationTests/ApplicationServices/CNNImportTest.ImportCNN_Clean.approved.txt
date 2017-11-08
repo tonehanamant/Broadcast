@@ -19,7 +19,7 @@
           "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -63,7 +63,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -107,7 +107,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -171,7 +171,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -215,7 +215,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -274,7 +274,7 @@
           "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -318,7 +318,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -362,7 +362,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -426,7 +426,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -470,7 +470,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -529,7 +529,7 @@
           "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -573,7 +573,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -617,7 +617,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -681,7 +681,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -740,7 +740,7 @@
           "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -784,7 +784,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -828,7 +828,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -892,7 +892,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -951,7 +951,7 @@
           "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -995,7 +995,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1039,7 +1039,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1118,7 +1118,7 @@
           "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1182,7 +1182,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1246,7 +1246,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1310,7 +1310,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1414,7 +1414,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1458,7 +1458,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1577,7 +1577,7 @@
           "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1641,7 +1641,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1705,7 +1705,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1769,7 +1769,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1873,7 +1873,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1917,7 +1917,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2036,7 +2036,7 @@
           "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2100,7 +2100,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2164,7 +2164,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2228,7 +2228,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2332,7 +2332,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2376,7 +2376,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2495,7 +2495,7 @@
           "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2559,7 +2559,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2623,7 +2623,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2727,7 +2727,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2771,7 +2771,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2890,7 +2890,7 @@
           "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2954,7 +2954,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -3018,7 +3018,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -3122,7 +3122,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -3166,7 +3166,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
-          "ManifestAudiencesReferences": null,
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
