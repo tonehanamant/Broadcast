@@ -775,6 +775,7 @@ IF NOT EXISTS(SELECT 1 FROM sys.columns
           AND Object_ID = Object_ID(N'dbo.station_inventory_manifest_audiences'))
 BEGIN
 	ALTER TABLE station_inventory_manifest_audiences ADD is_reference bit;
+	exec('update station_inventory_manifest_audiences SET is_reference = 1 WHERE is_reference is null')
 	exec('ALTER TABLE station_inventory_manifest_audiences ADD CONSTRAINT DF_station_inventory_manifest_audiences_is_reference DEFAULT 0 FOR is_reference; ');
 	exec('ALTER TABLE station_inventory_manifest_audiences ALTER COLUMN is_reference bit NOT NULL')
 END
