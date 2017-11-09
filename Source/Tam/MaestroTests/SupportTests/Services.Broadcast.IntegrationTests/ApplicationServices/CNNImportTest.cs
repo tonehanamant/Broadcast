@@ -169,8 +169,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(json);
         }
 
-
-
         [Test]
         public void ImportCNN_Bad_All_Dayparts()
         {
@@ -202,6 +200,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.Catch(() => importer.ExtractFileData(stream, ratesFile, request.EffectiveDate, fileProblems),
                 CNNFileImporter.NoGoodDaypartsFound);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ImportCNN_Bad_Spots()
+        {
+            const string filename = @".\Files\CNNAMPMBarterObligations_BadSpots.xlsx";
+
+            var factory = IntegrationTestApplicationServiceFactory.Instance.Resolve<IInventoryFileImporterFactory>();
+            var importer = factory.GetFileImporterInstance(_cnnInventorySource);
+            var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            var ratesFile = new InventoryFile();
+            var fileProblems = new List<InventoryFileProblem>();
+            var request = new InventoryFileSaveRequest()
+            {
+                FileName = filename,
+                RatesStream = stream,
+                EffectiveDate = new DateTime(2016, 10, 31)
+            };
+
+            importer.LoadFromSaveRequest(request);
+            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate, fileProblems);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            var json = IntegrationTestHelper.ConvertToJson(fileProblems, jsonSettings);
+            
+            Approvals.Verify(json);
         }
 
         [Test]
