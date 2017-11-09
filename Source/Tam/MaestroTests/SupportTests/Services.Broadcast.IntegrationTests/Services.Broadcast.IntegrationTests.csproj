@@ -222,6 +222,9 @@
     <None Include="Files\CNNAMPMBarterObligations_BadDayparts.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\CNNAMPMBarterObligations_BadSpots.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\CNNAMPMBarterObligations_BadStations.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
