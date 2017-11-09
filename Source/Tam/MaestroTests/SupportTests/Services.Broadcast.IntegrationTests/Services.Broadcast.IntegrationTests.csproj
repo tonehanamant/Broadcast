@@ -186,6 +186,7 @@
     <Compile Include="Repositories\ScheduleRepositoryTests.cs" />
     <Compile Include="Repositories\DisplayDaypartRepositoryTests.cs" />
     <Compile Include="StubbedSMSClient.cs" />
+    <Compile Include="UnitTests\InventoryFileImporterBaseTests.cs" />
     <Compile Include="UnitTests\Post\BvsPostFileParserTests.cs" />
     <Compile Include="UnitTests\Post\BvsPostFileRow.cs" />
     <Compile Include="UnitTests\Post\PostFileParserFactoryTests.cs" />
