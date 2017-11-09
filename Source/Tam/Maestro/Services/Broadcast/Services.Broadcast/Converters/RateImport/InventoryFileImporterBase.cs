@@ -162,11 +162,14 @@ namespace Services.Broadcast.Converters.RateImport
                 if (lDays.Contains(","))
                 {
                     string[] lDayGroups = lDays.Split(new char[] { ',' });
-                    ParseDays(lDisplayDaypart, lDayGroups);
+                    
+                    if (!TryParseDays(lDisplayDaypart, lDayGroups))
+                        return false;
                 }
                 else
                 {
-                    ParseDays(lDisplayDaypart, new string[] { lDays });
+                    if (!TryParseDays(lDisplayDaypart, new string[] { lDays }))
+                        return false;
                 }
                 #endregion
                 #region Times
@@ -234,7 +237,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             return (result != null);
         }
-        private void ParseDays(DisplayDaypart pDaypart, string[] pDayGroups)
+        private bool TryParseDays(DisplayDaypart pDaypart, string[] pDayGroups)
         {
             string[] lDayConstants1 = new string[7] { "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN" };
             string[] lDayConstants2 = new string[7] { "M", "TU", "W", "TH", "F", "SA", "SU" };
@@ -251,6 +254,12 @@ namespace Services.Broadcast.Converters.RateImport
                     int lEndIndex = -1;
                     int lStartIndex = -1;
                     string[] lSplitDays = lDayGroup.Split(new char[] { '-' });
+
+                    if (lSplitDays.Length != 2)
+                    {
+                        return false;
+                    }
+
                     for (int i = 0; i < lSplitDays.Length; i++)
                         lSplitDays[i] = lSplitDays[i].Trim();
 
@@ -342,6 +351,7 @@ namespace Services.Broadcast.Converters.RateImport
                     }
                 }
             }
+            return true;
         }
         private int? ParseTime(string pTimeString)
         {
