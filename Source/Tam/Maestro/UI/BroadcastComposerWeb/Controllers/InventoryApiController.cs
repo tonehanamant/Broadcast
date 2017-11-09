@@ -113,7 +113,37 @@ namespace BroadcastComposerWeb.Controllers
 
             var ratesSaveRequest = JsonConvert.DeserializeObject<InventoryFileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
             ratesSaveRequest.UserName = User.Identity.Name;
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(ratesSaveRequest));
+            try
+            {
+                var result =
+                    _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                        .SaveInventoryFile(ratesSaveRequest);
+                if (result.Problems == null || result.Problems.Count == 0)
+                {
+                    return new BaseResponse<InventoryFileSaveResult>()
+                    {
+                        Data = result,
+                        Success = true
+                    };
+                }
+                else
+                {
+                    return new BaseResponse<InventoryFileSaveResult>()
+                    {
+                        Data = result,
+                        Message = "Errors found while processing file",
+                        Success = false
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                return new BaseResponse<InventoryFileSaveResult>()
+                {
+                    Success = false,
+                    Message = e.Message
+                };
+            }
         }
 
 
