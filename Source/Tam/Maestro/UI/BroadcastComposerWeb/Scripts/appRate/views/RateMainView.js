@@ -64,6 +64,7 @@ var RateMainView = BaseView.extend({
     },
 
     //show upload issues if success but response includes "Problems" array (see controller)
+    //CHANGE - NO alert - will no longer be success. handle as success false and show httpService error modal - intercept as callback to api call
     showUploadFileIssues: function (problems) {
         var programProblems = problems.filter(function(problem) {
             return !problem.AffectedProposals;
@@ -106,11 +107,13 @@ var RateMainView = BaseView.extend({
         });
         ret += '</ul></div>';
 
-        var title = programProblems.length > 0 ? 'Rate File Has Issues' : 'Reserved Inventory Updated';
-        util.alert(title, ret);
+        //var title = programProblems.length > 0 ? 'Rate File Has Issues' : 'Reserved Inventory Updated';
+        //util.alert(title, ret);
+        var subTitle = 'Error(s) encountered processing Rate File Upload';
+        httpService.showDefaultError(ret, subTitle);
     },
 
-    // TODO - adjust after BE is done
+    // NOT USING - adjust after BE is done
     showSuccessUploadFileWarnings: function (warningObj) {
         var ret = '<div><h5><strong>' + warningObj.Title +  '</strong></h5><dl>';
         $.each(warningObj.Proposals, function (index, val) {
