@@ -115,9 +115,9 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<DisplayBroadcastStation> GetStationsWithFilter(string rateSource, string filterValue, DateTime today)
         {
-
             DisplayBroadcastStation.StationFilter filter;
             var parseSuccess = Enum.TryParse(filterValue, true, out filter);
+
             if (!parseSuccess)
             {
                 throw new ArgumentException(string.Format("Invalid station filter parameter: {0}", filterValue));
