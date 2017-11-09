@@ -91,12 +91,15 @@ var RateMainController = BaseController.extend({
 
     //handle Rate upload return; show problems in view if present
     onApiUploadInventoryFile: function (callback, data) {
-        if (data.Problems && data.Problems.length) {
+        var hasProblems = data.Problems && data.Problems.length;
+        if (hasProblems) {
             this.view.showUploadFileIssues(data.Problems);
         }
         //reset states
         if (callback) callback(data);
-        util.notify("Rate File Uploaded");
+        if (!hasProblems) {
+            util.notify("Rate File Uploaded");
+        }
         this.refreshApiLoadStations(false);
     },
     
