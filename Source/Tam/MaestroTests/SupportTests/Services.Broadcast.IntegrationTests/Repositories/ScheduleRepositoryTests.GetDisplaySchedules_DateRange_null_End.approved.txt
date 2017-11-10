@@ -19,11 +19,12 @@
     "PostingBookDate": null,
     "PostingBookId": 377,
     "PostType": 1,
-    "PrimaryDemoBooked": 2880242.0,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 109,
     "SpotsDelivered": 0,
-    "StartDate": "2016-07-11T00:00:00"
+    "StartDate": "2016-07-11T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -45,11 +46,12 @@
     "PostingBookDate": null,
     "PostingBookId": 380,
     "PostType": 1,
-    "PrimaryDemoBooked": 2880242.0,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 109,
     "SpotsDelivered": 0,
-    "StartDate": "2016-07-11T00:00:00"
+    "StartDate": "2016-07-11T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -71,11 +73,845 @@
     "PostingBookDate": null,
     "PostingBookId": 377,
     "PostType": 1,
-    "PrimaryDemoBooked": 6042379.0,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 750,
     "SpotsDelivered": 0,
-    "StartDate": "2016-07-18T00:00:00"
+    "StartDate": "2016-07-18T00:00:00",
+    "TrackingDetails": [
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      }
+    ]
   },
   {
     "Advertiser": null,
@@ -97,11 +933,173 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 1,
-    "PrimaryDemoBooked": 4064440.0,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 7783.2,
     "SpotsBooked": 816,
     "SpotsDelivered": 2,
-    "StartDate": "2016-07-18T00:00:00"
+    "StartDate": "2016-07-18T00:00:00",
+    "TrackingDetails": [
+      {
+        "Impressions": 7908.75,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 5827.875,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 4515.4,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 6386.125,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 34448.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 7230.625,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 9509.875,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 5462.75,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 10858.375,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 2383.375,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 300.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 9337.35,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 10277.6,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 9804.7,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 9804.7,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 7482.25,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 9584.75,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 5381.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 2735.1,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 4003.75,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1772.3999999999999,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 6326.0499999999993,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 6010.8,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 819.6,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1973.5,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 16507.850000000002,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 3573.625,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 2008.7999999999997,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1495.1,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1495.1,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 891.3,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 864.375,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1221.875,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 704.95,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1609.75,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 3728.25,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 5376.95,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1511.55,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 2029.35,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 883.3,
+        "SpotLength": 30
+      }
+    ]
   },
   {
     "Advertiser": null,
@@ -115,7 +1113,7 @@
     "InventorySource": 0,
     "IsBlank": false,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Test Settings Schedule",
     "OutOfSpec": 0,
@@ -123,11 +1121,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -149,11 +1148,12 @@
     "PostingBookDate": null,
     "PostingBookId": 377,
     "PostType": 1,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -167,7 +1167,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -175,11 +1175,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -193,7 +1194,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -201,11 +1202,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -219,7 +1221,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -227,11 +1229,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -245,7 +1248,7 @@
     "InventorySource": 0,
     "IsBlank": false,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Assembly Schedule Template",
     "OutOfSpec": 0,
@@ -253,11 +1256,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": 4390.0,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 5,
     "SpotsDelivered": 0,
-    "StartDate": "2016-12-26T00:00:00"
+    "StartDate": "2016-12-26T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -271,7 +1275,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -279,11 +1283,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -297,7 +1302,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -305,11 +1310,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -323,7 +1329,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -331,11 +1337,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -349,7 +1356,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -357,11 +1364,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -375,7 +1383,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -383,11 +1391,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -401,7 +1410,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -409,11 +1418,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -427,7 +1437,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -435,11 +1445,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -453,7 +1464,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -461,11 +1472,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -479,7 +1491,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -487,11 +1499,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -505,7 +1518,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -513,11 +1526,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -531,7 +1545,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -539,11 +1553,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -557,7 +1572,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -565,11 +1580,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -583,7 +1599,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -591,11 +1607,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -609,7 +1626,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -617,11 +1634,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -635,7 +1653,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -643,11 +1661,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -661,7 +1680,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -669,11 +1688,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -687,7 +1707,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -695,11 +1715,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -713,7 +1734,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -721,11 +1742,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -739,7 +1761,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -747,11 +1769,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -765,7 +1788,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -773,11 +1796,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -791,7 +1815,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -799,11 +1823,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -817,7 +1842,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -825,11 +1850,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -843,7 +1869,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -851,11 +1877,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -869,7 +1896,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -877,11 +1904,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -895,7 +1923,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -903,11 +1931,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -921,7 +1950,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -929,11 +1958,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -947,7 +1977,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -955,11 +1985,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -973,7 +2004,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -981,11 +2012,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -999,7 +2031,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1007,11 +2039,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1025,7 +2058,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1033,11 +2066,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1051,7 +2085,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1059,11 +2093,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1077,7 +2112,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1085,11 +2120,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1103,7 +2139,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1111,11 +2147,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1129,7 +2166,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1137,11 +2174,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1155,7 +2193,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1163,11 +2201,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1181,7 +2220,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1189,11 +2228,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1207,7 +2247,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1215,11 +2255,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1233,7 +2274,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1241,11 +2282,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1259,7 +2301,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1267,11 +2309,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1285,7 +2328,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1293,11 +2336,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1311,7 +2355,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1319,11 +2363,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1337,7 +2382,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1345,11 +2390,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1363,7 +2409,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1371,11 +2417,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1389,7 +2436,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1397,11 +2444,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1415,7 +2463,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1423,11 +2471,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1441,7 +2490,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1449,11 +2498,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1467,7 +2517,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1475,11 +2525,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1493,7 +2544,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1501,11 +2552,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1519,7 +2571,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1527,11 +2579,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1545,7 +2598,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1553,11 +2606,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1571,7 +2625,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1579,11 +2633,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1597,7 +2652,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1605,11 +2660,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1623,7 +2679,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1631,11 +2687,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1649,7 +2706,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1657,11 +2714,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1675,7 +2733,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1683,11 +2741,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1701,7 +2760,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1709,11 +2768,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1727,7 +2787,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1735,11 +2795,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1753,7 +2814,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1761,11 +2822,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1779,7 +2841,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1787,11 +2849,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1805,7 +2868,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1813,11 +2876,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1831,7 +2895,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1839,11 +2903,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1857,7 +2922,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1865,11 +2930,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1883,7 +2949,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1891,11 +2957,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1909,7 +2976,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1917,11 +2984,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1935,7 +3003,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1943,11 +3011,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1961,7 +3030,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1969,11 +3038,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -1987,7 +3057,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1995,11 +3065,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2013,7 +3084,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -2021,11 +3092,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2039,7 +3111,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -2047,11 +3119,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2065,7 +3138,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -2073,11 +3146,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2091,7 +3165,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -2099,11 +3173,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2117,7 +3192,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -2125,11 +3200,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2143,7 +3219,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -2151,11 +3227,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2169,7 +3246,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -2177,11 +3254,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2195,7 +3273,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -2203,11 +3281,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2221,7 +3300,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -2229,11 +3308,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2247,7 +3327,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -2255,11 +3335,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2273,7 +3354,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -2281,11 +3362,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2299,7 +3381,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -2307,11 +3389,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2325,7 +3408,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -2333,11 +3416,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2351,7 +3435,7 @@
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -2359,11 +3443,12 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": null,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2017-01-20T00:00:00"
+    "StartDate": "2017-01-20T00:00:00",
+    "TrackingDetails": []
   },
   {
     "Advertiser": null,
@@ -2377,7 +3462,7 @@
     "InventorySource": 0,
     "IsBlank": false,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "_Test Mappings",
     "OutOfSpec": 3,
@@ -2385,10 +3470,36 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 1,
-    "PrimaryDemoBooked": 6490.0,
+    "PrimaryDemoBooked": 0.0,
     "PrimaryDemoDelivered": 1259.85,
     "SpotsBooked": 6,
     "SpotsDelivered": 3,
-    "StartDate": "2017-03-13T00:00:00"
+    "StartDate": "2017-03-13T00:00:00",
+    "TrackingDetails": [
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 2356.8999999999996,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 943.75,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1259.8500000000001,
+        "SpotLength": 30
+      }
+    ]
   }
 ]

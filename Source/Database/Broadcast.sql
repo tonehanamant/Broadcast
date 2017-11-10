@@ -662,12 +662,12 @@ BEGIN
 END
 
 IF NOT EXISTS(SELECT * FROM inventory_sources
-			  WHERE name = 'Open Market')
+			  WHERE name = 'OpenMarket')
 BEGIN
 	SET IDENTITY_INSERT inventory_sources ON
 
 	INSERT INTO inventory_sources  (id, name, is_active, inventory_source_type)
-	VALUES (4, 'Open Market', 1, 1)
+	VALUES (4, 'OpenMarket', 1, 1)
 
 	SET IDENTITY_INSERT inventory_sources OFF
 END
@@ -693,7 +693,7 @@ BEGIN
 	WHERE id = 4
 
 	UPDATE inventory_sources
-	SET name = 'Open Market'
+	SET name = 'OpenMarket'
 	WHERE id = 1
 
 	UPDATE station_inventory_group
@@ -831,8 +831,21 @@ BEGIN
 	ALTER TABLE [dbo].[station_inventory_manifest_rates] CHECK CONSTRAINT [FK_station_inventory_manifest_rates_station_inventory_manifest]
 END
 GO
-
 /*************************************** BCOP-1945 - END *****************************************************/
+
+
+/*************************************** BCOP-BCOP-2134 - START *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'is_reference'
+          AND Object_ID = Object_ID(N'dbo.station_inventory_manifest_audiences'))
+BEGIN
+	ALTER TABLE station_inventory_manifest_audiences ADD is_reference bit;
+	exec('update station_inventory_manifest_audiences SET is_reference = 1 WHERE is_reference is null')
+	exec('ALTER TABLE station_inventory_manifest_audiences ADD CONSTRAINT DF_station_inventory_manifest_audiences_is_reference DEFAULT 0 FOR is_reference; ');
+	exec('ALTER TABLE station_inventory_manifest_audiences ALTER COLUMN is_reference bit NOT NULL')
+END
+GO
+/*************************************** BCOP-BCOP-2134 - END *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

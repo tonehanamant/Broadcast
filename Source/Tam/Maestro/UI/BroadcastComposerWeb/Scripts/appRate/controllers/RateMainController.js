@@ -79,7 +79,7 @@ var RateMainController = BaseController.extend({
         var jsonObj = JSON.stringify(rateFileRequest);
         httpService.post(url,
             this.onApiUploadInventoryFile.bind(this, callback),
-            null,
+            this.onApiUploadInventoryFileErrorProblems.bind(this),
             jsonObj,
             {
                 $ViewElement: $('#rate_view'),
@@ -90,14 +90,20 @@ var RateMainController = BaseController.extend({
     },
 
     //handle Rate upload return; show problems in view if present
+    //CHANGE: handle problems as error status false - intercept as error - wiew will handle modal display text
     onApiUploadInventoryFile: function (callback, data) {
-        if (data.Problems && data.Problems.length) {
-            this.view.showUploadFileIssues(data.Problems);
-        }
-        //reset states
         if (callback) callback(data);
         util.notify("Rate File Uploaded");
         this.refreshApiLoadStations(false);
+    },
+
+    //error callback if Problems
+    onApiUploadInventoryFileErrorProblems: function (xhr, response) {
+        var hasProblems = response && response.Problems && response.Problems.length;
+        if (hasProblems) {
+            //console.log('onApiUploadInventoryFileErrorProblems', response);
+            this.view.showUploadFileIssues(response.Problems);
+        }
     },
     
     //TBD - add this in when creating Station Specifics C/V/VM

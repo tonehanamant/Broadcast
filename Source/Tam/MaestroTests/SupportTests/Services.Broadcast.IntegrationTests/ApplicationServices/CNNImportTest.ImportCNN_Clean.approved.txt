@@ -19,6 +19,7 @@
           "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -37,6 +38,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -61,6 +63,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -79,6 +82,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -103,6 +107,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -121,6 +126,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -140,6 +146,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -164,6 +171,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -182,6 +190,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -206,6 +215,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -224,6 +234,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -263,6 +274,7 @@
           "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -281,6 +293,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -305,6 +318,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -323,6 +337,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -347,6 +362,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -365,6 +381,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -384,6 +401,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -408,6 +426,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -426,6 +445,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -450,6 +470,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -468,6 +489,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -507,6 +529,7 @@
           "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -525,6 +548,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -549,6 +573,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -567,6 +592,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -591,6 +617,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -609,6 +636,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -628,6 +656,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -652,6 +681,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -670,6 +700,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -709,6 +740,7 @@
           "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -727,6 +759,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -751,6 +784,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -769,6 +803,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -793,6 +828,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -811,6 +847,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -830,6 +867,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -854,6 +892,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -872,6 +911,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -911,6 +951,7 @@
           "EffectiveDate": "2017-06-01T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -929,6 +970,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -953,6 +995,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -971,6 +1014,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -995,6 +1039,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1013,6 +1058,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1032,6 +1078,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -1071,6 +1118,7 @@
           "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1089,6 +1137,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1108,6 +1157,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -1132,6 +1182,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1150,6 +1201,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1169,6 +1221,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -1193,6 +1246,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1211,6 +1265,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1230,6 +1285,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -1254,6 +1310,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1272,6 +1329,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1291,6 +1349,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1310,6 +1369,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1329,6 +1389,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -1353,6 +1414,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1371,6 +1433,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -1395,6 +1458,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1413,6 +1477,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1432,6 +1497,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1451,6 +1517,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1470,6 +1537,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -1509,6 +1577,7 @@
           "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1527,6 +1596,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1546,6 +1616,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -1570,6 +1641,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1588,6 +1660,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1607,6 +1680,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -1631,6 +1705,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1649,6 +1724,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1668,6 +1744,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -1692,6 +1769,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1710,6 +1788,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1729,6 +1808,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1748,6 +1828,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1767,6 +1848,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -1791,6 +1873,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1809,6 +1892,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -1833,6 +1917,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1851,6 +1936,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1870,6 +1956,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1889,6 +1976,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1908,6 +1996,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -1947,6 +2036,7 @@
           "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -1965,6 +2055,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -1984,6 +2075,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2008,6 +2100,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2026,6 +2119,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2045,6 +2139,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2069,6 +2164,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2087,6 +2183,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2106,6 +2203,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2130,6 +2228,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2148,6 +2247,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2167,6 +2267,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2186,6 +2287,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2205,6 +2307,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2229,6 +2332,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2247,6 +2351,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2271,6 +2376,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2289,6 +2395,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2308,6 +2415,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2327,6 +2435,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2346,6 +2455,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2385,6 +2495,7 @@
           "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2403,6 +2514,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2422,6 +2534,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2446,6 +2559,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2464,6 +2578,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2483,6 +2598,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2507,6 +2623,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2525,6 +2642,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2544,6 +2662,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2563,6 +2682,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2582,6 +2702,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2606,6 +2727,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2624,6 +2746,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2648,6 +2771,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2666,6 +2790,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2685,6 +2810,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2704,6 +2830,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2723,6 +2850,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2762,6 +2890,7 @@
           "EffectiveDate": "2017-04-17T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2780,6 +2909,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2799,6 +2929,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2823,6 +2954,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2841,6 +2973,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2860,6 +2993,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2884,6 +3018,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -2902,6 +3037,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2921,6 +3057,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2940,6 +3077,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -2959,6 +3097,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -2983,6 +3122,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -3001,6 +3141,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             }
           ],
@@ -3025,6 +3166,7 @@
           "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
+          "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
             {
               "Daypart": {
@@ -3043,6 +3185,7 @@
                 "_Tuesday": true,
                 "_Wednesday": true
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -3062,6 +3205,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -3081,6 +3225,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             },
             {
@@ -3100,6 +3245,7 @@
                 "_Tuesday": false,
                 "_Wednesday": false
               },
+              "Id": null,
               "ProgramName": null
             }
           ],

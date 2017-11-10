@@ -10,13 +10,15 @@ namespace Services.Broadcast.Entities
 {
     public class StationInventoryManifestDaypart
     {
+        public int? Id { get; set; }
         public DisplayDaypart Daypart { get; set; }
         public string ProgramName { get; set; }
 
         public StationInventoryManifestDaypart() { }
 
-        public StationInventoryManifestDaypart(DisplayDaypart daypart, string programName)
+        public StationInventoryManifestDaypart(int id,DisplayDaypart daypart, string programName)
         {
+            this.Id = id;
             this.Daypart = daypart;
             this.ProgramName = programName;
         }

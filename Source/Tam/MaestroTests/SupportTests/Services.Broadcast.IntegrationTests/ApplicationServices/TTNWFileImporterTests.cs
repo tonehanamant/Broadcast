@@ -50,6 +50,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
+                jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -85,6 +86,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
+                jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
+
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -119,7 +122,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
-                jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource"); 
+                jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
+                jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -149,6 +153,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
+                jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 //jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -243,6 +248,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
+                jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -280,6 +286,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
                 var json = IntegrationTestHelper.ConvertToJson(fileProblems, jsonSettings);
+                Approvals.Verify(json);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ZeroInDaypartSpot()
+        {
+            _ttnwFileImporter.BroadcastDataDataRepository =
+                IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var filename = @".\Files\TTNW_ZeroInDaypartSpot.xlsx";
+                var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+                var inventoryFile = new InventoryFile();
+                var effectiveDate = DateTime.Parse("10/1/2017");
+                var fileProblems = new List<InventoryFileProblem>();
+
+                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate, fileProblems);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                
+                jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
+                
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                var json = IntegrationTestHelper.ConvertToJson(fileProblems, jsonSettings);
+
                 Approvals.Verify(json);
             }
         }

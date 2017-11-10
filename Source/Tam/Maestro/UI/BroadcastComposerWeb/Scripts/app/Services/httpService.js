@@ -21,6 +21,7 @@
         this.ajax(url, success, error, 'PUT', args);
     },
 
+    //CHANGE: allow for Problems handling in success false in result as error callback
     ajax: function (url, success, error, method, args) {
         if (args.$ViewElement) {
             this.showProcessing(args.$ViewElement);
@@ -55,11 +56,16 @@
                     }
                 } else {
                     state = 'error';
-
                     if (error) {
-                        error(xhr);
-                        //dont bypass default error message
-                        me.showDefaultError(result.Message);
+                        if (result.Data && result.Data.Problems && result.Data.Problems.length) {
+                            //bypass default error if Problems - callback will handle
+                            //console.log('service error Problems', result.Data);
+                            error(xhr, result.Data);
+                        } else {
+                            error(xhr);
+                            //dont bypass default error message
+                            me.showDefaultError(result.Message);
+                        }
                     } else {
                         me.showDefaultError(result.Message);
                     }
@@ -104,7 +110,7 @@
         };
     },
 
-    //show default error modal - dont neeed refresh option?
+    //show default error modal - dont need refresh option?
     showDefaultError: function (msg, headtxt, showRefresh) {
         msg = msg || config.defaultErrorMsg;
         headtxt = headtxt || config.headError;

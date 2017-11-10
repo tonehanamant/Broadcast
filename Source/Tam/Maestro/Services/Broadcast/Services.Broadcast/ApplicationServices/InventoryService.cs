@@ -65,7 +65,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ILockingManagerApplicationService _LockingManager;
         private readonly Dictionary<int, int> _SpotLengthMap;
         private readonly Dictionary<int, double> _SpotLengthCostMultipliers; 
-        private readonly IThirdPartySpotCostCalculationEngine _ThirdPartySpotCostCalculationEngine;
+        private readonly IProprietarySpotCostCalculationEngine _proprietarySpotCostCalculationEngine;
         private readonly IStationInventoryGroupService _stationInventoryGroupService;
         private readonly IInventoryRepository _inventoryRepository;
 
@@ -77,7 +77,7 @@ namespace Services.Broadcast.ApplicationServices
                             IInventoryFileImporterFactory inventoryFileImporterFactory,
                             ISMSClient smsClient, 
                             ILockingManagerApplicationService lockingManager,
-                            IThirdPartySpotCostCalculationEngine thirdPartySpotCostCalculationEngine,
+                            IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
                             IStationInventoryGroupService stationInventoryGroupService,
                             IBroadcastAudiencesCache audiencesCache)
         {
@@ -100,7 +100,7 @@ namespace Services.Broadcast.ApplicationServices
             _SpotLengthCostMultipliers =
                 broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthMultiplierRepository>()
                     .GetSpotLengthIdsAndCostMultipliers();
-            _ThirdPartySpotCostCalculationEngine = thirdPartySpotCostCalculationEngine;
+            _proprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _stationInventoryGroupService = stationInventoryGroupService;
             _inventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
@@ -115,9 +115,9 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<DisplayBroadcastStation> GetStationsWithFilter(string rateSource, string filterValue, DateTime today)
         {
-
             DisplayBroadcastStation.StationFilter filter;
             var parseSuccess = Enum.TryParse(filterValue, true, out filter);
+
             if (!parseSuccess)
             {
                 throw new ArgumentException(string.Format("Invalid station filter parameter: {0}", filterValue));
@@ -154,8 +154,6 @@ namespace Services.Broadcast.ApplicationServices
 
             try
             {
-                var startTime = DateTime.Now;
-
                 fileImporter.ExtractFileData(request.RatesStream, inventoryFile, request.EffectiveDate, fileProblems);
 
                 if ((inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 ||
@@ -178,13 +176,19 @@ namespace Services.Broadcast.ApplicationServices
                     };
                 }
 
-                startTime = DateTime.Now;
+                if (inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 ||
+                    !inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Any())
+                {
+                    throw new ApplicationException("Unable to parse any file records.");
+                }
+
+                var startTime = DateTime.Now;
 
                 var validationProblems = _inventoryFileValidator.ValidateInventoryFile(inventoryFile);
 
                 fileProblems.AddRange(validationProblems.InventoryFileProblems);
 
-                endTime = DateTime.Now;
+                var endTime = DateTime.Now;
 
                 System.Diagnostics.Debug.WriteLine("Completed file validation in {0}", endTime - startTime);
 
@@ -209,17 +213,20 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     LockStations(fileStationCodes, lockedStationCodes, stationLocks, inventoryFile);
 
-                    var isThirdParty = inventorySource.Name == "CNN" ||
+                    var isProprietary = inventorySource.Name == "CNN" ||
                                        inventorySource.Name == "TTNW";
 
-                    if (isThirdParty)
+                    _AddRequestAudienceInfo(request, inventoryFile);
+
+                    if (isProprietary)
                     {
-                        _ThirdPartySpotCostCalculationEngine.CalculateSpotCost(request, inventoryFile);
+                        _EnsureInventoryDaypartIds(inventoryFile);
+                        _proprietarySpotCostCalculationEngine.CalculateSpotCost(request, inventoryFile);
                     }
 
                     inventoryFile.FileStatus = InventoryFile.FileStatusEnum.Loaded;
 
-                    _SaveStationInventoryGroups(request, inventoryFile);
+                    _AddNewStationInventoryGroups(request, inventoryFile);
                     _SaveInventoryFileContacts(request, inventoryFile);
 
                     transaction.Complete();
@@ -251,6 +258,7 @@ namespace Services.Broadcast.ApplicationServices
                 throw new BroadcastInventoryDataException(string.Format("Error loading new inventory file: {0}", e.Message),
                     inventoryFile.Id, e);
             }
+
             return new InventoryFileSaveResult
             {
                 FileId = inventoryFile.Id,
@@ -293,15 +301,37 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private void _SaveStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
+        private void _AddRequestAudienceInfo(InventoryFileSaveRequest request, InventoryFile inventoryFile)
+        {
+            if (request.AudiencePricing == null || !request.AudiencePricing.Any())
+                return;
+
+            var audiencePricing = request.AudiencePricing;
+            inventoryFile
+                .InventoryGroups
+                .SelectMany(g => g.Manifests)
+                .ForEach(manifest =>
+                    manifest.ManifestAudiences.AddRange(
+                        audiencePricing.Select(ap => new StationInventoryManifestAudience()
+                        {
+                            IsReference = false,
+                            Audience = new DisplayAudience() {Id = ap.AudienceId},
+                            Rate = ap.Price
+                        })));
+        }
+
+        private void _AddNewStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
+        {
+            _EnsureInventoryDaypartIds(inventoryFile);
+            _stationInventoryGroupService.AddNewStationInventoryGroups(request, inventoryFile);
+        }
+
+        private void _EnsureInventoryDaypartIds(InventoryFile inventoryFile)
         {
             // set daypart id
-            inventoryFile.InventoryGroups.SelectMany(ig => ig.Manifests.SelectMany(m => m.ManifestDayparts.Select(md => md.Daypart))).ForEach(dd =>
-            {
-                dd.Id = _daypartCache.GetIdByDaypart(dd);
-            });
-
-            _stationInventoryGroupService.SaveStationInventoryGroups(request, inventoryFile);
+            inventoryFile.InventoryGroups.SelectMany(
+                    ig => ig.Manifests.SelectMany(m => m.ManifestDayparts.Where(md => md.Daypart.Id == -1).Select(md => md.Daypart)))
+                .ForEach(dd => { dd.Id = _daypartCache.GetIdByDaypart(dd); });
         }
 
 

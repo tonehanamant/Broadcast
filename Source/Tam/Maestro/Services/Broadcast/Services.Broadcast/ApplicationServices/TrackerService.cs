@@ -113,13 +113,18 @@ namespace Services.Broadcast.ApplicationServices
         internal List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate)
         {
             var displaySchedules = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetDisplaySchedules(startDate, endDate);
+            
             foreach (var schedule in displaySchedules)
             {
-                if (schedule.PrimaryDemoBooked.HasValue)
-                    schedule.PrimaryDemoBooked = _ImpressionAdjustmentEngine.AdjustImpression(schedule.PrimaryDemoBooked.Value, schedule.PostType, schedule.PostingBookId, false);
+                foreach (var trackingDetails in schedule.TrackingDetails)
+                {
+                    if (trackingDetails.Impressions != null)
+                        schedule.PrimaryDemoBooked += _ImpressionAdjustmentEngine.AdjustImpression(trackingDetails.Impressions.Value, schedule.IsEquivalized, trackingDetails.SpotLength, schedule.PostType, schedule.PostingBookId);
+                }
 
                 schedule.PrimaryDemoDelivered = _ImpressionAdjustmentEngine.AdjustImpression(schedule.PrimaryDemoDelivered, schedule.PostType, schedule.PostingBookId, false);
             }
+
             return displaySchedules;
         }
 
@@ -682,11 +687,13 @@ namespace Services.Broadcast.ApplicationServices
         internal List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule)
         {
             var details = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailsByEstimateId(estimateId);
+            
             foreach (var detail in details)
             {
                 if (detail.Impressions.HasValue)
-                    detail.Impressions = _ImpressionAdjustmentEngine.AdjustImpression(detail.Impressions.Value, schedule.Equivalized, detail.SpotLength, schedule.PostType, schedule.PostingBookId, false);
+                    detail.Impressions = _ImpressionAdjustmentEngine.AdjustImpression(detail.Impressions.Value, schedule.Equivalized, detail.SpotLength, schedule.PostType, schedule.PostingBookId);
             }
+
             return details;
         }
 

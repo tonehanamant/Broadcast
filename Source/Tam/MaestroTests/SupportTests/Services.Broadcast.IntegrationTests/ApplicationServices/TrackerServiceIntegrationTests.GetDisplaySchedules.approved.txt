@@ -90,11 +90,17 @@
       "PostingBookDate": "2016-02-28T00:00:00",
       "PostingBookId": 413,
       "PostType": 1,
-      "PrimaryDemoBooked": 1022872.0,
+      "PrimaryDemoBooked": 0.0,
       "PrimaryDemoDelivered": 0.0,
       "SpotsBooked": 8,
       "SpotsDelivered": 0,
-      "StartDate": "2016-01-01T00:00:00"
+      "StartDate": "2016-01-01T00:00:00",
+      "TrackingDetails": [
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        }
+      ]
     },
     {
       "Advertiser": "1 Vision",
@@ -114,11 +120,33 @@
       "PostingBookDate": "2016-02-28T00:00:00",
       "PostingBookId": 413,
       "PostType": 1,
-      "PrimaryDemoBooked": 767154.0,
+      "PrimaryDemoBooked": 0.0,
       "PrimaryDemoDelivered": 0.0,
       "SpotsBooked": 6,
       "SpotsDelivered": 0,
-      "StartDate": "2016-01-01T00:00:00"
+      "StartDate": "2016-01-01T00:00:00",
+      "TrackingDetails": [
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        }
+      ]
     },
     {
       "Advertiser": "1 Vision",
@@ -138,11 +166,17 @@
       "PostingBookDate": "2016-02-28T00:00:00",
       "PostingBookId": 413,
       "PostType": 1,
-      "PrimaryDemoBooked": 511436.0,
+      "PrimaryDemoBooked": 0.0,
       "PrimaryDemoDelivered": 0.0,
       "SpotsBooked": 4,
       "SpotsDelivered": 0,
-      "StartDate": "2016-01-01T00:00:00"
+      "StartDate": "2016-01-01T00:00:00",
+      "TrackingDetails": [
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        }
+      ]
     }
   ]
 }

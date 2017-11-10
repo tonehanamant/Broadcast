@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Entities
 {
@@ -18,6 +17,7 @@ namespace Services.Broadcast.Entities
         public int InventorySourceId { get; set; }
         public DateTime EffectiveDate { get; set; }
         public List<StationInventoryManifestAudience> ManifestAudiences { get; set; }
+        public List<StationInventoryManifestAudience> ManifestAudiencesReferences { get; set; }
 
         public List<StationInventoryManifestRate> ManifestRates { get; set; } 
 
@@ -25,6 +25,7 @@ namespace Services.Broadcast.Entities
         {
             ManifestDayparts = new List<StationInventoryManifestDaypart>();
             ManifestAudiences = new List<StationInventoryManifestAudience>();
+            ManifestAudiencesReferences = new List<StationInventoryManifestAudience>();
             ManifestRates = new List<StationInventoryManifestRate>();
         }
         // todo: this date needs to be populated

@@ -17,49 +17,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 37000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 20000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 31000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 34000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 16000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 17000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -109,49 +143,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 76000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 35000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 52000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 56000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 28000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 31000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -177,7 +245,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 15254.4000,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -201,49 +274,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 35000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 10000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 18000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 20000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 4000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -269,7 +376,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 14801.0100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -293,49 +405,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 51000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 25000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 37000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 40000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 16000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 16000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -380,7 +526,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 27862.0900,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -404,49 +555,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 98000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 57000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 73000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 80000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 38000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 42000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -472,7 +657,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 92683.7100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -496,49 +686,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 71000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 38000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 50000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 55000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 26000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 28000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -564,7 +788,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 18788.9100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -588,49 +817,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 45000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 24000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 32000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 34000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 18000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 19000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -656,7 +919,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 3430.1400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -680,49 +948,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 35000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 14000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 23000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 25000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 8000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 10000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -748,7 +1050,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 10848.0200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -772,49 +1079,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 41000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 23000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 32000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 35000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 18000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 21000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -840,7 +1181,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 4584.5600,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -864,49 +1210,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 194000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 115000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 150000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 167000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 77000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 84000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -932,7 +1312,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 59239.4800,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -956,49 +1341,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 25000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 15000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 18000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 22000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 12000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -1024,7 +1443,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 7421.0800,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1048,49 +1472,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 24000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 15000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 17000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 20000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -1135,7 +1593,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 5910.6300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1159,49 +1622,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 13000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 6000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 10000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 12000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 4000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -1246,7 +1743,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 12573.5400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1270,49 +1772,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 39000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 17000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 27000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 29000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 10000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -1338,7 +1874,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 22348.9900,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1362,49 +1903,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 70000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 40000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 52000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 60000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 28000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 30000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -1430,7 +2005,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 31272.3100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -1454,49 +2034,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 32000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 15000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 23000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 27000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 10000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 10000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -1522,7 +2136,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 6670.4400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1546,49 +2165,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 34000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 14000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 24000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 28000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -1633,7 +2286,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 3240.1300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -1657,49 +2315,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 24000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 13000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 16000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 19000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 10000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -1744,7 +2436,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1372.0400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -1768,49 +2465,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 26000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 8000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 12000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 12000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -1836,7 +2567,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 4116.4200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1860,49 +2596,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 21000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 6000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 4000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -1928,7 +2698,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1243.6200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -1952,49 +2727,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 30000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 10000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 18000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 20000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -2020,7 +2829,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2050.6500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2044,49 +2858,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 45000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 19000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 29000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 33000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 14000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 16000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -2112,7 +2960,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 19189.5400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2136,49 +2989,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 57000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 17000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 37000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 41000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 13000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -2204,7 +3091,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 12846.7000,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2228,49 +3120,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 32000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 15000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 16000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -2296,7 +3222,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 5416.6900,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2320,49 +3251,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 85000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 30000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 49000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 52000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 21000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 23000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -2388,7 +3353,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1460.1300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2412,49 +3382,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 17000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 14000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 16000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 8000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -2480,7 +3484,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 3747.9200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2504,49 +3513,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 28000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 15000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 20000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 24000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 13000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -2572,7 +3615,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 969.1500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2596,49 +3644,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 12000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 6000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 6000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -2664,7 +3746,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2532.5000,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -2688,49 +3775,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 15000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 4000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 8000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -2756,7 +3877,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1965.6500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2780,49 +3906,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 53000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 22000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 31000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 36000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 19000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 20000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -2848,7 +4008,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 4241.8400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 4,
@@ -2872,49 +4037,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 97000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 41000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 68000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 73000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 26000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 29000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -2940,7 +4139,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 35419.6500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -2964,49 +4168,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 33000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 14000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 22000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 25000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 10000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 12000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -3032,7 +4270,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 11089.2100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3056,49 +4299,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 33000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 17000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 24000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 26000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 12000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -3124,7 +4401,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 10991.4500,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -3148,49 +4430,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 20000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 12000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 6000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -3216,7 +4532,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 5361.0400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3240,49 +4561,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 6000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -3308,7 +4663,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 916.5400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3332,49 +4692,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 4000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 6000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -3400,7 +4794,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2196.5000,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3424,49 +4823,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 4000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 2000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 2000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -3492,7 +4925,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2055.0600,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3516,49 +4954,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 6000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 10000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -3584,7 +5056,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 5924.5200,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3608,49 +5085,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 6000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 4000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 4000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -3676,7 +5187,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 757.1600,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3700,49 +5216,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 2000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 1000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 2000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 2000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 1000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 1000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -3768,7 +5318,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 376.1100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -3792,49 +5347,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 2000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 2000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -3860,7 +5449,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 250.5800,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -3884,49 +5478,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 55000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 19000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 36000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 39000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -3952,7 +5580,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1895.5100,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 3,
@@ -3976,49 +5609,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 17000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 20000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 21000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -4063,7 +5730,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1612.9800,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4087,49 +5759,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 13000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 8000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 10000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 6000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 6000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -4155,7 +5861,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2287.4800,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4179,49 +5890,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 24000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 14000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 20000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 23000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 11000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -4247,7 +5992,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 564.0600,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -4271,49 +6021,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 2000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 1000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 1000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -4339,7 +6123,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 1487.7400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4363,49 +6152,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 14000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 6000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 10000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 4000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -4431,7 +6254,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 265.3900,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -4455,49 +6283,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 8000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 3000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -4523,7 +6385,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2282.7000,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4547,49 +6414,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 32000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 10000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 18000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 20000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 7000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -4615,7 +6516,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2854.5300,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,
@@ -4639,49 +6545,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 12000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 5000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 9000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 4000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 4000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -4707,7 +6647,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 2830.6400,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 1,
@@ -4731,49 +6676,83 @@
         "ManifestAudiences": [
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Females 50-54",
+              "Id": 13
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 210.0000,
+            "Rating": 0.0
+          },
+          {
+            "Audience": {
+              "AudienceString": "Females 55-64",
+              "Id": 14
+            },
+            "Impressions": 0.0,
+            "IsReference": false,
+            "Rate": 131.0000,
+            "Rating": 0.0
+          }
+        ],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "House Holds",
+              "Id": 31
             },
             "Impressions": 1000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-54",
+              "Id": 37
             },
             "Impressions": 1000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 35-64",
+              "Id": 40
             },
             "Impressions": 1000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-64",
+              "Id": 257
             },
             "Impressions": 1000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 25-49",
+              "Id": 36
             },
             "Impressions": 1000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           },
           {
             "Audience": {
-              "AudienceString": null
+              "AudienceString": "Adults 18-49",
+              "Id": 33
             },
             "Impressions": 1000.0,
+            "IsReference": true,
             "Rate": 0.0000,
             "Rating": 0.0
           }
@@ -4799,7 +6778,12 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [],
+        "ManifestRates": [
+          {
+            "Rate": 0.0000,
+            "SpotLengthId": 1
+          }
+        ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
         "SpotsPerWeek": 2,

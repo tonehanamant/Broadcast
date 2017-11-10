@@ -1,87 +1,89 @@
 ﻿using System;
+using System.Collections.Generic;
 using Common.Services.Repositories;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.Practices.ObjectBuilder2;
+using Services.Broadcast.ApplicationServices;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.BusinessEngines
 {
-    public interface IThirdPartySpotCostCalculationEngine
+    public interface IProprietarySpotCostCalculationEngine
     {
         void CalculateSpotCost(InventoryFileSaveRequest request, InventoryFile inventoryFile);
     }
 
-    public class ThirdPartySpotCostCalculationEngine : IThirdPartySpotCostCalculationEngine
+    public class ProprietarySpotCostCalculationEngine : IProprietarySpotCostCalculationEngine
     {
         private readonly IRatingForecastRepository _RatingsRepository;
 
-        public ThirdPartySpotCostCalculationEngine(IDataRepositoryFactory dataRepositoryFactory)
+        public ProprietarySpotCostCalculationEngine(IDataRepositoryFactory dataRepositoryFactory)
         {
             _RatingsRepository = dataRepositoryFactory.GetDataRepository<IRatingForecastRepository>(); ;
         }
 
         public void CalculateSpotCost(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
-            //TODO: Fixme or remove.
-            //var audiences = (from stationProgram in ratesFile.StationPrograms
-            //                 from stationProgramFlightWeek in stationProgram.FlightWeeks
-            //                 from stationProgramFlightWeekAudience in stationProgramFlightWeek.Audiences
-            //                 select stationProgramFlightWeekAudience.Audience.Id).Distinct().ToList();
+            var audiences = (from groups in inventoryFile.InventoryGroups
+                             from manifest in groups.Manifests
+                             from audience in manifest.ManifestAudiences
+                             select audience.Audience.Id).Distinct().ToList();
 
-            //var stations = ratesFile.StationPrograms.GroupBy(g => g.StationCode).Select(stationProgram => new StationDetailDaypart
-            //{
-            //    Code = stationProgram.First().StationCode,
-            //    DisplayDaypart = stationProgram.First().Daypart,
-            //    Id = stationProgram.First().Id
-            //}).ToList();
+            var manifestList = inventoryFile.InventoryGroups
+                .SelectMany(g => g.Manifests)
+                .ToList();
 
-            //var stationsImpressions = _RatingsRepository.GetImpressionsDaypart(request.RatingBook.Value, audiences, stations, request.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+            // flatten out manifest dayparts with unique Ids for each record.
+            var manifestDaypartMap = 
+                (
+                    from manifest in manifestList
+                    from manifestDaypart in manifest.ManifestDayparts
+                    select new {id = manifestDaypart.Daypart.Id, manifest = manifest,daypart = manifestDaypart.Daypart,}
+                ).ToList();
 
-            //foreach (var stationProgram in ratesFile.StationPrograms)
-            //{
-            //    foreach (var stationProgramFlightWeek in stationProgram.FlightWeeks)
-            //    {
-            //        var firstAudience = stationProgramFlightWeek.Audiences.FirstOrDefault();
+            // group stations and dayparts (to make them distint)
+            var stationDaypartGroups =
+            (
+                from mdpMap in manifestDaypartMap
+                select new StationDetailDaypart()
+                {
+                    Code = (short) mdpMap.manifest.Station.Code,
+                    DisplayDaypart = mdpMap.daypart,
+                    Id = mdpMap.id
+                }
+            ).GroupBy(g => new {g.Code, g.Id }).ToList();
+            
+            var stationsImpressions = _RatingsRepository.GetImpressionsDaypart(request.RatingBook, audiences, stationDaypartGroups.Select(g => g.First()), request.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
 
-            //        if (firstAudience == null)
-            //            continue;
+            foreach (var manifest in manifestList)
+            {
+                var firstAudience = manifest.ManifestAudiences.FirstOrDefault();
 
-            //        var stationImpressions =
-            //            stationsImpressions.FirstOrDefault(
-            //                stationImpression => stationImpression.station_code == stationProgram.StationCode &&
-            //                                     stationImpression.audience_id == firstAudience.Audience.Id);
+                if (firstAudience == null)
+                    continue;
 
-            //        if (stationImpressions == null)
-            //            continue;
+                var stationImpressions = stationsImpressions
+                                            .Where(si => si.station_code == manifest.Station.Code 
+                                                            && firstAudience.Audience.Id == si.audience_id 
+                                                            && manifestDaypartMap
+                                                                    .Any(md => md.id == si.id 
+                                                                                &&  manifest.ManifestDayparts.Any(mdp => mdp.Daypart.Id == md.daypart.Id ))
+                                                            ).ToList();
+                if (!stationImpressions.Any()) continue;
 
-            //        SetSpotCost(stationImpressions, firstAudience, stationProgramFlightWeek);
-            //    }
-            //}
+                var impression = stationImpressions.Average(si => si.impressions);
+
+                var rate = manifest.ManifestRates.FirstOrDefault(r => r.SpotLengthId == manifest.SpotLengthId);
+                if (rate == null)
+                {
+                    rate = new StationInventoryManifestRate() {SpotLengthId = manifest.SpotLengthId};
+                    manifest.ManifestRates.Add(rate);
+                }
+                rate.Rate = ProposalMath.CalculateCost(firstAudience.Rate, impression);
+            }
         }
-
-        //private void SetSpotCost(StationImpressionsWithAudience stationImpressionsWithAudience, StationProgramFlightWeekAudience audience, StationProgramFlightWeek stationProgramFlightWeek)
-        //{
-        //    if (audience.Cpm15 != null)
-        //    {
-        //        stationProgramFlightWeek.Rate15s = ProposalMath.CalculateCost(audience.Cpm15.Value, stationImpressionsWithAudience.impressions);
-        //    }
-        //    else if (audience.Cpm30 != null)
-        //    {
-        //        stationProgramFlightWeek.Rate30s = ProposalMath.CalculateCost(audience.Cpm30.Value, stationImpressionsWithAudience.impressions);
-        //    }
-        //    else if (audience.Cpm60 != null)
-        //    {
-        //        stationProgramFlightWeek.Rate60s = ProposalMath.CalculateCost(audience.Cpm60.Value, stationImpressionsWithAudience.impressions);
-        //    }
-        //    else if (audience.Cpm90 != null)
-        //    {
-        //        stationProgramFlightWeek.Rate90s = ProposalMath.CalculateCost(audience.Cpm90.Value, stationImpressionsWithAudience.impressions);
-        //    }
-        //    else if (audience.Cpm120 != null)
-        //    {
-        //        stationProgramFlightWeek.Rate120s = ProposalMath.CalculateCost(audience.Cpm120.Value, stationImpressionsWithAudience.impressions);
-        //    }
-        //}
     }
 }
