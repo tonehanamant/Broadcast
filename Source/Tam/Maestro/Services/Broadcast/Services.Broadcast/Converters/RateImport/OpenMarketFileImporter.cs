@@ -152,7 +152,7 @@ namespace Services.Broadcast.Converters.RateImport
                             {
                                 var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, availLinePeriod, programName, callLetters, fileProblems);
 
-                                var manifestAudiences = _GetManifestAudienceListForAvailLineWithPeriods(
+                                var manifestAudiences = _GetManifestAudienceListForAvailLine(
                                     proposal,
                                     audienceMap,
                                     ToDemoValueDict(availLinePeriod.DemoValues));
@@ -164,7 +164,7 @@ namespace Services.Broadcast.Converters.RateImport
                                     SpotsPerWeek = null,
                                     SpotLengthId = spotLengthId,
                                     ManifestDayparts = _GetDaypartsListForAvailLineWithDetailedPeriods(availLine),
-                                    ManifestAudiences = manifestAudiences,
+                                    ManifestAudiencesReferences = manifestAudiences,
                                     ManifestRates = manifestRates,
                                     EffectiveDate = effectiveDate
                                 };
@@ -300,7 +300,7 @@ namespace Services.Broadcast.Converters.RateImport
                                              availLine.SpotLength.Second;
                         var spotLengthId = SpotLengthIdsByLength[spotLength];
 
-                        var manifestAudiences = _GetManifestAudienceListForAvailLineWithPeriods(
+                        var manifestAudiences = _GetManifestAudienceListForAvailLine(
                             proposal,
                             audienceMap,
                             ToDemoValueDict(availLine.DemoValues));
@@ -317,7 +317,7 @@ namespace Services.Broadcast.Converters.RateImport
                                     SpotsPerWeek = null,
                                     SpotLengthId = spotLengthId,
                                     ManifestDayparts = _GetDaypartsListForAvailLineWithPeriods(availLine),
-                                    ManifestAudiences = manifestAudiences,
+                                    ManifestAudiencesReferences = manifestAudiences,
                                     EffectiveDate = effectiveDate
                                 };
                                 manifests.Add(periodManifest);
@@ -337,7 +337,7 @@ namespace Services.Broadcast.Converters.RateImport
                 }
             }
 
-        private List<StationInventoryManifestAudience> _GetManifestAudienceListForAvailLineWithPeriods(AAAAMessageProposal proposal, 
+        private List<StationInventoryManifestAudience> _GetManifestAudienceListForAvailLine(AAAAMessageProposal proposal, 
             Dictionary<string, DisplayAudience> audienceMap, Dictionary<string, decimal> demoValues)
         {
                 List<StationInventoryManifestAudience> manifestAudiences = new List<StationInventoryManifestAudience>();
@@ -356,6 +356,7 @@ namespace Services.Broadcast.Converters.RateImport
                     newManifestAudience = true;
                     manifestAudience = new StationInventoryManifestAudience();
                     manifestAudience.Audience = audience;
+                    manifestAudience.IsReference = true;
                 }
 
                 switch (demo.DemoType)

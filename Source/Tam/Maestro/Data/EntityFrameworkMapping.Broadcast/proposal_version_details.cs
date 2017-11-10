@@ -47,10 +47,10 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual media_months media_months1 { get; set; }
         public virtual media_months media_months2 { get; set; }
         public virtual proposal_versions proposal_versions { get; set; }
-        public virtual spot_lengths spot_lengths { get; set; }
         public virtual ICollection<proposal_version_detail_quarters> proposal_version_detail_quarters { get; set; }
         public virtual ICollection<proposal_version_detail_criteria_cpm> proposal_version_detail_criteria_cpm { get; set; }
         public virtual ICollection<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
         public virtual ICollection<proposal_version_detail_criteria_programs> proposal_version_detail_criteria_programs { get; set; }
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }

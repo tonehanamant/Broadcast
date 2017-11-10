@@ -2061,7 +2061,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySet Name="schedule_restriction_dayparts" EntityType="BroadcastModel.schedule_restriction_dayparts" />
           <EntitySet Name="schedules" EntityType="BroadcastModel.schedule" />
           <EntitySet Name="spot_length_cost_multipliers" EntityType="BroadcastModel.spot_length_cost_multipliers" />
-          <EntitySet Name="spot_lengths" EntityType="BroadcastModel.spot_lengths" />
           <EntitySet Name="station_contacts" EntityType="BroadcastModel.station_contacts" />
           <EntitySet Name="stations" EntityType="BroadcastModel.station" />
           <EntitySet Name="system_component_parameters" EntityType="BroadcastModel.system_component_parameters" />
@@ -2151,10 +2150,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="audience" EntitySet="audiences" />
             <End Role="schedule_detail_audiences" EntitySet="schedule_detail_audiences" />
           </AssociationSet>
-          <AssociationSet Name="FK_bvs_file_details_spot_lengths" Association="BroadcastModel.FK_bvs_file_details_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="bvs_file_details" EntitySet="bvs_file_details" />
-          </AssociationSet>
           <AssociationSet Name="FK_schedule_details_dayparts" Association="BroadcastModel.FK_schedule_details_dayparts">
             <End Role="daypart" EntitySet="dayparts" />
             <End Role="schedule_details" EntitySet="schedule_details" />
@@ -2182,22 +2177,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <AssociationSet Name="FK_schedule_detail_weeks_media_weeks" Association="BroadcastModel.FK_schedule_detail_weeks_media_weeks">
             <End Role="media_weeks" EntitySet="media_weeks" />
             <End Role="schedule_detail_weeks" EntitySet="schedule_detail_weeks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_post_file_details_spot_lengths" Association="BroadcastModel.FK_post_file_details_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="post_file_details" EntitySet="post_file_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_spot_length_spot_lengths" Association="BroadcastModel.FK_proposal_version_spot_length_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="proposal_version_spot_length" EntitySet="proposal_version_spot_length" />
-          </AssociationSet>
-          <AssociationSet Name="FK_schedule_details_spot_lengths" Association="BroadcastModel.FK_schedule_details_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="schedule_details" EntitySet="schedule_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_spot_length_cost_multipliers_spot_lengths" Association="BroadcastModel.FK_spot_length_cost_multipliers_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="spot_length_cost_multipliers" EntitySet="spot_length_cost_multipliers" />
           </AssociationSet>
           <EntitySet Name="proposal_versions" EntityType="BroadcastModel.proposal_versions" />
           <AssociationSet Name="FK_proposal_version_flight_weeks_proposal_versions" Association="BroadcastModel.FK_proposal_version_flight_weeks_proposal_versions">
@@ -2244,10 +2223,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           </AssociationSet>
           <AssociationSet Name="FK_proposal_version_details_proposal_versions" Association="BroadcastModel.FK_proposal_version_details_proposal_versions">
             <End Role="proposal_versions" EntitySet="proposal_versions" />
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_details_spot_lengths" Association="BroadcastModel.FK_proposal_version_details_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
           </AssociationSet>
           <EntitySet Name="proposal_version_detail_quarters" EntityType="BroadcastModel.proposal_version_detail_quarters" />
@@ -2310,23 +2285,8 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="media_weeks" EntitySet="media_weeks" />
             <End Role="station_inventory_manifest_generation" EntitySet="station_inventory_manifest_generation" />
           </AssociationSet>
-          <EntitySet Name="station_inventory_manifest_audiences" EntityType="BroadcastModel.station_inventory_manifest_audiences" />
-          <EntitySet Name="station_inventory_manifest_dayparts" EntityType="BroadcastModel.station_inventory_manifest_dayparts" />
           <EntitySet Name="station_inventory_manifest_rates" EntityType="BroadcastModel.station_inventory_manifest_rates" />
-          <AssociationSet Name="FK_station_inventory_manifest_audiences_audiences" Association="BroadcastModel.FK_station_inventory_manifest_audiences_audiences">
-            <End Role="audience" EntitySet="audiences" />
-            <End Role="station_inventory_manifest_audiences" EntitySet="station_inventory_manifest_audiences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_inventory_manifest_dayparts_dayparts" Association="BroadcastModel.FK_station_inventory_manifest_dayparts_dayparts">
-            <End Role="daypart" EntitySet="dayparts" />
-            <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_inventory_manifest_rates_spot_lengths" Association="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="station_inventory_manifest_rates" EntitySet="station_inventory_manifest_rates" />
-          </AssociationSet>
           <EntitySet Name="inventory_files" EntityType="BroadcastModel.inventory_files" />
-          <EntitySet Name="station_inventory_manifest" EntityType="BroadcastModel.station_inventory_manifest" />
           <AssociationSet Name="FK_inventory_files_inventory_source" Association="BroadcastModel.FK_inventory_files_inventory_source">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="inventory_files" EntitySet="inventory_files" />
@@ -2343,6 +2303,22 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="inventory_files" EntitySet="inventory_files" />
             <End Role="station_contacts" EntitySet="station_contacts" />
           </AssociationSet>
+          <EntitySet Name="spot_lengths" EntityType="BroadcastModel.spot_lengths" />
+          <EntitySet Name="station_inventory_manifest" EntityType="BroadcastModel.station_inventory_manifest" />
+          <EntitySet Name="station_inventory_manifest_audiences" EntityType="BroadcastModel.station_inventory_manifest_audiences" />
+          <EntitySet Name="station_inventory_manifest_dayparts" EntityType="BroadcastModel.station_inventory_manifest_dayparts" />
+          <AssociationSet Name="FK_station_inventory_manifest_audiences_audiences" Association="BroadcastModel.FK_station_inventory_manifest_audiences_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="station_inventory_manifest_audiences" EntitySet="station_inventory_manifest_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_bvs_file_details_spot_lengths" Association="BroadcastModel.FK_bvs_file_details_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="bvs_file_details" EntitySet="bvs_file_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_manifest_dayparts_dayparts" Association="BroadcastModel.FK_station_inventory_manifest_dayparts_dayparts">
+            <End Role="daypart" EntitySet="dayparts" />
+            <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
+          </AssociationSet>
           <AssociationSet Name="FK_station_inventory_manifest_inventory_files" Association="BroadcastModel.FK_station_inventory_manifest_inventory_files">
             <End Role="inventory_files" EntitySet="inventory_files" />
             <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
@@ -2350,6 +2326,30 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <AssociationSet Name="FK_station_inventory_manifest_inventory_sources" Association="BroadcastModel.FK_station_inventory_manifest_inventory_sources">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_post_file_details_spot_lengths" Association="BroadcastModel.FK_post_file_details_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="post_file_details" EntitySet="post_file_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_details_spot_lengths" Association="BroadcastModel.FK_proposal_version_details_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_spot_length_spot_lengths" Association="BroadcastModel.FK_proposal_version_spot_length_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="proposal_version_spot_length" EntitySet="proposal_version_spot_length" />
+          </AssociationSet>
+          <AssociationSet Name="FK_schedule_details_spot_lengths" Association="BroadcastModel.FK_schedule_details_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="schedule_details" EntitySet="schedule_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spot_length_cost_multipliers_spot_lengths" Association="BroadcastModel.FK_spot_length_cost_multipliers_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="spot_length_cost_multipliers" EntitySet="spot_length_cost_multipliers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_manifest_rates_spot_lengths" Association="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="station_inventory_manifest_rates" EntitySet="station_inventory_manifest_rates" />
           </AssociationSet>
           <AssociationSet Name="FK_station_inventory_manifest_spot_lengths" Association="BroadcastModel.FK_station_inventory_manifest_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
@@ -2611,8 +2611,8 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="spot" Type="Int32" Nullable="false" />
           <NavigationProperty Name="post_file_detail_impressions" Relationship="BroadcastModel.FK_post_file_details_impressions_post_file_details" FromRole="post_file_details" ToRole="post_file_detail_impressions" />
           <NavigationProperty Name="post_files" Relationship="BroadcastModel.FK_post_file_details_post_files" FromRole="post_file_details" ToRole="post_files" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_post_file_details_spot_lengths" FromRole="post_file_details" ToRole="spot_lengths" />
           <Property Name="advertiser_out_of_spec_reason" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_post_file_details_spot_lengths" FromRole="post_file_details" ToRole="spot_lengths" />
         </EntityType>
         <EntityType Name="post_files">
           <Key>
@@ -2660,8 +2660,8 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="proposal_version_id" Type="Int32" Nullable="false" />
           <Property Name="spot_length_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_proposal_version_spot_length_spot_lengths" FromRole="proposal_version_spot_length" ToRole="spot_lengths" />
           <NavigationProperty Name="proposal_versions" Relationship="BroadcastModel.FK_proposal_version_spot_length_proposal_versions" FromRole="proposal_version_spot_length" ToRole="proposal_versions" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_proposal_version_spot_length_spot_lengths" FromRole="proposal_version_spot_length" ToRole="spot_lengths" />
         </EntityType>
         <EntityType Name="proposal">
           <Key>
@@ -2788,24 +2788,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="spot_length_id" Type="Int32" Nullable="false" />
           <Property Name="cost_multiplier" Type="Double" Nullable="false" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_length_cost_multipliers_spot_lengths" FromRole="spot_length_cost_multipliers" ToRole="spot_lengths" />
-        </EntityType>
-        <EntityType Name="spot_lengths">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="length" Type="Int32" Nullable="false" />
-          <Property Name="delivery_multiplier" Type="Double" Nullable="false" />
-          <Property Name="order_by" Type="Int32" Nullable="false" />
-          <Property Name="is_default" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="bvs_file_details" Relationship="BroadcastModel.FK_bvs_file_details_spot_lengths" FromRole="spot_lengths" ToRole="bvs_file_details" />
-          <NavigationProperty Name="post_file_details" Relationship="BroadcastModel.FK_post_file_details_spot_lengths" FromRole="spot_lengths" ToRole="post_file_details" />
-          <NavigationProperty Name="proposal_version_spot_length" Relationship="BroadcastModel.FK_proposal_version_spot_length_spot_lengths" FromRole="spot_lengths" ToRole="proposal_version_spot_length" />
-          <NavigationProperty Name="schedule_details" Relationship="BroadcastModel.FK_schedule_details_spot_lengths" FromRole="spot_lengths" ToRole="schedule_details" />
-          <NavigationProperty Name="spot_length_cost_multipliers" Relationship="BroadcastModel.FK_spot_length_cost_multipliers_spot_lengths" FromRole="spot_lengths" ToRole="spot_length_cost_multipliers" />
-          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="spot_lengths" ToRole="proposal_version_details" />
-          <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_manifest_rates" />
-          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_manifest" />
         </EntityType>
         <EntityType Name="station_contacts">
           <Key>
@@ -3147,18 +3129,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_bvs_file_details_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
-          <End Type="BroadcastModel.bvs_file_details" Role="bvs_file_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_file_details">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_schedule_details_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
           <End Type="BroadcastModel.schedule_details" Role="schedule_details" Multiplicity="*" />
@@ -3240,54 +3210,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Principal>
             <Dependent Role="schedule_detail_weeks">
               <PropertyRef Name="media_week_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_post_file_details_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
-          <End Type="BroadcastModel.post_file_details" Role="post_file_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="post_file_details">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_spot_length_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
-          <End Type="BroadcastModel.proposal_version_spot_length" Role="proposal_version_spot_length" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_spot_length">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_schedule_details_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
-          <End Type="BroadcastModel.schedule_details" Role="schedule_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="schedule_details">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_length_cost_multipliers_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
-          <End Type="BroadcastModel.spot_length_cost_multipliers" Role="spot_length_cost_multipliers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_length_cost_multipliers">
-              <PropertyRef Name="spot_length_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3446,11 +3368,11 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_proposal_version_details_share_media_months" FromRole="proposal_version_details" ToRole="media_months" />
           <NavigationProperty Name="media_months2" Relationship="BroadcastModel.FK_proposal_version_details_single_media_months" FromRole="proposal_version_details" ToRole="media_months" />
           <NavigationProperty Name="proposal_versions" Relationship="BroadcastModel.FK_proposal_version_details_proposal_versions" FromRole="proposal_version_details" ToRole="proposal_versions" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="proposal_version_details" ToRole="spot_lengths" />
           <NavigationProperty Name="proposal_version_detail_quarters" Relationship="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_quarters" />
           <NavigationProperty Name="proposal_version_detail_criteria_cpm" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_cpm" />
           <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_genres" />
           <NavigationProperty Name="proposal_version_detail_criteria_programs" Relationship="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_programs" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="proposal_version_details" ToRole="spot_lengths" />
         </EntityType>
         <Association Name="FK_proposal_version_details_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -3511,18 +3433,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Principal>
             <Dependent Role="proposal_version_details">
               <PropertyRef Name="proposal_version_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_details_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_details">
-              <PropertyRef Name="spot_length_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3829,31 +3739,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="station_inventory_manifest_audiences">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
-          <Property Name="audience_id" Type="Int32" Nullable="false" />
-          <Property Name="impressions" Type="Double" />
-          <Property Name="rate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="rating" Type="Double" />
-          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" FromRole="station_inventory_manifest_audiences" ToRole="audience" />
-          <Property Name="is_reference" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" FromRole="station_inventory_manifest_audiences" ToRole="station_inventory_manifest" />
-        </EntityType>
-        <EntityType Name="station_inventory_manifest_dayparts">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="daypart_id" Type="Int32" Nullable="false" />
-          <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="program_name" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_dayparts" FromRole="station_inventory_manifest_dayparts" ToRole="daypart" />
-          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_station_inventory_manifest" FromRole="station_inventory_manifest_dayparts" ToRole="station_inventory_manifest" />
-        </EntityType>
         <EntityType Name="station_inventory_manifest_rates">
           <Key>
             <PropertyRef Name="id" />
@@ -3865,42 +3750,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" FromRole="station_inventory_manifest_rates" ToRole="spot_lengths" />
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_station_inventory_manifest" FromRole="station_inventory_manifest_rates" ToRole="station_inventory_manifest" />
         </EntityType>
-        <Association Name="FK_station_inventory_manifest_audiences_audiences">
-          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
-          <End Type="BroadcastModel.station_inventory_manifest_audiences" Role="station_inventory_manifest_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audience">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_inventory_manifest_audiences">
-              <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_inventory_manifest_dayparts_dayparts">
-          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
-          <End Type="BroadcastModel.station_inventory_manifest_dayparts" Role="station_inventory_manifest_dayparts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="daypart">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_inventory_manifest_dayparts">
-              <PropertyRef Name="daypart_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_inventory_manifest_rates_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
-          <End Type="BroadcastModel.station_inventory_manifest_rates" Role="station_inventory_manifest_rates" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_inventory_manifest_rates">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="inventory_files">
           <Key>
             <PropertyRef Name="id" />
@@ -3920,30 +3769,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="station_contacts" Relationship="BroadcastModel.FK_station_contacts_inventory_files_created" FromRole="inventory_files" ToRole="station_contacts" />
           <NavigationProperty Name="station_contacts1" Relationship="BroadcastModel.FK_station_contacts_inventory_files_modified" FromRole="inventory_files" ToRole="station_contacts" />
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_inventory_files" FromRole="inventory_files" ToRole="station_inventory_manifest" />
-        </EntityType>
-        <EntityType Name="station_inventory_manifest">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="station_code" Type="Int16" Nullable="false" />
-          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
-          <Property Name="spots_per_week" Type="Int32" />
-          <Property Name="effective_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
-          <Property Name="station_inventory_group_id" Type="Int32" />
-          <Property Name="file_id" Type="Int32" />
-          <Property Name="spots_per_day" Type="Int32" />
-          <Property Name="end_date" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_station_inventory_manifest_inventory_files" FromRole="station_inventory_manifest" ToRole="inventory_files" />
-          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_station_inventory_manifest_inventory_sources" FromRole="station_inventory_manifest" ToRole="inventory_sources" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_station_inventory_manifest_spot_lengths" FromRole="station_inventory_manifest" ToRole="spot_lengths" />
-          <NavigationProperty Name="station_inventory_group" Relationship="BroadcastModel.FK_station_inventory_manifest_station_inventory_group" FromRole="station_inventory_manifest" ToRole="station_inventory_group" />
-          <NavigationProperty Name="station_inventory_manifest_audiences" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_audiences" />
-          <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_dayparts" />
-          <NavigationProperty Name="station_inventory_manifest_generation" Relationship="BroadcastModel.FK_station_inventory_manifest_generation_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_generation" />
-          <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_rates" />
-          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_inventory_manifest_stations" FromRole="station_inventory_manifest" ToRole="station" />
         </EntityType>
         <Association Name="FK_inventory_files_inventory_source">
           <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
@@ -3995,6 +3820,109 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="spot_lengths">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="length" Type="Int32" Nullable="false" />
+          <Property Name="delivery_multiplier" Type="Double" Nullable="false" />
+          <Property Name="order_by" Type="Int32" Nullable="false" />
+          <Property Name="is_default" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="bvs_file_details" Relationship="BroadcastModel.FK_bvs_file_details_spot_lengths" FromRole="spot_lengths" ToRole="bvs_file_details" />
+          <NavigationProperty Name="post_file_details" Relationship="BroadcastModel.FK_post_file_details_spot_lengths" FromRole="spot_lengths" ToRole="post_file_details" />
+          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="spot_lengths" ToRole="proposal_version_details" />
+          <NavigationProperty Name="proposal_version_spot_length" Relationship="BroadcastModel.FK_proposal_version_spot_length_spot_lengths" FromRole="spot_lengths" ToRole="proposal_version_spot_length" />
+          <NavigationProperty Name="schedule_details" Relationship="BroadcastModel.FK_schedule_details_spot_lengths" FromRole="spot_lengths" ToRole="schedule_details" />
+          <NavigationProperty Name="spot_length_cost_multipliers" Relationship="BroadcastModel.FK_spot_length_cost_multipliers_spot_lengths" FromRole="spot_lengths" ToRole="spot_length_cost_multipliers" />
+          <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_manifest_rates" />
+          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_manifest" />
+        </EntityType>
+        <EntityType Name="station_inventory_manifest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="station_code" Type="Int16" Nullable="false" />
+          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
+          <Property Name="spots_per_week" Type="Int32" />
+          <Property Name="effective_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
+          <Property Name="station_inventory_group_id" Type="Int32" />
+          <Property Name="file_id" Type="Int32" />
+          <Property Name="spots_per_day" Type="Int32" />
+          <Property Name="end_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_station_inventory_manifest_inventory_files" FromRole="station_inventory_manifest" ToRole="inventory_files" />
+          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_station_inventory_manifest_inventory_sources" FromRole="station_inventory_manifest" ToRole="inventory_sources" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_station_inventory_manifest_spot_lengths" FromRole="station_inventory_manifest" ToRole="spot_lengths" />
+          <NavigationProperty Name="station_inventory_group" Relationship="BroadcastModel.FK_station_inventory_manifest_station_inventory_group" FromRole="station_inventory_manifest" ToRole="station_inventory_group" />
+          <NavigationProperty Name="station_inventory_manifest_audiences" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_audiences" />
+          <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_dayparts" />
+          <NavigationProperty Name="station_inventory_manifest_generation" Relationship="BroadcastModel.FK_station_inventory_manifest_generation_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_generation" />
+          <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_rates" />
+          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_inventory_manifest_stations" FromRole="station_inventory_manifest" ToRole="station" />
+        </EntityType>
+        <EntityType Name="station_inventory_manifest_audiences">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Double" />
+          <Property Name="rate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rating" Type="Double" />
+          <Property Name="is_reference" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" FromRole="station_inventory_manifest_audiences" ToRole="audience" />
+          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" FromRole="station_inventory_manifest_audiences" ToRole="station_inventory_manifest" />
+        </EntityType>
+        <EntityType Name="station_inventory_manifest_dayparts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="daypart_id" Type="Int32" Nullable="false" />
+          <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="program_name" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_dayparts" FromRole="station_inventory_manifest_dayparts" ToRole="daypart" />
+          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_station_inventory_manifest" FromRole="station_inventory_manifest_dayparts" ToRole="station_inventory_manifest" />
+        </EntityType>
+        <Association Name="FK_station_inventory_manifest_audiences_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.station_inventory_manifest_audiences" Role="station_inventory_manifest_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_manifest_audiences">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_bvs_file_details_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
+          <End Type="BroadcastModel.bvs_file_details" Role="bvs_file_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bvs_file_details">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_inventory_manifest_dayparts_dayparts">
+          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
+          <End Type="BroadcastModel.station_inventory_manifest_dayparts" Role="station_inventory_manifest_dayparts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_manifest_dayparts">
+              <PropertyRef Name="daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_station_inventory_manifest_inventory_files">
           <End Type="BroadcastModel.inventory_files" Role="inventory_files" Multiplicity="0..1" />
           <End Type="BroadcastModel.station_inventory_manifest" Role="station_inventory_manifest" Multiplicity="*" />
@@ -4016,6 +3944,78 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Principal>
             <Dependent Role="station_inventory_manifest">
               <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_post_file_details_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
+          <End Type="BroadcastModel.post_file_details" Role="post_file_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="post_file_details">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_details_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_details">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_spot_length_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
+          <End Type="BroadcastModel.proposal_version_spot_length" Role="proposal_version_spot_length" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_spot_length">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_schedule_details_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
+          <End Type="BroadcastModel.schedule_details" Role="schedule_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="schedule_details">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_length_cost_multipliers_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
+          <End Type="BroadcastModel.spot_length_cost_multipliers" Role="spot_length_cost_multipliers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_length_cost_multipliers">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_inventory_manifest_rates_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
+          <End Type="BroadcastModel.station_inventory_manifest_rates" Role="station_inventory_manifest_rates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_manifest_rates">
+              <PropertyRef Name="spot_length_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4473,17 +4473,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="spot_lengths">
-            <EntityTypeMapping TypeName="BroadcastModel.spot_lengths">
-              <MappingFragment StoreEntitySet="spot_lengths">
-                <ScalarProperty Name="is_default" ColumnName="is_default" />
-                <ScalarProperty Name="order_by" ColumnName="order_by" />
-                <ScalarProperty Name="delivery_multiplier" ColumnName="delivery_multiplier" />
-                <ScalarProperty Name="length" ColumnName="length" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="station_contacts">
             <EntityTypeMapping TypeName="BroadcastModel.station_contacts">
               <MappingFragment StoreEntitySet="station_contacts">
@@ -4775,29 +4764,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="station_inventory_manifest_audiences">
-            <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_audiences">
-              <MappingFragment StoreEntitySet="station_inventory_manifest_audiences">
-                <ScalarProperty Name="is_reference" ColumnName="is_reference" />
-                <ScalarProperty Name="rating" ColumnName="rating" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="rate" ColumnName="rate" />
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
-                <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="station_inventory_manifest_dayparts">
-            <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_dayparts">
-              <MappingFragment StoreEntitySet="station_inventory_manifest_dayparts">
-                <ScalarProperty Name="program_name" ColumnName="program_name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
-                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="station_inventory_manifest_rates">
             <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_rates">
               <MappingFragment StoreEntitySet="station_inventory_manifest_rates">
@@ -4824,6 +4790,17 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="spot_lengths">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_lengths">
+              <MappingFragment StoreEntitySet="spot_lengths">
+                <ScalarProperty Name="is_default" ColumnName="is_default" />
+                <ScalarProperty Name="order_by" ColumnName="order_by" />
+                <ScalarProperty Name="delivery_multiplier" ColumnName="delivery_multiplier" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="station_inventory_manifest">
             <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest">
               <MappingFragment StoreEntitySet="station_inventory_manifest">
@@ -4837,6 +4814,29 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
                 <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
                 <ScalarProperty Name="station_code" ColumnName="station_code" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="station_inventory_manifest_audiences">
+            <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_audiences">
+              <MappingFragment StoreEntitySet="station_inventory_manifest_audiences">
+                <ScalarProperty Name="is_reference" ColumnName="is_reference" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="station_inventory_manifest_dayparts">
+            <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_dayparts">
+              <MappingFragment StoreEntitySet="station_inventory_manifest_dayparts">
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
+                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

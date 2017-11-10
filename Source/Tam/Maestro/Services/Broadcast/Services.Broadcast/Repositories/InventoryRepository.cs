@@ -154,6 +154,7 @@ namespace Services.Broadcast.Repositories
 
                     context.station_inventory_group.AddRange(newGroups);
 
+                    //OpenMarket manifests
                     var newManifests =
                         inventoryFile.InventoryManifests.Where(m => m.Id == null)
                             .Select(
@@ -173,14 +174,30 @@ namespace Services.Broadcast.Repositories
                                             {
                                                 audience_id = audience.Audience.Id,
                                                 impressions = audience.Impressions,
-                                                rating = audience.Rating,
-                                                rate = audience.Rate
-                                            }).ToList(),
+                                                rate = audience.Rate,
+                                                is_reference = audience.IsReference
+                                            })
+                                            .Union(
+                                                manifest.ManifestAudiencesReferences.Select(
+                                                    audience => new station_inventory_manifest_audiences()
+                                                    {
+                                                        audience_id = audience.Audience.Id,
+                                                        impressions = audience.Impressions,
+                                                        rate = audience.Rate,
+                                                        is_reference = audience.IsReference
+                                                    })).ToList(),
                                     station_inventory_manifest_dayparts =
                                         manifest.ManifestDayparts.Select(md => new station_inventory_manifest_dayparts()
                                         {
-                                            daypart_id = md.Daypart.Id                                            
+                                            daypart_id = md.Daypart.Id,
+                                            program_name = md.ProgramName
                                         }).ToList(),
+                                    station_inventory_manifest_rates = 
+                                        manifest.ManifestRates.Select(mr => new station_inventory_manifest_rates()
+                                        {
+                                            rate = mr.Rate,
+                                            spot_length_id = mr.SpotLengthId
+                                        }).ToList()
                                 }).ToList();
 
                     context.station_inventory_manifest.AddRange(newManifests);

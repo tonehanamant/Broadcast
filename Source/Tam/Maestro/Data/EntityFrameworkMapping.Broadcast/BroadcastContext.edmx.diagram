@@ -33,7 +33,6 @@
         <EntityTypeShape EntityType="BroadcastModel.schedule_restriction_dayparts" Width="1.5" PointX="10.5" PointY="46.5" />
         <EntityTypeShape EntityType="BroadcastModel.schedule" Width="1.5" PointX="8.25" PointY="38.75" />
         <EntityTypeShape EntityType="BroadcastModel.spot_length_cost_multipliers" Width="1.5" PointX="0.75" PointY="21.25" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_lengths" Width="1.5" PointX="19.75" PointY="9.25" />
         <EntityTypeShape EntityType="BroadcastModel.station_contacts" Width="1.5" PointX="10.5" PointY="7.25" />
         <EntityTypeShape EntityType="BroadcastModel.station" Width="1.5" PointX="8.25" PointY="7.75" />
         <EntityTypeShape EntityType="BroadcastModel.system_component_parameters" Width="1.5" PointX="20.75" PointY="2.25" />
@@ -60,7 +59,6 @@
         <AssociationConnector Association="BroadcastModel.FK_bvs_post_details_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_post_file_detail_impressions_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_detail_audiences_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_bvs_file_details_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_details_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_media_weeks_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_post_files_media_months" />
@@ -68,10 +66,6 @@
         <AssociationConnector Association="BroadcastModel.FK_schedules_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_flight_weeks_media_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_detail_weeks_media_weeks" />
-        <AssociationConnector Association="BroadcastModel.FK_post_file_details_spot_lengths" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_spot_length_spot_lengths" />
-        <AssociationConnector Association="BroadcastModel.FK_schedule_details_spot_lengths" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_length_cost_multipliers_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_versions" Width="1.5" PointX="3.375" PointY="14.375" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_flight_weeks_proposal_versions" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_markets_proposal_versions" />
@@ -86,7 +80,6 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_share_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_single_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_proposal_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_quarters" Width="1.5" PointX="7.625" PointY="25.25" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_quarter_weeks" Width="1.5" PointX="9.75" PointY="25.125" />
@@ -111,20 +104,27 @@
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_group_inventory_sources" />
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_generation" Width="1.5" PointX="0.5" PointY="32.375" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_generation_media_weeks" />
-        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_audiences" Width="1.5" PointX="26.25" PointY="13.375" />
-        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_dayparts" Width="1.5" PointX="26.25" PointY="16.625" />
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_rates" Width="1.5" PointX="26.25" PointY="20" />
-        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_dayparts_dayparts" />
-        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_files" Width="1.5" PointX="2.75" PointY="24.625" />
-        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest" Width="1.5" PointX="24" PointY="23.375" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_files_inventory_source" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_files_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_station_contacts_inventory_files_created" />
         <AssociationConnector Association="BroadcastModel.FK_station_contacts_inventory_files_modified" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_lengths" Width="1.5" PointX="0.75" PointY="22.625" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest" Width="1.5" PointX="14.75" PointY="25.375" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_audiences" Width="1.5" PointX="17" PointY="13.75" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_dayparts" Width="1.5" PointX="19.25" PointY="14.125" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_bvs_file_details_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_dayparts_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_inventory_files" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_inventory_sources" />
+        <AssociationConnector Association="BroadcastModel.FK_post_file_details_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_spot_length_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_schedule_details_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_length_cost_multipliers_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_station_inventory_group" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" />
