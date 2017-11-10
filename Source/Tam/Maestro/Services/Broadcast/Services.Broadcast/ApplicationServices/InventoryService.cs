@@ -134,6 +134,10 @@ namespace Services.Broadcast.ApplicationServices
 
         public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request)
         {
+            if (request.EffectiveDate == DateTime.MinValue)
+            {
+                request.EffectiveDate = DateTime.Now;
+            }
             var inventorySource = _ParseInventorySourceOrDefault(request.InventorySource);
             var fileImporter = _inventoryFileImporterFactory.GetFileImporterInstance(inventorySource);
             
@@ -154,8 +158,9 @@ namespace Services.Broadcast.ApplicationServices
 
                 fileImporter.ExtractFileData(request.RatesStream, inventoryFile, request.EffectiveDate, fileProblems);
 
-                if (inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 ||
-                    !inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Any())
+                if ((inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 ||
+                    !inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Any()) &&
+                    (inventoryFile.InventoryManifests == null || inventoryFile.InventoryManifests.Count == 0))
                 {
                     throw new ApplicationException("Unable to parse any file records.");
                 }

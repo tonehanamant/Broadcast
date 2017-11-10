@@ -775,6 +775,10 @@ GO
 ALTER TABLE station_inventory_manifest
 ALTER COLUMN spots_per_week int null
 GO
+-- Manifest groups not applicable to open market inventory
+ALTER TABLE station_inventory_manifest
+ALTER COLUMN station_inventory_group_id int null
+GO
 -- Updates to manifest audiences
 ALTER TABLE station_inventory_manifest_audiences
 ALTER COLUMN impressions float null

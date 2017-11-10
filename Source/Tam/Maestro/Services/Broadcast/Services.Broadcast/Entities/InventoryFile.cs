@@ -28,7 +28,7 @@ namespace Services.Broadcast.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int? RatingBook { get; set; }
-        public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
+        public ProposalEnums.ProposalPlaybackType? PlaybackType { get; set; }
         public InventorySource InventorySource { get; set; }
         private List<StationContact> _stationContacts; 
 
