@@ -56,7 +56,7 @@ namespace Services.Broadcast.BusinessEngines
                 }
             ).GroupBy(g => new {g.Code, g.Id }).ToList();
             
-            var stationsImpressions = _RatingsRepository.GetImpressionsDaypart(request.RatingBook, audiences, stationDaypartGroups.Select(g => g.First()), request.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+            var stationsImpressions = _RatingsRepository.GetImpressionsDaypart(request.RatingBook.Value, audiences, stationDaypartGroups.Select(g => g.First()), request.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
 
             foreach (var manifest in manifestList)
             {
