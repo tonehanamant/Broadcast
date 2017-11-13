@@ -107,7 +107,7 @@ namespace Services.Broadcast.Repositories
                                 inventoryGroup.Manifests
                                     .Where(m => m.Id == null)
                                     .Select(manifest =>
-                                    {
+                                        {
                                         return new station_inventory_manifest()
                                         {
                                             station_code = (short) manifest.Station.Code,
@@ -117,7 +117,7 @@ namespace Services.Broadcast.Repositories
                                             //TODO: Update database and make field nullable
                                             effective_date = manifest.EffectiveDate,
                                             file_id = inventoryFile.Id,
-                                            inventory_source_id = inventoryFile.InventorySource.Id,
+                                                inventory_source_id = inventoryFile.InventorySource.Id,
                                             end_date = manifest.EndDate,
                                             station_inventory_manifest_audiences =
                                                 manifest.ManifestAudiences.Select(
@@ -127,16 +127,15 @@ namespace Services.Broadcast.Repositories
                                                         impressions = audience.Impressions,
                                                         rate = audience.Rate,
                                                         is_reference = audience.IsReference
-                                                    })
-                                                    .Union(
-                                                        manifest.ManifestAudiencesReferences.Select(
-                                                            audience => new station_inventory_manifest_audiences()
-                                                            {
-                                                                audience_id = audience.Audience.Id,
-                                                                impressions = audience.Impressions,
-                                                                rate = audience.Rate,
-                                                                is_reference = audience.IsReference
-                                                            })).ToList(),
+                                                    }).ToList().Union(
+                                                            manifest.ManifestAudiencesReferences.Select(
+                                                                audience => new station_inventory_manifest_audiences()
+                                                                {
+                                                                    audience_id = audience.Audience.Id,
+                                                                    impressions = audience.Impressions,
+                                                                    rate = audience.Rate,
+                                                                    is_reference = audience.IsReference
+                                                                })).ToList(),
                                             station_inventory_manifest_dayparts =
                                                 manifest.ManifestDayparts.Select(
                                                     md => new station_inventory_manifest_dayparts()
@@ -144,11 +143,11 @@ namespace Services.Broadcast.Repositories
                                                         daypart_id = md.Daypart.Id
                                                     }).ToList(),
                                             station_inventory_manifest_rates = manifest.ManifestRates.Select(
-                                                r => new station_inventory_manifest_rates()
-                                                {
-                                                    spot_length_id = r.SpotLengthId,
-                                                    rate = r.Rate
-                                                }).ToList()
+                                                    r => new station_inventory_manifest_rates()
+                                                    {
+                                                         spot_length_id = r.SpotLengthId,
+                                                         rate = r.Rate
+                                                    }).ToList()
                                         };
                                     }).ToList()
                         }).ToList();
