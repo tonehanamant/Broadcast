@@ -111,20 +111,20 @@
         <AssociationConnector Association="BroadcastModel.FK_station_contacts_inventory_files_created" />
         <AssociationConnector Association="BroadcastModel.FK_station_contacts_inventory_files_modified" />
         <EntityTypeShape EntityType="BroadcastModel.spot_lengths" Width="1.5" PointX="0.75" PointY="22.625" />
-        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest" Width="1.5" PointX="14.75" PointY="25.375" />
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_audiences" Width="1.5" PointX="17" PointY="13.75" />
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_dayparts" Width="1.5" PointX="19.25" PointY="14.125" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_bvs_file_details_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_dayparts_dayparts" />
-        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_inventory_files" />
-        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_inventory_sources" />
         <AssociationConnector Association="BroadcastModel.FK_post_file_details_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_spot_length_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_details_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_spot_length_cost_multipliers_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest" Width="1.5" PointX="12.5" PointY="25.375" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_inventory_files" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_inventory_sources" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_station_inventory_group" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" />

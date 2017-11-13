@@ -155,9 +155,7 @@ namespace Services.Broadcast.ApplicationServices
             try
             {
                 var startTime = DateTime.Now;
-
                 fileImporter.ExtractFileData(request.RatesStream, inventoryFile, request.EffectiveDate, fileProblems);
-
                 var endTime = DateTime.Now;
 
                 System.Diagnostics.Debug.WriteLine("Completed file parsing in {0}", endTime - startTime);
@@ -177,8 +175,6 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     throw new ApplicationException("Unable to parse any file records.");
                 }
-
-                startTime = DateTime.Now;
 
                 var validationProblems = _inventoryFileValidator.ValidateInventoryFile(inventoryFile);
 
