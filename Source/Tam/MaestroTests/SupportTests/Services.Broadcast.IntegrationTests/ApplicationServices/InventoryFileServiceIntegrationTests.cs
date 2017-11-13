@@ -759,7 +759,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "file may be invalid", MatchType = MessageMatch.Contains)]
         public void ThrowsExceptionWhenLoadingBadXmlFile()
@@ -859,7 +858,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadProgramInventoryFileWithSimplePeriods() //XML structure that is not using DetailedPeriod
@@ -875,7 +873,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         FileAccess.Read),
                     UserName = "IntegrationTestUser",
                     FileName = "simple_period_rate_file_wvtm.xml"
-            };
+                };
 
                 _InventoryFileService.SaveInventoryFile(request);
                 //var result = _ratesService.GetStationDetailByCode("OpenMarket", stationCodeWVTM).Rates.Where(p => p.Program == "Simple Period News").ToList();
@@ -893,8 +891,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void LoadInventoryFileWithOverlapingFlightWeeks()
