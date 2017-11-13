@@ -134,6 +134,10 @@ namespace Services.Broadcast.ApplicationServices
 
         public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request)
         {
+            if (request.EffectiveDate == DateTime.MinValue)
+            {
+                request.EffectiveDate = DateTime.Now;
+            }
             var inventorySource = _ParseInventorySourceOrDefault(request.InventorySource);
             var fileImporter = _inventoryFileImporterFactory.GetFileImporterInstance(inventorySource);
             
@@ -150,7 +154,13 @@ namespace Services.Broadcast.ApplicationServices
 
             try
             {
+                var startTime = DateTime.Now;
+
                 fileImporter.ExtractFileData(request.RatesStream, inventoryFile, request.EffectiveDate, fileProblems);
+
+                var endTime = DateTime.Now;
+
+                System.Diagnostics.Debug.WriteLine("Completed file parsing in {0}", endTime - startTime);
 
                 if (fileProblems.Any())
                 {
@@ -161,19 +171,20 @@ namespace Services.Broadcast.ApplicationServices
                     };
                 }
 
-                if (inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 ||
-                    !inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Any())
+                if ((inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 ||
+                    !inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Any()) &&
+                    (inventoryFile.InventoryManifests == null || inventoryFile.InventoryManifests.Count == 0))
                 {
                     throw new ApplicationException("Unable to parse any file records.");
                 }
 
-                var startTime = DateTime.Now;
+                startTime = DateTime.Now;
 
                 var validationProblems = _inventoryFileValidator.ValidateInventoryFile(inventoryFile);
 
                 fileProblems.AddRange(validationProblems.InventoryFileProblems);
 
-                var endTime = DateTime.Now;
+                endTime = DateTime.Now;
 
                 System.Diagnostics.Debug.WriteLine("Completed file validation in {0}", endTime - startTime);
 

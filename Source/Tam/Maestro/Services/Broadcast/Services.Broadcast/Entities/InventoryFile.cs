@@ -17,6 +17,7 @@ namespace Services.Broadcast.Entities
         public InventoryFile()
         {
             InventoryGroups = new List<StationInventoryGroup>();
+            InventoryManifests = new List<StationInventoryManifest>();
         }
 
         public int Id { get; set; }
@@ -27,7 +28,7 @@ namespace Services.Broadcast.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int? RatingBook { get; set; }
-        public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
+        public ProposalEnums.ProposalPlaybackType? PlaybackType { get; set; }
         public InventorySource InventorySource { get; set; }
         private List<StationContact> _stationContacts; 
 
@@ -45,6 +46,7 @@ namespace Services.Broadcast.Entities
         }
 
         public List<StationInventoryGroup> InventoryGroups { get; set; }
+        public List<StationInventoryManifest> InventoryManifests { get; set; } //Only used for OpenMarket
 
     }
 }

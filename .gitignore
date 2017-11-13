@@ -310,3 +310,6 @@ OpenCover/
 # Source/Tam/Maestro/UI/BroadcastComposerWeb/ServiceCommonAppSettings.config
 # Source/Tam/Maestro/Services/Broadcast/Services.Broadcast/ServiceCommonAppSettings.config
 # ServiceCommonAppSettings.config
+
+#Backup approval files created by WinMerge
+*.approved.txt.bak

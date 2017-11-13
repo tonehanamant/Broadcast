@@ -51,6 +51,7 @@ namespace Services.Broadcast.ApplicationServices
             var expireDate = request.EffectiveDate.AddDays(-1);
             
             _ExpireExistingInventory(inventoryFile.InventoryGroups, inventoryFile.InventorySource, expireDate);
+
             _inventoryRepository.AddNewInventoryGroups(inventoryFile);
         }
 

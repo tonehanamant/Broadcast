@@ -3271,8 +3271,9 @@
       "StartDate": "2016-10-31T00:00:00"
     }
   ],
+  "InventoryManifests": [],
   "InventorySource": null,
-  "PlaybackType": 0,
+  "PlaybackType": null,
   "RatingBook": null,
   "StartDate": "0001-01-01T00:00:00",
   "StationContacts": [],

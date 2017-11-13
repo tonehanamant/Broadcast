@@ -13,6 +13,7 @@
   ],
   "DaypartRestriction": null,
   "DaypartRestrictionId": 63335,
+  "DeliveryDetails": null,
   "EndDate": "2018-01-20T00:00:00",
   "Estimate": 4000,
   "InventorySource": 1,
@@ -35,10 +36,9 @@
   "PostingBookDate": null,
   "PostingBookId": 377,
   "PostType": 1,
-  "PrimaryDemoBooked": 0.0,
+  "PrimaryDemoBooked": null,
   "PrimaryDemoDelivered": 0.0,
   "SpotsBooked": null,
   "SpotsDelivered": 0,
-  "StartDate": "2017-01-20T00:00:00",
-  "TrackingDetails": null
+  "StartDate": "2017-01-20T00:00:00"
 }

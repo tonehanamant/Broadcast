@@ -116,13 +116,11 @@ namespace Services.Broadcast.ApplicationServices
             
             foreach (var schedule in displaySchedules)
             {
-                foreach (var trackingDetails in schedule.TrackingDetails)
+                foreach (var trackingDetails in schedule.DeliveryDetails)
                 {
                     if (trackingDetails.Impressions != null)
-                        schedule.PrimaryDemoBooked += _ImpressionAdjustmentEngine.AdjustImpression(trackingDetails.Impressions.Value, schedule.IsEquivalized, trackingDetails.SpotLength, schedule.PostType, schedule.PostingBookId);
+                        schedule.PrimaryDemoDelivered += _ImpressionAdjustmentEngine.AdjustImpression(trackingDetails.Impressions.Value, schedule.IsEquivalized, trackingDetails.SpotLength, schedule.PostType, schedule.PostingBookId);
                 }
-
-                schedule.PrimaryDemoDelivered = _ImpressionAdjustmentEngine.AdjustImpression(schedule.PrimaryDemoDelivered, schedule.PostType, schedule.PostingBookId, false);
             }
 
             return displaySchedules;

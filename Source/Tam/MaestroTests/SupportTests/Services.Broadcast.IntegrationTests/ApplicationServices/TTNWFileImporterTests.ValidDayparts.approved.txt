@@ -27,7 +27,7 @@
                 "Impressions": 37000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -37,7 +37,7 @@
                 "Impressions": 20000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -47,7 +47,7 @@
                 "Impressions": 31000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -57,7 +57,7 @@
                 "Impressions": 34000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -67,7 +67,7 @@
                 "Impressions": 16000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -77,7 +77,7 @@
                 "Impressions": 17000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               }
             ],
             "ManifestDayparts": [
@@ -133,7 +133,7 @@
                 "Impressions": 76000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -143,7 +143,7 @@
                 "Impressions": 35000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -153,7 +153,7 @@
                 "Impressions": 52000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -163,7 +163,7 @@
                 "Impressions": 56000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -173,7 +173,7 @@
                 "Impressions": 28000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -183,7 +183,7 @@
                 "Impressions": 31000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               }
             ],
             "ManifestDayparts": [
@@ -259,7 +259,7 @@
                 "Impressions": 13000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -269,7 +269,7 @@
                 "Impressions": 4000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -279,7 +279,7 @@
                 "Impressions": 7000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -289,7 +289,7 @@
                 "Impressions": 8000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -299,7 +299,7 @@
                 "Impressions": 3000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -309,7 +309,7 @@
                 "Impressions": 3000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               }
             ],
             "ManifestDayparts": [
@@ -385,7 +385,7 @@
                 "Impressions": 35000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -395,7 +395,7 @@
                 "Impressions": 10000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -405,7 +405,7 @@
                 "Impressions": 18000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -415,7 +415,7 @@
                 "Impressions": 20000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -425,7 +425,7 @@
                 "Impressions": 4000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               },
               {
                 "Audience": {
@@ -435,7 +435,7 @@
                 "Impressions": 5000.0,
                 "IsReference": true,
                 "Rate": 0.0,
-                "Rating": 0.0
+                "Rating": null
               }
             ],
             "ManifestDayparts": [
@@ -522,13 +522,14 @@
         "StartDate": "2017-10-01T00:00:00"
       }
     ],
+    "InventoryManifests": [],
     "InventorySource": {
       "Id": 4,
       "InventoryType": 1,
       "IsActive": true,
       "Name": "TTNW"
     },
-    "PlaybackType": 0,
+    "PlaybackType": null,
     "RatingBook": null,
     "StartDate": "0001-01-01T00:00:00",
     "StationContacts": [],
