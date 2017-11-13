@@ -167,6 +167,15 @@ namespace Services.Broadcast.ApplicationServices
                     throw new ApplicationException("Unable to parse any file records.");
                 }
 
+                var endTime = DateTime.Now;
+
+
+                if (inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 ||
+                    !inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Any())
+                {
+                    throw new ApplicationException("Unable to parse any file records.");
+                }
+
                 var startTime = DateTime.Now;
 
                 var validationProblems = _inventoryFileValidator.ValidateInventoryFile(inventoryFile);
