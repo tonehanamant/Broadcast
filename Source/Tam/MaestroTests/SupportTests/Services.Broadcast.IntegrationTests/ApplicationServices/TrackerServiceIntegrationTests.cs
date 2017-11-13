@@ -149,7 +149,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                var displayScheduleTrackingDetails = new DisplayScheduleTrackingDetails()
+                var displayScheduleTrackingDetails = new ScheduleDeliveryDetails()
                 {
                     Impressions = 9999,
                     SpotLength = 30
@@ -157,11 +157,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var displaySchedule = new DisplaySchedule
                 {
-                    PrimaryDemoDelivered = 1234,
+                    PrimaryDemoBooked = 9999,
                     PostingBookId = 420,
                     PostType = SchedulePostType.NTI,
-                    TrackingDetails =
-                        new List<DisplayScheduleTrackingDetails>
+                    DeliveryDetails =
+                        new List<ScheduleDeliveryDetails>
                         {
                             displayScheduleTrackingDetails
                         }
@@ -188,7 +188,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var actual = sut.GetDisplaySchedulesWithAdjustedImpressions(startDate, dateTime);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
                 Assert.That(actual.Single().PrimaryDemoBooked, Is.EqualTo(9999));
-                Assert.That(actual.Single().PrimaryDemoDelivered, Is.EqualTo(99999));
+                Assert.That(actual.Single().PrimaryDemoDelivered, Is.EqualTo(9999));
             }
         }
 

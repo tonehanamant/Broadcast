@@ -117,15 +117,14 @@ namespace Services.Broadcast.Repositories
                                            && x.status != (int)TrackingStatus.InSpec
                                      select x).Count(),
                         PostingBookId = s.posting_book_id,
-                        PrimaryDemoDelivered = (from bfd in context.bvs_file_details
-                                                join pd in context.bvs_post_details on bfd.id equals pd.bvs_file_detail_id
-                                                where bfd.estimate_id == s.estimate_id
-                                                      && bfd.status == (int)TrackingStatus.InSpec
-                                                      && pd.audience_rank == 1
-                                                select (double?)pd.delivery).Sum() ?? 0,
-                        TrackingDetails = (from bfd in context.bvs_file_details
+                        PrimaryDemoBooked = (from sda in context.schedule_detail_audiences
+                                             join sd in context.schedule_details on sda.schedule_detail_id equals sd.id
+                                             where sd.schedule_id == s.id
+                                                   && sda.audience_rank == 1
+                                             select sd.total_spots * sda.impressions).Sum(),
+                        DeliveryDetails = (from bfd in context.bvs_file_details
                                            where bfd.estimate_id == s.estimate_id
-                                           select new DisplayScheduleTrackingDetails
+                                           select new ScheduleDeliveryDetails
                                            {
                                                SpotLength = bfd.spot_length,
                                                Impressions = (from x in context.bvs_post_details
@@ -566,11 +565,11 @@ namespace Services.Broadcast.Repositories
 
                             PostingBookId = s.posting_book_id,
 
-                            PrimaryDemoDelivered = (from bfd in context.bvs_file_details
-                                                    join pd in context.bvs_post_details on bfd.id equals pd.bvs_file_detail_id
-                                                    where bfd.estimate_id == s.estimate_id && bfd.status == (int)TrackingStatus.InSpec && pd.audience_rank == 1
-                                                    select (double?)pd.delivery).Sum() ?? 0,
-
+                            PrimaryDemoBooked = (from sda in context.schedule_detail_audiences
+                                                 join sd in context.schedule_details on sda.schedule_detail_id equals sd.id
+                                                 where sd.schedule_id == s.id
+                                                       && sda.audience_rank == 1
+                                                 select sd.total_spots * sda.impressions).Sum(),
                             MarketRestrictions = (from m in s.markets
                                                   select m.market_code).ToList(),
 

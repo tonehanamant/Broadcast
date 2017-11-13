@@ -78,6 +78,12 @@
       "Audiences": null,
       "DaypartRestriction": null,
       "DaypartRestrictionId": 0,
+      "DeliveryDetails": [
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        }
+      ],
       "EndDate": "2016-12-24T00:00:00",
       "Estimate": 8675309,
       "InventorySource": 0,
@@ -90,17 +96,11 @@
       "PostingBookDate": "2016-02-28T00:00:00",
       "PostingBookId": 413,
       "PostType": 1,
-      "PrimaryDemoBooked": 0.0,
+      "PrimaryDemoBooked": 1022872.0,
       "PrimaryDemoDelivered": 0.0,
       "SpotsBooked": 8,
       "SpotsDelivered": 0,
-      "StartDate": "2016-01-01T00:00:00",
-      "TrackingDetails": [
-        {
-          "Impressions": null,
-          "SpotLength": 30
-        }
-      ]
+      "StartDate": "2016-01-01T00:00:00"
     },
     {
       "Advertiser": "1 Vision",
@@ -108,6 +108,28 @@
       "Audiences": null,
       "DaypartRestriction": null,
       "DaypartRestrictionId": 0,
+      "DeliveryDetails": [
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        }
+      ],
       "EndDate": "2016-12-24T00:00:00",
       "Estimate": 7618419,
       "InventorySource": 0,
@@ -120,33 +142,11 @@
       "PostingBookDate": "2016-02-28T00:00:00",
       "PostingBookId": 413,
       "PostType": 1,
-      "PrimaryDemoBooked": 0.0,
+      "PrimaryDemoBooked": 767154.0,
       "PrimaryDemoDelivered": 0.0,
       "SpotsBooked": 6,
       "SpotsDelivered": 0,
-      "StartDate": "2016-01-01T00:00:00",
-      "TrackingDetails": [
-        {
-          "Impressions": null,
-          "SpotLength": 30
-        },
-        {
-          "Impressions": null,
-          "SpotLength": 30
-        },
-        {
-          "Impressions": null,
-          "SpotLength": 30
-        },
-        {
-          "Impressions": null,
-          "SpotLength": 30
-        },
-        {
-          "Impressions": null,
-          "SpotLength": 30
-        }
-      ]
+      "StartDate": "2016-01-01T00:00:00"
     },
     {
       "Advertiser": "1 Vision",
@@ -154,6 +154,12 @@
       "Audiences": null,
       "DaypartRestriction": null,
       "DaypartRestrictionId": 0,
+      "DeliveryDetails": [
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        }
+      ],
       "EndDate": "2016-12-24T00:00:00",
       "Estimate": 7985133,
       "InventorySource": 0,
@@ -166,17 +172,11 @@
       "PostingBookDate": "2016-02-28T00:00:00",
       "PostingBookId": 413,
       "PostType": 1,
-      "PrimaryDemoBooked": 0.0,
+      "PrimaryDemoBooked": 511436.0,
       "PrimaryDemoDelivered": 0.0,
       "SpotsBooked": 4,
       "SpotsDelivered": 0,
-      "StartDate": "2016-01-01T00:00:00",
-      "TrackingDetails": [
-        {
-          "Impressions": null,
-          "SpotLength": 30
-        }
-      ]
+      "StartDate": "2016-01-01T00:00:00"
     }
   ]
 }

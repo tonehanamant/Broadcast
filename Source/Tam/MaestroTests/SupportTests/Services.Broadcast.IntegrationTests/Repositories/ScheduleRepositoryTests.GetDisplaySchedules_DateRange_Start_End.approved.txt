@@ -5,6 +5,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-07-24T00:00:00",
     "Estimate": 3477,
     "Id": 65,
@@ -19,12 +20,11 @@
     "PostingBookDate": null,
     "PostingBookId": 377,
     "PostType": 1,
-    "PrimaryDemoBooked": 0.0,
+    "PrimaryDemoBooked": 2880242.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 109,
     "SpotsDelivered": 0,
-    "StartDate": "2016-07-11T00:00:00",
-    "TrackingDetails": []
+    "StartDate": "2016-07-11T00:00:00"
   },
   {
     "Advertiser": null,
@@ -32,6 +32,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-07-24T00:00:00",
     "Estimate": 123,
     "Id": 66,
@@ -46,12 +47,11 @@
     "PostingBookDate": null,
     "PostingBookId": 380,
     "PostType": 1,
-    "PrimaryDemoBooked": 0.0,
+    "PrimaryDemoBooked": 2880242.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 109,
     "SpotsDelivered": 0,
-    "StartDate": "2016-07-11T00:00:00",
-    "TrackingDetails": []
+    "StartDate": "2016-07-11T00:00:00"
   },
   {
     "Advertiser": null,
@@ -59,26 +59,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
-    "EndDate": "2016-08-07T00:00:00",
-    "Estimate": 3447,
-    "Id": 67,
-    "InventorySource": 0,
-    "IsBlank": false,
-    "Iscis": null,
-    "IsEquivalized": false,
-    "MarketRestrictions": null,
-    "Name": "QWERTY",
-    "OutOfSpec": 208,
-    "PostingBook": null,
-    "PostingBookDate": null,
-    "PostingBookId": 377,
-    "PostType": 1,
-    "PrimaryDemoBooked": 0.0,
-    "PrimaryDemoDelivered": 0.0,
-    "SpotsBooked": 750,
-    "SpotsDelivered": 0,
-    "StartDate": "2016-07-18T00:00:00",
-    "TrackingDetails": [
+    "DeliveryDetails": [
       {
         "Impressions": 0.0,
         "SpotLength": 30
@@ -911,7 +892,26 @@
         "Impressions": 0.0,
         "SpotLength": 30
       }
-    ]
+    ],
+    "EndDate": "2016-08-07T00:00:00",
+    "Estimate": 3447,
+    "Id": 67,
+    "InventorySource": 0,
+    "IsBlank": false,
+    "Iscis": null,
+    "IsEquivalized": false,
+    "MarketRestrictions": null,
+    "Name": "QWERTY",
+    "OutOfSpec": 208,
+    "PostingBook": null,
+    "PostingBookDate": null,
+    "PostingBookId": 377,
+    "PostType": 1,
+    "PrimaryDemoBooked": 6042379.0,
+    "PrimaryDemoDelivered": 0.0,
+    "SpotsBooked": 750,
+    "SpotsDelivered": 0,
+    "StartDate": "2016-07-18T00:00:00"
   },
   {
     "Advertiser": null,
@@ -919,26 +919,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
-    "EndDate": "2016-08-07T00:00:00",
-    "Estimate": 3416,
-    "Id": 78,
-    "InventorySource": 0,
-    "IsBlank": false,
-    "Iscis": null,
-    "IsEquivalized": false,
-    "MarketRestrictions": null,
-    "Name": "Bio Oil",
-    "OutOfSpec": 38,
-    "PostingBook": null,
-    "PostingBookDate": null,
-    "PostingBookId": 413,
-    "PostType": 1,
-    "PrimaryDemoBooked": 0.0,
-    "PrimaryDemoDelivered": 7783.2,
-    "SpotsBooked": 816,
-    "SpotsDelivered": 2,
-    "StartDate": "2016-07-18T00:00:00",
-    "TrackingDetails": [
+    "DeliveryDetails": [
       {
         "Impressions": 7908.75,
         "SpotLength": 30
@@ -1099,7 +1080,26 @@
         "Impressions": 883.3,
         "SpotLength": 30
       }
-    ]
+    ],
+    "EndDate": "2016-08-07T00:00:00",
+    "Estimate": 3416,
+    "Id": 78,
+    "InventorySource": 0,
+    "IsBlank": false,
+    "Iscis": null,
+    "IsEquivalized": false,
+    "MarketRestrictions": null,
+    "Name": "Bio Oil",
+    "OutOfSpec": 38,
+    "PostingBook": null,
+    "PostingBookDate": null,
+    "PostingBookId": 413,
+    "PostType": 1,
+    "PrimaryDemoBooked": 4064440.0,
+    "PrimaryDemoDelivered": 0.0,
+    "SpotsBooked": 816,
+    "SpotsDelivered": 2,
+    "StartDate": "2016-07-18T00:00:00"
   },
   {
     "Advertiser": null,
@@ -1107,6 +1107,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2017-01-08T00:00:00",
     "Estimate": 121220,
     "Id": 2193,
@@ -1121,11 +1122,10 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": 0.0,
+    "PrimaryDemoBooked": 4390.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 5,
     "SpotsDelivered": 0,
-    "StartDate": "2016-12-26T00:00:00",
-    "TrackingDetails": []
+    "StartDate": "2016-12-26T00:00:00"
   }
 ]

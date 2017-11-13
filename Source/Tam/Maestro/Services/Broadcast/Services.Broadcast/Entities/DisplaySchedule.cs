@@ -18,7 +18,7 @@ namespace Services.Broadcast.Entities
         public int PostingBookId { get; set; }
         public string PostingBook { get; set; }
         public DateTime? PostingBookDate { get; set; }
-        public double PrimaryDemoBooked { get; set; }
+        public double? PrimaryDemoBooked { get; set; }
         public double PrimaryDemoDelivered { get; set; }
         public SchedulePostType PostType { get; set; }
         public InventorySourceEnum InventorySource { get; set; }
@@ -28,7 +28,7 @@ namespace Services.Broadcast.Entities
         public DaypartDto DaypartRestriction { get; set; }
         public List<BvsTrackingAudience> Audiences { get; set; }
         public List<IsciDto> Iscis { get; set; }
-        public List<DisplayScheduleTrackingDetails> TrackingDetails { get; set; }
+        public List<ScheduleDeliveryDetails> DeliveryDetails { get; set; }
 
         public bool IsBlank
         {
@@ -36,7 +36,7 @@ namespace Services.Broadcast.Entities
         }
     }
 
-    public class DisplayScheduleTrackingDetails
+    public class ScheduleDeliveryDetails
     {
         public int SpotLength { get; set; }
         public double? Impressions { get; set; }

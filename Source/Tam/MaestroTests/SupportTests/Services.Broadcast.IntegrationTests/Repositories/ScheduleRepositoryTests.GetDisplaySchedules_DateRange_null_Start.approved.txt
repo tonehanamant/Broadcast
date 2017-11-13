@@ -5,6 +5,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-06-12T00:00:00",
     "Estimate": 123456,
     "Id": 42,
@@ -19,12 +20,11 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 1,
-    "PrimaryDemoBooked": 0.0,
+    "PrimaryDemoBooked": 3301426.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 392,
     "SpotsDelivered": 0,
-    "StartDate": "2016-05-30T00:00:00",
-    "TrackingDetails": []
+    "StartDate": "2016-05-30T00:00:00"
   },
   {
     "Advertiser": null,
@@ -32,6 +32,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-04-24T00:00:00",
     "Estimate": 3380,
     "Id": 44,
@@ -46,12 +47,11 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 1,
-    "PrimaryDemoBooked": 0.0,
+    "PrimaryDemoBooked": 2041658.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 268,
     "SpotsDelivered": 0,
-    "StartDate": "2016-03-28T00:00:00",
-    "TrackingDetails": []
+    "StartDate": "2016-03-28T00:00:00"
   },
   {
     "Advertiser": null,
@@ -59,6 +59,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-07-24T00:00:00",
     "Estimate": 3477,
     "Id": 65,
@@ -73,12 +74,11 @@
     "PostingBookDate": null,
     "PostingBookId": 377,
     "PostType": 1,
-    "PrimaryDemoBooked": 0.0,
+    "PrimaryDemoBooked": 2880242.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 109,
     "SpotsDelivered": 0,
-    "StartDate": "2016-07-11T00:00:00",
-    "TrackingDetails": []
+    "StartDate": "2016-07-11T00:00:00"
   },
   {
     "Advertiser": null,
@@ -86,6 +86,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-07-24T00:00:00",
     "Estimate": 123,
     "Id": 66,
@@ -100,12 +101,11 @@
     "PostingBookDate": null,
     "PostingBookId": 380,
     "PostType": 1,
-    "PrimaryDemoBooked": 0.0,
+    "PrimaryDemoBooked": 2880242.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 109,
     "SpotsDelivered": 0,
-    "StartDate": "2016-07-11T00:00:00",
-    "TrackingDetails": []
+    "StartDate": "2016-07-11T00:00:00"
   },
   {
     "Advertiser": null,
@@ -113,26 +113,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
-    "EndDate": "2016-06-12T00:00:00",
-    "Estimate": 3417,
-    "Id": 69,
-    "InventorySource": 0,
-    "IsBlank": false,
-    "Iscis": null,
-    "IsEquivalized": false,
-    "MarketRestrictions": null,
-    "Name": "test-mnorris-phillips",
-    "OutOfSpec": 211,
-    "PostingBook": null,
-    "PostingBookDate": null,
-    "PostingBookId": 413,
-    "PostType": 1,
-    "PrimaryDemoBooked": 0.0,
-    "PrimaryDemoDelivered": 1883781.4,
-    "SpotsBooked": 392,
-    "SpotsDelivered": 100,
-    "StartDate": "2016-05-30T00:00:00",
-    "TrackingDetails": [
+    "DeliveryDetails": [
       {
         "Impressions": 34534.45,
         "SpotLength": 30
@@ -1377,7 +1358,26 @@
         "Impressions": 10325.95,
         "SpotLength": 60
       }
-    ]
+    ],
+    "EndDate": "2016-06-12T00:00:00",
+    "Estimate": 3417,
+    "Id": 69,
+    "InventorySource": 0,
+    "IsBlank": false,
+    "Iscis": null,
+    "IsEquivalized": false,
+    "MarketRestrictions": null,
+    "Name": "test-mnorris-phillips",
+    "OutOfSpec": 211,
+    "PostingBook": null,
+    "PostingBookDate": null,
+    "PostingBookId": 413,
+    "PostType": 1,
+    "PrimaryDemoBooked": 3301426.0,
+    "PrimaryDemoDelivered": 0.0,
+    "SpotsBooked": 392,
+    "SpotsDelivered": 100,
+    "StartDate": "2016-05-30T00:00:00"
   },
   {
     "Advertiser": null,
@@ -1385,6 +1385,12 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2016-12-24T00:00:00",
     "Estimate": 8675309,
     "Id": 82,
@@ -1399,17 +1405,11 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 1,
-    "PrimaryDemoBooked": 0.0,
+    "PrimaryDemoBooked": 1022872.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 8,
     "SpotsDelivered": 0,
-    "StartDate": "2016-01-01T00:00:00",
-    "TrackingDetails": [
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      }
-    ]
+    "StartDate": "2016-01-01T00:00:00"
   },
   {
     "Advertiser": null,
@@ -1417,6 +1417,28 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2016-12-24T00:00:00",
     "Estimate": 7618419,
     "Id": 83,
@@ -1431,33 +1453,11 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 1,
-    "PrimaryDemoBooked": 0.0,
+    "PrimaryDemoBooked": 767154.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 6,
     "SpotsDelivered": 0,
-    "StartDate": "2016-01-01T00:00:00",
-    "TrackingDetails": [
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      }
-    ]
+    "StartDate": "2016-01-01T00:00:00"
   },
   {
     "Advertiser": null,
@@ -1465,6 +1465,12 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2016-12-24T00:00:00",
     "Estimate": 7985133,
     "Id": 84,
@@ -1479,17 +1485,11 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 1,
-    "PrimaryDemoBooked": 0.0,
+    "PrimaryDemoBooked": 511436.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 4,
     "SpotsDelivered": 0,
-    "StartDate": "2016-01-01T00:00:00",
-    "TrackingDetails": [
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      }
-    ]
+    "StartDate": "2016-01-01T00:00:00"
   },
   {
     "Advertiser": null,
@@ -1497,6 +1497,32 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": 226069.7,
+        "SpotLength": 15
+      },
+      {
+        "Impressions": 206756.44999999998,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 192029.7,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 222931.65,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 55449.6,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 79280.55,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2016-04-24T00:00:00",
     "Estimate": 3909,
     "Id": 96,
@@ -1511,12 +1537,19 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": 0.0,
-    "PrimaryDemoDelivered": 847787.5,
+    "PrimaryDemoBooked": 1768942.0,
+    "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 16,
     "SpotsDelivered": 4,
-    "StartDate": "2016-03-28T00:00:00",
-    "TrackingDetails": [
+    "StartDate": "2016-03-28T00:00:00"
+  },
+  {
+    "Advertiser": null,
+    "AdvertiserId": 39279,
+    "Audiences": null,
+    "DaypartRestriction": null,
+    "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
       {
         "Impressions": 226069.7,
         "SpotLength": 15
@@ -1541,14 +1574,7 @@
         "Impressions": 79280.55,
         "SpotLength": 30
       }
-    ]
-  },
-  {
-    "Advertiser": null,
-    "AdvertiserId": 39279,
-    "Audiences": null,
-    "DaypartRestriction": null,
-    "DaypartRestrictionId": 0,
+    ],
     "EndDate": "2016-04-24T00:00:00",
     "Estimate": 4400,
     "Id": 975,
@@ -1563,37 +1589,11 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": 0.0,
-    "PrimaryDemoDelivered": 226069.7,
+    "PrimaryDemoBooked": 1025927.0,
+    "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 11,
     "SpotsDelivered": 1,
-    "StartDate": "2016-03-28T00:00:00",
-    "TrackingDetails": [
-      {
-        "Impressions": 226069.7,
-        "SpotLength": 15
-      },
-      {
-        "Impressions": 206756.44999999998,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 192029.7,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 222931.65,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 55449.6,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 79280.55,
-        "SpotLength": 30
-      }
-    ]
+    "StartDate": "2016-03-28T00:00:00"
   },
   {
     "Advertiser": null,
@@ -1601,6 +1601,16 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": 226069.7,
+        "SpotLength": 15
+      },
+      {
+        "Impressions": 55449.6,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2016-04-24T00:00:00",
     "Estimate": 4401,
     "Id": 976,
@@ -1615,21 +1625,11 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": 0.0,
-    "PrimaryDemoDelivered": 226069.7,
+    "PrimaryDemoBooked": 1025927.0,
+    "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 11,
     "SpotsDelivered": 1,
-    "StartDate": "2016-03-28T00:00:00",
-    "TrackingDetails": [
-      {
-        "Impressions": 226069.7,
-        "SpotLength": 15
-      },
-      {
-        "Impressions": 55449.6,
-        "SpotLength": 30
-      }
-    ]
+    "StartDate": "2016-03-28T00:00:00"
   },
   {
     "Advertiser": null,
@@ -1637,6 +1637,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-04-24T00:00:00",
     "Estimate": 3390,
     "Id": 2364,
@@ -1651,12 +1652,11 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": 0.0,
+    "PrimaryDemoBooked": 2041658.0,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 268,
     "SpotsDelivered": 0,
-    "StartDate": "2016-03-28T00:00:00",
-    "TrackingDetails": []
+    "StartDate": "2016-03-28T00:00:00"
   },
   {
     "Advertiser": null,
@@ -1664,6 +1664,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-04-24T00:00:00",
     "Estimate": null,
     "Id": 2365,
@@ -1678,11 +1679,10 @@
     "PostingBookDate": null,
     "PostingBookId": 413,
     "PostType": 2,
-    "PrimaryDemoBooked": 0.0,
+    "PrimaryDemoBooked": null,
     "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": null,
     "SpotsDelivered": 0,
-    "StartDate": "2016-03-28T00:00:00",
-    "TrackingDetails": []
+    "StartDate": "2016-03-28T00:00:00"
   }
 ]
