@@ -1,0 +1,12 @@
+[
+  {
+    "id": "header.subtitle",
+    "description": "application subtitle",
+    "defaultMessage": "React + Redux + Webpack"
+  },
+  {
+    "id": "header.title",
+    "description": "title message of the application",
+    "defaultMessage": "JS Boilerplate"
+  }
+]

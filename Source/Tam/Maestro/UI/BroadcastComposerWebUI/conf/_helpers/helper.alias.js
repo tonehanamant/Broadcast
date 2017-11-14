@@ -1,0 +1,11 @@
+var { resolve } = require('path');
+
+module.exports = {
+  Components: resolve(__dirname, '../../src/app/components'),
+  Containers: resolve(__dirname, '../../src/app/containers'),
+  Ducks: resolve(__dirname, '../../src/app/ducks'),
+  Sagas: resolve(__dirname, '../../src/app/sagas'),
+  Utils: resolve(__dirname, '../../src/app/utils'),
+  Assets: resolve(__dirname, '../../src/assets'),
+  Shims: resolve(__dirname, '../../src/shims'),
+};
