@@ -1,0 +1,22 @@
+{
+  "presets": [
+    ["env", { "modules": false }],
+    "react",
+  ],
+  "plugins": [
+    "add-module-exports",
+    "transform-object-rest-spread",
+    "react-hot-loader/babel",
+    ["react-intl", { "messagesDir": "./src/messages/" }]
+  ],
+  "env": {
+    "development": {
+      "plugins": ["istanbul"]
+    },
+    "production": {
+      "presets": [
+        ["latest"]
+      ]
+    }
+  }
+}

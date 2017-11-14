@@ -1,0 +1,746 @@
+﻿/************************************************************************
+    Styles are organized following the SMACSS categorization (https://smacss.com/book/categorizing):
+        * BASE: default rules for the entire application
+        * LAYOUT: styles for the page sections 
+        * MODULE: imported libraries customizations and styles for minor components that sit within major elements declared in the LAYOUT section. 
+        * THEME: defines colours and images that give the application its look and feel 
+        * VIEWS: view-specific styles
+/************************************************************************/
+
+/************************************************************************
+    BASE: default rules for the entire application
+/************************************************************************/
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    position: relative;
+    height: 100%;
+    min-height: 100%;
+}
+
+body {
+    height: 100%;
+    padding-top: 51px;
+    position: relative;
+    padding-bottom: 50px;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-shadow: rgba(0,0,0,.01) 0 0 1px;
+}
+
+#root {
+    height: 100%;
+}
+
+.elem-margin {
+    position: absolute;
+    width: 1px;
+    height: 10px;
+}
+
+button.disabled {
+    color: #999;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        /* appearance: none; */
+        margin: 0;
+    }
+
+/*input.edit-input {
+    user-select: all !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: all !important;
+    -ms-user-select: text !important;
+    -o-user-select: all !important;
+}*/
+
+.table th, .table td {
+    border-top: none !important;
+}
+
+/************************************************************************
+    LAYOUT: styles for the page sections 
+/************************************************************************/
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    /* Set the fixed height of the footer here */
+    height: 40px;
+    background-color: #f5f5f5;
+}
+
+#app_title_info {
+    margin-right: 12px;
+    height: 50px;
+    position: relative;
+    bottom: 8px;
+}
+
+ .view_container {
+            margin-top: 10px;
+        }
+
+.view_main_title {
+    margin-bottom: 8px;
+}
+
+.view_main_title h4 {
+    text-align: center;
+}
+
+.grid_menu_container {
+    text-align: right;
+}
+
+/************************************************************************
+    MODULE: imported libraries customizations and styles for minor components that sit within major elements declared in the LAYOUT section. 
+/************************************************************************/
+
+/*** Bootstrap customizations ***/
+.popover {
+    max-width: 500px;
+}
+
+.nav .breadcrumb {
+    margin: 0 7px;
+}
+
+@media (min-width: 768px) {
+    .nav .breadcrumb {
+        float: left;
+        margin: 7px 10px;
+    }
+}
+
+.header-row.row {
+    padding-bottom: 4px;
+}
+
+/*** Date Range Picker customizations ***/
+.daterangepicker:before, .daterangepicker:after {
+    display: none;
+}
+
+/* Clear space in last li to avoid scrollbars when not needed */
+.ranges li:last-child {
+    margin-bottom: 0;
+}
+
+/*** Modals ***/
+.modal-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+    .modal-title .small {
+        font-size: 15px;
+    }
+
+.modal-xlg {
+    width: 90%;
+}
+
+.modal-med-xl {
+    width: 70%;
+}
+
+.modal-body-lg {
+    max-height: calc(100vh - 212px);
+    overflow-y: auto;
+}
+
+.modal-body-sm {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.modal-display-label {
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.modal.modal-attached {
+    height: 100%;
+}
+
+    .modal.modal-attached > .modal-dialog {
+        height: 100%;
+        margin: 0 auto;
+        padding-top: 30px;
+    }
+
+        .modal.modal-attached > .modal-dialog > .modal-content {
+            height: 100%;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom-width: 0;
+            display: flex;
+            flex-flow: column;
+        }
+
+            .modal.modal-attached > .modal-dialog > .modal-content > .modal-header {
+                flex: none;
+            }
+
+            .modal.modal-attached > .modal-dialog > .modal-content > .modal-body {
+                height: auto;
+                flex: 1 1 auto;
+                overflow: auto;
+            }
+
+            .modal.modal-attached > .modal-dialog > .modal-content > .modal-footer {
+                flex: none;
+            }
+
+.modal-body-attached {
+    max-height: calc(100vh - 152px);
+}
+
+.modal.slide-in {
+    overflow: hidden;
+}
+
+    .modal.slide-in .modal-dialog {
+        webkit-transition: -webkit-transform .3s ease-out;
+        transition: -webkit-transform .3s ease-out;
+        -o-transition: -o-transform .3s ease-out;
+        transition: transform .3s ease-out;
+        transition: transform .3s ease-out,-webkit-transform .3s ease-out,-o-transform .3s ease-out;
+        -webkit-transform: translate(0,100%);
+        -ms-transform: translate(0, 100%);
+        -o-transform: translate(0, 100%);
+        transform: translate(0, 100%);
+    }
+
+.modal.in.slide-in .modal-dialog {
+    webkit-transition: -webkit-transform .3s ease-out;
+    transition: -webkit-transform .3s ease-out;
+    -o-transition: -o-transform .3s ease-out;
+    transition: transform .3s ease-out;
+    transition: transform .3s ease-out,-webkit-transform .3s ease-out,-o-transform .3s ease-out;
+    -webkit-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    -o-transform: translate(0,0);
+    transform: translate(0,0);
+}
+
+
+/* //grid sticky scrolling*/
+/* .sticky {
+  position:absolute;
+  top:0;
+} */
+
+.sticky-container .w2ui-grid-records > TABLE {
+    position: relative;
+}
+
+    .sticky-container .w2ui-grid-records > TABLE TD > DIV {
+        height: 24px;
+    }
+
+
+.keepInView {
+    position: absolute !important;
+    z-index: 99;
+}
+
+    .keepInView + tr td {
+        border-top: solid transparent 24px !important;
+    }
+
+    .keepInView + tr.keepInView td {
+        border-top: none !important;
+    }
+
+    .keepInView + tr.keepInView + tr td {
+        border-top: solid transparent 48px !important;
+    }
+
+
+/*grid inline editing (TODO: revise copied from other project - remove unneeded)*/
+
+.flex-container-1 {
+    width: 100%;
+    display: flex;
+    display: -ms-flexbox;
+    justify-content: space-between;
+    -ms-flex-pack: justify;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0 6px !important;
+    height: 24px;
+    position: relative;
+}
+
+    .flex-container-1 > div:not(.edit-input-container) {
+        display: inline-block;
+    }
+
+
+.editable-cell {
+    border: 1px solid transparent;
+    -webkit-transition: border-color .25s linear; /* Saf3.2+, Chrome */
+    -moz-transition: border-color .25s linear; /* FF3.7+ */
+    -o-transition: border-color .25s linear; /* Opera 10.5 */
+    transition: border-color .25s linear;
+}
+
+    .editable-cell:hover {
+        border-color: #7676F5;
+    }
+
+    .editable-cell:focus {
+        border-color: blue;
+    }
+
+    .editable-cell.has-error {
+        border-color: red !important;
+    }
+
+.edit-input, .edit-input-container {
+    width: 100% !important;
+    display: none;
+}
+
+.edit-cpm-input {
+    padding-left: 17px !important;
+}
+
+.edit-spot-input {
+    padding-left: 10px !important;
+}
+
+.flex-container-1.is-editing {
+    padding: 0 !important;
+}
+
+.is-editing > div:not(.edit-input):not(.error-input):not(.label-spot):not(.icons-container):not(.edit-input-container):not(.hd-comment-icon) {
+    display: none;
+}
+
+.calendar-icon {
+    display: none;
+}
+
+.is-editing > .calendar-icon {
+    display: inline-block;
+    position: absolute;
+    right: 20px;
+    top: 6px;
+}
+
+.is-editing .edit-input {
+    display: block;
+}
+
+.is-editing > .edit-input-container {
+    display: flex;
+    display: -ms-flexbox;
+}
+
+div.edit-input-container {
+    height: 100%;
+    align-items: center;
+    -ms-flex-align: center;
+}
+
+.edit-input-container > div {
+    flex: 0 0 50%;
+    -ms-flex: 0 0 50%;
+    overflow: hidden;
+}
+
+.is-editing {
+    border: 1px solid blue !important;
+}
+
+    .is-editing.has-error {
+        border-color: red !important;
+    }
+
+.dollar-text {
+    display: none !important;
+    position: absolute;
+    left: 10px;
+    top: 5px;
+}
+
+.is-editing > .dollar-text {
+    display: inline-block !important;
+}
+
+.is-editing > div.label-cpm {
+    display: inline-block !important;
+    position: absolute;
+    top: 4px;
+    right: 10px;
+}
+
+
+.is-editing > div.label-spot {
+    display: inline-block;
+    position: absolute;
+    top: 4px;
+    right: 10px;
+}
+
+
+/*animated loading*/
+
+.text-loading {
+    width: 30px;
+    display: inline-block;
+    background: #ddd;
+    padding: 2px 5px;
+}
+
+    .text-loading > span {
+        width: 100%;
+        height: 6px;
+        display: inline-block;
+        background: #999;
+        margin-bottom: 1px;
+    }
+
+@-webkit-keyframes placeHolderShimmer {
+    0% {
+        background-position: -468px 0;
+    }
+
+    100% {
+        background-position: 468px 0;
+    }
+}
+
+@keyframes placeHolderShimmer {
+    0% {
+        background-position: -468px 0;
+    }
+
+    100% {
+        background-position: 468px 0;
+    }
+}
+
+.animated-background > span, .IMSPlaceholder {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: placeHolderShimmer;
+    animation-name: placeHolderShimmer;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: #a4a3a3;
+    background: -webkit-gradient(linear, left top, right top, color-stop(8%, #bfbfbf), color-stop(18%, #a4a3a3), color-stop(33%, #bfbfbf));
+    background: -webkit-linear-gradient(left, #bfbfbf 8%, #a4a3a3 18%, #bfbfbf 33%);
+    background: linear-gradient(to right, #bfbfbf 8%, #a4a3a3 18%, #bfbfbf 33%);
+    -webkit-background-size: 800px 104px;
+    background-size: 800px 104px;
+    position: relative;
+}
+
+/* select2 */
+
+.select2 {
+    width: 100% !important;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: 1px solid #ccc !important;
+}
+
+.bootstrap-tagsinput {
+    width: 100% !important;
+}
+
+.select2-search__field {
+    min-width: 100%;
+}
+
+/* bootstrap-tagsinput */
+
+.bootstrap-tagsinput {
+    margin-bottom: 10px;
+}
+
+    .bootstrap-tagsinput .tag {
+        background-color: #e4e4e4;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        cursor: default;
+        float: left;
+        padding: 0 5px;
+        white-space: nowrap;
+        color: black;
+        margin: 1px 5px 1px -1px;
+    }
+
+    .bootstrap-tagsinput [data-role="remove"] {
+        float: left;
+        color: #999;
+        cursor: pointer;
+        display: inline-block;
+        font-weight: bold;
+        margin-right: 2px;
+        padding: 0px 2px;
+        font-size: 12px;
+        margin-left: -4px !important;
+        margin-right: 0;
+    }
+
+/************************************************************************
+    THEME: defines colours and images that give the application its look and feel 
+/************************************************************************/
+
+/*** Cadent colors ***/
+.cadent-blue {
+    color: #00c1f3;
+}
+
+.cadent-blue-emphasis {
+    font-size: 13px;
+    font-weight: normal;
+    color: #00c1f3;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0px 0px 1px rgb(22, 28, 73);
+}
+
+.cadent-dk-blue {
+    color: #1e5fa8;
+}
+
+.cadent-black {
+    color: #333333;
+}
+
+/*** Validation colors ***/
+.user-green {
+    color: #006600;
+}
+
+.zone-red {
+    color: #8C0000;
+}
+
+.zone-red-bold {
+    color: #8C0000;
+    font-weight: bold;
+}
+
+.zone-red-caps {
+    color: #8C0000;
+    text-transform: uppercase;
+}
+
+/*** Status ***/
+.status-gray {
+    color: #8f8f8f;
+}
+
+.status-green {
+    color: #006600;
+}
+
+.status-orange {
+    color: #D96C00;
+}
+
+.status-blue {
+    color: #00A3D9;
+}
+
+.status-warning {
+    color: #e8ae0f;
+}
+
+.status-red {
+    color: #D90000;
+}
+
+/************************************************************************
+    VIEWS: view-specific styles 
+/************************************************************************/
+
+/*** BroadcastView.cshtml ***/
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.overlay {
+    background: rgba(233,233,233,0.9);
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    position: fixed;
+    text-align: center;
+    display: none;
+}
+
+    .overlay .center {
+        top: 50%;
+        position: relative;
+        margin-top: -60px;
+    }
+
+    .overlay p {
+        padding: 25px;
+        color: #818181;
+        text-align: center;
+        font-size: 1.5em;
+        font-style: italic;
+        font-weight: normal;
+    }
+
+.upload-cloud {
+    color: rgba(110,110,110,0.7);
+    font-size: 42px;
+    position: relative;
+    /* top: 25px; */
+}
+
+.stitched {
+    padding: 16px;
+    margin: 0;
+    background: #eeeeee;
+    color: #a4a3a3;
+    font-size: 20px;
+    line-height: 1.3em;
+    border: 2px dashed #a4a3a3;
+    border-radius: 6px;
+    box-shadow: 0 0 0 4px #eeeeee, 2px 1px 4px 4px rgba(10, 10, 0, 0.5);
+    font-weight: normal;
+    text-align: center;
+    cursor: pointer;
+}
+/** use throughout no need for specific id selectors*/
+.read-only-picker {
+    background-color: white !important;
+    color: black;
+}
+
+/*** _ScrubTimeslot.cshtml ***/
+#scrub_timeslot_modal .modal-content {
+    width: 123%;
+}
+
+/*** ScrubModal.cshtml ***/
+#scrub_view .modal, #scrub_view .modal .btn {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 11px;
+}
+
+    #scrub_view .modal .btn {
+        font-size: 13px;
+    }
+
+#scrub_view .modal-body .line {
+    padding-bottom: 15px;
+}
+
+#scrub_view small {
+    font-size: 10px;
+    position: relative;
+    bottom: 3px;
+    left: 2px;
+}
+
+/*** StationModal.cshtml ***/
+#station_view label {
+    font-size: 13px;
+}
+
+#new_program_flight_input.read-only-picker {
+    background-color: white;
+    color: black;
+}
+
+/*** CriteriaBuilderModal.cshtml ***/
+
+/* remove button */
+.btn-circle-remove {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.42;
+    border-radius: 15px;
+}
+
+.btn-circle-remove .glyphicon {
+    padding-right: 2px;
+}
+
+.criterion {
+    position: relative;
+    bottom: 15px;
+}
+
+/*** _SwitchProposalVersionModal.cshtml ***/
+
+#switch_proposal_version_grid {
+    height: 200px;
+}
+
+/*** _VersionCreatedOptionsModal.cshtml ***/
+
+#version_warning_sign {
+    font-size: 32px;
+    padding-right: 16px;
+    position: relative;
+    top: 6px;
+}
+
+/*** Mapping Modal styles ***/
+
+/* paddind between each row */
+#scrub_mapping_modal .row {
+    padding-bottom: 20px;
+}
+
+/* padding to the left */
+.to-map-column .row {
+    padding-left: 20px;
+}
+
+/* Select input adjustment */
+.mapping-value select {
+    width: 90%;
+}
+
+/* Titles closer to the inputs */
+.mapping-title {
+    padding-bottom: 3px !important;
+}
+
+/*** TrackerView.cshtml ***/
+.trackerDropMenu li a{
+    cursor: pointer;
+}
