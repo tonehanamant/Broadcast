@@ -21,7 +21,7 @@ module.exports = {
   },
   proxy: {
     '/api': {
-      target: 'http://localhost:63942',
+      target: 'http://localhost:63944',
       secure: false,
       changeOrigin: true,
       ws: true, // proxy websockets
