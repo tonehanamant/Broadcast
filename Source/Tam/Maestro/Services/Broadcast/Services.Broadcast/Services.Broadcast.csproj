@@ -218,7 +218,7 @@
     <Compile Include="Entities\ProprietaryInventoryAllocationSnapshotComponentDto.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationSnapshotDto.cs" />
     <Compile Include="Entities\RateConversionRequest.cs" />
-    <Compile Include="Entities\StationDetailDaypart.cs" />
+    <Compile Include="Entities\ManifestDetailDaypart.cs" />
     <Compile Include="Entities\StationImpressions.cs" />
     <Compile Include="Entities\StationInventoryGroup.cs" />
     <Compile Include="Entities\InventorySource.cs" />

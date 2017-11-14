@@ -42,7 +42,7 @@ namespace Services.Broadcast.Entities
 
         public override string ToString()
         {
-            return MediaMonth.MediaMonthX + " - " + Crunched;
+            return MediaMonth.MediaMonthX + "("+ MediaMonth.Id + ") - " + Crunched;
         }
     }
 }
