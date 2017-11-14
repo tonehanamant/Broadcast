@@ -38,6 +38,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _cnnInventorySource = inventoryRepository.GetInventorySourceByName("CNN");
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void InventoryFileLoadCNN()
@@ -66,6 +67,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void InventoryFileUpdateCNN()
@@ -159,6 +161,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(json);
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ExpireInventory()
@@ -197,6 +200,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void TTNWCanLoadFile()
@@ -225,6 +229,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void TTNWCanUpdateInventory()
