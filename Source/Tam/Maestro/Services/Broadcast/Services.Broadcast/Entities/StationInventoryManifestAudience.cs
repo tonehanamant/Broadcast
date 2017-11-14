@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +10,8 @@ namespace Services.Broadcast.Entities
     {
         public DisplayAudience Audience { get; set; }
         public bool IsReference { get; set; }
-        public double Impressions { get; set; }
-        public double Rating { get; set; }
+        public double? Impressions { get; set; }
+        public double? Rating { get; set; }
         public decimal Rate { get; set; }
     }
 }

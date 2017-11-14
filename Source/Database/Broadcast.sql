@@ -769,17 +769,40 @@ GO
 
 /*************************************** BCOP-2149 - END *****************************************************/
 
-/*************************************** BCOP-BCOP-2134 - START *****************************************************/
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
-          WHERE Name = N'is_reference'
-          AND Object_ID = Object_ID(N'dbo.station_inventory_manifest_audiences'))
-BEGIN
-	ALTER TABLE station_inventory_manifest_audiences ADD is_reference bit;
-	exec('update station_inventory_manifest_audiences SET is_reference = 1 WHERE is_reference is null')
-	exec('ALTER TABLE station_inventory_manifest_audiences ADD CONSTRAINT DF_station_inventory_manifest_audiences_is_reference DEFAULT 0 FOR is_reference; ');
-	exec('ALTER TABLE station_inventory_manifest_audiences ALTER COLUMN is_reference bit NOT NULL')
-END
+/*************************************** BCOP-1945 - START *****************************************************/
 
+-- Spots per week are not available for open market inventory
+ALTER TABLE station_inventory_manifest
+ALTER COLUMN spots_per_week int null
+GO
+-- Manifest groups not applicable to open market inventory
+ALTER TABLE station_inventory_manifest
+ALTER COLUMN station_inventory_group_id int null
+GO
+-- Updates to manifest audiences
+ALTER TABLE station_inventory_manifest_audiences
+ALTER COLUMN impressions float null
+GO
+IF NOT EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_manifest_audiences'
+	AND COLUMN_NAME = 'rating')
+BEGIN
+	ALTER TABLE station_inventory_manifest_audiences 
+	ADD rating float null
+END
+GO
+
+-- Add program name
+IF NOT EXISTS(SELECT *
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE TABLE_NAME = 'station_inventory_manifest_dayparts'
+	AND COLUMN_NAME = 'program_name')
+BEGIN
+	ALTER TABLE station_inventory_manifest_dayparts
+	ADD program_name varchar(63) null
+END
+GO
 
 -- manifest rates table
 if Object_ID(N'[dbo].[station_inventory_manifest_rates]') is null
@@ -808,9 +831,23 @@ BEGIN
 	ALTER TABLE [dbo].[station_inventory_manifest_rates] CHECK CONSTRAINT [FK_station_inventory_manifest_rates_station_inventory_manifest]
 END
 GO
+/*************************************** BCOP-1945 - END *****************************************************/
 
-/*************************************** BCOP-BCOP-2134 - END *****************************************************/
+
 GO
+/*************************************** BCOP-BCOP-2134 - START *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'is_reference'
+          AND Object_ID = Object_ID(N'dbo.station_inventory_manifest_audiences'))
+BEGIN
+	ALTER TABLE station_inventory_manifest_audiences ADD is_reference bit;
+	exec('update station_inventory_manifest_audiences SET is_reference = 1 WHERE is_reference is null')
+	exec('ALTER TABLE station_inventory_manifest_audiences ADD CONSTRAINT DF_station_inventory_manifest_audiences_is_reference DEFAULT 0 FOR is_reference; ');
+	exec('ALTER TABLE station_inventory_manifest_audiences ALTER COLUMN is_reference bit NOT NULL')
+END
+GO
+/*************************************** BCOP-BCOP-2134 - END *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------
@@ -851,44 +888,3 @@ BEGIN
 	PRINT 'Database Update Failed. Transaction rolled back.'
 END
 GO
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -149,12 +149,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
+                var displayScheduleTrackingDetails = new ScheduleDeliveryDetails()
+                {
+                    Impressions = 9999,
+                    SpotLength = 30
+                };
+
                 var displaySchedule = new DisplaySchedule
                 {
-                    PrimaryDemoBooked = 123,
-                    PrimaryDemoDelivered = 1234,
+                    PrimaryDemoBooked = 9999,
                     PostingBookId = 420,
-                    PostType = SchedulePostType.NTI
+                    PostType = SchedulePostType.NTI,
+                    DeliveryDetails =
+                        new List<ScheduleDeliveryDetails>
+                        {
+                            displayScheduleTrackingDetails
+                        }
                 };
 
                 var startDate = new DateTime(2000, 1, 1);
@@ -166,7 +176,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(repo.Object);
 
                 var engine = new Mock<IImpressionAdjustmentEngine>();
-                engine.Setup(e => e.AdjustImpression(displaySchedule.PrimaryDemoBooked.Value, displaySchedule.PostType, displaySchedule.PostingBookId, false)).Returns(9999);
+                engine.Setup(
+                    e =>
+                        e.AdjustImpression(displayScheduleTrackingDetails.Impressions.Value,
+                            displaySchedule.IsEquivalized, displayScheduleTrackingDetails.SpotLength,
+                            displaySchedule.PostType, displaySchedule.PostingBookId, true)).Returns(9999);
                 engine.Setup(e => e.AdjustImpression(displaySchedule.PrimaryDemoDelivered, displaySchedule.PostType, displaySchedule.PostingBookId, false)).Returns(99999);
 
                 var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, engine.Object);
@@ -174,7 +188,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var actual = sut.GetDisplaySchedulesWithAdjustedImpressions(startDate, dateTime);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
                 Assert.That(actual.Single().PrimaryDemoBooked, Is.EqualTo(9999));
-                Assert.That(actual.Single().PrimaryDemoDelivered, Is.EqualTo(99999));
+                Assert.That(actual.Single().PrimaryDemoDelivered, Is.EqualTo(9999));
             }
         }
 
@@ -203,7 +217,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(repo.Object);
 
                 var engine = new Mock<IImpressionAdjustmentEngine>();
-                engine.Setup(e => e.AdjustImpression(bvsTrackingDetail.Impressions.Value, dto.Equivalized, bvsTrackingDetail.SpotLength, dto.PostType, dto.PostingBookId, false)).Returns(9999);
+                engine.Setup(e => e.AdjustImpression(bvsTrackingDetail.Impressions.Value, dto.Equivalized, bvsTrackingDetail.SpotLength, dto.PostType, dto.PostingBookId, true)).Returns(9999);
 
                 var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, engine.Object);
                 var actual = sut.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);

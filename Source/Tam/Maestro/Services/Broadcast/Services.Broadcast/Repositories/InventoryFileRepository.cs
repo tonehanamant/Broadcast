@@ -55,12 +55,12 @@ namespace Services.Broadcast.Repositories
                         created_date = DateTime.Now,
                         inventory_source_id = inventoryFile.InventorySource.Id,
                         sweep_book_id = inventoryFile.RatingBook,
-                        play_back_type = (byte) inventoryFile.PlaybackType
+                        play_back_type = (byte?) inventoryFile.PlaybackType
                     };
 
                     context.inventory_files.Add(file);
                     context.SaveChanges();
-
+                    
                     return file.id;
                 });
 

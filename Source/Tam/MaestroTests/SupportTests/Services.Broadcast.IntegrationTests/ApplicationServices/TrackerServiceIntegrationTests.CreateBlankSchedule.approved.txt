@@ -13,6 +13,7 @@
   ],
   "DaypartRestriction": null,
   "DaypartRestrictionId": 63332,
+  "DeliveryDetails": null,
   "EndDate": "2018-01-20T00:00:00",
   "Estimate": null,
   "InventorySource": 5,

@@ -5,6 +5,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-07-24T00:00:00",
     "Estimate": 3477,
     "Id": 65,
@@ -31,6 +32,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-07-24T00:00:00",
     "Estimate": 123,
     "Id": 66,
@@ -57,6 +59,840 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2016-08-07T00:00:00",
     "Estimate": 3447,
     "Id": 67,
@@ -83,6 +919,168 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": 7908.75,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 5827.875,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 4515.4,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 6386.125,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 34448.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 7230.625,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 9509.875,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 5462.75,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 10858.375,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 2383.375,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 300.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 9337.35,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 10277.6,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 9804.7,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 9804.7,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 7482.25,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 9584.75,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 5381.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 2735.1,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 4003.75,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1772.3999999999999,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 6326.0499999999993,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 6010.8,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 819.6,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1973.5,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 16507.850000000002,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 3573.625,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 2008.7999999999997,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1495.1,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1495.1,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 891.3,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 864.375,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1221.875,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 704.95,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1609.75,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 3728.25,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 5376.95,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1511.55,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 2029.35,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 883.3,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2016-08-07T00:00:00",
     "Estimate": 3416,
     "Id": 78,
@@ -98,7 +1096,7 @@
     "PostingBookId": 413,
     "PostType": 1,
     "PrimaryDemoBooked": 4064440.0,
-    "PrimaryDemoDelivered": 7783.2,
+    "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 816,
     "SpotsDelivered": 2,
     "StartDate": "2016-07-18T00:00:00"
@@ -109,13 +1107,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": 3910,
     "Id": 331,
     "InventorySource": 0,
     "IsBlank": false,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Test Settings Schedule",
     "OutOfSpec": 0,
@@ -135,6 +1134,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": 4000,
     "Id": 550,
@@ -161,13 +1161,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2188,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -187,13 +1188,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2189,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -213,13 +1215,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2190,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -239,13 +1242,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2017-01-08T00:00:00",
     "Estimate": 121220,
     "Id": 2193,
     "InventorySource": 0,
     "IsBlank": false,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Assembly Schedule Template",
     "OutOfSpec": 0,
@@ -265,13 +1269,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2195,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -291,13 +1296,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2196,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -317,13 +1323,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2197,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -343,13 +1350,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2201,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -369,13 +1377,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2202,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -395,13 +1404,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2203,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -421,13 +1431,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2207,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -447,13 +1458,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2208,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -473,13 +1485,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2209,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -499,13 +1512,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2213,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -525,13 +1539,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2214,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -551,13 +1566,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2215,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -577,13 +1593,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2227,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -603,13 +1620,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2228,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -629,13 +1647,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2229,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -655,13 +1674,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2233,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -681,13 +1701,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2234,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -707,13 +1728,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2235,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -733,13 +1755,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2239,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -759,13 +1782,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2240,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -785,13 +1809,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2241,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -811,13 +1836,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2245,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -837,13 +1863,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2246,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -863,13 +1890,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2247,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -889,13 +1917,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2251,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -915,13 +1944,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2252,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -941,13 +1971,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2253,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -967,13 +1998,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2257,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -993,13 +2025,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2258,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1019,13 +2052,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2259,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1045,13 +2079,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2263,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1071,13 +2106,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2264,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1097,13 +2133,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2265,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1123,13 +2160,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2269,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1149,13 +2187,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2270,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1175,13 +2214,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2271,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1201,13 +2241,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2275,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1227,13 +2268,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2276,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1253,13 +2295,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2277,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1279,13 +2322,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2281,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1305,13 +2349,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2282,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1331,13 +2376,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2283,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1357,13 +2403,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2287,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1383,13 +2430,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2288,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1409,13 +2457,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2289,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1435,13 +2484,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2293,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1461,13 +2511,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2294,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1487,13 +2538,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2295,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1513,13 +2565,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2299,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1539,13 +2592,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2300,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1565,13 +2619,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2301,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1591,13 +2646,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2305,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1617,13 +2673,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2306,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1643,13 +2700,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2307,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1669,13 +2727,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2311,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1695,13 +2754,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2312,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1721,13 +2781,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2313,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1747,13 +2808,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2317,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1773,13 +2835,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2318,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1799,13 +2862,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2319,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1825,13 +2889,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2323,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1851,13 +2916,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2324,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1877,13 +2943,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2325,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1903,13 +2970,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2329,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -1929,13 +2997,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2330,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -1955,13 +3024,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2331,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -1981,13 +3051,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2335,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -2007,13 +3078,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2336,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -2033,13 +3105,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2337,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -2059,13 +3132,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2341,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -2085,13 +3159,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2342,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -2111,13 +3186,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2343,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -2137,13 +3213,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2347,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -2163,13 +3240,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2348,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -2189,13 +3267,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2349,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -2215,13 +3294,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2352,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -2241,13 +3321,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2353,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -2267,13 +3348,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2354,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -2293,13 +3375,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2359,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule",
     "OutOfSpec": 0,
@@ -2319,13 +3402,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2360,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Best",
     "OutOfSpec": 0,
@@ -2345,13 +3429,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2018-01-20T00:00:00",
     "Estimate": null,
     "Id": 2361,
     "InventorySource": 0,
     "IsBlank": true,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Blank Schedule 2",
     "OutOfSpec": 0,
@@ -2371,13 +3456,39 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 2356.8999999999996,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 943.75,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 1259.8500000000001,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2017-03-19T00:00:00",
     "Estimate": 666555,
     "Id": 3420,
     "InventorySource": 0,
     "IsBlank": false,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "_Test Mappings",
     "OutOfSpec": 3,
@@ -2386,7 +3497,7 @@
     "PostingBookId": 413,
     "PostType": 1,
     "PrimaryDemoBooked": 6490.0,
-    "PrimaryDemoDelivered": 1259.85,
+    "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 6,
     "SpotsDelivered": 3,
     "StartDate": "2017-03-13T00:00:00"

@@ -5,6 +5,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-06-12T00:00:00",
     "Estimate": 123456,
     "Id": 42,
@@ -31,6 +32,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-04-24T00:00:00",
     "Estimate": 3380,
     "Id": 44,
@@ -57,6 +59,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-07-24T00:00:00",
     "Estimate": 3477,
     "Id": 65,
@@ -83,6 +86,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-07-24T00:00:00",
     "Estimate": 123,
     "Id": 66,
@@ -109,6 +113,1252 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": 34534.45,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 36958.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 41493.9,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 41493.9,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 30794.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 30794.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 16085.35,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 24234.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 24186.2,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 49052.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 28540.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 32250.3,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 60576.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 32250.3,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 54640.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11564.875,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 8027.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 4664.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6974.85,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11676.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 39884.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11451.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 20470.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 21051.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 21760.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 17179.050000000003,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 22762.7,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 22109.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6519.9,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 4997.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 22535.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 22535.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 38390.7,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 38390.7,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 7510.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 20718.2,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 22792.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 37104.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 37104.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9672.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10726.95,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 17753.9,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 17536.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13714.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13714.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 2483.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 2696.95,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 2483.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 3415.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 56651.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 57340.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11639.15,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13162.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11639.15,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 12298.2,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18399.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10245.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 8793.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10245.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 36805.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 36282.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 33644.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 34249.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 31490.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 25819.85,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 31490.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 25819.85,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 44898.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 46786.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 46786.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6372.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 7255.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 19722.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 19722.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 40643.35,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 40643.35,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13156.199999999999,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11926.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 12728.550000000001,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11926.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11587.3,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11587.3,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 40689.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 40899.35,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 47496.35,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 50508.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9209.9,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 5601.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 7796.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 5601.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13996.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13996.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 16426.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 5174.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 252.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 2216.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 5563.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11393.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 5563.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11393.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 26868.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13986.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 27486.100000000002,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13986.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 25664.95,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 30200.95,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 7925.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9093.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18829.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 19636.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9287.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 30601.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 30601.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 19667.35,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 23740.350000000002,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 24987.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 25831.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18052.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 24729.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 16531.2,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18052.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 32355.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 37066.450000000004,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 37066.450000000004,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 32355.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 22028.85,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 27818.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 22914.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 27818.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10044.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10044.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 29585.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 40263.85,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 15616.7,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 17194.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 24750.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 17492.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 22043.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 8539.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10361.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 8761.35,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9710.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 14875.900000000001,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 20847.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18187.3,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 20847.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 27273.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 20678.35,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 27273.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 20489.199999999997,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 20489.199999999997,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 35462.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 22674.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 35136.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 22674.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 14615.3,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 26570.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 26570.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18258.9,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18258.9,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10066.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9621.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 14526.95,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 14526.95,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13184.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 14526.95,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 16223.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 16223.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13611.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13833.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 17317.85,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 20151.2,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 17317.85,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 20151.2,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 19787.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 17207.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18522.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18522.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18522.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18522.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 19360.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 17387.2,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9108.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9117.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9117.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9217.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 19044.699999999997,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 32258.85,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 31235.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 19044.699999999997,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 5927.15,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 4150.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 4567.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10712.85,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10712.85,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 3812.125,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 4352.875,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 8390.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 8322.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 8390.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 8271.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 21180.649999999998,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13812.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 25461.9,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 19807.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 19702.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18425.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 19702.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18425.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 15833.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 14359.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13527.15,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13527.15,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 2494.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 2494.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 12345.900000000001,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13073.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 12345.900000000001,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13073.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 3163.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11930.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 3255.7000000000003,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11776.9,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 16327.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18717.375,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18717.375,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 14205.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 14205.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 5683.15,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 19280.199999999997,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 29324.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 30411.3,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6860.3,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6680.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 26161.350000000002,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 25648.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6943.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10128.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10128.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11355.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 17178.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 14247.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 21728.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6460.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6460.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6811.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6811.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13188.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 33019.7,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13188.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13188.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18373.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 21781.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18373.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18373.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 25651.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 25343.55,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 0.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6085.2,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 5976.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6113.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 5919.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 2425.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10262.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 2184.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 7985.35,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 15106.95,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 8005.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 14485.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 3782.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6951.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6951.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6951.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6951.05,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 14650.3,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 14717.3,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 15446.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 15446.45,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10753.3,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 3640.9,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10431.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 3919.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 5539.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 5931.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6569.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 5931.0,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 18399.95,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 4045.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 3886.6000000000004,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 4045.6,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 3886.6000000000004,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 13832.8,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 14580.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 8834.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 8260.15,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 8935.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 8260.15,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11614.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9555.75,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 11614.25,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9745.95,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9786.1,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9948.65,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10780.35,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10133.5,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6935.9,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6754.4,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6935.9,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 6935.9,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 9611.0500000000011,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 10325.95,
+        "SpotLength": 60
+      }
+    ],
     "EndDate": "2016-06-12T00:00:00",
     "Estimate": 3417,
     "Id": 69,
@@ -124,7 +1374,7 @@
     "PostingBookId": 413,
     "PostType": 1,
     "PrimaryDemoBooked": 3301426.0,
-    "PrimaryDemoDelivered": 1883781.4,
+    "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 392,
     "SpotsDelivered": 100,
     "StartDate": "2016-05-30T00:00:00"
@@ -135,6 +1385,12 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2016-12-24T00:00:00",
     "Estimate": 8675309,
     "Id": 82,
@@ -161,6 +1417,28 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2016-12-24T00:00:00",
     "Estimate": 7618419,
     "Id": 83,
@@ -187,6 +1465,12 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": null,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2016-12-24T00:00:00",
     "Estimate": 7985133,
     "Id": 84,
@@ -213,13 +1497,39 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": 226069.7,
+        "SpotLength": 15
+      },
+      {
+        "Impressions": 206756.44999999998,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 192029.7,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 222931.65,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 55449.6,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 79280.55,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2016-04-24T00:00:00",
     "Estimate": 3909,
     "Id": 96,
     "InventorySource": 0,
     "IsBlank": false,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Checkers 2Q16 SYN - Scheduler (tv)",
     "OutOfSpec": 2,
@@ -228,7 +1538,7 @@
     "PostingBookId": 413,
     "PostType": 2,
     "PrimaryDemoBooked": 1768942.0,
-    "PrimaryDemoDelivered": 847787.5,
+    "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 16,
     "SpotsDelivered": 4,
     "StartDate": "2016-03-28T00:00:00"
@@ -239,6 +1549,32 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": 226069.7,
+        "SpotLength": 15
+      },
+      {
+        "Impressions": 206756.44999999998,
+        "SpotLength": 60
+      },
+      {
+        "Impressions": 192029.7,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 222931.65,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 55449.6,
+        "SpotLength": 30
+      },
+      {
+        "Impressions": 79280.55,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2016-04-24T00:00:00",
     "Estimate": 4400,
     "Id": 975,
@@ -254,7 +1590,7 @@
     "PostingBookId": 413,
     "PostType": 2,
     "PrimaryDemoBooked": 1025927.0,
-    "PrimaryDemoDelivered": 226069.7,
+    "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 11,
     "SpotsDelivered": 1,
     "StartDate": "2016-03-28T00:00:00"
@@ -265,6 +1601,16 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [
+      {
+        "Impressions": 226069.7,
+        "SpotLength": 15
+      },
+      {
+        "Impressions": 55449.6,
+        "SpotLength": 30
+      }
+    ],
     "EndDate": "2016-04-24T00:00:00",
     "Estimate": 4401,
     "Id": 976,
@@ -280,7 +1626,7 @@
     "PostingBookId": 413,
     "PostType": 2,
     "PrimaryDemoBooked": 1025927.0,
-    "PrimaryDemoDelivered": 226069.7,
+    "PrimaryDemoDelivered": 0.0,
     "SpotsBooked": 11,
     "SpotsDelivered": 1,
     "StartDate": "2016-03-28T00:00:00"
@@ -291,13 +1637,14 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-04-24T00:00:00",
     "Estimate": 3390,
     "Id": 2364,
     "InventorySource": 0,
     "IsBlank": false,
     "Iscis": null,
-    "IsEquivalized": false,
+    "IsEquivalized": true,
     "MarketRestrictions": null,
     "Name": "Checkers 2Q16 SYN - Scheduler (tv)",
     "OutOfSpec": 0,
@@ -317,6 +1664,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
+    "DeliveryDetails": [],
     "EndDate": "2016-04-24T00:00:00",
     "Estimate": null,
     "Id": 2365,

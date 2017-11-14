@@ -51,8 +51,11 @@ namespace Services.Broadcast.Converters.RateImport
                 case "TTNW":
                     fileImporter = new TTNWFileImporter();
                     break;
+                case "OpenMarket":
+                    fileImporter = new OpenMarketFileImporter();
+                    break;
                 default:
-                    throw new NotImplementedException("Open market imports not supported.");
+                    throw new NotImplementedException("Unsupported inventory type.");
             }
 
             fileImporter.BroadcastDataDataRepository = _broadcastDataDataRepositoryFactory;

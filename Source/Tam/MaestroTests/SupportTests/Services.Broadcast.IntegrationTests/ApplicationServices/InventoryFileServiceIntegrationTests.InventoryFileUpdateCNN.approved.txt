@@ -20,20 +20,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -90,20 +90,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -160,20 +160,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -249,20 +249,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -319,20 +319,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -404,20 +404,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -474,20 +474,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -544,20 +544,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -633,20 +633,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -703,20 +703,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -788,20 +788,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -858,20 +858,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -928,20 +928,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1017,20 +1017,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1102,20 +1102,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1172,20 +1172,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1242,20 +1242,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1331,20 +1331,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1416,20 +1416,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1486,20 +1486,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1556,20 +1556,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1660,20 +1660,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1744,20 +1744,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1871,20 +1871,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1955,20 +1955,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2044,20 +2044,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2148,20 +2148,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2232,20 +2232,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2359,20 +2359,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2443,20 +2443,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2532,20 +2532,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2636,20 +2636,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2720,20 +2720,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2847,20 +2847,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2931,20 +2931,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -3035,20 +3035,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -3119,20 +3119,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -3246,20 +3246,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -3330,20 +3330,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -3434,20 +3434,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -3518,20 +3518,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -3645,20 +3645,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -3729,20 +3729,20 @@
               "AudienceString": "Females 50-54",
               "Id": 13
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 210.0000,
-            "Rating": 0.0
+            "Rating": null
           },
           {
             "Audience": {
               "AudienceString": "Females 55-64",
               "Id": 14
             },
-            "Impressions": 0.0,
+            "Impressions": null,
             "IsReference": false,
             "Rate": 131.0000,
-            "Rating": 0.0
+            "Rating": null
           }
         ],
         "ManifestAudiencesReferences": [],

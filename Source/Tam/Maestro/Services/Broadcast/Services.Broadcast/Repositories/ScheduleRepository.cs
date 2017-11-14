@@ -103,6 +103,7 @@ namespace Services.Broadcast.Repositories
                         Estimate = s.estimate_id,
                         StartDate = s.start_date,
                         EndDate = s.end_date,
+                        IsEquivalized = s.equivalized,
                         PostType = (SchedulePostType)s.post_type,
                         SpotsBooked = (from sd in context.schedule_details
                                        where sd.schedule_id == s.id
@@ -121,14 +122,16 @@ namespace Services.Broadcast.Repositories
                                              where sd.schedule_id == s.id
                                                    && sda.audience_rank == 1
                                              select sd.total_spots * sda.impressions).Sum(),
-                        PrimaryDemoDelivered = (from bfd in context.bvs_file_details
-                                                join pd in context.bvs_post_details on bfd.id equals
-                                                pd.bvs_file_detail_id
-                                                where bfd.estimate_id == s.estimate_id
-                                                      && bfd.status == (int)TrackingStatus.InSpec
-                                                      && pd.audience_rank == 1
-                                                select (double?)pd.delivery).Sum() ?? 0
-
+                        DeliveryDetails = (from bfd in context.bvs_file_details
+                                           where bfd.estimate_id == s.estimate_id
+                                           select new ScheduleDeliveryDetails
+                                           {
+                                               SpotLength = bfd.spot_length,
+                                               Impressions = (from x in context.bvs_post_details
+                                                              where x.bvs_file_detail_id == bfd.id && 
+                                                                    x.audience_rank == 1
+                                                              select x.delivery).Sum()
+                                           }).ToList()
                     }).ToList();
                 });
 
@@ -564,14 +567,9 @@ namespace Services.Broadcast.Repositories
 
                             PrimaryDemoBooked = (from sda in context.schedule_detail_audiences
                                                  join sd in context.schedule_details on sda.schedule_detail_id equals sd.id
-                                                 where sd.schedule_id == s.id && sda.audience_rank == 1
-                                                 select sda.impressions).Sum(),
-
-                            PrimaryDemoDelivered = (from bfd in context.bvs_file_details
-                                                    join pd in context.bvs_post_details on bfd.id equals pd.bvs_file_detail_id
-                                                    where bfd.estimate_id == s.estimate_id && bfd.status == (int)TrackingStatus.InSpec && pd.audience_rank == 1
-                                                    select (double?)pd.delivery).Sum() ?? 0,
-
+                                                 where sd.schedule_id == s.id
+                                                       && sda.audience_rank == 1
+                                                 select sd.total_spots * sda.impressions).Sum(),
                             MarketRestrictions = (from m in s.markets
                                                   select m.market_code).ToList(),
 
