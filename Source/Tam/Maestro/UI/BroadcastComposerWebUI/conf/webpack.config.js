@@ -20,13 +20,13 @@ var webpackConfig = {
   output: {
     filename: 'bundle.js',
     path: resolve(__dirname, '../dist'),
-    publicPath: '/broadcast',
+    publicPath: '/broadcastreact',
   },
 
   devServer: {
     hot: true,
     contentBase: resolve(__dirname, '../build'),
-    publicPath: '/broadcast',
+    publicPath: '/broadcastreact/',
     stats: HELPERS.stats,
     proxy: HELPERS.api.proxy
   },

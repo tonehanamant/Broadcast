@@ -7,12 +7,12 @@ module.exports = {
   qa: {
     // API and application will sit side-by-side on server, reference relatively
     // (i.e. API: http://cadapps-qa1/broadcastapi, Application: http://cadapps-qa1/broadcast)
-    url: 'http://localhost:63944',
+    url: 'http://cadapps-qa1/broadcast',
     name: '/api', // 'api'
     version: '', // 'v1'
   },
   production: {
-    url: 'http://127.0.0.1/broadcastapi',
+    url: 'http://cadapps-qa1/broadcast',
     name: '/api', // 'api'
     version: '', // 'v1'
   },

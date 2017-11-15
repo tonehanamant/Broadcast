@@ -18,7 +18,7 @@ var webpackConfig = {
   output: {
     path: resolve(__dirname, '../dist'),
     filename: '[name]-bundle-[hash].js',
-    publicPath: '/broadcast',
+    publicPath: '/broadcastreact/',
   },
 
   resolve: {
