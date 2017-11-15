@@ -7,12 +7,12 @@ module.exports = {
   qa: {
     // API and application will sit side-by-side on server, reference relatively
     // (i.e. API: http://cadapps-qa1/broadcastapi, Application: http://cadapps-qa1/broadcast)
-    url: 'http://cadapps-qa1/broadcast',
+    url: 'http://cadapps-qa1.crossmw.com/broadcast',
     name: '/api', // 'api'
     version: '', // 'v1'
   },
   production: {
-    url: 'http://cadapps-qa1/broadcast',
+    url: 'http://cadapps-qa1.crossmw.com/broadcast',
     name: '/api', // 'api'
     version: '', // 'v1'
   },
