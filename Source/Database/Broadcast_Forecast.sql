@@ -1831,6 +1831,140 @@ GO
 
 
 
+-- =============================================
+-- Author:		Stephen DeFusco
+-- Create date: 12/14/2016
+-- Description:	
+-- =============================================
+-- SELECT * FROM nsi.udf_GetForecastedNsiRatings(410,410,'A35+',5014,0,0,0,1,1,0,0,70200,71999,'3')
+-- =============================================
+CREATE FUNCTION [nsi].[udf_GetForecastedNsiRatings]
+(	
+	@hut_media_month_id SMALLINT,
+	@share_media_month_id SMALLINT,
+	@demo VARCHAR(15),
+	@legacy_call_letters varchar(15),
+	@mon BIT,
+	@tue BIT,
+	@wed BIT,
+	@thu BIT,
+	@fri BIT,
+	@sat BIT,
+	@sun BIT,
+	@start_time INT,
+	@end_time INT,
+	@min_playback_type VARCHAR(1)
+)
+RETURNS FLOAT
+AS
+BEGIN 
+	DECLARE @days_of_week TABLE (day_of_week TINYINT NOT NULL, PRIMARY KEY CLUSTERED(day_of_week ASC));
+	IF @mon=1 INSERT INTO @days_of_week SELECT 1
+	IF @tue=1 INSERT INTO @days_of_week SELECT 2
+	IF @wed=1 INSERT INTO @days_of_week SELECT 3
+	IF @thu=1 INSERT INTO @days_of_week SELECT 4
+	IF @fri=1 INSERT INTO @days_of_week SELECT 5
+	IF @sat=1 INSERT INTO @days_of_week SELECT 6
+	IF @sun=1 INSERT INTO @days_of_week SELECT 7
+
+	DECLARE @audience_ids TABLE (audience_id INT NOT NULL, PRIMARY KEY CLUSTERED(audience_id ASC));
+	INSERT INTO @audience_ids
+		SELECT
+			aa.rating_audience_id
+		FROM
+			dbo.audience_audiences aa (NOLOCK)
+			JOIN dbo.audiences a (NOLOCK) ON a.id=aa.custom_audience_id
+		WHERE
+			a.id=@demo
+			AND aa.rating_category_group_id=2 --NSI
+
+	DECLARE @hut_min_playback_types TABLE (market_code SMALLINT NOT NULL, available_playback_type VARCHAR(1), PRIMARY KEY CLUSTERED(market_code ASC))
+	INSERT INTO @hut_min_playback_types
+		SELECT * FROM dbo.udf_GetMinPlaybackTypes(@hut_media_month_id,@min_playback_type);
+
+	DECLARE @share_min_playback_types TABLE (market_code SMALLINT NOT NULL, available_playback_type VARCHAR(1), PRIMARY KEY CLUSTERED(market_code ASC))
+	INSERT INTO @share_min_playback_types
+		SELECT * FROM dbo.udf_GetMinPlaybackTypes(@share_media_month_id,@min_playback_type);
+
+	DECLARE @hut_market_codes TABLE (market_code INT NOT NULL, PRIMARY KEY CLUSTERED(market_code ASC))
+	INSERT INTO @hut_market_codes
+		SELECT
+			v.market_code
+		FROM
+			nsi.viewers v (NOLOCK) 
+		WHERE
+			v.media_month_id=@hut_media_month_id
+			AND v.Legacy_Call_letters=@legacy_call_letters
+			AND (v.start_time<=@end_time AND v.end_time>=@start_time)
+		GROUP BY
+			v.market_code;
+	
+	DECLARE @hut FLOAT;
+	SELECT
+		@hut = SUM(mon_usage+tue_usage+wed_usage+thu_usage+fri_usage+sat_usage+sun_usage) / SUM(universe)
+	FROM (
+		SELECT
+			uv.universe,
+			CASE dow.day_of_week WHEN 1 THEN u.mon_usage ELSE 0 END 'mon_usage',
+			CASE dow.day_of_week WHEN 2 THEN u.tue_usage ELSE 0 END 'tue_usage',
+			CASE dow.day_of_week WHEN 3 THEN u.wed_usage ELSE 0 END 'wed_usage',
+			CASE dow.day_of_week WHEN 4 THEN u.thu_usage ELSE 0 END 'thu_usage',
+			CASE dow.day_of_week WHEN 5 THEN u.fri_usage ELSE 0 END 'fri_usage',
+			CASE dow.day_of_week WHEN 6 THEN u.sat_usage ELSE 0 END 'sat_usage',
+			CASE dow.day_of_week WHEN 7 THEN u.sun_usage ELSE 0 END 'sun_usage'		
+		FROM
+			nsi.usages u (NOLOCK)
+			JOIN @hut_market_codes hds ON hds.market_code=u.market_code
+			JOIN @audience_ids a ON a.audience_id=u.audience_id
+			JOIN @hut_min_playback_types mpt ON mpt.market_code=u.market_code
+				AND u.playback_type=mpt.available_playback_type
+			JOIN nsi.universes uv (NOLOCK) ON uv.media_month_id=u.media_month_id
+				AND uv.playback_type=mpt.available_playback_type
+				AND uv.market_code=u.market_code
+				AND uv.audience_id=a.audience_id
+			CROSS APPLY @days_of_week dow
+		WHERE
+			u.media_month_id=@hut_media_month_id
+			AND (u.start_time<=@end_time AND u.end_time>=@start_time)
+	) tmp
+
+	DECLARE @share FLOAT;
+	SELECT
+		@share = SUM(mon_viewers+tue_viewers+wed_viewers+thu_viewers+fri_viewers+sat_viewers+sun_viewers) / SUM(universe)
+	FROM (
+		SELECT
+			uv.universe,
+			CASE dow.day_of_week WHEN 1 THEN vd.mon_viewers ELSE 0 END 'mon_viewers',
+			CASE dow.day_of_week WHEN 2 THEN vd.tue_viewers ELSE 0 END 'tue_viewers',
+			CASE dow.day_of_week WHEN 3 THEN vd.wed_viewers ELSE 0 END 'wed_viewers',
+			CASE dow.day_of_week WHEN 4 THEN vd.thu_viewers ELSE 0 END 'thu_viewers',
+			CASE dow.day_of_week WHEN 5 THEN vd.fri_viewers ELSE 0 END 'fri_viewers',
+			CASE dow.day_of_week WHEN 6 THEN vd.sat_viewers ELSE 0 END 'sat_viewers',
+			CASE dow.day_of_week WHEN 7 THEN vd.sun_viewers ELSE 0 END 'sun_viewers'		
+		FROM
+			nsi.viewers v (NOLOCK)
+			CROSS APPLY @audience_ids a
+			JOIN nsi.viewer_details vd (NOLOCK) ON vd.media_month_id=v.media_month_id
+				AND vd.viewer_id=v.id
+				AND vd.audience_id=a.audience_id
+			JOIN @share_min_playback_types mpt ON mpt.market_code=v.market_code
+				AND vd.playback_type=mpt.available_playback_type
+			JOIN nsi.universes uv (NOLOCK) ON uv.media_month_id=v.media_month_id
+				AND uv.playback_type=mpt.available_playback_type
+				AND uv.market_code=v.market_code
+				AND uv.audience_id=a.audience_id
+			CROSS APPLY @days_of_week dow
+		WHERE
+			v.media_month_id=@hut_media_month_id
+			AND v.legacy_call_letters=@legacy_call_letters
+			AND (v.start_time<=@end_time AND v.end_time>=@start_time)
+	) tmp
+
+	RETURN @hut * @share;
+END
+
+
+GO
 
 /*************************************** END BCOP-2088 *********************************************************/
 
