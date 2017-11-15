@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleModal, createAlert } from 'Ducks/app';
+import { toggleModal, createAlert, setOverlayLoading } from 'Ducks/app';
 import { getPostInitialData, getPost, getPostFiltered, deletePost, getPostFileEdit } from 'Ducks/post';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
@@ -42,6 +42,7 @@ const mapDispatchToProps = dispatch => (bindActionCreators(
     toggleModal,
     deletePost,
     getPostFileEdit,
+    setOverlayLoading,
     // React-Redux-Grid
     showMenu,
     hideMenu,
@@ -73,6 +74,10 @@ export class DataGridContainer extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.post !== this.props.post) {
+      this.props.setOverlayLoading({
+        id: 'gridPostMain',
+        loading: true,
+      });
       // Evaluate if sort directions is set on column or default
       // Sort dataSource using Sorter
       setTimeout(() => {
@@ -87,7 +92,11 @@ export class DataGridContainer extends Component {
             stateKey: 'gridPostMain',
           });
         }
-      }, 10); // SET_DATA is completed, for dataSource
+        this.props.setOverlayLoading({
+          id: 'gridPostMain',
+          loading: false,
+        });
+      }, 0); // SET_DATA is completed, for dataSource
 
       // Hide Context Menu (assumes visible)
       this.props.hideMenu({ stateKey: 'gridPostMain' });
@@ -306,6 +315,7 @@ DataGridContainer.propTypes = {
   createAlert: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
   getPostFileEdit: PropTypes.func.isRequired,
+  setOverlayLoading: PropTypes.func.isRequired,
 
   showMenu: PropTypes.func.isRequired,
   hideMenu: PropTypes.func.isRequired,

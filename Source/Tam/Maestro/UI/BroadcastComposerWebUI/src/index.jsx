@@ -16,6 +16,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { IntlProvider } from 'react-intl';
 import { AppContainer } from 'react-hot-loader';
+import 'Utils/element-closest'; // Element.closest polyfill
 
 import AppRoot from 'Containers/AppRoot';
 
@@ -24,6 +25,7 @@ import configureStore, { history } from './index.store';
 import 'react-select/dist/react-select.css';
 import './index.css';
 import './index.scss';
+
 
 require('./assets/icons/favicon.png');
 

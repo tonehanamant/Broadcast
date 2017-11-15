@@ -154,6 +154,16 @@ export const clearErrors = () => ({
   type: ACTIONS.CLEAR_ERRORS,
 });
 
+export const setOverlayProcessing = overlay => ({
+  type: ACTIONS.SET_OVERLAY_PROCESSING,
+  overlay,
+});
+
+export const setOverlayLoading = overlay => ({
+  type: ACTIONS.SET_OVERLAY_LOADING,
+  overlay,
+});
+
 export const storeFile = file => ({
   type: ACTIONS.STORE_FILE,
   file,
