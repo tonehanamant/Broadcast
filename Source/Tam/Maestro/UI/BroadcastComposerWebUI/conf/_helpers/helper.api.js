@@ -14,17 +14,17 @@ module.exports = {
     },
   },
   development: {
-    host: 'http://cadapps-qa1.crossmw.com/broadcast/',
+    host: 'http://cadapps-qa1/broadcast/',
     apiName: 'api',
     // version: 'v1',
   },
   qa: {
-    host: 'http://cadapps-qa1.crossmw.com/broadcast/',
+    host: 'http://cadapps-qa1/broadcast/',
     apiName: 'api',
     // version: 'v1',
   },
   production: {
-    host: 'http://cadapps-qa1.crossmw.com/broadcast/',
+    host: 'http://cadapps-qa1/broadcast/',
     apiName: 'api',
     // version: 'v1',
   },

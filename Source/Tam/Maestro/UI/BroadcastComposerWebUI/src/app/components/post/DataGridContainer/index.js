@@ -238,7 +238,7 @@ export class DataGridContainer extends Component {
             text: 'Post Report',
             key: 'menu-post-report',
             EVENT_HANDLER: ({ metaData }) => {
-              window.open(`${window.location.origin}/api/Post/Report/${metaData.rowData.Id}`, '_blank');
+              window.open(`${window.location.origin}/broadcast/api/Post/Report/${metaData.rowData.Id}`, '_blank');
             },
           },
           {

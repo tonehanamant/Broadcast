@@ -39,11 +39,11 @@ export class NavigationBar extends Component {
           <Col>
             <Navbar.Collapse>
               <Nav>
-                <NavItem eventKey={1} href="#">Rate Cards</NavItem>
-                <NavItem eventKey={2} href="#">Planning</NavItem>
-                <NavItem eventKey={2} href="#">Traffic</NavItem>
-                <NavItem eventKey={2} href="#">Tracker Pre Posting</NavItem>
-                <NavItem active eventKey={2} href="/post">Post</NavItem>
+                <NavItem href="/broadcast/rates" target="_self">Rate Cards</NavItem>
+                <NavItem href="/broadcast/rates" target="_self">Planning</NavItem>
+                <NavItem href="/broadcast/traffic" target="_self">Traffic</NavItem>
+                <NavItem href="/broadcast/Home/TrackerPrePosting" target="_self">Tracker Pre Posting</NavItem>
+                <NavItem active href="/post">Post</NavItem>
               </Nav>
             </Navbar.Collapse>
           </Col>
