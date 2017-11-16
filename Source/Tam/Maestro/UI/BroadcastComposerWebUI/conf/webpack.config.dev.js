@@ -10,15 +10,24 @@ var HELPERS = require('./_helpers/_index.js');
 var webpackConfig = {
   context: resolve(__dirname, '../src'),
 
-  entry: {
-    app: './index.jsx',
-    vendor: HELPERS.exclude,
-  },
+  entry: [
+    'react-hot-loader/patch',
+    'webpack-dev-server/client?http://localhost:8080',
+    'webpack/hot/only-dev-server',
+    './index.jsx',
+  ],
 
   output: {
+    filename: 'bundle.js',
     path: resolve(__dirname, '../dist'),
-    filename: '[name]-bundle-[hash].js',
     publicPath: '/broadcastreact/',
+  },
+
+  devServer: {
+    hot: true,
+    contentBase: resolve(__dirname, '../build'),
+    publicPath: '/broadcastreact',
+    stats: HELPERS.stats,
   },
 
   resolve: {
@@ -26,37 +35,18 @@ var webpackConfig = {
     extensions: ['.js', '.jsx', '.scss']
   },
 
-  node: {
-    fs: "empty"
-  },
-
-  stats: HELPERS.stats,
-
   plugins: [
-    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      output: {
-        comments: false
-      },
-      compress: {
-        unused: true,
-        dead_code: true,
-        warnings: false
-      }
-    }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"',
-      __PRODUCTION__: true,
-      __API__: HELPERS.api.createApi('production'),
+      'process.env.NODE_ENV': '"development"',
+      __PRODUCTION__: false,
+      __API__: HELPERS.api.createApi('development'),
     }),
     new ExtractTextPlugin({
-      filename: '[name]-style-[hash].css',
+      filename: 'style.css',
     }),
     new HtmlWebpackPlugin({
       favicon: resolve(__dirname, '../src/assets/icons/favicon.ico'),
@@ -71,7 +61,7 @@ var webpackConfig = {
       LOADERS.svg,
       LOADERS.url,
       LOADERS.file,
-      LOADERS.style(false),  // true for development, false for prod, default to true
+      LOADERS.style(true),  // true for development, false for prod, default to true
       LOADERS.css(false),
     ]
   },

@@ -68,7 +68,7 @@ export default function reducer(state = initialState, action) {
         },
         errors: [
           ...state.errors,
-          error.message,
+          error,
         ],
       });
 

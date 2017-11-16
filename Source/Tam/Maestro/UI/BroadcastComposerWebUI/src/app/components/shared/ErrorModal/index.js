@@ -36,7 +36,7 @@ export class ErrorModal extends Component {
     return (
       <Modal show={this.props.modal.active} onHide={this.close}>
         <Modal.Header>
-					<Modal.Title style={{ display: 'inline-block' }}>Error{errors.length > 1 && <span>s</span>} Encountered</Modal.Title>
+					<Modal.Title className="modal-title" style={{ display: 'inline-block' }}>Error{errors.length > 1 && <span>s</span>} Encountered</Modal.Title>
           <Button className="close" bsStyle="link" onClick={this.close} style={{ display: 'inline-block', float: 'right' }}>
             <span>&times;</span>
           </Button>
@@ -44,7 +44,15 @@ export class ErrorModal extends Component {
         <Modal.Body>
           { Object.keys(errors).map((error, i, arr) => (
                 <div key={error}>
-                  <p>{errors[error]}</p>
+                  {errors[error].error &&
+                    <h4 id="default_error_text" className="zone-red-bold">{errors[error].error}</h4>
+                  }
+                  {errors[error].message &&
+                    <p>{errors[error].message}</p>
+                  }
+                  {errors[error].exception &&
+                    <p>{errors[error].exception}</p>
+                  }
                   {(arr.length - 1) !== i &&
                     <hr />
                   }

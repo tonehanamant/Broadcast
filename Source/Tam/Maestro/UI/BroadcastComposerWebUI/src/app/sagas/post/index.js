@@ -35,7 +35,8 @@ export function* requestPostInitialData() {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          message: `The server encountered an error processing the request (Initial Data). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+          error: 'No post initial data returned.',
+          message: `The server encountered an error processing the request (post initial data). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
         },
       });
       throw new Error();
@@ -44,7 +45,8 @@ export function* requestPostInitialData() {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          message: data.Message || 'The server encountered an error processing the request (Initial Data). Please try again or contact your administrator to review error logs.',
+          error: 'No post initial data returned.',
+          message: data.Message || 'The server encountered an error processing the request (post initial data). Please try again or contact your administrator to review error logs.',
         },
       });
       throw new Error();
@@ -54,7 +56,17 @@ export function* requestPostInitialData() {
       data,
     });
   } catch (e) {
-    if (e.message) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No post initial data returned.',
+          message: 'The server encountered an error processing the request (post initial data). Please try again or contact your administrator to review error logs.',
+          exception: `${e.response.data.ExceptionMessage}`,
+        },
+      });
+    }
+    if (!e.response && e.message) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
@@ -91,7 +103,8 @@ export function* requestPost() {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          message: `The server encountered an error processing the request (Posts). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+          error: 'No post returned.',
+          message: `The server encountered an error processing the request (post). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
         },
       });
       throw new Error();
@@ -100,7 +113,8 @@ export function* requestPost() {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          message: data.Message || 'The server encountered an error processing the request (Posts). Please try again or contact your administrator to review error logs.',
+          error: 'No post returned.',
+          message: data.Message || 'The server encountered an error processing the request (post). Please try again or contact your administrator to review error logs.',
         },
       });
       throw new Error();
@@ -116,7 +130,17 @@ export function* requestPost() {
       },
     });
   } catch (e) {
-    if (e.message) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No post returned.',
+          message: 'The server encountered an error processing the request (post). Please try again or contact your administrator to review error logs.',
+          exception: `${e.response.data.ExceptionMessage}`,
+        },
+      });
+    }
+    if (!e.response && e.message) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
@@ -217,7 +241,8 @@ export function* deletePostById({ payload: id }) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          message: `The server encountered an error processing the request (Delete Post ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+          error: 'Post not deleted.',
+          message: `The server encountered an error processing the request (delete post ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
         },
       });
       throw new Error();
@@ -226,7 +251,8 @@ export function* deletePostById({ payload: id }) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          message: data.Message || `The server encountered an error processing the request (Delete Post ${id}). Please try again or contact your administrator to review error logs.`,
+          error: 'Post not deleted.',
+          message: data.Message || `The server encountered an error processing the request (delete post ${id}). Please try again or contact your administrator to review error logs.`,
         },
       });
       throw new Error();
@@ -242,7 +268,17 @@ export function* deletePostById({ payload: id }) {
     yield put({
       type: ACTIONS.REQUEST_POST });
   } catch (e) {
-    if (e.message) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'Post not deleted.',
+          message: 'The server encountered an error processing the request (delete post). Please try again or contact your administrator to review error logs.',
+          exception: `${e.response.data.ExceptionMessage}`,
+        },
+      });
+    }
+    if (!e.response && e.message) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
@@ -279,7 +315,8 @@ export function* requestPostFileEdit({ payload: id }) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          message: `The server encountered an error processing the request (Post ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+          error: 'No post data returned.',
+          message: `The server encountered an error processing the request (post ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
         },
       });
       throw new Error();
@@ -288,7 +325,8 @@ export function* requestPostFileEdit({ payload: id }) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          message: data.Message || `The server encountered an error processing the request (Post ${id}). Please try again or contact your administrator to review error logs.`,
+          error: 'No post data returned.',
+          message: data.Message || `The server encountered an error processing the request (post ${id}). Please try again or contact your administrator to review error logs.`,
         },
       });
       throw new Error();
@@ -305,7 +343,17 @@ export function* requestPostFileEdit({ payload: id }) {
       },
     });
   } catch (e) {
-    if (e.message) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No post data returned.',
+          message: 'The server encountered an error processing the request (post). Please try again or contact your administrator to review error logs.',
+          exception: `${e.response.data.ExceptionMessage}`,
+        },
+      });
+    }
+    if (!e.response && e.message) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
@@ -342,7 +390,8 @@ export function* savePostFileEdit({ payload: params }) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          message: `The server encountered an error processing the request (Save Post ${params.FileId}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+          error: 'Post not saved.',
+          message: `The server encountered an error processing the request (save post ${params.FileId}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
         },
       });
       throw new Error();
@@ -351,7 +400,8 @@ export function* savePostFileEdit({ payload: params }) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          message: data.Message || `The server encountered an error processing the request (Save Post ${params.FileId}). Please try again or contact your administrator to review error logs.`,
+          error: 'Post not saved.',
+          message: data.Message || `The server encountered an error processing the request (save post ${params.FileId}). Please try again or contact your administrator to review error logs.`,
         },
       });
       throw new Error();
@@ -378,6 +428,16 @@ export function* savePostFileEdit({ payload: params }) {
       type: ACTIONS.REQUEST_POST,
     });
   } catch (e) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'Post not saved.',
+          message: 'The server encountered an error processing the request (save post). Please try again or contact your administrator to review error logs.',
+          exception: `${e.response.data.ExceptionMessage}`,
+        },
+      });
+    }
     if (e.message) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
@@ -416,7 +476,8 @@ export function* uploadPostFile({ payload: params }) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          message: `The server encountered an error processing the request (Create Post ${params.FileId}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+          error: 'Post file not created.',
+          message: `The server encountered an error processing the request (create post ${params.FileId}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
         },
       });
       throw new Error();
@@ -425,7 +486,8 @@ export function* uploadPostFile({ payload: params }) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          message: data.Message || `The server encountered an error processing the request (Create Post ${params.FileId}). Please try again or contact your administrator to review error logs.`,
+          error: 'Post file not created.',
+          message: data.Message || `The server encountered an error processing the request (create post ${params.FileId}). Please try again or contact your administrator to review error logs.`,
         },
       });
       throw new Error();
@@ -458,6 +520,16 @@ export function* uploadPostFile({ payload: params }) {
       type: ACTIONS.REQUEST_POST,
     });
   } catch (e) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'Post file not created.',
+          message: 'The server encountered an error processing the request (create post). Please try again or contact your administrator to review error logs.',
+          exception: `${e.response.data.ExceptionMessage}`,
+        },
+      });
+    }
     if (e.message) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,

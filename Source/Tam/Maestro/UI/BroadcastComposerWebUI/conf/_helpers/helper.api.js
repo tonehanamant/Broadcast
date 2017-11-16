@@ -1,34 +1,34 @@
 module.exports = {
+  local: {
+    host: 'http://localhost:8080/',
+    apiName: 'api',
+    // version: 'v1',
+    proxyToDev: {
+      '/api/**': {
+        target: 'http://localhost:63944',
+        secure: false,
+        changeOrigin: true,
+        // ws: true, // proxy websockets
+        logLevel: 'error',
+      },
+    },
+  },
   development: {
-    url: '/api',
-    name: '',
-    version: '',
+    host: 'http://cadapps-qa1.crossmw.com/broadcast/',
+    apiName: 'api',
+    // version: 'v1',
   },
   qa: {
-    // API and application will sit side-by-side on server, reference relatively
-    // (i.e. API: http://cadapps-qa1/broadcastapi, Application: http://cadapps-qa1/broadcast)
-    url: 'http://cadapps-qa1.crossmw.com/broadcast',
-    name: '/api', // 'api'
-    version: '', // 'v1'
+    host: 'http://cadapps-qa1.crossmw.com/broadcast/',
+    apiName: 'api',
+    // version: 'v1',
   },
   production: {
-    url: 'http://cadapps-qa1.crossmw.com/broadcast',
-    name: '/api', // 'api'
-    version: '', // 'v1'
+    host: 'http://cadapps-qa1.crossmw.com/broadcast/',
+    apiName: 'api',
+    // version: 'v1',
   },
   createApi: function(type) {
-    return JSON.stringify(this[type].url + this[type].name + this[type].version + '/');
+    return JSON.stringify(this[type].host + this[type].apiName + '/'); // + this[type].version + '/'
   },
-  proxy: {
-    '/api': {
-      target: 'http://localhost:63944',
-      secure: false,
-      changeOrigin: true,
-      ws: true, // proxy websockets
-      logLevel: 'error',
-      // pathRewrite: {
-      //   '^/api': ''
-      // }
-    }
-  }
 };

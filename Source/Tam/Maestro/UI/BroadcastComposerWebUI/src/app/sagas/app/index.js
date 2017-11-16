@@ -9,7 +9,6 @@ import api from '../api';
 /* ////////////////////////////////// */
 export function* requestEnvironment() {
   const { getEnvironment } = api.app;
-
   try {
     // Set loading overlay
     yield put({
@@ -22,6 +21,7 @@ export function* requestEnvironment() {
     // Yield getEnvirontment
     const response = yield getEnvironment();
     const { status, data } = response;
+    console.log('RESPONSE', response);
     // Unset loading overlay
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,
@@ -35,6 +35,7 @@ export function* requestEnvironment() {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
+          error: 'No environment info returned.',
           message: `The server encountered an error processing the request (environment). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
         },
       });
@@ -44,6 +45,7 @@ export function* requestEnvironment() {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
+          error: 'No environment info returned.',
           message: data.Message || 'The server encountered an error processing the request (environment). Please try again or contact your administrator to review error logs.',
         },
       });
@@ -56,7 +58,17 @@ export function* requestEnvironment() {
     });
   } catch (e) {
     // Default error for try
-    if (e.message) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No environment info returned.',
+          message: 'The server encountered an error processing the request (environment). Please try again or contact your administrator to review error logs.',
+          exception: `${e.response.data.ExceptionMessage}`,
+        },
+      });
+    }
+    if (!e.response && e.message) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
@@ -92,6 +104,7 @@ export function* requestEmployee() {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
+          error: 'No employee info returned.',
           message: `The server encountered an error processing the request (employee). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
         },
       });
@@ -101,6 +114,7 @@ export function* requestEmployee() {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
+          error: 'No employee info returned.',
           message: data.Message || 'The server encountered an error processing the request (employee). Please try again or contact your administrator to review error logs.',
         },
       });
@@ -111,7 +125,17 @@ export function* requestEmployee() {
       data,
     });
   } catch (e) {
-    if (e.message) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No employee info returned.',
+          message: 'The server encountered an error processing the request (employee). Please try again or contact your administrator to review error logs.',
+          exception: `${e.response.data.ExceptionMessage}`,
+        },
+      });
+    }
+    if (!e.response && e.message) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {

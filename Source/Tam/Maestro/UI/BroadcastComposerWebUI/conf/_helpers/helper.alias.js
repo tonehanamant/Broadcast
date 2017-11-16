@@ -7,5 +7,4 @@ module.exports = {
   Sagas: resolve(__dirname, '../../src/app/sagas'),
   Utils: resolve(__dirname, '../../src/app/utils'),
   Assets: resolve(__dirname, '../../src/assets'),
-  Shims: resolve(__dirname, '../../src/shims'),
 };

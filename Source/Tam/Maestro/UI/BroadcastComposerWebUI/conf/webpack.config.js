@@ -20,15 +20,18 @@ var webpackConfig = {
   output: {
     filename: 'bundle.js',
     path: resolve(__dirname, '../dist'),
-    publicPath: '/broadcastreact',
+    publicPath: '/broadcastreact/',
   },
 
   devServer: {
     hot: true,
-    contentBase: resolve(__dirname, '../build'),
-    publicPath: '/broadcastreact/',
+    contentBase: resolve(__dirname, '../src'),
+    publicPath: '/broadcastreact',
+    historyApiFallback: {
+      index: '/broadcastreact/'
+    },
     stats: HELPERS.stats,
-    proxy: HELPERS.api.proxy
+    proxy: HELPERS.api.local.proxyToDev,
   },
 
   resolve: {
@@ -44,16 +47,17 @@ var webpackConfig = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"development"',
       __PRODUCTION__: false,
-      __API__: HELPERS.api.createApi('development'),
+      __API__: HELPERS.api.createApi('local'),
     }),
     new ExtractTextPlugin({
       filename: 'style.css',
     }),
     new HtmlWebpackPlugin({
+      favicon: resolve(__dirname, '../src/assets/icons/favicon.ico'),
       template: './index.html',
     }),
   ],
-  devtool: '#source-map',
+
   module: {
     rules: [
       LOADERS.jsxBabel,
@@ -62,7 +66,7 @@ var webpackConfig = {
       LOADERS.url,
       LOADERS.file,
       LOADERS.style(true),  // true for development, false for prod, default to true
-      LOADERS.css(true),
+      LOADERS.css(false),
     ]
   },
 };
