@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
+using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -13,6 +14,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IPostRepository : IDataRepository
     {
+        List<PostFile> GetAllPostsList();
         List<PostFile> GetAllPosts();
         int SavePost(post_files file);
         PostFile GetPost(int id);
@@ -27,16 +29,27 @@ namespace Services.Broadcast.Repositories
     {
         public PostRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper) { }
 
+        public List<PostFile> GetAllPostsList()
+        {
+            return _InReadUncommitedTransaction(
+                c =>
+                {
+                    var files = c.post_files.ToList();
+                    return files.Select(f => f.ConvertShallow()).ToList();
+                });
+        }
+
+
         public List<PostFile> GetAllPosts()
         {
             return _InReadUncommitedTransaction(
                 c =>
                 {
                     return c.post_files.Include(f => f.post_file_details)
-                                       .Include(f => f.post_file_demos)
-                                       .Include(f => f.post_file_details.Select(fd => fd.post_file_detail_impressions))
-                                       .ToList()
-                                       .Select(x => x.Convert()).ToList();
+                        .Include(f => f.post_file_demos)
+                        .Include(f => f.post_file_details.Select(fd => fd.post_file_detail_impressions))
+                        .ToList()
+                        .Select(x => x.Convert()).ToList();
                 });
         }
 
@@ -145,6 +158,11 @@ namespace Services.Broadcast.Repositories
 
     public static class Extensions
     {
+        public static PostFile ConvertShallow(this post_files x)
+        {
+            var postUpload = new PostFile(x.id, x.equivalized, x.posting_book_id, (ProposalEnums.ProposalPlaybackType)x.playback_type, x.post_file_demos, x.file_name, x.upload_date, x.modified_date);
+            return postUpload;
+        }
         public static PostFile Convert(this post_files x)
         {
             var postUpload = new PostFile(x.id, x.equivalized, x.posting_book_id, (ProposalEnums.ProposalPlaybackType)x.playback_type, x.post_file_demos, x.file_name, x.upload_date, x.modified_date, x.post_file_details.Select(d => d.Convert()).ToList());

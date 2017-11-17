@@ -1,0 +1,53 @@
+﻿
+<div class="modal slide-in fade modal-attached" id="posting_upload_modal" role="dialog">
+    <div class="modal-dialog modal-xlg" role="document">
+        <div class="modal-content" id="posting-upload-view">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" data-bind="visible: activeFormMode() != 'edit'">Post File Upload</h4>
+                <h4 class="modal-title" data-bind="visible: activeFormMode() == 'edit'">Post File Edit</h4>
+            </div>
+            <div class="modal-body">
+                <form id="posting_upload_form">
+                    <div class="row" style="height: 60px; vertical-align: bottom;">
+                        <div class="col-md-2">
+                            <div data-bind="text: FileName"></div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="checkbox" data-bind="checked: Equivalized" name="equivalized" id="posting-upload-equivalized" value="" />
+                                <label for="posting-upload-equivalized">Equivalized</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="post_input_posting">Posting Book</label>
+                                <br />
+                                <select class="form-control" id="post_input_posting" name="post_input_posting" style="width: 100%;" data-bind="options: $root.PostingBooks, optionsValue: 'Id', optionsText: 'Display', value: PostingBookId, optionsCaption: 'Choose Posting...'"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="post_input_playback">Playback Type</label>
+                                <br />
+                                <select class="form-control" id="post_input_playback" name="post_input_playback" aria-haspopup="true" aria-expanded="false" data-bind="options: $root.PlaybackTypes, optionsValue: 'Id', optionsText: 'Display', value: selectedPlaybackType, optionsCaption: 'Choose Playback Type...'"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="post_input_demos">Demos</label>
+                                <br />
+                                <select class="form-control" multiple="multiple" style="width:100%;" name="post_input_demos" id="post_input_demos" data-bind="options: $root.PostingDemos, optionsValue: 'Id', optionsText: 'Display', selectedOptions: selectedPostingDemos, select2: true"></select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-success" data-bind="visible: activeFormMode() != 'edit', click: uploadPosting">Upload</button>
+                <button class="btn btn-success" data-bind="visible: activeFormMode() == 'edit', click: savePosting">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
