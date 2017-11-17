@@ -1,6 +1,17 @@
 {
   "presets": [
-    ["env", { "modules": false }],
+    ["env",
+      { 
+        "modules": false,
+        "targets": {
+          "browsers": [
+            "last 2 versions",
+            "ios_saf >= 8",
+            "ie >= 10"
+          ]
+        }
+      }
+    ],
     "react",
   ],
   "plugins": [

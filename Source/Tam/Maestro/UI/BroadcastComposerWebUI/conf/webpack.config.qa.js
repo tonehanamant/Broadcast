@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-require("babel-polyfill");
+require ('babel-polyfill');
 
 var { resolve } = require('path');
 var AutoPrefixer = require('autoprefixer');
@@ -39,9 +39,20 @@ var webpackConfig = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor'
     }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+      output: {
+        comments: false
+      },
+      compress: {
+        unused: true,
+        dead_code: true,
+        warnings: false
+      }
+    }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"development"',
+      'process.env.NODE_ENV': '"production"',
       __PRODUCTION__: false,
       __API__: HELPERS.api.createApi('qa'),
     }),

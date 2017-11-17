@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-require("babel-polyfill");
+require ('babel-polyfill');
 
 var { resolve } = require('path');
 var AutoPrefixer = require('autoprefixer');
