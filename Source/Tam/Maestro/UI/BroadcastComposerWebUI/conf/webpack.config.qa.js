@@ -2,7 +2,6 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 require ('babel-polyfill');
-require ('es6-symbol');
 
 var { resolve } = require('path');
 var AutoPrefixer = require('autoprefixer');
@@ -13,7 +12,7 @@ var webpackConfig = {
   context: resolve(__dirname, '../src'),
 
   entry: {
-    app: ['es6-symbol', 'babel-polyfill', './index.jsx'],
+    app: ['babel-polyfill', './index.jsx'],
     vendor: HELPERS.exclude,
   },
 
