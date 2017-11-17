@@ -1,28 +1,26 @@
 {
   "presets": [
-    ["env",
-      { 
-        "modules": false,
-        "targets": {
-          "browsers": [
-            "last 2 versions",
-            "ios_saf >= 8",
-            "ie >= 10",
-            "Explorer 11",
-            "last 4 Edge versions"
-          ]
-        },
-        // "useBuiltIns": true
+    ["env", { 
+      "modules": false,
+      "targets": {
+        "browsers": [
+          "last 2 versions",
+          "ios_saf >= 8",
+          "ie >= 10",
+          "Explorer 11",
+          "last 4 Edge versions"
+        ]
       }
-    ],
+        // "useBuiltIns": true
+    }],
     "react",
-    "stage-0"
+    // "stage-0"
   ],
   "plugins": [
     "add-module-exports",
     "transform-object-rest-spread",
     "react-hot-loader/babel",
-    "transform-es3-member-expression-literals",
+    // "transform-es3-member-expression-literals",
     "transform-es3-property-literals"
   ],
   "env": {
