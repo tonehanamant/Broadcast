@@ -9,7 +9,6 @@
     "react-hot-loader/babel",
     "transform-es3-property-literals",
     "transform-es3-member-expression-literals",
-    "transform-runtime",
   ],
   "env": {
     "development": {

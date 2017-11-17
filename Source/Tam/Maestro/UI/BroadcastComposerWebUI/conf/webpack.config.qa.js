@@ -11,7 +11,7 @@ var webpackConfig = {
   context: resolve(__dirname, '../src'),
 
   entry: {
-    app: ['babel-polyfill', './index.jsx'],
+    app: ['es6-symbol', 'babel-polyfill', './index.jsx'],
     vendor: HELPERS.exclude,
   },
 

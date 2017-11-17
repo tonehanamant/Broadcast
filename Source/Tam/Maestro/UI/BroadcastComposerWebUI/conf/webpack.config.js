@@ -11,6 +11,7 @@ var webpackConfig = {
   context: resolve(__dirname, '../src'),
 
   entry: [
+    'es6-symbol',
     'babel-polyfill',
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://localhost:8080',
