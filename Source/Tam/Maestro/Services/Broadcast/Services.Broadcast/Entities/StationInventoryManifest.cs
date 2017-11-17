@@ -19,7 +19,7 @@ namespace Services.Broadcast.Entities
         public List<StationInventoryManifestAudience> ManifestAudiences { get; set; }
         public List<StationInventoryManifestAudience> ManifestAudiencesReferences { get; set; }
 
-        public List<StationInventoryManifestRate> ManifestRates { get; set; } 
+        public List<StationInventoryManifestRate> ManifestRates { get; set; }
 
         public StationInventoryManifest()
         {

@@ -20,7 +20,7 @@ namespace Services.Broadcast.Repositories
         DisplayBroadcastStation GetBroadcastStationByLegacyCallLetters(string callLetters);
         DisplayBroadcastStation GetBroadcastStationByCallLetters(string stationCallLetters);
         List<DisplayBroadcastStation> GetBroadcastStationListByLegacyCallLetters(List<string> stationNameList);
-        List<DisplayBroadcastStation> GetBroadcastStationsByFlightWeek(InventorySource inventorySource, int mediaWeekId, bool isIncluded);
+        List<DisplayBroadcastStation> GetBroadcastStationsByDate(int inventorySourceId, DateTime date, bool isIncluded);
         List<DisplayBroadcastStation> GetBroadcastStationListByStationCode(List<int> fileStationCodes);
         int GetBroadcastStationCodeByContactId(int stationContactId);
         void UpdateStation(int code, string user, DateTime timeStamp);
@@ -61,6 +61,36 @@ namespace Services.Broadcast.Repositories
                                               OrderBy(a => a.Id).
                                               ToList()
                         }).ToList();
+                });
+        }
+
+        public List<DisplayBroadcastStation> GetBroadcastStationsByDate(int inventorySourceId, DateTime date, bool isIncluded)
+        {
+
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var query =
+                        context.stations.Where(
+                            s =>
+                                s.station_inventory_manifest.Any(
+                                    m => (m.end_date == null || m.end_date > date)
+                                         && m.inventory_source_id == inventorySourceId &&
+                                         (m.file_id == null ||
+                                          m.inventory_files.status == (byte)InventoryFile.FileStatusEnum.Loaded)
+                                          ) == isIncluded);
+
+                    var result = query.Select(
+                        s => new DisplayBroadcastStation
+                        {
+                            Code = s.station_code,
+                            Affiliation = s.affiliation,
+                            CallLetters = s.station_call_letters,
+                            LegacyCallLetters = s.legacy_call_letters,
+                            OriginMarket = s.market.geography_name,
+                            ModifiedDate = s.modified_date,
+                        }).ToList();
+                    return result;
                 });
         }
 

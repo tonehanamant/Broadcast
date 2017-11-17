@@ -225,6 +225,7 @@
     <Compile Include="Entities\StationInventoryManifest.cs" />
     <Compile Include="Entities\StationInventoryManifestAudience.cs" />
     <Compile Include="Entities\StationInventoryManifestDaypart.cs" />
+    <Compile Include="Entities\StationInventoryManifestGeneration.cs" />
     <Compile Include="Entities\StationInventoryManifestRate.cs" />
     <Compile Include="Entities\StationProgram.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
