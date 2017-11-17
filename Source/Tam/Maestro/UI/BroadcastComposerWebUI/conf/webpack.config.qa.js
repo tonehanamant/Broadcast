@@ -38,22 +38,11 @@ var webpackConfig = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor'
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      output: {
-        comments: false
-      },
-      compress: {
-        unused: true,
-        dead_code: true,
-        warnings: false
-      }
-    }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"',
-      __PRODUCTION__: true,
-      __API__: HELPERS.api.createApi('production'),
+      'process.env.NODE_ENV': '"development"',
+      __PRODUCTION__: false,
+      __API__: HELPERS.api.createApi('qa'),
     }),
     new ExtractTextPlugin({
       filename: '[name]-style-[hash].css',
