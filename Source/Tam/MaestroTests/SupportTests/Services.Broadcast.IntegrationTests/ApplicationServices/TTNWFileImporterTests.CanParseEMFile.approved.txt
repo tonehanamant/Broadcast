@@ -173,7 +173,7 @@
               "Code": 5012,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -279,7 +279,7 @@
               "Code": 5013,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNBC",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -385,7 +385,7 @@
               "Code": 5014,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPIX",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -491,7 +491,7 @@
               "Code": 5014,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPIX",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -597,7 +597,7 @@
               "Code": 5050,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBBM",
-              "MarketCode": 0,
+              "MarketCode": 202,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -703,7 +703,7 @@
               "Code": 5716,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
-              "MarketCode": 0,
+              "MarketCode": 202,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -809,7 +809,7 @@
               "Code": 5035,
               "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
-              "MarketCode": 0,
+              "MarketCode": 223,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -915,7 +915,7 @@
               "Code": 5733,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHAG",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -1021,7 +1021,7 @@
               "Code": 5109,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTTG",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -1127,7 +1127,7 @@
               "Code": 5109,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTTG",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -1233,7 +1233,7 @@
               "Code": 5098,
               "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -1339,7 +1339,7 @@
               "Code": 5138,
               "FlightWeeks": [],
               "LegacyCallLetters": "KHOU",
-              "MarketCode": 0,
+              "MarketCode": 218,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Houston",
               "RateDataThrough": null
@@ -1637,7 +1637,7 @@
               "Code": 5054,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBZ",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -1743,7 +1743,7 @@
               "Code": 5420,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -1849,7 +1849,7 @@
               "Code": 5420,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -1955,7 +1955,7 @@
               "Code": 5420,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -2061,7 +2061,7 @@
               "Code": 6705,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFXT",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -2167,7 +2167,7 @@
               "Code": 5089,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -2273,7 +2273,7 @@
               "Code": 5102,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSB",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -2379,7 +2379,7 @@
               "Code": 5117,
               "FlightWeeks": [],
               "LegacyCallLetters": "WXIA",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -2485,7 +2485,7 @@
               "Code": 5321,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
-              "MarketCode": 0,
+              "MarketCode": 139,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -2591,7 +2591,7 @@
               "Code": 5321,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
-              "MarketCode": 0,
+              "MarketCode": 139,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -2697,7 +2697,7 @@
               "Code": 5114,
               "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -2803,7 +2803,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -2909,7 +2909,7 @@
               "Code": 6019,
               "FlightWeeks": [],
               "LegacyCallLetters": "KCPQ",
-              "MarketCode": 0,
+              "MarketCode": 419,
               "ModifiedDate": "2017-08-17T18:01:02.687",
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -3015,7 +3015,7 @@
               "Code": 6019,
               "FlightWeeks": [],
               "LegacyCallLetters": "KCPQ",
-              "MarketCode": 0,
+              "MarketCode": 419,
               "ModifiedDate": "2017-08-17T18:01:02.687",
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -3121,7 +3121,7 @@
               "Code": 5508,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3227,7 +3227,7 @@
               "Code": 5508,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3333,7 +3333,7 @@
               "Code": 5412,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPLG",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3439,7 +3439,7 @@
               "Code": 5412,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPLG",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3545,7 +3545,7 @@
               "Code": 5375,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3651,7 +3651,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3757,7 +3757,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3863,7 +3863,7 @@
               "Code": 5557,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKCF",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -3969,7 +3969,7 @@
               "Code": 5259,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -4075,7 +4075,7 @@
               "Code": 6818,
               "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -4181,7 +4181,7 @@
               "Code": 5765,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
-              "MarketCode": 0,
+              "MarketCode": 117,
               "ModifiedDate": "2017-08-17T17:59:31.417",
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -4287,7 +4287,7 @@
               "Code": 6907,
               "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
-              "MarketCode": 0,
+              "MarketCode": 425,
               "ModifiedDate": "2017-08-17T17:59:38.447",
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -4393,7 +4393,7 @@
               "Code": 5094,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTNH",
-              "MarketCode": 0,
+              "MarketCode": 133,
               "ModifiedDate": "2017-08-17T17:59:39.287",
               "OriginMarket": "Hartford & New Haven",
               "RateDataThrough": null
@@ -4499,7 +4499,7 @@
               "Code": 5022,
               "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
-              "MarketCode": 0,
+              "MarketCode": 241,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -4605,7 +4605,7 @@
               "Code": 5022,
               "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
-              "MarketCode": 0,
+              "MarketCode": 241,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -4711,7 +4711,7 @@
               "Code": 5022,
               "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
-              "MarketCode": 0,
+              "MarketCode": 241,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -4817,7 +4817,7 @@
               "Code": 5112,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSYX",
-              "MarketCode": 0,
+              "MarketCode": 135,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Columbus, OH",
               "RateDataThrough": null
@@ -4923,7 +4923,7 @@
               "Code": 5163,
               "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
-              "MarketCode": 0,
+              "MarketCode": 216,
               "ModifiedDate": "2017-08-17T18:00:30.21",
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -5029,7 +5029,7 @@
               "Code": 5717,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -5135,7 +5135,7 @@
               "Code": 5717,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -5241,7 +5241,7 @@
               "Code": 5081,
               "FlightWeeks": [],
               "LegacyCallLetters": "WOOD",
-              "MarketCode": 0,
+              "MarketCode": 163,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -5347,7 +5347,7 @@
               "Code": 5052,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBRC",
-              "MarketCode": 0,
+              "MarketCode": 230,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Birmingham (Ann and Tusc)",
               "RateDataThrough": null
@@ -5453,7 +5453,7 @@
               "Code": 5181,
               "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
-              "MarketCode": 0,
+              "MarketCode": 390,
               "ModifiedDate": "2017-08-17T18:01:10.11",
               "OriginMarket": "Albuquerque-Santa Fe",
               "RateDataThrough": null
@@ -5559,7 +5559,7 @@
               "Code": 5417,
               "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
-              "MarketCode": 0,
+              "MarketCode": 222,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -5665,7 +5665,7 @@
               "Code": 5696,
               "FlightWeeks": [],
               "LegacyCallLetters": "WLNE",
-              "MarketCode": 0,
+              "MarketCode": 121,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -5771,7 +5771,7 @@
               "Code": 5208,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPRI",
-              "MarketCode": 0,
+              "MarketCode": 121,
               "ModifiedDate": "2017-08-17T17:59:30.487",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -5877,7 +5877,7 @@
               "Code": 5049,
               "FlightWeeks": [],
               "LegacyCallLetters": "WIVB",
-              "MarketCode": 0,
+              "MarketCode": 114,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -5983,7 +5983,7 @@
               "Code": 6333,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNLO",
-              "MarketCode": 0,
+              "MarketCode": 114,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -6089,7 +6089,7 @@
               "Code": 5974,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -6195,7 +6195,7 @@
               "Code": 5712,
               "FlightWeeks": [],
               "LegacyCallLetters": "WZVN",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -6301,7 +6301,7 @@
               "Code": 6154,
               "FlightWeeks": [],
               "LegacyCallLetters": "WRGT",
-              "MarketCode": 0,
+              "MarketCode": 142,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -6407,7 +6407,7 @@
               "Code": 5130,
               "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -6513,7 +6513,7 @@
               "Code": 5130,
               "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -6619,7 +6619,7 @@
               "Code": 5151,
               "FlightWeeks": [],
               "LegacyCallLetters": "KOAA",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2017-08-17T18:02:14.263",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -6725,7 +6725,7 @@
               "Code": 5848,
               "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
-              "MarketCode": 0,
+              "MarketCode": 109,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -6831,7 +6831,7 @@
               "Code": 5848,
               "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
-              "MarketCode": 0,
+              "MarketCode": 109,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -6937,7 +6937,7 @@
               "Code": 5180,
               "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
-              "MarketCode": 0,
+              "MarketCode": 428,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -7053,7 +7053,7 @@
               "Code": 5012,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -7159,7 +7159,7 @@
               "Code": 5013,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNBC",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -7265,7 +7265,7 @@
               "Code": 5010,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNYW",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -7371,7 +7371,7 @@
               "Code": 5716,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
-              "MarketCode": 0,
+              "MarketCode": 202,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -7477,7 +7477,7 @@
               "Code": 5035,
               "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
-              "MarketCode": 0,
+              "MarketCode": 223,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -7583,7 +7583,7 @@
               "Code": 5733,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHAG",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -7689,7 +7689,7 @@
               "Code": 5085,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJLA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -7795,7 +7795,7 @@
               "Code": 5098,
               "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -7997,7 +7997,7 @@
               "Code": 5420,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -8103,7 +8103,7 @@
               "Code": 6705,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFXT",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -8209,7 +8209,7 @@
               "Code": 5089,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -8315,7 +8315,7 @@
               "Code": 5893,
               "FlightWeeks": [],
               "LegacyCallLetters": "WGCL",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -8421,7 +8421,7 @@
               "Code": 5117,
               "FlightWeeks": [],
               "LegacyCallLetters": "WXIA",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -8527,7 +8527,7 @@
               "Code": 5321,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
-              "MarketCode": 0,
+              "MarketCode": 139,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -8633,7 +8633,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -8739,7 +8739,7 @@
               "Code": 6019,
               "FlightWeeks": [],
               "LegacyCallLetters": "KCPQ",
-              "MarketCode": 0,
+              "MarketCode": 419,
               "ModifiedDate": "2017-08-17T18:01:02.687",
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -8845,7 +8845,7 @@
               "Code": 5508,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -8951,7 +8951,7 @@
               "Code": 5508,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -9057,7 +9057,7 @@
               "Code": 5375,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -9163,7 +9163,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -9269,7 +9269,7 @@
               "Code": 5557,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKCF",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -9375,7 +9375,7 @@
               "Code": 5259,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -9481,7 +9481,7 @@
               "Code": 6818,
               "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -9587,7 +9587,7 @@
               "Code": 6818,
               "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -9693,7 +9693,7 @@
               "Code": 6818,
               "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -9799,7 +9799,7 @@
               "Code": 5765,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
-              "MarketCode": 0,
+              "MarketCode": 117,
               "ModifiedDate": "2017-08-17T17:59:31.417",
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -9905,7 +9905,7 @@
               "Code": 5765,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
-              "MarketCode": 0,
+              "MarketCode": 117,
               "ModifiedDate": "2017-08-17T17:59:31.417",
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -10011,7 +10011,7 @@
               "Code": 5024,
               "FlightWeeks": [],
               "LegacyCallLetters": "KFMB",
-              "MarketCode": 0,
+              "MarketCode": 425,
               "ModifiedDate": "2017-08-17T18:02:11.387",
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -10117,7 +10117,7 @@
               "Code": 5094,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTNH",
-              "MarketCode": 0,
+              "MarketCode": 133,
               "ModifiedDate": "2017-08-17T17:59:39.287",
               "OriginMarket": "Hartford & New Haven",
               "RateDataThrough": null
@@ -10223,7 +10223,7 @@
               "Code": 5022,
               "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
-              "MarketCode": 0,
+              "MarketCode": 241,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -10329,7 +10329,7 @@
               "Code": 5112,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSYX",
-              "MarketCode": 0,
+              "MarketCode": 135,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Columbus, OH",
               "RateDataThrough": null
@@ -10435,7 +10435,7 @@
               "Code": 5163,
               "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
-              "MarketCode": 0,
+              "MarketCode": 216,
               "ModifiedDate": "2017-08-17T18:00:30.21",
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -10541,7 +10541,7 @@
               "Code": 5289,
               "FlightWeeks": [],
               "LegacyCallLetters": "WLOS",
-              "MarketCode": 0,
+              "MarketCode": 167,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Greenvll-Spart-Ashevll-And",
               "RateDataThrough": null
@@ -10647,7 +10647,7 @@
               "Code": 6704,
               "FlightWeeks": [],
               "LegacyCallLetters": "KOKH",
-              "MarketCode": 0,
+              "MarketCode": 250,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Oklahoma City",
               "RateDataThrough": null
@@ -10753,7 +10753,7 @@
               "Code": 5734,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHP",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -10859,7 +10859,7 @@
               "Code": 5717,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -10965,7 +10965,7 @@
               "Code": 5717,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -11071,7 +11071,7 @@
               "Code": 5681,
               "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
-              "MarketCode": 0,
+              "MarketCode": 163,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -11177,7 +11177,7 @@
               "Code": 5681,
               "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
-              "MarketCode": 0,
+              "MarketCode": 163,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -11283,7 +11283,7 @@
               "Code": 5052,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBRC",
-              "MarketCode": 0,
+              "MarketCode": 230,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Birmingham (Ann and Tusc)",
               "RateDataThrough": null
@@ -11389,7 +11389,7 @@
               "Code": 5181,
               "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
-              "MarketCode": 0,
+              "MarketCode": 390,
               "ModifiedDate": "2017-08-17T18:01:10.11",
               "OriginMarket": "Albuquerque-Santa Fe",
               "RateDataThrough": null
@@ -11495,7 +11495,7 @@
               "Code": 5417,
               "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
-              "MarketCode": 0,
+              "MarketCode": 222,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -11601,7 +11601,7 @@
               "Code": 5417,
               "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
-              "MarketCode": 0,
+              "MarketCode": 222,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -11707,7 +11707,7 @@
               "Code": 5696,
               "FlightWeeks": [],
               "LegacyCallLetters": "WLNE",
-              "MarketCode": 0,
+              "MarketCode": 121,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -11813,7 +11813,7 @@
               "Code": 5208,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPRI",
-              "MarketCode": 0,
+              "MarketCode": 121,
               "ModifiedDate": "2017-08-17T17:59:30.487",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -11919,7 +11919,7 @@
               "Code": 5049,
               "FlightWeeks": [],
               "LegacyCallLetters": "WIVB",
-              "MarketCode": 0,
+              "MarketCode": 114,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -12025,7 +12025,7 @@
               "Code": 6333,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNLO",
-              "MarketCode": 0,
+              "MarketCode": 114,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -12131,7 +12131,7 @@
               "Code": 6247,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFTX",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -12237,7 +12237,7 @@
               "Code": 5712,
               "FlightWeeks": [],
               "LegacyCallLetters": "WZVN",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -12343,7 +12343,7 @@
               "Code": 5777,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKEF",
-              "MarketCode": 0,
+              "MarketCode": 142,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -12449,7 +12449,7 @@
               "Code": 6154,
               "FlightWeeks": [],
               "LegacyCallLetters": "WRGT",
-              "MarketCode": 0,
+              "MarketCode": 142,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -12555,7 +12555,7 @@
               "Code": 6873,
               "FlightWeeks": [],
               "LegacyCallLetters": "WACH",
-              "MarketCode": 0,
+              "MarketCode": 146,
               "ModifiedDate": "2017-08-17T17:58:30.077",
               "OriginMarket": "Columbia, SC",
               "RateDataThrough": null
@@ -12661,7 +12661,7 @@
               "Code": 5130,
               "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -12767,7 +12767,7 @@
               "Code": 5151,
               "FlightWeeks": [],
               "LegacyCallLetters": "KOAA",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2017-08-17T18:02:14.263",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -12873,7 +12873,7 @@
               "Code": 6176,
               "FlightWeeks": [],
               "LegacyCallLetters": "KXRM",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -13075,7 +13075,7 @@
               "Code": 5848,
               "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
-              "MarketCode": 0,
+              "MarketCode": 109,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -13181,7 +13181,7 @@
               "Code": 5180,
               "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
-              "MarketCode": 0,
+              "MarketCode": 428,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -13297,7 +13297,7 @@
               "Code": 5012,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -13403,7 +13403,7 @@
               "Code": 5013,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNBC",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -13509,7 +13509,7 @@
               "Code": 5010,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNYW",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -13615,7 +13615,7 @@
               "Code": 5716,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
-              "MarketCode": 0,
+              "MarketCode": 202,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -13721,7 +13721,7 @@
               "Code": 5035,
               "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
-              "MarketCode": 0,
+              "MarketCode": 223,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -13827,7 +13827,7 @@
               "Code": 5733,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHAG",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -13933,7 +13933,7 @@
               "Code": 5085,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJLA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -14039,7 +14039,7 @@
               "Code": 5098,
               "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -14145,7 +14145,7 @@
               "Code": 5054,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBZ",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -14251,7 +14251,7 @@
               "Code": 5420,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -14357,7 +14357,7 @@
               "Code": 6705,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFXT",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -14463,7 +14463,7 @@
               "Code": 5089,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -14569,7 +14569,7 @@
               "Code": 5893,
               "FlightWeeks": [],
               "LegacyCallLetters": "WGCL",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -14675,7 +14675,7 @@
               "Code": 5117,
               "FlightWeeks": [],
               "LegacyCallLetters": "WXIA",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -14781,7 +14781,7 @@
               "Code": 5321,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
-              "MarketCode": 0,
+              "MarketCode": 139,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -14887,7 +14887,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -14993,7 +14993,7 @@
               "Code": 6019,
               "FlightWeeks": [],
               "LegacyCallLetters": "KCPQ",
-              "MarketCode": 0,
+              "MarketCode": 419,
               "ModifiedDate": "2017-08-17T18:01:02.687",
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -15099,7 +15099,7 @@
               "Code": 5508,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -15205,7 +15205,7 @@
               "Code": 5508,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -15311,7 +15311,7 @@
               "Code": 5412,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPLG",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -15417,7 +15417,7 @@
               "Code": 5375,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -15523,7 +15523,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -15629,7 +15629,7 @@
               "Code": 5557,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKCF",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -15735,7 +15735,7 @@
               "Code": 5259,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -15841,7 +15841,7 @@
               "Code": 6818,
               "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -15947,7 +15947,7 @@
               "Code": 6818,
               "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -16053,7 +16053,7 @@
               "Code": 6818,
               "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -16159,7 +16159,7 @@
               "Code": 5765,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
-              "MarketCode": 0,
+              "MarketCode": 117,
               "ModifiedDate": "2017-08-17T17:59:31.417",
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -16265,7 +16265,7 @@
               "Code": 5024,
               "FlightWeeks": [],
               "LegacyCallLetters": "KFMB",
-              "MarketCode": 0,
+              "MarketCode": 425,
               "ModifiedDate": "2017-08-17T18:02:11.387",
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -16371,7 +16371,7 @@
               "Code": 5094,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTNH",
-              "MarketCode": 0,
+              "MarketCode": 133,
               "ModifiedDate": "2017-08-17T17:59:39.287",
               "OriginMarket": "Hartford & New Haven",
               "RateDataThrough": null
@@ -16477,7 +16477,7 @@
               "Code": 5022,
               "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
-              "MarketCode": 0,
+              "MarketCode": 241,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -16583,7 +16583,7 @@
               "Code": 5112,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSYX",
-              "MarketCode": 0,
+              "MarketCode": 135,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Columbus, OH",
               "RateDataThrough": null
@@ -16689,7 +16689,7 @@
               "Code": 5163,
               "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
-              "MarketCode": 0,
+              "MarketCode": 216,
               "ModifiedDate": "2017-08-17T18:00:30.21",
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -16795,7 +16795,7 @@
               "Code": 5289,
               "FlightWeeks": [],
               "LegacyCallLetters": "WLOS",
-              "MarketCode": 0,
+              "MarketCode": 167,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Greenvll-Spart-Ashevll-And",
               "RateDataThrough": null
@@ -16901,7 +16901,7 @@
               "Code": 6704,
               "FlightWeeks": [],
               "LegacyCallLetters": "KOKH",
-              "MarketCode": 0,
+              "MarketCode": 250,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Oklahoma City",
               "RateDataThrough": null
@@ -17007,7 +17007,7 @@
               "Code": 5734,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHP",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -17113,7 +17113,7 @@
               "Code": 5717,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -17219,7 +17219,7 @@
               "Code": 5717,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -17325,7 +17325,7 @@
               "Code": 5081,
               "FlightWeeks": [],
               "LegacyCallLetters": "WOOD",
-              "MarketCode": 0,
+              "MarketCode": 163,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -17431,7 +17431,7 @@
               "Code": 5681,
               "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
-              "MarketCode": 0,
+              "MarketCode": 163,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -17537,7 +17537,7 @@
               "Code": 5052,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBRC",
-              "MarketCode": 0,
+              "MarketCode": 230,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Birmingham (Ann and Tusc)",
               "RateDataThrough": null
@@ -17643,7 +17643,7 @@
               "Code": 5181,
               "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
-              "MarketCode": 0,
+              "MarketCode": 390,
               "ModifiedDate": "2017-08-17T18:01:10.11",
               "OriginMarket": "Albuquerque-Santa Fe",
               "RateDataThrough": null
@@ -17749,7 +17749,7 @@
               "Code": 5417,
               "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
-              "MarketCode": 0,
+              "MarketCode": 222,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -17855,7 +17855,7 @@
               "Code": 5417,
               "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
-              "MarketCode": 0,
+              "MarketCode": 222,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -17961,7 +17961,7 @@
               "Code": 5696,
               "FlightWeeks": [],
               "LegacyCallLetters": "WLNE",
-              "MarketCode": 0,
+              "MarketCode": 121,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -18067,7 +18067,7 @@
               "Code": 5208,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPRI",
-              "MarketCode": 0,
+              "MarketCode": 121,
               "ModifiedDate": "2017-08-17T17:59:30.487",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -18173,7 +18173,7 @@
               "Code": 5049,
               "FlightWeeks": [],
               "LegacyCallLetters": "WIVB",
-              "MarketCode": 0,
+              "MarketCode": 114,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -18279,7 +18279,7 @@
               "Code": 6333,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNLO",
-              "MarketCode": 0,
+              "MarketCode": 114,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -18385,7 +18385,7 @@
               "Code": 6247,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFTX",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -18491,7 +18491,7 @@
               "Code": 5712,
               "FlightWeeks": [],
               "LegacyCallLetters": "WZVN",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -18597,7 +18597,7 @@
               "Code": 5777,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKEF",
-              "MarketCode": 0,
+              "MarketCode": 142,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -18703,7 +18703,7 @@
               "Code": 6154,
               "FlightWeeks": [],
               "LegacyCallLetters": "WRGT",
-              "MarketCode": 0,
+              "MarketCode": 142,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -18809,7 +18809,7 @@
               "Code": 5130,
               "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -18915,7 +18915,7 @@
               "Code": 5151,
               "FlightWeeks": [],
               "LegacyCallLetters": "KOAA",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2017-08-17T18:02:14.263",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -19021,7 +19021,7 @@
               "Code": 6176,
               "FlightWeeks": [],
               "LegacyCallLetters": "KXRM",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -19223,7 +19223,7 @@
               "Code": 5848,
               "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
-              "MarketCode": 0,
+              "MarketCode": 109,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -19329,7 +19329,7 @@
               "Code": 5180,
               "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
-              "MarketCode": 0,
+              "MarketCode": 428,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -19435,7 +19435,7 @@
               "Code": 5180,
               "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
-              "MarketCode": 0,
+              "MarketCode": 428,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -19551,7 +19551,7 @@
               "Code": 5012,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -19657,7 +19657,7 @@
               "Code": 5012,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -19763,7 +19763,7 @@
               "Code": 5014,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPIX",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -19869,7 +19869,7 @@
               "Code": 5050,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBBM",
-              "MarketCode": 0,
+              "MarketCode": 202,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -19975,7 +19975,7 @@
               "Code": 5050,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBBM",
-              "MarketCode": 0,
+              "MarketCode": 202,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -20081,7 +20081,7 @@
               "Code": 5716,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
-              "MarketCode": 0,
+              "MarketCode": 202,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -20187,7 +20187,7 @@
               "Code": 5035,
               "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
-              "MarketCode": 0,
+              "MarketCode": 223,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -20293,7 +20293,7 @@
               "Code": 5733,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHAG",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -20399,7 +20399,7 @@
               "Code": 5085,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJLA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -20505,7 +20505,7 @@
               "Code": 5109,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTTG",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -20611,7 +20611,7 @@
               "Code": 5098,
               "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -20696,7 +20696,7 @@
               "Code": 5138,
               "FlightWeeks": [],
               "LegacyCallLetters": "KHOU",
-              "MarketCode": 0,
+              "MarketCode": 218,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Houston",
               "RateDataThrough": null
@@ -20802,7 +20802,7 @@
               "Code": 5420,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -20908,7 +20908,7 @@
               "Code": 6705,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFXT",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -21014,7 +21014,7 @@
               "Code": 5089,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -21120,7 +21120,7 @@
               "Code": 5089,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -21226,7 +21226,7 @@
               "Code": 5089,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -21332,7 +21332,7 @@
               "Code": 5893,
               "FlightWeeks": [],
               "LegacyCallLetters": "WGCL",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -21438,7 +21438,7 @@
               "Code": 5102,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSB",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -21544,7 +21544,7 @@
               "Code": 5102,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSB",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -21650,7 +21650,7 @@
               "Code": 5321,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
-              "MarketCode": 0,
+              "MarketCode": 139,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -21756,7 +21756,7 @@
               "Code": 5321,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
-              "MarketCode": 0,
+              "MarketCode": 139,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -21862,7 +21862,7 @@
               "Code": 5114,
               "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -21968,7 +21968,7 @@
               "Code": 5114,
               "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -22074,7 +22074,7 @@
               "Code": 5114,
               "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -22180,7 +22180,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -22286,7 +22286,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -22392,7 +22392,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -22498,7 +22498,7 @@
               "Code": 6019,
               "FlightWeeks": [],
               "LegacyCallLetters": "KCPQ",
-              "MarketCode": 0,
+              "MarketCode": 419,
               "ModifiedDate": "2017-08-17T18:01:02.687",
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -22604,7 +22604,7 @@
               "Code": 5412,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPLG",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -22710,7 +22710,7 @@
               "Code": 5412,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPLG",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -22816,7 +22816,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -22922,7 +22922,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -23028,7 +23028,7 @@
               "Code": 5376,
               "FlightWeeks": [],
               "LegacyCallLetters": "WESH",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -23134,7 +23134,7 @@
               "Code": 5259,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -23240,7 +23240,7 @@
               "Code": 6818,
               "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -23346,7 +23346,7 @@
               "Code": 5765,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
-              "MarketCode": 0,
+              "MarketCode": 117,
               "ModifiedDate": "2017-08-17T17:59:31.417",
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -23452,7 +23452,7 @@
               "Code": 6907,
               "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
-              "MarketCode": 0,
+              "MarketCode": 425,
               "ModifiedDate": "2017-08-17T17:59:38.447",
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -23558,7 +23558,7 @@
               "Code": 5022,
               "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
-              "MarketCode": 0,
+              "MarketCode": 241,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -23664,7 +23664,7 @@
               "Code": 5022,
               "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
-              "MarketCode": 0,
+              "MarketCode": 241,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -23770,7 +23770,7 @@
               "Code": 6995,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTTE",
-              "MarketCode": 0,
+              "MarketCode": 135,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Columbus, OH",
               "RateDataThrough": null
@@ -23876,7 +23876,7 @@
               "Code": 5163,
               "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
-              "MarketCode": 0,
+              "MarketCode": 216,
               "ModifiedDate": "2017-08-17T18:00:30.21",
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -23982,7 +23982,7 @@
               "Code": 6704,
               "FlightWeeks": [],
               "LegacyCallLetters": "KOKH",
-              "MarketCode": 0,
+              "MarketCode": 250,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Oklahoma City",
               "RateDataThrough": null
@@ -24088,7 +24088,7 @@
               "Code": 5734,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHP",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -24194,7 +24194,7 @@
               "Code": 5681,
               "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
-              "MarketCode": 0,
+              "MarketCode": 163,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -24300,7 +24300,7 @@
               "Code": 5417,
               "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
-              "MarketCode": 0,
+              "MarketCode": 222,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -24406,7 +24406,7 @@
               "Code": 6924,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNAC",
-              "MarketCode": 0,
+              "MarketCode": 121,
               "ModifiedDate": "2017-08-17T17:59:30.487",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -24512,7 +24512,7 @@
               "Code": 5049,
               "FlightWeeks": [],
               "LegacyCallLetters": "WIVB",
-              "MarketCode": 0,
+              "MarketCode": 114,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -24618,7 +24618,7 @@
               "Code": 5974,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -24724,7 +24724,7 @@
               "Code": 5974,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -24830,7 +24830,7 @@
               "Code": 5712,
               "FlightWeeks": [],
               "LegacyCallLetters": "WZVN",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -24936,7 +24936,7 @@
               "Code": 6154,
               "FlightWeeks": [],
               "LegacyCallLetters": "WRGT",
-              "MarketCode": 0,
+              "MarketCode": 142,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -25042,7 +25042,7 @@
               "Code": 6154,
               "FlightWeeks": [],
               "LegacyCallLetters": "WRGT",
-              "MarketCode": 0,
+              "MarketCode": 142,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -25148,7 +25148,7 @@
               "Code": 6873,
               "FlightWeeks": [],
               "LegacyCallLetters": "WACH",
-              "MarketCode": 0,
+              "MarketCode": 146,
               "ModifiedDate": "2017-08-17T17:58:30.077",
               "OriginMarket": "Columbia, SC",
               "RateDataThrough": null
@@ -25254,7 +25254,7 @@
               "Code": 5130,
               "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -25360,7 +25360,7 @@
               "Code": 6239,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTAT",
-              "MarketCode": 0,
+              "MarketCode": 119,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Charleston, SC",
               "RateDataThrough": null
@@ -25466,7 +25466,7 @@
               "Code": 5848,
               "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
-              "MarketCode": 0,
+              "MarketCode": 109,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -25572,7 +25572,7 @@
               "Code": 5848,
               "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
-              "MarketCode": 0,
+              "MarketCode": 109,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -25678,7 +25678,7 @@
               "Code": 5494,
               "FlightWeeks": [],
               "LegacyCallLetters": "WILX",
-              "MarketCode": 0,
+              "MarketCode": 151,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Lansing",
               "RateDataThrough": null
@@ -25784,7 +25784,7 @@
               "Code": 5180,
               "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
-              "MarketCode": 0,
+              "MarketCode": 428,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -25900,7 +25900,7 @@
               "Code": 5012,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -26006,7 +26006,7 @@
               "Code": 5012,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -26112,7 +26112,7 @@
               "Code": 5014,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPIX",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -26218,7 +26218,7 @@
               "Code": 5050,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBBM",
-              "MarketCode": 0,
+              "MarketCode": 202,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -26303,7 +26303,7 @@
               "Code": 5050,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBBM",
-              "MarketCode": 0,
+              "MarketCode": 202,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -26409,7 +26409,7 @@
               "Code": 5716,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
-              "MarketCode": 0,
+              "MarketCode": 202,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -26515,7 +26515,7 @@
               "Code": 5035,
               "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
-              "MarketCode": 0,
+              "MarketCode": 223,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -26621,7 +26621,7 @@
               "Code": 5733,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHAG",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -26727,7 +26727,7 @@
               "Code": 5085,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJLA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -26833,7 +26833,7 @@
               "Code": 5109,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTTG",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -26939,7 +26939,7 @@
               "Code": 5098,
               "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -27045,7 +27045,7 @@
               "Code": 5138,
               "FlightWeeks": [],
               "LegacyCallLetters": "KHOU",
-              "MarketCode": 0,
+              "MarketCode": 218,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Houston",
               "RateDataThrough": null
@@ -27247,7 +27247,7 @@
               "Code": 5054,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBZ",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -27353,7 +27353,7 @@
               "Code": 5420,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -27459,7 +27459,7 @@
               "Code": 5089,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -27565,7 +27565,7 @@
               "Code": 5089,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -27671,7 +27671,7 @@
               "Code": 5893,
               "FlightWeeks": [],
               "LegacyCallLetters": "WGCL",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -27777,7 +27777,7 @@
               "Code": 5102,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSB",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -27883,7 +27883,7 @@
               "Code": 5321,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
-              "MarketCode": 0,
+              "MarketCode": 139,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -27989,7 +27989,7 @@
               "Code": 5321,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
-              "MarketCode": 0,
+              "MarketCode": 139,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -28095,7 +28095,7 @@
               "Code": 5114,
               "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -28201,7 +28201,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -28307,7 +28307,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -28413,7 +28413,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -28519,7 +28519,7 @@
               "Code": 6193,
               "FlightWeeks": [],
               "LegacyCallLetters": "KZJO",
-              "MarketCode": 0,
+              "MarketCode": 419,
               "ModifiedDate": "2017-08-17T18:02:08.623",
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -28625,7 +28625,7 @@
               "Code": 5508,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -28731,7 +28731,7 @@
               "Code": 5412,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPLG",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -28837,7 +28837,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -28943,7 +28943,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -29049,7 +29049,7 @@
               "Code": 5376,
               "FlightWeeks": [],
               "LegacyCallLetters": "WESH",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -29155,7 +29155,7 @@
               "Code": 5259,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -29261,7 +29261,7 @@
               "Code": 6818,
               "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -29367,7 +29367,7 @@
               "Code": 5765,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
-              "MarketCode": 0,
+              "MarketCode": 117,
               "ModifiedDate": "2017-08-17T17:59:31.417",
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -29473,7 +29473,7 @@
               "Code": 6907,
               "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
-              "MarketCode": 0,
+              "MarketCode": 425,
               "ModifiedDate": "2017-08-17T17:59:38.447",
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -29579,7 +29579,7 @@
               "Code": 6907,
               "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
-              "MarketCode": 0,
+              "MarketCode": 425,
               "ModifiedDate": "2017-08-17T17:59:38.447",
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -29685,7 +29685,7 @@
               "Code": 5094,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTNH",
-              "MarketCode": 0,
+              "MarketCode": 133,
               "ModifiedDate": "2017-08-17T17:59:39.287",
               "OriginMarket": "Hartford & New Haven",
               "RateDataThrough": null
@@ -29791,7 +29791,7 @@
               "Code": 5022,
               "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
-              "MarketCode": 0,
+              "MarketCode": 241,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -29897,7 +29897,7 @@
               "Code": 5022,
               "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
-              "MarketCode": 0,
+              "MarketCode": 241,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -30003,7 +30003,7 @@
               "Code": 5163,
               "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
-              "MarketCode": 0,
+              "MarketCode": 216,
               "ModifiedDate": "2017-08-17T18:00:30.21",
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -30109,7 +30109,7 @@
               "Code": 5289,
               "FlightWeeks": [],
               "LegacyCallLetters": "WLOS",
-              "MarketCode": 0,
+              "MarketCode": 167,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Greenvll-Spart-Ashevll-And",
               "RateDataThrough": null
@@ -30215,7 +30215,7 @@
               "Code": 5717,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -30321,7 +30321,7 @@
               "Code": 5681,
               "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
-              "MarketCode": 0,
+              "MarketCode": 163,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -30427,7 +30427,7 @@
               "Code": 5181,
               "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
-              "MarketCode": 0,
+              "MarketCode": 390,
               "ModifiedDate": "2017-08-17T18:01:10.11",
               "OriginMarket": "Albuquerque-Santa Fe",
               "RateDataThrough": null
@@ -30533,7 +30533,7 @@
               "Code": 5417,
               "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
-              "MarketCode": 0,
+              "MarketCode": 222,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -30639,7 +30639,7 @@
               "Code": 5696,
               "FlightWeeks": [],
               "LegacyCallLetters": "WLNE",
-              "MarketCode": 0,
+              "MarketCode": 121,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -30745,7 +30745,7 @@
               "Code": 5208,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPRI",
-              "MarketCode": 0,
+              "MarketCode": 121,
               "ModifiedDate": "2017-08-17T17:59:30.487",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -30851,7 +30851,7 @@
               "Code": 5049,
               "FlightWeeks": [],
               "LegacyCallLetters": "WIVB",
-              "MarketCode": 0,
+              "MarketCode": 114,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -30957,7 +30957,7 @@
               "Code": 5974,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -31063,7 +31063,7 @@
               "Code": 5974,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -31169,7 +31169,7 @@
               "Code": 6247,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFTX",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -31275,7 +31275,7 @@
               "Code": 5777,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKEF",
-              "MarketCode": 0,
+              "MarketCode": 142,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -31381,7 +31381,7 @@
               "Code": 5130,
               "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -31487,7 +31487,7 @@
               "Code": 5151,
               "FlightWeeks": [],
               "LegacyCallLetters": "KOAA",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2017-08-17T18:02:14.263",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -31593,7 +31593,7 @@
               "Code": 6176,
               "FlightWeeks": [],
               "LegacyCallLetters": "KXRM",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -31699,7 +31699,7 @@
               "Code": 5437,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVC",
-              "MarketCode": 0,
+              "MarketCode": 175,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chattanooga",
               "RateDataThrough": null
@@ -31901,7 +31901,7 @@
               "Code": 5848,
               "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
-              "MarketCode": 0,
+              "MarketCode": 109,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -32007,7 +32007,7 @@
               "Code": 5494,
               "FlightWeeks": [],
               "LegacyCallLetters": "WILX",
-              "MarketCode": 0,
+              "MarketCode": 151,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Lansing",
               "RateDataThrough": null
@@ -32113,7 +32113,7 @@
               "Code": 5180,
               "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
-              "MarketCode": 0,
+              "MarketCode": 428,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -32229,7 +32229,7 @@
               "Code": 5012,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -32314,7 +32314,7 @@
               "Code": 5012,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -32420,7 +32420,7 @@
               "Code": 5013,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNBC",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -32526,7 +32526,7 @@
               "Code": 5716,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
-              "MarketCode": 0,
+              "MarketCode": 202,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -32632,7 +32632,7 @@
               "Code": 5035,
               "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
-              "MarketCode": 0,
+              "MarketCode": 223,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -32738,7 +32738,7 @@
               "Code": 5085,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJLA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -32844,7 +32844,7 @@
               "Code": 5098,
               "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -32950,7 +32950,7 @@
               "Code": 5098,
               "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -33152,7 +33152,7 @@
               "Code": 5054,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBZ",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -33258,7 +33258,7 @@
               "Code": 5420,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -33364,7 +33364,7 @@
               "Code": 5420,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -33470,7 +33470,7 @@
               "Code": 6705,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFXT",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -33576,7 +33576,7 @@
               "Code": 5089,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -33682,7 +33682,7 @@
               "Code": 5089,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -33808,7 +33808,7 @@
               "Code": 5045,
               "FlightWeeks": [],
               "LegacyCallLetters": "WAGA",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -33914,7 +33914,7 @@
               "Code": 5102,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSB",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -34020,7 +34020,7 @@
               "Code": 5321,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
-              "MarketCode": 0,
+              "MarketCode": 139,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -34126,7 +34126,7 @@
               "Code": 5114,
               "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -34232,7 +34232,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -34338,7 +34338,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -34444,7 +34444,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -34550,7 +34550,7 @@
               "Code": 6193,
               "FlightWeeks": [],
               "LegacyCallLetters": "KZJO",
-              "MarketCode": 0,
+              "MarketCode": 419,
               "ModifiedDate": "2017-08-17T18:02:08.623",
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -34656,7 +34656,7 @@
               "Code": 5508,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -34762,7 +34762,7 @@
               "Code": 5375,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -34868,7 +34868,7 @@
               "Code": 5375,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -34974,7 +34974,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -35080,7 +35080,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -35186,7 +35186,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -35292,7 +35292,7 @@
               "Code": 5376,
               "FlightWeeks": [],
               "LegacyCallLetters": "WESH",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -35398,7 +35398,7 @@
               "Code": 5259,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -35504,7 +35504,7 @@
               "Code": 6818,
               "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -35610,7 +35610,7 @@
               "Code": 5765,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
-              "MarketCode": 0,
+              "MarketCode": 117,
               "ModifiedDate": "2017-08-17T17:59:31.417",
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -35716,7 +35716,7 @@
               "Code": 6907,
               "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
-              "MarketCode": 0,
+              "MarketCode": 425,
               "ModifiedDate": "2017-08-17T17:59:38.447",
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -35822,7 +35822,7 @@
               "Code": 6907,
               "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
-              "MarketCode": 0,
+              "MarketCode": 425,
               "ModifiedDate": "2017-08-17T17:59:38.447",
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -35928,7 +35928,7 @@
               "Code": 5094,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTNH",
-              "MarketCode": 0,
+              "MarketCode": 133,
               "ModifiedDate": "2017-08-17T17:59:39.287",
               "OriginMarket": "Hartford & New Haven",
               "RateDataThrough": null
@@ -36034,7 +36034,7 @@
               "Code": 5022,
               "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
-              "MarketCode": 0,
+              "MarketCode": 241,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -36140,7 +36140,7 @@
               "Code": 6995,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTTE",
-              "MarketCode": 0,
+              "MarketCode": 135,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Columbus, OH",
               "RateDataThrough": null
@@ -36246,7 +36246,7 @@
               "Code": 5163,
               "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
-              "MarketCode": 0,
+              "MarketCode": 216,
               "ModifiedDate": "2017-08-17T18:00:30.21",
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -36352,7 +36352,7 @@
               "Code": 5717,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -36458,7 +36458,7 @@
               "Code": 5717,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -36564,7 +36564,7 @@
               "Code": 5681,
               "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
-              "MarketCode": 0,
+              "MarketCode": 163,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -36670,7 +36670,7 @@
               "Code": 5181,
               "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
-              "MarketCode": 0,
+              "MarketCode": 390,
               "ModifiedDate": "2017-08-17T18:01:10.11",
               "OriginMarket": "Albuquerque-Santa Fe",
               "RateDataThrough": null
@@ -36776,7 +36776,7 @@
               "Code": 5417,
               "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
-              "MarketCode": 0,
+              "MarketCode": 222,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -36882,7 +36882,7 @@
               "Code": 5696,
               "FlightWeeks": [],
               "LegacyCallLetters": "WLNE",
-              "MarketCode": 0,
+              "MarketCode": 121,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -36988,7 +36988,7 @@
               "Code": 5208,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPRI",
-              "MarketCode": 0,
+              "MarketCode": 121,
               "ModifiedDate": "2017-08-17T17:59:30.487",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -37094,7 +37094,7 @@
               "Code": 6333,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNLO",
-              "MarketCode": 0,
+              "MarketCode": 114,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -37200,7 +37200,7 @@
               "Code": 5974,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -37306,7 +37306,7 @@
               "Code": 6247,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFTX",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -37412,7 +37412,7 @@
               "Code": 5777,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKEF",
-              "MarketCode": 0,
+              "MarketCode": 142,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -37518,7 +37518,7 @@
               "Code": 6873,
               "FlightWeeks": [],
               "LegacyCallLetters": "WACH",
-              "MarketCode": 0,
+              "MarketCode": 146,
               "ModifiedDate": "2017-08-17T17:58:30.077",
               "OriginMarket": "Columbia, SC",
               "RateDataThrough": null
@@ -37624,7 +37624,7 @@
               "Code": 5130,
               "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -37730,7 +37730,7 @@
               "Code": 5151,
               "FlightWeeks": [],
               "LegacyCallLetters": "KOAA",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2017-08-17T18:02:14.263",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -37836,7 +37836,7 @@
               "Code": 5437,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVC",
-              "MarketCode": 0,
+              "MarketCode": 175,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chattanooga",
               "RateDataThrough": null
@@ -37942,7 +37942,7 @@
               "Code": 5629,
               "FlightWeeks": [],
               "LegacyCallLetters": "WAFB",
-              "MarketCode": 0,
+              "MarketCode": 316,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Baton Rouge",
               "RateDataThrough": null
@@ -38048,7 +38048,7 @@
               "Code": 6239,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTAT",
-              "MarketCode": 0,
+              "MarketCode": 119,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Charleston, SC",
               "RateDataThrough": null
@@ -38154,7 +38154,7 @@
               "Code": 5848,
               "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
-              "MarketCode": 0,
+              "MarketCode": 109,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -38260,7 +38260,7 @@
               "Code": 5494,
               "FlightWeeks": [],
               "LegacyCallLetters": "WILX",
-              "MarketCode": 0,
+              "MarketCode": 151,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Lansing",
               "RateDataThrough": null
@@ -38366,7 +38366,7 @@
               "Code": 5180,
               "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
-              "MarketCode": 0,
+              "MarketCode": 428,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -38472,7 +38472,7 @@
               "Code": 5180,
               "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
-              "MarketCode": 0,
+              "MarketCode": 428,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -38588,7 +38588,7 @@
               "Code": 5012,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -38673,7 +38673,7 @@
               "Code": 5012,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -38779,7 +38779,7 @@
               "Code": 5013,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNBC",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -38885,7 +38885,7 @@
               "Code": 5716,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
-              "MarketCode": 0,
+              "MarketCode": 202,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -38991,7 +38991,7 @@
               "Code": 5035,
               "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
-              "MarketCode": 0,
+              "MarketCode": 223,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -39097,7 +39097,7 @@
               "Code": 5085,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJLA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -39203,7 +39203,7 @@
               "Code": 5098,
               "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -39309,7 +39309,7 @@
               "Code": 5098,
               "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -39511,7 +39511,7 @@
               "Code": 5054,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBZ",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -39617,7 +39617,7 @@
               "Code": 5420,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -39723,7 +39723,7 @@
               "Code": 5420,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -39829,7 +39829,7 @@
               "Code": 6705,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFXT",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -39935,7 +39935,7 @@
               "Code": 5089,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -40041,7 +40041,7 @@
               "Code": 5089,
               "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
-              "MarketCode": 0,
+              "MarketCode": 106,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -40167,7 +40167,7 @@
               "Code": 5045,
               "FlightWeeks": [],
               "LegacyCallLetters": "WAGA",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -40273,7 +40273,7 @@
               "Code": 5102,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSB",
-              "MarketCode": 0,
+              "MarketCode": 124,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -40379,7 +40379,7 @@
               "Code": 5321,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
-              "MarketCode": 0,
+              "MarketCode": 139,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -40485,7 +40485,7 @@
               "Code": 5114,
               "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -40591,7 +40591,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -40697,7 +40697,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -40803,7 +40803,7 @@
               "Code": 5075,
               "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
-              "MarketCode": 0,
+              "MarketCode": 105,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -40909,7 +40909,7 @@
               "Code": 6193,
               "FlightWeeks": [],
               "LegacyCallLetters": "KZJO",
-              "MarketCode": 0,
+              "MarketCode": 419,
               "ModifiedDate": "2017-08-17T18:02:08.623",
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -41015,7 +41015,7 @@
               "Code": 5508,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -41121,7 +41121,7 @@
               "Code": 5375,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -41227,7 +41227,7 @@
               "Code": 5375,
               "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -41333,7 +41333,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -41439,7 +41439,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -41545,7 +41545,7 @@
               "Code": 5111,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
-              "MarketCode": 0,
+              "MarketCode": 128,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -41651,7 +41651,7 @@
               "Code": 5376,
               "FlightWeeks": [],
               "LegacyCallLetters": "WESH",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -41757,7 +41757,7 @@
               "Code": 5259,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -41863,7 +41863,7 @@
               "Code": 6818,
               "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
-              "MarketCode": 0,
+              "MarketCode": 134,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -41969,7 +41969,7 @@
               "Code": 5765,
               "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
-              "MarketCode": 0,
+              "MarketCode": 117,
               "ModifiedDate": "2017-08-17T17:59:31.417",
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -42075,7 +42075,7 @@
               "Code": 6907,
               "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
-              "MarketCode": 0,
+              "MarketCode": 425,
               "ModifiedDate": "2017-08-17T17:59:38.447",
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -42181,7 +42181,7 @@
               "Code": 6907,
               "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
-              "MarketCode": 0,
+              "MarketCode": 425,
               "ModifiedDate": "2017-08-17T17:59:38.447",
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -42287,7 +42287,7 @@
               "Code": 5094,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTNH",
-              "MarketCode": 0,
+              "MarketCode": 133,
               "ModifiedDate": "2017-08-17T17:59:39.287",
               "OriginMarket": "Hartford & New Haven",
               "RateDataThrough": null
@@ -42393,7 +42393,7 @@
               "Code": 5022,
               "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
-              "MarketCode": 0,
+              "MarketCode": 241,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -42499,7 +42499,7 @@
               "Code": 6995,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTTE",
-              "MarketCode": 0,
+              "MarketCode": 135,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Columbus, OH",
               "RateDataThrough": null
@@ -42605,7 +42605,7 @@
               "Code": 5163,
               "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
-              "MarketCode": 0,
+              "MarketCode": 216,
               "ModifiedDate": "2017-08-17T18:00:30.21",
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -42711,7 +42711,7 @@
               "Code": 5717,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -42817,7 +42817,7 @@
               "Code": 5717,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
-              "MarketCode": 0,
+              "MarketCode": 166,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -42923,7 +42923,7 @@
               "Code": 5681,
               "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
-              "MarketCode": 0,
+              "MarketCode": 163,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -43029,7 +43029,7 @@
               "Code": 5181,
               "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
-              "MarketCode": 0,
+              "MarketCode": 390,
               "ModifiedDate": "2017-08-17T18:01:10.11",
               "OriginMarket": "Albuquerque-Santa Fe",
               "RateDataThrough": null
@@ -43135,7 +43135,7 @@
               "Code": 5417,
               "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
-              "MarketCode": 0,
+              "MarketCode": 222,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -43241,7 +43241,7 @@
               "Code": 5696,
               "FlightWeeks": [],
               "LegacyCallLetters": "WLNE",
-              "MarketCode": 0,
+              "MarketCode": 121,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -43347,7 +43347,7 @@
               "Code": 5208,
               "FlightWeeks": [],
               "LegacyCallLetters": "WPRI",
-              "MarketCode": 0,
+              "MarketCode": 121,
               "ModifiedDate": "2017-08-17T17:59:30.487",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -43453,7 +43453,7 @@
               "Code": 6333,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNLO",
-              "MarketCode": 0,
+              "MarketCode": 114,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -43559,7 +43559,7 @@
               "Code": 5974,
               "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -43665,7 +43665,7 @@
               "Code": 6247,
               "FlightWeeks": [],
               "LegacyCallLetters": "WFTX",
-              "MarketCode": 0,
+              "MarketCode": 171,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -43771,7 +43771,7 @@
               "Code": 5777,
               "FlightWeeks": [],
               "LegacyCallLetters": "WKEF",
-              "MarketCode": 0,
+              "MarketCode": 142,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -43877,7 +43877,7 @@
               "Code": 6873,
               "FlightWeeks": [],
               "LegacyCallLetters": "WACH",
-              "MarketCode": 0,
+              "MarketCode": 146,
               "ModifiedDate": "2017-08-17T17:58:30.077",
               "OriginMarket": "Columbia, SC",
               "RateDataThrough": null
@@ -43983,7 +43983,7 @@
               "Code": 5130,
               "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -44089,7 +44089,7 @@
               "Code": 5151,
               "FlightWeeks": [],
               "LegacyCallLetters": "KOAA",
-              "MarketCode": 0,
+              "MarketCode": 352,
               "ModifiedDate": "2017-08-17T18:02:14.263",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -44195,7 +44195,7 @@
               "Code": 5437,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTVC",
-              "MarketCode": 0,
+              "MarketCode": 175,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chattanooga",
               "RateDataThrough": null
@@ -44301,7 +44301,7 @@
               "Code": 5629,
               "FlightWeeks": [],
               "LegacyCallLetters": "WAFB",
-              "MarketCode": 0,
+              "MarketCode": 316,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Baton Rouge",
               "RateDataThrough": null
@@ -44407,7 +44407,7 @@
               "Code": 6239,
               "FlightWeeks": [],
               "LegacyCallLetters": "WTAT",
-              "MarketCode": 0,
+              "MarketCode": 119,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Charleston, SC",
               "RateDataThrough": null
@@ -44513,7 +44513,7 @@
               "Code": 5848,
               "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
-              "MarketCode": 0,
+              "MarketCode": 109,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -44619,7 +44619,7 @@
               "Code": 5494,
               "FlightWeeks": [],
               "LegacyCallLetters": "WILX",
-              "MarketCode": 0,
+              "MarketCode": 151,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Lansing",
               "RateDataThrough": null
@@ -44725,7 +44725,7 @@
               "Code": 5180,
               "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
-              "MarketCode": 0,
+              "MarketCode": 428,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -44831,7 +44831,7 @@
               "Code": 5180,
               "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
-              "MarketCode": 0,
+              "MarketCode": 428,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
