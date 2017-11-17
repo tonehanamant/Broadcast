@@ -7,7 +7,6 @@
     "add-module-exports",
     "transform-object-rest-spread",
     "react-hot-loader/babel",
-    ["react-intl", { "messagesDir": "./src/messages/" }]
   ],
   "env": {
     "development": {

@@ -14,7 +14,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
-import { IntlProvider } from 'react-intl';
 import { AppContainer } from 'react-hot-loader';
 import 'Utils/element-closest'; // Element.closest polyfill
 
@@ -30,19 +29,15 @@ import './index.scss';
 require('./assets/icons/favicon.png');
 
 const store = configureStore();
-const locale = 'en';
-
 
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
-      <IntlProvider locale={locale}>
         <Provider store={store}>
           <ConnectedRouter history={history}>
             <Component />
           </ConnectedRouter>
         </Provider>
-      </IntlProvider>
     </AppContainer>,
     document.getElementById('root'),
   );

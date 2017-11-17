@@ -66,7 +66,7 @@ var webpackConfig = {
       LOADERS.url,
       LOADERS.file,
       LOADERS.style(true),  // true for development, false for prod, default to true
-      LOADERS.css(false),
+      LOADERS.css(true),
     ]
   },
 };
