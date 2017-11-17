@@ -16,22 +16,19 @@
       }
     ],
     "react",
-    "stage-1"
+    "stage-0"
   ],
   "plugins": [
     "add-module-exports",
-    "react-hot-loader/babel",
     "transform-object-rest-spread",
-    "transform-es3-property-literals",
+    "react-hot-loader/babel",
     "transform-es3-member-expression-literals",
+    "transform-es3-property-literals",
   ],
   "env": {
     "development": {
       "plugins": [
-        "istanbul",
-        "transform-object-rest-spread",
-        "transform-es3-property-literals",
-        "transform-es3-member-expression-literals",
+        "istanbul"
       ]
     },
     "production": {
