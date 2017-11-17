@@ -4,7 +4,8 @@
     "CallLetters": "WVTM-TV 13.1",
     "Code": 5044,
     "LegacyCallLetters": "WVTM",
+    "MarketCode": 230,
     "OriginMarket": "Birmingham (Ann and Tusc)",
-    "RateDataThrough": "12/25/2016"
+    "RateDataThrough": "-"
   }
 ]

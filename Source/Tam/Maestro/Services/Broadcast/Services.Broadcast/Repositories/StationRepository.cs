@@ -89,6 +89,7 @@ namespace Services.Broadcast.Repositories
                             LegacyCallLetters = s.legacy_call_letters,
                             OriginMarket = s.market.geography_name,
                             ModifiedDate = s.modified_date,
+                            MarketCode = s.market_code
                         }).ToList();
                     return result;
                 });
@@ -165,7 +166,8 @@ namespace Services.Broadcast.Repositories
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
                                 OriginMarket = s.market.geography_name,
-                                ModifiedDate = s.modified_date
+                                ModifiedDate = s.modified_date,
+                                MarketCode = s.market_code
                             }).FirstOrDefault();
                 });
         }
@@ -182,6 +184,7 @@ namespace Services.Broadcast.Repositories
                         CallLetters = s.station_call_letters,
                         LegacyCallLetters = s.legacy_call_letters,
                         OriginMarket = s.market.geography_name,
+                        MarketCode = s.market_code,
                         ModifiedDate = s.modified_date
                     }).FirstOrDefault());
         }
@@ -201,6 +204,7 @@ namespace Services.Broadcast.Repositories
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
                                 OriginMarket = s.market.geography_name,
+                                MarketCode = s.market_code,
                                 ModifiedDate = s.modified_date
                             }).ToList();
                 });
@@ -221,6 +225,7 @@ namespace Services.Broadcast.Repositories
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
                                 OriginMarket = s.market.geography_name,
+                                MarketCode = s.market_code,
                                 ModifiedDate = s.modified_date
                             }).ToList();
                 });
