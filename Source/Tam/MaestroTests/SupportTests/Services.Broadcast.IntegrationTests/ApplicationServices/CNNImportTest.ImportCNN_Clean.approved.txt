@@ -51,7 +51,7 @@
             "Code": 2796,
             "FlightWeeks": [],
             "LegacyCallLetters": "ENCT",
-            "MarketCode": 0,
+            "MarketCode": 145,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Greenville-N.Bern-Washngtn",
             "RateDataThrough": null
@@ -95,7 +95,7 @@
             "Code": 6342,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAEF",
-            "MarketCode": 0,
+            "MarketCode": 402,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Eureka",
             "RateDataThrough": null
@@ -159,7 +159,7 @@
             "Code": 5933,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAMC",
-            "MarketCode": 0,
+            "MarketCode": 251,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Lubbock",
             "RateDataThrough": null
@@ -203,7 +203,7 @@
             "Code": 6844,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAUT",
-            "MarketCode": 0,
+            "MarketCode": 250,
             "ModifiedDate": "2017-08-17T18:02:10.017",
             "OriginMarket": "Oklahoma City",
             "RateDataThrough": null
@@ -247,7 +247,7 @@
             "Code": 5890,
             "FlightWeeks": [],
             "LegacyCallLetters": "KBCW",
-            "MarketCode": 0,
+            "MarketCode": 407,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "San Francisco-Oak-San Jose",
             "RateDataThrough": null
@@ -305,7 +305,7 @@
             "Code": 2796,
             "FlightWeeks": [],
             "LegacyCallLetters": "ENCT",
-            "MarketCode": 0,
+            "MarketCode": 145,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Greenville-N.Bern-Washngtn",
             "RateDataThrough": null
@@ -349,7 +349,7 @@
             "Code": 6342,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAEF",
-            "MarketCode": 0,
+            "MarketCode": 402,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Eureka",
             "RateDataThrough": null
@@ -413,7 +413,7 @@
             "Code": 5933,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAMC",
-            "MarketCode": 0,
+            "MarketCode": 251,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Lubbock",
             "RateDataThrough": null
@@ -457,7 +457,7 @@
             "Code": 6844,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAUT",
-            "MarketCode": 0,
+            "MarketCode": 250,
             "ModifiedDate": "2017-08-17T18:02:10.017",
             "OriginMarket": "Oklahoma City",
             "RateDataThrough": null
@@ -501,7 +501,7 @@
             "Code": 5890,
             "FlightWeeks": [],
             "LegacyCallLetters": "KBCW",
-            "MarketCode": 0,
+            "MarketCode": 407,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "San Francisco-Oak-San Jose",
             "RateDataThrough": null
@@ -559,7 +559,7 @@
             "Code": 2796,
             "FlightWeeks": [],
             "LegacyCallLetters": "ENCT",
-            "MarketCode": 0,
+            "MarketCode": 145,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Greenville-N.Bern-Washngtn",
             "RateDataThrough": null
@@ -603,7 +603,7 @@
             "Code": 6342,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAEF",
-            "MarketCode": 0,
+            "MarketCode": 402,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Eureka",
             "RateDataThrough": null
@@ -667,7 +667,7 @@
             "Code": 5933,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAMC",
-            "MarketCode": 0,
+            "MarketCode": 251,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Lubbock",
             "RateDataThrough": null
@@ -711,7 +711,7 @@
             "Code": 6844,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAUT",
-            "MarketCode": 0,
+            "MarketCode": 250,
             "ModifiedDate": "2017-08-17T18:02:10.017",
             "OriginMarket": "Oklahoma City",
             "RateDataThrough": null
@@ -769,7 +769,7 @@
             "Code": 2796,
             "FlightWeeks": [],
             "LegacyCallLetters": "ENCT",
-            "MarketCode": 0,
+            "MarketCode": 145,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Greenville-N.Bern-Washngtn",
             "RateDataThrough": null
@@ -813,7 +813,7 @@
             "Code": 6342,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAEF",
-            "MarketCode": 0,
+            "MarketCode": 402,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Eureka",
             "RateDataThrough": null
@@ -877,7 +877,7 @@
             "Code": 5933,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAMC",
-            "MarketCode": 0,
+            "MarketCode": 251,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Lubbock",
             "RateDataThrough": null
@@ -921,7 +921,7 @@
             "Code": 6844,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAUT",
-            "MarketCode": 0,
+            "MarketCode": 250,
             "ModifiedDate": "2017-08-17T18:02:10.017",
             "OriginMarket": "Oklahoma City",
             "RateDataThrough": null
@@ -979,7 +979,7 @@
             "Code": 2796,
             "FlightWeeks": [],
             "LegacyCallLetters": "ENCT",
-            "MarketCode": 0,
+            "MarketCode": 145,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Greenville-N.Bern-Washngtn",
             "RateDataThrough": null
@@ -1023,7 +1023,7 @@
             "Code": 6342,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAEF",
-            "MarketCode": 0,
+            "MarketCode": 402,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Eureka",
             "RateDataThrough": null
@@ -1087,7 +1087,7 @@
             "Code": 5933,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAMC",
-            "MarketCode": 0,
+            "MarketCode": 251,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Lubbock",
             "RateDataThrough": null
@@ -1165,7 +1165,7 @@
             "Code": 5490,
             "FlightWeeks": [],
             "LegacyCallLetters": "KABY",
-            "MarketCode": 0,
+            "MarketCode": 325,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Sioux Falls(Mitchell)",
             "RateDataThrough": null
@@ -1229,7 +1229,7 @@
             "Code": 5160,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAIT",
-            "MarketCode": 0,
+            "MarketCode": 334,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Jonesboro",
             "RateDataThrough": null
@@ -1293,7 +1293,7 @@
             "Code": 5297,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAKE",
-            "MarketCode": 0,
+            "MarketCode": 278,
             "ModifiedDate": "2017-08-17T17:58:31.897",
             "OriginMarket": "Wichita-Hutchinson Plus",
             "RateDataThrough": null
@@ -1397,7 +1397,7 @@
             "Code": 5292,
             "FlightWeeks": [],
             "LegacyCallLetters": "KALB",
-            "MarketCode": 0,
+            "MarketCode": 244,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Alexandria, LA",
             "RateDataThrough": null
@@ -1441,7 +1441,7 @@
             "Code": 5933,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAMC",
-            "MarketCode": 0,
+            "MarketCode": 251,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Lubbock",
             "RateDataThrough": null
@@ -1545,7 +1545,7 @@
             "Code": 5894,
             "FlightWeeks": [],
             "LegacyCallLetters": "WXIX",
-            "MarketCode": 0,
+            "MarketCode": 115,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Cincinnati",
             "RateDataThrough": null
@@ -1623,7 +1623,7 @@
             "Code": 5490,
             "FlightWeeks": [],
             "LegacyCallLetters": "KABY",
-            "MarketCode": 0,
+            "MarketCode": 325,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Sioux Falls(Mitchell)",
             "RateDataThrough": null
@@ -1687,7 +1687,7 @@
             "Code": 5160,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAIT",
-            "MarketCode": 0,
+            "MarketCode": 334,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Jonesboro",
             "RateDataThrough": null
@@ -1751,7 +1751,7 @@
             "Code": 5297,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAKE",
-            "MarketCode": 0,
+            "MarketCode": 278,
             "ModifiedDate": "2017-08-17T17:58:31.897",
             "OriginMarket": "Wichita-Hutchinson Plus",
             "RateDataThrough": null
@@ -1855,7 +1855,7 @@
             "Code": 5292,
             "FlightWeeks": [],
             "LegacyCallLetters": "KALB",
-            "MarketCode": 0,
+            "MarketCode": 244,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Alexandria, LA",
             "RateDataThrough": null
@@ -1899,7 +1899,7 @@
             "Code": 5933,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAMC",
-            "MarketCode": 0,
+            "MarketCode": 251,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Lubbock",
             "RateDataThrough": null
@@ -2003,7 +2003,7 @@
             "Code": 5894,
             "FlightWeeks": [],
             "LegacyCallLetters": "WXIX",
-            "MarketCode": 0,
+            "MarketCode": 115,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Cincinnati",
             "RateDataThrough": null
@@ -2081,7 +2081,7 @@
             "Code": 5490,
             "FlightWeeks": [],
             "LegacyCallLetters": "KABY",
-            "MarketCode": 0,
+            "MarketCode": 325,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Sioux Falls(Mitchell)",
             "RateDataThrough": null
@@ -2145,7 +2145,7 @@
             "Code": 5160,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAIT",
-            "MarketCode": 0,
+            "MarketCode": 334,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Jonesboro",
             "RateDataThrough": null
@@ -2209,7 +2209,7 @@
             "Code": 5297,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAKE",
-            "MarketCode": 0,
+            "MarketCode": 278,
             "ModifiedDate": "2017-08-17T17:58:31.897",
             "OriginMarket": "Wichita-Hutchinson Plus",
             "RateDataThrough": null
@@ -2313,7 +2313,7 @@
             "Code": 5292,
             "FlightWeeks": [],
             "LegacyCallLetters": "KALB",
-            "MarketCode": 0,
+            "MarketCode": 244,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Alexandria, LA",
             "RateDataThrough": null
@@ -2357,7 +2357,7 @@
             "Code": 5933,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAMC",
-            "MarketCode": 0,
+            "MarketCode": 251,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Lubbock",
             "RateDataThrough": null
@@ -2461,7 +2461,7 @@
             "Code": 5894,
             "FlightWeeks": [],
             "LegacyCallLetters": "WXIX",
-            "MarketCode": 0,
+            "MarketCode": 115,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Cincinnati",
             "RateDataThrough": null
@@ -2539,7 +2539,7 @@
             "Code": 5490,
             "FlightWeeks": [],
             "LegacyCallLetters": "KABY",
-            "MarketCode": 0,
+            "MarketCode": 325,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Sioux Falls(Mitchell)",
             "RateDataThrough": null
@@ -2603,7 +2603,7 @@
             "Code": 5297,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAKE",
-            "MarketCode": 0,
+            "MarketCode": 278,
             "ModifiedDate": "2017-08-17T17:58:31.897",
             "OriginMarket": "Wichita-Hutchinson Plus",
             "RateDataThrough": null
@@ -2707,7 +2707,7 @@
             "Code": 5292,
             "FlightWeeks": [],
             "LegacyCallLetters": "KALB",
-            "MarketCode": 0,
+            "MarketCode": 244,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Alexandria, LA",
             "RateDataThrough": null
@@ -2751,7 +2751,7 @@
             "Code": 5933,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAMC",
-            "MarketCode": 0,
+            "MarketCode": 251,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Lubbock",
             "RateDataThrough": null
@@ -2855,7 +2855,7 @@
             "Code": 5894,
             "FlightWeeks": [],
             "LegacyCallLetters": "WXIX",
-            "MarketCode": 0,
+            "MarketCode": 115,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Cincinnati",
             "RateDataThrough": null
@@ -2933,7 +2933,7 @@
             "Code": 5490,
             "FlightWeeks": [],
             "LegacyCallLetters": "KABY",
-            "MarketCode": 0,
+            "MarketCode": 325,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Sioux Falls(Mitchell)",
             "RateDataThrough": null
@@ -2997,7 +2997,7 @@
             "Code": 5297,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAKE",
-            "MarketCode": 0,
+            "MarketCode": 278,
             "ModifiedDate": "2017-08-17T17:58:31.897",
             "OriginMarket": "Wichita-Hutchinson Plus",
             "RateDataThrough": null
@@ -3101,7 +3101,7 @@
             "Code": 5292,
             "FlightWeeks": [],
             "LegacyCallLetters": "KALB",
-            "MarketCode": 0,
+            "MarketCode": 244,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Alexandria, LA",
             "RateDataThrough": null
@@ -3145,7 +3145,7 @@
             "Code": 5933,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAMC",
-            "MarketCode": 0,
+            "MarketCode": 251,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Lubbock",
             "RateDataThrough": null
@@ -3249,7 +3249,7 @@
             "Code": 5894,
             "FlightWeeks": [],
             "LegacyCallLetters": "WXIX",
-            "MarketCode": 0,
+            "MarketCode": 115,
             "ModifiedDate": "2016-11-16T05:55:10.86",
             "OriginMarket": "Cincinnati",
             "RateDataThrough": null

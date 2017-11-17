@@ -112,7 +112,7 @@
               "Code": 5013,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNBC",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -238,7 +238,7 @@
               "Code": 5035,
               "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
-              "MarketCode": 0,
+              "MarketCode": 223,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -364,7 +364,7 @@
               "Code": 5013,
               "FlightWeeks": [],
               "LegacyCallLetters": "WNBC",
-              "MarketCode": 0,
+              "MarketCode": 101,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -510,7 +510,7 @@
               "Code": 5098,
               "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
-              "MarketCode": 0,
+              "MarketCode": 111,
               "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
