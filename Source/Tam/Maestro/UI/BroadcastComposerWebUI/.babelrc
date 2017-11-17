@@ -12,11 +12,11 @@
             "last 4 Edge versions"
           ]
         },
-        "useBuiltIns": true
+        // "useBuiltIns": true
       }
     ],
     "react",
-    // "stage-0"
+    "stage-0"
   ],
   "plugins": [
     "add-module-exports",
