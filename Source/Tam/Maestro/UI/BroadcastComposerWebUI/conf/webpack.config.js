@@ -11,6 +11,7 @@ var webpackConfig = {
   context: resolve(__dirname, '../src'),
 
   entry: [
+    'babel-polyfill',
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
