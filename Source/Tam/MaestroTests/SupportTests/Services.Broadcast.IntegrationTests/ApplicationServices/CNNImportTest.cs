@@ -72,6 +72,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof (StationInventoryManifest), "InventorySourceId");
             jsonResolver.Ignore(typeof (StationInventoryManifest), "FileId");
             jsonResolver.Ignore(typeof(InventoryFile), "Id");
+            jsonResolver.Ignore(typeof (InventorySource), "Id");
+
             var jsonSettings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

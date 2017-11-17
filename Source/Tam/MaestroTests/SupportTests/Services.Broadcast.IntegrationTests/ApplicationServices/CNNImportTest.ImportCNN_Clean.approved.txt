@@ -8,7 +8,6 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -263,7 +262,6 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -518,7 +516,6 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -729,7 +726,6 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -940,7 +936,6 @@
       "DaypartCode": "PM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -1107,7 +1102,6 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -1566,7 +1560,6 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -2025,7 +2018,6 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -2484,7 +2476,6 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
@@ -2879,7 +2870,6 @@
       "DaypartCode": "AM News",
       "EndDate": null,
       "InventorySource": {
-        "Id": 5,
         "InventoryType": 1,
         "IsActive": true,
         "Name": "CNN"
