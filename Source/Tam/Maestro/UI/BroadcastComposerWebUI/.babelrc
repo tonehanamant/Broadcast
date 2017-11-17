@@ -7,6 +7,8 @@
     "add-module-exports",
     "transform-object-rest-spread",
     "react-hot-loader/babel",
+    "transform-es3-property-literals",
+    "transform-es3-member-expression-literals",
   ],
   "env": {
     "development": {
