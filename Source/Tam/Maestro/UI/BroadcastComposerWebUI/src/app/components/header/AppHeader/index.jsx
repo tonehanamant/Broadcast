@@ -22,6 +22,7 @@ export class AppHeader extends Component {
   //   super(props);
   // }
 
+
   componentWillMount() {
     this.props.getEnvironment();
     this.props.getEmployee();

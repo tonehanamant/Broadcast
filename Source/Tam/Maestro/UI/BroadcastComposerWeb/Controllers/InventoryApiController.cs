@@ -70,6 +70,36 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
+        [Route("{rateSource}/Stations/{stationCode}/Rates")]
+        public BaseResponse<List<StationProgram>> GetStationProgramsByDateRange(string rateSource, int stationCode, [FromUri] DateTime startDate, [FromUri] DateTime endDate)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().GetStationPrograms(rateSource, stationCode, startDate, endDate));
+
+        }
+
+        [HttpGet]
+        [Route("{rateSource}/Stations/{stationCode}/Rates")]
+        public BaseResponse<List<StationProgram>> GetAllStationPrograms(string rateSource, int stationCode)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () =>
+                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                            .GetAllStationPrograms(rateSource, stationCode));
+        }
+
+        [HttpGet]
+        [Route("{rateSource}/Stations/{stationCode}/Rates/{timeFrame}")]
+        public BaseResponse<List<StationProgram>> GetStationPrograms(string rateSource, int stationCode, string timeFrame)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().GetStationPrograms(rateSource, stationCode, timeFrame, DateTime.Now));
+        }
+
+        [HttpGet]
         [Route("{inventorySource}/Stations/{stationCode}/Contacts")]
         public BaseResponse<List<StationContact>> GetStationContacts(string inventorySource, int stationCode)
         {

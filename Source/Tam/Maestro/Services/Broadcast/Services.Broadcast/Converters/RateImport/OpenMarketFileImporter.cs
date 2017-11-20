@@ -124,7 +124,6 @@ namespace Services.Broadcast.Converters.RateImport
                 Dictionary<string, DisplayAudience> audienceMap, Dictionary<string, DisplayBroadcastStation> validStations,
                 List<StationInventoryManifest> manifests)
             {
-                var effectiveDate = DateTime.Now;
                 foreach (var availLine in proposal.AvailList.AvailLineWithDetailedPeriods)
                 {
                     var availLineManifests = new List<StationInventoryManifest>();
@@ -166,7 +165,8 @@ namespace Services.Broadcast.Converters.RateImport
                                     ManifestDayparts = _GetDaypartsListForAvailLineWithDetailedPeriods(availLine),
                                     ManifestAudiencesReferences = manifestAudiences,
                                     ManifestRates = manifestRates,
-                                    EffectiveDate = effectiveDate
+                                    EffectiveDate = availLinePeriod.startDate,
+                                    EndDate = availLinePeriod.endDate
                                 };
                                 manifests.Add(periodManifest);
                             }
@@ -280,7 +280,6 @@ namespace Services.Broadcast.Converters.RateImport
                 Dictionary<string, DisplayAudience> audienceMap, Dictionary<string, DisplayBroadcastStation> validStations,
                 List<StationInventoryManifest> manifests)
             {
-                var effectiveDate = DateTime.Now;
                 foreach (var availLine in proposal.AvailList.AvailLineWithPeriods)
                 {
                     var availLineManifests = new List<StationInventoryManifest>();
@@ -318,7 +317,8 @@ namespace Services.Broadcast.Converters.RateImport
                                     SpotLengthId = spotLengthId,
                                     ManifestDayparts = _GetDaypartsListForAvailLineWithPeriods(availLine),
                                     ManifestAudiencesReferences = manifestAudiences,
-                                    EffectiveDate = effectiveDate
+                                    EffectiveDate = availLinePeriod.startDate,
+                                    EndDate = availLinePeriod.endDate
                                 };
                                 manifests.Add(periodManifest);
                             }
@@ -362,7 +362,7 @@ namespace Services.Broadcast.Converters.RateImport
                 switch (demo.DemoType)
                 {
                     case "Impression":
-                        manifestAudience.Impressions = (double) demoValue.Value;
+                        manifestAudience.Impressions = (double) demoValue.Value * 1000;
                         break;
                     case "Rating":
                         manifestAudience.Rating = (double) demoValue.Value;

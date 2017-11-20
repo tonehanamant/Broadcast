@@ -62,7 +62,7 @@ export function* requestPostInitialData() {
         error: {
           error: 'No post initial data returned.',
           message: 'The server encountered an error processing the request (post initial data). Please try again or contact your administrator to review error logs.',
-          exception: `${e.response.data.ExceptionMessage}`,
+          exception: e.response.data.ExceptionMessage || '',
         },
       });
     }
@@ -136,7 +136,7 @@ export function* requestPost() {
         error: {
           error: 'No post returned.',
           message: 'The server encountered an error processing the request (post). Please try again or contact your administrator to review error logs.',
-          exception: `${e.response.data.ExceptionMessage}`,
+          exception: e.response.data.ExceptionMessage || '',
         },
       });
     }
@@ -274,7 +274,7 @@ export function* deletePostById({ payload: id }) {
         error: {
           error: 'Post not deleted.',
           message: 'The server encountered an error processing the request (delete post). Please try again or contact your administrator to review error logs.',
-          exception: `${e.response.data.ExceptionMessage}`,
+          exception: e.response.data.ExceptionMessage || '',
         },
       });
     }
@@ -349,7 +349,7 @@ export function* requestPostFileEdit({ payload: id }) {
         error: {
           error: 'No post data returned.',
           message: 'The server encountered an error processing the request (post). Please try again or contact your administrator to review error logs.',
-          exception: `${e.response.data.ExceptionMessage}`,
+          exception: e.response.data.ExceptionMessage || '',
         },
       });
     }
@@ -434,7 +434,7 @@ export function* savePostFileEdit({ payload: params }) {
         error: {
           error: 'Post not saved.',
           message: 'The server encountered an error processing the request (save post). Please try again or contact your administrator to review error logs.',
-          exception: `${e.response.data.ExceptionMessage}`,
+          exception: e.response.data.ExceptionMessage || '',
         },
       });
     }
@@ -526,7 +526,7 @@ export function* uploadPostFile({ payload: params }) {
         error: {
           error: 'Post file not created.',
           message: 'The server encountered an error processing the request (create post). Please try again or contact your administrator to review error logs.',
-          exception: `${e.response.data.ExceptionMessage}`,
+          exception: e.response.data.ExceptionMessage || '',
         },
       });
     }

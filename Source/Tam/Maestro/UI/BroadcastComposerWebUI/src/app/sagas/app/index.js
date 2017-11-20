@@ -64,7 +64,7 @@ export function* requestEnvironment() {
         error: {
           error: 'No environment info returned.',
           message: 'The server encountered an error processing the request (environment). Please try again or contact your administrator to review error logs.',
-          exception: `${e.response.data.ExceptionMessage}`,
+          exception: e.response.data.ExceptionMessage || '',
         },
       });
     }
@@ -131,7 +131,7 @@ export function* requestEmployee() {
         error: {
           error: 'No employee info returned.',
           message: 'The server encountered an error processing the request (employee). Please try again or contact your administrator to review error logs.',
-          exception: `${e.response.data.ExceptionMessage}`,
+          exception: e.response.data.ExceptionMessage || '',
         },
       });
     }

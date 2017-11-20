@@ -307,7 +307,7 @@
                     size: '15%'
                 },
                 {
-                    field: 'Program',
+                    field: 'ProgramName',
                     caption: 'Program',
                     //searchable: true,
                     sortable: true,
@@ -331,7 +331,7 @@
                     }
                 },
                 {
-                    field: 'Spots',
+                    field: 'SpotsPerWeek',
                     caption: 'Spots/Week',
                     sortable: true,
                     hidden:true,
@@ -360,12 +360,12 @@
                     }
                 },
                 {
-                    field: 'Impressions',
+                    field: 'HouseHoldImpressions',
                     caption: 'HH Impressions (000)',
                     size: '10%',
-                    sortable: false,
+                    sortable: true,
                     render: function (record) {
-                        return record.Impressions ? numeral(util.divideImpressions(record.Impressions)).format('0,0.[000]') : '-';
+                        return record.HouseHoldImpressions ? numeral(util.divideImpressions(record.HouseHoldImpressions)).format('0,0.[000]') : '-';
                     }
                 },
                 {
@@ -373,37 +373,39 @@
                     caption: 'Rating',
                     render: 'float:2',
                     size: '10%',
-                    sortable: false
+                    sortable: true
                 },
                 {
-                    field: 'Flight',
+                    field: 'StartDate',
                     caption: 'Flight',
                     size: '15%',
-                    sortable: false,
+                    sortable: true,
+                    //remove tooltip; change from FLight to StartDate handle start and end only if present
                     render: function (record, index, column_index) {
+                        var start = moment(record.StartDate).format("MM/DD/YYYY");
+                        var end = record.EndDate ? (' - ' + moment(record.EndDate).format("MM/DD/YYYY")) : '';
+                        //var hiatusWeeks = [];
+                        //var html = '<span>' + record.Flight + '</span>';
+                        //var tooltipText = '<div><span>Hiatus Weeks</span> <br>';
+                        //$.each(record.Flights, function (idx, week) {
+                        //    if (week.IsHiatus == true) {
+                        //        var hiatusWeekFormated = moment(week.StartDate).format("MM/DD/YYYY") + ' - ' + moment(week.EndDate).format("MM/DD/YYYY");
+                        //        hiatusWeeks.push(hiatusWeekFormated);
+                        //        tooltipText  += '<div>' + hiatusWeekFormated + '</div>';
+                        //    }
+                        //});
 
-                        var hiatusWeeks = [];
-                        var html = '<span>' + record.Flight + '</span>';
-                        var tooltipText = '<div><span>Hiatus Weeks</span> <br>';
-                        $.each(record.Flights, function (idx, week) {
-                            if (week.IsHiatus == true) {
-                                var hiatusWeekFormated = moment(week.StartDate).format("MM/DD/YYYY") + ' - ' + moment(week.EndDate).format("MM/DD/YYYY");
-                                hiatusWeeks.push(hiatusWeekFormated);
-                                tooltipText  += '<div>' + hiatusWeekFormated + '</div>';
-                            }
-                        });
-
-                        if (hiatusWeeks.length > 0) {
-                            tooltipText += '</div>';
-                            var mrk = '<span class="glyphicon glyphicon-info-sign" style="" aria-hidden="false"></span>';
-                            html = '<span class="span-block" data-container="body" data-html="true" data-toggle="tooltip" title="' + tooltipText + '">' + html + '&nbsp;' + mrk + '</span>';
-                        }
-                        return html;
+                        //if (hiatusWeeks.length > 0) {
+                        //    tooltipText += '</div>';
+                        //    var mrk = '<span class="glyphicon glyphicon-info-sign" style="" aria-hidden="false"></span>';
+                        //    html = '<span class="span-block" data-container="body" data-html="true" data-toggle="tooltip" title="' + tooltipText + '">' + html + '&nbsp;' + mrk + '</span>';
+                        //}
+                        return start + end;
                     }
                 }
             ],
 
-            sortData: [{ field: 'Program', direction: 'asc' }, { field: 'Flight', direction: 'asc' }],
+            sortData: [{ field: 'ProgramName', direction: 'asc' }, { field: 'StartDate', direction: 'asc' }],
 
             onDblClick: function (event) {
                 view.onRatesDoubleClick(event);
