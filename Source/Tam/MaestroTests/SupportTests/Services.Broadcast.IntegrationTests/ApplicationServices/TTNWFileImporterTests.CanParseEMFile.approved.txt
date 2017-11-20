@@ -38,18 +38,6 @@
     },
     {
       "AffectedProposals": null,
-      "ProblemDescription": "Invalid station: WBTS",
-      "ProgramName": null,
-      "StationLetters": null
-    },
-    {
-      "AffectedProposals": null,
-      "ProblemDescription": "Invalid station: WBTS",
-      "ProgramName": null,
-      "StationLetters": null
-    },
-    {
-      "AffectedProposals": null,
       "ProblemDescription": "Invalid station: WCIV-DT",
       "ProgramName": null,
       "StationLetters": null
@@ -1535,7 +1523,17 @@
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
-            "Station": null
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WBTS-LD 8.1",
+              "Code": 11704,
+              "FlightWeeks": [],
+              "LegacyCallLetters": "WBTS",
+              "MarketCode": 106,
+              "ModifiedDate": "2017-11-20T17:53:34.097",
+              "OriginMarket": "Boston (Manchester)",
+              "RateDataThrough": null
+            }
           },
           {
             "DaypartCode": "EM",
@@ -5450,7 +5448,7 @@
             "Station": {
               "Affiliation": "CBS",
               "CallLetters": "KRQE 13.1",
-              "Code": 5181,
+              "Code": 181,
               "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
               "MarketCode": 390,
@@ -11386,7 +11384,7 @@
             "Station": {
               "Affiliation": "CBS",
               "CallLetters": "KRQE 13.1",
-              "Code": 5181,
+              "Code": 181,
               "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
               "MarketCode": 390,
@@ -17640,7 +17638,7 @@
             "Station": {
               "Affiliation": "CBS",
               "CallLetters": "KRQE 13.1",
-              "Code": 5181,
+              "Code": 181,
               "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
               "MarketCode": 390,
@@ -30424,7 +30422,7 @@
             "Station": {
               "Affiliation": "CBS",
               "CallLetters": "KRQE 13.1",
-              "Code": 5181,
+              "Code": 181,
               "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
               "MarketCode": 390,
@@ -33050,7 +33048,17 @@
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
-            "Station": null
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WBTS-LD 8.1",
+              "Code": 11704,
+              "FlightWeeks": [],
+              "LegacyCallLetters": "WBTS",
+              "MarketCode": 106,
+              "ModifiedDate": "2017-11-20T17:53:34.097",
+              "OriginMarket": "Boston (Manchester)",
+              "RateDataThrough": null
+            }
           },
           {
             "DaypartCode": "EM",
@@ -36667,7 +36675,7 @@
             "Station": {
               "Affiliation": "CBS",
               "CallLetters": "KRQE 13.1",
-              "Code": 5181,
+              "Code": 181,
               "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
               "MarketCode": 390,
@@ -39409,7 +39417,17 @@
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
-            "Station": null
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WBTS-LD 8.1",
+              "Code": 11704,
+              "FlightWeeks": [],
+              "LegacyCallLetters": "WBTS",
+              "MarketCode": 106,
+              "ModifiedDate": "2017-11-20T17:53:34.097",
+              "OriginMarket": "Boston (Manchester)",
+              "RateDataThrough": null
+            }
           },
           {
             "DaypartCode": "EM",
@@ -43026,7 +43044,7 @@
             "Station": {
               "Affiliation": "CBS",
               "CallLetters": "KRQE 13.1",
-              "Code": 5181,
+              "Code": 181,
               "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
               "MarketCode": 390,
