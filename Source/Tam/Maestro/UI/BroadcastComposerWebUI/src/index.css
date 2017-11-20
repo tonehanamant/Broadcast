@@ -1,0 +1,10 @@
+@import './styles/imports/index.css';
+
+.has-error .Select-control {
+	border-color: #a94442;
+}
+
+.has-error .is-focused:not(.is-open) > .Select-control {
+  border-color: #a94442;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(255, 51, 0, 0.1);
+}

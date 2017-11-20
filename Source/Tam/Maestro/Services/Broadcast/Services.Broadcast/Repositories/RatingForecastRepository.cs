@@ -24,8 +24,8 @@ namespace Services.Broadcast.Repositories
         List<RatingsForecastStatus> GetForecastDetails(List<MediaMonth> sweepsMonths);
         void CrunchMonth(short mediaMonthId, DateTime startDate, DateTime endDate);
         List<StationImpressionsWithAudience> GetImpressionsPointInTime(int postingBookId, List<int> uniqueRatingsAudiences, List<StationDetailPointInTime> stationDetails, ProposalEnums.ProposalPlaybackType playbackType, bool useDayByDayImpressions);
-        List<StationImpressionsWithAudience> GetImpressionsDaypart(int postingBookId, List<int> uniqueRatingsAudiences, IEnumerable<StationDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions);
-        List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, IEnumerable<StationDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions);
+        List<StationImpressionsWithAudience> GetImpressionsDaypart(int postingBookId, List<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions);
+        List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, IEnumerable<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions);
         List<MarketPlaybackTypes> GetPlaybackForMarketBy(int mediaMonthId, ProposalEnums.ProposalPlaybackType? playbackType);
         Dictionary<short, List<universe>> GetMarketUniverseDataByAudience(int mediaMonth, List<int> audienceIds, List<short> marketIds, List<string> playbackTypes);
     }
@@ -47,7 +47,7 @@ namespace Services.Broadcast.Repositories
                     var audienceId = new SqlParameter("demo", SqlDbType.NVarChar) { Value = string.Join(",", audience) };
 
                     var ratingsInput = new DataTable();
-                    ratingsInput.Columns.Add("station_code");
+                    ratingsInput.Columns.Add("legacy_call_letters");
                     ratingsInput.Columns.Add("mon");
                     ratingsInput.Columns.Add("tue");
                     ratingsInput.Columns.Add("wed");
@@ -68,6 +68,10 @@ namespace Services.Broadcast.Repositories
                         p.DisplayDaypart.Sunday,
                         p.DisplayDaypart.StartTime,
                         p.DisplayDaypart.EndTime));
+
+                    //WriteTableSQLDebug(programs);
+
+
                     var ratingsRequest = new SqlParameter("ratings_request", SqlDbType.Structured)
                     {
                         Value = ratingsInput,
@@ -103,7 +107,7 @@ namespace Services.Broadcast.Repositories
 
                     var ratingsInput = new DataTable();
                     ratingsInput.Columns.Add("id");
-                    ratingsInput.Columns.Add("station_code");
+                    ratingsInput.Columns.Add("legacy_call_letters");
                     ratingsInput.Columns.Add("mon");
                     ratingsInput.Columns.Add("tue");
                     ratingsInput.Columns.Add("wed");
@@ -114,7 +118,7 @@ namespace Services.Broadcast.Repositories
                     ratingsInput.Columns.Add("start_time");
                     ratingsInput.Columns.Add("end_time");
 
-                    stationDetails.Distinct().ForEach(p => ratingsInput.Rows.Add(p.Id, p.Code,
+                    stationDetails.Distinct().ForEach(p => ratingsInput.Rows.Add(p.Id, p.LegacyCallLetters,
                         p.DayOfWeek == DayOfWeek.Monday,
                         p.DayOfWeek == DayOfWeek.Tuesday,
                         p.DayOfWeek == DayOfWeek.Wednesday,
@@ -124,6 +128,8 @@ namespace Services.Broadcast.Repositories
                         p.DayOfWeek == DayOfWeek.Sunday,
                         p.TimeAired,
                         p.TimeAired));
+
+                    //WriteTableSQLDebug(stationDetails);
 
                     var ratingsRequest = new SqlParameter("ratings_request", SqlDbType.Structured) { Value = ratingsInput, TypeName = "RatingsInputWithId" };
 
@@ -136,7 +142,8 @@ namespace Services.Broadcast.Repositories
             }
         }
 
-        public List<StationImpressionsWithAudience> GetImpressionsDaypart(int postingBookId, List<int> uniqueRatingsAudiences, IEnumerable<StationDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
+
+        public List<StationImpressionsWithAudience> GetImpressionsDaypart(int postingBookId, List<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -148,7 +155,7 @@ namespace Services.Broadcast.Repositories
 
                     var ratingsInput = new DataTable();
                     ratingsInput.Columns.Add("id");
-                    ratingsInput.Columns.Add("station_code");
+                    ratingsInput.Columns.Add("legacy_call_letters");
                     ratingsInput.Columns.Add("mon");
                     ratingsInput.Columns.Add("tue");
                     ratingsInput.Columns.Add("wed");
@@ -159,7 +166,9 @@ namespace Services.Broadcast.Repositories
                     ratingsInput.Columns.Add("start_time");
                     ratingsInput.Columns.Add("end_time");
 
-                    stationDetails.Distinct().ForEach(p => ratingsInput.Rows.Add(p.Id, p.Code,
+                    stationDetails.Distinct().ForEach(p => ratingsInput.Rows.Add(
+                        p.Id,
+                        p.LegacyCallLetters, 
                         p.DisplayDaypart.Monday,
                         p.DisplayDaypart.Tuesday,
                         p.DisplayDaypart.Wednesday,
@@ -170,23 +179,7 @@ namespace Services.Broadcast.Repositories
                         p.DisplayDaypart.StartTime,
                         p.DisplayDaypart.EndTime));
 
-                    //stationDetails
-                    //    .Distinct()
-                    //    .ForEach(p =>
-                    //        Debug.WriteLine(
-                    //            string.Format(
-                    //                "INSERT INTO @ratings_request SELECT {0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
-                    //                p.Id,
-                    //                p.Code,
-                    //                p.DisplayDaypart.Monday ? "1" : "0",
-                    //                p.DisplayDaypart.Tuesday ? "1" : "0",
-                    //                p.DisplayDaypart.Wednesday ? "1" : "0",
-                    //                p.DisplayDaypart.Thursday ? "1" : "0",
-                    //                p.DisplayDaypart.Friday ? "1" : "0",
-                    //                p.DisplayDaypart.Saturday ? "1" : "0",
-                    //                p.DisplayDaypart.Sunday ? "1" : "0",
-                    //                p.DisplayDaypart.StartTime,
-                    //                p.DisplayDaypart.EndTime)));
+                    //WriteTableSQLDebug(stationDetails);
 
                     var ratingsRequest = new SqlParameter("ratings_request", SqlDbType.Structured) { Value = ratingsInput, TypeName = "RatingsInputWithId" };
 
@@ -197,6 +190,66 @@ namespace Services.Broadcast.Repositories
                     return c.Database.SqlQuery<StationImpressionsWithAudience>(string.Format(@"EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), book, audienceId, ratingsRequest, minPlaybackType).ToList();
                 });
             }
+        }
+
+        private static void WriteTableSQLDebug(IEnumerable<Program> programs)
+        {
+            programs
+                .Distinct()
+                .ForEach(p =>
+                    Debug.WriteLine(
+                        string.Format(
+                            "INSERT INTO @ratings_request SELECT {0},{1},{2},{3},{4},{5},{6},{7},{8},{9}",
+                            string.Format("'{0}'", p.LegacyCallLetters),
+                            p.DisplayDaypart.Monday ? "1" : "0",
+                            p.DisplayDaypart.Tuesday ? "1" : "0",
+                            p.DisplayDaypart.Wednesday ? "1" : "0",
+                            p.DisplayDaypart.Thursday ? "1" : "0",
+                            p.DisplayDaypart.Friday ? "1" : "0",
+                            p.DisplayDaypart.Saturday ? "1" : "0",
+                            p.DisplayDaypart.Sunday ? "1" : "0",
+                            p.DisplayDaypart.StartTime,
+                            p.DisplayDaypart.EndTime)));
+        }
+        private static void WriteTableSQLDebug(List<StationDetailPointInTime> stationDetails)
+        {
+            stationDetails
+                .Distinct()
+                .ForEach(p =>
+                    Debug.WriteLine(
+                        string.Format(
+                            "INSERT INTO @ratings_request SELECT {0},'{1}',{2},{3},{4},{5},{6},{7},{8},{9},{10}",
+                            p.Id,
+                            string.Format("'{0}'", p.LegacyCallLetters),
+                            p.DayOfWeek == DayOfWeek.Monday ? "1" : "0",
+                            p.DayOfWeek == DayOfWeek.Tuesday ? "1" : "0",
+                            p.DayOfWeek == DayOfWeek.Wednesday ? "1" : "0",
+                            p.DayOfWeek == DayOfWeek.Thursday ? "1" : "0",
+                            p.DayOfWeek == DayOfWeek.Friday ? "1" : "0",
+                            p.DayOfWeek == DayOfWeek.Saturday ? "1" : "0",
+                            p.DayOfWeek == DayOfWeek.Sunday ? "1" : "0",
+                            p.TimeAired,
+                            p.TimeAired)));
+        }
+        private static void WriteTableSQLDebug(List<ManifestDetailDaypart> stationDetails)
+        {
+            stationDetails
+                .Distinct()
+                .ForEach(p =>
+                    Debug.WriteLine(
+                        string.Format(
+                            "INSERT INTO @ratings_request SELECT {0},'{1}',{2},{3},{4},{5},{6},{7},{8},{9},{10}",
+                            p.Id,
+                            string.Format("'{0}'", p.LegacyCallLetters),
+                            p.DisplayDaypart.Monday ? "1" : "0",
+                            p.DisplayDaypart.Tuesday ? "1" : "0",
+                            p.DisplayDaypart.Wednesday ? "1" : "0",
+                            p.DisplayDaypart.Thursday ? "1" : "0",
+                            p.DisplayDaypart.Friday ? "1" : "0",
+                            p.DisplayDaypart.Saturday ? "1" : "0",
+                            p.DisplayDaypart.Sunday ? "1" : "0",
+                            p.DisplayDaypart.StartTime,
+                            p.DisplayDaypart.EndTime)));
         }
 
         public List<RatingsForecastStatus> GetForecastDetails(List<MediaMonth> sweepsMonths)
@@ -263,7 +316,7 @@ namespace Services.Broadcast.Repositories
         }
 
 
-        public List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, IEnumerable<StationDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
+        public List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, IEnumerable<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -280,7 +333,7 @@ namespace Services.Broadcast.Repositories
 
                     var ratingsInput = new DataTable();
                     ratingsInput.Columns.Add("id");
-                    ratingsInput.Columns.Add("station_code");
+                    ratingsInput.Columns.Add("legacy_call_letters");
                     ratingsInput.Columns.Add("mon");
                     ratingsInput.Columns.Add("tue");
                     ratingsInput.Columns.Add("wed");
@@ -293,7 +346,7 @@ namespace Services.Broadcast.Repositories
 
                     stationDetails.Distinct().ForEach(p => ratingsInput.Rows.Add(
                         p.Id,
-                        p.Code,
+                        p.LegacyCallLetters,
                         p.DisplayDaypart.Monday,
                         p.DisplayDaypart.Tuesday,
                         p.DisplayDaypart.Wednesday,

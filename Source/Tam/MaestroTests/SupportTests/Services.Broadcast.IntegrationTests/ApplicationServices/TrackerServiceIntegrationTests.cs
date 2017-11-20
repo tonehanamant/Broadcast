@@ -993,6 +993,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         private const int TRACKER_TEST_ESTIMATE_ID = 121220;
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void LoadBvs_Load_Assembly_Tracker()
@@ -1264,6 +1265,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         /// The point of this test is to ensure the post logic of the second schedule does 
         /// not affect the first schedule.
         /// </summary>
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CreateBlankSchedule_CheckPost()
@@ -1830,6 +1832,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         /// 
         /// This test also covers BCOP-1679 which fails to show BVS out of spec records that fall outside the schedule's weeks.
         /// </summary>
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void Tracker_Days_Overnight_And_Lead_Ins()
@@ -1897,7 +1900,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-
+        [Ignore]
         public void Delete_BVS_File()
         {
             using (new TransactionScopeWrapper())
@@ -1919,6 +1922,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
 
@@ -1981,6 +1985,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         /// The idea of this test to to *not* include bvs details as part of delivery counts for 
         /// bvs records that are not in spec.
         /// </summary>
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void Remove_OutofSpec_Deliveries_BCOP_1873()
@@ -2049,6 +2054,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         /// The various tests.scx file has 3 audiences.  Upload it and post data will have data for all audiences.
         /// Then update schedule with only one audience, the post data should only have audiences for only the one.
         /// </summary>
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_GenerateScheduleReportDto_BCOP1900()

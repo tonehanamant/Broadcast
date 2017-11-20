@@ -3,9 +3,12 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Entities
 {
+    //TODO: FIXME or deleteME 
+    //this needs to go and replaced by something completely different.
     public class Program : IEquatable<Program>
     {
         public readonly short StationCode;
+        public readonly string LegacyCallLetters;
         public readonly DisplayDaypart DisplayDaypart;
 
         public Program(short stationCode, DisplayDaypart daypart)
@@ -13,6 +16,12 @@ namespace Services.Broadcast.Entities
             StationCode = stationCode;
             DisplayDaypart = daypart;
         }
+        public Program(string legacyCallLetters, DisplayDaypart daypart)
+        {
+            LegacyCallLetters = legacyCallLetters;
+            DisplayDaypart = daypart;
+        }
+
 
         public override string ToString()
         {

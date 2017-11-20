@@ -33,17 +33,12 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var postFileDetail in postFile.post_file_details)
             {
-                var stationCode = stationRepo.GetStationCode(postFileDetail.station);
-                if (stationCode == null)
-                {
-                    continue;
-                }
                 var postDetail = new StationDetailPointInTime()
                 {
                     Id = postFileDetail.id,
                     TimeAired = postFileDetail.time_aired,
                     DayOfWeek = postFileDetail.date.DayOfWeek,
-                    Code = stationCode.Value
+                    LegacyCallLetters= postFileDetail.station
                 };
                 postDetails.Add(postDetail);
             }
