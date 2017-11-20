@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-const SectionPlanningProposal = () => (
-  <div id="planning-section-proposal">
-      <h3>Proposal Placeholder</h3>
-  </div>
+import ProposalHeader from 'Components/planning/ProposalHeader';
+
+const mapStateToProps = ({ routing }) => ({
+  routing,
+});
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({}, dispatch)
 );
 
-export default SectionPlanningProposal;
+/* eslint-disable react/prefer-stateless-function */
+export class SectionPlanningProposal extends Component {
+  render() {
+    return (
+      <div id="planning-section-proposal">
+          <ProposalHeader />
+      </div>
+    );
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SectionPlanningProposal);
+

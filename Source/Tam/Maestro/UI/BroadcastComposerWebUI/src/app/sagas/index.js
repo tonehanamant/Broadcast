@@ -1,5 +1,6 @@
 import * as appSaga from './app';
 import * as postSaga from './post';
+import * as planningSaga from './planning';
 
 export default function* rootSaga() {
   yield [
@@ -16,6 +17,8 @@ export default function* rootSaga() {
     postSaga.watchRequestPostFileEdit(),
     postSaga.watchSavePostFileEdit(),
     postSaga.watchUploadPostFile(),
+
+    planningSaga.watchRequestProposalInitialData(),
 
   ];
 }

@@ -1,8 +1,11 @@
 import React from 'react';
+import PageTitle from 'Components/shared/PageTitle';
+import PageHeaderContainer from 'Components/planning/PageHeaderContainer';
 
 const SectionPlanningHome = () => (
   <div id="planning-section-proposal">
-      <h3>Planning Grid Placeholder</h3>
+    <PageTitle title="Planning" />
+    <PageHeaderContainer />
   </div>
 );
 

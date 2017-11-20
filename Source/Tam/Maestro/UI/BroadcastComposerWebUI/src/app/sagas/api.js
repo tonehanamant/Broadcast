@@ -43,14 +43,17 @@ const post = {
   ),
 };
 
-
-// const post = {
-// };
+const planning = {
+  getProposalInitialData: () => (
+    call(GET, `${apiBase}Proposals/InitialData`, {})
+  ),
+};
 
 // Calls
 const api = {
   app,
   post,
+  planning,
 };
 
 export default api;
