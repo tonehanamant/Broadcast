@@ -18,7 +18,7 @@ namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/Proposals")]
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-    public class ProposalController : ControllerBase
+    public class ProposalController : BroadcastControllerBase
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IWebLogger _Logger;
@@ -58,7 +58,7 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IProposalService>()
-                            .SaveProposal(proposal, User.Identity.Name, DateTime.Now));
+                            .SaveProposal(proposal, Identity.Name, DateTime.Now));
         }
 
         [HttpDelete]
@@ -81,7 +81,7 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IProposalService>()
-                            .UnorderProposal(proposalId, User.Identity.Name));
+                            .UnorderProposal(proposalId, Identity.Name));
         }
         [HttpGet]
         [Route("generate_scx_archive/{proposalId}")]
