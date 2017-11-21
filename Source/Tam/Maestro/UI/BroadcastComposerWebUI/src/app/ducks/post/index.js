@@ -19,7 +19,6 @@ const initialState = {
     PlaybackType: null,
     Demos: null,
   },
-  modals: {},
 };
 
 // Reducer

@@ -15,6 +15,7 @@ export const SectionPlanning = ({ match: { path } }) => (
     <AppBody>
       <Switch>
         <Route path={`${path}/proposal/create`} component={SectionPlanningProposalCreate} />
+        <Route path={`${path}/proposal/:id/version/:version`} component={SectionPlanningProposal} />
         <Route path={`${path}/proposal/:id`} component={SectionPlanningProposal} />
         <Route path={`${path}`} component={SectionPlanningHome} />
       </Switch>

@@ -12,6 +12,7 @@ import SectionPlanning from 'Containers/SectionPlanning';
 import Toast from 'Components/shared/Toast';
 import ErrorModal from 'Components/shared/ErrorModal';
 import ConfirmModal from 'Components/shared/ConfirmModal';
+import Overlay from 'Components/shared/Overlay';
 
 import styles from './index.style.scss';
 
@@ -22,6 +23,8 @@ export const AppMain = ({ match: { path } }) => (
     <ErrorModal />
     <ConfirmModal />
     <AppHeader />
+    <Overlay type="loading" />
+    <Overlay type="processing" />
     <Switch>
       <Route exact path={path} component={SectionPost} />
       <Route path={`${path}/post`} component={SectionPost} />
