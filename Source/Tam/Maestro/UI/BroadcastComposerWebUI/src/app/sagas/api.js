@@ -47,6 +47,15 @@ const planning = {
   getProposalInitialData: () => (
     call(GET, `${apiBase}Proposals/InitialData`, {})
   ),
+  getProposal: id => (
+    call(GET, `${apiBase}Proposals/Proposal/${id}`, {})
+  ),
+  getProposalVersions: id => (
+    call(GET, `${apiBase}Proposals/Proposal/${id}/Versions`, {})
+  ),
+  getProposalVersion: params => (
+    call(GET, `${apiBase}Proposals/Proposal/${params.id}/Versions/${params.version}`, {})
+  ),
 };
 
 // Calls
