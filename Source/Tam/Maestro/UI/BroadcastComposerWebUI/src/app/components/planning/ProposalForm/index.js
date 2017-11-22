@@ -192,15 +192,15 @@ export class ProposalForm extends Component {
 							</Col>
 							<Col md={5}>
 								<Row>
-									<Col md="4">
+									<Col md={4}>
 										<strong>Spot Length</strong><br />
 										<span>-</span>
 									</Col>
-									<Col md="4">
+									<Col md={4}>
 										<strong>Flight</strong><br />
 										<span>-</span>
 									</Col>
-									<Col md="4">
+									<Col md={4}>
 										<FormGroup controlId="proposalNotes">
 											<ControlLabel>Notes</ControlLabel>
 											<FormControl componentClass="textarea" />
