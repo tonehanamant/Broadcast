@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { Row, Col, Label, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import Select from 'react-select';
-
+import MarketGroupSelector from './MarketGroupSelector';
 
 const mapStateToProps = () => ({
 });
@@ -16,9 +16,26 @@ const mapDispatchToProps = dispatch => (
 
 export class ProposalForm extends Component {
   constructor(props) {
-		super(props);
-		this.state = {};
+    super(props);
+
+    this.toggleMarketSelector = this.toggleMarketSelector.bind(this);
+    this.onMarketChange = this.onMarketChange.bind(this);
+
+		this.state = {
+      isMarketSelectorOpen: false,
+    };
+
 		this.state.Invalid = null;
+  }
+
+  toggleMarketSelector() {
+    this.setState({ isMarketSelectorOpen: !this.state.isMarketSelectorOpen });
+  }
+
+  onMarketChange(marketGroup) {
+    if (marketGroup.Id === -1) {
+      this.toggleMarketSelector();
+    }
   }
 
   render() {
@@ -28,7 +45,7 @@ export class ProposalForm extends Component {
 						<Row className="clearfix">
 							<Col md={6}>
 								<Row>
-									<Col md={6}>
+									<Col md={4}>
 										<FormGroup controlId="proposalName" validationState={this.state.Invalid} >
 											<ControlLabel><strong>Proposal Name</strong></ControlLabel>
 											<FormControl type="text" />
@@ -39,18 +56,21 @@ export class ProposalForm extends Component {
 											}
 										</FormGroup>
 									</Col>
-									<Col md={2}>
+									<Col md={4}>
 										<FormGroup controlId="proposalMarket" validationState={this.state.Invalid} >
 											<ControlLabel><strong>Market</strong></ControlLabel>
 											<Select
-												name="proposalMarket"
-												value={null}
-												// placeholder="Choose Posting..."
-												// className="form-control"
-												options={null}
-												labelKey=""
-												valueKey=""
-												onChange={null}
+                        name="marketGroup"
+                        value={null}
+                        placeholder="Choose a market..."
+                        options={[
+                          { Display: 'Market1', Id: 'market1' },
+                          { Display: 'Market2', Id: 'market2' },
+                          { Display: 'Custom', Id: -1 },
+                        ]}
+                        labelKey="Display"
+                        valueKey="Id"
+                        onChange={this.onMarketChange}
 											/>
 											{this.state.Invalid != null &&
 											<HelpBlock>
@@ -210,6 +230,11 @@ export class ProposalForm extends Component {
 							</Col>
 						</Row>
 					</form>
+
+          <MarketGroupSelector
+            open={this.state.isMarketSelectorOpen}
+            onClose={this.toggleMarketSelector}
+          />
 			</div>
     );
   }
