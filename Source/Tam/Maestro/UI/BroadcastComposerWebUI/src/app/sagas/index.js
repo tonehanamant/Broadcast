@@ -19,6 +19,9 @@ export default function* rootSaga() {
     postSaga.watchUploadPostFile(),
 
     planningSaga.watchRequestProposalInitialData(),
+    planningSaga.watchRequestProposal(),
+    planningSaga.watchRequestProposalVersions(),
+    planningSaga.watchRequestProposalVersion(),
 
   ];
 }

@@ -18,7 +18,7 @@ namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/Post")]
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-    public class PostApiController : ControllerBase
+    public class PostApiController : BroadcastControllerBase
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
 
@@ -36,7 +36,7 @@ namespace BroadcastComposerWeb.Controllers
                 throw new Exception("No post file data received.");
 
             var request = JsonConvert.DeserializeObject<PostRequest>(saveRequest.Content.ReadAsStringAsync().Result);
-            request.UserName = User.Identity.Name;
+            request.UserName = Identity.Name;
             request.UploadDate = DateTime.Now;
             request.ModifiedDate = DateTime.Now;
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostService>().SavePost(request));
@@ -53,7 +53,7 @@ namespace BroadcastComposerWeb.Controllers
             if (request.FileId == null)
                 throw new Exception("Can not edit post with no id.");
 
-            request.UserName = User.Identity.Name;
+            request.UserName = Identity.Name;
             request.ModifiedDate = DateTime.Now;
 
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostService>().EditPost(request));

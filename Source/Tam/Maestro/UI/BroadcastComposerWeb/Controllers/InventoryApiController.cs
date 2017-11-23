@@ -17,7 +17,7 @@ namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/RatesManager")]
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-    public class InventoryApiController : ControllerBase
+    public class InventoryApiController : BroadcastControllerBase
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IWebLogger _Logger;
@@ -118,7 +118,7 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                            .SaveStationContact(stationContact, User.Identity.Name));
+                            .SaveStationContact(stationContact, Identity.Name));
         }
 
         [HttpDelete]
@@ -128,7 +128,7 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                        .DeleteStationContact(stationContactId, User.Identity.Name));
+                        .DeleteStationContact(stationContactId, Identity.Name));
         }
 
 
@@ -142,7 +142,7 @@ namespace BroadcastComposerWeb.Controllers
             }
 
             var ratesSaveRequest = JsonConvert.DeserializeObject<InventoryFileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
-            ratesSaveRequest.UserName = User.Identity.Name;
+            ratesSaveRequest.UserName = Identity.Name;
             try
             {
                 var result =
