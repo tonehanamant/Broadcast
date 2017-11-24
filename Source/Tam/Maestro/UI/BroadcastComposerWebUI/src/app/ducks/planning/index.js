@@ -50,6 +50,21 @@ export const getProposalInitialData = () => ({
   payload: {},
 });
 
+export const getProposals = () => ({
+  type: ACTIONS.REQUEST_PROPOSALS,
+  payload: {},
+});
+
+export const getProposalLock = id => ({
+  type: ACTIONS.REQUEST_PROPOSAL_LOCK,
+  payload: id,
+});
+
+export const getProposalUnlock = id => ({
+  type: ACTIONS.REQUEST_PROPOSAL_UNLOCK,
+  payload: id,
+});
+
 export const getProposal = id => ({
   type: ACTIONS.REQUEST_PROPOSAL,
   payload: id,
@@ -60,8 +75,22 @@ export const getProposalVersions = id => ({
   payload: id,
 });
 
-export const getProposalVersion = (id, version) => (
-  {
+export const getProposalVersion = (id, version) => ({
   type: ACTIONS.REQUEST_PROPOSAL_VERSION,
   payload: { id, version },
+});
+
+export const saveProposal = params => ({
+  type: ACTIONS.SAVE_PROPOSAL,
+  payload: params,
+});
+
+export const deleteProposal = id => ({
+  type: ACTIONS.DELETE_PROPOSAL,
+  payload: id,
+});
+
+export const updateProposal = params => ({
+  type: ACTIONS.UPDATE_PROPOSAL,
+  payload: params,
 });

@@ -47,6 +47,15 @@ const planning = {
   getProposalInitialData: () => (
     call(GET, `${apiBase}Proposals/InitialData`, {})
   ),
+  getProposals: () => (
+    call(GET, `${apiBase}Proposals/GetProposals`, {})
+  ),
+  getProposalLock: () => (
+    call(GET, `${apiBase}Proposals/Proposal/${id}/Lock`, {})
+  ),
+  getProposalUnlock: () => (
+    call(GET, `${apiBase}Proposals/Proposal/${id}/Lock`, {})
+  ),
   getProposal: id => (
     call(GET, `${apiBase}Proposals/Proposal/${id}`, {})
   ),
@@ -55,6 +64,21 @@ const planning = {
   ),
   getProposalVersion: params => (
     call(GET, `${apiBase}Proposals/Proposal/${params.id}/Versions/${params.version}`, {})
+  ),
+  saveProposal: params => (
+    call(PUT, `${apiBase}Proposals/SaveProposal`, params)
+  ),
+  deleteProposal: id => (
+    call(DELETE, `${apiBase}Proposals/DeleteProposal/${id}`, {})
+  ),
+  unorderProposal: id => (
+    call(GET, `${apiBase}Proposals/UnorderProposal?proposalId=${id}`, {})
+  ),
+  getProposalDetail: params => (
+    call(GET, `${apiBase}Proposals/GetProposalDetail`, params)
+  ),
+  updateProposal: params => (
+    call(POST, `${apiBase}Proposals/UpdateProposal`, params)
   ),
 };
 
