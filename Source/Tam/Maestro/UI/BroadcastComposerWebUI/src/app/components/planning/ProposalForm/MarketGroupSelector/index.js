@@ -1,45 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import { Button, Modal } from 'react-bootstrap/lib';
+import { Row, Col, Button, Modal } from 'react-bootstrap/lib';
+import MarketSelector from './MarketSelector';
 
 import styles from './index.scss';
 
-class MarketGroupSelector extends Component {
-  constructor() {
-    super();
+const MarketGroupSelector = ({ title, open, onClose }) => (
+  <Modal show={open}>
+    <Modal.Header>
+      <Modal.Title>{title}</Modal.Title>
+    </Modal.Header>
 
-    this.closeModal = this.closeModal.bind(this);
+    <Modal.Body>
+      <Row>
+        <Col md={6}>
+          <MarketSelector />
+        </Col>
 
-    this.state = {
-      open: false,
-    };
-  }
+        <Col md={6}>
+          <MarketSelector />
+        </Col>
+      </Row>
+    </Modal.Body>
 
-  closeModal() {
-    this.setState({ open: false });
-  }
-
-  render() {
-    return (
-      <Modal show={this.props.open}>
-        <Modal.Header closeButton>
-          <Modal.Title>Learn More</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          TODO
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button onClick={this.props.onClose}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
-}
+    <Modal.Footer>
+      <Button onClick={onClose}>Close</Button>
+    </Modal.Footer>
+  </Modal>
+);
 
 MarketGroupSelector.propTypes = {
+  title: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };

@@ -64,8 +64,9 @@ export class ProposalForm extends Component {
                         value={null}
                         placeholder="Choose a market..."
                         options={[
-                          { Display: 'Market1', Id: 'market1' },
-                          { Display: 'Market2', Id: 'market2' },
+                          { Display: 'All', Id: 0 },
+                          { Display: 'Top 50', Id: 50 },
+                          { Display: 'Top 100', Id: 100 },
                           { Display: 'Custom', Id: -1 },
                         ]}
                         labelKey="Display"
@@ -232,6 +233,7 @@ export class ProposalForm extends Component {
 					</form>
 
           <MarketGroupSelector
+            title={'Custom Market'}
             open={this.state.isMarketSelectorOpen}
             onClose={this.toggleMarketSelector}
           />
