@@ -5,7 +5,7 @@ module.exports = {
     // version: 'v1',
     proxyToDev: {
       '/api/**': {
-        target: 'http://localhost:63944',
+        target: 'http://localhost:62344',
         secure: false,
         changeOrigin: true,
         // ws: true, // proxy websockets

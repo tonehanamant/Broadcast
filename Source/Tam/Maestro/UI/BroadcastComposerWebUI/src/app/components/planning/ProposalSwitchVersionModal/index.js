@@ -128,13 +128,13 @@ export class ProposalSwitchVersionModal extends Component {
 			LOADER: {
 				enabled: false,
 			},
-			SELECTION_MODEL: {
-				mode: 'single',
-				enabled: true,
-				allowDeselect: true,
-				activeCls: 'active',
-				selectionEvent: 'singleclick',
-			},
+			// SELECTION_MODEL: {
+			// 	mode: 'single',
+			// 	enabled: true,
+			// 	allowDeselect: true,
+			// 	activeCls: 'active',
+			// 	selectionEvent: 'singleclick',
+			// },
 			ROW: {
 				enabled: true,
 				renderer: ({ rowProps, cells }) => {
@@ -159,9 +159,17 @@ export class ProposalSwitchVersionModal extends Component {
 			},
 		};
 
+		/* GRID EVENTS */
+		const events = {
+			HANDLE_ROW_DOUBLE_CLICK: () => {
+				this.openVersion();
+			},
+		};
+
 		const grid = {
 			columns,
 			plugins,
+			events,
 			stateKey,
 		};
 
