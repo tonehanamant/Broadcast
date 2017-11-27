@@ -29,7 +29,8 @@ export class UploadButton extends Component {
   }
 
   openFileDialog() {
-    this.input.fileInputEl.click();
+    // this.input.fileInputEl.click();
+    this.input.open();
   }
 
   processFiles(acceptedFiles, rejectedFiles) {
