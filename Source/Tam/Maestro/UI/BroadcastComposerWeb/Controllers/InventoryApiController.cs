@@ -17,7 +17,7 @@ namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/RatesManager")]
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-    public class InventoryApiController : ControllerBase
+    public class InventoryApiController : BroadcastControllerBase
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IWebLogger _Logger;
@@ -70,6 +70,36 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
+        [Route("{rateSource}/Stations/{stationCode}/Rates")]
+        public BaseResponse<List<StationProgram>> GetStationProgramsByDateRange(string rateSource, int stationCode, [FromUri] DateTime startDate, [FromUri] DateTime endDate)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().GetStationPrograms(rateSource, stationCode, startDate, endDate));
+
+        }
+
+        [HttpGet]
+        [Route("{rateSource}/Stations/{stationCode}/Rates")]
+        public BaseResponse<List<StationProgram>> GetAllStationPrograms(string rateSource, int stationCode)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () =>
+                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                            .GetAllStationPrograms(rateSource, stationCode));
+        }
+
+        [HttpGet]
+        [Route("{rateSource}/Stations/{stationCode}/Rates/{timeFrame}")]
+        public BaseResponse<List<StationProgram>> GetStationPrograms(string rateSource, int stationCode, string timeFrame)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().GetStationPrograms(rateSource, stationCode, timeFrame, DateTime.Now));
+        }
+
+        [HttpGet]
         [Route("{inventorySource}/Stations/{stationCode}/Contacts")]
         public BaseResponse<List<StationContact>> GetStationContacts(string inventorySource, int stationCode)
         {
@@ -88,7 +118,7 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                            .SaveStationContact(stationContact, User.Identity.Name));
+                            .SaveStationContact(stationContact, Identity.Name));
         }
 
         [HttpDelete]
@@ -98,7 +128,7 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                        .DeleteStationContact(stationContactId, User.Identity.Name));
+                        .DeleteStationContact(stationContactId, Identity.Name));
         }
 
 
@@ -112,7 +142,7 @@ namespace BroadcastComposerWeb.Controllers
             }
 
             var ratesSaveRequest = JsonConvert.DeserializeObject<InventoryFileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
-            ratesSaveRequest.UserName = User.Identity.Name;
+            ratesSaveRequest.UserName = Identity.Name;
             try
             {
                 var result =

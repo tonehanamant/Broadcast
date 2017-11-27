@@ -117,7 +117,7 @@ var RateStationView = BaseView.extend({
 
     // prepares Rates grid add data; clear filters
     setRatesGrid: function () {
-        var ratesData = this.prepareRatesGridData(this.activeStationData.Rates);
+        var ratesData = this.prepareRatesGridData(this.activeStationData.Programs);
         this.$RatesGrid.searchReset();
         this.$RatesGrid.clear(false);
         this.$RatesGrid.add(ratesData);
@@ -137,12 +137,12 @@ var RateStationView = BaseView.extend({
 
     showRatesGridThirdpartyColumns: function (show) {
         if (show) {
-            this.$RatesGrid.hideColumn('Rate30', 'Rate15', 'Impressions', 'Rating');
-            this.$RatesGrid.showColumn('Spots');
+            this.$RatesGrid.hideColumn('Rate30', 'Rate15', 'HouseHoldImpressions', 'Rating');
+            this.$RatesGrid.showColumn('SpotsPerWeek');
 
         } else {
-            this.$RatesGrid.hideColumn('Spots');
-            this.$RatesGrid.showColumn('Rate30', 'Rate15', 'Impressions', 'Rating');
+            this.$RatesGrid.hideColumn('SpotsPerWeek');
+            this.$RatesGrid.showColumn('Rate30', 'Rate15', 'HouseHoldImpressions', 'Rating');
         }
     },
 

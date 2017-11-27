@@ -6,15 +6,12 @@ import PageHeaderContainer from 'Components/post/PageHeaderContainer';
 import DataGridContainer from 'Components/post/DataGridContainer';
 import PostFileEditModal from 'Components/post/PostFileEditModal';
 import PostFileUploadModal from 'Components/post/PostFileUploadModal';
-import Overlay from 'Components/shared/Overlay';
 import Dropzone from 'Components/shared/Dropzone';
 
 import styles from './index.style.scss';
 
 export const SectionPost = () => (
   <div id="post-section">
-    <Overlay type="loading" />
-    <Overlay type="processing" />
     <Dropzone
       acceptedMimeTypes="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       fileType="Excel"

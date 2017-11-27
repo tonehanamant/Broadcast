@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+require ('babel-polyfill');
 
 var { resolve } = require('path');
 var AutoPrefixer = require('autoprefixer');
@@ -11,7 +12,7 @@ var webpackConfig = {
   context: resolve(__dirname, '../src'),
 
   entry: {
-    app: './index.jsx',
+    app: ['babel-polyfill', './index.jsx'],
     vendor: HELPERS.exclude,
   },
 
@@ -52,8 +53,8 @@ var webpackConfig = {
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
-      __PRODUCTION__: true,
-      __API__: HELPERS.api.createApi('production'),
+      __PRODUCTION__: false,
+      __API__: HELPERS.api.createApi('qa'),
     }),
     new ExtractTextPlugin({
       filename: '[name]-style-[hash].css',
@@ -71,8 +72,8 @@ var webpackConfig = {
       LOADERS.svg,
       LOADERS.url,
       LOADERS.file,
-      LOADERS.style(false),  // true for development, false for prod, default to true
-      LOADERS.css(false),
+      LOADERS.style(true),  // true for development, false for prod, default to true
+      LOADERS.css(true),
     ]
   },
 };

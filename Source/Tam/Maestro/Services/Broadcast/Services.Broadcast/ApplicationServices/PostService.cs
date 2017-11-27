@@ -143,7 +143,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var allDemos = _AudiencesCache.GetAllLookups().ToDictionary(l => l.Id);
 
-            var postFiles = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>().GetAllPosts();
+            var postFiles = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>().GetAllPostsList();
             postFiles.ForEach(pf => pf.DemoLookups = pf.Demos.Select(d => allDemos[d]).ToList());
 
             return postFiles;

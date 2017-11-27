@@ -46,6 +46,20 @@ namespace Services.Broadcast.ApplicationServices
         RatesInitialDataDto GetInitialRatesData();
         Decimal ConvertRateForSpotLength(decimal rateFor30s, int outputRateSpotLength);
         List<StationContact> FindStationContactsByName(string query);
+
+        List<StationProgram> GetStationPrograms(
+            string inventorySourceString,
+            int stationCode,
+            DateTime startDate,
+            DateTime endDate);
+
+        List<StationProgram> GetStationPrograms(
+            string inventorySourceString,
+            int stationCode,
+            string timeFrame,
+            DateTime currentDate);
+
+        List<StationProgram> GetAllStationPrograms(string inventorySource, int stationCode);
     }
 
     public class InventoryService : IInventoryService
@@ -113,7 +127,7 @@ namespace Services.Broadcast.ApplicationServices
             return stations;
         }
 
-        public List<DisplayBroadcastStation> GetStationsWithFilter(string rateSource, string filterValue, DateTime today)
+        public List<DisplayBroadcastStation> GetStationsWithFilter(string rateSourceString, string filterValue, DateTime today)
         {
             DisplayBroadcastStation.StationFilter filter;
             var parseSuccess = Enum.TryParse(filterValue, true, out filter);
@@ -123,13 +137,50 @@ namespace Services.Broadcast.ApplicationServices
                 throw new ArgumentException(string.Format("Invalid station filter parameter: {0}", filterValue));
             }
 
+            var inventorySource = _ParseInventorySource(rateSourceString);
+
             var isIncluded = (filter == DisplayBroadcastStation.StationFilter.WithTodaysData);
-            var mediaWeekId = _MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDate(today).Id;
-            var stations = _stationRepository.GetBroadcastStationsByFlightWeek(_ParseInventorySource(rateSource), mediaWeekId, isIncluded);
+            var stations = _stationRepository.GetBroadcastStationsByDate(inventorySource.Id, today, isIncluded);
 
             _SetFlightData(stations, today);
 
             return stations;
+        }
+
+        public List<StationProgram> GetStationPrograms(string inventorySourceString, int stationCode, DateTime startDate, DateTime endDate)
+        {
+            var inventorySource = _ParseInventorySource(inventorySourceString);
+            var stationManifests = _inventoryRepository.GetStationManifestsBySourceStationCodeAndDates(inventorySource, stationCode, startDate, endDate);
+            var programs = _GetStationProgramsFromStationInventoryManifest(stationManifests);
+
+            return programs;
+        }
+
+        public List<StationProgram> GetStationPrograms(string inventorySourceString, int stationCode, string timeFrame, DateTime currentDate)
+        {
+
+            RatesTimeframe timeFrameValue;
+            try
+            {
+                var succeeded = RatesTimeframe.TryParse(timeFrame.ToUpper(), true, out timeFrameValue);
+                if (!succeeded) throw new ArgumentException(string.Format("Invalid timeframe specified: {0}.", timeFrame));
+            }
+            catch (Exception e)
+            {
+                throw new Exception(String.Format("Unable to parse rate timeframe for {0}: {1}", timeFrame, e.Message));
+            }
+
+            var dateRange = _QuarterCalculationEngine.GetDatesForTimeframe(timeFrameValue, currentDate);
+
+            return GetStationPrograms(inventorySourceString, stationCode, dateRange.Item1, dateRange.Item2);
+        }
+
+        public List<StationProgram> GetAllStationPrograms(string inventorySourceString, int stationCode)
+        {
+            var inventorySource = _ParseInventorySource(inventorySourceString);
+            var stationManifests = _inventoryRepository.GetStationManifestsBySourceAndStationCode(inventorySource, stationCode);
+            var programs = _GetStationProgramsFromStationInventoryManifest(stationManifests);
+            return programs;
         }
 
         public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request)
@@ -195,15 +246,16 @@ namespace Services.Broadcast.ApplicationServices
 
                 startTime = DateTime.Now;
 
-                var fileStationCodes =
-                    inventoryFile.InventoryGroups.SelectMany(g => g.Manifests)
-                        .Select(i => i.Station.Code)
-                        .Distinct()
-                        .ToList();
+                var fileStationsDict =
+                    inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Select(m => m.Station).Union(
+                        inventoryFile.InventoryManifests.Select(m => m.Station))
+                        .GroupBy(s => s.Code)
+                        .ToDictionary(g => g.First().Code, g => g.First().LegacyCallLetters);
+                       
 
                 using (var transaction = new TransactionScopeWrapper(_CreateTransactionScope(TimeSpan.FromMinutes(20))))
                 {
-                    LockStations(fileStationCodes, lockedStationCodes, stationLocks, inventoryFile);
+                    LockStations(fileStationsDict, lockedStationCodes, stationLocks, inventoryFile);
 
                     var isProprietary = inventorySource.Name == "CNN" ||
                                        inventorySource.Name == "TTNW";
@@ -216,10 +268,11 @@ namespace Services.Broadcast.ApplicationServices
                         _proprietarySpotCostCalculationEngine.CalculateSpotCost(request, inventoryFile);
                     }
 
-                    inventoryFile.FileStatus = InventoryFile.FileStatusEnum.Loaded;
-
                     _AddNewStationInventoryGroups(request, inventoryFile);
                     _SaveInventoryFileContacts(request, inventoryFile);
+                    _stationRepository.UpdateStationList(fileStationsDict.Keys.ToList(), request.UserName, DateTime.Now);
+                    inventoryFile.FileStatus = InventoryFile.FileStatusEnum.Loaded;
+                    _inventoryFileRepository.UpdateInventoryFile(inventoryFile, request.UserName);
 
                     transaction.Complete();
 
@@ -258,25 +311,21 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private void LockStations(List<int> fileStationCodes, List<int> lockedStationCodes, List<IDisposable> stationLocks, InventoryFile inventoryFile)
+        private void LockStations(Dictionary<int, string> fileStationsDict, List<int> lockedStationCodes, List<IDisposable> stationLocks, InventoryFile inventoryFile)
         {
             //Lock stations before database operations
-            foreach (var stationCode in fileStationCodes)
+            foreach (var fileStation in fileStationsDict)
             {
-                var lockResult = LockStation(stationCode);
+                var lockResult = LockStation(fileStation.Key);
                 if (lockResult.Success)
                 {
-                    lockedStationCodes.Add(stationCode);
-                    stationLocks.Add(new BomsLockManager(_SmsClient, new StationToken(stationCode)));
+                    lockedStationCodes.Add(fileStation.Key);
+                    stationLocks.Add(new BomsLockManager(_SmsClient, new StationToken(fileStation.Key)));
                 }
                 else
                 {
-                    var stationLetters =
-                        inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Where(i => i.Station.Code == stationCode)
-                            .First()
-                            .Station.LegacyCallLetters;
                     throw new ApplicationException(string.Format("Unable to update station. Station locked for editing {0}.",
-                        stationLetters));
+                        fileStation.Value));
                 }
             }
         }
@@ -459,11 +508,12 @@ namespace Services.Broadcast.ApplicationServices
                 Market = station.OriginMarket,
                 StationCode = stationCode,
                 StationName = station.LegacyCallLetters,
-                Programs = GetStationProgramsFromStationInventoryManifest(stationManifests),
+                Programs = _GetStationProgramsFromStationInventoryManifest(stationManifests),
                 Contacts = _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
                     .GetStationContactsByStationCode(stationCode)
             };
         }
+
 
         private void _SetDisplayDaypartForInventoryManifest(List<StationInventoryManifest> manifests)
         {
@@ -481,9 +531,13 @@ namespace Services.Broadcast.ApplicationServices
             });
         }
 
-        private List<StationProgram> GetStationProgramsFromStationInventoryManifest(List<StationInventoryManifest> stationManifests)
+        /// <summary>
+        /// Transform manifests into Station Program to match FE grid structure 
+        /// </summary>
+        /// <param name="stationManifests"></param>
+        /// <returns></returns>
+        private List<StationProgram> _GetStationProgramsFromStationInventoryManifest(List<StationInventoryManifest> stationManifests)
         {
-            // todo: still some properties missing
             return (from manifest in stationManifests
                 from daypart in manifest.ManifestDayparts
                 select new StationProgram()
@@ -491,10 +545,41 @@ namespace Services.Broadcast.ApplicationServices
                     ProgramName = daypart.ProgramName,
                     Airtime = daypart.Daypart.Preview,
                     StartDate = manifest.EffectiveDate,
-                    EndDate = manifest.EndDate
+                    EndDate = manifest.EndDate,
+                    StationCode = manifest.Station.Code,
+                    SpotLength = _SpotLengthMap.Single(a => a.Value == manifest.SpotLengthId).Key,
+                    SpotsPerWeek = manifest.SpotsPerWeek,
+                    Rate15 = _GetSpotRateFromManifestRates(15, manifest.ManifestRates),
+                    Rate30 = _GetSpotRateFromManifestRates(30, manifest.ManifestRates),
+                    HouseHoldImpressions = _GetHouseHoldImpressionFromManifestAudiences(manifest.ManifestAudiencesReferences),
+                    Rating = _GetHouseHoldRatingFromManifestAudiences(manifest.ManifestAudiencesReferences)
                 }).ToList();
         }
 
+        private double? _GetHouseHoldRatingFromManifestAudiences(List<StationInventoryManifestAudience> list)
+        {
+            var houseHold = _GetHouseHoldAudienceFromManifestAudiences(list);
+            return houseHold != null ? houseHold.Rating : 0;
+        }
+
+        private double? _GetHouseHoldImpressionFromManifestAudiences(List<StationInventoryManifestAudience> list)
+        {
+            var houseHold = _GetHouseHoldAudienceFromManifestAudiences(list);
+            return houseHold != null ? houseHold.Impressions : 0;
+        }
+
+        private StationInventoryManifestAudience _GetHouseHoldAudienceFromManifestAudiences(
+            List<StationInventoryManifestAudience> list)
+        {
+            return list != null && list.Any()
+               ? list.SingleOrDefault(c => c.Audience.Id == BroadcastConstants.HouseHoldAudienceId)
+               : null;
+        }
+
+        private decimal _GetSpotRateFromManifestRates(int spotLength, List<StationInventoryManifestRate> list)
+        {
+            return list != null && list.Any() ? list.SingleOrDefault(c => c.SpotLengthId == _SpotLengthMap[spotLength]).Rate : 0;
+        }
 
         public List<LookupDto> GetAllGenres()
         {
@@ -640,5 +725,6 @@ namespace Services.Broadcast.ApplicationServices
             var result = rateFor30s * (Decimal) costMultiplier;
             return result;
         }
+
     }
 }

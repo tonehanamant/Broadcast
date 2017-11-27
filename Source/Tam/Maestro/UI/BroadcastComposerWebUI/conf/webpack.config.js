@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+require ('babel-polyfill');
 
 var { resolve } = require('path');
 var AutoPrefixer = require('autoprefixer');
@@ -11,6 +12,7 @@ var webpackConfig = {
   context: resolve(__dirname, '../src'),
 
   entry: [
+    'babel-polyfill',
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
