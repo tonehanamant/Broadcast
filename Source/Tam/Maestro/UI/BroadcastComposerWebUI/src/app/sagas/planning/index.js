@@ -1,5 +1,7 @@
 /* eslint-disable import/prefer-default-export */
-import { takeEvery, put } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
+import { call, takeEvery, put } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
 
 import * as appActions from 'Ducks/app/actionTypes';
 import * as planningActions from 'Ducks/planning/actionTypes';
@@ -497,7 +499,12 @@ export function* saveProposal({ payload: params }) {
         processing: true,
       },
     });
-    const response = yield saveProposal(params);
+    const proposal = { ...params.proposal };
+    if (params.force) {
+      proposal.ForceSave = true;
+      proposal.ValidationWarning = null;
+    }
+    const response = yield saveProposal(proposal);
     const { status, data } = response;
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
@@ -526,14 +533,117 @@ export function* saveProposal({ payload: params }) {
       });
       throw new Error();
     }
-    // yield put({
-    //   type: ACTIONS.CREATE_ALERT,
-    //   alert: {
-    //     type: 'success',
-    //     headline: 'Proposal Saved',
-    //   },
-    // });
-    // window.location()
+    if (!data.Data.ValidationWarning) {
+      yield put({
+        type: ACTIONS.CREATE_ALERT,
+        alert: {
+          type: 'success',
+          headline: 'Proposal Saved Successfully',
+          message: '',
+        },
+      });
+    }
+    yield put({
+      type: ACTIONS.RECEIVE_PROPOSAL,
+      data,
+    });
+  } catch (e) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'Propsal not saved.',
+          message: 'The server encountered an error processing the request (save proposal). Please try again or contact your administrator to review error logs.',
+          exception: e.response.data.ExceptionMessage || '',
+        },
+      });
+    }
+    if (e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
+/* ////////////////////////////////// */
+/* SAVE PROPOSAL AS VERSION */
+/* ////////////////////////////////// */
+export function* saveProposalAsVersion({ payload: params }) {
+  /* eslint-disable no-shadow */
+  const { saveProposal } = api.planning;
+  try {
+    yield put({
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
+      overlay: {
+        id: 'saveProposalAsVersion',
+        processing: true,
+      },
+    });
+    const proposal = { ...params };
+          proposal.Version = null; // Set to null, BE assigns new version
+    const response = yield saveProposal(proposal);
+    const { status, data } = response;
+    yield put({
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
+      overlay: {
+        id: 'saveProposalAsVersion',
+        processing: false,
+      },
+    });
+    if (status !== 200) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'Proposal not saved as version.',
+          message: `The server encountered an error processing the request (save proposal ${params.FileId}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Success) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'Proposal not saved as version.',
+          message: data.Message || `The server encountered an error processing the request (save proposal ${params.FileId}). Please try again or contact your administrator to review error logs.`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Data.ValidationWarning) {
+      yield put({
+        type: ACTIONS.CREATE_ALERT,
+        alert: {
+          type: 'success',
+          headline: 'Proposal Saved As Version Successfully',
+          message: '',
+        },
+      });
+    }
+    yield put({
+      type: ACTIONS.RECEIVE_PROPOSAL,
+      data,
+    });
+    yield put({
+      type: ACTIONS.TOGGLE_MODAL,
+      modal: {
+        modal: 'confirmModal',
+        active: true,
+        properties: {
+          titleText: 'Saved Proposal Version',
+          bodyText: 'Would you like to continue working in the proposal OR exit the proposal and return to the Planning dashboard?',
+          closeButtonText: 'Continue',
+          closeButtonBsStyle: 'success',
+          actionButtonText: 'Exit',
+          actionButtonBsStyle: 'default',
+          action: () => window.location.assign('/broadcast/planning'),
+        },
+      },
+    });
   } catch (e) {
     if (e.response) {
       yield put({
@@ -563,8 +673,22 @@ export function* deleteProposalById({ payload: id }) {
   const { deleteProposal } = api.planning;
 
   try {
+    yield put({
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
+      overlay: {
+        id: 'deleteProposal',
+        processing: true,
+      },
+    });
     const response = yield deleteProposal(id);
     const { status, data } = response;
+    yield put({
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
+      overlay: {
+        id: 'deleteProposal',
+        processing: false,
+      },
+    });
     if (status !== 200) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
@@ -593,10 +717,15 @@ export function* deleteProposalById({ payload: id }) {
         message: `${id} was successfully removed.`,
       },
     });
-    // yield put({
-    //   type: ACTIONS.REQUEST_PROPOSALS,
-    // });
-    // window.location()
+    yield put({
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
+      overlay: {
+        id: 'deleteProposal',
+        processing: true,
+      },
+    });
+    yield call(delay, 2000);
+    yield put(push('/broadcast/planning'));
   } catch (e) {
     if (e.response) {
       yield put({
@@ -632,10 +761,11 @@ export function* deleteProposalById({ payload: id }) {
 // . . .
 
 /* ////////////////////////////////// */
-/* UPDATE PROPOSAL */
+/* UPDATE PROPOSAL (FROM DETAILS) */
 /* ////////////////////////////////// */
 export function* updateProposal({ payload: params }) {
   /* eslint-disable no-shadow */
+  console.log('PARMS', params);
   const { updateProposal } = api.planning;
   try {
     yield put({
@@ -741,6 +871,10 @@ export function* watchRequestProposalVersion() {
 
 export function* watchSaveProposal() {
   yield takeEvery(ACTIONS.SAVE_PROPOSAL, saveProposal);
+}
+
+export function* watchSaveProposalAsVersion() {
+  yield takeEvery(ACTIONS.SAVE_PROPOSAL_AS_VERSION, saveProposalAsVersion);
 }
 
 export function* watchDeleteProposalById() {

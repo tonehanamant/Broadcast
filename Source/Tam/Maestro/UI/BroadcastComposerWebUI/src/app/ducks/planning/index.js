@@ -3,13 +3,15 @@ import * as ACTIONS from './actionTypes.js';
 
 const initialState = {
   initialdata: {},
+  proposalLock: {},
   proposal: {},
-  versions: {},
+  proposalEditForm: {},
+  versions: [],
 };
 
 // Reducer
 export default function reducer(state = initialState, action) {
-  const { type, data } = action;
+  const { type, data, payload } = action;
 
   switch (type) {
     // PROPOSAL INITIAL DATA
@@ -19,11 +21,19 @@ export default function reducer(state = initialState, action) {
         initialdata: data.Data,
       };
 
+    // PROPOSAL LOCK UNLOCK
+    case ACTIONS.RECEIVE_PROPOSAL_LOCK:
+    return {
+      ...state,
+      proposalLock: data.Data,
+    };
+
     // PROPOSAL
     case ACTIONS.RECEIVE_PROPOSAL:
       return {
         ...state,
         proposal: data.Data,
+        proposalEditForm: data.Data,
       };
 
     // PROPOSAL VERSIONS
@@ -37,7 +47,16 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         proposal: data.Data,
+        proposalEditForm: data.Data,
       };
+
+    case ACTIONS.UPDATE_PROPOSAL_EDIT_FORM:
+      return Object.assign({}, state, {
+        proposalEditForm: {
+          ...state.proposalEditForm,
+          [payload.key]: payload.value,
+        },
+      });
 
     default:
       return state;
@@ -85,6 +104,11 @@ export const saveProposal = params => ({
   payload: params,
 });
 
+export const saveProposalAsVersion = params => ({
+  type: ACTIONS.SAVE_PROPOSAL_AS_VERSION,
+  payload: params,
+});
+
 export const deleteProposal = id => ({
   type: ACTIONS.DELETE_PROPOSAL,
   payload: id,
@@ -93,4 +117,9 @@ export const deleteProposal = id => ({
 export const updateProposal = params => ({
   type: ACTIONS.UPDATE_PROPOSAL,
   payload: params,
+});
+
+export const updateProposalEditForm = keyValue => ({
+  type: ACTIONS.UPDATE_PROPOSAL_EDIT_FORM,
+  payload: keyValue,
 });

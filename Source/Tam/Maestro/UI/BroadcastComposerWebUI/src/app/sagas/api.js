@@ -50,10 +50,10 @@ const planning = {
   getProposals: () => (
     call(GET, `${apiBase}Proposals/GetProposals`, {})
   ),
-  getProposalLock: () => (
+  getProposalLock: id => (
     call(GET, `${apiBase}Proposals/Proposal/${id}/Lock`, {})
   ),
-  getProposalUnlock: () => (
+  getProposalUnlock: id => (
     call(GET, `${apiBase}Proposals/Proposal/${id}/Lock`, {})
   ),
   getProposal: id => (
@@ -66,7 +66,7 @@ const planning = {
     call(GET, `${apiBase}Proposals/Proposal/${params.id}/Versions/${params.version}`, {})
   ),
   saveProposal: params => (
-    call(PUT, `${apiBase}Proposals/SaveProposal`, params)
+    call(POST, `${apiBase}Proposals/SaveProposal`, params)
   ),
   deleteProposal: id => (
     call(DELETE, `${apiBase}Proposals/DeleteProposal/${id}`, {})
