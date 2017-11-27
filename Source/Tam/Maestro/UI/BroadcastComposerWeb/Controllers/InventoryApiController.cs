@@ -214,6 +214,13 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        [Route("Programs")]
+        public BaseResponse<bool> SaveProgram(StationProgram stationProgram)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveProgram(stationProgram));
+        }
+
+        [HttpPost]
         [Route("ConvertRate")]
         public BaseResponse<Decimal> ConvertRate(RateConversionRequest request)
         {
@@ -222,6 +229,22 @@ namespace BroadcastComposerWeb.Controllers
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                             .ConvertRateForSpotLength(request.Rate30, request.SpotLength));
+        }
+
+        [HttpPost]
+        [Route("Conflicts")]
+        public BaseResponse<List<StationProgram>> GetStationConflicts(StationProgramConflictRequest conflict)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                .GetStationProgramConflicts(conflict));
+        }
+
+        [HttpPost]
+        [Route("Conflicts/{programId}")]
+        public BaseResponse<bool> GetStationProgramConflicted(StationProgramConflictRequest conflict, int programId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                .GetStationProgramConflicted(conflict, programId));
         }
     }
 }

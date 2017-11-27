@@ -1,0 +1,31 @@
+﻿[
+  {
+    "Airtime": {
+      "endTime": 64800,
+      "fri": true,
+      "mon": true,
+      "sat": false,
+      "startTime": 21600,
+      "sun": false,
+      "Text": "M-F 6AM-6PM",
+      "thu": true,
+      "tue": true,
+      "wed": true
+    },
+    "AirtimePreview": "M-F 6AM-6PM",
+    "Conflicts": null,
+    "EffectiveDate": "2017-12-01T00:00:00",
+    "EndDate": "2018-01-01T00:00:00",
+    "FlightWeeks": [],
+    "HouseHoldImpressions": 1000.0,
+    "Id": 24538,
+    "ProgramName": "Testing",
+    "Rate15": 0.0,
+    "Rate30": 0.0,
+    "RateSource": null,
+    "Rating": 50.0,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 7353
+  }
+]

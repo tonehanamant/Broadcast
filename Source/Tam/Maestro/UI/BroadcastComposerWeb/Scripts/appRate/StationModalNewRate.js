@@ -3,6 +3,8 @@
 //Conflicts handling: get conflicts on flights/airtime; edit conflicts - custom locked DRP (id start is in past); check conflict api
 //Store/Save data per BE requirements; maintain changed conflicts
 
+//NOTE: Genres processing currently not active (commented out)
+
 var StationModalNewRate = function (view) {
     //private
     var _view = view;
@@ -58,13 +60,14 @@ var StationModalNewRate = function (view) {
             this.hasPendingConflictsChanges = false;
             this.newProgram = {
                 //StationCode: null, //StationCode ?
-                Program: null,
+                RateSource: _view.controller.getSource(),
+                ProgramName: null,
                 Rate15: null,
                 Rate30: null,
-                Impressions: null,
+                HouseHoldImpressions: null,
                 Rating: null,
-                FlightStartDate: null,
-                FlightEndDate: null,
+                EffectiveDate: null,
+                EndDate: null,
                 Genres: [], //currently one item but will change
                 Flights: [], //StartDate, EndDate, IsHiatus
                 Airtime: null, //airtime object
@@ -120,13 +123,14 @@ var StationModalNewRate = function (view) {
             var me = this;
             if ($("#new_program_form").valid()) {
                 me.newProgram.Conflicts = this.getConflictsForSave(this.$ProgramConflictGrid.records);
-                me.newProgram.Program = $('#new_program_name_input').val();
-                me.newProgram.Genres = me.processGenres();
+                me.newProgram.ProgramName = $('#new_program_name_input').val();
+                //not currenlty processsing Genres
+                //me.newProgram.Genres = me.processGenres();
                 me.newProgram.Rate15 = $('#new_program_spot15_input').val() ? parseFloat($('#new_program_spot15_input').val().replace(/[$,]+/g, "")) : null;
                 me.newProgram.Rate30 = $('#new_program_spot30_input').val() ? parseFloat($('#new_program_spot30_input').val().replace(/[$,]+/g, "")) : null;
 
-                me.newProgram.Impressions = parseFloat($('#new_program_hhimpressions_input').val().replace(/[$,]+/g, ""));
-                me.newProgram.Impressions = util.multiplyImpressions(me.newProgram.Impressions);
+                me.newProgram.HouseHoldImpressions = parseFloat($('#new_program_hhimpressions_input').val().replace(/[$,]+/g, ""));
+                me.newProgram.HouseHoldImpressions = util.multiplyImpressions(me.newProgram.HouseHoldImpressions);
 
                 me.newProgram.Rating = parseFloat($('#new_program_hhrating_input').val().replace(/[$,]+/g, ""));
 
@@ -245,10 +249,10 @@ var StationModalNewRate = function (view) {
             // save picker data for BE post - change date format appropriately
             getElement.on('apply.daterangepicker', function (ev, picker) {
                 var adjustStart = picker.startDate.startOf('week').weekday(1);
-                me.newProgram.FlightStartDate = adjustStart.format('MM-DD-YYYY');
+                me.newProgram.EffectiveDate = adjustStart.format('MM-DD-YYYY');
                 //need to set to Sunday
                 var adjustEnd = picker.endDate.day() == 0 ? picker.endDate : picker.endDate.add(1, "week").startOf('week').weekday(0);
-                me.newProgram.FlightEndDate = adjustEnd.format('MM-DD-YYYY');
+                me.newProgram.EndDate = adjustEnd.format('MM-DD-YYYY');
 
                 getElement.val(adjustStart.format('MM/DD/YYYY') + ' - ' + adjustEnd.format('MM/DD/YYYY'));
                 //fix validation change not displaying
@@ -260,7 +264,7 @@ var StationModalNewRate = function (view) {
                     flight.IsHiatus = !$(this).prop('checked');
                     flights.push(flight);
                 });
-                me.newProgram.Flights = flights;
+                me.newProgram.FlightWeeks = flights;
                
                 //check conflicts
                 me.checkNewProgramConflicts();
@@ -395,11 +399,11 @@ var StationModalNewRate = function (view) {
         //check airtime and flights vals - if both: get data from api call that will populate grid; show warning if conflicts changes unsaved
         //if none or just one then clear the grid data
         checkNewProgramConflicts: function () {
-            if (this.newProgram.Airtime && this.newProgram.FlightStartDate && this.newProgram.FlightEndDate) {
+            if (this.newProgram.Airtime && this.newProgram.EffectiveDate && this.newProgram.EndDate) {
                 var checkObj = {
                     Airtime: this.newProgram.Airtime,
-                    StartDate: this.newProgram.FlightStartDate,
-                    EndDate: this.newProgram.FlightEndDate
+                    StartDate: this.newProgram.EffectiveDate,
+                    EndDate: this.newProgram.EndDate
                 };
                 var callback = this.setProgramConflictsGrid.bind(this);
                 if (this.hasPendingConflictsChanges) {

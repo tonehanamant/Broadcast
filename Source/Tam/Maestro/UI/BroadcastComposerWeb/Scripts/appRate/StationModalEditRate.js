@@ -1,4 +1,5 @@
 ﻿/*** UPDATE RATES PROGRAM MODAL  RELATED ***/
+//NOTE: Genres processing currently not active (commented out)
 var StationModalEditRate = function (view) {
     var _view = view;
 
@@ -44,15 +45,16 @@ var StationModalEditRate = function (view) {
             //input30.off('blur keydown');
             input30.off('change');
 
-            $('#update_program_name_input').val(me.activeRecord.Program);
-            $('#update_program_airtime_input').val(me.activeRecord.Airtime);
+            $('#update_program_name_input').val(me.activeRecord.ProgramName);
+            $('#update_program_airtime_input').val(me.activeRecord.AirtimePreview);
+            //Flight is now constructed in the program renderer based on dates
             $('#update_program_flight_input').val(me.activeRecord.Flight);
             $('#update_program_spot15_input').val(me.activeRecord.Rate15);
             $('#update_program_spot30_input').val(me.activeRecord.Rate30);
-            $('#update_program_hhimpressions_input').val(util.divideImpressions(me.activeRecord.Impressions));
+            $('#update_program_hhimpressions_input').val(util.divideImpressions(me.activeRecord.HouseHoldImpressions));
             $('#update_program_hhrating_input').val(me.activeRecord.Rating);
             $('#update_program_effective_date_input').val(null);
-            $('#update_program_audience_id_input').val(me.activeRecord.AudienceId);
+           // $('#update_program_audience_id_input').val(me.activeRecord.AudienceId);
 
             me.loadGenres();
             me.applyMasksToForm();
@@ -84,12 +86,14 @@ var StationModalEditRate = function (view) {
                     tags: true,
                     data: genres
                 });
-
+                //not processing per current
+                /*
                 var selected = me.activeRecord.Genres.map(function (selectedGenre) {
                     return selectedGenre.Id;
                 });
 
                 $('#update_program_genre_input').val(selected).trigger('change');
+                */
             });
         },
 
@@ -106,27 +110,31 @@ var StationModalEditRate = function (view) {
                     impressions = util.multiplyImpressions(impressions);
 
                 var rating = parseFloat($('#update_program_hhrating_input').val().replace(/,/g, ''));
-                var audienceId = $('#update_program_audience_id_input').val();
+                //var audienceId = $('#update_program_audience_id_input').val();
 
                 var getEffectiveDate = $('#update_program_effective_date_input').val();
                 var effectiveDate = moment(new Date(getEffectiveDate)).isValid() ? moment(new Date(getEffectiveDate)).format('YYYY-MM-DD' + 'T00:00:00') : null;
                 
-                var genres = me.processGenres();
+                //not currently processing genres
+                //var genres = me.processGenres();
 
                 //adjust to BE specifications
                 var updatedProgram = {
                     //UpdatedProgramId: me.activeRecord.Id,
-                    Genres: genres,
+                    //Genres: genres,
+                    Id: this.activeRecord.Id,
+                    RateSource: _view.controller.getSource(),
                     Rate15: rate15,
                     Rate30: rate30,
-                    Impressions: impressions,
+                    HouseHoldImpressions: impressions,
                     Rating: rating,
-                    FlightStartDate: effectiveDate,
-                    FlightEndDate: this.activeRecord.FlightEndDate,
-                    AudienceId: audienceId
+                    EffectiveDate: effectiveDate,
+                    Airtime: this.activeRecord.Airtime,
+                    EndDate: this.activeRecord.EndDate
+                   // AudienceId: audienceId
                 };
 
-                _view.controller.apiUpdateRatesProgram(this.activeRecord.Id, updatedProgram);
+                _view.controller.apiUpdateRatesProgram(updatedProgram);
             }
         },
 
@@ -176,7 +184,7 @@ var StationModalEditRate = function (view) {
 
             // daterangepicker config
             var currentDay = moment();
-            var lastDay = this.activeRecord.FlightEndDate;
+            var lastDay = this.activeRecord.EndDate;
             var beginningOfWeek = currentDay.startOf('week').weekday(1);
 
             getElement.daterangepicker({
@@ -215,7 +223,7 @@ var StationModalEditRate = function (view) {
 
                 // check if before FlightEndDate
                 var effectiveDate = moment(value, 'YYYY/MM/DD').toDate();
-                var flightEndDate = (new Date(me.activeRecord.FlightEndDate));
+                var flightEndDate = (new Date(me.activeRecord.EndDate));
                 flightEndDate.setDate(flightEndDate.getDate() + 1);
 
                 if (effectiveDate > flightEndDate) {

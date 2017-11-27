@@ -1,15 +1,30 @@
 ﻿[
   {
-    "Airtime": " 12AM-12AM",
+    "Airtime": {
+      "endTime": 1,
+      "fri": false,
+      "mon": false,
+      "sat": false,
+      "startTime": 0,
+      "sun": false,
+      "Text": " 12AM-12AM",
+      "thu": false,
+      "tue": false,
+      "wed": false
+    },
+    "AirtimePreview": " 12AM-12AM",
+    "Conflicts": null,
+    "EffectiveDate": "2016-06-27T00:00:00",
     "EndDate": "2016-09-25T00:00:00",
+    "FlightWeeks": [],
     "HouseHoldImpressions": 30500.0,
     "ProgramName": "Q3 CADENT NEWS AT 11:30AM",
     "Rate15": 84.5000,
     "Rate30": 130.0000,
+    "RateSource": null,
     "Rating": 3.8,
     "SpotLength": 30,
     "SpotsPerWeek": null,
-    "StartDate": "2016-06-27T00:00:00",
     "StationCode": 5044
   }
 ]

@@ -112,11 +112,11 @@ var RateStationController = BaseController.extend({
         this.refreshApiProgramRates();
     },
 
-    apiUpdateRatesProgram: function (programId, data) {
+    apiUpdateRatesProgram: function (data) {
         var jsonObj = JSON.stringify(data);
-        var url = baseUrl + 'api/RatesManager/Programs/' + programId;
+        var url = baseUrl + 'api/RatesManager/Programs'
 
-        httpService.put(url, this.onApiUpdateRatesProgram.bind(this), null, jsonObj, {
+        httpService.post(url, this.onApiUpdateRatesProgram.bind(this), null, jsonObj, {
             $ViewElement: $('#update_program_form'), //show processing to form
             ErrorMessage: 'Error Updating Program Rate',
             TitleErrorMessage: 'Program Rate Not Updated',

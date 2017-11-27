@@ -17037,15 +17037,6 @@
     "RateDataThrough": "-"
   },
   {
-    "Affiliation": "AZA",
-    "CallLetters": "AZSD",
-    "Code": 7353,
-    "LegacyCallLetters": "AZSD",
-    "MarketCode": 425,
-    "OriginMarket": "San Diego",
-    "RateDataThrough": "-"
-  },
-  {
     "Affiliation": "IND",
     "CallLetters": "WMOR-TV 32.2",
     "Code": 7360,
