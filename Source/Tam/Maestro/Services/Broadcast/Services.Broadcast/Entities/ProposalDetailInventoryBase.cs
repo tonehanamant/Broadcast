@@ -30,8 +30,8 @@ namespace Services.Broadcast.Entities
         // daypart is saved
         public int? DetailDaypartId { get; set; }
 
-        public DateTime? DetailFlightStartDate { get; set; }
-        public DateTime? DetailFlightEndDate { get; set; }
+        public DateTime DetailFlightStartDate { get; set; }
+        public DateTime DetailFlightEndDate { get; set; }
         public List<ProposalFlightWeek> DetailFlightWeeks { get; set; }
 
         public decimal? DetailTargetBudget { get; set; }

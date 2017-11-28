@@ -333,8 +333,8 @@ namespace Services.Broadcast.Converters
         private List<ScxMarketStationProgramSpotWeek> _SetProgramWeeks(ScxData data,
             ProposalDetailOpenMarketInventoryDto detail)
         {
-            var startDate = detail.DetailFlightStartDate.Value;
-            var endDate = detail.DetailFlightEndDate.Value;
+            var startDate = detail.DetailFlightStartDate;
+            var endDate = detail.DetailFlightEndDate;
 
             var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksIntersecting(startDate, endDate);
 

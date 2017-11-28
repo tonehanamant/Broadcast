@@ -577,7 +577,11 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61949/</IISUrl>
+<<<<<<< HEAD
+          <IISUrl>http://localhost:61944/</IISUrl>
+=======
+          <IISUrl>http://localhost:62344/</IISUrl>
+>>>>>>> origin/develop
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -61,6 +61,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<ISpotLengthRepository, SpotLengthBroadcastRepository>();
             instance.RegisterType<IProposalProgramsCriteriaRepository, ProposalProgramsCriteriaRepository>();
             instance.RegisterType<ITrafficRepository, TrafficRepository>();
+            instance.RegisterType<IStationProgramRepository, StationProgramRepository>();
             
 
             instance.RegisterType<IMediaMonthAndWeekAggregateRepository, MediaMonthAndWeekAggregateAndWeekAggregateRepository>();
