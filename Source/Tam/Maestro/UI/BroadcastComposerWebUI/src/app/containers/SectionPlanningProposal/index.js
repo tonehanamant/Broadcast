@@ -37,12 +37,10 @@ export class SectionPlanningProposal extends Component {
     } else if (id) {
       this.props.getProposal(id);
     }
-
-    this.props.getProposalVersions(id);
   }
 
   render() {
-    const { toggleModal, proposalLock, initialdata, proposal, versions, proposalEditForm, updateProposalEditForm, saveProposal, deleteProposal, saveProposalAsVersion } = this.props;
+    const { toggleModal, proposalLock, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, saveProposal, deleteProposal, saveProposalAsVersion } = this.props;
     return (
       <div id="planning-section-proposal">
         {
@@ -51,7 +49,7 @@ export class SectionPlanningProposal extends Component {
           Object.keys(initialdata).length > 0 &&
           Object.keys(proposal).length > 0 &&
           Object.keys(proposalEditForm).length > 0 &&
-          versions.length > 0 &&
+
           <div id="proposal-body">
             <ProposalSwitchVersionModal
               toggleModal={toggleModal}
@@ -66,6 +64,7 @@ export class SectionPlanningProposal extends Component {
               proposal={proposal}
               proposalEditForm={proposalEditForm}
               updateProposalEditForm={updateProposalEditForm}
+              getProposalVersions={getProposalVersions}
               deleteProposal={deleteProposal}
               saveProposalAsVersion={saveProposalAsVersion}
               versions={versions}

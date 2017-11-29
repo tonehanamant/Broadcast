@@ -8,28 +8,11 @@ export default class ProposalHeaderActions extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    // this.createStatusOptions = this.createStatusOptions.bind(this);
-    // this.onStatusSelected = this.onStatusSelected.bind(this);
     this.onChangeStatus = this.onChangeStatus.bind(this);
     this.onSaveVersion = this.onSaveVersion.bind(this);
     this.onSwitchVersions = this.onSwitchVersions.bind(this);
     this.onDeleteProposal = this.onDeleteProposal.bind(this);
   }
-
-  // createStatusOptions() {
-  //   const options = [];
-  //   this.props.statusOptions.map(item =>
-  //     // options.push({ label: item.Display, value: item.Id }),
-  //     options.push(<option key={item.Id} value={item.Id}>{item.Display}</option>),
-  //   );
-  //   return options;
-  // }
-
-  // onStatusSelected(e) {
-  //   console.log('onStatusSelected', this, e.target.value);
-  //   // this.props.selectedStatusId = e.target.value;
-  //   this.setState({ selectedStatusId: e.target.value });
-  // }
 
   onChangeStatus(value) {
     this.props.updateProposalEditForm({ key: 'Status', value: value ? value.Id : null });
@@ -40,11 +23,7 @@ export default class ProposalHeaderActions extends Component {
   }
 
   onSwitchVersions() {
-    this.props.toggleModal({
-      modal: 'planningSwitchVersionsModal',
-      active: true,
-      properties: {},
-    });
+    this.props.getProposalVersions(this.props.proposalEditForm.Id);
   }
 
   onDeleteProposal() {
@@ -63,8 +42,10 @@ export default class ProposalHeaderActions extends Component {
   }
 
   render() {
-    console.log('ProposalHeaderActions', this.props);
+    // console.log('ProposalHeaderActions', this.props);
     const { initialdata, proposalEditForm } = this.props;
+    const copyStatuses = [...initialdata.Statuses];
+    const statusOptions = (proposalEditForm.Status !== 4) ? copyStatuses.filter(item => item.Id !== 4) : copyStatuses;
     return (
       <Row>
         <Col md={10}>
@@ -73,15 +54,12 @@ export default class ProposalHeaderActions extends Component {
               <Col componentClass={ControlLabel} sm={2}>
                 <strong>Status</strong>
               </Col>
-              {/* <FormControl componentClass="select" value={this.state.selectedStatusId} style={{ margin: '0 20px 0 10px' }} onChange={this.onStatusSelected}>
-                {this.createStatusOptions()}
-              </FormControl> */}
               <Col sm={10}>
                 <Select
                   name="proposalStatus"
                   value={proposalEditForm.Status}
                   // placeholder=""
-                  options={initialdata.Statuses}
+                  options={statusOptions}
                   labelKey="Display"
                   valueKey="Id"
                   onChange={this.onChangeStatus}
@@ -116,17 +94,14 @@ export default class ProposalHeaderActions extends Component {
 }
 
 ProposalHeaderActions.defaultProps = {
- // selectedStatusId: 2,
-//  statusOptions: [],
 };
 
 /* eslint-disable react/no-unused-prop-types */
 ProposalHeaderActions.propTypes = {
-  // statusOptions: PropTypes.array.isRequired,
-  // selectedStatusId: PropTypes.number.isRequired,
   initialdata: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
   updateProposalEditForm: PropTypes.func.isRequired,
+  getProposalVersions: PropTypes.func.isRequired,
   deleteProposal: PropTypes.func.isRequired,
   saveProposalAsVersion: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,

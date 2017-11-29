@@ -15,7 +15,7 @@ export default class ProposalHeader extends Component {
 
   render() {
     console.log('HEADER PROPS>>>>>>>>>>>>>>>>>', this.props);
-    const { toggleModal, isEdit, initialdata, proposal, proposalEditForm, updateProposalEditForm, deleteProposal, saveProposalAsVersion } = this.props;
+    const { toggleModal, isEdit, initialdata, proposal, proposalEditForm, updateProposalEditForm, getProposalVersions, deleteProposal, saveProposalAsVersion } = this.props;
     return (
       <div id="proposal-header">
         {isEdit &&
@@ -36,6 +36,7 @@ export default class ProposalHeader extends Component {
               <ProposalHeaderActions
                 initialdata={initialdata}
                 proposalEditForm={proposalEditForm}
+                getProposalVersions={getProposalVersions}
                 updateProposalEditForm={updateProposalEditForm}
                 deleteProposal={deleteProposal}
                 saveProposalAsVersion={saveProposalAsVersion}
@@ -76,6 +77,7 @@ ProposalHeader.propTypes = {
   initialdata: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
   updateProposalEditForm: PropTypes.func.isRequired,
+  getProposalVersions: PropTypes.func.isRequired,
   deleteProposal: PropTypes.func.isRequired,
   saveProposalAsVersion: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
