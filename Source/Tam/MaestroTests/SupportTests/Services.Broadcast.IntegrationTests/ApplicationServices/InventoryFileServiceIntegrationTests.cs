@@ -929,6 +929,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketInventoryFileWithDifferentSpotLengths()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    RatesStream = new FileStream(
+                        @".\Files\multi-quarter_program_rate_file_wvtm.xml",
+                        FileMode.Open,
+                        FileAccess.Read),
+                    UserName = "IntegrationTestUser",
+                    RatingBook = 416
+                };
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
+                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                var result = _InventoryFileService.SaveInventoryFile(request);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+
+            }
+
+        }
+
         [Ignore]
         [Test]
         public void UpdateLastModifiedDateAfterAddingGenre()

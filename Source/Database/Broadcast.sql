@@ -1316,6 +1316,40 @@ GO
 
 /*************************************** BCOP-2088 - END *****************************************************/
 
+/*************************************** BCOP-2237 - START *****************************************************/
+if not exists (
+	select 1 from spot_length_cost_multipliers slcm 
+	inner join spot_lengths sl on slcm.spot_length_id = sl.id
+	where sl.length = 45)
+begin
+	print 'Adding 45s spot length cost multiplier'
+	insert into spot_length_cost_multipliers (spot_length_id, cost_multiplier)
+	select id, delivery_multiplier from spot_lengths where length = 45
+end
+go
+
+if not exists (
+	select 1 from spot_length_cost_multipliers slcm 
+	inner join spot_lengths sl on slcm.spot_length_id = sl.id
+	where sl.length = 180)
+begin
+	print 'Adding 180s spot length cost multiplier'
+	insert into spot_length_cost_multipliers (spot_length_id, cost_multiplier)
+	select id, delivery_multiplier from spot_lengths where length = 180
+end
+go
+
+if not exists (
+	select 1 from spot_length_cost_multipliers slcm 
+	inner join spot_lengths sl on slcm.spot_length_id = sl.id
+	where sl.length = 300)
+begin
+	print 'Adding 300s spot length cost multiplier'
+	insert into spot_length_cost_multipliers (spot_length_id, cost_multiplier)
+	select id, delivery_multiplier from spot_lengths where length = 300
+end
+go
+/*************************************** BCOP-2237 - END *****************************************************/
 
 
 GO
