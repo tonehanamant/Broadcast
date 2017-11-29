@@ -22,17 +22,17 @@ export class ConfirmModal extends Component {
     this.actionButtonClick = this.actionButtonClick.bind(this);
   }
 
-  actionButtonClick() {
-    this.close();
-    this.props.modal.properties.action();
-  }
-
   close() {
     this.props.toggleModal({
       modal: 'confirmModal',
       active: false,
       properties: this.props.modal.properties,
     });
+  }
+
+  actionButtonClick() {
+    this.close();
+    this.props.modal.properties.action();
   }
 
   render() {
@@ -49,7 +49,7 @@ export class ConfirmModal extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button bsStyle={this.props.modal.properties.actionButtonBsStyle} onClick={this.actionButtonClick}>{this.props.modal.properties.actionButtonText}</Button>
-          <Button onClick={this.close}>{this.props.modal.properties.closeButtonText}</Button>
+          <Button onClick={this.close} bsStyle={this.props.modal.properties.closeButtonBsStyle || 'default'}>{this.props.modal.properties.closeButtonText}</Button>
         </Modal.Footer>
       </Modal>
     );
@@ -63,6 +63,7 @@ ConfirmModal.defaultProps = {
       titleText: 'Confirm Modal',
       bodyText: 'Body Text',
       closeButtonText: 'Close',
+      closeButtonBsStyle: 'default',
       actionButtonText: 'Action',
       actionButtonBsStyle: 'warning',
       action: () => {},

@@ -31,13 +31,14 @@ export class AppHeader extends Component {
   render() {
     return (
       <div id="app-header">
-        <NavigationBar environment={this.props.environment} employee={this.props.employee} />
+        <NavigationBar routing={this.props.routing} environment={this.props.environment} employee={this.props.employee} />
       </div>
     );
   }
 }
 
 AppHeader.propTypes = {
+  routing: PropTypes.object.isRequired,
   environment: PropTypes.string.isRequired,
   employee: PropTypes.object.isRequired,
   getEnvironment: PropTypes.func.isRequired,

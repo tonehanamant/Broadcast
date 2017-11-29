@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
+import { Link } from 'react-router-dom';
 import { Navbar, Nav, NavItem, Row, Col } from 'react-bootstrap';
 
 import UserEnvironment from 'Components/header/UserEnvironment';
@@ -39,11 +40,11 @@ export class NavigationBar extends Component {
           <Col>
             <Navbar.Collapse>
               <Nav>
-                <NavItem href="/broadcast/rates" target="_self">Rate Cards</NavItem>
-                <NavItem href="/broadcast/rates" target="_self">Planning</NavItem>
-                <NavItem href="/broadcast/traffic" target="_self">Traffic</NavItem>
-                <NavItem href="/broadcast/Home/TrackerPrePosting" target="_self">Tracker Pre Posting</NavItem>
-                <NavItem active href="/post">Post</NavItem>
+                <NavItem componentClass={Link} href="/broadcast/rates" to="/broadcast/rates">Rate Cards</NavItem>
+                <NavItem componentClass={Link} href="/broadcast/planning" to="/broadcast/planning">Planning</NavItem>
+                <NavItem componentClass={Link} href="/broadcast/traffic" to="/broadcast/traffic">Traffic</NavItem>
+                <NavItem componentClass={Link} href="/broadcast/Home/TrackerPrePosting" to="/broadcast/Home/TrackerPrePosting">Tracker Pre Posting</NavItem>
+                <NavItem componentClass={Link} href="/broadcastreact/post" to="/broadcastreact/post" active={this.props.routing.location.pathname === '/broadcastreact/post'}>Post</NavItem>
               </Nav>
             </Navbar.Collapse>
           </Col>
@@ -54,6 +55,7 @@ export class NavigationBar extends Component {
 }
 
 NavigationBar.propTypes = {
+  routing: PropTypes.object.isRequired,
   environment: PropTypes.string.isRequired,
   employee: PropTypes.object.isRequired,
 };

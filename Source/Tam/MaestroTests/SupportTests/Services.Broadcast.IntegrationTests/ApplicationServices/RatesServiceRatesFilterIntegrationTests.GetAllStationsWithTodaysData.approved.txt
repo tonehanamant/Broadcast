@@ -7,5 +7,14 @@
     "MarketCode": 230,
     "OriginMarket": "Birmingham (Ann and Tusc)",
     "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "AZA",
+    "CallLetters": "AZSD",
+    "Code": 7353,
+    "LegacyCallLetters": "AZSD",
+    "MarketCode": 425,
+    "OriginMarket": "San Diego",
+    "RateDataThrough": "-"
   }
 ]

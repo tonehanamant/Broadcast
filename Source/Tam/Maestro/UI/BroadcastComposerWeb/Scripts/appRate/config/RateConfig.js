@@ -300,7 +300,7 @@
             ],
             columns: [
                 {
-                    field: 'Airtime',
+                    field: 'AirtimePreview',
                     caption: 'Air Time',
                     sortable: true,
                     //attr: 'align=center',
@@ -400,6 +400,8 @@
                         //    var mrk = '<span class="glyphicon glyphicon-info-sign" style="" aria-hidden="false"></span>';
                         //    html = '<span class="span-block" data-container="body" data-html="true" data-toggle="tooltip" title="' + tooltipText + '">' + html + '&nbsp;' + mrk + '</span>';
                         //}
+                        //try changing the record so can use in edit station form
+                        record.Flight = start + end;
                         return start + end;
                     }
                 }
