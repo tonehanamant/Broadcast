@@ -19,11 +19,11 @@
     "FlightWeeks": [],
     "HouseHoldImpressions": 30500.0,
     "ProgramName": "Q3 CADENT NEWS AT 11:30AM",
-    "Rate15": 84.5000,
-    "Rate30": 130.0000,
+    "Rate15": 0.0,
+    "Rate30": 0.0,
     "RateSource": null,
     "Rating": 3.8,
-    "SpotLength": 30,
+    "SpotLength": 90,
     "SpotsPerWeek": null,
     "StationCode": 5044
   }
