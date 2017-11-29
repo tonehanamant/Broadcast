@@ -142,35 +142,13 @@ namespace Services.Broadcast.Converters.RateImport
         {
             var manifestRates = new List<StationInventoryManifestRate>();
 
-            manifestRates.Add(new StationInventoryManifestRate()
+            foreach (var spotLength in _SpotLengthIdsByLength)
             {
-                Rate = periodRate * (decimal) _SpotLengthMultipliers[15],
-                SpotLengthId = _SpotLengthIdsByLength[15]
-            });
-
-            manifestRates.Add(new StationInventoryManifestRate()
-            {
-                Rate = periodRate,
-                SpotLengthId = _SpotLengthIdsByLength[30]
-            });
-
-            manifestRates.Add(new StationInventoryManifestRate()
-            {
-                Rate = periodRate * (decimal)_SpotLengthMultipliers[60],
-                SpotLengthId = _SpotLengthIdsByLength[60]
-            });
-
-            manifestRates.Add(new StationInventoryManifestRate()
-            {
-                Rate = periodRate * (decimal)_SpotLengthMultipliers[90],
-                SpotLengthId = _SpotLengthIdsByLength[90]
-            });
-
-            manifestRates.Add(new StationInventoryManifestRate()
-            {
-                Rate = periodRate * (decimal)_SpotLengthMultipliers[120],
-                SpotLengthId = _SpotLengthIdsByLength[120]
-            });
+                var manifestRate = new StationInventoryManifestRate();
+                manifestRate.SpotLengthId = _SpotLengthIdsByLength[spotLength.Key];
+                manifestRate.Rate = periodRate * (decimal) _SpotLengthMultipliers[spotLength.Key];
+                manifestRates.Add(manifestRate);
+            }
 
             return manifestRates;
         }

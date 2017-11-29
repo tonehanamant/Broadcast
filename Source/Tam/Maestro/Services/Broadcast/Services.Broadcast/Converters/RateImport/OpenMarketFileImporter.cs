@@ -194,38 +194,35 @@ namespace Services.Broadcast.Converters.RateImport
 
                 var availLineRate = string.IsNullOrEmpty(availLine.Rate) ? 0 : decimal.Parse(availLine.Rate);
 
-                if (spotLength == 30)
+                if (spotLength == 30) //only create other spot length rates if 30s rate is provided
                 {
                     manifestRates.AddRange(_GetManifestRatesFromMultipliers(availLineRate));
                 }
                 else
                 {
-                    switch (spotLength)
+                    if (SpotLengthIdsByLength.ContainsKey(spotLength))
                     {
-                        case 15:
-                        case 60:
-                        case 90:
-                        case 120:
-                var manifestRate = new StationInventoryManifestRate()
-                {
-                                SpotLengthId = spotLengthId,
-                                Rate = availLineRate
-                };
-                            manifestRates.Add(manifestRate);
-                            break;
-                        default:
-                            fileProblems.Add(
-                                new InventoryFileProblem()
-                                {
-                                    ProblemDescription =
-                                        string.Format(
-                                            "Unknown spot length found: {0}",
-                                            spotLength),
-                                    ProgramName = availLine.AvailName,
-                                    StationLetters = stationCallLetters
-                                });
-                            break;
+                        var manifestRate = new StationInventoryManifestRate()
+                        {
+                            SpotLengthId = spotLengthId,
+                            Rate = availLineRate
+                        };
+                        manifestRates.Add(manifestRate);
                     }
+                    else
+                    {
+                        fileProblems.Add(
+                        new InventoryFileProblem()
+                        {
+                            ProblemDescription =
+                                string.Format(
+                                    "Unknown spot length found: {0}",
+                                    spotLength),
+                            ProgramName = availLine.AvailName,
+                            StationLetters = stationCallLetters
+                        });
+                    }
+
                 }
 
                 return manifestRates;
@@ -245,31 +242,27 @@ namespace Services.Broadcast.Converters.RateImport
                 }
                 else
                 {
-                    switch (spotLength)
+                    if (SpotLengthIdsByLength.ContainsKey(spotLength))
                     {
-                        case 15:
-                        case 60:
-                        case 90:
-                        case 120:
-                            var manifestRate = new StationInventoryManifestRate()
-                            {
-                                SpotLengthId = spotLengthId,
-                                Rate = availLineRate
-                            };
-                manifestRates.Add(manifestRate);
-                            break;
-                        default:
-                            fileProblems.Add(
-                                new InventoryFileProblem()
-                                {
-                                    ProblemDescription =
-                                        string.Format(
-                                            "Unknown spot length found: {0}",
-                                            spotLength),
-                                    ProgramName = programName,
-                                    StationLetters = stationCallLetters
-                                });
-                            break;
+                        var manifestRate = new StationInventoryManifestRate()
+                        {
+                            SpotLengthId = spotLengthId,
+                            Rate = availLineRate
+                        };
+                        manifestRates.Add(manifestRate);
+                    }
+                    else
+                    {
+                        fileProblems.Add(
+                        new InventoryFileProblem()
+                        {
+                            ProblemDescription =
+                                string.Format(
+                                    "Unknown spot length found: {0}",
+                                    spotLength),
+                            ProgramName = programName,
+                            StationLetters = stationCallLetters
+                        });
                     }
                 }
 
