@@ -15,17 +15,18 @@ const MarketGroupSelector = ({ title, open, onClose }) => (
     <Modal.Body>
       <Row>
         <Col md={6}>
-          <MarketSelector />
+          <MarketSelector name="Markets" />
         </Col>
 
         <Col md={6}>
-          <MarketSelector />
+          <MarketSelector name="Blackout Markets" />
         </Col>
       </Row>
     </Modal.Body>
 
     <Modal.Footer>
-      <Button onClick={onClose}>Close</Button>
+      <Button onClick={onClose} bsStyle="danger">Cancel</Button>
+      <Button onClick={onClose} bsStyle="success">Save</Button>
     </Modal.Footer>
   </Modal>
 );
