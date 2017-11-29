@@ -5,11 +5,13 @@ using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using System.Data.Entity;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Repositories
 {

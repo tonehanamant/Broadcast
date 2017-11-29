@@ -1,1 +1,13 @@
-﻿[]
+﻿[
+  {
+    "Affiliation": "AZA",
+    "CallLetters": "AZSD",
+    "Code": 7353,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "AZSD",
+    "MarketCode": 425,
+    "ModifiedDate": "2016-11-16T05:55:10.86",
+    "OriginMarket": "San Diego",
+    "RateDataThrough": "-"
+  }
+]

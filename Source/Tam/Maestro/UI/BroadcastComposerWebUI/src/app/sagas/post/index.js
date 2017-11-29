@@ -449,7 +449,6 @@ export function* savePostFileEdit({ payload: params }) {
   }
 }
 
-
 /* ////////////////////////////////// */
 /* UPLOAD POST FILE */
 /* ////////////////////////////////// */
@@ -540,6 +539,7 @@ export function* uploadPostFile({ payload: params }) {
     }
   }
 }
+
 
 /* ////////////////////////////////// */
 /* WATCHERS */

@@ -21,7 +21,6 @@ export function* requestEnvironment() {
     // Yield getEnvirontment
     const response = yield getEnvironment();
     const { status, data } = response;
-    console.log('RESPONSE', response);
     // Unset loading overlay
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,

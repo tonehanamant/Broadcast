@@ -15,9 +15,10 @@ const mapDispatchToProps = dispatch => (
 /* eslint-disable react/prefer-stateless-function */
 export class SectionPlanningProposalCreate extends Component {
   render() {
+    const isEdit = false;
     return (
       <div id="planning-section-proposal">
-          <ProposalHeader />
+          <ProposalHeader isEdit={isEdit} />
       </div>
     );
   }

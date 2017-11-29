@@ -1,15 +1,30 @@
 ﻿[
   {
-    "Airtime": " 12AM-12AM",
+    "Airtime": {
+      "endTime": 1,
+      "fri": false,
+      "mon": false,
+      "sat": false,
+      "startTime": 0,
+      "sun": false,
+      "Text": " 12AM-12AM",
+      "thu": false,
+      "tue": false,
+      "wed": false
+    },
+    "AirtimePreview": " 12AM-12AM",
+    "Conflicts": null,
+    "EffectiveDate": "2015-12-28T00:00:00",
     "EndDate": "2016-03-27T00:00:00",
+    "FlightWeeks": [],
     "HouseHoldImpressions": 10500.0,
     "ProgramName": "Q1 CADENT NEWS AT 11:30AM",
-    "Rate15": 71.5000,
-    "Rate30": 110.0000,
+    "Rate15": 110.0000,
+    "Rate30": 0.0,
+    "RateSource": null,
     "Rating": 3.8,
-    "SpotLength": 30,
+    "SpotLength": 15,
     "SpotsPerWeek": null,
-    "StartDate": "2015-12-28T00:00:00",
     "StationCode": 5044
   }
 ]

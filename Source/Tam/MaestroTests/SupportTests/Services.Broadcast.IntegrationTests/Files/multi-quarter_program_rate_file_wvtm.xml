@@ -65,7 +65,7 @@
         </DayTimes>
         <DaypartName>EARLY NEWS</DaypartName>
         <AvailName>Q1 CADENT NEWS AT 11:30AM</AvailName>
-        <SpotLength>00:00:30</SpotLength>
+        <SpotLength>00:00:15</SpotLength>
         <Periods>
           <DetailedPeriod endDate="2016-03-27" startDate="2015-12-28">
             <Rate>110.00</Rate>
@@ -125,7 +125,7 @@
         </DayTimes>
         <DaypartName>EARLY NEWS</DaypartName>
         <AvailName>Q3 CADENT NEWS AT 11:30AM</AvailName>
-        <SpotLength>00:00:30</SpotLength>
+        <SpotLength>00:01:30</SpotLength>
         <Periods>
           <DetailedPeriod endDate="2016-09-25" startDate="2016-06-27">
             <Rate>130.00</Rate>
@@ -155,7 +155,7 @@
         </DayTimes>
         <DaypartName>EARLY NEWS</DaypartName>
         <AvailName>Q4 CADENT NEWS AT 11:30AM</AvailName>
-        <SpotLength>00:00:30</SpotLength>
+        <SpotLength>00:01:00</SpotLength>
         <Periods>
           <DetailedPeriod endDate="2016-10-02" startDate="2016-09-26">
             <Rate>140.00</Rate>

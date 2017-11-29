@@ -3,19 +3,23 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-// import { toggleModal, createAlert, setOverlayLoading } from 'Ducks/app';
-import { getProposalInitialData, getProposal, getProposalVersions, getProposalVersion } from 'Ducks/planning';
+import { toggleModal } from 'Ducks/app';
+import { getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, saveProposal, deleteProposal, saveProposalAsVersion } from 'Ducks/planning';
 
 import ProposalHeader from 'Components/planning/ProposalHeader';
+import ProposalActions from 'Components/planning/ProposalActions';
+import ProposalSwitchVersionModal from 'Components/planning/ProposalSwitchVersionModal';
 
-const mapStateToProps = ({ planning: { initialdata }, planning: { proposal }, planning: { versions } }) => ({
+const mapStateToProps = ({ planning: { proposalLock }, planning: { initialdata }, planning: { proposal }, planning: { versions }, planning: { proposalEditForm } }) => ({
+  proposalLock,
   initialdata,
   proposal,
   versions,
+  proposalEditForm,
 });
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ getProposalInitialData, getProposal, getProposalVersions, getProposalVersion }, dispatch)
+  bindActionCreators({ toggleModal, getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, saveProposal, deleteProposal, saveProposalAsVersion }, dispatch)
 );
 
 /* eslint-disable react/prefer-stateless-function */
@@ -23,23 +27,58 @@ export class SectionPlanningProposal extends Component {
   componentWillMount() {
     const id = this.props.match.params.id;
     const version = this.props.match.params.version;
-    console.log('PARAMS', this.props.match, 'ID', this.props.match.params.version, 'VERSION', this.props.match.params.version);
+
+    this.props.getProposalLock(id);
 
     this.props.getProposalInitialData();
 
     if (id && version) {
       this.props.getProposalVersion(id, version);
-      this.props.getProposalVersions(id);
     } else if (id) {
       this.props.getProposal(id);
-      this.props.getProposalVersions(id);
     }
+
+    this.props.getProposalVersions(id);
   }
 
   render() {
+    const { toggleModal, proposalLock, initialdata, proposal, versions, proposalEditForm, updateProposalEditForm, saveProposal, deleteProposal, saveProposalAsVersion } = this.props;
     return (
       <div id="planning-section-proposal">
-          <ProposalHeader />
+        {
+          Object.keys(proposalLock).length > 0 &&
+          !proposalLock.LockedUserId &&
+          Object.keys(initialdata).length > 0 &&
+          Object.keys(proposal).length > 0 &&
+          Object.keys(proposalEditForm).length > 0 &&
+          versions.length > 0 &&
+          <div id="proposal-body">
+            <ProposalSwitchVersionModal
+              toggleModal={toggleModal}
+              initialdata={initialdata}
+              proposal={proposal}
+              versions={versions}
+            />
+            <ProposalHeader
+              isEdit
+              toggleModal={toggleModal}
+              initialdata={initialdata}
+              proposal={proposal}
+              proposalEditForm={proposalEditForm}
+              updateProposalEditForm={updateProposalEditForm}
+              deleteProposal={deleteProposal}
+              saveProposalAsVersion={saveProposalAsVersion}
+              versions={versions}
+            />
+            <ProposalActions
+              toggleModal={toggleModal}
+              proposal={proposal}
+              proposalEditForm={proposalEditForm}
+              updateProposalEditForm={updateProposalEditForm}
+              saveProposal={saveProposal}
+            />
+          </div>
+        }
       </div>
     );
   }
@@ -50,14 +89,23 @@ export class SectionPlanningProposal extends Component {
 /* ////////////////////////////////// */
 SectionPlanningProposal.propTypes = {
   match: PropTypes.object.isRequired,
-  // initialdata: PropTypes.object.isRequired,
-  // proposal: PropTypes.object.isRequired,
-  // versions: PropTypes.object.isRequired,
+  proposalLock: PropTypes.object.isRequired,
+  initialdata: PropTypes.object.isRequired,
+  proposal: PropTypes.object.isRequired,
+  proposalEditForm: PropTypes.object.isRequired,
+  versions: PropTypes.array.isRequired,
 
+  getProposalLock: PropTypes.func.isRequired,
   getProposalInitialData: PropTypes.func.isRequired,
   getProposal: PropTypes.func.isRequired,
   getProposalVersions: PropTypes.func.isRequired,
   getProposalVersion: PropTypes.func.isRequired,
+  updateProposalEditForm: PropTypes.func.isRequired,
+  saveProposal: PropTypes.func.isRequired,
+  deleteProposal: PropTypes.func.isRequired,
+  saveProposalAsVersion: PropTypes.func.isRequired,
+
+  toggleModal: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SectionPlanningProposal);
