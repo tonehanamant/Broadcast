@@ -735,7 +735,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void LoadsInventoryFileWithUnknownSpotLength()
