@@ -366,7 +366,14 @@
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-10-02T00:00:00",
-    "FlightWeeks": [],
+    "FlightWeeks": [
+      {
+        "EndDate": "2016-10-02T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-09-26T00:00:00"
+      }
+    ],
     "HouseHoldImpressions": 40500.0,
     "ProgramName": "Q4 CADENT NEWS WITH 45SEC ADS",
     "Rate15": 0.0,
@@ -394,7 +401,80 @@
     "Conflicts": null,
     "EffectiveDate": "2016-10-03T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
-    "FlightWeeks": [],
+    "FlightWeeks": [
+      {
+        "EndDate": "2016-10-09T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-03T00:00:00"
+      },
+      {
+        "EndDate": "2016-10-16T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2016-10-23T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-17T00:00:00"
+      },
+      {
+        "EndDate": "2016-10-30T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-24T00:00:00"
+      },
+      {
+        "EndDate": "2016-11-06T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-31T00:00:00"
+      },
+      {
+        "EndDate": "2016-11-13T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-11-07T00:00:00"
+      },
+      {
+        "EndDate": "2016-11-20T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-11-14T00:00:00"
+      },
+      {
+        "EndDate": "2016-11-27T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-11-21T00:00:00"
+      },
+      {
+        "EndDate": "2016-12-04T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-11-28T00:00:00"
+      },
+      {
+        "EndDate": "2016-12-11T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-12-05T00:00:00"
+      },
+      {
+        "EndDate": "2016-12-18T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-12-12T00:00:00"
+      },
+      {
+        "EndDate": "2016-12-25T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-12-19T00:00:00"
+      }
+    ],
     "HouseHoldImpressions": 60500.0,
     "ProgramName": "Q4 CADENT NEWS WITH 45SEC ADS",
     "Rate15": 0.0,
@@ -422,7 +502,14 @@
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-10-02T00:00:00",
-    "FlightWeeks": [],
+    "FlightWeeks": [
+      {
+        "EndDate": "2016-10-02T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-09-26T00:00:00"
+      }
+    ],
     "HouseHoldImpressions": 40500.0,
     "ProgramName": "Q4 CADENT NEWS WITH 180SEC ADS",
     "Rate15": 0.0,
@@ -450,7 +537,80 @@
     "Conflicts": null,
     "EffectiveDate": "2016-10-03T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
-    "FlightWeeks": [],
+    "FlightWeeks": [
+      {
+        "EndDate": "2016-10-09T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-03T00:00:00"
+      },
+      {
+        "EndDate": "2016-10-16T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2016-10-23T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-17T00:00:00"
+      },
+      {
+        "EndDate": "2016-10-30T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-24T00:00:00"
+      },
+      {
+        "EndDate": "2016-11-06T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-31T00:00:00"
+      },
+      {
+        "EndDate": "2016-11-13T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-11-07T00:00:00"
+      },
+      {
+        "EndDate": "2016-11-20T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-11-14T00:00:00"
+      },
+      {
+        "EndDate": "2016-11-27T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-11-21T00:00:00"
+      },
+      {
+        "EndDate": "2016-12-04T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-11-28T00:00:00"
+      },
+      {
+        "EndDate": "2016-12-11T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-12-05T00:00:00"
+      },
+      {
+        "EndDate": "2016-12-18T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-12-12T00:00:00"
+      },
+      {
+        "EndDate": "2016-12-25T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-12-19T00:00:00"
+      }
+    ],
     "HouseHoldImpressions": 60500.0,
     "ProgramName": "Q4 CADENT NEWS WITH 180SEC ADS",
     "Rate15": 0.0,
@@ -478,7 +638,14 @@
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-10-02T00:00:00",
-    "FlightWeeks": [],
+    "FlightWeeks": [
+      {
+        "EndDate": "2016-10-02T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-09-26T00:00:00"
+      }
+    ],
     "HouseHoldImpressions": 40500.0,
     "ProgramName": "Q4 CADENT NEWS WITH 300SEC ADS",
     "Rate15": 0.0,
@@ -506,7 +673,80 @@
     "Conflicts": null,
     "EffectiveDate": "2016-10-03T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
-    "FlightWeeks": [],
+    "FlightWeeks": [
+      {
+        "EndDate": "2016-10-09T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-03T00:00:00"
+      },
+      {
+        "EndDate": "2016-10-16T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2016-10-23T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-17T00:00:00"
+      },
+      {
+        "EndDate": "2016-10-30T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-24T00:00:00"
+      },
+      {
+        "EndDate": "2016-11-06T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-10-31T00:00:00"
+      },
+      {
+        "EndDate": "2016-11-13T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-11-07T00:00:00"
+      },
+      {
+        "EndDate": "2016-11-20T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-11-14T00:00:00"
+      },
+      {
+        "EndDate": "2016-11-27T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-11-21T00:00:00"
+      },
+      {
+        "EndDate": "2016-12-04T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-11-28T00:00:00"
+      },
+      {
+        "EndDate": "2016-12-11T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-12-05T00:00:00"
+      },
+      {
+        "EndDate": "2016-12-18T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-12-12T00:00:00"
+      },
+      {
+        "EndDate": "2016-12-25T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2016-12-19T00:00:00"
+      }
+    ],
     "HouseHoldImpressions": 60500.0,
     "ProgramName": "Q4 CADENT NEWS WITH 300SEC ADS",
     "Rate15": 0.0,
