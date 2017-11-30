@@ -9,6 +9,8 @@ import { getProposalLock, getProposalInitialData, getProposal, getProposalVersio
 import ProposalHeader from 'Components/planning/ProposalHeader';
 import ProposalActions from 'Components/planning/ProposalActions';
 import ProposalSwitchVersionModal from 'Components/planning/ProposalSwitchVersionModal';
+import ProposalDetails from 'Components/planning/ProposalDetails';
+
 
 const mapStateToProps = ({ planning: { proposalLock }, planning: { initialdata }, planning: { proposal }, planning: { versions }, planning: { proposalEditForm } }) => ({
   proposalLock,
@@ -68,6 +70,9 @@ export class SectionPlanningProposal extends Component {
               deleteProposal={deleteProposal}
               saveProposalAsVersion={saveProposalAsVersion}
               versions={versions}
+            />
+            <ProposalDetails
+              proposalEditForm={proposalEditForm}
             />
             <ProposalActions
               toggleModal={toggleModal}
