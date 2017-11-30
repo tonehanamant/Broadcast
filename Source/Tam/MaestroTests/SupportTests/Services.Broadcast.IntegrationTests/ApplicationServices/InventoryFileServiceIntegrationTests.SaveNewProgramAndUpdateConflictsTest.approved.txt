@@ -14,9 +14,63 @@
     },
     "AirtimePreview": "M-F 6AM-6PM",
     "Conflicts": null,
-    "EffectiveDate": "2018-01-02T00:00:00",
-    "EndDate": "2018-01-25T00:00:00",
-    "FlightWeeks": [],
+    "EffectiveDate": "2018-01-07T00:00:00",
+    "EndDate": "2018-01-13T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 1000.0,
+    "ProgramName": "Testing",
+    "Rate15": 0.0,
+    "Rate30": 0.0,
+    "RateSource": null,
+    "Rating": 50.0,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 7353
+  },
+  {
+    "Airtime": {
+      "endTime": 64800,
+      "fri": true,
+      "mon": true,
+      "sat": false,
+      "startTime": 21600,
+      "sun": false,
+      "Text": "M-F 6AM-6PM",
+      "thu": true,
+      "tue": true,
+      "wed": true
+    },
+    "AirtimePreview": "M-F 6AM-6PM",
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-21T00:00:00",
+    "EndDate": "2018-01-27T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      }
+    ],
     "HouseHoldImpressions": 1000.0,
     "ProgramName": "Testing",
     "Rate15": 0.0,
@@ -44,7 +98,44 @@
     "Conflicts": null,
     "EffectiveDate": "2017-12-01T00:00:00",
     "EndDate": "2018-01-01T00:00:00",
-    "FlightWeeks": [],
+    "FlightWeeks": [
+      {
+        "EndDate": "2017-12-03T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2017-11-27T00:00:00"
+      },
+      {
+        "EndDate": "2017-12-10T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2017-12-04T00:00:00"
+      },
+      {
+        "EndDate": "2017-12-17T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2017-12-11T00:00:00"
+      },
+      {
+        "EndDate": "2017-12-24T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2017-12-18T00:00:00"
+      },
+      {
+        "EndDate": "2017-12-31T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2017-12-25T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "Id": 0,
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      }
+    ],
     "HouseHoldImpressions": 1000.0,
     "ProgramName": "Edited Program Name 54",
     "Rate15": 0.0,
