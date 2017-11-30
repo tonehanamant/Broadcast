@@ -6,6 +6,7 @@ using Services.Broadcast.Entities.InventoryOpenMarketFileXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Services.Broadcast.Entities.spotcableXML;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -141,6 +142,14 @@ namespace Services.Broadcast.Converters.RateImport
 
                         var spotLength = availLine.SpotLength.Minute * SecondsPerMinute +
                                              availLine.SpotLength.Second;
+
+                        var spotLengthProblem = _CheckSpotLength(spotLength, callLetters, programName);
+                        if (spotLengthProblem != null)
+                        {
+                            fileProblems.Add(spotLengthProblem);
+                            continue;
+                        }
+
                         var spotLengthId = SpotLengthIdsByLength[spotLength];
 
                         if (availLine.Periods != null && availLine.Periods.Count() > 0)
@@ -200,33 +209,44 @@ namespace Services.Broadcast.Converters.RateImport
                 }
                 else
                 {
-                    if (SpotLengthIdsByLength.ContainsKey(spotLength))
+                    var spotLengthProblem = _CheckSpotLength(spotLength, stationCallLetters, availLine.AvailName);
+                    if (spotLengthProblem != null)
+                    {
+                        fileProblems.Add(spotLengthProblem);
+                    }
+                    else
                     {
                         var manifestRate = new StationInventoryManifestRate()
                         {
                             SpotLengthId = spotLengthId,
                             Rate = availLineRate
                         };
-                        manifestRates.Add(manifestRate);
-                    }
-                    else
-                    {
-                        fileProblems.Add(
-                        new InventoryFileProblem()
-                        {
-                            ProblemDescription =
-                                string.Format(
-                                    "Unknown spot length found: {0}",
-                                    spotLength),
-                            ProgramName = availLine.AvailName,
-                            StationLetters = stationCallLetters
-                        });
+                        manifestRates.Add(manifestRate);    
                     }
 
                 }
 
                 return manifestRates;
             }
+
+        private InventoryFileProblem _CheckSpotLength(int spotLength, string stationLetters, string programName)
+        {
+            if (!SpotLengthIdsByLength.ContainsKey(spotLength))
+            {
+                return 
+                new InventoryFileProblem()
+                {
+                    ProblemDescription =
+                        string.Format(
+                            "Unknown spot length found: {0}",
+                            spotLength),
+                    ProgramName = programName,
+                    StationLetters = stationLetters
+                };
+            }
+
+            return null;
+        }
 
             private List<StationInventoryManifestRate> _GetManifestRatesforAvailLineWithDetailedPeriods(int spotLengthId,
                 AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriod detailedPeriod, string programName, string stationCallLetters, List<InventoryFileProblem> fileProblems)
@@ -242,7 +262,12 @@ namespace Services.Broadcast.Converters.RateImport
                 }
                 else
                 {
-                    if (SpotLengthIdsByLength.ContainsKey(spotLength))
+                    var spotLengthProblem = _CheckSpotLength(spotLength, stationCallLetters, programName);
+                    if (spotLengthProblem != null)
+                    {
+                        fileProblems.Add(spotLengthProblem);
+                    }
+                    else
                     {
                         var manifestRate = new StationInventoryManifestRate()
                         {
@@ -250,19 +275,6 @@ namespace Services.Broadcast.Converters.RateImport
                             Rate = availLineRate
                         };
                         manifestRates.Add(manifestRate);
-                    }
-                    else
-                    {
-                        fileProblems.Add(
-                        new InventoryFileProblem()
-                        {
-                            ProblemDescription =
-                                string.Format(
-                                    "Unknown spot length found: {0}",
-                                    spotLength),
-                            ProgramName = programName,
-                            StationLetters = stationCallLetters
-                        });
                     }
                 }
 
@@ -290,6 +302,14 @@ namespace Services.Broadcast.Converters.RateImport
 
                         var spotLength = availLine.SpotLength.Minute * SecondsPerMinute +
                                              availLine.SpotLength.Second;
+
+                        var spotLengthProblem = _CheckSpotLength(spotLength, callLetters, programName);
+                        if (spotLengthProblem != null)
+                        {
+                            fileProblems.Add(spotLengthProblem);
+                            continue;
+                        }
+
                         var spotLengthId = SpotLengthIdsByLength[spotLength];
 
                         var manifestAudiences = _GetManifestAudienceListForAvailLine(
