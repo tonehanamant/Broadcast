@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AAAA-Message xmlns:tvb="http://www.AAAA.org/schemas/spotTV" xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes" xmlns="http://www.AAAA.org/schemas/spotTVCableProposal">
+	<AAAA-Values>
+		<SchemaName>SpotTVCableProposal</SchemaName>
+		<SchemaVersion>0.3.0.5A</SchemaVersion>
+		<Media>SpotTV</Media>
+		<BusinessObject>Proposal</BusinessObject>
+		<Action>New</Action>
+		<UniqueMessageID>IDAMKO3C</UniqueMessageID>
+	</AAAA-Values>
+	<Proposal uniqueIdentifier="PALM SPRINGS KESQ SYN 3q17-KESQ" version="1" sendDateTime="2017-06-27T23:19:50" weekStartDay="Mo" startDate="2017-12-17" endDate="2017-12-27">
+		<Seller companyName="KATZ CONTINENTAL">
+			<Salesperson name="DIANN KARNITSKY"/>
+		</Seller>
+		<Buyer buyingCompanyName="N/A"/>
+		<Advertiser name="Cadent Network">
+			<Product name="PALM SPRINGS KESQ SYN 3q17"/>
+		</Advertiser>
+		<Name>PALM SPRINGS KESQ SYN 3q17-KESQ</Name>
+		<Outlets>
+			<TelevisionStation callLetters="WVTM" parentPlus="N" outletId="OUT0"/>
+		</Outlets>
+		<AvailList startDate="2017-12-17" endDate="2017-12-27" identifier="AL001" isPackage="N">
+			<Name>Television Schedule - Palm Springs, CA Jul16 DMA Nielsen Live+1</Name>
+			<OutletReferences>
+				<OutletReference outletFromProposalRef="OUT0" outletForListId="OUL0"/>
+			</OutletReferences>
+			<DemoCategories>
+				<DemoCategory DemoId="DM0">
+					<tvb:DemoType>Rating</tvb:DemoType>
+					<tvb:Group>Homes</tvb:Group>
+					<tvb:AgeFrom>0</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+			</DemoCategories>
+			<TargetDemo demoRef="DM0"/>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>12:15</StartTime>
+						<EndTime>15:15</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Harry</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>Harry</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2017-12-17" endDate="2017-12-27">
+						<Rate>700.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+		</AvailList>
+	</Proposal>
+</AAAA-Message>

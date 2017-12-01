@@ -39,6 +39,7 @@ namespace Services.Broadcast.Repositories
             DateTime startDate, DateTime endDate);
         void SaveStationInventoryManifest(StationInventoryManifest stationInventoryManifest);
         void UpdateStationInventoryManifest(StationInventoryManifest stationInventoryManifest);
+        bool CheckIfManifestByStationProgramFlightDaypartExists(int stationCode, string programName, DateTime startDate, DateTime endDate, int daypartId);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -870,5 +871,28 @@ namespace Services.Broadcast.Repositories
                 context.SaveChanges();
             });
         }
+
+
+        public bool CheckIfManifestByStationProgramFlightDaypartExists(
+            int stationCode,
+            string programName,
+            DateTime startDate,
+            DateTime endDate,
+            int daypartId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var matchingManifestDayparts = context.station_inventory_manifest_dayparts.Where(
+                        md =>
+                            md.daypart_id == daypartId
+                            && md.program_name.Equals(programName, StringComparison.InvariantCultureIgnoreCase)
+                            && md.station_inventory_manifest.station_code == stationCode
+                            && md.station_inventory_manifest.effective_date == startDate
+                            && md.station_inventory_manifest.end_date == endDate).Select(md => md.id).ToList();
+                    return matchingManifestDayparts.Any();
+                });
+        }
+
     }
 }
