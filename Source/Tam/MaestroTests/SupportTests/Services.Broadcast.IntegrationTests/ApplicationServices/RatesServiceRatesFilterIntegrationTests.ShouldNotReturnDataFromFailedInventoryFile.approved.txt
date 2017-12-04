@@ -1,5 +1,258 @@
 ﻿[
   {
+    "Affiliation": "FOX",
+    "CallLetters": "KCYU-LD 41.1",
+    "Code": 1045,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KCYU",
+    "MarketCode": 410,
+    "ModifiedDate": "2017-12-01T16:39:14.123",
+    "OriginMarket": "Yakima-Pasco-Rchlnd-Knnwck",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "KFNB 20.1",
+    "Code": 1160,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KFNB",
+    "MarketCode": 367,
+    "ModifiedDate": "2017-12-01T16:39:14.513",
+    "OriginMarket": "Casper-Riverton",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "KHQA-TV 7.2",
+    "Code": 2279,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "NHQA",
+    "MarketCode": 317,
+    "ModifiedDate": "2017-12-01T16:39:13.613",
+    "OriginMarket": "Quincy-Hannibal-Keokuk",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "KCWQ",
+    "Code": 2772,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KCWQ",
+    "MarketCode": 404,
+    "ModifiedDate": "2017-12-01T16:39:13.647",
+    "OriginMarket": "Palm Springs",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "KION-TV 46.2",
+    "Code": 2784,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "NION",
+    "MarketCode": 428,
+    "ModifiedDate": "2017-12-01T16:39:13.24",
+    "OriginMarket": "Monterey-Salinas",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "NBC",
+    "CallLetters": "KNBN-DT 21.1",
+    "Code": 3503,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KNBN",
+    "MarketCode": 364,
+    "ModifiedDate": "2017-12-01T16:39:13.69",
+    "OriginMarket": "Rapid City",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CBS",
+    "CallLetters": "KHQA-TV 7.1",
+    "Code": 5192,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KHQA",
+    "MarketCode": 317,
+    "ModifiedDate": "2017-12-01T16:39:14.187",
+    "OriginMarket": "Quincy-Hannibal-Keokuk",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "NBC",
+    "CallLetters": "WGEM-TV 10.1",
+    "Code": 5198,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "WGEM",
+    "MarketCode": 317,
+    "ModifiedDate": "2017-12-01T16:39:13.697",
+    "OriginMarket": "Quincy-Hannibal-Keokuk",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CBS",
+    "CallLetters": "KIDK 3.1",
+    "Code": 5225,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KIDK",
+    "MarketCode": 358,
+    "ModifiedDate": "2017-12-01T16:39:13.213",
+    "OriginMarket": "Idaho Fals-Pocatllo(Jcksn)",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "KIII 3.1",
+    "Code": 5319,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KIII",
+    "MarketCode": 200,
+    "ModifiedDate": "2017-12-01T16:39:14.877",
+    "OriginMarket": "Corpus Christi",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "KTWO-TV 2.1",
+    "Code": 5408,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KTWO",
+    "MarketCode": 367,
+    "ModifiedDate": "2017-12-01T16:39:14.613",
+    "OriginMarket": "Casper-Riverton",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CBS",
+    "CallLetters": "KXGN-TV 5.1",
+    "Code": 5465,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KXGN",
+    "MarketCode": 398,
+    "ModifiedDate": "2017-12-01T16:39:13.137",
+    "OriginMarket": "Glendive",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CBS",
+    "CallLetters": "KION-TV 46.1",
+    "Code": 5927,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KION",
+    "MarketCode": 428,
+    "ModifiedDate": "2017-12-01T16:39:13.24",
+    "OriginMarket": "Monterey-Salinas",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "WWSB 40.1",
+    "Code": 5942,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "WWSB",
+    "MarketCode": 139,
+    "ModifiedDate": "2017-12-01T16:39:13.69",
+    "OriginMarket": "Tampa-St. Pete (Sarasota)",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "KATN 2.1",
+    "Code": 6069,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KATN",
+    "MarketCode": 345,
+    "ModifiedDate": "2017-12-01T16:39:14.687",
+    "OriginMarket": "Fairbanks",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "KYUR 13.1",
+    "Code": 6072,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KYUR",
+    "MarketCode": 343,
+    "ModifiedDate": "2017-12-01T16:39:14.267",
+    "OriginMarket": "Anchorage",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "WDBD 40.1",
+    "Code": 6173,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "WDBD",
+    "MarketCode": 318,
+    "ModifiedDate": "2017-12-01T16:39:13.11",
+    "OriginMarket": "Jackson, MS",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "NBC",
+    "CallLetters": "KTFT-LD 7.1",
+    "Code": 6269,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KTFT",
+    "MarketCode": 360,
+    "ModifiedDate": "2017-12-01T16:39:14.327",
+    "OriginMarket": "Twin Falls",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "WNTZ-TV 48.1",
+    "Code": 6433,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "WNTZ",
+    "MarketCode": 244,
+    "ModifiedDate": "2017-12-01T16:39:14.087",
+    "OriginMarket": "Alexandria, LA",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "KXPI-LD 34.2",
+    "Code": 6444,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KXPI",
+    "MarketCode": 358,
+    "ModifiedDate": "2017-12-01T16:39:13.213",
+    "OriginMarket": "Idaho Fals-Pocatllo(Jcksn)",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "KTBY 4.1",
+    "Code": 6682,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KTBY",
+    "MarketCode": 343,
+    "ModifiedDate": "2017-12-01T16:39:14.17",
+    "OriginMarket": "Anchorage",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "KJUD 8.1",
+    "Code": 6684,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KJUD",
+    "MarketCode": 347,
+    "ModifiedDate": "2017-12-01T16:39:13.133",
+    "OriginMarket": "Juneau",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "KDFX-CD 39.1",
+    "Code": 7011,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KDFX",
+    "MarketCode": 404,
+    "ModifiedDate": "2017-12-01T16:39:13.647",
+    "OriginMarket": "Palm Springs",
+    "RateDataThrough": "-"
+  },
+  {
     "Affiliation": "AZA",
     "CallLetters": "AZSD",
     "Code": 7353,
@@ -8,6 +261,39 @@
     "MarketCode": 425,
     "ModifiedDate": "2016-11-16T05:55:10.86",
     "OriginMarket": "San Diego",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "WGEM-TV 10.3",
+    "Code": 7634,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "GGEM",
+    "MarketCode": 317,
+    "ModifiedDate": "2017-12-01T16:39:13.697",
+    "OriginMarket": "Quincy-Hannibal-Keokuk",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "KJNB-LD 39.1",
+    "Code": 10686,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "KJNB",
+    "MarketCode": 334,
+    "ModifiedDate": "2017-12-01T16:39:13.203",
+    "OriginMarket": "Jonesboro",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CBS",
+    "CallLetters": "KJNB-LD 39.2",
+    "Code": 10736,
+    "FlightWeeks": [],
+    "LegacyCallLetters": "NJNB",
+    "MarketCode": 334,
+    "ModifiedDate": "2017-12-01T16:39:13.203",
+    "OriginMarket": "Jonesboro",
     "RateDataThrough": "-"
   }
 ]
