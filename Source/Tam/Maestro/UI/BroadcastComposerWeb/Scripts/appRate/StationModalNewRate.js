@@ -69,7 +69,7 @@ var StationModalNewRate = function (view) {
                 EffectiveDate: null,
                 EndDate: null,
                 Genres: [], //currently one item but will change
-                FlightWeeks: [], //StartDate, EndDate, IsHiatus
+                Flights: [], //StartDate, EndDate, IsHiatus
                 Airtime: null, //airtime object
                 Conflicts: [] //flights in conflicts should only show changes
             };
@@ -133,7 +133,6 @@ var StationModalNewRate = function (view) {
                 me.newProgram.HouseHoldImpressions = util.multiplyImpressions(me.newProgram.HouseHoldImpressions);
 
                 me.newProgram.Rating = parseFloat($('#new_program_hhrating_input').val().replace(/[$,]+/g, ""));
-                // console.log('new program save', me.newProgram);
 
                 var callback = this.onAfterSaveNewRate.bind(this, addAnother);
                 _view.controller.apiSaveNewRatesProgram(this.newProgram, callback);
@@ -171,10 +170,9 @@ var StationModalNewRate = function (view) {
                 if (item.isEdited) {
                     var obj = {
                         Id: item.Id,
-                        FlightStartDate: item.EffectiveDate,
-                        FlightEndDate: item.EndDate,
-                        //Flights: item.FlightWeeks,
-                        Flights: item.ActiveFlights //changing to pass active
+                        FlightStartDate: item.FlightStartDate,
+                        FlightEndDate: item.FlightEndDate,
+                        Flights: item.Flights
                     };
                     ret.push(obj);
                 }
@@ -419,7 +417,6 @@ var StationModalNewRate = function (view) {
 
         
         //prepare conflicts grid data add hasConflict; store ActiveFlights; store original start and end for use in ranges
-        //NEW: flights no longer have Id - is always 0 - (change to use indexedId)
         prepareProgramConflictGridData: function (data) {
             var displayData = util.copyData(data);
             var ret = [];
@@ -428,14 +425,13 @@ var StationModalNewRate = function (view) {
                 var item = value;
                 item.recid = item.Id;
                 //attempt to store condition that has original hiatus (in both Flights and ActiveFlights
-                $.each(item.FlightWeeks, function (idx, flight) {
-                    flight.indexedId = idx + 1;
+                $.each(item.Flights, function (idx, flight) {
                     flight.hasOriginalHiatus = flight.IsHiatus;
                 });
-                item.ActiveFlights = util.copyArray(item.FlightWeeks);
+                item.ActiveFlights = util.copyArray(item.Flights);
                 item.hasConflict = true;
-                item.OriginalFlightStartDate = item.EffectiveDate;
-                item.OriginalFlightEndDate = item.EndDate;
+                item.OriginalFlightStartDate = item.FlightStartDate;
+                item.OriginalFlightEndDate = item.FlightEndDate;
                 ret.push(item);
             });
 
@@ -513,11 +509,11 @@ var StationModalNewRate = function (view) {
         },
 
         //determine flights/hiatus changes - alter record Flights to most curent
-        //NEW flights have on id so use injected indexedId
+
         getConflictFlightsChanges: function (recid, flights) {
             var newFlights = [];
             $('#conflicts_flight_week_list_' + recid + ' input').each(function () {
-                var originalFlight = util.objectFindByKey(flights, 'indexedId', parseInt($(this).val()));
+                var originalFlight = util.objectFindByKey(flights, 'Id', parseInt($(this).val()));
                 if (originalFlight) {
                     var notHiatus = $(this).prop('checked');
                     //originalFlight.isEdited = (originalFlight.IsHiatus === notHiatus);
@@ -532,7 +528,7 @@ var StationModalNewRate = function (view) {
         //set the grid record; change editing state; call the check single api; getconflicts format date per use for save/display
         setConflictFlightItem: function (start, end) {
             //this should update the stored FLights in each and retun a new version for UI handling (altered)
-            var flightChanges = this.getConflictFlightsChanges(this.activeConflictsRecord.recid, this.activeConflictsRecord.FlightWeeks);
+            var flightChanges = this.getConflictFlightsChanges(this.activeConflictsRecord.recid, this.activeConflictsRecord.Flights);
             //console.log('conflict flightChanges', flightChanges);
             start = start.startOf('week').weekday(1);
             end = (end.day() == 0) ? end : end.add(1, "week").startOf('week').weekday(0);
@@ -540,12 +536,12 @@ var StationModalNewRate = function (view) {
                 endSave = end.format('MM-DD-YYYY');
             var callback = this.setSingleProgramConflictStatus.bind(this);
             //change to single object per API change
-            _view.controller.apiCheckSingleConflict(this.activeConflictsRecord.Id, { ConflictedProgramNewStartDate: startSave, ConflictedProgramNewEndDate: endSave, StartDate: this.newProgram.EffectiveDate, EndDate: this.newProgram.EndDate }, callback);
+            _view.controller.apiCheckSingleConflict(this.activeConflictsRecord.Id, { ConflictedProgramNewStartDate: startSave, ConflictedProgramNewEndDate: endSave, StartDate: this.newProgram.FlightStartDate, EndDate: this.newProgram.FlightEndDate }, callback);
             var displayFlight = start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY');
-            //this.activeConflictsRecord.FlightWeeks = flightChanges;//set here and then wehn extend on set call will add the changes to (extend)
-            //this.activeConflictsRecord.Flight = displayFlight;
-            this.activeConflictsRecord.EffectiveDate = startSave;
-            this.activeConflictsRecord.EndDate = endSave;
+            //this.activeConflictsRecord.Flights = flightChanges;//set here and then wehn extend on set call will add the changes to (extend)
+            this.activeConflictsRecord.Flight = displayFlight;
+            this.activeConflictsRecord.FlightStartDate = startSave;
+            this.activeConflictsRecord.FlightEndDate = endSave;
             this.activeConflictsRecord.isEdited = true; //so can set indicator
             this.hasPendingConflictsChanges = true;
             this.$ProgramConflictGrid.set(this.activeConflictsRecord.recid, this.activeConflictsRecord);
@@ -557,25 +553,23 @@ var StationModalNewRate = function (view) {
 
         //changes conflict status indicator in grid
         setSingleProgramConflictStatus: function (recid, status) {
-            //console.log(recid, status);
             this.$ProgramConflictGrid.set(recid, {hasConflict: status});
 
         },
 
-        //set the inputs in picker based on the actual flights from the record; handle disabled/checked
+        //set the inputs in drp picker based on the actual flights from the record; handle disabled/checked
         //revised: use changed ActiveFlights if initial else use original flights if user change (start, end)
         //revised: need to disable hiatus if in original flights but not if changed in sessions - see hasOriginalHiatus
-        //NEW: flights no longer have Id (change to use indexedId)
         setConflictFlightsInternalPicker: function (startDate, endDate, flightWeeksEl) {
             flightWeeksEl.html('');
             //if notInitial - just display all
             var notInitial = startDate ? true : false;
-            var conflictFlights = notInitial ? this.activeConflictsRecord.FlightWeeks : this.activeConflictsRecord.ActiveFlights;
-           //console.log('picker which flights - notInitial, flights', notInitial, conflictFlights);
+            var conflictFlights = notInitial ? this.activeConflictsRecord.Flights : this.activeConflictsRecord.ActiveFlights;
+           // console.log('picker which flights - notInitial, flights', notInitial, conflictFlights);
 
             $.each(conflictFlights, function (index, item) {
                 var endWeek = moment(item.EndDate);
-                var startWeek = moment(item.EffectiveDate);
+                var startWeek = moment(item.StartDate);
                 //show start not before selected start ; end not after selected end
                 if (notInitial && (endWeek.diff(endDate, 'day') > 0) || (startWeek.diff(startDate, 'day') < 0)) {
                 } else {
@@ -587,7 +581,7 @@ var StationModalNewRate = function (view) {
                     var disabled = (item.hasOriginalHiatus || !inFuture) ? 'disabled' : '';
                     var weekInterval = startWeek.format('YYYY/MM/DD') + " - " + endWeek.format('YYYY/MM/DD');
                    
-                    flightWeeksEl.append('<li style="width: 200px; position: relative; right: 25px "><input value="' + item.indexedId + '" type="checkbox" id="checkbox_' + item.indexedId + '" ' + checked + ' ' + disabled + '> ' + weekInterval + '</li>');
+                    flightWeeksEl.append('<li style="width: 200px; position: relative; right: 25px "><input value="' + item.Id + '" type="checkbox" id="checkbox_' + item.Id + '" ' + checked + ' ' + disabled + '> ' + weekInterval + '</li>');
                 }
             });
 
@@ -610,8 +604,8 @@ var StationModalNewRate = function (view) {
             var today = moment();
             var minStart = moment(rec.OriginalFlightStartDate);
             var maxEnd = moment(rec.OriginalFlightEndDate);
-            var start = moment(rec.EffectiveDate);
-            var end = moment(rec.EndDate);
+            var start = moment(rec.FlightStartDate);
+            var end = moment(rec.FlightEndDate);
             var inPast = minStart.diff(today, 'day') < 0;
 
             
