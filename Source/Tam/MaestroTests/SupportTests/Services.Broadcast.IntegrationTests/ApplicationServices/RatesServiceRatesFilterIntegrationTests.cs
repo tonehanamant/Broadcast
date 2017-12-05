@@ -242,8 +242,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _inventoryFileRepository.UpdateInventoryFileStatus(fileId, InventoryFile.FileStatusEnum.Failed);
                 var today = new DateTime(2016, 01, 01);
                 var response = _inventoryService.GetStationsWithFilter("OpenMarket", "withtodaysdata", today);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
 
+                var json = IntegrationTestHelper.ConvertToJson(response, jsonSettings);
+                Approvals.Verify(json);
             }
         }
     }

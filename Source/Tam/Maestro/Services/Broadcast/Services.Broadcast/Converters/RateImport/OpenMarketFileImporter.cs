@@ -57,11 +57,21 @@ namespace Services.Broadcast.Converters.RateImport
 
                 var audienceMap = GetAudienceMap(proposal.AvailList.DemoCategories);
 
-                var validStations = _GetValidStations(proposal.Outlets.Select(o => o.callLetters).ToList());
+                List<string> invalidStations = new List<string>();
+                var validStations = _GetValidStations(proposal.Outlets.Select(o => o.callLetters).ToList(),invalidStations);
                 if (validStations == null || validStations.Count == 0)
                 {
                     fileProblems.Add(new InventoryFileProblem("There are no known stations in the file"));
                     return manifests;
+                }
+                if (invalidStations.Any())
+                {
+                    fileProblems.AddRange(invalidStations.Select(s =>
+                    {
+                        var warning = new InventoryFileProblem();
+                        warning.AddWarning("Invalid station: " + s);
+                        return warning;
+                    }));
                 }
 
                 if (proposal.AvailList == null || (proposal.AvailList.AvailLineWithDetailedPeriods == null && proposal.AvailList.AvailLineWithPeriods == null))
@@ -83,7 +93,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             //TODO: Move to base class
-            private Dictionary<string, DisplayBroadcastStation> _GetValidStations(List<string> stationNameList)
+            private Dictionary<string, DisplayBroadcastStation> _GetValidStations(List<string> stationNameList,List<string> invalidStations)
             {
                 var stationsDictionary = new Dictionary<string, DisplayBroadcastStation>();
                 foreach (var stationName in stationNameList)
@@ -92,6 +102,10 @@ namespace Services.Broadcast.Converters.RateImport
                     if (station != null)
                     {
                         stationsDictionary.Add(stationName, station);
+                    }
+                    else
+                    {
+                        invalidStations.Add(stationName);
                     }
                 }
                 return stationsDictionary;
@@ -127,8 +141,8 @@ namespace Services.Broadcast.Converters.RateImport
                 foreach (var availLine in proposal.AvailList.AvailLineWithDetailedPeriods)
                 {
                     var availLineManifests = new List<StationInventoryManifest>();
-                    var programName = availLine.AvailName;
 
+                    string programName = availLine.AvailName;
                     try
                     {
                         var outletRef = proposal.AvailList.OutletReferences
@@ -136,6 +150,9 @@ namespace Services.Broadcast.Converters.RateImport
                             .Select(a => a.outletFromProposalRef).First();
                         var callLetters = proposal.Outlets.Where(a => a.outletId == outletRef)
                             .Select(a => a.callLetters).First();
+
+                        if (!validStations.ContainsKey(callLetters))
+                            continue; // skip bad station program BCOP-2264
 
                         var station = validStations[callLetters];
 
