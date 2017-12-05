@@ -28,7 +28,7 @@ namespace Services.Broadcast.ReportGenerators
             using (var package = new ExcelPackage(new MemoryStream()))
             {
                 _GenerateAdvertiserDataSheet(package);
-                _GenerateBroadcastWeeksDataSheets(package, false, true);
+                _GenerateBroadcastWeeksDataSheets(package, true);
                 _GenerateStationSummaryDataSheet(package);
                 _GenerateOutofSpecToDate(package, true);
                 _GenerateSpotDetailDataSheet(package, false, false, false);
@@ -47,7 +47,7 @@ namespace Services.Broadcast.ReportGenerators
             using (var package = new ExcelPackage(new MemoryStream()))
             {
                 _GenerateAdvertiserDataSheet(package);
-                _GenerateBroadcastWeeksDataSheets(package, false, false);
+                _GenerateBroadcastWeeksDataSheets(package, false);
                 _GenerateStationSummaryDataSheet(package);
                 _GenerateOutofSpecToDate(package, false);
                 _GenerateSpotDetailDataSheet(package, false, true, true);
@@ -67,7 +67,7 @@ namespace Services.Broadcast.ReportGenerators
             using (var package = new ExcelPackage(new MemoryStream()))
             {
                 _GenerateAdvertiserDataSheet(package);
-                _GenerateBroadcastWeeksDataSheets(package, false, false);
+                _GenerateBroadcastWeeksDataSheets(package, false);
                 _GenerateStationSummaryDataSheet(package);
                 _GenerateOutofSpecToDate(package, false);
                 _GenerateSpotDetailDataSheet(package, true, false, false);
@@ -190,7 +190,7 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells.AutoFitColumns();
         }
 
-        private void _GenerateBroadcastWeeksDataSheets(ExcelPackage package, bool includeDateColumnsInSpec, bool includeDateColumnsOutOfSpec)
+        private void _GenerateBroadcastWeeksDataSheets(ExcelPackage package, bool includeDateColumns)
         {
             // add weekly detail information
             foreach (var weeklyData in _ScheduleReportDto.WeeklyData.ReportDataByWeek)
@@ -200,14 +200,14 @@ namespace Services.Broadcast.ReportGenerators
                     package.Workbook.Worksheets.Delete(sheetName);
 
                 var wsInspec = package.Workbook.Worksheets.Add(sheetName);
-                _SetWeeklyInSpecTab(wsInspec, weeklyData, includeDateColumnsInSpec);
+                _SetWeeklyInSpecTab(wsInspec, weeklyData, includeDateColumns);
 
                 sheetName = "Week Out of Spec - " + weeklyData.Week.Display.Replace('/', '.');
                 if (package.Workbook.Worksheets[sheetName] != null)
                     package.Workbook.Worksheets.Delete(sheetName);
 
                 var wsOutofSpec = package.Workbook.Worksheets.Add(sheetName);
-                _SetWeeklyOutSpecTab(wsOutofSpec, weeklyData, includeDateColumnsOutOfSpec);
+                _SetWeeklyOutSpecTab(wsOutofSpec, weeklyData, includeDateColumns);
             }
         }
 
