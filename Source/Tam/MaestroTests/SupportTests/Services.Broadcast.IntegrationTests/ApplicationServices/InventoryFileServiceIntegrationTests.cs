@@ -735,7 +735,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void LoadsInventoryFileWithUnknownSpotLength()
@@ -2771,6 +2770,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+
         public void CanConvert30sRateTo15sRate()
         {
             var result = _InventoryFileService.ConvertRateForSpotLength(10, 15);
@@ -2849,7 +2849,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof (StationProgram), "Id");
+                jsonResolver.Ignore(typeof(StationProgram), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -2889,9 +2889,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         new StationProgram.StationProgramConflictChangeDto
                         {
-                            FlightEndDate = new DateTime(2018, 01, 25),
-                            FlightStartDate = new DateTime(2018, 01, 02),
-                            Id = 24538
+                            Id = 24538,
+                            Flights = new List<FlightWeekDto>
+                            {
+                                new FlightWeekDto
+                                {
+                                    StartDate = new DateTime(2017, 01, 25),
+                                    EndDate = new DateTime(2018, 01, 02)
+                                }
+                            }
                         }
                     },
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
@@ -2900,7 +2906,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof (StationProgram), "Id");
+                jsonResolver.Ignore(typeof(StationProgram), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -2951,9 +2957,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         new StationProgram.StationProgramConflictChangeDto
                         {
-                            FlightEndDate = new DateTime(2018, 01, 25),
-                            FlightStartDate = new DateTime(2018, 01, 02),
-                            Id = 24538
+                            Id = 24538,
+                            Flights = new List<FlightWeekDto>
+                            {
+                                new FlightWeekDto
+                                {
+                                    StartDate = new DateTime(2017, 01, 25),
+                                    EndDate = new DateTime(2018, 01, 02)
+                                }
+                            }
+                            
                         }
                     },
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
@@ -2974,7 +2987,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof (DiffReporter))]
+        [UseReporter(typeof(DiffReporter))]
         public void StationConflictsTest()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
