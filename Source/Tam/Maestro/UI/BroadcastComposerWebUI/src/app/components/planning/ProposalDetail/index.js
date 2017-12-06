@@ -97,14 +97,15 @@ export default class ProposalDetail extends Component {
 			<Well bsSize="small">
         <Row>
           <Col md={3}>
-            <FormGroup controlId="detailFlight" style={{ width: '300px' }}>
-              <ControlLabel style={{ float: 'left', margin: '6px 10px 0 0' }}>Flight</ControlLabel>
-              <FlightPicker
-                startDate={detail.FlightStartDate}
-                endDate={detail.FlightEndDate}
-                style={{ float: 'left' }}
-              />
-            </FormGroup>
+            <Form inline>
+              <FormGroup controlId="detailFlight">
+                <ControlLabel style={{ paddingRight: 5 }}>Flight</ControlLabel>
+                <FlightPicker
+                  startDate={detail.FlightStartDate}
+                  endDate={detail.FlightEndDate}
+                />
+              </FormGroup>
+            </Form>
           </Col>
           {this.state.activeDetail &&
           <Col md={9}>
