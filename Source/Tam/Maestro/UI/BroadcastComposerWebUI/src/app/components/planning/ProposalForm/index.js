@@ -20,14 +20,22 @@ export default class ProposalForm extends Component {
 		this.onChangeAdvertiserId = this.onChangeAdvertiserId.bind(this);
 		this.onChangeGuaranteedDemoId = this.onChangeGuaranteedDemoId.bind(this);
 		this.onChangeSecondaryDemos = this.onChangeSecondaryDemos.bind(this);
-		this.onChangeNotes = this.onChangeNotes.bind(this);
+    this.onChangeNotes = this.onChangeNotes.bind(this);
 
-		this.state = {};
-		this.state.Invalid = null;
+    this.checkValid = this.checkValid.bind(this);
+    this.setValidationState = this.setValidationState.bind(this);
+    this.clearValidationStates = this.clearValidationStates.bind(this);
+
+		this.state = {
+      nameInvalid: null,
+      advertiserInvalid: null,
+    };
 	}
 
 	onChangeProposalName(event) {
-		this.props.updateProposalEditForm({ key: 'ProposalName', value: event.target.value });
+    const val = event.target.value ? event.target.value : '';
+    this.props.updateProposalEditForm({ key: 'ProposalName', value: val });
+    this.setValidationState('nameInvalid', val ? null : 'error');
 	}
 
 	onChangePostType(value) {
@@ -39,7 +47,9 @@ export default class ProposalForm extends Component {
 	}
 
 	onChangeAdvertiserId(value) {
-		this.props.updateProposalEditForm({ key: 'AdvertiserId', value: value ? value.Id : null });
+    const val = value ? value.Id : null;
+    this.props.updateProposalEditForm({ key: 'AdvertiserId', value: val });
+    this.setValidationState('advertiserInvalid', val ? null : 'error');
 	}
 
 	onChangeGuaranteedDemoId(value) {
@@ -52,7 +62,30 @@ export default class ProposalForm extends Component {
 
 	onChangeNotes(event) {
 		this.props.updateProposalEditForm({ key: 'Notes', value: event.target.value });
-	}
+  }
+
+  checkValid() {
+    const nameValid = (this.props.proposalEditForm.ProposalName != null) && (this.props.proposalEditForm.ProposalName !== '');
+    const advertiserValid = this.props.proposalEditForm.AdvertiserId != null;
+    if (nameValid && advertiserValid) {
+      this.clearValidationStates();
+      return true;
+    }
+    this.setValidationState('nameInvalid', nameValid ? null : 'error');
+    this.setValidationState('advertiserInvalid', advertiserValid ? null : 'error');
+    return false;
+  }
+
+  setValidationState(type, state) {
+    this.state[type] = state;
+  }
+
+  clearValidationStates() {
+    this.setState({
+      nameInvalid: null,
+      advertiserInvalid: null,
+    });
+  }
 
   render() {
 		const { initialdata, proposalEditForm } = this.props;
@@ -63,7 +96,7 @@ export default class ProposalForm extends Component {
 							<Col md={6}>
 								<Row>
 									<Col md={6}>
-										<FormGroup controlId="proposalName" validationState={this.state.Invalid} >
+										<FormGroup controlId="proposalName" validationState={this.state.nameInvalid} >
 											<ControlLabel><strong>Proposal Name</strong></ControlLabel>
 											<InputGroup>
 												<FormControl
@@ -77,7 +110,7 @@ export default class ProposalForm extends Component {
 														</InputGroup.Addon>
 												}
 											</InputGroup>
-											{this.state.Invalid != null &&
+											{this.state.nameInvalid != null &&
 											<HelpBlock>
 												<p className="text-danger">Required</p>
 											</HelpBlock>
@@ -88,7 +121,7 @@ export default class ProposalForm extends Component {
 									...
 									</Col>
 									<Col md={2}>
-										<FormGroup controlId="proposalPostType" validationState={this.state.Invalid} >
+										<FormGroup controlId="proposalPostType" >
 											<ControlLabel><strong>Post Type</strong></ControlLabel>
 											<Select
 												name="proposalPostType"
@@ -100,15 +133,10 @@ export default class ProposalForm extends Component {
 												onChange={this.onChangePostType}
 												clearable={false}
 											/>
-											{this.state.Invalid != null &&
-											<HelpBlock>
-												<p className="text-danger">Required</p>
-											</HelpBlock>
-											}
 										</FormGroup>
 									</Col>
 									<Col md={2}>
-										<FormGroup controlId="proposalEquivalized" validationState={this.state.Invalid} >
+										<FormGroup controlId="proposalEquivalized" >
 											<ControlLabel><strong>Equivalized</strong></ControlLabel>
 											<Select
 												name="proposalEquivalized"
@@ -120,11 +148,6 @@ export default class ProposalForm extends Component {
 												onChange={this.onChangeEquivalized}
 												clearable={false}
 											/>
-											{this.state.Invalid != null &&
-											<HelpBlock>
-												<p className="text-danger">Required</p>
-											</HelpBlock>
-											}
 										</FormGroup>
 									</Col>
 								</Row>
@@ -170,7 +193,7 @@ export default class ProposalForm extends Component {
 							<Col md={7}>
 								<Row>
 									<Col md={4}>
-										<FormGroup controlId="proposalAdvertiser" validationState={this.state.Invalid} >
+										<FormGroup controlId="proposalAdvertiser" validationState={this.state.advertiserInvalid} >
 											<ControlLabel><strong>Advertiser</strong></ControlLabel>
 											<Select
 												name="proposalAdvertiser"
@@ -182,7 +205,7 @@ export default class ProposalForm extends Component {
 												onChange={this.onChangeAdvertiserId}
 												clearable={false}
 											/>
-											{this.state.Invalid != null &&
+											{this.state.advertiserInvalid != null &&
 											<HelpBlock>
 												<p className="text-danger">Required</p>
 											</HelpBlock>
@@ -190,7 +213,7 @@ export default class ProposalForm extends Component {
 										</FormGroup>
 									</Col>
 									<Col md={4}>
-										<FormGroup controlId="proposalGuaranteedDemo" validationState={this.state.Invalid} >
+										<FormGroup controlId="proposalGuaranteedDemo" >
 											<ControlLabel><strong>Guaranteed Demo</strong></ControlLabel>
 											<Select
 												name="proposalGuaranteedDemo"
@@ -202,15 +225,10 @@ export default class ProposalForm extends Component {
 												onChange={this.onChangeGuaranteedDemoId}
 												clearable={false}
 											/>
-											{this.state.Invalid != null &&
-											<HelpBlock>
-												<p className="text-danger">Required</p>
-											</HelpBlock>
-											}
 										</FormGroup>
 									</Col>
 									<Col md={4}>
-										<FormGroup controlId="proposalSecondaryDemo" validationState={this.state.Invalid} >
+										<FormGroup controlId="proposalSecondaryDemo" >
 											<ControlLabel><strong>Secondary Demo</strong></ControlLabel>
 											<Select
 												name="proposalSecondaryDemo"
@@ -223,11 +241,6 @@ export default class ProposalForm extends Component {
 												closeOnSelect
 												onChange={this.onChangeSecondaryDemos}
 											/>
-											{this.state.Invalid != null &&
-											<HelpBlock>
-												<p className="text-danger">Required</p>
-											</HelpBlock>
-											}
 										</FormGroup>
 									</Col>
 								</Row>
