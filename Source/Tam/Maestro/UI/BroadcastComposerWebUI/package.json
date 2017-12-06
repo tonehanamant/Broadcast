@@ -21,6 +21,7 @@
     "fuzzy-search": "^2.0.1",
     "history": "^4.7.2",
     "immutability-helper": "^2.4.0",
+    "lodash": "^4.17.4",
     "moment": "^2.19.0",
     "numeral": "^2.0.6",
     "prop-types": "^15.6.0",
