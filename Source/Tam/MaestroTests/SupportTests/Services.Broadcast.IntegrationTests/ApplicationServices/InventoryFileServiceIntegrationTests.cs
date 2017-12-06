@@ -735,7 +735,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void LoadsInventoryFileWithUnknownSpotLength()
@@ -899,6 +898,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void CannotLoadProgramWhenTheSameAlreadyExists()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request1 = new InventoryFileSaveRequest
+                {
+                    RatesStream = new FileStream(
+                        @".\Files\Open Market Duplicate Program File1.xml",
+                        FileMode.Open,
+                        FileAccess.Read),
+                    UserName = "IntegrationTestUser",
+                    FileName = "Open Market Duplicate Program File1.xml"
+                };
+
+                var request2 = new InventoryFileSaveRequest
+                {
+                    RatesStream = new FileStream(
+                        @".\Files\Open Market Duplicate Program File2.xml",
+                        FileMode.Open,
+                        FileAccess.Read),
+                    UserName = "IntegrationTestUser",
+                    FileName = "Open Market Duplicate Program File2.xml"
+                };
+
+                _InventoryFileService.SaveInventoryFile(request1);
+                var result = _InventoryFileService.SaveInventoryFile(request2);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems));
+
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void LoadInventoryFileWithOverlapingFlightWeeks()
         {
             using (new TransactionScopeWrapper())
@@ -927,6 +960,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
 
             }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketInventoryFileWithDifferentSpotLengths()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    RatesStream = new FileStream(
+                        @".\Files\multi-quarter_program_rate_file_wvtm.xml",
+                        FileMode.Open,
+                        FileAccess.Read),
+                    UserName = "IntegrationTestUser",
+                    RatingBook = 416
+                };
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
+                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                var result = _InventoryFileService.SaveInventoryFile(request);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+
+            }
+
         }
 
         [Ignore]
