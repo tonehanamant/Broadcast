@@ -262,7 +262,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 System.Diagnostics.Debug.WriteLine("Completed file parsing in {0}", endTime - startTime);
 
-                if (fileProblems.Any(f => !f.IsWarning))
+                if (fileProblems.Any())
                 {
                     return SetFileProblemWarnings(inventoryFile.Id,fileProblems);
                 }
@@ -282,7 +282,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 System.Diagnostics.Debug.WriteLine("Completed file validation in {0}", endTime - startTime);
 
-                if (fileProblems.Any(f => !f.IsWarning))
+                if (fileProblems.Any())
                 {
                     return SetFileProblemWarnings(inventoryFile.Id, fileProblems);
                 }
