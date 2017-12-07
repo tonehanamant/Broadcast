@@ -39,6 +39,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _cnnInventorySource = inventoryRepository.GetInventorySourceByName("CNN");
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void InventoryFileLoadCNN()
@@ -651,7 +652,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "nknown station", MatchType = MessageMatch.Contains)]
         public void ThrowsExceptionWhenLoadingAllUnknownStation()
         {
             using (new TransactionScopeWrapper())
@@ -666,8 +666,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = "unknown_station_rate_file_zyxw.xml";
                 request.RatingBook = 416;
 
-                _InventoryFileService.SaveInventoryFile(request);
-
+                var result = _InventoryFileService.SaveInventoryFile(request);
+                Assert.IsTrue(result.Problems.Any());
             }
         }
 
