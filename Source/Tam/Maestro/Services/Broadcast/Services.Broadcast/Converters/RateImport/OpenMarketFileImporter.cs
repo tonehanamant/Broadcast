@@ -23,7 +23,6 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile, DateTime effecitveDate, List<InventoryFileProblem> fileProblems)
         {
-
             try
             {
                 var message = DeserializeAaaaMessage(rawStream);
@@ -32,8 +31,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                 var resultFile = BuildRatesFile(message, inventoryFile, fileProblems);
                 resultFile.StationContacts = ExtractContactData(message);
-
-        }
+            }
             catch (Exception e)
             {
                 throw new Exception(string.Format("Unable to parse rates file: {0} The file may be invalid: {1}", e.Message, inventoryFile.FileName), e);
@@ -67,12 +65,8 @@ namespace Services.Broadcast.Converters.RateImport
                 }
                 if (invalidStations.Any())
                 {
-                    fileProblems.AddRange(invalidStations.Select(s =>
-                    {
-                        var warning = new InventoryFileProblem();
-                        warning.AddWarning("Invalid station: " + s);
-                        return warning;
-                    }));
+                    fileProblems.AddRange(invalidStations.Select(s => new InventoryFileProblem("Invalid station: " + s)));
+                    return manifests;
                 }
 
                 if (proposal.AvailList == null || (proposal.AvailList.AvailLineWithDetailedPeriods == null && proposal.AvailList.AvailLineWithPeriods == null))
@@ -153,7 +147,7 @@ namespace Services.Broadcast.Converters.RateImport
                             .Select(a => a.callLetters).First();
 
                         if (!validStations.ContainsKey(callLetters))
-                            continue; // skip bad station program BCOP-2264
+                            throw new Exception(string.Format("Could not find station with call letters \"{0}\"", callLetters));
 
                         var station = validStations[callLetters];
 
