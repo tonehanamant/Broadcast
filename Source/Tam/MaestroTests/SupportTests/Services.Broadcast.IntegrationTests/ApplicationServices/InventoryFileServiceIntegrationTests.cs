@@ -898,6 +898,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void CannotLoadProgramWhenTheSameAlreadyExists()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request1 = new InventoryFileSaveRequest
+                {
+                    RatesStream = new FileStream(
+                        @".\Files\Open Market Duplicate Program File1.xml",
+                        FileMode.Open,
+                        FileAccess.Read),
+                    UserName = "IntegrationTestUser",
+                    FileName = "Open Market Duplicate Program File1.xml"
+                };
+
+                var request2 = new InventoryFileSaveRequest
+                {
+                    RatesStream = new FileStream(
+                        @".\Files\Open Market Duplicate Program File2.xml",
+                        FileMode.Open,
+                        FileAccess.Read),
+                    UserName = "IntegrationTestUser",
+                    FileName = "Open Market Duplicate Program File2.xml"
+                };
+
+                _InventoryFileService.SaveInventoryFile(request1);
+                var result = _InventoryFileService.SaveInventoryFile(request2);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems));
+
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void LoadInventoryFileWithOverlapingFlightWeeks()
         {
             using (new TransactionScopeWrapper())
