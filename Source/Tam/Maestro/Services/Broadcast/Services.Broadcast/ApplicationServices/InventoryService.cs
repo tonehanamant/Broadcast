@@ -421,11 +421,9 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SaveInventoryFileContacts(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
-            //TODO: Fixme or remove.
-            return;
-            //var fileStationCodes = ratesFile.StationPrograms.Select(p => (int)p.StationCode).Distinct().ToList();
-            List<StationContact> existingStationContacts = null;
-                //_stationContactsRepository.GetStationContactsByStationCode(fileStationCodes);
+            var fileStationCodes = inventoryFile.InventoryManifests.Select(m => m.Station.Code).Distinct().ToList();
+            List<StationContact> existingStationContacts = 
+                    _stationContactsRepository.GetStationContactsByStationCode(fileStationCodes);
 
             var contactsUpdateList =
                 inventoryFile.StationContacts.Intersect(existingStationContacts, StationContact.StationContactComparer)
@@ -434,12 +432,9 @@ namespace Services.Broadcast.ApplicationServices
             //Set the ID for those that exist already
             foreach (var updateContact in contactsUpdateList)
             {
-                updateContact.Id =
-                    existingStationContacts.Single(
-                        c => StationContact.StationContactComparer.Equals(c, updateContact)).Id;
+                updateContact.Id = existingStationContacts.Single(c => StationContact.StationContactComparer.Equals(c, updateContact)).Id;
             }
-            _stationContactsRepository.UpdateExistingStationContacts(contactsUpdateList, request.UserName,
-                inventoryFile.Id);
+            _stationContactsRepository.UpdateExistingStationContacts(contactsUpdateList, request.UserName,inventoryFile.Id);
 
             var contactsCreateList =
                 inventoryFile.StationContacts.Except(existingStationContacts, StationContact.StationContactComparer)
@@ -448,7 +443,7 @@ namespace Services.Broadcast.ApplicationServices
 
             // update modified date for each station
             var timeStamp = DateTime.Now;
-            //fileStationCodes.ForEach(code => _stationRepository.UpdateStation(code, request.UserName, timeStamp));
+            fileStationCodes.ForEach(code => _stationRepository.UpdateStation(code, request.UserName, timeStamp));
         }
 
         public List<StationContact> GetStationContacts(string inventorySource, int stationCode)
