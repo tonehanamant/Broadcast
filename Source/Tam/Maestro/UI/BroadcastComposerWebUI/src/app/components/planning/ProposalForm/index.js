@@ -181,12 +181,14 @@ export default class ProposalForm extends Component {
     }
 
     // select custom
-    if (option.Id === -1) {
+    const isOpenCustomOption = option.Id === -1;
+    if (isOpenCustomOption) {
       countStyle.Display = 'none';
     }
 
     return (
       <div style={divStyle} href="">
+        {isOpenCustomOption ? <hr style={{ margin: '8px' }} /> : null}
         <span className="pull-left">{option.Display}</span>
         <span className="pull-right" style={countStyle}>{count}</span>
       </div>
@@ -268,7 +270,7 @@ export default class ProposalForm extends Component {
 						<Row className="clearfix">
 							<Col md={6}>
 								<Row>
-									<Col md={6}>
+									<Col md={5}>
 										<FormGroup controlId="proposalName" validationState={this.state.nameInvalid} >
 											<ControlLabel><strong>Proposal Name</strong></ControlLabel>
 											<InputGroup>
@@ -290,7 +292,7 @@ export default class ProposalForm extends Component {
 											}
 										</FormGroup>
 									</Col>
-									<Col md={5}>
+									<Col md={3}>
                     <FormGroup controlId="proposalMarket" validationState={this.state.Invalid} >
                       <ControlLabel><strong>Market</strong></ControlLabel>
                       <Select
