@@ -355,28 +355,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetAllStations()
-        {
-            var currentDate = new DateTime(2016, 11, 1);
-            var response = _InventoryFileService.GetStations("OpenMarket", currentDate);
-            var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
-            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
-            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "MarketCode");
-            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
-
-            var jsonSettings = new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
-            };
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
-        }
-
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetAllStationsWithTodaysData()
@@ -398,7 +376,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetAllStationsWithoutTodaysData()
@@ -421,7 +398,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetStationDetailsByCode()
@@ -444,7 +420,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //Ignore the Id on each Rate record
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Id");
+                jsonResolver.Ignore(typeof(StationProgram), "Id");
                 //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Audiences");
                 jsonResolver.Ignore(typeof(StationContact), "Id");
                 var jsonSettings = new JsonSerializerSettings()
@@ -457,7 +433,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
 
-        [Ignore]
         [Test]
         [UseReporter(typeof (DiffReporter))]
         public void FindContacts()
@@ -477,7 +452,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ImportNewStationContact()
@@ -514,7 +488,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void UpdateExistingStationContactDuringImport()
@@ -552,7 +525,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
         public void SaveStationContact()
         {
@@ -582,7 +554,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
         [ExpectedException(typeof(Exception))]
         public void ThrowsExceptionWhenSavingContactWithEmptyName()
@@ -608,7 +579,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
         public void UpdateStationContactIfAlreadyExists()
         {
@@ -650,7 +620,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
         public void CanDeleteStationContact()
         {
@@ -682,9 +651,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
-        [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "nknown station", MatchType = MessageMatch.Contains)]
         public void ThrowsExceptionWhenLoadingAllUnknownStation()
         {
             using (new TransactionScopeWrapper())
@@ -699,12 +666,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = "unknown_station_rate_file_zyxw.xml";
                 request.RatingBook = 416;
 
-                _InventoryFileService.SaveInventoryFile(request);
-
+                var result = _InventoryFileService.SaveInventoryFile(request);
+                Assert.IsTrue(result.Problems.Any());
             }
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void LoadsInventoryFileWithKnownAndUnknownStations()
@@ -784,31 +750,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
-        [Test]
-        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot select a date beyond the original flight of the program", MatchType = MessageMatch.Contains)]
-        public void ThrowExceptionWhenEndDateIsBiggerThanProgramEndDate()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    RatesStream = new FileStream(
-                        @".\Files\end_program_flight_file_wvtm.xml",
-                        FileMode.Open,
-                        FileAccess.Read),
-                    UserName = "IntegrationTestUser",
-                    RatingBook = 416
-            };
-
-                _InventoryFileService.SaveInventoryFile(request);
-                var stationCodeWVTM = 1027;
-                var endDate = DateFormatter.AdjustEndDate(new DateTime(2017, 01, 20));
-                var stationDetails = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
-                //var program = stationDetails.Rates.Single(q => q.Program == "TR_WVTM-TV_TEST_1 11:30AM");
-                //_ratesService.TrimProgramFlight(program.Id, endDate, endDate.AddDays(-7), "IntegrationTestUser");
-            }
-        }
 
         [Ignore]
         [Test]
