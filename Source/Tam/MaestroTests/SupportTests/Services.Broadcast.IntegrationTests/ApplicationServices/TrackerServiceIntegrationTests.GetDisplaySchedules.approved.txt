@@ -78,6 +78,12 @@
       "Audiences": null,
       "DaypartRestriction": null,
       "DaypartRestrictionId": 0,
+      "DeliveryDetails": [
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        }
+      ],
       "EndDate": "2016-12-24T00:00:00",
       "Estimate": 8675309,
       "InventorySource": 0,
@@ -102,6 +108,28 @@
       "Audiences": null,
       "DaypartRestriction": null,
       "DaypartRestrictionId": 0,
+      "DeliveryDetails": [
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        }
+      ],
       "EndDate": "2016-12-24T00:00:00",
       "Estimate": 7618419,
       "InventorySource": 0,
@@ -126,6 +154,12 @@
       "Audiences": null,
       "DaypartRestriction": null,
       "DaypartRestrictionId": 0,
+      "DeliveryDetails": [
+        {
+          "Impressions": null,
+          "SpotLength": 30
+        }
+      ],
       "EndDate": "2016-12-24T00:00:00",
       "Estimate": 7985133,
       "InventorySource": 0,

@@ -48,15 +48,15 @@ namespace Services.Broadcast.BusinessEngines
             var stationDaypartGroups =
             (
                 from mdpMap in manifestDaypartMap
-                select new StationDetailDaypart()
+                select new ManifestDetailDaypart()
                 {
-                    Code = (short) mdpMap.manifest.Station.Code,
+                    LegacyCallLetters= mdpMap.manifest.Station.LegacyCallLetters,
                     DisplayDaypart = mdpMap.daypart,
                     Id = mdpMap.id
                 }
-            ).GroupBy(g => new {g.Code, g.Id }).ToList();
+            ).GroupBy(g => new {g.LegacyCallLetters, g.Id }).ToList();
             
-            var stationsImpressions = _RatingsRepository.GetImpressionsDaypart(request.RatingBook, audiences, stationDaypartGroups.Select(g => g.First()), request.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+            var stationsImpressions = _RatingsRepository.GetImpressionsDaypart(request.RatingBook.Value, audiences, stationDaypartGroups.Select(g => g.First()).ToList(), request.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
 
             foreach (var manifest in manifestList)
             {
@@ -66,7 +66,7 @@ namespace Services.Broadcast.BusinessEngines
                     continue;
 
                 var stationImpressions = stationsImpressions
-                                            .Where(si => si.station_code == manifest.Station.Code 
+                                            .Where(si => si.legacy_call_letters == manifest.Station.LegacyCallLetters 
                                                             && firstAudience.Audience.Id == si.audience_id 
                                                             && manifestDaypartMap
                                                                     .Any(md => md.id == si.id 

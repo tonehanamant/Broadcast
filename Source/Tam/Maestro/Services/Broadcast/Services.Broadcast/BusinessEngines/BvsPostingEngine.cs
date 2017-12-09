@@ -93,18 +93,18 @@ namespace Services.Broadcast.BusinessEngines
             var ratingsAudienceMappings = _DataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>().GetRatingsAudiencesByMaestroAudience(scheduleAudiences.Select(x => x.Value).ToList());
             var uniqueRatingsAudiences = ratingsAudienceMappings.Select(x => x.rating_audience_id).Distinct().ToList();
 
-            var stationRepo = _DataRepositoryFactory.GetDataRepository<IStationRepository>();
+            //var stationRepo = _DataRepositoryFactory.GetDataRepository<IStationRepository>();
             var stationDetails = new List<StationDetailPointInTime>();
             foreach (var bvsPostDetail in bvsData)
             {
-                var stationCode = stationRepo.GetStationCode(bvsPostDetail.Station);
-                if (stationCode == null)
-                {
-                    continue;
-                }
+                //var stationCode = stationRepo.GetStationCode(bvsPostDetail.Station);
+                //if (stationCode == null)
+                //{
+                //    continue;
+                //}
                 var stationDetail =  new StationDetailPointInTime
                 {
-                    Code = stationCode.Value,
+                    LegacyCallLetters= bvsPostDetail.Station,
                     Id = bvsPostDetail.BvsDetailId,
                     DayOfWeek = bvsPostDetail.NsiDate.DayOfWeek,
                     TimeAired = bvsPostDetail.TimeAired

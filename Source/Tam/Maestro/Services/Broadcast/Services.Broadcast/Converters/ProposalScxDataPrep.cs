@@ -100,35 +100,37 @@ namespace Services.Broadcast.Converters
 
         private void _SetDemos(ScxData data, ProposalDetailDto proposalDetailDto)
         {
-            var demos = new List<int>();
-            demos.Add(data.ProposalDto.GuaranteedDemoId);
-            demos.AddRange(data.ProposalDto.SecondaryDemos);
+            return;
+            // fixme or delete
+            //var demos = new List<int>();
+            //demos.Add(data.ProposalDto.GuaranteedDemoId);
+            //demos.AddRange(data.ProposalDto.SecondaryDemos);
 
-            var audiencesMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>()
-                        .GetRatingsAudiencesByMaestroAudience(demos).ToList();
+            //var audiencesMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>()
+            //            .GetRatingsAudiencesByMaestroAudience(demos).ToList();
         
-            data.Demos = new List<DemoData>();
-            int demoIndex = 1;
-            foreach (var demo in demos)
-            {
-                var aud = _AudienceCache.GetAllEntities().Single(a => a.Id == demo);
-                var demoData = new DemoData();
-                demoData.IsPrimaryDemo = demo == demos.First();
-                demoData.Demo = aud;
-                demoData.DemoRank = demoIndex;
-                demoData.AudienceId = demo;
-                demoData.RatingAudienceIds = audiencesMappings
-                                                .Where(a => a.custom_audience_id == demo)
-                                                .Select(a => a.rating_audience_id)
-                                                .Distinct()
-                                                .ToList();
-                data.Demos.Add(demoData);
-                demoIndex++;
-            }
+            //data.Demos = new List<DemoData>();
+            //int demoIndex = 1;
+            //foreach (var demo in demos)
+            //{
+            //    var aud = _AudienceCache.GetAllEntities().Single(a => a.Id == demo);
+            //    var demoData = new DemoData();
+            //    demoData.IsPrimaryDemo = demo == demos.First();
+            //    demoData.Demo = aud;
+            //    demoData.DemoRank = demoIndex;
+            //    demoData.AudienceId = demo;
+            //    demoData.RatingAudienceIds = audiencesMappings
+            //                                    .Where(a => a.custom_audience_id == demo)
+            //                                    .Select(a => a.rating_audience_id)
+            //                                    .Distinct()
+            //                                    .ToList();
+            //    data.Demos.Add(demoData);
+            //    demoIndex++;
+            //}
 
-            _GetDemoUniverseData(data, proposalDetailDto);
-            _GetDemoImpressionData(data, proposalDetailDto);
-            _GetDemoRatingData(data, proposalDetailDto);
+            //_GetDemoUniverseData(data, proposalDetailDto);
+            //_GetDemoImpressionData(data, proposalDetailDto);
+            //_GetDemoRatingData(data, proposalDetailDto);
         }
 
         private void _GetDemoUniverseData(ScxData data, ProposalDetailDto proposalDetailDto)
@@ -184,10 +186,10 @@ namespace Services.Broadcast.Converters
                 .SelectMany(s => s.Programs
                     .Where(p => programIds.Contains(p.ProgramId))
                     .Select(p =>
-                        new StationDetailDaypart()
+                        new ManifestDetailDaypart()
                         {
                             Id = p.ProgramId,
-                            Code = (short) s.StationCode
+                            LegacyCallLetters =s.LegacyCallLetters
                             ,DisplayDaypart = _DaypartCache.GetDisplayDaypart(p.Daypart.Id)
                         })).ToList();
 
@@ -220,83 +222,85 @@ namespace Services.Broadcast.Converters
         }
         private void _GetDemoRatingData(ScxData data, ProposalDetailDto proposalDetailDto)
         {
-            var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
+            return;
+            //FIXme or delete
+            //var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
 
-            bool isSingleBook = proposalDetailDto.SinglePostingBookId.HasValue;
+            //bool isSingleBook = proposalDetailDto.SinglePostingBookId.HasValue;
 
-            foreach (var demo in data.Demos)
-            {
-                var programIds = data.WeekData.Where(wd => wd.InventoryWeek != null)
-                    .SelectMany(w => w.InventoryWeek.Markets)
-                    .SelectMany(m => m.Stations)
-                    .SelectMany(s => s.Programs)
-                    .Where(p => p != null && p.Spots > 0)
-                    .Select(dd => dd.ProgramId);
-                var programs = data.ProposalInventoryMarkets
-                    .SelectMany(pm => pm.Value.Stations)
-                    .SelectMany(s => s.Programs
-                        .Where(p => programIds.Contains(p.ProgramId))
-                        .Select(p => new Program((short) s.StationCode, _DaypartCache.GetDisplayDaypart(p.Daypart.Id)))
-                     );
-                var p1 = data.ProposalInventoryMarkets
-                    .SelectMany(pm => pm.Value.Stations)
-                    .SelectMany(s => s.Programs
-                        .Where(p => programIds.Contains(p.ProgramId))
-                     );
-                if (isSingleBook)
-                {
-                    _GetDemo1BookRatingData(data, demo, p1);
-                }
-                else
-                {
-                    _GetDemo2BookRatingData(proposalDetailDto, repo, demo, programs);
-                }
-            }
+            //foreach (var demo in data.Demos)
+            //{
+            //    var programIds = data.WeekData.Where(wd => wd.InventoryWeek != null)
+            //        .SelectMany(w => w.InventoryWeek.Markets)
+            //        .SelectMany(m => m.Stations)
+            //        .SelectMany(s => s.Programs)
+            //        .Where(p => p != null && p.Spots > 0)
+            //        .Select(dd => dd.ProgramId);
+            //    var programs = data.ProposalInventoryMarkets
+            //        .SelectMany(pm => pm.Value.Stations)
+            //        .SelectMany(s => s.Programs
+            //            .Where(p => programIds.Contains(p.ProgramId))
+            //            .Select(p => new Program((short) s.StationCode, _DaypartCache.GetDisplayDaypart(p.Daypart.Id)))
+            //         );
+            //    var p1 = data.ProposalInventoryMarkets
+            //        .SelectMany(pm => pm.Value.Stations)
+            //        .SelectMany(s => s.Programs
+            //            .Where(p => programIds.Contains(p.ProgramId))
+            //         );
+            //    if (isSingleBook)
+            //    {
+            //        _GetDemo1BookRatingData(data, demo, p1);
+            //    }
+            //    else
+            //    {
+            //        _GetDemo2BookRatingData(proposalDetailDto, repo, demo, programs);
+            //    }
+            //}
         }
 
-        private void _GetDemo2BookRatingData(ProposalDetailDto proposalDetailDto, 
-                                                IRatingForecastRepository repo, 
-                                                DemoData demo,
-                                                IEnumerable<Program> programs)
-        {
-            var audienceIds = demo.RatingAudienceIds; //new List<int>() { demo.AudienceId };
-            var playbackType =
-                    PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(
-                    proposalDetailDto.PlaybackType);
+        //private void _GetDemo2BookRatingData(ProposalDetailDto proposalDetailDto, 
+        //                                        IRatingForecastRepository repo, 
+        //                                        DemoData demo,
+        //                                        IEnumerable<Program> programs)
+        //{
+        //    var audienceIds = demo.RatingAudienceIds; //new List<int>() { demo.AudienceId };
+        //    var playbackType =
+        //            PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(
+        //            proposalDetailDto.PlaybackType);
 
-            List<RatingsResult> ratings = null;
-            ratings = repo.ForecastRatings(
-                (short) proposalDetailDto.HutPostingBookId.Value
-                , (short) proposalDetailDto.SharePostingBookId.Value
-                , audienceIds
-                , playbackType
-                , programs
-                , BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+        //    List<RatingsResult> ratings = null;
+        //    ratings = repo.ForecastRatings(
+        //        (short) proposalDetailDto.HutPostingBookId.Value
+        //        , (short) proposalDetailDto.SharePostingBookId.Value
+        //        , audienceIds
+        //        , playbackType
+        //        , programs
+        //        , BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
 
-            demo.Ratings = new List<Ratingdata>();
-            foreach (var rating in ratings)
-            {
-                DisplayDaypart dp = new DisplayDaypart();
-                dp.StartTime = rating.start_time;
-                dp.EndTime = rating.end_time;
-                dp.Monday = rating.mon;
-                dp.Tuesday = rating.tue;
-                dp.Wednesday = rating.wed;
-                dp.Thursday = rating.thu;
-                dp.Friday = rating.fri;
-                dp.Saturday = rating.sat;
-                dp.Sunday = rating.sun;
+        //    demo.Ratings = new List<Ratingdata>();
+        //    foreach (var rating in ratings)
+        //    {
+        //        DisplayDaypart dp = new DisplayDaypart();
+        //        dp.StartTime = rating.start_time;
+        //        dp.EndTime = rating.end_time;
+        //        dp.Monday = rating.mon;
+        //        dp.Tuesday = rating.tue;
+        //        dp.Wednesday = rating.wed;
+        //        dp.Thursday = rating.thu;
+        //        dp.Friday = rating.fri;
+        //        dp.Saturday = rating.sat;
+        //        dp.Sunday = rating.sun;
 
-                var daypartId = _DaypartCache.GetIdByDaypart(dp);
-                Ratingdata demoRating = new Ratingdata()
-                {
-                    DaypartId = daypartId,
-                    Rating = (rating.rating.HasValue ? rating.rating.Value : 0 ) * dp.ActiveDays * 100,
-                    StationCode = rating.station_code
-                };
-                demo.Ratings.Add(demoRating);
-            }
-        }
+        //        var daypartId = _DaypartCache.GetIdByDaypart(dp);
+        //        Ratingdata demoRating = new Ratingdata()
+        //        {
+        //            DaypartId = daypartId,
+        //            Rating = (rating.rating.HasValue ? rating.rating.Value : 0 ) * dp.ActiveDays * 100,
+        //            StationCode = rating.station_code
+        //        };
+        //        demo.Ratings.Add(demoRating);
+        //    }
+        //}
 
         private static void _GetDemo1BookRatingData(ScxData data, DemoData demo, IEnumerable<ProposalInventoryMarketDto.InventoryMarketStationProgram> programs)
         {

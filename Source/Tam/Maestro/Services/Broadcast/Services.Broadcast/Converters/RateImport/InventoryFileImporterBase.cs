@@ -24,6 +24,8 @@ namespace Services.Broadcast.Converters.RateImport
         protected IBroadcastAudiencesCache _AudiencesCache;
         protected Dictionary<int, double> _SpotLengthMultipliers;
 
+        private Dictionary<int, int> _SpotLengthIdsByLength;
+        private Dictionary<int, int> _SpotLengthsById;
         private string _fileHash;
 
         public InventoryFileSaveRequest Request { get; private set; }
@@ -46,6 +48,30 @@ namespace Services.Broadcast.Converters.RateImport
         public IBroadcastAudiencesCache AudiencesCache
         {
             set { _AudiencesCache = value; }
+        }
+
+        public Dictionary<int, int> SpotLengthIdsByLength
+        {
+            get
+            {
+                if (_SpotLengthIdsByLength == null)
+                {
+                    _SpotLengthIdsByLength = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+                }
+                return _SpotLengthIdsByLength;
+            }
+        }
+
+        public Dictionary<int, int> SpotLengthsById
+        {
+            get
+            {
+                if (_SpotLengthsById == null)
+                {
+                    _SpotLengthsById = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthsById();
+                }
+                return _SpotLengthsById;
+            }
         }
 
         public void CheckFileHash()
@@ -112,14 +138,20 @@ namespace Services.Broadcast.Converters.RateImport
 
         }
 
-        //protected void _ApplySpotLengthRateMultipliers(StationProgramFlightWeek flightWeek, decimal periodRate)
-        //{
-        //    flightWeek.Rate15s = periodRate * (decimal) _SpotLengthMultipliers[15];
-        //    flightWeek.Rate30s = periodRate;
-        //    flightWeek.Rate60s = periodRate * (decimal) _SpotLengthMultipliers[60];
-        //    flightWeek.Rate90s = periodRate * (decimal) _SpotLengthMultipliers[90];
-        //    flightWeek.Rate120s = periodRate * (decimal) _SpotLengthMultipliers[120];
-        //}
+        protected List<StationInventoryManifestRate> _GetManifestRatesFromMultipliers(decimal periodRate)
+        {
+            var manifestRates = new List<StationInventoryManifestRate>();
+
+            foreach (var spotLength in _SpotLengthIdsByLength)
+            {
+                var manifestRate = new StationInventoryManifestRate();
+                manifestRate.SpotLengthId = _SpotLengthIdsByLength[spotLength.Key];
+                manifestRate.Rate = periodRate * (decimal) _SpotLengthMultipliers[spotLength.Key];
+                manifestRates.Add(manifestRate);
+            }
+
+            return manifestRates;
+        }
 
         protected DisplayDaypart ParseStringToDaypart(string daypartText, string station)
         {

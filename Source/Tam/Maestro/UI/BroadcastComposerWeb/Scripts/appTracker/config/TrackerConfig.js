@@ -142,7 +142,7 @@
                     caption: '',
                     sortable: true,
                     attr: 'align=center',
-                    size: '50px',
+                    size: '60px',
                     render: function (record, index, column_index) {
                         var stat = record.Status;
                         var display = '';
@@ -152,7 +152,7 @@
                             display = '<span title="' + states[2] + '" style="font-size: 14px;" id="bvs_status_item_' + record.recid + '" class="' + states[0] + ' glyphicon glyphicon-' + states[1] + '" aria-hidden="true"></span>';
 
                             if (record.HasLeadInScheduleMatches && !record.LinkedToLeadin) {
-                                display += ' <span title="timeslot mismatch" style="font-size: 14px;" id="bvs_status_item_' + record.recid + '" class="status-red fa fa-clock-o" aria-hidden="true"></span>';
+                                display += ' <span title="timeslot mismatch" style="font-size: 14px; display: inline;" id="bvs_status_item_' + record.recid + '" class="status-red fa fa-clock-o" aria-hidden="true"></span>';
                             }
                         }
 

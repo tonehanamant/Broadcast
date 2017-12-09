@@ -17,6 +17,7 @@ namespace Services.Broadcast.Repositories
         List<LookupDto> GetSpotLengths();
         List<LookupDto> GetSpotLengthsByLength(List<int> lengthList);
         Dictionary<int, int> GetSpotLengthAndIds();
+        Dictionary<int, int> GetSpotLengthsById();
         Dictionary<int, double> GetSpotLengthMultipliers();
     }
 
@@ -75,6 +76,15 @@ namespace Services.Broadcast.Repositories
             {
                 return _InReadUncommitedTransaction(
                     context => context.spot_lengths.ToDictionary(y => y.length, x => x.id));
+            }
+        }
+
+        public Dictionary<int, int> GetSpotLengthsById()
+        {
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                return _InReadUncommitedTransaction(
+                    context => context.spot_lengths.ToDictionary(y => y.id, x => x.length));
             }
         }
 

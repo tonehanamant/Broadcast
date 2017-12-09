@@ -126,22 +126,11 @@ namespace Services.Broadcast.Converters.RateImport
                         var dps = _GetCellValue(row, "Time Periods").ToUpper();
                         var dayparts = _ParseDayparts(dps, stationName);
 
-                        var effectiveDateValue = _GetCellValue(row, "Effective Date of New Barter Added").ToUpper();
-
-                        if (!string.IsNullOrEmpty(effectiveDateValue))
-                        {
-                            if (!DateTime.TryParse(effectiveDateValue, out effectiveDate))
-                                throw new Exception(string.Format("Invalid effective date {0} found.",effectiveDateValue));
-                        }
-                        else
-                        {
-                            effectiveDate = _EffectiveDate;
-                        }
-                        dtos.Add(new CNNFileDto()
+                        dtos.Add(new CNNFileDto
                         {
                             RowNumber = row,
                             Station = station,
-                            EffectiveDate = effectiveDate,
+                            EffectiveDate = _EffectiveDate,
                             DaypartCode = daypartCode,
                             SpotLengthId = spotLengthId,
                             SpotsPerWeek = spots,
@@ -378,6 +367,7 @@ namespace Services.Broadcast.Converters.RateImport
         private int _ParseNumericPositiveInt(string value,string errorMessage)
         {
             int num;
+
             if (!int.TryParse(value, out num) || num <= 0)
             {
                 _AddProblem(string.Format(errorMessage,value));

@@ -519,7 +519,7 @@ namespace Services.Broadcast.ApplicationServices
         private void _ApplyProgramImpressions(IEnumerable<ProposalProgramDto> programs,
             ProposalDetailInventoryBase proposalDetail)
         {
-            var impressionRequests = new List<StationDetailDaypart>();
+            var impressionRequests = new List<ManifestDetailDaypart>();
             var stationDetailImpressions = new Dictionary<int, ProposalProgramDto>();
 
             var proposalDetailDaypart = DaypartDto.ConvertDaypartDto(proposalDetail.DetailDaypart);
@@ -529,9 +529,9 @@ namespace Services.Broadcast.ApplicationServices
                     DisplayDaypart.Intersect(
                         Common.Services.DaypartCache.Instance.GetDisplayDaypart(program.DayPart.Id),
                         proposalDetailDaypart);
-                var stationDaypart = new StationDetailDaypart
+                var stationDaypart = new ManifestDetailDaypart
                 {
-                    Code = program.Station.StationCode,
+                    LegacyCallLetters = program.Station.LegacyCallLetters,
                     Id = program.ProgramId,
                     DisplayDaypart = intersectingDaypart
                 };

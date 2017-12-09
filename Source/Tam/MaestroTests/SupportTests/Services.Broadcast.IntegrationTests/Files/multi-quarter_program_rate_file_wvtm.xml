@@ -65,7 +65,7 @@
         </DayTimes>
         <DaypartName>EARLY NEWS</DaypartName>
         <AvailName>Q1 CADENT NEWS AT 11:30AM</AvailName>
-        <SpotLength>00:00:30</SpotLength>
+        <SpotLength>00:00:15</SpotLength>
         <Periods>
           <DetailedPeriod endDate="2016-03-27" startDate="2015-12-28">
             <Rate>110.00</Rate>
@@ -125,7 +125,7 @@
         </DayTimes>
         <DaypartName>EARLY NEWS</DaypartName>
         <AvailName>Q3 CADENT NEWS AT 11:30AM</AvailName>
-        <SpotLength>00:00:30</SpotLength>
+        <SpotLength>00:01:30</SpotLength>
         <Periods>
           <DetailedPeriod endDate="2016-09-25" startDate="2016-06-27">
             <Rate>130.00</Rate>
@@ -155,7 +155,118 @@
         </DayTimes>
         <DaypartName>EARLY NEWS</DaypartName>
         <AvailName>Q4 CADENT NEWS AT 11:30AM</AvailName>
-        <SpotLength>00:00:30</SpotLength>
+        <SpotLength>00:01:00</SpotLength>
+        <Periods>
+          <DetailedPeriod endDate="2016-10-02" startDate="2016-09-26">
+            <Rate>140.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">40.5</DemoValue>
+              <DemoValue demoRef="DM1">3.8</DemoValue>
+            </DemoValues>
+          </DetailedPeriod>
+          <DetailedPeriod endDate="2016-12-25" startDate="2016-10-03">
+            <Rate>180.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">60.5</DemoValue>
+              <DemoValue demoRef="DM1">4.5</DemoValue>
+            </DemoValues>
+          </DetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0"/>
+        <DayTimes>
+          <DayTime>
+            <StartTime>11:30</StartTime>
+            <EndTime>12:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY NEWS</DaypartName>
+        <AvailName>Q4 CADENT NEWS WITH 45SEC ADS</AvailName>
+        <SpotLength>00:00:45</SpotLength>
+        <Periods>
+          <DetailedPeriod endDate="2016-10-02" startDate="2016-09-26">
+            <Rate>140.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">40.5</DemoValue>
+              <DemoValue demoRef="DM1">3.8</DemoValue>
+            </DemoValues>
+          </DetailedPeriod>
+          <DetailedPeriod endDate="2016-12-25" startDate="2016-10-03">
+            <Rate>180.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">60.5</DemoValue>
+              <DemoValue demoRef="DM1">4.5</DemoValue>
+            </DemoValues>
+          </DetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0"/>
+        <DayTimes>
+          <DayTime>
+            <StartTime>11:30</StartTime>
+            <EndTime>12:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY NEWS</DaypartName>
+        <AvailName>Q4 CADENT NEWS WITH 180SEC ADS</AvailName>
+        <SpotLength>00:03:00</SpotLength>
+        <Periods>
+          <DetailedPeriod endDate="2016-10-02" startDate="2016-09-26">
+            <Rate>140.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">40.5</DemoValue>
+              <DemoValue demoRef="DM1">3.8</DemoValue>
+            </DemoValues>
+          </DetailedPeriod>
+          <DetailedPeriod endDate="2016-12-25" startDate="2016-10-03">
+            <Rate>180.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">60.5</DemoValue>
+              <DemoValue demoRef="DM1">4.5</DemoValue>
+            </DemoValues>
+          </DetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0"/>
+        <DayTimes>
+          <DayTime>
+            <StartTime>11:30</StartTime>
+            <EndTime>12:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY NEWS</DaypartName>
+        <AvailName>Q4 CADENT NEWS WITH 300SEC ADS</AvailName>
+        <SpotLength>00:05:00</SpotLength>
         <Periods>
           <DetailedPeriod endDate="2016-10-02" startDate="2016-09-26">
             <Rate>140.00</Rate>

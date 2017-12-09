@@ -1,0 +1,97 @@
+/* styles for when the component is used as another component wrapper */
+.dropzoneAsWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: none;
+
+  .drop-overlay {
+    display: none;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* overall dimensions and text positioning */
+.dropzone {
+  z-index: 999999;
+  border-style: dashed;
+  border-width: 5px;
+  padding: 25px;
+
+  /* center text on dropzone div */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* style for active state */
+.active {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 999;
+
+  .drop-overlay {
+    position: fixed;
+    z-index: 999;
+    top: 50;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: rgb(233,233,233);
+    background: -moz-linear-gradient(top, rgba(238,238,238,0.9) 0%, rgba(200,200,200,0.9) 100%);
+    background: -webkit-linear-gradient(top, rgba(238,238,238,0.9) 0%,rgba(200,200,200,0.9) 100%);
+    background: linear-gradient(to bottom, rgba(238,238,238,0.9) 0%,rgba(200,200,200,0.9) 100%);
+
+
+    .drop-dialog {
+      position: fixed;
+      top: 30%;
+      bottom: 70%;
+      width: 100%;
+      text-align: center;
+      color: #818181;
+      font-style: italic;
+      font-weight: normal;
+
+      .accept-prompt {
+        display: none;
+      }
+
+      .reject-prompt {
+        display: none;
+      }
+
+    }
+
+  }
+}
+
+/* style for accepted file types */
+.accept {
+  
+  .drop-dialog {
+    .accept-prompt {
+      display: block !important;
+      color: #5cb85c;
+    }
+  }
+
+}
+
+/* style for rejected file types */
+.reject {
+
+  .drop-dialog {
+    .reject-prompt {
+      display: block !important;
+      color: #c12e2a;
+    }
+  }
+
+
+}
+
+

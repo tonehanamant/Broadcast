@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Posting";
+}
+
+@section styles{
+    <link href="~/Styles/css/appPost.css" rel="stylesheet" />
+}
+
+@RenderPage("PostingMainView.cshtml")
+@RenderPage("PostingUploadModal.cshtml")
+
+@section scripts {
+    @Scripts.Render("~/bundles/posting")
+    <script>
+        var pageController = new PostingMainController();
+        var appController = new AppController();
+        $(document).ready(function () {
+            //initialize rate controller
+            (function () {
+                appController.initControllerPage(pageController);
+            })();
+        });
+    </script>
+}

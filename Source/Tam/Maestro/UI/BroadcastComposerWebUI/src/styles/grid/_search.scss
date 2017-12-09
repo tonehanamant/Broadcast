@@ -1,0 +1,13 @@
+.search-input-clear-btn-group {
+	width: auto;
+
+	.search-input-clear-btn {
+		margin-left: -37px;
+		z-index: 2;
+		color: #808080;
+
+		span {
+			padding-top: 2px;
+		}
+	}
+}

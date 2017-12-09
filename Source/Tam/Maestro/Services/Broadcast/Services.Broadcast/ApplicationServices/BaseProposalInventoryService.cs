@@ -30,7 +30,7 @@ namespace Services.Broadcast.ApplicationServices
             _proposalTotalsCalculationEngine = proposalTotalsCalculationEngine;
         }
 
-        protected IEnumerable<StationImpressions> GetImpressions(ProposalDetailInventoryBase proposalDetailInventory, List<int> ratingAudiences, IEnumerable<StationDetailDaypart> impressionRequests)
+        protected IEnumerable<StationImpressions> GetImpressions(ProposalDetailInventoryBase proposalDetailInventory, List<int> ratingAudiences, List<ManifestDetailDaypart> impressionRequests)
         {
             List<StationImpressions> impressions = null;
 

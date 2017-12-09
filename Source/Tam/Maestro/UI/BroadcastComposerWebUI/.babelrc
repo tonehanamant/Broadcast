@@ -1,0 +1,36 @@
+{
+  "presets": [
+    ["env", { 
+      "modules": false,
+      "targets": {
+        "browsers": [
+          "last 2 versions",
+          "ios_saf >= 8",
+          "ie >= 10"
+        ]
+      }
+        // "useBuiltIns": true
+    }],
+    "react",
+    // "stage-0"
+  ],
+  "plugins": [
+    "add-module-exports",
+    "transform-object-rest-spread",
+    // "react-hot-loader/babel",
+    "transform-es3-property-literals",
+    "transform-es3-member-expression-literals",
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "istanbul"
+      ]
+    },
+    "production": {
+      "presets": [
+        ["latest"]
+      ]
+    }
+  }
+}

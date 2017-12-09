@@ -7,6 +7,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System.Linq;
 using System.Transactions;
+using OfficeOpenXml.FormulaParsing.Exceptions;
 using Services.Broadcast.BusinessEngines;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
@@ -62,7 +63,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var daypartGroupings = new Dictionary<string, ProposalInventoryDaypartDto>();
             var stationDetailImpressions = new Dictionary<int, ProposalProprietaryInventoryWeekDto.InventoryDaypartSlotDto>();
-            var impressionRequests = new List<StationDetailDaypart>();
+            var impressionRequests = new List<ManifestDetailDaypart>();
 
             var relevantMediaWeeks = proposalDetailInventory.Weeks.Select(w => w.MediaWeekId).ToList();
             var spotLengthRepository = BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
@@ -152,11 +153,11 @@ namespace Services.Broadcast.ApplicationServices
 
                                 if (!DisplayDaypart.IsContained(displayDaypart, proposalDetailDaypart))
                                     slotDto.HasWastage = true;
-
-                                var detail = new StationDetailDaypart
+                                throw new Exception("Should not have gotten this far");
+                                var detail = new ManifestDetailDaypart
                                 {
                                     Id = component.Id,
-                                    Code = component.StationCode,
+                                    LegacyCallLetters= "xyz",
                                     DisplayDaypart = DisplayDaypart.Intersect(displayDaypart, proposalDetailDaypart)
                                 };
 

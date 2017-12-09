@@ -20,7 +20,7 @@ namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/Tracker")]
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-    public class TrackerController : ControllerBase
+    public class TrackerController : BroadcastControllerBase
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IWebLogger _Logger;
@@ -65,7 +65,7 @@ namespace BroadcastComposerWeb.Controllers
             }
 
             BvsSaveRequest bvsRequest = JsonConvert.DeserializeObject<BvsSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
-            bvsRequest.UserName = User.Identity.Name;
+            bvsRequest.UserName = Identity.Name;
             return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest));
         }
 
@@ -73,7 +73,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("UploadBvsFtp")]
         public BaseResponse<string> UploadViaFTP()
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsViaFtp(User.Identity.Name));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsViaFtp(Identity.Name));
         }
 
         [HttpPost]
@@ -85,7 +85,7 @@ namespace BroadcastComposerWeb.Controllers
                 throw new Exception("No Schedule file data received.");
             }
             ScheduleSaveRequest saveRequest = JsonConvert.DeserializeObject<ScheduleSaveRequest>(saveSchedule.Content.ReadAsStringAsync().Result, new IsoDateTimeConverter { DateTimeFormat = "MM-dd-yyyy" });
-            saveRequest.Schedule.UserName = User.Identity.Name;
+            saveRequest.Schedule.UserName = Identity.Name;
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveSchedule(saveRequest));
         }
 

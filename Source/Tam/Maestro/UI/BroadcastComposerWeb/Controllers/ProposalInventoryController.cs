@@ -16,7 +16,7 @@ namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/Inventory")]
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-    public class ProposalInventoryController : ControllerBase
+    public class ProposalInventoryController : BroadcastControllerBase
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
 
@@ -67,7 +67,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("OpenMarket")]
         public BaseResponse<ProposalDetailOpenMarketInventoryDto> SaveOpenMarketInventoryAllocations(OpenMarketAllocationSaveRequest request)
         {
-            request.Username = User.Identity.Name;
+            request.Username = Identity.Name;
             return
                 _ConvertToBaseResponse(
                     () =>

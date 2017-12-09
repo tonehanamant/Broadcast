@@ -4,7 +4,6 @@ using System.IO;
 using NUnit.Framework;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Exceptions;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
