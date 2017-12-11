@@ -70,13 +70,14 @@ namespace Services.Broadcast.ApplicationServices
                 .Distinct()
                 .OrderBy(a => a)
                 .ToList();
-            dto.DisplayFilter.Genres = stations.Where(p => p.Programs.Any())
-                .SelectMany(p => p.Programs.Where(g => g != null && g.Genres.Any()).SelectMany(z => z.Genres))
-                .GroupBy(g => new { g.Id, g.Display })
-                .Distinct()
-                .Select(a => a.First())
-                .OrderBy(b => b.Display)
-                .ToList();
+            // todo: deal with genre
+            //dto.DisplayFilter.Genres = stations.Where(p => p.Programs.Any())
+            //    .SelectMany(p => p.Programs.Where(g => g != null && g.Genres.Any()).SelectMany(z => z.Genres))
+            //    .GroupBy(g => new { g.Id, g.Display })
+            //    .Distinct()
+            //    .Select(a => a.First())
+            //    .OrderBy(b => b.Display)
+            //    .ToList();
             dto.DisplayFilter.Markets = dto.Markets
                 .Select(a => new { a.MarketId, a.MarketName })
                 .Distinct()
@@ -290,64 +291,65 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _PopulateMarkets(ProposalDetailOpenMarketInventoryDto dto, bool ignoreExistingAllocation)
         {
-            //_SetProposalInventoryDetailSpotLength(dto);
-            //_SetProposalInventoryDetailDaypart(dto);
+            _SetProposalInventoryDetailSpotLength(dto);
+            _SetProposalInventoryDetailDaypart(dto);
 
-            //var proposalMarketIds =
-            //    ProposalMarketsCalculationEngine.GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion,
-            //        dto.DetailId).Select(m => m.Id).ToList();
+            var proposalMarketIds =
+                ProposalMarketsCalculationEngine.GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion,
+                    dto.DetailId).Select(m => (short)m.Id).ToList();
 
-            //var programs = BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>()
-            //    .GetStationProgramsForProposalDetail(dto.DetailFlightStartDate.Value, dto.DetailFlightEndDate.Value,
-            //        dto.DetailSpotLength, (int)RatesFile.RateSourceType.OpenMarket, proposalMarketIds, dto.DetailId);
+            var programs = BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>()
+                .GetStationProgramsForProposalDetail(dto.DetailFlightStartDate, dto.DetailFlightEndDate,
+                    dto.DetailSpotLength, BroadcastConstants.OpenMarketSourceId, proposalMarketIds, dto.DetailId);
 
             //// represents the actual program names before any refine is applied
-            //dto.RefineFilterPrograms = programs.Where(l => l != null).Select(z => z.ProgramName)
-            //    .Distinct(StringComparer.OrdinalIgnoreCase)
-            //    .OrderBy(m => m)
-            //    .ToList();
+            dto.RefineFilterPrograms = programs.Where(l => l != null).Select(z => z.ProgramName)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(m => m)
+                .ToList();
 
-            //var proposalDetailDaypart = DaypartCache.GetDisplayDaypart(dto.DetailDaypartId.Value);
-            //var filteredProgramsWithAllocations = new List<int>();
-            //programs.RemoveAll(p =>
-            //{
-            //    if (!DaypartCache.GetDisplayDaypart(p.DayPartId).Intersects(proposalDetailDaypart))
-            //        return true;
+            var proposalDetailDaypart = DaypartCache.GetDisplayDaypart(dto.DetailDaypartId.Value);
+            var filteredProgramsWithAllocations = new List<int>();
+            programs.RemoveAll(p =>
+            {
+                if (!DaypartCache.GetDisplayDaypart(p.DayPartId).Intersects(proposalDetailDaypart))
+                    return true;
 
-            //    if (FilterByGenreAndProgramNameCriteria(p, dto.Criteria))
-            //    {
-            //        if (p.FlightWeeks.Any(fw => fw.Allocations.Any(a => a.Spots > 0)))
-            //        {
-            //            if (!ignoreExistingAllocation)
-            //            {
-            //                dto.NewCriteriaAffectsExistingAllocations = true;
+                //if (FilterByGenreAndProgramNameCriteria(p, dto.Criteria))
+                //{
+                //    if (p.FlightWeeks.Any(fw => fw.Allocations.Any(a => a.Spots > 0)))
+                //    {
+                //        if (!ignoreExistingAllocation)
+                //        {
+                //            dto.NewCriteriaAffectsExistingAllocations = true;
 
-            //                return false;
-            //            }
+                //            return false;
+                //        }
 
-            //            filteredProgramsWithAllocations.Add(p.ProgramId);
-            //        }
+                //        filteredProgramsWithAllocations.Add(p.ProgramId);
+                //    }
 
-            //        return true;
-            //    }
+                //    return true;
+                //}
 
-            //    return false;
-            //});
+                return false;
+            });
 
-            //if (filteredProgramsWithAllocations.Any())
-            //    BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>()
-            //        .RemoveAllocations(filteredProgramsWithAllocations, dto.DetailId);
+            if (filteredProgramsWithAllocations.Any())
+                BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>()
+                    .RemoveAllocations(filteredProgramsWithAllocations, dto.DetailId);
 
-            //if (programs.Count < 1)
-            //{
-            //    return;
-            //}
+            if (programs.Count < 1)
+            {
+                return;
+            }
 
-            //_ApplyDaypartNames(programs);
-            //_ApplyProgramImpressions(programs, dto);
-            //_ProposalProgramsCalculationEngine.ApplyBlendedCpmForEachProgram(programs, dto.DetailSpotLength);
+            _ApplyDaypartNames(programs);
+            _ApplyProgramImpressions(programs, dto);
+            _ProposalProgramsCalculationEngine.ApplyBlendedCpmForEachProgram(programs, dto.DetailSpotLength);
 
-            //filteredProgramsWithAllocations.Clear();
+            filteredProgramsWithAllocations.Clear();
+            // todo: fix allocations
             //programs.RemoveAll(p =>
             //{
             //    if (FilterByCpmCriteria(p, dto.Criteria.CpmCriteria))
@@ -365,19 +367,19 @@ namespace Services.Broadcast.ApplicationServices
             //    }
             //    return false;
             //});
-            //if (filteredProgramsWithAllocations.Any())
-            //    BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>()
-            //        .RemoveAllocations(filteredProgramsWithAllocations, dto.DetailId);
+            if (filteredProgramsWithAllocations.Any())
+                BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>()
+                    .RemoveAllocations(filteredProgramsWithAllocations, dto.DetailId);
 
-            //var inventoryMarkets = _GroupProgramsByMarketAndStation(programs);
+            var inventoryMarkets = _GroupProgramsByMarketAndStation(programs);
 
-            //var postingBook = _ProposalPostingBooksEngine.GetPostingBookId(dto);
-            //_ApplyInventoryMarketSubscribers(postingBook, inventoryMarkets);
-            //_ApplyInventoryMarketRankings(postingBook, inventoryMarkets);
+            var postingBook = _ProposalPostingBooksEngine.GetPostingBookId(dto);
+            _ApplyInventoryMarketSubscribers(postingBook, inventoryMarkets);
+            _ApplyInventoryMarketRankings(postingBook, inventoryMarkets);
 
-            //dto.Markets.AddRange(inventoryMarkets.OrderBy(m => m.MarketRank).ToList());
+            dto.Markets.AddRange(inventoryMarkets.OrderBy(m => m.MarketRank).ToList());
 
-            //_ApplyDefaultSorting(dto);
+            _ApplyDefaultSorting(dto);
         }
 
         internal static bool FilterByCpmCriteria(ProposalProgramDto program, List<CpmCriteria> cpmCriteria)
@@ -532,11 +534,11 @@ namespace Services.Broadcast.ApplicationServices
                 var stationDaypart = new ManifestDetailDaypart
                 {
                     LegacyCallLetters = program.Station.LegacyCallLetters,
-                    Id = program.ProgramId,
+                    Id = program.ManifestId,
                     DisplayDaypart = intersectingDaypart
                 };
                 impressionRequests.Add(stationDaypart);
-                stationDetailImpressions[program.ProgramId] = program;
+                stationDetailImpressions[program.ManifestId] = program;
             }
 
             var ratingAudiences = BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>()
@@ -546,7 +548,8 @@ namespace Services.Broadcast.ApplicationServices
                         proposalDetail.GuaranteedAudience.Value
                     }).Select(r => r.rating_audience_id).Distinct().ToList();
 
-            foreach (var imp in GetImpressions(proposalDetail, ratingAudiences, impressionRequests))
+            var programImpressions = GetImpressions(proposalDetail, ratingAudiences, impressionRequests);
+            foreach (var imp in programImpressions)
             {
                 stationDetailImpressions[imp.id].UnitImpressions += imp.impressions;
             }
@@ -593,7 +596,7 @@ namespace Services.Broadcast.ApplicationServices
                         StationCode = s.First().Station.StationCode,
                         Programs = s.Select(p => new ProposalInventoryMarketDto.InventoryMarketStationProgram
                         {
-                            ProgramId = p.ProgramId,
+                            ProgramId = p.ManifestId,
                             ProgramName = p.ProgramName,
                             TargetCpm = p.TargetCpm,
                             UnitImpressions = p.UnitImpressions,

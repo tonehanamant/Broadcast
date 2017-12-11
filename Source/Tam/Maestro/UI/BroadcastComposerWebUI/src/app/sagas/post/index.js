@@ -207,7 +207,7 @@ export function* assignPostDisplay({ payload: request }) {
 /* ////////////////////////////////// */
 export function* requestPostFiltered({ payload: query }) {
   const postUnfiltered = yield select(state => state.post.postUnfiltered);
-  const searcher = new FuzzySearch(postUnfiltered, ['FileName', 'DisplayDemo', 'DisplayUploadDate', 'DisplayModifiedDate'], { caseSensitive: false });
+  const searcher = new FuzzySearch(postUnfiltered, ['FileName', 'DisplayDemos', 'DisplayUploadDate', 'DisplayModifiedDate'], { caseSensitive: false });
   const postFiltered = () => searcher.search(query);
 
   try {
@@ -449,7 +449,6 @@ export function* savePostFileEdit({ payload: params }) {
   }
 }
 
-
 /* ////////////////////////////////// */
 /* UPLOAD POST FILE */
 /* ////////////////////////////////// */
@@ -540,6 +539,7 @@ export function* uploadPostFile({ payload: params }) {
     }
   }
 }
+
 
 /* ////////////////////////////////// */
 /* WATCHERS */

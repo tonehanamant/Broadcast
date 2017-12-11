@@ -141,7 +141,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             _mockDataRepositoryFactory.Setup(a => a.GetDataRepository<ISpotLengthRepository>())
                 .Returns(_mockSpotLengthRepository.Object);
 
-            var _ratesFileValidator = new InventoryFileValidator();
+            var _ratesFileValidator = new InventoryFileValidator(null);
 
             var incomingInventoryFile = new InventoryFile()
             {

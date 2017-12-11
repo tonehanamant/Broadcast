@@ -1,23 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.Entities
 {
     public class StationProgram
     {
+        public StationProgram()
+        {
+            FlightWeeks = new List<FlightWeekDto>();
+        }
+
+        public int Id { get; set; }
         public int StationCode { get; set; }
         public int SpotLength { get; set; }
         public int? SpotsPerWeek { get; set; }
         public string ProgramName { get; set; }
-        public string Airtime { get; set; }
-        public DateTime StartDate { get; set; }
+        public string RateSource { get; set; }
+        public DaypartDto Airtime { get; set; }
+        public string AirtimePreview { get; set; }
+        public DateTime EffectiveDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public decimal Rate15 { get; set; }
-        public decimal Rate30 { get; set; }
+        public decimal? Rate15 { get; set; }
+        public decimal? Rate30 { get; set; }
         public double? HouseHoldImpressions { get; set; }
         public double? Rating { get; set; }
+        public List<FlightWeekDto> FlightWeeks { get; set; }
+        public List<StationProgramConflictChangeDto> Conflicts { get; set; }
+
+        public class StationProgramConflictChangeDto
+        {
+            public int Id { get; set; }
+            public DateTime FlightStartDate { get; set; }
+            public DateTime FlightEndDate { get; set; }
+            public List<FlightWeekDto> Flights { get; set; }
+        }
     }
 }

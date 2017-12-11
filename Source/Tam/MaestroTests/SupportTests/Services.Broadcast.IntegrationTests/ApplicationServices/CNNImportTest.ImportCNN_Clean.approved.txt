@@ -15,7 +15,7 @@
       "Manifests": [
         {
           "DaypartCode": "PM News",
-          "EffectiveDate": "2017-06-01T00:00:00",
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
@@ -269,7 +269,7 @@
       "Manifests": [
         {
           "DaypartCode": "PM News",
-          "EffectiveDate": "2017-06-01T00:00:00",
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
@@ -523,7 +523,7 @@
       "Manifests": [
         {
           "DaypartCode": "PM News",
-          "EffectiveDate": "2017-06-01T00:00:00",
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
@@ -733,7 +733,7 @@
       "Manifests": [
         {
           "DaypartCode": "PM News",
-          "EffectiveDate": "2017-06-01T00:00:00",
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
@@ -943,7 +943,7 @@
       "Manifests": [
         {
           "DaypartCode": "PM News",
-          "EffectiveDate": "2017-06-01T00:00:00",
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
@@ -1109,7 +1109,7 @@
       "Manifests": [
         {
           "DaypartCode": "AM News",
-          "EffectiveDate": "2017-04-17T00:00:00",
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
@@ -1290,7 +1290,7 @@
           "Station": {
             "Affiliation": "ABC",
             "CallLetters": "KAKE 10.1",
-            "Code": 5297,
+            "Code": 297,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAKE",
             "MarketCode": 278,
@@ -1567,7 +1567,7 @@
       "Manifests": [
         {
           "DaypartCode": "AM News",
-          "EffectiveDate": "2017-04-17T00:00:00",
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
@@ -1748,7 +1748,7 @@
           "Station": {
             "Affiliation": "ABC",
             "CallLetters": "KAKE 10.1",
-            "Code": 5297,
+            "Code": 297,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAKE",
             "MarketCode": 278,
@@ -2025,7 +2025,7 @@
       "Manifests": [
         {
           "DaypartCode": "AM News",
-          "EffectiveDate": "2017-04-17T00:00:00",
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
@@ -2206,7 +2206,7 @@
           "Station": {
             "Affiliation": "ABC",
             "CallLetters": "KAKE 10.1",
-            "Code": 5297,
+            "Code": 297,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAKE",
             "MarketCode": 278,
@@ -2483,7 +2483,7 @@
       "Manifests": [
         {
           "DaypartCode": "AM News",
-          "EffectiveDate": "2017-04-17T00:00:00",
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
@@ -2600,7 +2600,7 @@
           "Station": {
             "Affiliation": "ABC",
             "CallLetters": "KAKE 10.1",
-            "Code": 5297,
+            "Code": 297,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAKE",
             "MarketCode": 278,
@@ -2877,7 +2877,7 @@
       "Manifests": [
         {
           "DaypartCode": "AM News",
-          "EffectiveDate": "2017-04-17T00:00:00",
+          "EffectiveDate": "2016-10-31T00:00:00",
           "EndDate": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
@@ -2994,7 +2994,7 @@
           "Station": {
             "Affiliation": "ABC",
             "CallLetters": "KAKE 10.1",
-            "Code": 5297,
+            "Code": 297,
             "FlightWeeks": [],
             "LegacyCallLetters": "KAKE",
             "MarketCode": 278,

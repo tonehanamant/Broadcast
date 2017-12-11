@@ -19,6 +19,16 @@ export default function* rootSaga() {
     postSaga.watchUploadPostFile(),
 
     planningSaga.watchRequestProposalInitialData(),
+    planningSaga.watchRequestProposals(),
+    planningSaga.watchRequestProposalLock(),
+    planningSaga.watchRequestProposalUnlock(),
+    planningSaga.watchRequestProposal(),
+    planningSaga.watchRequestProposalVersions(),
+    planningSaga.watchRequestProposalVersion(),
+    planningSaga.watchSaveProposal(),
+    planningSaga.watchSaveProposalAsVersion(),
+    planningSaga.watchDeleteProposalById(),
+    planningSaga.watchUpdateProposal(),
 
   ];
 }

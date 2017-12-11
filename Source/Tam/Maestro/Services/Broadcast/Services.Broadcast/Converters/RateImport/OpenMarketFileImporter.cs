@@ -6,6 +6,7 @@ using Services.Broadcast.Entities.InventoryOpenMarketFileXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Services.Broadcast.Entities.spotcableXML;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -22,7 +23,6 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile, DateTime effecitveDate, List<InventoryFileProblem> fileProblems)
         {
-
             try
             {
                 var message = DeserializeAaaaMessage(rawStream);
@@ -31,8 +31,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                 var resultFile = BuildRatesFile(message, inventoryFile, fileProblems);
                 resultFile.StationContacts = ExtractContactData(message);
-
-        }
+            }
             catch (Exception e)
             {
                 throw new Exception(string.Format("Unable to parse rates file: {0} The file may be invalid: {1}", e.Message, inventoryFile.FileName), e);
@@ -57,10 +56,16 @@ namespace Services.Broadcast.Converters.RateImport
 
                 var audienceMap = GetAudienceMap(proposal.AvailList.DemoCategories);
 
-                var validStations = _GetValidStations(proposal.Outlets.Select(o => o.callLetters).ToList());
+                List<string> invalidStations = new List<string>();
+                var validStations = _GetValidStations(proposal.Outlets.Select(o => o.callLetters).ToList(),invalidStations);
                 if (validStations == null || validStations.Count == 0)
                 {
                     fileProblems.Add(new InventoryFileProblem("There are no known stations in the file"));
+                    return manifests;
+                }
+                if (invalidStations.Any())
+                {
+                    fileProblems.AddRange(invalidStations.Select(s => new InventoryFileProblem("Invalid station: " + s)));
                     return manifests;
                 }
 
@@ -83,7 +88,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             //TODO: Move to base class
-            private Dictionary<string, DisplayBroadcastStation> _GetValidStations(List<string> stationNameList)
+            private Dictionary<string, DisplayBroadcastStation> _GetValidStations(List<string> stationNameList,List<string> invalidStations)
             {
                 var stationsDictionary = new Dictionary<string, DisplayBroadcastStation>();
                 foreach (var stationName in stationNameList)
@@ -92,6 +97,10 @@ namespace Services.Broadcast.Converters.RateImport
                     if (station != null)
                     {
                         stationsDictionary.Add(stationName, station);
+                    }
+                    else
+                    {
+                        invalidStations.Add(stationName);
                     }
                 }
                 return stationsDictionary;
@@ -127,8 +136,8 @@ namespace Services.Broadcast.Converters.RateImport
                 foreach (var availLine in proposal.AvailList.AvailLineWithDetailedPeriods)
                 {
                     var availLineManifests = new List<StationInventoryManifest>();
-                    var programName = availLine.AvailName;
 
+                    string programName = availLine.AvailName;
                     try
                     {
                         var outletRef = proposal.AvailList.OutletReferences
@@ -137,10 +146,21 @@ namespace Services.Broadcast.Converters.RateImport
                         var callLetters = proposal.Outlets.Where(a => a.outletId == outletRef)
                             .Select(a => a.callLetters).First();
 
+                        if (!validStations.ContainsKey(callLetters))
+                            throw new Exception(string.Format("Could not find station with call letters \"{0}\"", callLetters));
+
                         var station = validStations[callLetters];
 
                         var spotLength = availLine.SpotLength.Minute * SecondsPerMinute +
                                              availLine.SpotLength.Second;
+
+                        var spotLengthProblem = _CheckSpotLength(spotLength, callLetters, programName);
+                        if (spotLengthProblem != null)
+                        {
+                            fileProblems.Add(spotLengthProblem);
+                            continue;
+                        }
+
                         var spotLengthId = SpotLengthIdsByLength[spotLength];
 
                         if (availLine.Periods != null && availLine.Periods.Count() > 0)
@@ -194,42 +214,50 @@ namespace Services.Broadcast.Converters.RateImport
 
                 var availLineRate = string.IsNullOrEmpty(availLine.Rate) ? 0 : decimal.Parse(availLine.Rate);
 
-                if (spotLength == 30)
+                if (spotLength == 30) //only create other spot length rates if 30s rate is provided
                 {
                     manifestRates.AddRange(_GetManifestRatesFromMultipliers(availLineRate));
                 }
                 else
                 {
-                    switch (spotLength)
+                    var spotLengthProblem = _CheckSpotLength(spotLength, stationCallLetters, availLine.AvailName);
+                    if (spotLengthProblem != null)
                     {
-                        case 15:
-                        case 60:
-                        case 90:
-                        case 120:
-                var manifestRate = new StationInventoryManifestRate()
-                {
-                                SpotLengthId = spotLengthId,
-                                Rate = availLineRate
-                };
-                            manifestRates.Add(manifestRate);
-                            break;
-                        default:
-                            fileProblems.Add(
-                                new InventoryFileProblem()
-                                {
-                                    ProblemDescription =
-                                        string.Format(
-                                            "Unknown spot length found: {0}",
-                                            spotLength),
-                                    ProgramName = availLine.AvailName,
-                                    StationLetters = stationCallLetters
-                                });
-                            break;
+                        fileProblems.Add(spotLengthProblem);
                     }
+                    else
+                    {
+                        var manifestRate = new StationInventoryManifestRate()
+                        {
+                            SpotLengthId = spotLengthId,
+                            Rate = availLineRate
+                        };
+                        manifestRates.Add(manifestRate);    
+                    }
+
                 }
 
                 return manifestRates;
             }
+
+        private InventoryFileProblem _CheckSpotLength(int spotLength, string stationLetters, string programName)
+        {
+            if (!SpotLengthIdsByLength.ContainsKey(spotLength))
+            {
+                return 
+                new InventoryFileProblem()
+                {
+                    ProblemDescription =
+                        string.Format(
+                            "Unknown spot length found: {0}",
+                            spotLength),
+                    ProgramName = programName,
+                    StationLetters = stationLetters
+                };
+            }
+
+            return null;
+        }
 
             private List<StationInventoryManifestRate> _GetManifestRatesforAvailLineWithDetailedPeriods(int spotLengthId,
                 AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriod detailedPeriod, string programName, string stationCallLetters, List<InventoryFileProblem> fileProblems)
@@ -245,31 +273,19 @@ namespace Services.Broadcast.Converters.RateImport
                 }
                 else
                 {
-                    switch (spotLength)
+                    var spotLengthProblem = _CheckSpotLength(spotLength, stationCallLetters, programName);
+                    if (spotLengthProblem != null)
                     {
-                        case 15:
-                        case 60:
-                        case 90:
-                        case 120:
-                            var manifestRate = new StationInventoryManifestRate()
-                            {
-                                SpotLengthId = spotLengthId,
-                                Rate = availLineRate
-                            };
-                manifestRates.Add(manifestRate);
-                            break;
-                        default:
-                            fileProblems.Add(
-                                new InventoryFileProblem()
-                                {
-                                    ProblemDescription =
-                                        string.Format(
-                                            "Unknown spot length found: {0}",
-                                            spotLength),
-                                    ProgramName = programName,
-                                    StationLetters = stationCallLetters
-                                });
-                            break;
+                        fileProblems.Add(spotLengthProblem);
+                    }
+                    else
+                    {
+                        var manifestRate = new StationInventoryManifestRate()
+                        {
+                            SpotLengthId = spotLengthId,
+                            Rate = availLineRate
+                        };
+                        manifestRates.Add(manifestRate);
                     }
                 }
 
@@ -297,6 +313,14 @@ namespace Services.Broadcast.Converters.RateImport
 
                         var spotLength = availLine.SpotLength.Minute * SecondsPerMinute +
                                              availLine.SpotLength.Second;
+
+                        var spotLengthProblem = _CheckSpotLength(spotLength, callLetters, programName);
+                        if (spotLengthProblem != null)
+                        {
+                            fileProblems.Add(spotLengthProblem);
+                            continue;
+                        }
+
                         var spotLengthId = SpotLengthIdsByLength[spotLength];
 
                         var manifestAudiences = _GetManifestAudienceListForAvailLine(

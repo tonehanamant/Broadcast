@@ -1,0 +1,218 @@
+﻿[
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "KCYU-LD 41.1",
+    "Code": 1045,
+    "LegacyCallLetters": "KCYU",
+    "OriginMarket": "Yakima-Pasco-Rchlnd-Knnwck",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "KFNB 20.1",
+    "Code": 1160,
+    "LegacyCallLetters": "KFNB",
+    "OriginMarket": "Casper-Riverton",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "KHQA-TV 7.2",
+    "Code": 2279,
+    "LegacyCallLetters": "NHQA",
+    "OriginMarket": "Quincy-Hannibal-Keokuk",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "KCWQ",
+    "Code": 2772,
+    "LegacyCallLetters": "KCWQ",
+    "OriginMarket": "Palm Springs",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "KION-TV 46.2",
+    "Code": 2784,
+    "LegacyCallLetters": "NION",
+    "OriginMarket": "Monterey-Salinas",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "NBC",
+    "CallLetters": "KNBN-DT 21.1",
+    "Code": 3503,
+    "LegacyCallLetters": "KNBN",
+    "OriginMarket": "Rapid City",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CBS",
+    "CallLetters": "KHQA-TV 7.1",
+    "Code": 5192,
+    "LegacyCallLetters": "KHQA",
+    "OriginMarket": "Quincy-Hannibal-Keokuk",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "NBC",
+    "CallLetters": "WGEM-TV 10.1",
+    "Code": 5198,
+    "LegacyCallLetters": "WGEM",
+    "OriginMarket": "Quincy-Hannibal-Keokuk",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CBS",
+    "CallLetters": "KIDK 3.1",
+    "Code": 5225,
+    "LegacyCallLetters": "KIDK",
+    "OriginMarket": "Idaho Fals-Pocatllo(Jcksn)",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "KIII 3.1",
+    "Code": 5319,
+    "LegacyCallLetters": "KIII",
+    "OriginMarket": "Corpus Christi",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "KTWO-TV 2.1",
+    "Code": 5408,
+    "LegacyCallLetters": "KTWO",
+    "OriginMarket": "Casper-Riverton",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CBS",
+    "CallLetters": "KXGN-TV 5.1",
+    "Code": 5465,
+    "LegacyCallLetters": "KXGN",
+    "OriginMarket": "Glendive",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CBS",
+    "CallLetters": "KION-TV 46.1",
+    "Code": 5927,
+    "LegacyCallLetters": "KION",
+    "OriginMarket": "Monterey-Salinas",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "WWSB 40.1",
+    "Code": 5942,
+    "LegacyCallLetters": "WWSB",
+    "OriginMarket": "Tampa-St. Pete (Sarasota)",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "KATN 2.1",
+    "Code": 6069,
+    "LegacyCallLetters": "KATN",
+    "OriginMarket": "Fairbanks",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "KYUR 13.1",
+    "Code": 6072,
+    "LegacyCallLetters": "KYUR",
+    "OriginMarket": "Anchorage",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "WDBD 40.1",
+    "Code": 6173,
+    "LegacyCallLetters": "WDBD",
+    "OriginMarket": "Jackson, MS",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "NBC",
+    "CallLetters": "KTFT-LD 7.1",
+    "Code": 6269,
+    "LegacyCallLetters": "KTFT",
+    "OriginMarket": "Twin Falls",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "WNTZ-TV 48.1",
+    "Code": 6433,
+    "LegacyCallLetters": "WNTZ",
+    "OriginMarket": "Alexandria, LA",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "KXPI-LD 34.2",
+    "Code": 6444,
+    "LegacyCallLetters": "KXPI",
+    "OriginMarket": "Idaho Fals-Pocatllo(Jcksn)",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "KTBY 4.1",
+    "Code": 6682,
+    "LegacyCallLetters": "KTBY",
+    "OriginMarket": "Anchorage",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "KJUD 8.1",
+    "Code": 6684,
+    "LegacyCallLetters": "KJUD",
+    "OriginMarket": "Juneau",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "KDFX-CD 39.1",
+    "Code": 7011,
+    "LegacyCallLetters": "KDFX",
+    "OriginMarket": "Palm Springs",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "AZA",
+    "CallLetters": "AZSD",
+    "Code": 7353,
+    "LegacyCallLetters": "AZSD",
+    "OriginMarket": "San Diego",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "WGEM-TV 10.3",
+    "Code": 7634,
+    "LegacyCallLetters": "GGEM",
+    "OriginMarket": "Quincy-Hannibal-Keokuk",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "KJNB-LD 39.1",
+    "Code": 10686,
+    "LegacyCallLetters": "KJNB",
+    "OriginMarket": "Jonesboro",
+    "RateDataThrough": "-"
+  },
+  {
+    "Affiliation": "CBS",
+    "CallLetters": "KJNB-LD 39.2",
+    "Code": 10736,
+    "LegacyCallLetters": "NJNB",
+    "OriginMarket": "Jonesboro",
+    "RateDataThrough": "-"
+  }
+]
