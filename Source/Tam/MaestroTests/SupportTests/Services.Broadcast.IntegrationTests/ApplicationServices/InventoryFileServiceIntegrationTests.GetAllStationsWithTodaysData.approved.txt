@@ -4,7 +4,6 @@
     "CallLetters": "KCYU-LD 41.1",
     "Code": 1045,
     "LegacyCallLetters": "KCYU",
-    "MarketCode": 410,
     "OriginMarket": "Yakima-Pasco-Rchlnd-Knnwck",
     "RateDataThrough": "-"
   },
@@ -13,7 +12,6 @@
     "CallLetters": "KFNB 20.1",
     "Code": 1160,
     "LegacyCallLetters": "KFNB",
-    "MarketCode": 367,
     "OriginMarket": "Casper-Riverton",
     "RateDataThrough": "-"
   },
@@ -22,7 +20,6 @@
     "CallLetters": "KHQA-TV 7.2",
     "Code": 2279,
     "LegacyCallLetters": "NHQA",
-    "MarketCode": 317,
     "OriginMarket": "Quincy-Hannibal-Keokuk",
     "RateDataThrough": "-"
   },
@@ -31,7 +28,6 @@
     "CallLetters": "KCWQ",
     "Code": 2772,
     "LegacyCallLetters": "KCWQ",
-    "MarketCode": 404,
     "OriginMarket": "Palm Springs",
     "RateDataThrough": "-"
   },
@@ -40,7 +36,6 @@
     "CallLetters": "KION-TV 46.2",
     "Code": 2784,
     "LegacyCallLetters": "NION",
-    "MarketCode": 428,
     "OriginMarket": "Monterey-Salinas",
     "RateDataThrough": "-"
   },
@@ -49,17 +44,7 @@
     "CallLetters": "KNBN-DT 21.1",
     "Code": 3503,
     "LegacyCallLetters": "KNBN",
-    "MarketCode": 364,
     "OriginMarket": "Rapid City",
-    "RateDataThrough": "-"
-  },
-  {
-    "Affiliation": "NBC",
-    "CallLetters": "WVTM-TV 13.1",
-    "Code": 5044,
-    "LegacyCallLetters": "WVTM",
-    "MarketCode": 230,
-    "OriginMarket": "Birmingham (Ann and Tusc)",
     "RateDataThrough": "-"
   },
   {
@@ -67,7 +52,6 @@
     "CallLetters": "KHQA-TV 7.1",
     "Code": 5192,
     "LegacyCallLetters": "KHQA",
-    "MarketCode": 317,
     "OriginMarket": "Quincy-Hannibal-Keokuk",
     "RateDataThrough": "-"
   },
@@ -76,7 +60,6 @@
     "CallLetters": "WGEM-TV 10.1",
     "Code": 5198,
     "LegacyCallLetters": "WGEM",
-    "MarketCode": 317,
     "OriginMarket": "Quincy-Hannibal-Keokuk",
     "RateDataThrough": "-"
   },
@@ -85,7 +68,6 @@
     "CallLetters": "KIDK 3.1",
     "Code": 5225,
     "LegacyCallLetters": "KIDK",
-    "MarketCode": 358,
     "OriginMarket": "Idaho Fals-Pocatllo(Jcksn)",
     "RateDataThrough": "-"
   },
@@ -94,7 +76,6 @@
     "CallLetters": "KIII 3.1",
     "Code": 5319,
     "LegacyCallLetters": "KIII",
-    "MarketCode": 200,
     "OriginMarket": "Corpus Christi",
     "RateDataThrough": "-"
   },
@@ -103,7 +84,6 @@
     "CallLetters": "KTWO-TV 2.1",
     "Code": 5408,
     "LegacyCallLetters": "KTWO",
-    "MarketCode": 367,
     "OriginMarket": "Casper-Riverton",
     "RateDataThrough": "-"
   },
@@ -112,7 +92,6 @@
     "CallLetters": "KXGN-TV 5.1",
     "Code": 5465,
     "LegacyCallLetters": "KXGN",
-    "MarketCode": 398,
     "OriginMarket": "Glendive",
     "RateDataThrough": "-"
   },
@@ -121,7 +100,6 @@
     "CallLetters": "KION-TV 46.1",
     "Code": 5927,
     "LegacyCallLetters": "KION",
-    "MarketCode": 428,
     "OriginMarket": "Monterey-Salinas",
     "RateDataThrough": "-"
   },
@@ -130,7 +108,6 @@
     "CallLetters": "WWSB 40.1",
     "Code": 5942,
     "LegacyCallLetters": "WWSB",
-    "MarketCode": 139,
     "OriginMarket": "Tampa-St. Pete (Sarasota)",
     "RateDataThrough": "-"
   },
@@ -139,7 +116,6 @@
     "CallLetters": "KATN 2.1",
     "Code": 6069,
     "LegacyCallLetters": "KATN",
-    "MarketCode": 345,
     "OriginMarket": "Fairbanks",
     "RateDataThrough": "-"
   },
@@ -148,7 +124,6 @@
     "CallLetters": "KYUR 13.1",
     "Code": 6072,
     "LegacyCallLetters": "KYUR",
-    "MarketCode": 343,
     "OriginMarket": "Anchorage",
     "RateDataThrough": "-"
   },
@@ -157,7 +132,6 @@
     "CallLetters": "WDBD 40.1",
     "Code": 6173,
     "LegacyCallLetters": "WDBD",
-    "MarketCode": 318,
     "OriginMarket": "Jackson, MS",
     "RateDataThrough": "-"
   },
@@ -166,7 +140,6 @@
     "CallLetters": "KTFT-LD 7.1",
     "Code": 6269,
     "LegacyCallLetters": "KTFT",
-    "MarketCode": 360,
     "OriginMarket": "Twin Falls",
     "RateDataThrough": "-"
   },
@@ -175,7 +148,6 @@
     "CallLetters": "WNTZ-TV 48.1",
     "Code": 6433,
     "LegacyCallLetters": "WNTZ",
-    "MarketCode": 244,
     "OriginMarket": "Alexandria, LA",
     "RateDataThrough": "-"
   },
@@ -184,7 +156,6 @@
     "CallLetters": "KXPI-LD 34.2",
     "Code": 6444,
     "LegacyCallLetters": "KXPI",
-    "MarketCode": 358,
     "OriginMarket": "Idaho Fals-Pocatllo(Jcksn)",
     "RateDataThrough": "-"
   },
@@ -193,7 +164,6 @@
     "CallLetters": "KTBY 4.1",
     "Code": 6682,
     "LegacyCallLetters": "KTBY",
-    "MarketCode": 343,
     "OriginMarket": "Anchorage",
     "RateDataThrough": "-"
   },
@@ -202,7 +172,6 @@
     "CallLetters": "KJUD 8.1",
     "Code": 6684,
     "LegacyCallLetters": "KJUD",
-    "MarketCode": 347,
     "OriginMarket": "Juneau",
     "RateDataThrough": "-"
   },
@@ -211,7 +180,6 @@
     "CallLetters": "KDFX-CD 39.1",
     "Code": 7011,
     "LegacyCallLetters": "KDFX",
-    "MarketCode": 404,
     "OriginMarket": "Palm Springs",
     "RateDataThrough": "-"
   },
@@ -220,7 +188,6 @@
     "CallLetters": "AZSD",
     "Code": 7353,
     "LegacyCallLetters": "AZSD",
-    "MarketCode": 425,
     "OriginMarket": "San Diego",
     "RateDataThrough": "-"
   },
@@ -229,7 +196,6 @@
     "CallLetters": "WGEM-TV 10.3",
     "Code": 7634,
     "LegacyCallLetters": "GGEM",
-    "MarketCode": 317,
     "OriginMarket": "Quincy-Hannibal-Keokuk",
     "RateDataThrough": "-"
   },
@@ -238,7 +204,6 @@
     "CallLetters": "KJNB-LD 39.1",
     "Code": 10686,
     "LegacyCallLetters": "KJNB",
-    "MarketCode": 334,
     "OriginMarket": "Jonesboro",
     "RateDataThrough": "-"
   },
@@ -247,7 +212,6 @@
     "CallLetters": "KJNB-LD 39.2",
     "Code": 10736,
     "LegacyCallLetters": "NJNB",
-    "MarketCode": 334,
     "OriginMarket": "Jonesboro",
     "RateDataThrough": "-"
   }
