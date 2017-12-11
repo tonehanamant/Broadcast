@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { toggleModal } from 'Ducks/app';
-import { getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, saveProposal, deleteProposal, saveProposalAsVersion } from 'Ducks/planning';
+import { getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion } from 'Ducks/planning';
 
 import ProposalHeader from 'Components/planning/ProposalHeader';
 import ProposalActions from 'Components/planning/ProposalActions';
 import ProposalSwitchVersionModal from 'Components/planning/ProposalSwitchVersionModal';
+import ProposalDetails from 'Components/planning/ProposalDetails';
+
 
 const mapStateToProps = ({ planning: { proposalLock }, planning: { initialdata }, planning: { proposal }, planning: { versions }, planning: { proposalEditForm } }) => ({
   proposalLock,
@@ -19,7 +21,7 @@ const mapStateToProps = ({ planning: { proposalLock }, planning: { initialdata }
 });
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleModal, getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, saveProposal, deleteProposal, saveProposalAsVersion }, dispatch)
+  bindActionCreators({ toggleModal, getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion }, dispatch)
 );
 
 /* eslint-disable react/prefer-stateless-function */
@@ -37,12 +39,10 @@ export class SectionPlanningProposal extends Component {
     } else if (id) {
       this.props.getProposal(id);
     }
-
-    this.props.getProposalVersions(id);
   }
 
   render() {
-    const { toggleModal, proposalLock, initialdata, proposal, versions, proposalEditForm, updateProposalEditForm, saveProposal, deleteProposal, saveProposalAsVersion } = this.props;
+    const { toggleModal, proposalLock, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail } = this.props;
     return (
       <div id="planning-section-proposal">
         {
@@ -51,7 +51,7 @@ export class SectionPlanningProposal extends Component {
           Object.keys(initialdata).length > 0 &&
           Object.keys(proposal).length > 0 &&
           Object.keys(proposalEditForm).length > 0 &&
-          versions.length > 0 &&
+
           <div id="proposal-body">
             <ProposalSwitchVersionModal
               toggleModal={toggleModal}
@@ -66,9 +66,17 @@ export class SectionPlanningProposal extends Component {
               proposal={proposal}
               proposalEditForm={proposalEditForm}
               updateProposalEditForm={updateProposalEditForm}
+              getProposalVersions={getProposalVersions}
               deleteProposal={deleteProposal}
               saveProposalAsVersion={saveProposalAsVersion}
               versions={versions}
+            />
+            <ProposalDetails
+              proposalEditForm={proposalEditForm}
+              initialdata={initialdata}
+              toggleModal={toggleModal}
+              updateProposalEditFormDetail={updateProposalEditFormDetail}
+              deleteProposalDetail={deleteProposalDetail}
             />
             <ProposalActions
               toggleModal={toggleModal}
@@ -101,6 +109,9 @@ SectionPlanningProposal.propTypes = {
   getProposalVersions: PropTypes.func.isRequired,
   getProposalVersion: PropTypes.func.isRequired,
   updateProposalEditForm: PropTypes.func.isRequired,
+
+  updateProposalEditFormDetail: PropTypes.func.isRequired,
+  deleteProposalDetail: PropTypes.func.isRequired,
   saveProposal: PropTypes.func.isRequired,
   deleteProposal: PropTypes.func.isRequired,
   saveProposalAsVersion: PropTypes.func.isRequired,

@@ -45,7 +45,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadOpenMarketProposalInventory()
         {
@@ -61,6 +60,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
+                jsonResolver.Ignore(typeof (ProposalProgramDto), "ManifestId");
 
                 var jsonSettings = new JsonSerializerSettings
                 {

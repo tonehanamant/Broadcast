@@ -395,6 +395,13 @@ export function* requestProposalVersions({ payload: id }) {
       type: ACTIONS.RECEIVE_PROPOSAL_VERSIONS,
       data,
     });
+    yield put({
+      type: ACTIONS.TOGGLE_MODAL,
+      modal: {
+        modal: 'planningSwitchVersionsModal',
+        active: true,
+      },
+    });
   } catch (e) {
     if (e.response) {
       yield put({

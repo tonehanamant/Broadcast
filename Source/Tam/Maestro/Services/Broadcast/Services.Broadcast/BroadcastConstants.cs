@@ -1,4 +1,6 @@
-﻿namespace Services.Broadcast
+﻿using System.Runtime.InteropServices.WindowsRuntime;
+
+namespace Services.Broadcast
 {
     public static class BroadcastConstants
     {
@@ -9,5 +11,7 @@
         public static readonly int PostableMonthMarketThreshold = 200; //retrieved from nsi.usp_NSI_GetPostableMediaMonths
 
         public static readonly int RatingsGroupId = 2;
+
+        public static readonly int OpenMarketSourceId = 1;
     }
 }

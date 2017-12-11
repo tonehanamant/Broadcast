@@ -58,6 +58,44 @@ export default function reducer(state = initialState, action) {
         },
       });
 
+    case ACTIONS.UPDATE_PROPOSAL_EDIT_FORM_DETAIL: {
+      const details = [...state.proposalEditForm.Details];
+      const detailIndex = details.findIndex(detail => detail.Id === payload.id);
+      console.log('>>>>>>>>>>> UPDATE_PROPOSAL_EDIT_FORM_DETAIL', details, detailIndex);
+      return Object.assign({}, state, {
+        proposalEditForm: {
+          ...state.proposalEditForm,
+          Details: [
+            // ...state.proposalEditForm.Details,
+            // [detailIndex]: {
+            //   ...state.proposalEditForm.Details[detailIndex],
+            //   [payload.key]: payload.value,
+            // },
+            ...state.proposalEditForm.Details.slice(0, detailIndex),
+            {
+                ...state.proposalEditForm.Details[detailIndex],
+                [payload.key]: payload.value,
+            },
+            ...state.proposalEditForm.Details.slice(detailIndex + 1),
+          ],
+        },
+      });
+    }
+
+    case ACTIONS.DELETE_PROPOSAL_DETAIL: {
+      const details = [...state.proposalEditForm.Details];
+      const detailIndex = details.findIndex(detail => detail.Id === payload.id);
+      console.log('>>>>>>>>>>> DELETE_PROPOSAL_DETAIL', details, detailIndex);
+      return Object.assign({}, state, {
+        proposalEditForm: {
+          ...state.proposalEditForm,
+          Details: [
+            ...state.proposalEditForm.Details.filter((item, index) => index !== detailIndex),
+          ],
+        },
+      });
+    }
+
     default:
       return state;
   }
@@ -122,4 +160,14 @@ export const updateProposal = params => ({
 export const updateProposalEditForm = keyValue => ({
   type: ACTIONS.UPDATE_PROPOSAL_EDIT_FORM,
   payload: keyValue,
+});
+
+export const updateProposalEditFormDetail = idKeyValue => ({
+  type: ACTIONS.UPDATE_PROPOSAL_EDIT_FORM_DETAIL,
+  payload: idKeyValue,
+});
+
+export const deleteProposalDetail = id => ({
+  type: ACTIONS.DELETE_PROPOSAL_DETAIL,
+  payload: id,
 });

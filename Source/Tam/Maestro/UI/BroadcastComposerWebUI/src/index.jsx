@@ -11,6 +11,8 @@ import configureStore, { history } from './index.store';
 
 /* eslint-disable import/first */
 import 'react-select/dist/react-select.css';
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
 import './index.css';
 import './index.scss';
 

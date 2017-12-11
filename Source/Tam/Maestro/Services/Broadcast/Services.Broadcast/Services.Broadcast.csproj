@@ -407,6 +407,7 @@
     <Compile Include="Repositories\SpotLengthBroadcastRepository.cs" />
     <Compile Include="Repositories\SpotLengthMultiplierRepository.cs" />
     <Compile Include="Repositories\StationContactsRepository.cs" />
+    <Compile Include="Repositories\StationProgramRepository.cs" />
     <Compile Include="Repositories\StationRepository.cs" />
     <Compile Include="Repositories\TrackerMappingRepository.cs" />
     <Compile Include="Repositories\TrafficRepository.cs" />
