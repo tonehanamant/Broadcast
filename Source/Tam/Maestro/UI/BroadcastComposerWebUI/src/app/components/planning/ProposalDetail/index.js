@@ -1,22 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import Select from 'react-select';
 import { Well, Form, FormGroup, ControlLabel, Row, Col, FormControl, Button, Checkbox, Glyphicon } from 'react-bootstrap';
-
 import FlightPicker from 'Components/shared/FlightPicker';
-
+import Sweeps from './Sweeps';
 
 export default class ProposalDetail extends Component {
   constructor(props) {
     super(props);
     console.log('PROPOSAL DETAIL PROPS', this.props);
-    this.state = {
-      activeDetail: true, // temp use prop
-      spotLengthInvalid: null,
-      datpartInvalid: null,
-      daypartCodeInvalid: null,
-    };
+
     this.onChangeSpotLength = this.onChangeSpotLength.bind(this);
     this.onChangeDaypartCode = this.onChangeDaypartCode.bind(this);
     this.onChangeAdu = this.onChangeAdu.bind(this);
@@ -25,6 +18,54 @@ export default class ProposalDetail extends Component {
     this.checkValid = this.checkValid.bind(this);
     this.setValidationState = this.setValidationState.bind(this);
     this.clearValidationStates = this.clearValidationStates.bind(this);
+
+    this.toggleSweepsModal = this.toggleSweepsModal.bind(this);
+    this.onClickSweeps = this.onClickSweeps.bind(this);
+    this.onChangeSweeps = this.onChangeSweeps.bind(this);
+
+    this.state = {
+      activeDetail: true, // temp use prop
+      spotLengthInvalid: null,
+      datpartInvalid: null,
+      daypartCodeInvalid: null,
+      isSweepsModalOpen: false,
+
+      sweepsOptions: {
+        shareBookOptions: [],
+        hutBookOptions: [],
+        playbackTypeOptions: [],
+      },
+
+      sweepsSelected: {
+        shareBook: null,
+        hutBook: null,
+        playbackType: null,
+      },
+    };
+  }
+
+  onClickSweeps() {
+    this.toggleSweepsModal();
+  }
+
+  toggleSweepsModal() {
+    this.setState({ isSweepsModalOpen: !this.state.isSweepsModalOpen });
+  }
+
+  onChangeSweeps(shareBook, hutBook, playbackType) {
+    this.setState({
+      sweepsSelected: {
+        shareBook,
+        hutBook,
+        playbackType,
+      },
+    });
+
+    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'SharePostingBookId', value: shareBook.Id });
+    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'HutPostingBookId', value: hutBook.Id });
+    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'PlaybackType', value: playbackType.Id });
+
+    this.setState({ isSweepsModalOpen: false });
   }
 
   onChangeSpotLength(value) {
@@ -90,6 +131,28 @@ export default class ProposalDetail extends Component {
     return false;
   }
 
+  componentWillMount() {
+    const { initialdata, detail } = this.props;
+
+    // TODO - use DefaultPostingBooks if values in detail are null
+    const shareBook = initialdata.ForecastDefaults.CrunchedMonths.filter(o => o.Id === detail.SharePostingBookId).shift();
+    const hutBook = initialdata.ForecastDefaults.CrunchedMonths.filter(o => o.Id === detail.HutPostingBookId).shift();
+    const playbackType = initialdata.ForecastDefaults.PlaybackTypes.filter(o => o.Id === detail.PlaybackType).shift();
+
+    this.setState({
+      sweepsOptions: {
+        shareBookOptions: initialdata.ForecastDefaults.CrunchedMonths,
+        hutBookOptions: initialdata.ForecastDefaults.CrunchedMonths,
+        playbackTypeOptions: initialdata.ForecastDefaults.PlaybackTypes,
+      },
+      sweepsSelected: {
+        shareBook,
+        hutBook,
+        playbackType,
+      },
+    });
+  }
+
   render() {
 		/* eslint-disable no-unused-vars */
 		const { detail, proposalEditForm, initialdata } = this.props;
@@ -138,12 +201,29 @@ export default class ProposalDetail extends Component {
                 <Checkbox checked={detail.Adu} onChange={this.onChangeAdu} />
                 <ControlLabel style={{ margin: '0 0 0 6px' }}>ADU</ControlLabel>
               </FormGroup>
+
               <Button bsStyle="link" style={{ float: 'right' }} onClick={this.onDeleteProposalDetail}><Glyphicon style={{ color: 'red', fontSize: '16px' }} glyph="trash" /></Button>
-              <Button bsStyle="primary" bsSize="xsmall" style={{ float: 'right', margin: '6px 10px 0 4px' }}>Sweeps</Button>
+
+              <Button
+                bsStyle="primary"
+                bsSize="xsmall"
+                style={{ float: 'right', margin: '6px 10px 0 4px' }}
+                onClick={this.onClickSweeps}
+              >
+                Sweeps
+              </Button>
             </Form>
           </Col>
           }
         </Row>
+
+        <Sweeps
+          show={this.state.isSweepsModalOpen}
+          onClose={this.toggleSweepsModal}
+          onSave={this.onChangeSweeps}
+          {...this.state.sweepsOptions}
+          {...this.state.sweepsSelected}
+        />
 			</Well>
     );
   }
