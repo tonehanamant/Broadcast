@@ -11,6 +11,8 @@ var HELPERS = require('./_helpers/_index.js');
 var webpackConfig = {
   context: resolve(__dirname, '../src'),
 
+  devtool: '#source-map',
+
   entry: [
     'babel-polyfill',
     'react-hot-loader/patch',

@@ -82,6 +82,20 @@ export default function reducer(state = initialState, action) {
       });
     }
 
+    case ACTIONS.RECEIVE_NEW_PROPOSAL_DETAIL: {
+    console.log('DETAIL PAYLOAD', payload);
+    return {
+      ...state,
+      proposalEditForm: {
+        ...state.proposalEditForm,
+        Details: [
+          ...state.proposalEditForm.Details,
+          payload,
+        ],
+      },
+    };
+  }
+
     case ACTIONS.DELETE_PROPOSAL_DETAIL: {
       const details = [...state.proposalEditForm.Details];
       const detailIndex = details.findIndex(detail => detail.Id === payload.id);
@@ -170,4 +184,9 @@ export const updateProposalEditFormDetail = idKeyValue => ({
 export const deleteProposalDetail = id => ({
   type: ACTIONS.DELETE_PROPOSAL_DETAIL,
   payload: id,
+});
+
+export const modelNewProposalDetail = flight => ({
+  type: ACTIONS.MODEL_NEW_PROPOSAL_DETAIL,
+  payload: flight,
 });

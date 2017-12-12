@@ -12,16 +12,20 @@ import './style.css';
 
 const isValidDate = date => !!((date && moment.isMoment(date) && moment(date).isValid()));
 
+const isoWeekStart = moment().endOf('isoweek').add(1, 'days').startOf('isoweek');
+const isoWeekEndFuture = moment().add(4, 'weeks').endOf('isoweek');
+
+
 export default class FlightPicker extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
 			show: false,
-			startDate: this.props.startDate ? moment(this.props.startDate) : null,
-			endDate: this.props.endDate ? moment(this.props.endDate) : null,
+			startDate: this.props.startDate ? moment(this.props.startDate) : isoWeekStart,
+			endDate: this.props.endDate ? moment(this.props.endDate) : isoWeekEndFuture,
 			focusedInput: 'startDate',
-			inputStartDate: moment(this.props.startDate).format('M/D/YYYY'),
-			inputEndDate: moment(this.props.endDate).format('M/D/YYYY'),
+			inputStartDate: moment(this.props.startDate || isoWeekStart).format('M/D/YYYY'),
+			inputEndDate: moment(this.props.endDate || isoWeekEndFuture).format('M/D/YYYY'),
 			FlightWeeks: [],
 		};
 		this.checkboxes = [];
@@ -29,6 +33,8 @@ export default class FlightPicker extends Component {
 		this.setStartDate = this.setStartDate.bind(this);
 		this.setEndDate = this.setEndDate.bind(this);
 		this.setFlightWeeks = this.setFlightWeeks.bind(this);
+		this.onApply = this.onApply.bind(this);
+		this.resetDatesDefault = this.resetDatesDefault.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -38,6 +44,15 @@ export default class FlightPicker extends Component {
 	toggle() {
 		if (this.state.show === false) { this.setFlightWeeks(this.state.startDate, this.state.endDate); }
 		this.setState({ show: !this.state.show });
+	}
+
+	resetDatesDefault() {
+		this.setState({
+			startDate: isoWeekStart,
+			endDate: isoWeekEndFuture,
+			inputStartDate: moment(isoWeekStart).format('M/D/YYYY'),
+			inputEndDate: moment(isoWeekEndFuture).format('M/D/YYYY'),
+		});
 	}
 
 	setStartDate(value) {
@@ -97,12 +112,35 @@ export default class FlightPicker extends Component {
 					StartDate: moment(start).add(i, 'weeks'),
 					EndDate: moment(start).add(i, 'weeks').add(6, 'days'),
 					IsHiatus: false,
+					MediaWeekId: 0,
 				});
 			}
 			this.setState({ FlightWeeks });
 		} else {
 			this.setState({ FlightWeeks: [] });
 		}
+	}
+
+	onApply(event) {
+		const parsedStartDate = moment.utc(this.state.startDate).format();
+		const parsedEndDate = moment.utc(this.state.endDate).format();
+		const parsedFlightWeeks = this.state.FlightWeeks.map((flightWeek) => {
+			const parsedFlightWeek = {
+				...flightWeek,
+				StartDate: moment.utc(flightWeek.StartDate).format(),
+				EndDate: moment.utc(flightWeek.EndDate).format(),
+			};
+			return parsedFlightWeek;
+		});
+
+		this.props.onApply({
+			StartDate: parsedStartDate,
+			EndDate: parsedEndDate,
+			FlightWeeks: parsedFlightWeeks,
+		});
+
+		this.toggle();
+		this.resetDatesDefault();
 	}
 
   render() {
@@ -137,10 +175,15 @@ export default class FlightPicker extends Component {
 							border: '1px solid #CCC',
 							borderRadius: 3,
 							marginTop: 5,
+							marginBottom: 60,
 							padding: 10,
-							zIndex: 1,
+							zIndex: 99,
 							width: 938,
 						}}
+						// arrowOffsetLeft={null}
+						// arrowOffsetTop={null}
+						// positionLeft={null}
+						// positionTop={null}
 					>
 						<Row>
 							<Col md={8}>
@@ -214,7 +257,7 @@ export default class FlightPicker extends Component {
 								<Panel header="Flight Weeks" style={{ marginBotton: 10 }}>
 									<ListGroup fill style={{ minHeight: 250, maxHeight: 250, overflow: 'auto' }}>
 									{this.state.FlightWeeks.map(week => (
-										<ListGroupItem style={{ padding: 10 }}>
+										<ListGroupItem key={week.Id} style={{ padding: 10 }}>
 											<Button bsSize="xsmall" className={'flight-week-btn'} style={{ width: '100%' }}>
 												<Checkbox defaultChecked style={{ width: '100%' }}>
 													{moment(week.StartDate).format('M/D/YYYY')} - {moment(week.EndDate).format('M/D/YYYY')}
@@ -225,8 +268,12 @@ export default class FlightPicker extends Component {
 									</ListGroup>
 								</Panel>
 								<ButtonToolbar style={{ float: 'right' }}>
-									<Button bsStyle="default" bsSize="small" onClick={() => this.setState({ show: false })}>Cancel</Button>
-									<Button bsStyle="success" bsSize="small">Apply</Button>
+									<Button bsStyle="default" bsSize="small" onClick={() => { this.toggle(); this.resetDatesDefault(); }}>Cancel</Button>
+									<Button
+										bsStyle="success"
+										bsSize="small"
+										onClick={this.onApply}
+									>Apply</Button>
 								</ButtonToolbar>
 							</Col>
 						</Row>
@@ -242,9 +289,11 @@ export default class FlightPicker extends Component {
 FlightPicker.defaultProps = {
 	startDate: moment(),
 	endDate: moment(),
+	onApply: () => {},
 };
 
 FlightPicker.propTypes = {
 	startDate: PropTypes.string,
 	endDate: PropTypes.string,
+	onApply: PropTypes.func,
 };

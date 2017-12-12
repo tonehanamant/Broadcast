@@ -2,6 +2,7 @@
 import { delay } from 'redux-saga';
 import { call, takeEvery, put } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
+import moment from 'moment';
 
 import * as appActions from 'Ducks/app/actionTypes';
 import * as planningActions from 'Ducks/planning/actionTypes';
@@ -762,10 +763,126 @@ export function* deleteProposalById({ payload: id }) {
 // . . .
 
 /* ////////////////////////////////// */
-/* REQUEST PROPOSAL DETAIL */
+/* FLATTEN DETAIL */
+/* ////////////////////////////////// */
+export function* flattenDetail({ payload: detailSet }) {
+  const getDetailWeeks = () => {
+    const detail = { ...detailSet }; // clone this way?
+    const ret = [];
+    detail.Quarters.forEach((item, qidx) => {
+      const qtr = { Id: item.Id, QuarterIdx: qidx, Type: 'quarter', QuarterText: item.QuarterText, Cpm: item.Cpm, ImpressionGoal: item.ImpressionGoal };
+      ret.push(qtr);
+
+      item.Weeks.forEach((weekItem, widx) => {
+        const week = { ...weekItem };
+        // store for finding later
+        week.QuarterId = item.Id;
+        // store indexes
+        week.QuarterIdx = qidx;
+        week.WeekIdx = widx;
+        week.Type = 'week';
+        ret.push(week);
+      });
+    });
+    const totals = { TotalUnits: detail.TotalUnits, TotalCost: detail.TotalCost, TotalImpressions: detail.TotalImpressions, Id: 'total', Type: 'total' }; // construct totals
+    ret.push(totals);
+    return ret;
+  };
+
+  try {
+    const flattened = yield getDetailWeeks();
+    yield put({
+      type: ACTIONS.RECEIVE_FLATTEN_DETAIL,
+      data: flattened,
+    });
+  } catch (e) {
+    if (e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
+/* ////////////////////////////////// */
+/* REQUEST MODEL PROPOSAL DETAIL */
 /* ////////////////////////////////// */
 
-// . . .
+export function* modelNewProposalDetail({ payload: params }) {
+  /* eslint-disable no-shadow */
+  const { getProposalDetail } = api.planning;
+  const assignIdFlightWeeks = (data, flightWeeks) => {
+    let detail = { ...data, Id: moment().unix() };
+    detail = { ...detail, FlightWeeks: flightWeeks };
+    return detail;
+  };
+  try {
+    yield put({
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
+      overlay: {
+        id: 'modelNewProposalDetail',
+        processing: true,
+      },
+    });
+    const flight = { ...params };
+    const response = yield getProposalDetail(flight);
+    const { status, data } = response;
+    yield put({
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
+      overlay: {
+        id: 'modelNewProposalDetail',
+        processing: false,
+      },
+    });
+    if (status !== 200) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'New detail not modeled.',
+          message: `The server encountered an error processing the request (model new detail). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Success) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'New detail not modeled.',
+          message: data.Message || 'The server encountered an error processing the request (model new detail). Please try again or contact your administrator to review error logs.',
+        },
+      });
+      throw new Error();
+    }
+    const payload = yield assignIdFlightWeeks(data.Data, flight.FlightWeeks);
+    yield put({
+      type: ACTIONS.RECEIVE_NEW_PROPOSAL_DETAIL,
+      payload,
+    });
+  } catch (e) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'New detail not modeled.',
+          message: 'The server encountered an error processing the request (model new detail). Please try again or contact your administrator to review error logs.',
+          exception: e.response.data.ExceptionMessage || '',
+        },
+      });
+    }
+    if (e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
 
 /* ////////////////////////////////// */
 /* UPDATE PROPOSAL (FROM DETAILS) */
@@ -890,6 +1007,10 @@ export function* watchDeleteProposalById() {
 
 export function* watchUpdateProposal() {
   yield takeEvery(ACTIONS.UPDATE_PROPOSAL, updateProposal);
+}
+
+export function* watchModelNewProposalDetail() {
+  yield takeEvery(ACTIONS.MODEL_NEW_PROPOSAL_DETAIL, modelNewProposalDetail);
 }
 
 // if assign watcher > assign in sagas/index rootSaga also
