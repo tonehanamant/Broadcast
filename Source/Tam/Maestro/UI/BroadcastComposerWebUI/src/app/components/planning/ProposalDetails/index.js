@@ -10,7 +10,7 @@ export default class ProposalDetails extends Component {
 	}
 
   render() {
-		const { proposalEditForm, initialdata, updateProposalEditFormDetail, deleteProposalDetail, toggleModal } = this.props;
+    const { proposalEditForm, initialdata, updateProposalEditFormDetail, deleteProposalDetail, toggleModal, modelNewProposalDetail } = this.props;
     return (
       <div id="proposal-details">
 				<h5 style={{ textAlign: 'center', color: '#1e5fa8' }}><strong>Proposal Details</strong></h5>
@@ -24,7 +24,11 @@ export default class ProposalDetails extends Component {
             deleteProposalDetail={deleteProposalDetail}
             toggleModal={toggleModal}
 					/>
-				))}
+        ))}
+        <ProposalDetail
+          initialdata={initialdata}
+          modelNewProposalDetail={modelNewProposalDetail}
+        />
 			</div>
     );
   }
@@ -37,6 +41,7 @@ ProposalDetails.propTypes = {
   proposalEditForm: PropTypes.object.isRequired,
   initialdata: PropTypes.object.isRequired,
   updateProposalEditFormDetail: PropTypes.func.isRequired,
+  modelNewProposalDetail: PropTypes.func.isRequired,
   deleteProposalDetail: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
 };
