@@ -194,7 +194,7 @@ export default class ProposalDetail extends Component {
                 <ControlLabel style={{ float: 'left', margin: '8px 10px 0 16px' }}>Spot Length</ControlLabel>
                 <Select
                   name="proposalDetailSpotLength"
-                  value={detail.SpotLength}
+                  value={detail.SpotLengthId}
                   placeholder=""
                   options={this.props.initialdata.SpotLengths}
                   labelKey="Display"
