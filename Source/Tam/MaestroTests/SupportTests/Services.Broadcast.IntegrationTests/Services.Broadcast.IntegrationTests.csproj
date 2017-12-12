@@ -541,6 +541,9 @@
     <Content Include="Files\Open Market Duplicate Program File2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\OpenMarket_Inventory_EmailPhoneInSellerNode.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\rate-file-invalid-schema.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

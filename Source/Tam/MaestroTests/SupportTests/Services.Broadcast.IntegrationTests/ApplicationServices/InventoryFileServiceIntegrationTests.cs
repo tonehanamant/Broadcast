@@ -451,7 +451,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
 
         }
-
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ImportNewStationContact()
@@ -484,6 +483,44 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //then confirm the contacts are added
                 stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", stationCodeWVTM);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(stationContacts, jsonSettings));
+            }
+        }
+        /// <summary>
+        /// Inspired by BCOP-2283
+        /// </summary>
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ImportOpenMarketContact_WithEmailPhoneInSellerNode()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest();
+                int stationCodeWTVP = 6743;
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(StationContact), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                //first make sure the contacts don't exist
+                var stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", stationCodeWTVP);
+                Assert.AreEqual(0, stationContacts.Count); //make sure there are no contacts initially
+
+                request.RatesStream = new FileStream(
+                    @".\Files\OpenMarket_Inventory_EmailPhoneInSellerNode.xml",
+                    FileMode.Open,
+                    FileAccess.Read);
+                request.UserName = "IntegrationTestUser";
+                request.RatingBook = 416;
+
+                _InventoryFileService.SaveInventoryFile(request);
+
+                //then confirm the contacts are added
+                stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", stationCodeWTVP);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(stationContacts, jsonSettings));
             }
         }
@@ -524,6 +561,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(stationContacts, jsonSettings));
             }
         }
+
 
         [Test]
         public void SaveStationContact()

@@ -607,18 +607,9 @@ namespace Services.Broadcast.Converters.RateImport
 
                     stationContact.Company = message.Proposal.Seller.companyName;
                     stationContact.Name = message.Proposal.Seller.Salesperson.name;
-                    stationContact.Email = (message.Proposal.Seller.Salesperson != null && message.Proposal.Seller.Salesperson.Email != null) ?
-                        message.Proposal.Seller.Salesperson.Email.Where(e => e.type.Equals("primary"))
-                            .Select(e => e.Value)
-                            .FirstOrDefault() : null;
-                    stationContact.Phone = (message.Proposal.Seller.Salesperson != null && message.Proposal.Seller.Salesperson.Phone != null) ?
-                        message.Proposal.Seller.Salesperson.Phone.Where(p => p.type == "voice")
-                            .Select(p => p.Value)
-                            .FirstOrDefault() : null;
-                    stationContact.Fax = (message.Proposal.Seller.Salesperson != null && message.Proposal.Seller.Salesperson.Phone != null) ?
-                        message.Proposal.Seller.Salesperson.Phone.Where(p => p.type == "fax")
-                            .Select(p => p.Value)
-                            .FirstOrDefault() : null;
+                    stationContact.Email = SellerPrimaryEmail(message.Proposal.Seller);
+                    stationContact.Phone = SellerPhone(message.Proposal.Seller,"voice");
+                    stationContact.Fax = SellerPhone(message.Proposal.Seller, "fax");
                     stationContact.StationCode = proposalStation.Value.Code;
 
                     if (
@@ -643,6 +634,44 @@ namespace Services.Broadcast.Converters.RateImport
                 return contacts;
             }
 
+        private static string SellerPrimaryEmail(AAAAMessageProposalSeller seller)
+        {
+            // first check node of the Salesperson
+            string email = (seller.Salesperson != null && seller.Salesperson.Email != null)
+                ? seller.Salesperson.Email.Where(e => e.type.Equals("primary"))
+                    .Select(e => e.Value)
+                    .FirstOrDefault()
+                : null;
+            // try seller node
+            if (email == null)
+            {
+                email = (seller.Email != null)
+                    ? seller.Email.Where(e => e.type.Equals("primary"))
+                        .Select(e => e.Value)
+                        .FirstOrDefault()
+                    : null;
+            }
+            return email;
+        }
+        private static string SellerPhone(AAAAMessageProposalSeller seller,string type)
+        {
+            // first check phone node of the Salesperson
+            string phone = (seller.Salesperson != null && seller.Salesperson.Phone != null)
+                ? seller.Salesperson.Phone.Where(p => p.type == type)
+                    .Select(p => p.Value)
+                    .FirstOrDefault()
+                : null;
+            // try seller node
+            if (phone == null)
+            {
+                phone = (seller.Phone != null)
+                    ? seller.Phone.Where(p => p.type == type)
+                        .Select(p => p.Value)
+                        .FirstOrDefault()
+                    : null;
+            }
+            return phone;
+        }
             private static bool IsContactARep(List<string> repTeamNames, StationContact stationContact)
             {
                 return repTeamNames.Where(rt => stationContact.Company.ToUpper().Contains(rt.ToUpper())).Count() > 0;
