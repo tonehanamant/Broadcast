@@ -83,18 +83,18 @@ export default function reducer(state = initialState, action) {
     }
 
     case ACTIONS.RECEIVE_NEW_PROPOSAL_DETAIL: {
-    console.log('DETAIL PAYLOAD', payload);
-    return {
-      ...state,
-      proposalEditForm: {
-        ...state.proposalEditForm,
-        Details: [
-          ...state.proposalEditForm.Details,
-          payload,
-        ],
-      },
-    };
-  }
+      console.log('DETAIL PAYLOAD', payload);
+      return {
+        ...state,
+        proposalEditForm: {
+          ...state.proposalEditForm,
+          Details: [
+            ...state.proposalEditForm.Details,
+            payload,
+          ],
+        },
+      };
+    }
 
     case ACTIONS.DELETE_PROPOSAL_DETAIL: {
       const details = [...state.proposalEditForm.Details];
@@ -109,6 +109,14 @@ export default function reducer(state = initialState, action) {
         },
       });
     }
+
+    // PROPOSAL
+    case ACTIONS.RECEIVE_UPDATED_PROPOSAL:
+    return {
+      ...state,
+      // proposal: data.Data,
+      proposalEditForm: data.Data,
+    };
 
     default:
       return state;
@@ -166,9 +174,9 @@ export const deleteProposal = id => ({
   payload: id,
 });
 
-export const updateProposal = params => ({
+export const updateProposal = id => ({
   type: ACTIONS.UPDATE_PROPOSAL,
-  payload: params,
+  payload: id,
 });
 
 export const updateProposalEditForm = keyValue => ({
@@ -181,9 +189,9 @@ export const updateProposalEditFormDetail = idKeyValue => ({
   payload: idKeyValue,
 });
 
-export const deleteProposalDetail = id => ({
+export const deleteProposalDetail = params => ({
   type: ACTIONS.DELETE_PROPOSAL_DETAIL,
-  payload: id,
+  payload: params,
 });
 
 export const modelNewProposalDetail = flight => ({

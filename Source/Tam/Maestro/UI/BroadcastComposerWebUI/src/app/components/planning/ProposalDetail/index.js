@@ -112,6 +112,7 @@ export default class ProposalDetail extends Component {
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightStartDate', value: flight.StartDate });
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightEndDate', value: flight.EndDate });
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightWeeks', value: flight.FlightWeeks });
+      this.props.onUpdateProposal();
     } else {
       this.props.modelNewProposalDetail(flight);
     }
@@ -182,8 +183,9 @@ export default class ProposalDetail extends Component {
               <FormGroup controlId="detailFlight">
                 <ControlLabel style={{ margin: '0 10px 0 0' }}>Flight</ControlLabel>
                 <FlightPicker
-                  startDate={detail ? detail.FlightStartDate || null : null}
-                  endDate={detail ? detail.FlightEndDate || null : null}
+                  startDate={detail && detail.FlightStartDate ? detail.FlightStartDate : null}
+                  endDate={detail && detail.FlightEndDate ? detail.FlightEndDate : null}
+                  flightWeeks={detail && detail.FlightWeeks ? detail.FlightWeeks : null}
                   onApply={flight => this.onFlightPickerApply(flight)}
                 />
               </FormGroup>
@@ -248,6 +250,9 @@ export default class ProposalDetail extends Component {
           <Col md={12}>
             <ProposalDetailGrid
               detailId={detail.Id}
+              GridQuarterWeeks={detail.GridQuarterWeeks}
+              isAdu={detail.Adu}
+              // todo isReadonly
             />
           </Col>
         </Row>
@@ -269,6 +274,7 @@ ProposalDetail.defaultProps = {
   detail: null,
   proposalEditForm: {},
   updateProposalEditFormDetail: () => {},
+  onUpdateProposal: () => {},
   deleteProposalDetail: () => {},
   modelNewProposalDetail: () => {},
   toggleModal: () => {},
@@ -279,6 +285,7 @@ ProposalDetail.propTypes = {
 	detail: PropTypes.object,
   proposalEditForm: PropTypes.object,
   updateProposalEditFormDetail: PropTypes.func,
+  onUpdateProposal: PropTypes.func,
   deleteProposalDetail: PropTypes.func,
   modelNewProposalDetail: PropTypes.func,
   toggleModal: PropTypes.func,

@@ -213,6 +213,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\AffadavitUploadApiController.cs" />
     <Compile Include="Controllers\BroadcastControllerBase.cs" />
     <Compile Include="Controllers\EnvironmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

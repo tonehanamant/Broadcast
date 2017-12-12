@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { toggleModal } from 'Ducks/app';
-import { getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail } from 'Ducks/planning';
+import { getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail } from 'Ducks/planning';
 
 import ProposalHeader from 'Components/planning/ProposalHeader';
 import ProposalActions from 'Components/planning/ProposalActions';
@@ -21,7 +21,7 @@ const mapStateToProps = ({ planning: { proposalLock }, planning: { initialdata }
 });
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleModal, getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail }, dispatch)
+  bindActionCreators({ toggleModal, getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposal, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail }, dispatch)
 );
 
 /* eslint-disable react/prefer-stateless-function */
@@ -42,7 +42,7 @@ export class SectionPlanningProposal extends Component {
   }
 
   render() {
-    const { toggleModal, proposalLock, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail } = this.props;
+    const { toggleModal, proposalLock, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail } = this.props;
     return (
       <div id="planning-section-proposal" style={{ paddingBottom: 80 }}>
         {
@@ -76,6 +76,7 @@ export class SectionPlanningProposal extends Component {
               initialdata={initialdata}
               toggleModal={toggleModal}
               updateProposalEditFormDetail={updateProposalEditFormDetail}
+              updateProposal={updateProposal}
               deleteProposalDetail={deleteProposalDetail}
               modelNewProposalDetail={modelNewProposalDetail}
             />
@@ -112,6 +113,7 @@ SectionPlanningProposal.propTypes = {
   updateProposalEditForm: PropTypes.func.isRequired,
 
   updateProposalEditFormDetail: PropTypes.func.isRequired,
+  updateProposal: PropTypes.func.isRequired,
   deleteProposalDetail: PropTypes.func.isRequired,
   saveProposal: PropTypes.func.isRequired,
   deleteProposal: PropTypes.func.isRequired,
