@@ -152,13 +152,13 @@ export default class FlightPicker extends Component {
   }
 
 	onApply(event) {
-		const parsedStartDate = moment.utc(this.state.startDate).format();
-		const parsedEndDate = moment.utc(this.state.endDate).format();
+		const parsedStartDate = moment(this.state.startDate).format();
+		const parsedEndDate = moment(this.state.endDate).format();
 		const parsedFlightWeeks = this.state.FlightWeeks.map((flightWeek) => {
 			const parsedFlightWeek = {
 				...flightWeek,
-				StartDate: moment.utc(flightWeek.StartDate).format(),
-				EndDate: moment.utc(flightWeek.EndDate).format(),
+				StartDate: moment(flightWeek.StartDate).format(),
+				EndDate: moment(flightWeek.EndDate).format(),
 			};
 			return parsedFlightWeek;
 		});

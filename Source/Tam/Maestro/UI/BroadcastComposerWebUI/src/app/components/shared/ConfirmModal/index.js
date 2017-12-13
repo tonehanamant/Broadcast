@@ -45,7 +45,16 @@ export class ConfirmModal extends Component {
           </Button>
         </Modal.Header>
         <Modal.Body>
-          <p>{this.props.modal.properties.bodyText}</p>
+          {this.props.modal.properties.bodyText &&
+            <p>{this.props.modal.properties.bodyText}</p>
+          }
+          {this.props.modal.properties.bodyList &&
+            <ul>
+              {this.props.modal.properties.bodyList.map(item => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          }
         </Modal.Body>
         <Modal.Footer>
           <Button bsStyle={this.props.modal.properties.actionButtonBsStyle} onClick={this.actionButtonClick}>{this.props.modal.properties.actionButtonText}</Button>
@@ -61,7 +70,8 @@ ConfirmModal.defaultProps = {
     active: false,
     properties: {
       titleText: 'Confirm Modal',
-      bodyText: 'Body Text',
+      bodyText: null, // string
+      bodyList: null, // array
       closeButtonText: 'Close',
       closeButtonBsStyle: 'default',
       actionButtonText: 'Action',

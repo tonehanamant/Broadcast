@@ -115,7 +115,28 @@ export default function reducer(state = initialState, action) {
     return {
       ...state,
       // proposal: data.Data,
-      proposalEditForm: data.Data,
+      // proposalEditForm: data.Data,
+      proposalEditForm: {
+        ...state.proposalEditForm,
+        TotalCPM: data.Data.TotalCPM,
+        TargetCPM: data.Data.TargetCPM,
+        TotalCPMPercent: data.Data.TotalCPMPercent,
+        TotalCPMMarginAchieved: data.Data.TotalCPMMarginAchieved,
+        TotalCost: data.Data.TotalCost,
+        TargetBudget: data.Data.TargetBudget,
+        TotalCostPercent: data.Data.TotalCostPercent,
+        TotalCostMarginAchieved: data.Data.TotalCostMarginAchieved,
+        TotalImpressions: data.Data.TotalImpressions,
+        TargetImpressions: data.Data.TargetImpressions,
+        TotalImpressionsPercent: data.Data.TotalImpressionsPercent,
+        TotalImpressionsMarginAchieved: data.Data.TotalImpressionsMarginAchieved,
+        TargetUnits: data.Data.TargetUnits,
+        SpotLengths: data.Data.SpotLengths,
+        FlightStartDate: data.Data.FlightStartDate,
+        FlightEndDate: data.Data.FlightEndDate,
+        FlightWeeks: data.Data.FlightWeeks,
+        Details: data.Data.Details,
+      },
     };
 
     default:
@@ -174,9 +195,9 @@ export const deleteProposal = id => ({
   payload: id,
 });
 
-export const updateProposal = id => ({
+export const updateProposal = params => ({
   type: ACTIONS.UPDATE_PROPOSAL,
-  payload: id,
+  payload: params,
 });
 
 export const updateProposalEditForm = keyValue => ({
