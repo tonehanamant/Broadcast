@@ -12,7 +12,27 @@ import numeral from 'numeral';
 export default class ProposalDetailGrid extends Component {
   constructor(props, context) {
     super(props, context);
-		this.context = context;
+    this.context = context;
+    this.checkEditable = this.checkEditable.bind(this);
+  }
+
+  checkEditable(values, isUnits) {
+    // check read only - TODO future pass here
+    if (this.props.isReadOnly) return false;
+    let can = true;
+    if (values.Type === 'total') {
+      can = false;
+    }
+    // check for ADU and quarter if editing units
+    if (isUnits && (values.Type === 'quarter') && this.props.isAdu) {
+      can = false;
+    }
+    // no editing hiatus week level
+    if ((values.Type === 'week') && values.IsHiatus) {
+      can = false;
+    }
+    console.log('checkEditable', can);
+    return can;
   }
 
    /* ////////////////////////////////// */
@@ -36,10 +56,19 @@ export default class ProposalDetailGrid extends Component {
     // };
 
     /* GRID COLUMNS */
+    // See saga FlattenDetail for data structure
+    // NORMALIZE editing values for grid display/editing: EditUnits(quarter Cpm, week Units) EditImpressions (quarter ImpressionGoal, week Impressions)
     const columns = [
       {
         name: 'Type',
         dataIndex: 'Type',
+        editable: false,
+        // width: '20%',
+        hidden: true,
+      },
+      {
+        name: 'IsHiatus',
+        dataIndex: 'IsHiatus',
         editable: false,
         // width: '20%',
         hidden: true,
@@ -59,29 +88,30 @@ export default class ProposalDetailGrid extends Component {
       },
       {
           name: 'Units',
-          dataIndex: 'Units',
+          dataIndex: 'EditUnits',
          // editable: true,
-          /* validator: ({ value, values }) => value.length > 0,
-          change: ({ values }) => ({
+          validator: ({ row }) => {
+            console.log('validator', row);
+            const value = row.value;
+            return value.length > 0;
+          },
+         /* change: ({ values }) => ({
             otherColDataIndex: 'newValue',
           }), */
           editable: ({ row }) => {
           // editable: (...args) => {
             // console.log('edit units', args);
-            console.log('edit Unit editable', row);
+            console.log('edit Unit editable row', row);
             const values = row.values;
-            // TODO handle isHiatus, readOnly
-            if (values.Type === 'total') {
-                return false;
-            }
-            return true;
+            return this.checkEditable(values, true);
           },
           width: '20%',
           renderer: ({ value, row }) => {
-            // TODO - edit indicator styling, etc
+            // TODO - edit indicator styling, validation etc
+            // now based on EditUnits
             if (row.Type === 'total') return row.TotalUnits ? numeral(row.TotalUnits).format('0,0') : '-';
             if (row.Type === 'quarter') {
-              const cpm = numeral(row.Cpm).format('$0,0[.]00');
+              const cpm = numeral(value).format('$0,0[.]00');
               return <div><span style={{ color: '#808080' }}>CPM </span><span>{cpm}</span></div>;
             }
             return numeral(value).format('0,0');
@@ -89,25 +119,21 @@ export default class ProposalDetailGrid extends Component {
       },
       {
           name: 'Imp (000)',
-          dataIndex: 'Impressions',
+          dataIndex: 'EditImpressions',
           width: '20%',
           editable: ({ row }) => {
-              console.log('edit Impressions editable', row);
-              const values = row.values;
-              // TODO handle isHiatus, readOnly
-              if (values.Type === 'total') {
-                  return false;
-              }
-              return true;
+            const values = row.values;
+            return this.checkEditable(values, false);
           },
           renderer: ({ value, row }) => {
-            // TODO - edit indicator styling, etc
+            // TODO - edit indicator styling, validation etc
+            // now based on EditImpressions
             if (row.Type === 'total') return row.TotalImpressions ? numeral(row.TotalImpressions / 1000).format('0,0.[000]') : '-';
             if (row.Type === 'quarter') {
-              const imp = numeral(row.ImpressionGoal / 1000).format('0,0.[000]');
+              const imp = numeral(value).format('0,0.[000]');
               return <div><span style={{ color: '#808080' }}>Imp. Goal (000)  </span><span>{imp}</span></div>;
             }
-            return numeral(value / 1000).format('0,0.[000]');
+            return numeral(value).format('0,0.[000]');
           },
       },
       {
@@ -177,71 +203,16 @@ export default class ProposalDetailGrid extends Component {
       stateKey,
       // height,
     };
-    const testData = [{
-      Id: 35,
-      Type: 'quarter',
-      QuarterText: '2017 Q4',
-      Quarter: 4,
-      Year: 2017,
-      Cpm: 12.0000,
-       // use similar value to sync with field - Units is CPM; Impresion is ImpressionGoal
-      // Units: qtr.Cpm,
-      // Impressions: qtr.ImpressionGoal
-      ImpressionGoal: 3000.0,
-      DistributeGoals: false,
-    }, {
-      Id: 158,
-      Type: 'week',
-      MediaWeekId: 728,
-      Week: '12/4/2017',
-      IsHiatus: false,
-      Units: 1,
-      Impressions: 1000.0,
-      Cost: 12.0000,
-      EndDate: '2017-12-10T00:00:00',
-      StartDate: '2017-12-04T00:00:00',
-    }, {
-      Id: 159,
-      Type: 'week',
-      MediaWeekId: 729,
-      Week: '12/11/2017',
-      IsHiatus: false,
-      Units: 1,
-      Impressions: 1000.0,
-      Cost: 12.0000,
-      EndDate: '2017-12-17T00:00:00',
-      StartDate: '2017-12-11T00:00:00',
-    }, {
-      Id: 160,
-      Type: 'week',
-      MediaWeekId: 730,
-      Week: '12/18/2017',
-      IsHiatus: true,
-      Units: 1,
-      Impressions: 1000.0,
-      Cost: 12.0000,
-      // Cost: 0,
-      EndDate: '2017-12-24T00:00:00',
-      StartDate: '2017-12-18T00:00:00',
-    },
-    {
-      Id: 'total',
-      Type: 'total',
-      TotalUnits: 3,
-      TotalImpressions: 3000.00,
-      TotalCost: 36.0000,
-    },
-    ];
 
     return (
-      // <Grid {...grid} data={this.props.post} store={this.context.store} />
-      <Grid {...grid} data={testData} height="false" />
+      <Grid {...grid} data={this.props.GridQuarterWeeks} store={this.context.store} height="false" />
     );
   }
 }
 
 ProposalDetailGrid.defaultProps = {
   detailId: 'detailGrid',
+  isReadOnly: false,
 };
 
 ProposalDetailGrid.propTypes = {
@@ -249,4 +220,7 @@ ProposalDetailGrid.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  GridQuarterWeeks: PropTypes.array.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
+  isAdu: PropTypes.bool.isRequired,
 };

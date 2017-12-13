@@ -15,58 +15,28 @@ export default class ProposalDetail extends Component {
     this.onChangeAdu = this.onChangeAdu.bind(this);
     this.onDeleteProposalDetail = this.onDeleteProposalDetail.bind(this);
     this.onFlightPickerApply = this.onFlightPickerApply.bind(this);
+    this.FlightPickerApply = this.FlightPickerApply.bind(this);
 
     this.checkValid = this.checkValid.bind(this);
     this.setValidationState = this.setValidationState.bind(this);
     this.clearValidationStates = this.clearValidationStates.bind(this);
 
-    this.toggleSweepsModal = this.toggleSweepsModal.bind(this);
-    this.onClickSweeps = this.onClickSweeps.bind(this);
-    this.onChangeSweeps = this.onChangeSweeps.bind(this);
+    this.openSweepsModal = this.openSweepsModal.bind(this);
 
     this.state = {
       activeDetail: true, // temp use prop
       spotLengthInvalid: null,
       datpartInvalid: null,
       daypartCodeInvalid: null,
-      isSweepsModalOpen: false,
-
-      sweepsOptions: {
-        shareBookOptions: [],
-        hutBookOptions: [],
-        playbackTypeOptions: [],
-      },
-
-      sweepsSelected: {
-        shareBook: null,
-        hutBook: null,
-        playbackType: null,
-      },
     };
   }
 
-  onClickSweeps() {
-    this.toggleSweepsModal();
-  }
-
-  toggleSweepsModal() {
-    this.setState({ isSweepsModalOpen: !this.state.isSweepsModalOpen });
-  }
-
-  onChangeSweeps(shareBook, hutBook, playbackType) {
-    this.setState({
-      sweepsSelected: {
-        shareBook,
-        hutBook,
-        playbackType,
-      },
+  openSweepsModal() {
+    this.props.toggleModal({
+      modal: 'sweepsModal',
+      active: true,
+      properties: { detailId: this.props.detail.Id },
     });
-
-    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'SharePostingBookId', value: shareBook.Id });
-    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'HutPostingBookId', value: hutBook.Id });
-    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'PlaybackType', value: playbackType.Id });
-
-    this.setState({ isSweepsModalOpen: false });
   }
 
   onChangeSpotLength(value) {
@@ -82,7 +52,7 @@ export default class ProposalDetail extends Component {
     const re = /^[a-z0-9]+$/i; // check alphanumeric
     const val = event.target.value ? event.target.value : '';
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'DaypartCode', value: val });
-    this.setValidationState('daypartCodeInvalid', re.test(val) ? null : 'error');
+    this.setValidationState('daypartCodeInvalid', re.test(val) && val.length <= 10 ? null : 'error');
     // console.log('onChangeDaypartCode', event.target.value, this.props.detail);
   }
 
@@ -107,11 +77,32 @@ export default class ProposalDetail extends Component {
   }
 
   onFlightPickerApply(flight) {
-    // checkValidFlightDetails();
+    if (this.props.detail) {
+      this.props.toggleModal({
+        modal: 'confirmModal',
+        active: true,
+        properties: {
+          titleText: 'Flight Change',
+          bodyText: 'Existing data will be affected by this Flight change. Click Continue to proceed',
+          closeButtonText: 'Cancel',
+          closeButtonBsStyle: 'default',
+          actionButtonText: 'Continue',
+          actionButtonBsStyle: 'warning',
+          action: () => this.FlightPickerApply(flight),
+        },
+      });
+    } else {
+      this.FlightPickerApply(flight);
+    }
+  }
+
+  FlightPickerApply(flight) {
     if (this.props.detail) {
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightStartDate', value: flight.StartDate });
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightEndDate', value: flight.EndDate });
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightWeeks', value: flight.FlightWeeks });
+      this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightEdited', value: true });
+      this.props.onUpdateProposal();
     } else {
       this.props.modelNewProposalDetail(flight);
     }
@@ -143,37 +134,9 @@ export default class ProposalDetail extends Component {
     return false;
   }
 
-  componentWillMount() {
-    const { initialdata, detail } = this.props;
-
-    // TODO - use DefaultPostingBooks if values in detail are null
-    let shareBook = null;
-    let hutBook = null;
-    let playbackType = null;
-
-    if (detail) {
-      shareBook = initialdata.ForecastDefaults.CrunchedMonths.filter(o => o.Id === detail.SharePostingBookId).shift();
-      hutBook = initialdata.ForecastDefaults.CrunchedMonths.filter(o => o.Id === detail.HutPostingBookId).shift();
-      playbackType = initialdata.ForecastDefaults.PlaybackTypes.filter(o => o.Id === detail.PlaybackType).shift();
-    }
-
-    this.setState({
-      sweepsOptions: {
-        shareBookOptions: initialdata.ForecastDefaults.CrunchedMonths,
-        hutBookOptions: initialdata.ForecastDefaults.CrunchedMonths,
-        playbackTypeOptions: initialdata.ForecastDefaults.PlaybackTypes,
-      },
-      sweepsSelected: {
-        shareBook,
-        hutBook,
-        playbackType,
-      },
-    });
-  }
-
   render() {
 		/* eslint-disable no-unused-vars */
-    const { detail, proposalEditForm, initialdata } = this.props;
+    const { detail, proposalEditForm, initialdata, updateProposalEditFormDetail } = this.props;
     return (
 			<Well bsSize="small">
         <Row>
@@ -182,8 +145,9 @@ export default class ProposalDetail extends Component {
               <FormGroup controlId="detailFlight">
                 <ControlLabel style={{ margin: '0 10px 0 0' }}>Flight</ControlLabel>
                 <FlightPicker
-                  startDate={detail ? detail.FlightStartDate || null : null}
-                  endDate={detail ? detail.FlightEndDate || null : null}
+                  startDate={detail && detail.FlightStartDate ? detail.FlightStartDate : null}
+                  endDate={detail && detail.FlightEndDate ? detail.FlightEndDate : null}
+                  flightWeeks={detail && detail.FlightWeeks ? detail.FlightWeeks : null}
                   onApply={flight => this.onFlightPickerApply(flight)}
                 />
               </FormGroup>
@@ -192,7 +156,7 @@ export default class ProposalDetail extends Component {
                 <ControlLabel style={{ float: 'left', margin: '8px 10px 0 16px' }}>Spot Length</ControlLabel>
                 <Select
                   name="proposalDetailSpotLength"
-                  value={detail.SpotLength}
+                  value={detail.SpotLengthId}
                   placeholder=""
                   options={this.props.initialdata.SpotLengths}
                   labelKey="Display"
@@ -235,7 +199,7 @@ export default class ProposalDetail extends Component {
                 bsStyle="primary"
                 bsSize="xsmall"
                 style={{ float: 'right', margin: '6px 10px 0 4px' }}
-                onClick={this.onClickSweeps}
+                onClick={this.openSweepsModal}
               >
                 Sweeps
               </Button>
@@ -248,17 +212,20 @@ export default class ProposalDetail extends Component {
           <Col md={12}>
             <ProposalDetailGrid
               detailId={detail.Id}
+              GridQuarterWeeks={detail.GridQuarterWeeks}
+              isAdu={detail.Adu}
+              // todo isReadonly
             />
           </Col>
         </Row>
         }
 
         <Sweeps
-          show={this.state.isSweepsModalOpen}
+          toggleModal={this.props.toggleModal}
           onClose={this.toggleSweepsModal}
-          onSave={this.onChangeSweeps}
-          {...this.state.sweepsOptions}
-          {...this.state.sweepsSelected}
+          updateProposalEditFormDetail={updateProposalEditFormDetail}
+          initialdata={initialdata}
+          detail={detail}
         />
 			</Well>
     );
@@ -269,6 +236,7 @@ ProposalDetail.defaultProps = {
   detail: null,
   proposalEditForm: {},
   updateProposalEditFormDetail: () => {},
+  onUpdateProposal: () => {},
   deleteProposalDetail: () => {},
   modelNewProposalDetail: () => {},
   toggleModal: () => {},
@@ -279,6 +247,7 @@ ProposalDetail.propTypes = {
 	detail: PropTypes.object,
   proposalEditForm: PropTypes.object,
   updateProposalEditFormDetail: PropTypes.func,
+  onUpdateProposal: PropTypes.func,
   deleteProposalDetail: PropTypes.func,
   modelNewProposalDetail: PropTypes.func,
   toggleModal: PropTypes.func,

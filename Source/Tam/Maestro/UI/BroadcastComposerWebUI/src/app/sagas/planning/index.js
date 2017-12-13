@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { delay } from 'redux-saga';
-import { call, takeEvery, put } from 'redux-saga/effects';
+import { call, takeEvery, put, select } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import moment from 'moment';
 
@@ -283,6 +283,47 @@ export function* requestProposalUnlock({ payload: id }) {
 }
 
 /* ////////////////////////////////// */
+/* FLATTEN DETAIL HELPERS */
+/* ////////////////////////////////// */
+export function flattenDetail(detailSet) {
+  // NORMALIZE editing values for grid display/editing: EditUnits(quarter Cpm, week Units) EditImpressions (quarter ImpressionGoal, week Impressions)
+  const detail = { ...detailSet };
+  const ret = [];
+  detail.Quarters.forEach((item, qidx) => {
+    const impEditGoal = item.ImpressionGoal / 1000;
+    const qtr = { Id: item.Id, QuarterIdx: qidx, Type: 'quarter', QuarterText: item.QuarterText, Cpm: item.Cpm, EditUnits: item.Cpm, ImpressionGoal: item.ImpressionGoal, EditImpressions: impEditGoal };
+    ret.push(qtr);
+
+    item.Weeks.forEach((weekItem, widx) => {
+      const week = { ...weekItem };
+      // store for finding later
+      week.QuarterId = item.Id;
+      // store indexes
+      week.QuarterIdx = qidx;
+      week.WeekIdx = widx;
+      week.Type = 'week';
+      week.EditImpressions = week.Impressions / 1000;
+      week.EditUnits = week.Units;
+      ret.push(week);
+    });
+  });
+  const totals = { TotalUnits: detail.TotalUnits, TotalCost: detail.TotalCost, TotalImpressions: detail.TotalImpressions, Id: 'total', Type: 'total' }; // construct totals
+  ret.push(totals);
+  return ret;
+}
+
+export function flattenProposalDetails(proposal) {
+  const proposalData = { ...proposal };
+  // console.log('flattenProposalDetails', proposal, proposalData);
+  proposalData.Details.map((detail) => {
+    const set = detail;
+    set.GridQuarterWeeks = flattenDetail(detail);
+    return set;
+  });
+  return proposalData;
+}
+
+/* ////////////////////////////////// */
 /* REQUEST PROPOSAL */
 /* ////////////////////////////////// */
 export function* requestProposal({ payload: id }) {
@@ -324,6 +365,10 @@ export function* requestProposal({ payload: id }) {
       });
       throw new Error();
     }
+    // const payload = yield flattenProposalDetails(data.Data);
+    // console.log('receiveProposal flatten', payload);
+    data.Data = yield flattenProposalDetails(data.Data);
+    // console.log('receiveProposal flatten', data.Data);
     yield put({
       type: ACTIONS.RECEIVE_PROPOSAL,
       data,
@@ -467,6 +512,7 @@ export function* requestProposalVersion({ payload: id, version }) {
       });
       throw new Error();
     }
+    data.Data = yield flattenProposalDetails(data.Data);
     yield put({
       type: ACTIONS.RECEIVE_PROPOSAL_VERSION,
       data,
@@ -494,6 +540,23 @@ export function* requestProposalVersion({ payload: id, version }) {
 }
 
 /* ////////////////////////////////// */
+/* PRE-SAVE (CLEAR Id WHERE Persisted: false) */
+/* ////////////////////////////////// */
+export function preSaveDetailIdNull(proposal) {
+  // const proposalData = { ...proposal };
+  // proposalData.Details.map((detail) => {
+  //   const set = detail;
+  //   if (detail.Persisted === false) {
+  //     set.Persisted = null;
+  //     set.Id = null;
+  //   }
+  //   return set;
+  // });
+  // return proposalData;
+  return proposal;
+}
+
+/* ////////////////////////////////// */
 /* SAVE PROPOSAL */
 /* ////////////////////////////////// */
 export function* saveProposal({ payload: params }) {
@@ -507,11 +570,12 @@ export function* saveProposal({ payload: params }) {
         processing: true,
       },
     });
-    const proposal = { ...params.proposal };
-    if (params.force) {
-      proposal.ForceSave = true;
-      proposal.ValidationWarning = null;
-    }
+    let proposal = { ...params.proposal };
+        if (params.force) {
+          proposal.ForceSave = true;
+          proposal.ValidationWarning = null;
+        }
+        proposal = yield preSaveDetailIdNull(proposal);
     const response = yield saveProposal(proposal);
     const { status, data } = response;
     yield put({
@@ -551,6 +615,7 @@ export function* saveProposal({ payload: params }) {
         },
       });
     }
+    data.Data = yield flattenProposalDetails(data.Data);
     yield put({
       type: ACTIONS.RECEIVE_PROPOSAL,
       data,
@@ -591,8 +656,9 @@ export function* saveProposalAsVersion({ payload: params }) {
         processing: true,
       },
     });
-    const proposal = { ...params };
-          proposal.Version = null; // Set to null, BE assigns new version
+    let proposal = { ...params };
+        proposal.Version = null; // Set to null, BE assigns new version
+        proposal = yield preSaveDetailIdNull(proposal);
     const response = yield saveProposal(proposal);
     const { status, data } = response;
     yield put({
@@ -632,6 +698,7 @@ export function* saveProposalAsVersion({ payload: params }) {
         },
       });
     }
+    data.Data = yield flattenProposalDetails(data.Data);
     yield put({
       type: ACTIONS.RECEIVE_PROPOSAL,
       data,
@@ -765,47 +832,47 @@ export function* deleteProposalById({ payload: id }) {
 /* ////////////////////////////////// */
 /* FLATTEN DETAIL */
 /* ////////////////////////////////// */
-export function* flattenDetail({ payload: detailSet }) {
-  const getDetailWeeks = () => {
-    const detail = { ...detailSet }; // clone this way?
-    const ret = [];
-    detail.Quarters.forEach((item, qidx) => {
-      const qtr = { Id: item.Id, QuarterIdx: qidx, Type: 'quarter', QuarterText: item.QuarterText, Cpm: item.Cpm, ImpressionGoal: item.ImpressionGoal };
-      ret.push(qtr);
+// export function* flattenDetail({ payload: detailSet }) {
+//   const getDetailWeeks = () => {
+//     const detail = { ...detailSet }; // clone this way?
+//     const ret = [];
+//     detail.Quarters.forEach((item, qidx) => {
+//       const qtr = { Id: item.Id, QuarterIdx: qidx, Type: 'quarter', QuarterText: item.QuarterText, Cpm: item.Cpm, ImpressionGoal: item.ImpressionGoal };
+//       ret.push(qtr);
 
-      item.Weeks.forEach((weekItem, widx) => {
-        const week = { ...weekItem };
-        // store for finding later
-        week.QuarterId = item.Id;
-        // store indexes
-        week.QuarterIdx = qidx;
-        week.WeekIdx = widx;
-        week.Type = 'week';
-        ret.push(week);
-      });
-    });
-    const totals = { TotalUnits: detail.TotalUnits, TotalCost: detail.TotalCost, TotalImpressions: detail.TotalImpressions, Id: 'total', Type: 'total' }; // construct totals
-    ret.push(totals);
-    return ret;
-  };
+//       item.Weeks.forEach((weekItem, widx) => {
+//         const week = { ...weekItem };
+//         // store for finding later
+//         week.QuarterId = item.Id;
+//         // store indexes
+//         week.QuarterIdx = qidx;
+//         week.WeekIdx = widx;
+//         week.Type = 'week';
+//         ret.push(week);
+//       });
+//     });
+//     const totals = { TotalUnits: detail.TotalUnits, TotalCost: detail.TotalCost, TotalImpressions: detail.TotalImpressions, Id: 'total', Type: 'total' }; // construct totals
+//     ret.push(totals);
+//     return ret;
+//   };
 
-  try {
-    const flattened = yield getDetailWeeks();
-    yield put({
-      type: ACTIONS.RECEIVE_FLATTEN_DETAIL,
-      data: flattened,
-    });
-  } catch (e) {
-    if (e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message,
-        },
-      });
-    }
-  }
-}
+//   try {
+//     const flattened = yield getDetailWeeks();
+//     yield put({
+//       type: ACTIONS.RECEIVE_FLATTEN_DETAIL,
+//       data: flattened,
+//     });
+//   } catch (e) {
+//     if (e.message) {
+//       yield put({
+//         type: ACTIONS.DEPLOY_ERROR,
+//         error: {
+//           message: e.message,
+//         },
+//       });
+//     }
+//   }
+// }
 
 /* ////////////////////////////////// */
 /* REQUEST MODEL PROPOSAL DETAIL */
@@ -815,7 +882,7 @@ export function* modelNewProposalDetail({ payload: params }) {
   /* eslint-disable no-shadow */
   const { getProposalDetail } = api.planning;
   const assignIdFlightWeeks = (data, flightWeeks) => {
-    let detail = { ...data, Id: moment().unix() };
+    let detail = { ...data, Id: moment().unix(), Persisted: false };
     detail = { ...detail, FlightWeeks: flightWeeks };
     return detail;
   };
@@ -858,6 +925,8 @@ export function* modelNewProposalDetail({ payload: params }) {
       throw new Error();
     }
     const payload = yield assignIdFlightWeeks(data.Data, flight.FlightWeeks);
+    payload.GridQuarterWeeks = yield flattenDetail(payload);
+    // console.log('RECEIVE_NEW_PROPOSAL_DETAIL flatten', payload);
     yield put({
       type: ACTIONS.RECEIVE_NEW_PROPOSAL_DETAIL,
       payload,
@@ -889,8 +958,8 @@ export function* modelNewProposalDetail({ payload: params }) {
 /* ////////////////////////////////// */
 export function* updateProposal({ payload: params }) {
   /* eslint-disable no-shadow */
-  console.log('PARMS', params);
   const { updateProposal } = api.planning;
+  const details = yield select(state => state.planning.proposalEditForm.Details);
   try {
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
@@ -899,7 +968,7 @@ export function* updateProposal({ payload: params }) {
         processing: true,
       },
     });
-    const response = yield updateProposal(params);
+    const response = yield updateProposal(details);
     const { status, data } = response;
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
@@ -928,15 +997,44 @@ export function* updateProposal({ payload: params }) {
       });
       throw new Error();
     }
+    // TODO resolve to get entire proposal
+    data.Data = yield flattenProposalDetails(data.Data);
     yield put({
       type: ACTIONS.RECEIVE_UPDATED_PROPOSAL,
       data,
-    }); // Is this an updated proposal object? // window.location to new version?
+    });
+    const { Details } = data.Data;
+    let warnings = [];
+        warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
+    if (Details) {
+      Details.forEach((detail) => {
+        if (detail.DefaultPostingBooks &&
+            detail.DefaultPostingBooks.DefautlHutBook &&
+            detail.DefaultPostingBooksDefautlHutBook.HasWarning) {
+            warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+        }
+        if (detail.DefaultPostingBooks &&
+            detail.DefaultPostingBooks.DefaultShareBook &&
+            detail.DefaultPostingBooks.DefaultShareBook.HasWarning) {
+            warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+        }
+      });
+    }
     yield put({
-      type: ACTIONS.CREATE_ALERT,
-      alert: {
-        type: 'success',
-        headline: 'Proposal Updated',
+      type: ACTIONS.TOGGLE_MODAL,
+      modal: {
+        modal: 'confirmModal',
+        active: true,
+        properties: {
+          titleText: 'Warning',
+          bodyText: null,
+          bodyList: warnings,
+          closeButtonText: 'Cancel',
+          closeButtonBsStyle: 'default',
+          actionButtonText: 'Continue',
+          actionButtonBsStyle: 'warning',
+          action: () => {},
+        },
       },
     });
   } catch (e) {

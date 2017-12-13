@@ -83,18 +83,18 @@ export default function reducer(state = initialState, action) {
     }
 
     case ACTIONS.RECEIVE_NEW_PROPOSAL_DETAIL: {
-    console.log('DETAIL PAYLOAD', payload);
-    return {
-      ...state,
-      proposalEditForm: {
-        ...state.proposalEditForm,
-        Details: [
-          ...state.proposalEditForm.Details,
-          payload,
-        ],
-      },
-    };
-  }
+      console.log('DETAIL PAYLOAD', payload);
+      return {
+        ...state,
+        proposalEditForm: {
+          ...state.proposalEditForm,
+          Details: [
+            ...state.proposalEditForm.Details,
+            payload,
+          ],
+        },
+      };
+    }
 
     case ACTIONS.DELETE_PROPOSAL_DETAIL: {
       const details = [...state.proposalEditForm.Details];
@@ -109,6 +109,35 @@ export default function reducer(state = initialState, action) {
         },
       });
     }
+
+    // PROPOSAL
+    case ACTIONS.RECEIVE_UPDATED_PROPOSAL:
+    return {
+      ...state,
+      // proposal: data.Data,
+      // proposalEditForm: data.Data,
+      proposalEditForm: {
+        ...state.proposalEditForm,
+        TotalCPM: data.Data.TotalCPM,
+        TargetCPM: data.Data.TargetCPM,
+        TotalCPMPercent: data.Data.TotalCPMPercent,
+        TotalCPMMarginAchieved: data.Data.TotalCPMMarginAchieved,
+        TotalCost: data.Data.TotalCost,
+        TargetBudget: data.Data.TargetBudget,
+        TotalCostPercent: data.Data.TotalCostPercent,
+        TotalCostMarginAchieved: data.Data.TotalCostMarginAchieved,
+        TotalImpressions: data.Data.TotalImpressions,
+        TargetImpressions: data.Data.TargetImpressions,
+        TotalImpressionsPercent: data.Data.TotalImpressionsPercent,
+        TotalImpressionsMarginAchieved: data.Data.TotalImpressionsMarginAchieved,
+        TargetUnits: data.Data.TargetUnits,
+        SpotLengths: data.Data.SpotLengths,
+        FlightStartDate: data.Data.FlightStartDate,
+        FlightEndDate: data.Data.FlightEndDate,
+        FlightWeeks: data.Data.FlightWeeks,
+        Details: data.Data.Details,
+      },
+    };
 
     default:
       return state;
@@ -181,9 +210,9 @@ export const updateProposalEditFormDetail = idKeyValue => ({
   payload: idKeyValue,
 });
 
-export const deleteProposalDetail = id => ({
+export const deleteProposalDetail = params => ({
   type: ACTIONS.DELETE_PROPOSAL_DETAIL,
-  payload: id,
+  payload: params,
 });
 
 export const modelNewProposalDetail = flight => ({
