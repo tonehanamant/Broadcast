@@ -51,7 +51,7 @@ export class ConfirmModal extends Component {
           {this.props.modal.properties.bodyList &&
             <ul>
               {this.props.modal.properties.bodyList.map(item => (
-                <li>{item}</li>
+                <li key={item}>{item}</li>
               ))}
             </ul>
           }

@@ -67,7 +67,7 @@ export default class FlightPicker extends Component {
 			const endDate = null; // moment(date).endOf('isoweek');
 			const inputEndDate = moment(null).format('M/D/YYYY'); // moment(date).endOf('isoweek').format('M/D/YYYY');
 			this.setState({ endDate, inputEndDate }, this.setFlightWeeks(this.state.startDate, endDate));
-			this.setValidationState('endDate', 'error');
+			this.setValidationState('endDate', 'warning');
 		}
 
 		if (isValidDate(date) && moment.isMoment(startDate)) {
@@ -75,7 +75,7 @@ export default class FlightPicker extends Component {
 			this.setState({ focusedInput: 'endDate' });
 		}
 
-		this.setValidationState('startDate', isValidDate(date) ? null : 'error');
+		this.setValidationState('startDate', isValidDate(date) ? null : 'warning');
 	}
 
 	setEndDate(value) {
@@ -91,7 +91,7 @@ export default class FlightPicker extends Component {
 			const startDate = null; // moment(date).startOf('isoweek');
 			const inputStartDate = moment(null).format('M/D/YYYY'); // moment(date).startOf('isoweek').format('M/D/YYYY');
 			this.setState({ startDate, inputStartDate }, this.setFlightWeeks(startDate, this.state.endDate));
-			this.setValidationState('startDate', 'error');
+			this.setValidationState('startDate', 'warning');
 		}
 
 		if (isValidDate(date) && moment.isMoment(endDate)) {
@@ -99,7 +99,7 @@ export default class FlightPicker extends Component {
 			this.setState({ focusedInput: 'startDate' });
 		}
 
-		this.setValidationState('endDate', isValidDate(date) ? null : 'error');
+		this.setValidationState('endDate', isValidDate(date) ? null : 'warning');
 	}
 
 	setFlightWeeks(start, end) {
@@ -206,7 +206,7 @@ export default class FlightPicker extends Component {
 				id="flight-picker"
 				style={{ position: 'relative', display: 'inline' }}
 			>
-				<FormGroup validationState={(this.state.validationStates.startDate || this.state.validationStates.endDate === 'error' ? 'error' : null)}>
+				<FormGroup validationState={(this.state.validationStates.startDate || this.state.validationStates.endDate === 'warning' ? 'warning' : null)}>
 				<InputGroup onClick={this.toggle}>
 						<FormControl
 							type="text"
@@ -258,7 +258,7 @@ export default class FlightPicker extends Component {
 													onFocus={() => this.setState({ focusedInput: 'startDate' })}
 													onChange={(event) => {
 														this.setState({ inputStartDate: event.target.value });
-														this.setValidationState('startDate', isValidDate(event.target.value) ? null : 'error');
+														this.setValidationState('startDate', isValidDate(event.target.value) ? null : 'warning');
 													}}
 													onKeyPress={(event) => {
 														if (event.key === 'Enter') { this.setStartDate(event.target.value); }
@@ -280,7 +280,7 @@ export default class FlightPicker extends Component {
 													onFocus={() => this.setState({ focusedInput: 'endDate' })}
 													onChange={(event) => {
 														this.setState({ inputEndDate: event.target.value });
-														this.setValidationState('endDate', isValidDate(event.target.value) ? null : 'error');
+														this.setValidationState('endDate', isValidDate(event.target.value) ? null : 'warning');
 													}}
 													onKeyPress={(event) => {
 														if (event.key === 'Enter') { this.setEndDate(event.target.value); }
@@ -346,7 +346,7 @@ export default class FlightPicker extends Component {
 										bsStyle="success"
 										bsSize="small"
 										onClick={this.onApply}
-										disabled={this.state.validationStates.startDate || this.state.validationStates.endDate === 'error'}
+										disabled={this.state.validationStates.startDate || this.state.validationStates.endDate === 'warning'}
 									>Apply</Button>
 								</ButtonToolbar>
 							</Col>

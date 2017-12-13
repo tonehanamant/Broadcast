@@ -84,10 +84,10 @@ export default class ProposalForm extends Component {
   }
 
   onChangeProposalName(event) {
-    const re = /^[a-z0-9]+$/i; // check alphanumeric
+    const re = /^[A-Za-z0-9- ]+$/i; // check alphanumeric
     const val = event.target.value || '';
     this.props.updateProposalEditForm({ key: 'ProposalName', value: val });
-    this.setValidationState('proposalName', re.test(val) ? null : 'error');
+    this.setValidationState('proposalName', re.test(val) && val.length <= 100 ? null : 'error');
   }
 
   toggleMarketSelector() {
@@ -313,7 +313,7 @@ export default class ProposalForm extends Component {
 											</InputGroup>
 											{this.state.validationStates.proposalName != null &&
 											<HelpBlock>
-												<span className="text-danger">Required</span>
+												<span className="text-danger">Required, Alphanumeric, 100 Characters Maximum</span>
 											</HelpBlock>
 											}
 										</FormGroup>
