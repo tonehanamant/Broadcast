@@ -95,9 +95,17 @@ export class SectionPlanningProposal extends Component {
   }
 }
 
+
 /* ////////////////////////////////// */
 /* // PROPTYPES
 /* ////////////////////////////////// */
+SectionPlanningProposal.defaultProps = {
+  proposalLock: {},
+  initialdata: {},
+  proposal: {},
+  proposalEditForm: {},
+};
+
 SectionPlanningProposal.propTypes = {
   match: PropTypes.object.isRequired,
   proposalLock: PropTypes.object.isRequired,
