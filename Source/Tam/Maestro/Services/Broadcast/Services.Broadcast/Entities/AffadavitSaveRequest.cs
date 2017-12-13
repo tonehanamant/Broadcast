@@ -19,6 +19,7 @@ namespace Services.Broadcast.Entities
 
     public class AffadavitSaveRequestDetail
     {
+        public string Station;
         public DateTime AirTime;
         public string ProgramName;
         public int SpotLength;
