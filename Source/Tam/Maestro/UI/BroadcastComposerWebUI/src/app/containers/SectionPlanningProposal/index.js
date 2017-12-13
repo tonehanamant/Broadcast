@@ -43,11 +43,12 @@ export class SectionPlanningProposal extends Component {
 
   render() {
     const { toggleModal, proposalLock, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail } = this.props;
+    console.log('PROPOSAL LOCK', proposalLock);
     return (
       <div id="planning-section-proposal" style={{ paddingBottom: 80 }}>
         {
-          Object.keys(proposalLock).length > 0 &&
-          !proposalLock.LockedUserId &&
+          // Object.keys(proposalLock).length > 0 &&
+          // !proposalLock.LockedUserId &&
           Object.keys(initialdata).length > 0 &&
           Object.keys(proposal).length > 0 &&
           Object.keys(proposalEditForm).length > 0 &&
@@ -94,9 +95,17 @@ export class SectionPlanningProposal extends Component {
   }
 }
 
+
 /* ////////////////////////////////// */
 /* // PROPTYPES
 /* ////////////////////////////////// */
+SectionPlanningProposal.defaultProps = {
+  proposalLock: {},
+  initialdata: {},
+  proposal: {},
+  proposalEditForm: {},
+};
+
 SectionPlanningProposal.propTypes = {
   match: PropTypes.object.isRequired,
   proposalLock: PropTypes.object.isRequired,
