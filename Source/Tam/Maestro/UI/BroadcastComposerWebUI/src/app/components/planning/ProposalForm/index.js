@@ -20,7 +20,7 @@ export default class ProposalForm extends Component {
     this.onChangeSecondaryDemos = this.onChangeSecondaryDemos.bind(this);
     this.onChangeNotes = this.onChangeNotes.bind(this);
 
-    this.checkValid = this.checkValid.bind(this);
+    // this.checkValid = this.checkValid.bind(this);
     this.setValidationState = this.setValidationState.bind(this);
     this.clearValidationStates = this.clearValidationStates.bind(this);
 
@@ -33,8 +33,15 @@ export default class ProposalForm extends Component {
     this.initializeMarkets = this.initializeMarkets.bind(this);
 
     this.state = {
-      nameInvalid: null,
-      advertiserInvalid: null,
+      validationStates: {
+        proposalName: null,
+        proposalMarket: null,
+        proposalPostType: null,
+        proposalEquivalized: null,
+        proposalAdvertiserId: null,
+        proposalGuaranteedDemoId: null,
+        proposalSecondaryDemo: null,
+      },
       selectedMarketGroup: {},
       isMarketSelectorOpen: false,
       customMarketCount: 0,
@@ -45,43 +52,40 @@ export default class ProposalForm extends Component {
     this.state.Invalid = null;
   }
 
-  onChangeProposalName(event) {
-    const val = event.target.value ? event.target.value : '';
-    this.props.updateProposalEditForm({ key: 'ProposalName', value: val });
-    this.setValidationState('nameInvalid', val ? null : 'error');
-  }
-
-  onChangeAdvertiserId(value) {
-    const val = value ? value.Id : null;
-    this.props.updateProposalEditForm({ key: 'AdvertiserId', value: val });
-    this.setValidationState('advertiserInvalid', val ? null : 'error');
-  }
-
-  onChangeNotes(event) {
-		this.props.updateProposalEditForm({ key: 'Notes', value: event.target.value });
-  }
-
-  checkValid() {
-    const nameValid = (this.props.proposalEditForm.ProposalName != null) && (this.props.proposalEditForm.ProposalName !== '');
-    const advertiserValid = this.props.proposalEditForm.AdvertiserId != null;
-    if (nameValid && advertiserValid) {
-      this.clearValidationStates();
-      return true;
-    }
-    this.setValidationState('nameInvalid', nameValid ? null : 'error');
-    this.setValidationState('advertiserInvalid', advertiserValid ? null : 'error');
-    return false;
-  }
+  // checkValid() {
+  //   const nameValid = (this.props.proposalEditForm.ProposalName != null) && (this.props.proposalEditForm.ProposalName !== '');
+  //   const advertiserValid = this.props.proposalEditForm.AdvertiserId != null;
+  //   if (nameValid && advertiserValid) {
+  //     this.clearValidationStates();
+  //     return true;
+  //   }
+  //   this.setValidationState('nameInvalid', nameValid ? null : 'error');
+  //   this.setValidationState('advertiserInvalid', advertiserValid ? null : 'error');
+  //   return false;
+  // }
 
   clearValidationStates() {
     this.setState({
-      nameInvalid: null,
-      advertiserInvalid: null,
+      validationStates: {
+        proposalName: null,
+        proposalMarket: null,
+        proposalPostType: null,
+        proposalEquivalized: null,
+        proposalAdvertiserId: null,
+        proposalGuaranteedDemoId: null,
+      },
     });
   }
 
   setValidationState(type, state) {
-    this.state[type] = state;
+    this.state.validationStates[type] = state;
+  }
+
+  onChangeProposalName(event) {
+    const re = /^[a-z0-9]+$/i; // check alphanumeric
+    const val = event.target.value || '';
+    this.props.updateProposalEditForm({ key: 'ProposalName', value: val });
+    this.setValidationState('proposalName', re.test(val) ? null : 'error');
   }
 
   toggleMarketSelector() {
@@ -234,19 +238,38 @@ export default class ProposalForm extends Component {
   }
 
   onChangePostType(value) {
-    this.props.updateProposalEditForm({ key: 'PostType', value: value ? value.Id : null });
+    const val = value ? value.Id : null;
+    this.props.updateProposalEditForm({ key: 'PostType', value: val });
+    this.setValidationState('proposalPostType', val ? null : 'error');
   }
 
   onChangeEquivalized(value) {
-    this.props.updateProposalEditForm({ key: 'Equivalized', value: value ? value.Bool : null });
+    const val = value ? value.Bool : null;
+    this.props.updateProposalEditForm({ key: 'Equivalized', value: val });
+    this.setValidationState('proposalEquivalized', val ? null : 'error');
+  }
+
+  onChangeAdvertiserId(value) {
+    console.log('VALVALVAL ADVERT', value);
+    const val = value ? value.Id : null;
+    this.props.updateProposalEditForm({ key: 'AdvertiserId', value: val });
+    this.setValidationState('proposalAdvertiserId', val ? null : 'error');
   }
 
   onChangeGuaranteedDemoId(value) {
-    this.props.updateProposalEditForm({ key: 'GuaranteedDemoId', value: value ? value.Id : null });
+    const val = value ? value.Id : null;
+    this.props.updateProposalEditForm({ key: 'GuaranteedDemoId', value: val });
+    this.setValidationState('proposalGuaranteedDemoId', val ? null : 'error');
   }
 
   onChangeSecondaryDemos(value) {
-    this.props.updateProposalEditForm({ key: 'SecondaryDemos', value: value.map(item => item.Id) });
+    const val = value.map(item => item.Id);
+    this.props.updateProposalEditForm({ key: 'SecondaryDemos', value: val });
+  }
+
+  onChangeNotes(event) {
+    const val = event.target.value || '';
+		this.props.updateProposalEditForm({ key: 'Notes', value: val });
   }
 
   componentWillMount() {
@@ -271,7 +294,7 @@ export default class ProposalForm extends Component {
 							<Col md={6}>
 								<Row>
 									<Col md={5}>
-										<FormGroup controlId="proposalName" validationState={this.state.nameInvalid} >
+										<FormGroup controlId="proposalName" validationState={this.state.validationStates.proposalName} >
 											<ControlLabel><strong>Proposal Name</strong></ControlLabel>
 											<InputGroup>
 												<FormControl
@@ -285,15 +308,15 @@ export default class ProposalForm extends Component {
 														</InputGroup.Addon>
 												}
 											</InputGroup>
-											{this.state.nameInvalid != null &&
+											{this.state.validationStates.proposalName != null &&
 											<HelpBlock>
-												<p className="text-danger">Required</p>
+												<span className="text-danger">Required</span>
 											</HelpBlock>
 											}
 										</FormGroup>
 									</Col>
 									<Col md={3}>
-                    <FormGroup controlId="proposalMarket" validationState={this.state.Invalid} >
+                    <FormGroup controlId="proposalMarket" validationState={this.state.validationStates.proposalMarket} >
                       <ControlLabel><strong>Market</strong></ControlLabel>
                       <Select
                         name="marketGroup"
@@ -305,15 +328,10 @@ export default class ProposalForm extends Component {
                         onChange={this.onMarketGroupChange}
                         clearable={false}
                       />
-                      {this.state.Invalid != null &&
-                        <HelpBlock>
-                          <p className="text-danger">Required</p>
-                        </HelpBlock>
-                      }
                     </FormGroup>
                   </Col>
 									<Col md={2}>
-										<FormGroup controlId="proposalPostType" >
+										<FormGroup controlId="proposalPostType" validationState={this.state.validationStates.proposalPostType}>
 											<ControlLabel><strong>Post Type</strong></ControlLabel>
 											<Select
 												name="proposalPostType"
@@ -328,7 +346,7 @@ export default class ProposalForm extends Component {
 										</FormGroup>
 									</Col>
 									<Col md={2}>
-										<FormGroup controlId="proposalEquivalized" >
+										<FormGroup controlId="proposalEquivalized" validationState={this.state.validationStates.proposalEquivalized}>
 											<ControlLabel><strong>Equivalized</strong></ControlLabel>
 											<Select
 												name="proposalEquivalized"
@@ -385,7 +403,7 @@ export default class ProposalForm extends Component {
 							<Col md={7}>
 								<Row>
 									<Col md={4}>
-										<FormGroup controlId="proposalAdvertiser" validationState={this.state.advertiserInvalid} >
+										<FormGroup controlId="proposalAdvertiser" validationState={this.state.validationStates.proposalAdvertiserId} >
 											<ControlLabel><strong>Advertiser</strong></ControlLabel>
 											<Select
 												name="proposalAdvertiser"
@@ -397,15 +415,10 @@ export default class ProposalForm extends Component {
 												onChange={this.onChangeAdvertiserId}
 												clearable={false}
 											/>
-											{this.state.advertiserInvalid != null &&
-											<HelpBlock>
-												<p className="text-danger">Required</p>
-											</HelpBlock>
-											}
 										</FormGroup>
 									</Col>
 									<Col md={4}>
-										<FormGroup controlId="proposalGuaranteedDemo" >
+										<FormGroup controlId="proposalGuaranteedDemo" validationState={this.state.validationStates.proposalGuaranteedDemoId}>
 											<ControlLabel><strong>Guaranteed Demo</strong></ControlLabel>
 											<Select
 												name="proposalGuaranteedDemo"
@@ -420,7 +433,7 @@ export default class ProposalForm extends Component {
 										</FormGroup>
 									</Col>
 									<Col md={4}>
-										<FormGroup controlId="proposalSecondaryDemo" >
+										<FormGroup controlId="proposalSecondaryDemo" validationState={null}>
 											<ControlLabel><strong>Secondary Demo</strong></ControlLabel>
 											<Select
 												name="proposalSecondaryDemo"
@@ -456,7 +469,7 @@ export default class ProposalForm extends Component {
 										</FormGroup>
 									</Col>
 									<Col md={4}>
-										<FormGroup controlId="proposalNotes">
+										<FormGroup controlId="proposalNotes" validationState={null}>
 											<ControlLabel>Notes</ControlLabel>
 											<FormControl
 												componentClass="textarea"

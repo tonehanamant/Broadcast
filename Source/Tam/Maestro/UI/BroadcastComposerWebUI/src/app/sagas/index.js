@@ -29,6 +29,7 @@ export default function* rootSaga() {
     planningSaga.watchSaveProposalAsVersion(),
     planningSaga.watchDeleteProposalById(),
     planningSaga.watchUpdateProposal(),
+    planningSaga.watchModelNewProposalDetail(),
 
   ];
 }
