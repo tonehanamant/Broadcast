@@ -217,7 +217,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("Programs")]
         public BaseResponse<bool> SaveProgram(StationProgram stationProgram)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveProgram(stationProgram));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveProgram(stationProgram,Identity.Name));
         }
 
         [HttpPost]
