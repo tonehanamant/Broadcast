@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Modal, Button, Form, FormGroup, ControlLabel, Col } from 'react-bootstrap';
 import Select from 'react-select';
+
+const mapStateToProps = ({ app: { modals: { sweepsModal: modal } } }) => ({
+  modal,
+});
 
 class Sweeps extends Component {
   constructor(props) {
@@ -9,37 +14,98 @@ class Sweeps extends Component {
 
     this.onSave = this.onSave.bind(this);
     this.onCancel = this.onCancel.bind(this);
+    this.closeModal = this.closeModal.bind(this);
 
     this.state = {
       shareBook: null,
+      currentShareBook: null,
+      shareBookOptions: [],
       hutBook: null,
+      currentHutBook: null,
+      hutBookOptions: [],
       playbackType: null,
+      currentPlaybackType: null,
+      playbackTypeOptions: [],
       showConfirmation: false,
     };
   }
 
   componentWillMount() {
-    const { shareBook, hutBook, playbackType } = this.props;
-    this.setState({ shareBook, hutBook, playbackType });
+    const { initialdata, detail, updateProposalEditFormDetail } = this.props;
+
+    if (detail) {
+      const shareBookId = detail.SharePostingBookId || detail.DefaultPostingBooks.DefaultShareBook.PostingBookId;
+      const hutBookId = detail.HutPostingBookId || detail.DefaultPostingBooks.DefaultHutBook.PostingBookId;
+      const playbackTypeId = detail.PlaybackType || detail.DefaultPostingBooks.DefaultPlaybackType;
+
+      const shareBook = initialdata.ForecastDefaults.CrunchedMonths.filter(o => o.Id === shareBookId).shift();
+      const hutBook = initialdata.ForecastDefaults.CrunchedMonths.filter(o => o.Id === hutBookId).shift();
+      const playbackType = initialdata.ForecastDefaults.PlaybackTypes.filter(o => o.Id === playbackTypeId).shift();
+
+      this.setState({
+        shareBook,
+        currentShareBook: shareBook,
+        shareBookOptions: initialdata.ForecastDefaults.CrunchedMonths,
+
+        hutBook,
+        currentHutBook: hutBook,
+        hutBookOptions: initialdata.ForecastDefaults.CrunchedMonths,
+
+        playbackType,
+        currentPlaybackType: playbackType,
+        playbackTypeOptions: initialdata.ForecastDefaults.PlaybackTypes,
+      });
+
+      // default values
+      updateProposalEditFormDetail({ id: detail.Id, key: 'SharePostingBookId', value: shareBookId });
+      updateProposalEditFormDetail({ id: detail.Id, key: 'HutPostingBookId', value: hutBookId });
+      updateProposalEditFormDetail({ id: detail.Id, key: 'PlaybackType', value: playbackTypeId });
+    }
   }
 
   onSave() {
-    const { onSave } = this.props;
-    const { shareBook, hutBook, playbackType } = this.state;
+    const { updateProposalEditFormDetail, detail } = this.props;
+    const { currentShareBook, currentHutBook, currentPlaybackType } = this.state;
 
-    this.setState({ showConfirmation: false });
-    onSave(shareBook, hutBook, playbackType);
+    updateProposalEditFormDetail({ id: detail.Id, key: 'SharePostingBookId', value: currentShareBook.Id });
+    updateProposalEditFormDetail({ id: detail.Id, key: 'HutPostingBookId', value: currentHutBook.Id });
+    updateProposalEditFormDetail({ id: detail.Id, key: 'PlaybackType', value: currentPlaybackType.Id });
+
+    this.setState({
+      shareBook: currentShareBook,
+      hutBook: currentHutBook,
+      playbackType: currentPlaybackType,
+      showConfirmation: false,
+    });
+
+    this.closeModal();
   }
 
   onCancel() {
-    const { shareBook, hutBook, playbackType, onClose } = this.props;
-    this.setState({ shareBook, hutBook, playbackType });
-    onClose();
+    const { shareBook, hutBook, playbackType } = this.state;
+
+    // reset current selected values
+    this.setState({
+      currentShareBook: shareBook,
+      currentHutBook: hutBook,
+      currentPlaybackType: playbackType,
+    });
+
+    this.closeModal();
+  }
+
+  closeModal() {
+    this.props.toggleModal({
+      modal: 'sweepsModal',
+      active: false,
+      properties: { detailId: this.props.detail.Id },
+    });
   }
 
   render() {
-    const { show, shareBookOptions, hutBookOptions, playbackTypeOptions, isReadOnly } = this.props;
-    const { shareBook, hutBook, playbackType, showConfirmation } = this.state;
+    const { isReadOnly, modal, detail } = this.props;
+    const { currentShareBook, currentHutBook, currentPlaybackType, showConfirmation, shareBookOptions, hutBookOptions, playbackTypeOptions } = this.state;
+    const show = (detail && modal && modal.properties.detailId === detail.Id) ? modal.active : false;
 
     return (
       <div>
@@ -56,8 +122,8 @@ class Sweeps extends Component {
                 </Col>
                 <Col sm={9}>
                   <Select
-                    value={shareBook}
-                    onChange={shareBook => this.setState({ shareBook })}
+                    value={currentShareBook}
+                    onChange={shareBook => this.setState({ currentShareBook: shareBook })}
                     options={shareBookOptions}
                     labelKey="Display"
                     clearable={false}
@@ -71,8 +137,8 @@ class Sweeps extends Component {
                 </Col>
                 <Col sm={9}>
                   <Select
-                    value={hutBook}
-                    onChange={hutBook => this.setState({ hutBook })}
+                    value={currentHutBook}
+                    onChange={hutBook => this.setState({ currentHutBook: hutBook })}
                     options={hutBookOptions}
                     labelKey="Display"
                     clearable={false}
@@ -86,8 +152,8 @@ class Sweeps extends Component {
                 </Col>
                 <Col sm={9}>
                   <Select
-                    value={playbackType}
-                    onChange={playbackType => this.setState({ playbackType })}
+                    value={currentPlaybackType}
+                    onChange={playbackType => this.setState({ currentPlaybackType: playbackType })}
                     options={playbackTypeOptions}
                     labelKey="Display"
                     clearable={false}
@@ -122,31 +188,20 @@ class Sweeps extends Component {
   }
 }
 
-const optionShape = PropTypes.shape({
-  Id: PropTypes.number,
-  Display: PropTypes.string,
-});
-
 Sweeps.propTypes = {
-  show: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
+  modal: PropTypes.object,
+  toggleModal: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool,
-
-  shareBookOptions: PropTypes.arrayOf(optionShape).isRequired,
-  hutBookOptions: PropTypes.arrayOf(optionShape).isRequired,
-  playbackTypeOptions: PropTypes.arrayOf(optionShape).isRequired,
-
-  shareBook: optionShape,
-  hutBook: optionShape,
-  playbackType: optionShape,
+  initialdata: PropTypes.object,
+  detail: PropTypes.object,
+  updateProposalEditFormDetail: PropTypes.func.isRequired,
 };
 
 Sweeps.defaultProps = {
-  shareBook: null,
-  hutBook: null,
-  playbackType: null,
+  modal: null,
   isReadOnly: false,
+  initialdata: null,
+  detail: null,
 };
 
-export default Sweeps;
+export default connect(mapStateToProps)(Sweeps);
