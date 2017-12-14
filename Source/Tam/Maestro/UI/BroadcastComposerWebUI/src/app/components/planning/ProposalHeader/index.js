@@ -68,6 +68,9 @@ export default class ProposalHeader extends Component {
 
 ProposalHeader.defaultProps = {
   isEdit: false,
+  getProposalVersions: () => {},
+  deleteProposal: () => {},
+  saveProposalAsVersion: () => {},
 };
 
 /* eslint-disable react/no-unused-prop-types */
@@ -77,8 +80,10 @@ ProposalHeader.propTypes = {
   initialdata: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
   updateProposalEditForm: PropTypes.func.isRequired,
-  getProposalVersions: PropTypes.func.isRequired,
-  deleteProposal: PropTypes.func.isRequired,
-  saveProposalAsVersion: PropTypes.func.isRequired,
+
+  getProposalVersions: PropTypes.func,
+  deleteProposal: PropTypes.func,
+  saveProposalAsVersion: PropTypes.func,
+
   toggleModal: PropTypes.func.isRequired,
 };

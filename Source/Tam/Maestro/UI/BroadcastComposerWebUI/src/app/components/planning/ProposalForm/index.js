@@ -313,9 +313,19 @@ export default class ProposalForm extends Component {
 											</InputGroup>
 											{this.state.validationStates.proposalName != null &&
 											<HelpBlock>
-												<span className="text-danger">Required, Alphanumeric, 100 Characters Maximum</span>
+												<span className="text-danger">Required.</span>
 											</HelpBlock>
-											}
+                      }
+                      {this.state.validationStates.proposalName != null &&
+											<HelpBlock>
+												<span className="text-danger">Please enter only alphanumeric characters.</span>
+											</HelpBlock>
+                      }
+                      {this.state.validationStates.proposalName != null &&
+											<HelpBlock>
+												<span className="text-danger">Please enter no more than 100 characters.</span>
+											</HelpBlock>
+                      }
 										</FormGroup>
 									</Col>
 									<Col md={3}>

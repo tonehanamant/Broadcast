@@ -44,6 +44,7 @@ export default class ProposalActions extends Component {
 			// headline: '',
 			message: `${!nameValid ? 'Proposal Name is a required field. ' : ''}${!advertiserValid ? 'Advertiser is a required field. ' : ''}`,
 		});
+		// Proposal cannot be saved: Required Inputs Incomplete (in red)
     return false;
 	}
 
