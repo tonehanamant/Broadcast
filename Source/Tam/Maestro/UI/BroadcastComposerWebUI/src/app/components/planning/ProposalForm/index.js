@@ -24,13 +24,11 @@ export default class ProposalForm extends Component {
     this.setValidationState = this.setValidationState.bind(this);
     this.clearValidationStates = this.clearValidationStates.bind(this);
 
-    this.toggleMarketSelector = this.toggleMarketSelector.bind(this);
     this.onMarketGroupChange = this.onMarketGroupChange.bind(this);
     this.onChangeCustomMarketSelection = this.onChangeCustomMarketSelection.bind(this);
     this.marketSelectorOptionRenderer = this.marketSelectorOptionRenderer.bind(this);
     this.marketSelectorValueRenderer = this.marketSelectorValueRenderer.bind(this);
     this.onMarketsSelectionChange = this.onMarketsSelectionChange.bind(this);
-    this.initializeMarkets = this.initializeMarkets.bind(this);
 
     this.state = {
       validationStates: {
@@ -44,10 +42,7 @@ export default class ProposalForm extends Component {
         proposalNotes: null,
       },
       selectedMarketGroup: {},
-      isMarketSelectorOpen: false,
       customMarketCount: 0,
-      selectedMarkets: [],
-      blackoutMarkets: [],
     };
 
     this.state.Invalid = null;
@@ -90,10 +85,6 @@ export default class ProposalForm extends Component {
     this.setValidationState('proposalName', re.test(val) && val.length <= 100 ? null : 'error');
   }
 
-  toggleMarketSelector() {
-    this.setState({ isMarketSelectorOpen: !this.state.isMarketSelectorOpen });
-  }
-
   onMarketGroupChange(selectedMarketGroup) {
     const { initialdata } = this.props;
 
@@ -104,7 +95,10 @@ export default class ProposalForm extends Component {
 
     if (option.Id === -1) {
       option = initialdata.MarketGroups.find(marketGroup => marketGroup.Id === 255);
-      this.toggleMarketSelector();
+      this.props.toggleModal({
+        modal: 'marketSelectorModal',
+        active: true,
+      });
     } else {
       this.props.updateProposalEditForm({ key: 'Markets', value: null });
       this.props.updateProposalEditForm({ key: 'MarketGroupId', value: option.Id });
@@ -209,36 +203,6 @@ export default class ProposalForm extends Component {
     );
   }
 
-  initializeMarkets() {
-    const { initialdata, proposalEditForm } = this.props;
-    const { MarketGroup, Markets, BlackoutMarketGroup } = proposalEditForm;
-    let selectedMarketGroup = MarketGroup;
-    let customMarketCount = 0;
-
-    // conditions to be custom: has any amount of 'single' markets OR has more than one marketGroup
-    const isCustom = ((Markets && Markets.length > 0) || (MarketGroup && BlackoutMarketGroup));
-    if (isCustom) {
-      customMarketCount = Markets.length;
-      customMarketCount += MarketGroup ? MarketGroup.Count : 0;
-      customMarketCount += BlackoutMarketGroup ? BlackoutMarketGroup.Count : 0;
-
-      selectedMarketGroup = initialdata.MarketGroups.find(marketGroup => marketGroup.Id === 255);
-      selectedMarketGroup.Count = customMarketCount;
-
-      // update selected lists (simple and blackout)
-      const selectedMarkets = Markets.filter(market => !market.IsBlackout);
-      selectedMarkets.unshift(MarketGroup);
-      this.setState({ selectedMarkets });
-
-      const blackoutMarkets = Markets.filter(market => market.IsBlackout);
-      blackoutMarkets.unshift(BlackoutMarketGroup);
-      this.setState({ blackoutMarkets });
-    }
-
-    this.setState({ customMarketCount });
-    this.setState({ selectedMarketGroup });
-  }
-
   onChangePostType(value) {
     const val = value ? value.Id : null;
     this.props.updateProposalEditForm({ key: 'PostType', value: val });
@@ -273,10 +237,6 @@ export default class ProposalForm extends Component {
     const val = event.target.value || '';
     this.props.updateProposalEditForm({ key: 'Notes', value: val });
     // this.setValidationState('proposalNotes', val ? null : 'error'); // Not required
-  }
-
-  componentWillMount() {
-    this.initializeMarkets();
   }
 
   render() {
@@ -502,15 +462,14 @@ export default class ProposalForm extends Component {
 					</form>
 
           <MarketGroupSelector
-            title={'Custom Market'}
-            open={this.state.isMarketSelectorOpen}
-            onClose={this.toggleMarketSelector}
+            toggleModal={this.props.toggleModal}
+            initialdata={initialdata}
+            proposalEditForm={proposalEditForm}
+
             marketGroups={initialdata.MarketGroups.filter(market => (market.Id !== -1) && (market.Id !== 255))}
             markets={initialdata.Markets}
             onApplyChange={this.onChangeCustomMarketSelection}
             onMarketsSelectionChange={this.onMarketsSelectionChange}
-            selectedMarkets={this.state.selectedMarkets}
-            blackoutMarkets={this.state.blackoutMarkets}
           />
 			</div>
     );
@@ -518,6 +477,7 @@ export default class ProposalForm extends Component {
 }
 
 ProposalForm.defaultProps = {
+  toggleModal: () => {},
 };
 
 /* eslint-disable react/no-unused-prop-types */
@@ -525,4 +485,5 @@ ProposalForm.propTypes = {
   initialdata: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
   updateProposalEditForm: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func,
 };
