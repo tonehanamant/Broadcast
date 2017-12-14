@@ -38,22 +38,29 @@ class Sweeps extends Component {
       const hutBookId = detail.HutPostingBookId || detail.DefaultPostingBooks.DefaultHutBook.PostingBookId;
       const playbackTypeId = detail.PlaybackType || detail.DefaultPostingBooks.DefaultPlaybackType;
 
-      const shareBook = initialdata.ForecastDefaults.CrunchedMonths.filter(o => o.Id === shareBookId).shift();
-      const hutBook = initialdata.ForecastDefaults.CrunchedMonths.filter(o => o.Id === hutBookId).shift();
-      const playbackType = initialdata.ForecastDefaults.PlaybackTypes.filter(o => o.Id === playbackTypeId).shift();
+      // select options
+      const shareBookOptions = initialdata.ForecastDefaults.CrunchedMonths;
+      const hutBookOptions = shareBookOptions;
+      hutBookOptions.push({ Id: -1, Display: 'Use Share Only' });
+      const playbackTypeOptions = initialdata.ForecastDefaults.PlaybackTypes;
+
+      // selected option
+      const shareBook = shareBookOptions.filter(o => o.Id === shareBookId).shift();
+      const hutBook = hutBookOptions.filter(o => o.Id === hutBookId).shift();
+      const playbackType = playbackTypeOptions.filter(o => o.Id === playbackTypeId).shift();
 
       this.setState({
         shareBook,
         currentShareBook: shareBook,
-        shareBookOptions: initialdata.ForecastDefaults.CrunchedMonths,
+        shareBookOptions,
 
         hutBook,
         currentHutBook: hutBook,
-        hutBookOptions: initialdata.ForecastDefaults.CrunchedMonths,
+        hutBookOptions,
 
         playbackType,
         currentPlaybackType: playbackType,
-        playbackTypeOptions: initialdata.ForecastDefaults.PlaybackTypes,
+        playbackTypeOptions,
       });
 
       // default values
