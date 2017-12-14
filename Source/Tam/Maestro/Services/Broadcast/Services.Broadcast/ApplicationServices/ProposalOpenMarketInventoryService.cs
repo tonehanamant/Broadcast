@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
@@ -31,6 +32,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalProgramsCalculationEngine _ProposalProgramsCalculationEngine;
         private readonly IProposalOpenMarketsTotalsCalculationEngine _ProposalOpenMarketsTotalsCalculationEngine;
         private readonly IProposalPostingBooksEngine _ProposalPostingBooksEngine;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         internal static readonly string MissingGuaranteedAudienceErorMessage = "Unable to get proprietary inventory information due to null guaranteed audience";
 
         private const string HOUSEHOLD_AUDIENCE_CODE = "HH";
@@ -40,12 +42,14 @@ namespace Services.Broadcast.ApplicationServices
             IProposalProgramsCalculationEngine proposalProgramsCalculationEngine,
             IProposalOpenMarketsTotalsCalculationEngine proposalOpenMarketsTotalsCalculationEngine,
             IProposalPostingBooksEngine proposalPostingBooksEngine, IImpressionAdjustmentEngine impressionAdjustmentEngine,
-            IProposalTotalsCalculationEngine proposalTotalsCalculationEngine)
+            IProposalTotalsCalculationEngine proposalTotalsCalculationEngine,
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
             : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine, impressionAdjustmentEngine, proposalTotalsCalculationEngine)
         {
             _ProposalProgramsCalculationEngine = proposalProgramsCalculationEngine;
             _ProposalOpenMarketsTotalsCalculationEngine = proposalOpenMarketsTotalsCalculationEngine;
             _ProposalPostingBooksEngine = proposalPostingBooksEngine;
+            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
 
         public ProposalDetailOpenMarketInventoryDto GetInventory(int proposalDetailId)
@@ -223,6 +227,7 @@ namespace Services.Broadcast.ApplicationServices
                                         .Select(pro => new ProposalInventoryMarketDto.InventoryMarketStationProgram
                                         {
                                             ProgramId = pro.ProgramId,
+                                            ManifestDaypartId = pro.ManifestDaypartId,
                                             ProgramName = pro.ProgramName,
                                             Daypart = pro.Daypart,
                                             TargetCpm = pro.TargetCpm,
@@ -277,7 +282,7 @@ namespace Services.Broadcast.ApplicationServices
                             {
                                 // it can either be a null program just for filling the grid or the actual program with values
                                 // if it is null, does not matter, FE will just fake the program
-                                var weekProgram = weekPrograms.SingleOrDefault(a => a != null && a.ProgramId == program.ProgramId);
+                                var weekProgram = weekPrograms.SingleOrDefault(a => a != null && a.ProgramId == program.ProgramId && a.ManifestDaypartId == program.ManifestDaypartId);
                                 weekStation.Programs.Add(weekProgram);
                             }
                         }
@@ -301,6 +306,8 @@ namespace Services.Broadcast.ApplicationServices
             var programs = BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>()
                 .GetStationProgramsForProposalDetail(dto.DetailFlightStartDate, dto.DetailFlightEndDate,
                     dto.DetailSpotLength, BroadcastConstants.OpenMarketSourceId, proposalMarketIds, dto.DetailId);
+
+            _SetFlightWeeks(dto, programs);
 
             //// represents the actual program names before any refine is applied
             dto.RefineFilterPrograms = programs.Where(l => l != null).Select(z => z.ProgramName)
@@ -382,6 +389,53 @@ namespace Services.Broadcast.ApplicationServices
             _ApplyDefaultSorting(dto);
         }
 
+        private void _SetFlightWeeks(ProposalDetailOpenMarketInventoryDto dto, IEnumerable<ProposalProgramDto> programs)
+        {
+            foreach (var program in programs)
+            {
+                var manifestRate = program.ManifestRates.FirstOrDefault(r => r.SpotLengthId == dto.DetailSpotLengthId);
+
+                decimal rate = 0;
+
+                if (manifestRate != null)
+                    rate = manifestRate.Rate;
+
+                program.FlightWeeks = _GetFlightWeeks(program, rate);
+            }
+        }
+
+        private List<ProposalProgramFlightWeek> _GetFlightWeeks(ProposalProgramDto programDto, decimal rate)
+        {
+            var nonNullableEndDate = programDto.EndDate.HasValue ? programDto.EndDate.Value : programDto.StartDate.AddYears(1);
+
+            var displayFlighWeeks = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(programDto.StartDate, nonNullableEndDate);
+
+            var flighWeeks = new List<ProposalProgramFlightWeek>();
+
+            foreach (var displayMediaWeek in displayFlighWeeks)
+            {
+                var totalSpotsAllocated = programDto.Allocations.Count(x => x.MediaWeekId == displayMediaWeek.Id);
+
+                flighWeeks.Add(new ProposalProgramFlightWeek
+                {
+                    StartDate = displayMediaWeek.WeekStartDate,
+                    EndDate = displayMediaWeek.WeekEndDate,
+                    MediaWeekId = displayMediaWeek.Id,
+                    Rate = rate,
+                    Allocations = new List<OpenMarketAllocationDto>
+                    {
+                        new OpenMarketAllocationDto
+                        {
+                            MediaWeekId = displayMediaWeek.Id,
+                            Spots = totalSpotsAllocated
+                        }
+                    }
+                });
+            }
+
+            return flighWeeks;
+        }
+
         internal static bool FilterByCpmCriteria(ProposalProgramDto program, List<CpmCriteria> cpmCriteria)
         {
             foreach (var criteria in cpmCriteria)
@@ -461,17 +515,19 @@ namespace Services.Broadcast.ApplicationServices
                             var programFlightweek =
                                 program.FlightWeeks.SingleOrDefault(
                                     f => f.MediaWeekId == week.MediaWeekId && f.IsHiatus == false);
+
                             if (programFlightweek == null)
                             {
                                 weekStation.Programs.Add(null);
                                 continue;
                             }
                             var weekProgram = new ProposalOpenMarketInventoryWeekDto.InventoryWeekProgram();
-                            var existingAllocation =
-                                existingAllocations.SingleOrDefault(
-                                    a => a.MediaWeekId == week.MediaWeekId && a.StationProgramId == program.ProgramId);
+                            var numberOfSpotsAllocated =
+                                existingAllocations.Count(
+                                    a => a.MediaWeekId == week.MediaWeekId && a.ManifestId == program.ProgramId);
                             weekProgram.ProgramId = program.ProgramId;
-                            weekProgram.Spots = existingAllocation == null ? 0 : existingAllocation.Spots;
+                            weekProgram.ManifestDaypartId = program.ManifestDaypartId;
+                            weekProgram.Spots = numberOfSpotsAllocated;
                             weekProgram.UnitImpression = program.UnitImpressions;
                             weekProgram.UnitCost = programFlightweek.Rate;
                             weekProgram.TargetImpressions = program.TargetImpressions;
@@ -597,6 +653,7 @@ namespace Services.Broadcast.ApplicationServices
                         Programs = s.Select(p => new ProposalInventoryMarketDto.InventoryMarketStationProgram
                         {
                             ProgramId = p.ManifestId,
+                            ManifestDaypartId = p.ManifestDaypartId,
                             ProgramName = p.ProgramName,
                             TargetCpm = p.TargetCpm,
                             UnitImpressions = p.UnitImpressions,
@@ -634,23 +691,21 @@ namespace Services.Broadcast.ApplicationServices
 
         public ProposalDetailOpenMarketInventoryDto SaveInventoryAllocations(OpenMarketAllocationSaveRequest request)
         {
+            var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             var openMarketInventoryRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>();
             var existingAllocations =
                 openMarketInventoryRepository.GetProposalDetailAllocations(request.ProposalVersionDetailId);
+            var guaranteedAudienceId = proposalRepository.GetProposalDetailGuaranteedAudienceId(request.ProposalVersionDetailId);
             var allocationToRemove = _GetAllocationsToRemove(request, existingAllocations);
-            var allocationsToUpdate = _GetAllocationsToUpdate(request, existingAllocations);
             var allocationToAdd = _GetAllocationsToCreate(request, existingAllocations);
-            var spotLength = GetProposalSpotLength(request.ProposalVersionDetailId);
 
-            _ValidateSpotsAllocation(allocationToAdd, allocationsToUpdate);
+            _ValidateSpotsAllocation(allocationToAdd);
 
             using (var transaction = new TransactionScopeWrapper())
             {
                 openMarketInventoryRepository.RemoveAllocations(allocationToRemove);
 
-                openMarketInventoryRepository.UpdateAllocations(allocationsToUpdate, request.Username, spotLength);
-
-                openMarketInventoryRepository.AddAllocations(allocationToAdd, request.Username, spotLength);
+                openMarketInventoryRepository.AddAllocations(allocationToAdd, guaranteedAudienceId);
 
                 var inventoryDto = _GetProposalDetailOpenMarketInventoryDto(request.ProposalVersionDetailId, null);
 
@@ -674,32 +729,16 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private void _ValidateSpotsAllocation(IEnumerable<OpenMarketInventoryAllocation> allocationToAdd,
-            IEnumerable<OpenMarketInventoryAllocation> allocationsToUpdate)
+        private void _ValidateSpotsAllocation(IEnumerable<OpenMarketInventoryAllocation> allocations)
         {
-            _ValidateAllocations(allocationToAdd);
-            _ValidateAllocations(allocationsToUpdate);
-        }
-
-        private static void _ValidateAllocations(IEnumerable<OpenMarketInventoryAllocation> allocations)
-        {
-            if (
-                allocations.Any(
-                    openMarketInventoryAllocation =>
-                        openMarketInventoryAllocation.Impressions == 0 &&
-                        openMarketInventoryAllocation.Spots > 0))
-            {
-                throw new Exception("Cannot allocate spots that have zero impressions");
-            }
-        }
-
-        private int GetProposalSpotLength(int proposalVersionDetailId)
-        {
-            var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
-            var spotLengthRepository =
-                BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
-            var spotLengthId = proposalRepository.GetProposalDetailSpotLengthId(proposalVersionDetailId);
-            return spotLengthRepository.GetSpotLengthById(spotLengthId);
+            //if (
+            //    allocations.Any(
+            //        openMarketInventoryAllocation =>
+            //            openMarketInventoryAllocation.TotalImpressions == 0 &&
+            //            openMarketInventoryAllocation.Spots > 0))
+            //{
+            //    throw new Exception("Cannot allocate spots that have zero impressions");
+            //}
         }
 
         private static ProposalDetailSingleInventoryTotalsDto _GetProposalDetailTotals(ProposalDetailInventoryBase inventoryDto)
@@ -726,87 +765,59 @@ namespace Services.Broadcast.ApplicationServices
 
         private static List<OpenMarketInventoryAllocation> _GetAllocationsToCreate(OpenMarketAllocationSaveRequest request, List<OpenMarketInventoryAllocation> existingAllocations)
         {
-            var requestedAllocations =
-                request.Weeks.SelectMany(
-                    w => w.Programs.Select(
-                        p => new OpenMarketInventoryAllocation
-                        {
-                            ProposalVersionDetailId = request.ProposalVersionDetailId,
-                            MediaWeekId = w.MediaWeekId,
-                            StationProgramId = p.ProgramId,
-                            Spots = p.Spots,
-                            Impressions = p.Impressions,
-                            SpotCost = p.SpotCost
-                        })).ToList();
-
-            var newAllocations =
-                requestedAllocations.Where(
-                    ra =>
-                        existingAllocations.All(
-                            ea => ea.MediaWeekId != ra.MediaWeekId || ea.StationProgramId != ra.StationProgramId)).ToList();
-
-            return newAllocations;
-        }
-
-        private static List<OpenMarketInventoryAllocation> _GetAllocationsToUpdate(OpenMarketAllocationSaveRequest request, List<OpenMarketInventoryAllocation> existingAllocations)
-        {
-            var requestedAllocations =
-                request.Weeks.SelectMany(
-                    w => w.Programs.Select(
-                        p => new OpenMarketInventoryAllocation
-                        {
-                            ProposalVersionDetailId = request.ProposalVersionDetailId,
-                            MediaWeekId = w.MediaWeekId,
-                            StationProgramId = p.ProgramId,
-                            Spots = p.Spots,
-                            Impressions = p.Impressions,
-                            SpotCost = p.SpotCost
-                        })).Where(p => p.Spots > 0).ToList();
-
-            var updateAllocations = new List<OpenMarketInventoryAllocation>();
-            foreach (var requestedAllocation in requestedAllocations)
-            {
-                var existingAllocation = existingAllocations.SingleOrDefault(ea => ea.MediaWeekId == requestedAllocation.MediaWeekId && ea.StationProgramId == requestedAllocation.StationProgramId);
-                if (existingAllocation != null)
-                {
-                    requestedAllocation.ProposalVersionDetailQuarterWeekId = existingAllocation.ProposalVersionDetailQuarterWeekId;
-                    requestedAllocation.StationProgramFlightId = existingAllocation.StationProgramFlightId;
-                    updateAllocations.Add(requestedAllocation);
-                }
-            }
-
-            return updateAllocations;
-        }
-
-        private static List<OpenMarketInventoryAllocation> _GetAllocationsToRemove(OpenMarketAllocationSaveRequest request, IEnumerable<OpenMarketInventoryAllocation> existingAllocations)
-        {
-            var programFlightsWithZeroSpots = new List<Tuple<int, int>>();
+            var allocationsToAdd = new List<OpenMarketInventoryAllocation>();
+            
             foreach (var week in request.Weeks)
             {
                 foreach (var program in week.Programs)
                 {
-                    if (program.Spots == 0) //nothing allocated
+                    var numberOfPreviousAllocations = existingAllocations.Count(x => x.ManifestId == program.ProgramId);
+
+                    if (program.Spots < numberOfPreviousAllocations) 
+                        continue;
+
+                    var numberOfSpotsDifference = program.Spots - numberOfPreviousAllocations;
+
+                    allocationsToAdd.Add(new OpenMarketInventoryAllocation
                     {
-                        var flight = new Tuple<int, int>(week.MediaWeekId, program.ProgramId);
-                        programFlightsWithZeroSpots.Add(flight);
-                    }
+                        ManifestId = program.ProgramId,
+                        MediaWeekId = week.MediaWeekId,
+                        ProposalVersionDetailId = request.ProposalVersionDetailId,
+                        Spots = numberOfSpotsDifference,
+                        TotalImpressions = program.TotalImpressions,
+                        UnitImpressions = program.UnitImpressions,
+                        SpotCost = program.UnitCost,
+                        Rate = ProposalMath.CalculateManifestSpotAudienceRate(program.UnitImpressions, program.UnitCost)
+                    });
                 }
             }
 
-            var allocations = (from a in existingAllocations
-                               join f in programFlightsWithZeroSpots
-                               on new
-                               {
-                                   a.MediaWeekId,
-                                   a.StationProgramId
-                               } equals new
-                               {
-                                   MediaWeekId = f.Item1,
-                                   StationProgramId = f.Item2
-                               }
-                               select a).ToList();
+            return allocationsToAdd;
+        }        
 
-            return allocations;
+        private static List<OpenMarketInventoryAllocation> _GetAllocationsToRemove(OpenMarketAllocationSaveRequest request, List<OpenMarketInventoryAllocation> existingAllocations)
+        {
+            var allocationsToRemove = new List<OpenMarketInventoryAllocation>();
+            
+            foreach (var week in request.Weeks)
+            {
+                foreach (var program in week.Programs)
+                {
+                    var numberOfPreviousAllocations = existingAllocations.Count(x => x.ManifestId == program.ProgramId);
+
+                    if (program.Spots >= numberOfPreviousAllocations) 
+                        continue;
+                    
+                    var numberOfSpotsDifference = numberOfPreviousAllocations - program.Spots;
+
+                    allocationsToRemove.AddRange(
+                        existingAllocations.Where(
+                            x => x.MediaWeekId == week.MediaWeekId && x.ManifestId == program.ProgramId)
+                            .Take(numberOfSpotsDifference));
+                }
+            }
+
+            return allocationsToRemove;
         }
     }
 }

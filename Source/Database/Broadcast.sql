@@ -52,6 +52,68 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** BCOP-2155 ***************************************************************/
+
+IF OBJECT_ID('station_inventory_spots', 'U') IS NULL
+BEGIN
+	CREATE TABLE station_inventory_spots
+	(
+		id INT IDENTITY(1,1) NOT NULL,
+		proposal_version_detail_quarter_week_id INT NULL,
+		station_inventory_manifest_id INT NOT NULL,
+		media_week_id INT NOT NULL,
+		inventory_lost BIT NOT NULL,
+		overridden_impressions FLOAT NULL,
+		overridden_rate MONEY NULL,
+		delivery_cpm MONEY NULL,
+		CONSTRAINT [PK_station_inventory_spots] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	)
+
+	ALTER TABLE [dbo].[station_inventory_spots]  WITH CHECK ADD CONSTRAINT [FK_station_inventory_spots_proposal_version_detail_quarter_weeks] FOREIGN KEY(proposal_version_detail_quarter_week_id)
+	REFERENCES [dbo].[proposal_version_detail_quarter_weeks] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[station_inventory_spots] CHECK CONSTRAINT [FK_station_inventory_spots_proposal_version_detail_quarter_weeks]
+
+	ALTER TABLE [dbo].[station_inventory_spots]  WITH CHECK ADD CONSTRAINT [FK_station_inventory_spots_station_inventory_manifest] FOREIGN KEY(station_inventory_manifest_id)
+	REFERENCES [dbo].[station_inventory_manifest] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[station_inventory_spots] CHECK CONSTRAINT [FK_station_inventory_spots_station_inventory_manifest]
+END
+
+IF OBJECT_ID('station_inventory_spot_audiences', 'U') IS NULL
+BEGIN
+	CREATE TABLE station_inventory_spot_audiences
+	(
+		station_inventory_spot_id INT NOT NULL,
+		audience_id INT NOT NULL,
+		calculated_impressions FLOAT NULL,
+		calculated_rate MONEY NULL,
+		CONSTRAINT [PK_station_inventory_spot_audiences] PRIMARY KEY CLUSTERED
+		(
+		  station_inventory_spot_id ASC,
+		  audience_id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	)
+
+	ALTER TABLE [dbo].[station_inventory_spot_audiences]  WITH CHECK ADD CONSTRAINT [FK_station_inventory_spot_audiences_station_inventory_spots] FOREIGN KEY(station_inventory_spot_id)
+	REFERENCES [dbo].[station_inventory_spots] (id)
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[station_inventory_spot_audiences] CHECK CONSTRAINT [FK_station_inventory_spot_audiences_station_inventory_spots]
+
+	ALTER TABLE [dbo].[station_inventory_spot_audiences]  WITH CHECK ADD CONSTRAINT [FK_station_inventory_spot_audiences_audiences] FOREIGN KEY(audience_id)
+	REFERENCES [dbo].[audiences] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[station_inventory_spot_audiences] CHECK CONSTRAINT [FK_station_inventory_spot_audiences_audiences]
+END
+
+/*************************************** BCOP-2155 ***************************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

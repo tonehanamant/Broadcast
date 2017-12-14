@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Services.Broadcast.Repositories;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities
@@ -9,6 +10,7 @@ namespace Services.Broadcast.Entities
         public int ManifestId { get; set; }
         public string ProgramName { get; set; }        
         public int DayPartId { get; set; }
+        public int ManifestDaypartId { get; set; }
         public LookupDto DayPart { get; set; }
         public List<LookupDto> Genres { get; set; }
         public DisplayScheduleStation Station { get; set; }
@@ -35,5 +37,7 @@ namespace Services.Broadcast.Entities
         public double AdditionalAudienceSubscribers { get; set; }
         public bool IsOverlapping { get; set; }
         public double UnitImpressions { get; set; }
+        public List<StationInventoryManifestRate> ManifestRates { get; set; }
+        public List<StationInventorySpots> Allocations { get; set; }
     }
 }

@@ -642,7 +642,13 @@ var ProposalDetailOpenMarketView = BaseView.extend({
                 $.each(items, function (didx, data) {
                     //should be all isChanged
                     if (data.isChanged) {
-                        week.Programs.push({ ProgramId: data.ProgramId, Spots: data.Spots, Impressions: data.TotalImpressions });
+                        week.Programs.push({
+                            ProgramId: data.ProgramId,
+                            Spots: data.Spots,
+                            TotalImpressions: data.TotalImpressions,
+                            UnitCost: data.UnitCost,
+                            UnitImpressions: data.UnitImpression
+                        });
                     }
                 });
                 params.Weeks.push(week);
