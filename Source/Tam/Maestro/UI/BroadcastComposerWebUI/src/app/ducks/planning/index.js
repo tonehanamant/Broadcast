@@ -1,13 +1,58 @@
+import moment from 'moment';
+
 // Actions
 import * as ACTIONS from './actionTypes.js';
+
 
 const initialState = {
   initialdata: {},
   proposalLock: {},
-  proposal: {},
+  proposal: {
+    AdvertiserId: 37674,
+    BlackoutMarketGroup: null,
+    BlackoutMarketGroupId: null,
+    CanDelete: true,
+    Details: [],
+    Equivalized: true,
+    FlightEndDate: moment(null),
+    FlightStartDate: moment(null),
+    FlightWeeks: [],
+    ForceSave: false,
+    GuaranteedDemoId: 31,
+    Id: null,
+    Margin: null,
+    MarketGroup: { Id: 100, Display: 'Top 100', Count: 100 },
+    MarketGroupId: 100,
+    Markets: [],
+    Notes: null,
+    PostType: 1,
+    PrimaryVersionId: null,
+    ProposalName: null,
+    SecondaryDemos: [],
+    SpotLengths: [],
+    Status: null,
+    TargetBudget: 0,
+    TargetCPM: 0,
+    TargetImpressions: 0,
+    TargetUnits: 0,
+    TotalCPM: 0,
+    TotalCPMMarginAchieved: false,
+    TotalCPMPercent: 0,
+    TotalCost: 0,
+    TotalCostMarginAchieved: false,
+    TotalCostPercent: 0,
+    TotalImpressions: 0,
+    TotalImpressionsMarginAchieved: false,
+    TotalImpressionsPercent: 0,
+    ValidationWarning: null,
+    Version: null,
+    VersionId: null,
+  },
   proposalEditForm: {},
   versions: [],
 };
+
+initialState.proposalEditForm = { ...initialState.proposal };
 
 // Reducer
 export default function reducer(state = initialState, action) {
@@ -115,7 +160,28 @@ export default function reducer(state = initialState, action) {
     return {
       ...state,
       // proposal: data.Data,
-      proposalEditForm: data.Data,
+      // proposalEditForm: data.Data,
+      proposalEditForm: {
+        ...state.proposalEditForm,
+        TotalCPM: data.Data.TotalCPM,
+        TargetCPM: data.Data.TargetCPM,
+        TotalCPMPercent: data.Data.TotalCPMPercent,
+        TotalCPMMarginAchieved: data.Data.TotalCPMMarginAchieved,
+        TotalCost: data.Data.TotalCost,
+        TargetBudget: data.Data.TargetBudget,
+        TotalCostPercent: data.Data.TotalCostPercent,
+        TotalCostMarginAchieved: data.Data.TotalCostMarginAchieved,
+        TotalImpressions: data.Data.TotalImpressions,
+        TargetImpressions: data.Data.TargetImpressions,
+        TotalImpressionsPercent: data.Data.TotalImpressionsPercent,
+        TotalImpressionsMarginAchieved: data.Data.TotalImpressionsMarginAchieved,
+        TargetUnits: data.Data.TargetUnits,
+        SpotLengths: data.Data.SpotLengths,
+        FlightStartDate: data.Data.FlightStartDate,
+        FlightEndDate: data.Data.FlightEndDate,
+        FlightWeeks: data.Data.FlightWeeks,
+        Details: data.Data.Details,
+      },
     };
 
     default:
@@ -174,9 +240,9 @@ export const deleteProposal = id => ({
   payload: id,
 });
 
-export const updateProposal = id => ({
+export const updateProposal = params => ({
   type: ACTIONS.UPDATE_PROPOSAL,
-  payload: id,
+  payload: params,
 });
 
 export const updateProposalEditForm = keyValue => ({

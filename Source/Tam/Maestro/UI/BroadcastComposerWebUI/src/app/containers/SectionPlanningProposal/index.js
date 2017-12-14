@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { toggleModal } from 'Ducks/app';
+import { toggleModal, createAlert } from 'Ducks/app';
 import { getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail } from 'Ducks/planning';
 
 import ProposalHeader from 'Components/planning/ProposalHeader';
@@ -21,7 +21,7 @@ const mapStateToProps = ({ planning: { proposalLock }, planning: { initialdata }
 });
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleModal, getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposal, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail }, dispatch)
+  bindActionCreators({ toggleModal, createAlert, getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposal, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail }, dispatch)
 );
 
 /* eslint-disable react/prefer-stateless-function */
@@ -42,7 +42,7 @@ export class SectionPlanningProposal extends Component {
   }
 
   render() {
-    const { toggleModal, proposalLock, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail } = this.props;
+    const { toggleModal, createAlert, proposalLock, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail } = this.props;
     console.log('PROPOSAL LOCK', proposalLock);
     return (
       <div id="planning-section-proposal" style={{ paddingBottom: 80 }}>
@@ -83,6 +83,7 @@ export class SectionPlanningProposal extends Component {
             />
             <ProposalActions
               toggleModal={toggleModal}
+              createAlert={createAlert}
               proposal={proposal}
               proposalEditForm={proposalEditForm}
               updateProposalEditForm={updateProposalEditForm}
@@ -130,6 +131,7 @@ SectionPlanningProposal.propTypes = {
   modelNewProposalDetail: PropTypes.func.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
+  createAlert: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SectionPlanningProposal);

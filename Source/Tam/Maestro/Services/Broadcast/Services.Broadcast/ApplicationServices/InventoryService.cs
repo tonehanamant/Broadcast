@@ -48,7 +48,7 @@ namespace Services.Broadcast.ApplicationServices
         RatesInitialDataDto GetInitialRatesData();
         Decimal ConvertRateForSpotLength(decimal rateFor30s, int outputRateSpotLength);
         List<StationContact> FindStationContactsByName(string query);
-        bool SaveProgram(StationProgram stationProgram);
+        bool SaveProgram(StationProgram stationProgram, string userName);
         List<StationProgram> GetStationPrograms(
             string inventorySourceString,
             int stationCode,
@@ -461,7 +461,7 @@ namespace Services.Broadcast.ApplicationServices
             public DateTime EndDate { get; set; }
         }
 
-        public bool SaveProgram(StationProgram stationProgram)
+        public bool SaveProgram(StationProgram stationProgram,string userName)
         {
             using (var transaction = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
@@ -470,11 +470,11 @@ namespace Services.Broadcast.ApplicationServices
                 if (stationProgram.Id == 0)
                 {
                     _UpdateConflicts(stationProgram.Conflicts);
-                    _AddNewPrograms(stationProgram, manifest);
+                    _AddNewPrograms(stationProgram, manifest, userName);
                 }
                 else
                 {
-                    _UpdatePrograms(stationProgram, manifest);
+                    _UpdatePrograms(stationProgram, manifest,userName);
                 }
 
                 transaction.Complete();
@@ -523,7 +523,7 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("The program must have at least one valid flight week");
         }
 
-        private void _UpdatePrograms(StationProgram stationProgram, StationInventoryManifest manifest)
+        private void _UpdatePrograms(StationProgram stationProgram, StationInventoryManifest manifest,string userName)
         {
             var previousManifest = _inventoryRepository.GetStationManifest(stationProgram.Id);
 
@@ -544,9 +544,11 @@ namespace Services.Broadcast.ApplicationServices
             {
                 _inventoryRepository.UpdateStationInventoryManifest(manifest);
             }
+            var timeStamp = DateTime.Now;
+            _stationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp);
         }
 
-        private void _AddNewPrograms(StationProgram stationProgram, StationInventoryManifest manifest)
+        private void _AddNewPrograms(StationProgram stationProgram, StationInventoryManifest manifest,string userName)
         {
             _ValidateFlightWeeks(stationProgram.FlightWeeks);
 
@@ -559,8 +561,10 @@ namespace Services.Broadcast.ApplicationServices
 
                 _inventoryRepository.SaveStationInventoryManifest(manifest);
             }
+            var timeStamp = DateTime.Now;
+            _stationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp);
         }
-        
+
         private StationInventoryManifest _MapToStationInventoryManifest(StationProgram stationProgram)
         {
             const string householdAudienceCode = "HH";

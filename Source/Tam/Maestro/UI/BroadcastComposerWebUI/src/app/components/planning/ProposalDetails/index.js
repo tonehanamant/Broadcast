@@ -11,9 +11,8 @@ export default class ProposalDetails extends Component {
 	}
 
   onUpdateProposal() {
-    const { updateProposal, proposalEditForm } = this.props;
-    console.log('UPDATE PROPOSAL >>> ', proposalEditForm);
-    updateProposal([...proposalEditForm.Details]);
+    const { updateProposal } = this.props;
+    updateProposal();
   }
 
   render() {

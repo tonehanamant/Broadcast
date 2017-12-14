@@ -2776,7 +2776,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StationCode = stationCode,
                     RateSource = "OpenMarket",
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
-                });
+                },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 
@@ -2819,7 +2819,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StationCode = stationCode,
                     RateSource = "OpenMarket",
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
-                });
+                },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 
@@ -2876,7 +2876,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     },
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
-                });
+                },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 
@@ -2945,7 +2945,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     },
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
-                });
+                },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 

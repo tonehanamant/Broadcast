@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { delay } from 'redux-saga';
-import { call, takeEvery, put } from 'redux-saga/effects';
+import { call, takeEvery, put, select } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import moment from 'moment';
 
@@ -959,6 +959,7 @@ export function* modelNewProposalDetail({ payload: params }) {
 export function* updateProposal({ payload: params }) {
   /* eslint-disable no-shadow */
   const { updateProposal } = api.planning;
+  const details = yield select(state => state.planning.proposalEditForm.Details);
   try {
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
@@ -967,7 +968,7 @@ export function* updateProposal({ payload: params }) {
         processing: true,
       },
     });
-    const response = yield updateProposal(params);
+    const response = yield updateProposal(details);
     const { status, data } = response;
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
@@ -1001,14 +1002,41 @@ export function* updateProposal({ payload: params }) {
     yield put({
       type: ACTIONS.RECEIVE_UPDATED_PROPOSAL,
       data,
-    }); // Is this an updated proposal object? // window.location to new version?
-    // yield put({
-    //   type: ACTIONS.CREATE_ALERT,
-    //   alert: {
-    //     type: 'success',
-    //     headline: 'Proposal Updated',
-    //   },
-    // });
+    });
+    const { Details } = data.Data;
+    let warnings = [];
+        warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
+    if (Details) {
+      Details.forEach((detail) => {
+        if (detail.DefaultPostingBooks &&
+            detail.DefaultPostingBooks.DefautlHutBook &&
+            detail.DefaultPostingBooksDefautlHutBook.HasWarning) {
+            warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+        }
+        if (detail.DefaultPostingBooks &&
+            detail.DefaultPostingBooks.DefaultShareBook &&
+            detail.DefaultPostingBooks.DefaultShareBook.HasWarning) {
+            warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+        }
+      });
+    }
+    yield put({
+      type: ACTIONS.TOGGLE_MODAL,
+      modal: {
+        modal: 'confirmModal',
+        active: true,
+        properties: {
+          titleText: 'Warning',
+          bodyText: null,
+          bodyList: warnings,
+          closeButtonText: 'Cancel',
+          closeButtonBsStyle: 'default',
+          actionButtonText: 'Continue',
+          actionButtonBsStyle: 'warning',
+          action: () => {},
+        },
+      },
+    });
   } catch (e) {
     if (e.response) {
       yield put({
