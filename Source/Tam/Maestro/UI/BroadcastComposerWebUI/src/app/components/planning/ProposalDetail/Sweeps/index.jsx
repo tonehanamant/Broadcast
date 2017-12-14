@@ -133,6 +133,7 @@ class Sweeps extends Component {
                     onChange={shareBook => this.setState({ currentShareBook: shareBook })}
                     options={shareBookOptions}
                     labelKey="Display"
+                    valueKey="Id"
                     clearable={false}
                   />
                 </Col>
@@ -148,6 +149,7 @@ class Sweeps extends Component {
                     onChange={hutBook => this.setState({ currentHutBook: hutBook })}
                     options={hutBookOptions}
                     labelKey="Display"
+                    valueKey="Id"
                     clearable={false}
                   />
                 </Col>
@@ -163,6 +165,7 @@ class Sweeps extends Component {
                     onChange={playbackType => this.setState({ currentPlaybackType: playbackType })}
                     options={playbackTypeOptions}
                     labelKey="Display"
+                    valueKey="Id"
                     clearable={false}
                   />
                 </Col>
@@ -171,7 +174,7 @@ class Sweeps extends Component {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.onCancel} bsStyle="danger">Cancel</Button>
+            <Button onClick={this.onCancel} bsStyle="default">Cancel</Button>
             {!isReadOnly && <Button onClick={() => this.setState({ showConfirmation: true })} bsStyle="success">Save</Button>}
           </Modal.Footer>
         </Modal>
@@ -186,7 +189,7 @@ class Sweeps extends Component {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={() => this.setState({ showConfirmation: false })} bsStyle="danger">Cancel</Button>
+            <Button onClick={() => this.setState({ showConfirmation: false })} bsStyle="default">Cancel</Button>
             <Button onClick={this.onSave} bsStyle="success">Save</Button>
           </Modal.Footer>
         </Modal>

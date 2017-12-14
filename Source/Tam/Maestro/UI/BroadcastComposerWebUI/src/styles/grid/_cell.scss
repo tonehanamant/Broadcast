@@ -1,0 +1,9 @@
+.editable-cell {
+	max-height: 25px;
+	width: 100%;
+	background: rgba(255,255,255,0);
+
+	&:focus {
+		background: rgba(255,255,255,1);
+	}
+}
