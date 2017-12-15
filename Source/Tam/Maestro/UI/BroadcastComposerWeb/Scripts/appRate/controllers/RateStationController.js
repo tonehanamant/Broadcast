@@ -113,6 +113,7 @@ var RateStationController = BaseController.extend({
     },
 
     apiUpdateRatesProgram: function (data) {
+        data.StationCode = this.activeStation.Code;
         var jsonObj = JSON.stringify(data);
         var url = baseUrl + 'api/RatesManager/Programs'
 

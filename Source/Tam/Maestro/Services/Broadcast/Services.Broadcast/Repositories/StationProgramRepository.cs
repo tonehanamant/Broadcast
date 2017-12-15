@@ -54,12 +54,13 @@ namespace Services.Broadcast.Repositories
                             programs = programs.Where(b => proposalMarketIds.Contains(b.station.market_code)).ToList();
 
                         return (from manifest in programs
-                            from manifestDaypart in manifest.station_inventory_manifest_dayparts
-                            select new ProposalProgramDto()
+                            from daypart in manifest.station_inventory_manifest_dayparts
+                            select new ProposalProgramDto
                             {
                                 ManifestId = manifest.id,
-                                DayPartId = manifestDaypart.daypart_id,
-                                ProgramName = manifestDaypart.program_name,
+                                DayPartId = daypart.daypart_id,
+                                ManifestDaypartId = daypart.id,
+                                ProgramName = daypart.program_name,
                                 StartDate = manifest.effective_date,
                                 EndDate = manifest.end_date,
                                 TotalSpots = manifest.spots_per_week ?? 0,
@@ -75,9 +76,22 @@ namespace Services.Broadcast.Repositories
                                     Id = manifest.station.market_code,
                                     Display = manifest.station.market.geography_name
                                 },
+                                ManifestRates =
+                                    manifest.station_inventory_manifest_rates.Select(
+                                        r => new StationInventoryManifestRate
+                                        {
+                                            Id = r.id,
+                                            SpotLengthId = r.spot_length_id,
+                                            Rate = r.rate
+                                        }).ToList(),
+                                Allocations = manifest.station_inventory_spots.Select(r => new StationInventorySpots
+                                    {
+                                        ManifestId = r.station_inventory_manifest_id,
+                                        ProposalVersionDetailQuarterWeekId = r.proposal_version_detail_quarter_week_id,
+                                        MediaWeekId = r.media_week_id
+                                    }).ToList()
                                 // todo : still undefined
                                 //Genres = 
-                                FlightWeeks = new List<ProposalProgramFlightWeek>()
                             }).ToList();
 
                         /*
@@ -147,5 +161,13 @@ namespace Services.Broadcast.Repositories
             }
         }
 
+        
+    }
+
+    public class StationInventorySpots
+    {
+        public int ManifestId { get; set; }
+        public int MediaWeekId { get; set; }
+        public int? ProposalVersionDetailQuarterWeekId { get; set; }
     }
 }

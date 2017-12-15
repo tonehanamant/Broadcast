@@ -39,6 +39,7 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
                 FlightWeeks = new List<ProposalProgramFlightWeek>();
             } 
             public int ProgramId { get; set; }
+            public int ManifestDaypartId { get; set; }
             public string ProgramName { get; set; }
             public LookupDto Daypart { get; set; }
             public decimal TargetCpm { get; set; }

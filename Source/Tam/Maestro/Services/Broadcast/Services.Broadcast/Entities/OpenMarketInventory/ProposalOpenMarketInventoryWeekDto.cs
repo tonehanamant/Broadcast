@@ -34,6 +34,7 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
         public class InventoryWeekProgram
         {
             public int ProgramId { get; set; }
+            public int ManifestDaypartId { get; set; }
             public decimal UnitCost { get; set; }
             public double UnitImpression { get; set; }
             public decimal Cost { get; set; }

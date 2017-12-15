@@ -409,6 +409,12 @@
     <Compile Include="station_inventory_manifest_rates.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="station_inventory_spots.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="station_inventory_spot_audiences.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="system_component_parameters.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
