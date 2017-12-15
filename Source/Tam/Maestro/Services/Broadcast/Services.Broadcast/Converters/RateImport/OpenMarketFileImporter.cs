@@ -169,7 +169,7 @@ namespace Services.Broadcast.Converters.RateImport
                             //create a manifest for each period
                             foreach (var availLinePeriod in availLine.Periods)
                             {
-                                var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, availLinePeriod, programName, callLetters, fileProblems);
+                                var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, availLinePeriod.Rate, programName, callLetters, fileProblems);
 
                                 var manifestAudiences = _GetManifestAudienceListForAvailLine(
                                     proposal,
@@ -260,12 +260,12 @@ namespace Services.Broadcast.Converters.RateImport
         }
 
             private List<StationInventoryManifestRate> _GetManifestRatesforAvailLineWithDetailedPeriods(int spotLengthId,
-                AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriod detailedPeriod, string programName, string stationCallLetters, List<InventoryFileProblem> fileProblems)
+                string linePeriodRate, string programName, string stationCallLetters, List<InventoryFileProblem> fileProblems)
             {
                 var manifestRates = new List<StationInventoryManifestRate>();
                 var spotLength = SpotLengthsById[spotLengthId];
 
-                var availLineRate = string.IsNullOrEmpty(detailedPeriod.Rate) ? 0 : decimal.Parse(detailedPeriod.Rate);
+                var availLineRate = string.IsNullOrEmpty(linePeriodRate) ? 0 : decimal.Parse(linePeriodRate);
 
                 if (spotLength == 30)
                 {
@@ -333,6 +333,8 @@ namespace Services.Broadcast.Converters.RateImport
                             //create a manifest for each period
                             foreach (var availLinePeriod in availLine.Periods)
                             {
+                                var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, availLine.Rate, programName, callLetters, fileProblems);
+
                                 var periodManifest = new StationInventoryManifest()
                                 {
                                     Station = station,
@@ -341,6 +343,7 @@ namespace Services.Broadcast.Converters.RateImport
                                     SpotLengthId = spotLengthId,
                                     ManifestDayparts = _GetDaypartsListForAvailLineWithPeriods(availLine),
                                     ManifestAudiencesReferences = manifestAudiences,
+                                    ManifestRates = manifestRates,
                                     EffectiveDate = availLinePeriod.startDate,
                                     EndDate = availLinePeriod.endDate
                                 };
