@@ -42,9 +42,11 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.6",
     "react-select": "^1.0.0-rc.10",
+    "react-text-mask": "^5.0.2",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^0.15.4"
+    "redux-saga": "^0.15.4",
+    "text-mask-addons": "^3.7.1"
   },
   "devDependencies": {
     "@types/react": "^16.0.5",

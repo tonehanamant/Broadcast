@@ -38,22 +38,29 @@ class Sweeps extends Component {
       const hutBookId = detail.HutPostingBookId || detail.DefaultPostingBooks.DefaultHutBook.PostingBookId;
       const playbackTypeId = detail.PlaybackType || detail.DefaultPostingBooks.DefaultPlaybackType;
 
-      const shareBook = initialdata.ForecastDefaults.CrunchedMonths.filter(o => o.Id === shareBookId).shift();
-      const hutBook = initialdata.ForecastDefaults.CrunchedMonths.filter(o => o.Id === hutBookId).shift();
-      const playbackType = initialdata.ForecastDefaults.PlaybackTypes.filter(o => o.Id === playbackTypeId).shift();
+      // select options
+      const shareBookOptions = initialdata.ForecastDefaults.CrunchedMonths;
+      const hutBookOptions = shareBookOptions;
+      hutBookOptions.push({ Id: -1, Display: 'Use Share Only' });
+      const playbackTypeOptions = initialdata.ForecastDefaults.PlaybackTypes;
+
+      // selected option
+      const shareBook = shareBookOptions.filter(o => o.Id === shareBookId).shift();
+      const hutBook = hutBookOptions.filter(o => o.Id === hutBookId).shift();
+      const playbackType = playbackTypeOptions.filter(o => o.Id === playbackTypeId).shift();
 
       this.setState({
         shareBook,
         currentShareBook: shareBook,
-        shareBookOptions: initialdata.ForecastDefaults.CrunchedMonths,
+        shareBookOptions,
 
         hutBook,
         currentHutBook: hutBook,
-        hutBookOptions: initialdata.ForecastDefaults.CrunchedMonths,
+        hutBookOptions,
 
         playbackType,
         currentPlaybackType: playbackType,
-        playbackTypeOptions: initialdata.ForecastDefaults.PlaybackTypes,
+        playbackTypeOptions,
       });
 
       // default values
@@ -126,6 +133,7 @@ class Sweeps extends Component {
                     onChange={shareBook => this.setState({ currentShareBook: shareBook })}
                     options={shareBookOptions}
                     labelKey="Display"
+                    valueKey="Id"
                     clearable={false}
                   />
                 </Col>
@@ -141,6 +149,7 @@ class Sweeps extends Component {
                     onChange={hutBook => this.setState({ currentHutBook: hutBook })}
                     options={hutBookOptions}
                     labelKey="Display"
+                    valueKey="Id"
                     clearable={false}
                   />
                 </Col>
@@ -156,6 +165,7 @@ class Sweeps extends Component {
                     onChange={playbackType => this.setState({ currentPlaybackType: playbackType })}
                     options={playbackTypeOptions}
                     labelKey="Display"
+                    valueKey="Id"
                     clearable={false}
                   />
                 </Col>
@@ -164,7 +174,7 @@ class Sweeps extends Component {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.onCancel} bsStyle="danger">Cancel</Button>
+            <Button onClick={this.onCancel} bsStyle="default">Cancel</Button>
             {!isReadOnly && <Button onClick={() => this.setState({ showConfirmation: true })} bsStyle="success">Save</Button>}
           </Modal.Footer>
         </Modal>
@@ -179,7 +189,7 @@ class Sweeps extends Component {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={() => this.setState({ showConfirmation: false })} bsStyle="danger">Cancel</Button>
+            <Button onClick={() => this.setState({ showConfirmation: false })} bsStyle="default">Cancel</Button>
             <Button onClick={this.onSave} bsStyle="success">Save</Button>
           </Modal.Footer>
         </Modal>
