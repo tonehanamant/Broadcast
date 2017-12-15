@@ -731,14 +731,14 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _ValidateSpotsAllocation(IEnumerable<OpenMarketInventoryAllocation> allocations)
         {
-            //if (
-            //    allocations.Any(
-            //        openMarketInventoryAllocation =>
-            //            openMarketInventoryAllocation.TotalImpressions == 0 &&
-            //            openMarketInventoryAllocation.Spots > 0))
-            //{
-            //    throw new Exception("Cannot allocate spots that have zero impressions");
-            //}
+            if (
+                allocations.Any(
+                    openMarketInventoryAllocation =>
+                        openMarketInventoryAllocation.TotalImpressions == 0 &&
+                        openMarketInventoryAllocation.Spots > 0))
+            {
+                throw new Exception("Cannot allocate spots that have zero impressions");
+            }
         }
 
         private static ProposalDetailSingleInventoryTotalsDto _GetProposalDetailTotals(ProposalDetailInventoryBase inventoryDto)
