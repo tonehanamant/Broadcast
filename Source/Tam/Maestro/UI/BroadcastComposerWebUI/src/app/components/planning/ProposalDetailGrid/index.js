@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
-import { Grid } from 'react-redux-grid';
+import { Grid, Actions } from 'react-redux-grid';
 // import NumberCommaWhole from 'Components/shared/TextFormatters/NumberCommaWhole';
 import numeral from 'numeral';
+
+import CellInput from './CellInput';
 
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
@@ -14,6 +16,24 @@ export default class ProposalDetailGrid extends Component {
     super(props, context);
     this.context = context;
     this.checkEditable = this.checkEditable.bind(this);
+    this.onUnitsChange = this.onUnitsChange.bind(this);
+  }
+
+  onUnitsChange(value, row, rowId, column, columns, columnIndex, store, stateKey, reactEvent) {
+    console.log('onUnitsChange', value, rowId, row, reactEvent.target.value, column, columns, columnIndex, stateKey, store, Actions, this.props);
+    let changedValue = reactEvent.target.value;
+    if (changedValue === '' || changedValue < 1) changedValue = value;
+    // const fixedVal = changedValue.toFixed();
+    store.dispatch(
+      Actions.EditorActions.updateCellValue({
+          value: changedValue,
+          name: column.dataIndex,
+          column,
+          columns,
+          stateKey,
+          rowId,
+      }),
+  );
   }
 
   checkEditable(values, isUnits) {
@@ -44,7 +64,7 @@ export default class ProposalDetailGrid extends Component {
     /* ////////////////////////////////// */
     // TODO will need to be unique to each grid
     const stateKey = `detailGrid_${this.props.detailId}`;
-    console.log('DETAIL GRID PROPS', stateKey, this.props);
+    // console.log('DETAIL GRID PROPS', stateKey, this.props);
     /* GRID RENDERERS */
     // const renderers = {
     //   uploadDate: ({ value, row }) => (
@@ -90,21 +110,38 @@ export default class ProposalDetailGrid extends Component {
           name: 'Units',
           dataIndex: 'EditUnits',
          // editable: true,
-          validator: ({ row }) => {
-            console.log('validator', row);
-            const value = row.value;
-            return value.length > 0;
-          },
+         // returns value, values
+         /*  validator: ({ value, values }) => {
+            const valid = value && value > 0;
+            console.log('validator Units', value, valid, values);
+            // base on type ?
+           return valid;
+          }, */
+          editor: (
+            /* eslint-disable  react/prop-types */
+            { column, columnIndex, row, stateKey, store, value, rowId },
+            /* eslint-enable  react/prop-types */
+        ) => (
+                <input
+                /* eslint-disable  react/jsx-no-bind */
+                    onChange={this.onUnitsChange.bind(this, value, row, rowId, column, columns, columnIndex, store, stateKey)}
+                    type="number"
+                    min="1"
+                    step="1"
+                    value={value}
+                />
+          ),
          /* change: ({ values }) => ({
             otherColDataIndex: 'newValue',
           }), */
-          editable: ({ row }) => {
-          // editable: (...args) => {
-            // console.log('edit units', args);
-            console.log('edit Unit editable row', row);
-            const values = row.values;
-            return this.checkEditable(values, true);
-          },
+          // returns object row with values, value, etc
+          // editable: ({ row }) => {
+          // // editable: (...args) => {
+          //   // console.log('edit units', args);
+          //   // console.log('edit Unit editable row', row);
+          //   const values = row.values;
+          //   return this.checkEditable(values, true);
+          // },
           width: '20%',
           renderer: ({ value, row }) => {
             // TODO - edit indicator styling, validation etc
@@ -121,19 +158,40 @@ export default class ProposalDetailGrid extends Component {
           name: 'Imp (000)',
           dataIndex: 'EditImpressions',
           width: '20%',
-          editable: ({ row }) => {
-            const values = row.values;
-            return this.checkEditable(values, false);
+          validator: ({ value, values }) => {
+            const valid = value && value > 0;
+            console.log('validator Impressions', value, valid, values);
+            // base on type ?
+           return valid;
           },
+          // editable: ({ row }) => {
+          //   const values = row.values;
+          //   return this.checkEditable(values, false);
+          // },
           renderer: ({ value, row }) => {
             // TODO - edit indicator styling, validation etc
             // now based on EditImpressions
             if (row.Type === 'total') return row.TotalImpressions ? numeral(row.TotalImpressions / 1000).format('0,0.[000]') : '-';
             if (row.Type === 'quarter') {
-              const imp = numeral(value).format('0,0.[000]');
-              return <div><span style={{ color: '#808080' }}>Imp. Goal (000)  </span><span>{imp}</span></div>;
+              // const imp = numeral(value).format('0,0.[000]');
+              // return <div><span style={{ color: '#808080' }}>Imp. Goal (000)  </span><span>{imp}</span></div>;
+              return (
+                <CellInput
+                  name="cost"
+                  placeholder="Imp Goal (000)"
+                  value={value}
+                  mask="ImpressionsGoalDecimalsLimit3"
+                />
+              );
             }
-            return numeral(value).format('0,0.[000]');
+            return (
+              <CellInput
+                name="cost"
+                placeholder="-"
+                value={value}
+                mask="NumberDecimalsLimit3"
+              />
+            );
           },
       },
       {
@@ -172,7 +230,7 @@ export default class ProposalDetailGrid extends Component {
         mode: 'single',
         enabled: true,
         allowDeselect: true,
-        editEvent: 'singleclick',
+        editEvent: 'none', // 'none' not go edit mode
         activeCls: 'active',
         selectionEvent: 'singleclick',
       },

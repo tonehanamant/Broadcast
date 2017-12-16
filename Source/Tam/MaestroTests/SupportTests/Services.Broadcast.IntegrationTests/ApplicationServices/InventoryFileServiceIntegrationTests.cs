@@ -936,6 +936,42 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketInventoryFileWithAvailLineWithPeriods()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    RatesStream = new FileStream(
+                        @".\Files\1Chicago WLS Syn 4Q16.xml",
+                        FileMode.Open,
+                        FileAccess.Read),
+                    UserName = "IntegrationTestUser",
+                    RatingBook = 416
+                };
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(StationProgram), "Id");
+                jsonResolver.Ignore(typeof(FlightWeekDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                int stationCode = 5060; // for station WLS
+                _InventoryFileService.SaveInventoryFile(request);
+
+                var results = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, jsonSettings));
+
+            }
+
+        }
+
+
         [Ignore]
         [Test]
         public void UpdateLastModifiedDateAfterAddingGenre()

@@ -48,6 +48,7 @@ namespace Services.Broadcast.Repositories
         void UpdateProposalDetailSweepsBooks(int proposalDetailId, int hutBook, int shareBook);
         void UpdateProposalDetailSweepsBook(int proposalDetailId, int book);
         List<ProposalDetailTotalsDto> GetAllProposalDetailsTotals(int proposalVersionId);
+        int GetProposalDetailGuaranteedAudienceId(int proposalDetailId);
         void SaveProposalTotals(int proposalVersionId, ProposalHeaderTotalsDto proposalTotals);
         void ResetAllTotals(int proposalId, int proposalVersion);
         void DeleteProposal(int proposalId);
@@ -1075,6 +1076,18 @@ namespace Services.Broadcast.Repositories
                             ProprietaryImpressionsTotal = p.proprietary_impressions_total,
                             ProprietaryCostTotal = p.proprietary_cost_total
                         }).ToList());
+        }
+
+        public int GetProposalDetailGuaranteedAudienceId(int proposalDetailId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var proposalVersion =
+                    context.proposal_version_details.Include(pvd => pvd.proposal_versions)
+                        .Single(x => x.id == proposalDetailId, "Unable to find proposal detail");
+
+                return proposalVersion.proposal_versions.guaranteed_audience_id;
+            });
         }
 
         public void SaveProposalTotals(int proposalVersionId, ProposalHeaderTotalsDto proposalTotals)

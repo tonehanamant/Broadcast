@@ -132,6 +132,12 @@
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_generation_station_inventory_manifest" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_rates_station_inventory_manifest" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_stations" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_spot_audiences" Width="1.5" PointX="20.125" PointY="17.625" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_spots" Width="1.5" PointX="14.875" PointY="26.125" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_audiences_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_spots_proposal_version_detail_quarter_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_spots_station_inventory_manifest" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_audiences_station_inventory_spots" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -376,7 +376,7 @@
                     sortable: true
                 },
                 {
-                    field: 'StartDate',
+                    field: 'EffectiveDate',
                     caption: 'Flight',
                     size: '15%',
                     sortable: true,
@@ -407,7 +407,7 @@
                 }
             ],
 
-            sortData: [{ field: 'ProgramName', direction: 'asc' }, { field: 'StartDate', direction: 'asc' }],
+            sortData: [{ field: 'ProgramName', direction: 'asc' }, { field: 'EffectiveDate', direction: 'asc' }],
 
             onDblClick: function (event) {
                 view.onRatesDoubleClick(event);
