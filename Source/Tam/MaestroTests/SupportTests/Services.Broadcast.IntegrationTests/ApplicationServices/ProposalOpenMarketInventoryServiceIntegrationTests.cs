@@ -1051,6 +1051,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                 new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
                                 {
                                     UnitImpressions = 1000,
+                                    TotalImpressions = 10000,
                                     ProgramId = programId,
                                     Spots = 10
                                 }
