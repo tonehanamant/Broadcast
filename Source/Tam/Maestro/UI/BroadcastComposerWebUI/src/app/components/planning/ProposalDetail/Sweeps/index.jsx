@@ -39,9 +39,8 @@ class Sweeps extends Component {
       const playbackTypeId = detail.PlaybackType || detail.DefaultPostingBooks.DefaultPlaybackType;
 
       // select options
-      const shareBookOptions = initialdata.ForecastDefaults.CrunchedMonths;
-      const hutBookOptions = shareBookOptions;
-      hutBookOptions.push({ Id: -1, Display: 'Use Share Only' });
+      const shareBookOptions = [...initialdata.ForecastDefaults.CrunchedMonths];
+      const hutBookOptions = [{ Id: -1, Display: 'Use Share Only' }, ...initialdata.ForecastDefaults.CrunchedMonths];
       const playbackTypeOptions = initialdata.ForecastDefaults.PlaybackTypes;
 
       // selected option
