@@ -14,15 +14,92 @@ class MarketGroupSelector extends Component {
   constructor(props) {
     super(props);
 
-    this.onCancel = this.onCancel.bind(this);
+    this.cancel = this.cancel.bind(this);
+    this.onMarketsSelectionChange = this.onMarketsSelectionChange.bind(this);
+    this.save = this.save.bind(this);
 
     this.state = {
       selectedMarkets: [],
+      currentSelectedMarkets: [],
+
       blackoutMarkets: [],
+      currentBlackoutMarkets: [],
     };
   }
 
-  onCancel() {
+  cancel() {
+    this.setState({
+      currentSelectedMarkets: this.state.selectedMarkets,
+      currentBlackoutMarkets: this.state.blackoutMarkets,
+    });
+
+    this.props.toggleModal({
+      modal: 'marketSelectorModal',
+      active: false,
+    });
+  }
+
+  onMarketsSelectionChange(markets, selectorName) {
+    if (selectorName === 'Markets') {
+      this.setState({ currentSelectedMarkets: markets });
+    } else {
+      this.setState({ currentBlackoutMarkets: markets });
+    }
+  }
+
+  save() {
+    const { updateProposalEditForm, updateMarketCount } = this.props;
+    let { currentSelectedMarkets, currentBlackoutMarkets } = this.state;
+
+    let marketGroup;
+    const simpleMarkets = [];
+    currentSelectedMarkets = currentSelectedMarkets.filter(m => m !== null);
+    currentSelectedMarkets.map((market) => {
+      if (market.Count) {
+        marketGroup = market.Id;
+      } else {
+        simpleMarkets.push({
+          ...market,
+          IsBlackout: false,
+        });
+      }
+
+      return market;
+    });
+
+    let blackoutMarketGroup;
+    currentBlackoutMarkets = currentBlackoutMarkets.filter(m => m !== null);
+    currentBlackoutMarkets.map((market) => {
+      if (market.Count) {
+        blackoutMarketGroup = market.Id;
+      } else {
+        simpleMarkets.push({
+          ...market,
+          IsBlackout: true,
+        });
+      }
+
+      return market;
+    });
+
+    // total markets selected for custom option
+    const customMarketCount = currentSelectedMarkets.concat(currentBlackoutMarkets).reduce((sum, market) => sum + (market.Count || 1), 0);
+
+    // updates values for BE
+    updateProposalEditForm({ key: 'Markets', value: simpleMarkets });
+    updateProposalEditForm({ key: 'MarketGroup', value: null });
+    updateProposalEditForm({ key: 'MarketGroupId', value: marketGroup || -1 });
+    updateProposalEditForm({ key: 'BlackoutMarketGroup', value: null });
+    updateProposalEditForm({ key: 'BlackoutMarketGroupId', value: blackoutMarketGroup || -1 });
+
+    updateMarketCount(customMarketCount);
+
+    this.setState({
+      selectedMarkets: currentSelectedMarkets,
+      blackoutMarkets: currentBlackoutMarkets,
+    });
+
+    // close modal
     this.props.toggleModal({
       modal: 'marketSelectorModal',
       active: false,
@@ -30,38 +107,41 @@ class MarketGroupSelector extends Component {
   }
 
   componentWillMount() {
-    const { initialdata, proposalEditForm } = this.props;
+    const { proposalEditForm } = this.props;
     const { MarketGroup, Markets, BlackoutMarketGroup } = proposalEditForm;
-    let selectedMarketGroup = MarketGroup;
-    let customMarketCount = 0;
 
-    // conditions to be custom: has any amount of 'single' markets OR has more than one marketGroup
+
     const isCustom = ((Markets && Markets.length > 0) || (MarketGroup && BlackoutMarketGroup));
     if (isCustom) {
-      customMarketCount = Markets.length;
-      customMarketCount += MarketGroup ? MarketGroup.Count : 0;
-      customMarketCount += BlackoutMarketGroup ? BlackoutMarketGroup.Count : 0;
-
-      selectedMarketGroup = initialdata.MarketGroups.find(marketGroup => marketGroup.Id === 255);
-      selectedMarketGroup.Count = customMarketCount;
-
-      // update selected lists (simple and blackout)
       const selectedMarkets = Markets.filter(market => !market.IsBlackout);
-      selectedMarkets.unshift(MarketGroup);
-      this.setState({ selectedMarkets });
+
+      if (MarketGroup) {
+        selectedMarkets.unshift(MarketGroup);
+      }
+
+      this.setState({
+        selectedMarkets,
+        currentSelectedMarkets: selectedMarkets,
+      });
 
       const blackoutMarkets = Markets.filter(market => market.IsBlackout);
-      blackoutMarkets.unshift(BlackoutMarketGroup);
-      this.setState({ blackoutMarkets });
-    }
 
-    this.setState({ customMarketCount });
-    this.setState({ selectedMarketGroup });
+      if (BlackoutMarketGroup) {
+        blackoutMarkets.unshift(BlackoutMarketGroup);
+      }
+
+      this.setState({
+        blackoutMarkets,
+        currentBlackoutMarkets: blackoutMarkets,
+      });
+    }
   }
 
   render() {
-    const { modal, marketGroups, markets, onApplyChange, onMarketsSelectionChange } = this.props;
-    const { selectedMarkets, blackoutMarkets } = this.state;
+    const { initialdata, modal } = this.props;
+    const { currentSelectedMarkets, currentBlackoutMarkets } = this.state;
+
+    const marketGroups = initialdata.MarketGroups.filter(market => (market.Id !== -1) && (market.Id !== 255));
 
     return (
       <Modal show={modal && modal.active} bsSize="large">
@@ -75,9 +155,9 @@ class MarketGroupSelector extends Component {
               <MarketSelector
                 name="Markets"
                 marketGroups={marketGroups}
-                markets={markets}
-                selectedMarkets={selectedMarkets}
-                onMarketsSelectionChange={onMarketsSelectionChange}
+                markets={initialdata.Markets}
+                selectedMarkets={currentSelectedMarkets}
+                onMarketsSelectionChange={this.onMarketsSelectionChange}
               />
             </Col>
 
@@ -85,17 +165,17 @@ class MarketGroupSelector extends Component {
               <MarketSelector
                 name="Blackout Markets"
                 marketGroups={marketGroups}
-                markets={markets}
-                selectedMarkets={blackoutMarkets}
-                onMarketsSelectionChange={onMarketsSelectionChange}
+                markets={initialdata.Markets}
+                selectedMarkets={currentBlackoutMarkets}
+                onMarketsSelectionChange={this.onMarketsSelectionChange}
               />
             </Col>
           </Row>
         </Modal.Body>
 
         <Modal.Footer>
-          <Button onClick={this.onCancel} bsStyle="danger">Cancel</Button>
-          <Button onClick={() => onApplyChange()} bsStyle="success">Save</Button>
+          <Button onClick={this.cancel} bsStyle="danger">Cancel</Button>
+          <Button onClick={this.save} bsStyle="success">Save</Button>
         </Modal.Footer>
       </Modal>
     );
@@ -107,19 +187,8 @@ MarketGroupSelector.propTypes = {
   toggleModal: PropTypes.func,
   initialdata: PropTypes.object,
   proposalEditForm: PropTypes.object,
-
-  onApplyChange: PropTypes.func.isRequired,
-  onMarketsSelectionChange: PropTypes.func.isRequired,
-  marketGroups: PropTypes.arrayOf(PropTypes.shape({
-    Id: PropTypes.number,
-    Display: PropTypes.string,
-    Count: PropTypes.number,
-  })),
-
-  markets: PropTypes.arrayOf(PropTypes.shape({
-    Id: PropTypes.number,
-    Display: PropTypes.string,
-  })),
+  updateProposalEditForm: PropTypes.func,
+  updateMarketCount: PropTypes.func,
 };
 
 MarketGroupSelector.defaultProps = {
@@ -127,9 +196,8 @@ MarketGroupSelector.defaultProps = {
   toggleModal: () => {},
   initialdata: null,
   proposalEditForm: null,
-
-  marketGroups: [],
-  markets: [],
+  updateProposalEditForm: null,
+  updateMarketCount: () => {},
 };
 
 const styledComponent = CSSModules(MarketGroupSelector, styles);

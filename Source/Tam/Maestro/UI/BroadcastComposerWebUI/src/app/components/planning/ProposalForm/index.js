@@ -25,10 +25,9 @@ export default class ProposalForm extends Component {
     this.clearValidationStates = this.clearValidationStates.bind(this);
 
     this.onMarketGroupChange = this.onMarketGroupChange.bind(this);
-    this.onChangeCustomMarketSelection = this.onChangeCustomMarketSelection.bind(this);
     this.marketSelectorOptionRenderer = this.marketSelectorOptionRenderer.bind(this);
     this.marketSelectorValueRenderer = this.marketSelectorValueRenderer.bind(this);
-    this.onMarketsSelectionChange = this.onMarketsSelectionChange.bind(this);
+    this.updateMarketCount = this.updateMarketCount.bind(this);
 
     this.state = {
       validationStates: {
@@ -41,8 +40,6 @@ export default class ProposalForm extends Component {
         proposalSecondaryDemo: null,
         proposalNotes: null,
       },
-      selectedMarketGroup: {},
-      customMarketCount: 0,
     };
 
     this.state.Invalid = null;
@@ -86,7 +83,7 @@ export default class ProposalForm extends Component {
   }
 
   onMarketGroupChange(selectedMarketGroup) {
-    const { initialdata } = this.props;
+    const { initialdata, updateProposalEditForm } = this.props;
 
     let option = selectedMarketGroup;
     if (selectedMarketGroup.Count) {
@@ -100,74 +97,12 @@ export default class ProposalForm extends Component {
         active: true,
       });
     } else {
-      this.props.updateProposalEditForm({ key: 'Markets', value: null });
-      this.props.updateProposalEditForm({ key: 'MarketGroupId', value: option.Id });
-      this.props.updateProposalEditForm({ key: 'BlackoutMarketGroupId', value: null });
+      updateProposalEditForm({ key: 'Markets', value: null });
+      updateProposalEditForm({ key: 'MarketGroupId', value: option.Id });
+      updateProposalEditForm({ key: 'BlackoutMarketGroupId', value: null });
     }
 
-    this.setState({
-      selectedMarketGroup: option,
-    });
-  }
-
-  onChangeCustomMarketSelection() {
-    const { initialdata } = this.props;
-    const { selectedMarkets, blackoutMarkets } = this.state;
-
-    let marketGroup;
-    const simpleMarkets = [];
-    selectedMarkets.map((market) => {
-      if (market.Count) {
-        marketGroup = market.Id;
-      } else {
-        simpleMarkets.push({
-          ...market,
-          IsBlackout: false,
-        });
-      }
-
-      return market;
-    });
-
-    let blackoutMarketGroup;
-    blackoutMarkets.map((market) => {
-      if (market.Count) {
-        blackoutMarketGroup = market.Id;
-      } else {
-        simpleMarkets.push({
-          ...market,
-          IsBlackout: true,
-        });
-      }
-
-      return market;
-    });
-
-    // updates values for BE
-    this.props.updateProposalEditForm({ key: 'Markets', value: simpleMarkets });
-    this.props.updateProposalEditForm({ key: 'MarketGroupId', value: marketGroup });
-    this.props.updateProposalEditForm({ key: 'BlackoutMarketGroupId', value: blackoutMarketGroup });
-
-    // total markets selected for custom option -- if selector was cleared, assign the first option from initialData (i.e. 'All')
-    const customMarketCount = selectedMarkets.concat(blackoutMarkets).reduce((sum, market) => sum + (market.Count || 1), 0);
-    this.setState({ customMarketCount });
-
-    if (customMarketCount === 0) {
-      this.setState({ selectedMarketGroup: initialdata.MarketGroups[0] });
-    } else {
-      const customOption = initialdata.MarketGroups.find(marketgGroup => marketgGroup.Id === 255);
-      this.setState({ selectedMarketGroup: customOption });
-    }
-
-    this.toggleMarketSelector();
-  }
-
-  onMarketsSelectionChange(markets, selectorName) {
-    if (selectorName === 'Markets') {
-      this.setState({ selectedMarkets: markets });
-    } else {
-      this.setState({ blackoutMarkets: markets });
-    }
+    this.setState({ selectedMarketGroup: option });
   }
 
   marketSelectorOptionRenderer(option) {
@@ -201,6 +136,19 @@ export default class ProposalForm extends Component {
         <span className="pull-left ">{this.state.selectedMarketGroup.Display}</span>
       </div>
     );
+  }
+
+  updateMarketCount(customMarketCount) {
+    // if selector was cleared, assign the first option from initialData (i.e. 'All')
+    let selectedMarketGroup = this.props.initialdata.MarketGroups.find(marketgGroup => marketgGroup.Id === 255);
+    if (customMarketCount === 0) {
+      selectedMarketGroup = this.props.initialdata.MarketGroups[0];
+    }
+
+    this.setState({
+      selectedMarketGroup,
+      customMarketCount,
+    });
   }
 
   onChangePostType(value) {
@@ -239,6 +187,29 @@ export default class ProposalForm extends Component {
     // this.setValidationState('proposalNotes', val ? null : 'error'); // Not required
   }
 
+  componentWillMount() {
+    const { initialdata, proposalEditForm } = this.props;
+    const { MarketGroup, Markets, BlackoutMarketGroup } = proposalEditForm;
+
+    let selectedMarketGroup = MarketGroup;
+    let customMarketCount = 0;
+
+    const isCustom = ((Markets && Markets.length > 0) || (MarketGroup && BlackoutMarketGroup));
+    if (isCustom) {
+      customMarketCount = Markets.length;
+      customMarketCount += MarketGroup ? MarketGroup.Count : 0;
+      customMarketCount += BlackoutMarketGroup ? BlackoutMarketGroup.Count : 0;
+
+      selectedMarketGroup = initialdata.MarketGroups.find(marketGroup => marketGroup.Id === 255);
+      selectedMarketGroup.Count = customMarketCount;
+    }
+
+    this.setState({
+      customMarketCount,
+      selectedMarketGroup,
+    });
+  }
+
   render() {
     const { initialdata, proposalEditForm } = this.props;
 
@@ -249,6 +220,9 @@ export default class ProposalForm extends Component {
     // add 'Edit Custom Market List' option
     const marketOptions = initialdata.MarketGroups.filter(marketGroup => marketGroup.Count > 0);
     marketOptions.push({ Id: -1, Display: 'Edit Custom Market List' });
+
+    // selected market group
+    const selectedMarketGroup = this.state.selectedMarketGroup || marketOptions[0];
 
     return (
       <div id="proposal-form">
@@ -293,13 +267,14 @@ export default class ProposalForm extends Component {
                       <ControlLabel><strong>Market</strong></ControlLabel>
                       <Select
                         name="marketGroup"
-                        value={this.state.selectedMarketGroup}
                         placeholder="Choose a market..."
+                        value={selectedMarketGroup}
+                        onChange={this.onMarketGroupChange}
                         options={marketOptions}
                         optionRenderer={this.marketSelectorOptionRenderer}
                         valueRenderer={this.marketSelectorValueRenderer}
-                        onChange={this.onMarketGroupChange}
                         clearable={false}
+                        valueKey="Id"
                       />
                     </FormGroup>
                   </Col>
@@ -465,11 +440,8 @@ export default class ProposalForm extends Component {
             toggleModal={this.props.toggleModal}
             initialdata={initialdata}
             proposalEditForm={proposalEditForm}
-
-            marketGroups={initialdata.MarketGroups.filter(market => (market.Id !== -1) && (market.Id !== 255))}
-            markets={initialdata.Markets}
-            onApplyChange={this.onChangeCustomMarketSelection}
-            onMarketsSelectionChange={this.onMarketsSelectionChange}
+            updateProposalEditForm={this.props.updateProposalEditForm}
+            updateMarketCount={this.updateMarketCount}
           />
 			</div>
     );
