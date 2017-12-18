@@ -122,7 +122,7 @@ END
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-SET parameter_value = '18.01.1' -- Current release version
+SET parameter_value = '18.02.1' -- Current release version
 WHERE parameter_key = 'SchemaVersion'
 GO
 
@@ -133,8 +133,8 @@ BEGIN
 	
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
-		WHERE [version] = '5.8.11' -- Previous release version
-		OR [version] = '18.01.1') -- Current release version
+		WHERE [version] = '5.8.12' -- Previous release version
+		OR [version] = '18.02.1') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
 		COMMIT TRANSACTION
