@@ -44,6 +44,8 @@ export class SectionPlanningProposal extends Component {
   render() {
     const { toggleModal, createAlert, proposalLock, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail } = this.props;
     console.log('PROPOSAL LOCK', proposalLock);
+    const isReadOnly = proposal.Status != null ? (proposal.Status === 3 || proposal.Status === 4) : false;
+    // console.log('proposal is read only', proposal, isReadOnly);
     return (
       <div id="planning-section-proposal" style={{ paddingBottom: 80 }}>
         {
@@ -71,6 +73,7 @@ export class SectionPlanningProposal extends Component {
               deleteProposal={deleteProposal}
               saveProposalAsVersion={saveProposalAsVersion}
               versions={versions}
+              isReadOnly={isReadOnly}
             />
             <ProposalDetails
               proposalEditForm={proposalEditForm}
@@ -80,6 +83,7 @@ export class SectionPlanningProposal extends Component {
               updateProposal={updateProposal}
               deleteProposalDetail={deleteProposalDetail}
               modelNewProposalDetail={modelNewProposalDetail}
+              isReadOnly={isReadOnly}
             />
             <ProposalActions
               toggleModal={toggleModal}

@@ -134,6 +134,7 @@ class Sweeps extends Component {
                     labelKey="Display"
                     valueKey="Id"
                     clearable={false}
+                    disabled={isReadOnly}
                   />
                 </Col>
               </FormGroup>
@@ -150,6 +151,7 @@ class Sweeps extends Component {
                     labelKey="Display"
                     valueKey="Id"
                     clearable={false}
+                    disabled={isReadOnly}
                   />
                 </Col>
               </FormGroup>
@@ -166,6 +168,7 @@ class Sweeps extends Component {
                     labelKey="Display"
                     valueKey="Id"
                     clearable={false}
+                    disabled={isReadOnly}
                   />
                 </Col>
               </FormGroup>

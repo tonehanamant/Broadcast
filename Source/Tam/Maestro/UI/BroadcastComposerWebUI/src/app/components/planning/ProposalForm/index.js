@@ -211,7 +211,7 @@ export default class ProposalForm extends Component {
   }
 
   render() {
-    const { initialdata, proposalEditForm } = this.props;
+    const { initialdata, proposalEditForm, isReadOnly } = this.props;
 
     // update custom count
     const customIndex = initialdata.MarketGroups.findIndex(marketGroup => marketGroup.Id === 255);
@@ -237,7 +237,8 @@ export default class ProposalForm extends Component {
 												<FormControl
 													type="text"
 													defaultValue={proposalEditForm.ProposalName || ''}
-													onChange={this.onChangeProposalName}
+                          onChange={this.onChangeProposalName}
+                          disabled={isReadOnly}
 												/>
 												{ proposalEditForm.Id &&
 														<InputGroup.Addon>
@@ -274,6 +275,7 @@ export default class ProposalForm extends Component {
                         optionRenderer={this.marketSelectorOptionRenderer}
                         valueRenderer={this.marketSelectorValueRenderer}
                         clearable={false}
+                        disabled={isReadOnly}
                         valueKey="Id"
                       />
                     </FormGroup>
@@ -289,7 +291,8 @@ export default class ProposalForm extends Component {
 												labelKey="Display"
 												valueKey="Id"
 												onChange={this.onChangePostType}
-												clearable={false}
+                        clearable={false}
+                        disabled={isReadOnly}
 											/>
 										</FormGroup>
 									</Col>
@@ -304,7 +307,8 @@ export default class ProposalForm extends Component {
 												labelKey="Display"
 												valueKey="Bool"
 												onChange={this.onChangeEquivalized}
-												clearable={false}
+                        clearable={false}
+                        disabled={isReadOnly}
 											/>
 										</FormGroup>
 									</Col>
@@ -361,7 +365,8 @@ export default class ProposalForm extends Component {
 												labelKey="Display"
 												valueKey="Id"
 												onChange={this.onChangeAdvertiserId}
-												clearable={false}
+                        clearable={false}
+                        disabled={isReadOnly}
 											/>
                       {this.state.validationStates.proposalAdvertiserId != null &&
 											<HelpBlock>
@@ -381,7 +386,8 @@ export default class ProposalForm extends Component {
 												labelKey="Display"
 												valueKey="Id"
 												onChange={this.onChangeGuaranteedDemoId}
-												clearable={false}
+                        clearable={false}
+                        disabled={isReadOnly}
 											/>
 										</FormGroup>
 									</Col>
@@ -397,7 +403,8 @@ export default class ProposalForm extends Component {
 												labelKey="Display"
 												valueKey="Id"
 												closeOnSelect
-												onChange={this.onChangeSecondaryDemos}
+                        onChange={this.onChangeSecondaryDemos}
+                        disabled={isReadOnly}
 											/>
 										</FormGroup>
 									</Col>
@@ -427,7 +434,8 @@ export default class ProposalForm extends Component {
 											<FormControl
 												componentClass="textarea"
 												defaultValue={proposalEditForm.Notes || ''}
-												onChange={this.onChangeNotes}
+                        onChange={this.onChangeNotes}
+                        disabled={isReadOnly}
 											/>
 										</FormGroup>
 									</Col>
@@ -457,5 +465,6 @@ ProposalForm.propTypes = {
   initialdata: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
   updateProposalEditForm: PropTypes.func.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func,
 };

@@ -41,6 +41,7 @@ export default class ProposalHeader extends Component {
                 deleteProposal={deleteProposal}
                 saveProposalAsVersion={saveProposalAsVersion}
                 toggleModal={toggleModal}
+                isReadOnly={this.props.isReadOnly}
               />
             </Col>
           </Row>
@@ -58,6 +59,7 @@ export default class ProposalHeader extends Component {
               proposalEditForm={proposalEditForm}
               updateProposalEditForm={updateProposalEditForm}
               toggleModal={toggleModal}
+              isReadOnly={this.props.isReadOnly}
 						/>
 					</Panel>
         </Collapse>
@@ -71,6 +73,7 @@ ProposalHeader.defaultProps = {
   getProposalVersions: () => {},
   deleteProposal: () => {},
   saveProposalAsVersion: () => {},
+  isReadOnly: false,
 };
 
 /* eslint-disable react/no-unused-prop-types */
@@ -86,4 +89,5 @@ ProposalHeader.propTypes = {
   saveProposalAsVersion: PropTypes.func,
 
   toggleModal: PropTypes.func.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
 };
