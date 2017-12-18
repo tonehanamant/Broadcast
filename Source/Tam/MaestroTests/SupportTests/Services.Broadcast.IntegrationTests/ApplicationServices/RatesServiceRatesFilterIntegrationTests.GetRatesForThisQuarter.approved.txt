@@ -1,18 +1,18 @@
 ﻿[
   {
     "Airtime": {
-      "endTime": 1,
-      "fri": false,
-      "mon": false,
+      "endTime": 43200,
+      "fri": true,
+      "mon": true,
       "sat": false,
-      "startTime": 0,
+      "startTime": 41400,
       "sun": false,
-      "Text": " 12AM-12AM",
-      "thu": false,
-      "tue": false,
-      "wed": false
+      "Text": "M-F 11:30AM-12PM",
+      "thu": true,
+      "tue": true,
+      "wed": true
     },
-    "AirtimePreview": " 12AM-12AM",
+    "AirtimePreview": "M-F 11:30AM-12PM",
     "Conflicts": null,
     "EffectiveDate": "2016-06-27T00:00:00",
     "EndDate": "2016-09-25T00:00:00",
