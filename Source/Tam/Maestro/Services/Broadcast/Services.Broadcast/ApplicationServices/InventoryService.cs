@@ -155,8 +155,9 @@ namespace Services.Broadcast.ApplicationServices
             var inventorySource = _ParseInventorySource(inventorySourceString);
             var stationManifests = _inventoryRepository.GetStationManifestsBySourceStationCodeAndDates(inventorySource,
                 stationCode, startDate, endDate);
-            var programs = _GetStationProgramsFromStationInventoryManifest(stationManifests);
-
+            _SetDisplayDaypartForInventoryManifest(stationManifests);
+            _SetAudienceForInventoryManifest(stationManifests);
+            var programs = _GetStationProgramsFromStationInventoryManifest(stationManifests);            
             return programs;
         }
 
