@@ -1,9 +1,9 @@
 ﻿/************************************************************************
     Styles are organized following the SMACSS categorization (https://smacss.com/book/categorizing):
         * BASE: default rules for the entire application
-        * LAYOUT: styles for the page sections 
-        * MODULE: imported libraries customizations and styles for minor components that sit within major elements declared in the LAYOUT section. 
-        * THEME: defines colours and images that give the application its look and feel 
+        * LAYOUT: styles for the page sections
+        * MODULE: imported libraries customizations and styles for minor components that sit within major elements declared in the LAYOUT section.
+        * THEME: defines colours and images that give the application its look and feel
         * VIEWS: view-specific styles
 /************************************************************************/
 
@@ -70,7 +70,7 @@ input[type=number] {
 }
 
 /************************************************************************
-    LAYOUT: styles for the page sections 
+    LAYOUT: styles for the page sections
 /************************************************************************/
 
 .footer {
@@ -81,6 +81,7 @@ input[type=number] {
     /* Set the fixed height of the footer here */
     height: 40px;
     background-color: #f5f5f5;
+    z-index: 2;
 }
 
 #app_title_info {
@@ -107,7 +108,7 @@ input[type=number] {
 }
 
 /************************************************************************
-    MODULE: imported libraries customizations and styles for minor components that sit within major elements declared in the LAYOUT section. 
+    MODULE: imported libraries customizations and styles for minor components that sit within major elements declared in the LAYOUT section.
 /************************************************************************/
 
 /*** Bootstrap customizations ***/
@@ -508,7 +509,7 @@ div.edit-input-container {
     }
 
 /************************************************************************
-    THEME: defines colours and images that give the application its look and feel 
+    THEME: defines colours and images that give the application its look and feel
 /************************************************************************/
 
 /*** Cadent colors ***/
@@ -578,7 +579,7 @@ div.edit-input-container {
 }
 
 /************************************************************************
-    VIEWS: view-specific styles 
+    VIEWS: view-specific styles
 /************************************************************************/
 
 /*** BroadcastView.cshtml ***/

@@ -213,6 +213,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\AffadavitUploadApiController.cs" />
     <Compile Include="Controllers\BroadcastControllerBase.cs" />
     <Compile Include="Controllers\EnvironmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -577,7 +578,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62344/</IISUrl>
+          <IISUrl>http://localhost:61949/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

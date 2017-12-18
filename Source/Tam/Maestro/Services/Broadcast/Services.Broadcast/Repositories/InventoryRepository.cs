@@ -497,6 +497,7 @@ namespace Services.Broadcast.Repositories
                                                  }).ToList(),
                                          ManifestRates = sp.station_inventory_manifest_rates.Select(mr => new StationInventoryManifestRate()
                                          {
+                                             Id = mr.id,
                                              Rate = mr.rate,
                                              SpotLengthId = mr.spot_length_id,
                                          }).ToList(),
@@ -574,6 +575,7 @@ namespace Services.Broadcast.Repositories
                                 }).ToList(),
                         ManifestRates = sp.station_inventory_manifest_rates.Select(mr => new StationInventoryManifestRate()
                         {
+                            Id = mr.id,
                             Rate = mr.rate,
                             SpotLengthId = mr.spot_length_id,
                         }).ToList(),

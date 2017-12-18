@@ -376,13 +376,13 @@
                     sortable: true
                 },
                 {
-                    field: 'StartDate',
+                    field: 'EffectiveDate',
                     caption: 'Flight',
                     size: '15%',
                     sortable: true,
                     //remove tooltip; change from FLight to StartDate handle start and end only if present
                     render: function (record, index, column_index) {
-                        var start = moment(record.StartDate).format("MM/DD/YYYY");
+                        var start = moment(record.EffectiveDate).format("MM/DD/YYYY");
                         var end = record.EndDate ? (' - ' + moment(record.EndDate).format("MM/DD/YYYY")) : '';
                         //var hiatusWeeks = [];
                         //var html = '<span>' + record.Flight + '</span>';
@@ -407,7 +407,7 @@
                 }
             ],
 
-            sortData: [{ field: 'ProgramName', direction: 'asc' }, { field: 'StartDate', direction: 'asc' }],
+            sortData: [{ field: 'ProgramName', direction: 'asc' }, { field: 'EffectiveDate', direction: 'asc' }],
 
             onDblClick: function (event) {
                 view.onRatesDoubleClick(event);
@@ -454,22 +454,16 @@
                     }
                 },
                 {
-                    field: 'Airtime',
+                    field: 'AirtimePreview',
                     caption: 'Air Time',
                     sortable: true,
-                    size: '30%',
-                    render: function (record, index, column_index) {
-                        return record.Airtime;
-                    }
+                    size: '30%'
                 },
                 {
-                    field: 'Program',
+                    field: 'ProgramName',
                     caption: 'Program',
                     sortable: true,
-                    size: '30%',
-                    render: function (record, index, column_index) {
-                        return record.Program;
-                    }
+                    size: '30%'
                 },             
                 {
                     field: 'Flight',
@@ -477,12 +471,15 @@
                     size: '30%',
                     sortable: true,
                     render: function (record, index, column_index) {
-
+                        //adjust - no FLight in data
+                        var start = moment(record.EffectiveDate).format("MM/DD/YYYY");
+                        var end = record.EndDate ? (' - ' + moment(record.EndDate).format("MM/DD/YYYY")) : '';
+                        var flight = start + end;
                         var cellId = "flight-" + record.recid;
                         var cell = "<div recidEdit='" + record.recid + "' id='" + cellId + "'class='flex-container-1 editable-cell'>";
                         cell += "<input type='text' class='edit-input' style='display: none !important' />"
                         cell += '<i class="calendar-icon glyphicon glyphicon-calendar fa fa-calendar"></i>'
-                        cell += record.isEdited ? "<div class='text-warning'>" + record.Flight + '</div>' : "<div>" + record.Flight + '</div>';
+                        cell += record.isEdited ? "<div class='text-warning'>" + flight + '</div>' : "<div>" + flight + '</div>';
                         cell += "</div>";
                         return cell;
                     }

@@ -48,7 +48,7 @@ namespace Services.Broadcast.ApplicationServices
         RatesInitialDataDto GetInitialRatesData();
         Decimal ConvertRateForSpotLength(decimal rateFor30s, int outputRateSpotLength);
         List<StationContact> FindStationContactsByName(string query);
-        bool SaveProgram(StationProgram stationProgram);
+        bool SaveProgram(StationProgram stationProgram, string userName);
         List<StationProgram> GetStationPrograms(
             string inventorySourceString,
             int stationCode,
@@ -418,7 +418,6 @@ namespace Services.Broadcast.ApplicationServices
                 .ForEach(dd => { dd.Id = _daypartCache.GetIdByDaypart(dd); });
         }
 
-
         private void _SaveInventoryFileContacts(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
             var fileStationCodes = inventoryFile.InventoryManifests.Select(m => m.Station.Code).Distinct().ToList();
@@ -462,7 +461,7 @@ namespace Services.Broadcast.ApplicationServices
             public DateTime EndDate { get; set; }
         }
 
-        public bool SaveProgram(StationProgram stationProgram)
+        public bool SaveProgram(StationProgram stationProgram,string userName)
         {
             using (var transaction = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
@@ -471,11 +470,11 @@ namespace Services.Broadcast.ApplicationServices
                 if (stationProgram.Id == 0)
                 {
                     _UpdateConflicts(stationProgram.Conflicts);
-                    _AddNewPrograms(stationProgram, manifest);
+                    _AddNewPrograms(stationProgram, manifest, userName);
                 }
                 else
                 {
-                    _UpdatePrograms(stationProgram, manifest);
+                    _UpdatePrograms(stationProgram, manifest,userName);
                 }
 
                 transaction.Complete();
@@ -491,16 +490,40 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var program in conflicts)
             {
+                _ValidateFlightWeeks(program.Flights);
+
+                var flightWeekGroups = _GetFlightWeekGroups(program.Flights);
+
+                if (!flightWeekGroups.Any())
+                    continue;
+
+                var firstFlightGroup = flightWeekGroups.First();
                 var previousManifest = _inventoryRepository.GetStationManifest(program.Id);
 
-                previousManifest.EffectiveDate = program.FlightStartDate;
-                previousManifest.EndDate = program.FlightEndDate;
+                previousManifest.EffectiveDate = firstFlightGroup.StartDate;
+                previousManifest.EndDate = firstFlightGroup.EndDate;
 
                 _inventoryRepository.UpdateStationInventoryManifest(previousManifest);
+
+                foreach (var flightWeekGroup in flightWeekGroups.Skip(1))
+                {
+                    previousManifest.EffectiveDate = flightWeekGroup.StartDate;
+                    previousManifest.EndDate = flightWeekGroup.EndDate;
+
+                    _inventoryRepository.SaveStationInventoryManifest(previousManifest);
+                }
             }
         }
 
-        private void _UpdatePrograms(StationProgram stationProgram, StationInventoryManifest manifest)
+        private void _ValidateFlightWeeks(IEnumerable<FlightWeekDto> flights)
+        {
+            var hasOnlyHiatusFlights = flights.All(w => w.IsHiatus);
+
+            if (hasOnlyHiatusFlights)
+                throw new Exception("The program must have at least one valid flight week");
+        }
+
+        private void _UpdatePrograms(StationProgram stationProgram, StationInventoryManifest manifest,string userName)
         {
             var previousManifest = _inventoryRepository.GetStationManifest(stationProgram.Id);
 
@@ -521,33 +544,15 @@ namespace Services.Broadcast.ApplicationServices
             {
                 _inventoryRepository.UpdateStationInventoryManifest(manifest);
             }
+            var timeStamp = DateTime.Now;
+            _stationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp);
         }
 
-        private void _AddNewPrograms(StationProgram stationProgram, StationInventoryManifest manifest)
+        private void _AddNewPrograms(StationProgram stationProgram, StationInventoryManifest manifest,string userName)
         {
-            var flightWeekGroups = new List<FlightWeekGroup>();
-            FlightWeekGroup currentFlightWeekGroup = null;
+            _ValidateFlightWeeks(stationProgram.FlightWeeks);
 
-            foreach (var flightWeek in stationProgram.FlightWeeks)
-            {
-                if (flightWeek.IsHiatus)
-                {
-                    currentFlightWeekGroup = null;
-                    continue;
-                }
-
-                if (currentFlightWeekGroup == null)
-                {
-                    currentFlightWeekGroup = new FlightWeekGroup
-                    {
-                        StartDate = flightWeek.StartDate
-                    };
-
-                    flightWeekGroups.Add(currentFlightWeekGroup);
-                }
-
-                currentFlightWeekGroup.EndDate = flightWeek.EndDate;
-            }
+            var flightWeekGroups = _GetFlightWeekGroups(stationProgram.FlightWeeks);
 
             foreach (var flightWeekGroup in flightWeekGroups)
             {
@@ -556,6 +561,8 @@ namespace Services.Broadcast.ApplicationServices
 
                 _inventoryRepository.SaveStationInventoryManifest(manifest);
             }
+            var timeStamp = DateTime.Now;
+            _stationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp);
         }
 
         private StationInventoryManifest _MapToStationInventoryManifest(StationProgram stationProgram)
@@ -572,6 +579,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 Id = stationProgram.Id,
                 EffectiveDate = stationProgram.EffectiveDate,
+                EndDate = stationProgram.EndDate,
                 Station = new DisplayBroadcastStation
                 {
                     Code = stationProgram.StationCode
@@ -780,8 +788,29 @@ namespace Services.Broadcast.ApplicationServices
                     Rate30 = _GetSpotRateFromManifestRates(30, manifest.ManifestRates),
                     HouseHoldImpressions =
                         _GetHouseHoldImpressionFromManifestAudiences(manifest.ManifestAudiencesReferences),
-                    Rating = _GetHouseHoldRatingFromManifestAudiences(manifest.ManifestAudiencesReferences)
+                    Rating = _GetHouseHoldRatingFromManifestAudiences(manifest.ManifestAudiencesReferences),
+                    FlightWeeks = _GetFlightWeeks(manifest.EffectiveDate, manifest.EndDate)
                 }).ToList();
+        }
+
+        private List<FlightWeekDto> _GetFlightWeeks(DateTime effectiveDate, DateTime? endDate)
+        {
+            var nonNullableEndDate = endDate.HasValue ? endDate.Value : effectiveDate.AddYears(1);
+
+            var displayFlighWeeks = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(effectiveDate, nonNullableEndDate);
+
+            var flighWeeks = new List<FlightWeekDto>();
+
+            foreach (var displayMediaWeek in displayFlighWeeks)
+            {
+                flighWeeks.Add(new FlightWeekDto
+                {
+                    StartDate = displayMediaWeek.WeekStartDate,
+                    EndDate = displayMediaWeek.WeekEndDate
+                });
+            }
+
+            return flighWeeks;
         }
 
         private double? _GetHouseHoldRatingFromManifestAudiences(List<StationInventoryManifestAudience> list)
@@ -806,12 +835,13 @@ namespace Services.Broadcast.ApplicationServices
 
         private decimal _GetSpotRateFromManifestRates(int spotLength, List<StationInventoryManifestRate> list)
         {
-            if (list == null || !list.Any())
-                return 0;
-            var stationInventoryManifestRate = list.FirstOrDefault(c => c.SpotLengthId == _SpotLengthMap[spotLength]);
-            if (stationInventoryManifestRate != null)
-                return stationInventoryManifestRate.Rate;
-            return 0;
+            StationInventoryManifestRate manifestRate = null;
+            if (list != null && list.Any())
+            {
+                manifestRate = list.FirstOrDefault(c => c.SpotLengthId == _SpotLengthMap[spotLength]);
+            }
+
+            return manifestRate != null ? manifestRate.Rate : 0;
         }
 
         public List<LookupDto> GetAllGenres()
@@ -1053,6 +1083,38 @@ namespace Services.Broadcast.ApplicationServices
             return (startDate1 >= startDate2 && startDate1 <= endDate2)
                    || (endDate1 >= startDate2 && endDate1 <= endDate2)
                    || (startDate1 < startDate2 && endDate1 > endDate2);
+        }
+
+        private static IList<FlightWeekGroup> _GetFlightWeekGroups(IEnumerable<FlightWeekDto> flightWeeks)
+        {
+            var flightWeekGroups = new List<FlightWeekGroup>();
+            FlightWeekGroup currentFlightWeekGroup = null;
+
+            if (flightWeeks == null)
+                return flightWeekGroups;
+
+            foreach (var flightWeek in flightWeeks)
+            {
+                if (flightWeek.IsHiatus)
+                {
+                    currentFlightWeekGroup = null;
+                    continue;
+                }
+
+                if (currentFlightWeekGroup == null)
+                {
+                    currentFlightWeekGroup = new FlightWeekGroup
+                    {
+                        StartDate = flightWeek.StartDate
+                    };
+
+                    flightWeekGroups.Add(currentFlightWeekGroup);
+                }
+
+                currentFlightWeekGroup.EndDate = flightWeek.EndDate;
+            }
+
+            return flightWeekGroups;
         }
     }
 }

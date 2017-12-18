@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using Services.Broadcast.Repositories;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities
 {
     public class ProposalProgramDto
     {
-        //public int Id { get; set; }
-        public int ProgramId { get; set; }
+        public int ManifestId { get; set; }
         public string ProgramName { get; set; }        
         public int DayPartId { get; set; }
+        public int ManifestDaypartId { get; set; }
         public LookupDto DayPart { get; set; }
         public List<LookupDto> Genres { get; set; }
         public DisplayScheduleStation Station { get; set; }
@@ -29,12 +30,14 @@ namespace Services.Broadcast.Entities
         public double DemoRating { get; set; }
         public double HouseHoldRating { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public double AdditionalAudienceImpressions { get; set; }
         public double AdditionalDemoRating { get; set; }
         public decimal AdditonalAudienceCPM { get; set; }
         public double AdditionalAudienceSubscribers { get; set; }
         public bool IsOverlapping { get; set; }
         public double UnitImpressions { get; set; }
+        public List<StationInventoryManifestRate> ManifestRates { get; set; }
+        public List<StationInventorySpots> Allocations { get; set; }
     }
 }

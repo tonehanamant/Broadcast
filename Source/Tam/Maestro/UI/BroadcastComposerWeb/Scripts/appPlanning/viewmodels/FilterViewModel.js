@@ -110,7 +110,7 @@
 
     /*** MENU ***/
 
-    $scope.options = ko.observableArray(["Program Name", "Airing Time", "Genre", "Affiliation", "Market"]);
+    $scope.options = ko.observableArray(["Program Name", "Airing Time",  "Affiliation", "Market"]);
     $scope.selectedOption = ko.observable();
     $scope.selectedOption.subscribe(function (option) {
         if (option && option != 'none') {

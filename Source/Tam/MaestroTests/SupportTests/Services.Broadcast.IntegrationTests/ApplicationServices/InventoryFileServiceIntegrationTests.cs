@@ -936,6 +936,42 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketInventoryFileWithAvailLineWithPeriods()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    RatesStream = new FileStream(
+                        @".\Files\1Chicago WLS Syn 4Q16.xml",
+                        FileMode.Open,
+                        FileAccess.Read),
+                    UserName = "IntegrationTestUser",
+                    RatingBook = 416
+                };
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(StationProgram), "Id");
+                jsonResolver.Ignore(typeof(FlightWeekDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                int stationCode = 5060; // for station WLS
+                _InventoryFileService.SaveInventoryFile(request);
+
+                var results = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, jsonSettings));
+
+            }
+
+        }
+
+
         [Ignore]
         [Test]
         public void UpdateLastModifiedDateAfterAddingGenre()
@@ -2745,6 +2781,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+
         public void CanConvert30sRateTo15sRate()
         {
             var result = _InventoryFileService.ConvertRateForSpotLength(10, 15);
@@ -2775,7 +2812,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StationCode = stationCode,
                     RateSource = "OpenMarket",
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
-                });
+                },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 
@@ -2818,12 +2855,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StationCode = stationCode,
                     RateSource = "OpenMarket",
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
-                });
+                },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof (StationProgram), "Id");
+                jsonResolver.Ignore(typeof(StationProgram), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -2863,18 +2900,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         new StationProgram.StationProgramConflictChangeDto
                         {
-                            FlightEndDate = new DateTime(2018, 01, 25),
-                            FlightStartDate = new DateTime(2018, 01, 02),
-                            Id = 24538
+                            Id = 24538,
+                            Flights = new List<FlightWeekDto>
+                            {
+                                new FlightWeekDto
+                                {
+                                    StartDate = new DateTime(2017, 01, 25),
+                                    EndDate = new DateTime(2018, 01, 02)
+                                }
+                            }
                         }
                     },
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
-                });
+                },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof (StationProgram), "Id");
+                jsonResolver.Ignore(typeof(StationProgram), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -2925,13 +2968,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         new StationProgram.StationProgramConflictChangeDto
                         {
-                            FlightEndDate = new DateTime(2018, 01, 25),
-                            FlightStartDate = new DateTime(2018, 01, 02),
-                            Id = 24538
+                            Id = 24538,
+                            Flights = new List<FlightWeekDto>
+                            {
+                                new FlightWeekDto
+                                {
+                                    StartDate = new DateTime(2017, 01, 25),
+                                    EndDate = new DateTime(2018, 01, 02)
+                                }
+                            }
+                            
                         }
                     },
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
-                });
+                },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 
@@ -2948,7 +2998,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof (DiffReporter))]
+        [UseReporter(typeof(DiffReporter))]
         public void StationConflictsTest()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
