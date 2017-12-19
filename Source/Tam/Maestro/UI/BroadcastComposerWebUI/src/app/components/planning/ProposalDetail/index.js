@@ -72,6 +72,7 @@ export default class ProposalDetail extends Component {
         actionButtonText: 'Continue',
         actionButtonBsStyle: 'danger',
         action: () => this.props.deleteProposalDetail({ id: this.props.detail.Id }),
+        dismiss: () => {},
       },
     });
   }
@@ -89,6 +90,7 @@ export default class ProposalDetail extends Component {
           actionButtonText: 'Continue',
           actionButtonBsStyle: 'warning',
           action: () => this.FlightPickerApply(flight),
+          dismiss: () => {},
         },
       });
     } else {
@@ -136,7 +138,7 @@ export default class ProposalDetail extends Component {
 
   render() {
 		/* eslint-disable no-unused-vars */
-    const { detail, proposalEditForm, initialdata, updateProposalEditFormDetail, isReadOnly } = this.props;
+    const { detail, proposalEditForm, initialdata, updateProposalEditFormDetail, updateProposalEditFormDetailGrid, onUpdateProposal, isReadOnly, toggleModal } = this.props;
     return (
 			<Well bsSize="small">
         <Row>
@@ -217,6 +219,9 @@ export default class ProposalDetail extends Component {
               GridQuarterWeeks={detail.GridQuarterWeeks}
               isAdu={detail.Adu}
               isReadOnly={isReadOnly}
+              updateProposalEditFormDetailGrid={updateProposalEditFormDetailGrid}
+              onUpdateProposal={onUpdateProposal}
+              toggleModal={toggleModal}
             />
           </Col>
         </Row>
@@ -239,6 +244,7 @@ ProposalDetail.defaultProps = {
   detail: null,
   proposalEditForm: {},
   updateProposalEditFormDetail: () => {},
+  updateProposalEditFormDetailGrid: () => {},
   onUpdateProposal: () => {},
   deleteProposalDetail: () => {},
   modelNewProposalDetail: () => {},
@@ -250,6 +256,7 @@ ProposalDetail.propTypes = {
 	detail: PropTypes.object,
   proposalEditForm: PropTypes.object,
   updateProposalEditFormDetail: PropTypes.func,
+  updateProposalEditFormDetailGrid: PropTypes.func,
   onUpdateProposal: PropTypes.func,
   deleteProposalDetail: PropTypes.func,
   modelNewProposalDetail: PropTypes.func,

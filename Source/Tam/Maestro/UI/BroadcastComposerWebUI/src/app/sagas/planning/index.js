@@ -716,6 +716,7 @@ export function* saveProposalAsVersion({ payload: params }) {
           actionButtonText: 'Exit',
           actionButtonBsStyle: 'default',
           action: () => window.location.assign('/broadcast/planning'),
+          dismiss: () => {},
         },
       },
     });
@@ -829,50 +830,6 @@ export function* deleteProposalById({ payload: id }) {
 
 // . . .
 
-/* ////////////////////////////////// */
-/* FLATTEN DETAIL */
-/* ////////////////////////////////// */
-// export function* flattenDetail({ payload: detailSet }) {
-//   const getDetailWeeks = () => {
-//     const detail = { ...detailSet }; // clone this way?
-//     const ret = [];
-//     detail.Quarters.forEach((item, qidx) => {
-//       const qtr = { Id: item.Id, QuarterIdx: qidx, Type: 'quarter', QuarterText: item.QuarterText, Cpm: item.Cpm, ImpressionGoal: item.ImpressionGoal };
-//       ret.push(qtr);
-
-//       item.Weeks.forEach((weekItem, widx) => {
-//         const week = { ...weekItem };
-//         // store for finding later
-//         week.QuarterId = item.Id;
-//         // store indexes
-//         week.QuarterIdx = qidx;
-//         week.WeekIdx = widx;
-//         week.Type = 'week';
-//         ret.push(week);
-//       });
-//     });
-//     const totals = { TotalUnits: detail.TotalUnits, TotalCost: detail.TotalCost, TotalImpressions: detail.TotalImpressions, Id: 'total', Type: 'total' }; // construct totals
-//     ret.push(totals);
-//     return ret;
-//   };
-
-//   try {
-//     const flattened = yield getDetailWeeks();
-//     yield put({
-//       type: ACTIONS.RECEIVE_FLATTEN_DETAIL,
-//       data: flattened,
-//     });
-//   } catch (e) {
-//     if (e.message) {
-//       yield put({
-//         type: ACTIONS.DEPLOY_ERROR,
-//         error: {
-//           message: e.message,
-//         },
-//       });
-//     }
-//   }
-// }
 
 /* ////////////////////////////////// */
 /* REQUEST MODEL PROPOSAL DETAIL */
@@ -956,7 +913,7 @@ export function* modelNewProposalDetail({ payload: params }) {
 /* ////////////////////////////////// */
 /* UPDATE PROPOSAL (FROM DETAILS) */
 /* ////////////////////////////////// */
-export function* updateProposal({ payload: params }) {
+export function* updateProposal() { // { payload: params }
   /* eslint-disable no-shadow */
   const { updateProposal } = api.planning;
   const details = yield select(state => state.planning.proposalEditForm.Details);
@@ -982,7 +939,7 @@ export function* updateProposal({ payload: params }) {
         type: ACTIONS.DEPLOY_ERROR,
         error: {
           error: 'Proposal not updated.',
-          message: `The server encountered an error processing the request (update proposal ${params.FileId}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+          message: `The server encountered an error processing the request (update proposal). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
         },
       });
       throw new Error();
@@ -992,7 +949,7 @@ export function* updateProposal({ payload: params }) {
         type: ACTIONS.DEPLOY_ERROR,
         error: {
           error: 'Proposal not updated.',
-          message: data.Message || `The server encountered an error processing the request (update proposal ${params.FileId}). Please try again or contact your administrator to review error logs.`,
+          message: data.Message || 'The server encountered an error processing the request (update proposal). Please try again or contact your administrator to review error logs.',
         },
       });
       throw new Error();
@@ -1005,18 +962,19 @@ export function* updateProposal({ payload: params }) {
     });
     const { Details } = data.Data;
     let warnings = [];
-        warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
     if (Details) {
       Details.forEach((detail) => {
         if (detail.DefaultPostingBooks &&
             detail.DefaultPostingBooks.DefautlHutBook &&
             detail.DefaultPostingBooksDefautlHutBook.HasWarning) {
             warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+            warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
         }
         if (detail.DefaultPostingBooks &&
             detail.DefaultPostingBooks.DefaultShareBook &&
             detail.DefaultPostingBooks.DefaultShareBook.HasWarning) {
             warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+            warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
         }
       });
     }
@@ -1024,7 +982,7 @@ export function* updateProposal({ payload: params }) {
       type: ACTIONS.TOGGLE_MODAL,
       modal: {
         modal: 'confirmModal',
-        active: true,
+        active: warnings.length > 0,
         properties: {
           titleText: 'Warning',
           bodyText: null,
@@ -1034,6 +992,7 @@ export function* updateProposal({ payload: params }) {
           actionButtonText: 'Continue',
           actionButtonBsStyle: 'warning',
           action: () => {},
+          dismiss: () => {},
         },
       },
     });

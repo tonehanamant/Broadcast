@@ -7,3 +7,10 @@
 		background: rgba(255,255,255,1);
 	}
 }
+
+.non-editable-cell {
+  max-height: 25px;
+	width: 100%;
+	background: rgba(255,255,255,0);
+	cursor: pointer !important;
+}

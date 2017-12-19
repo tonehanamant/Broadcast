@@ -14,7 +14,6 @@ export default class ProposalHeader extends Component {
   }
 
   render() {
-    console.log('HEADER PROPS>>>>>>>>>>>>>>>>>', this.props);
     const { toggleModal, isEdit, initialdata, proposal, proposalEditForm, updateProposalEditForm, getProposalVersions, deleteProposal, saveProposalAsVersion } = this.props;
     return (
       <div id="proposal-header">

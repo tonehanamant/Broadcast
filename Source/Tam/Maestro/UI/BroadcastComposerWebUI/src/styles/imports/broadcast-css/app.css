@@ -313,6 +313,14 @@ input[type=number] {
         border-color: red !important;
     }
 
+  .non-editable-cell {
+      border: 1px solid transparent;
+      -webkit-transition: border-color .25s linear; /* Saf3.2+, Chrome */
+      -moz-transition: border-color .25s linear; /* FF3.7+ */
+      -o-transition: border-color .25s linear; /* Opera 10.5 */
+      transition: border-color .25s linear;
+  }
+
 .edit-input, .edit-input-container {
     width: 100% !important;
     display: none;
