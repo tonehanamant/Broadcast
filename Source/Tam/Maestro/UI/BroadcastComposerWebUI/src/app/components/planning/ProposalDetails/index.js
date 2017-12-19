@@ -30,11 +30,13 @@ export default class ProposalDetails extends Component {
             onUpdateProposal={() => this.onUpdateProposal()}
             deleteProposalDetail={deleteProposalDetail}
             toggleModal={toggleModal}
+            isReadOnly={this.props.isReadOnly}
 					/>
         ))}
         <ProposalDetail
           initialdata={initialdata}
           modelNewProposalDetail={modelNewProposalDetail}
+          isReadOnly={this.props.isReadOnly}
         />
 			</div>
     );
@@ -52,4 +54,5 @@ ProposalDetails.propTypes = {
   modelNewProposalDetail: PropTypes.func.isRequired,
   deleteProposalDetail: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
 };

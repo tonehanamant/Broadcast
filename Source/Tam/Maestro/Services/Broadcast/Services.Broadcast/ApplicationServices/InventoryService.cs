@@ -112,7 +112,6 @@ namespace Services.Broadcast.ApplicationServices
             _LockingManager = lockingManager;
             _SpotLengthMap =
                 broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
-            _SpotLengthMap.Add(0, 0);
             _SpotLengthCostMultipliers =
                 broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthMultiplierRepository>()
                     .GetSpotLengthIdsAndCostMultipliers();
@@ -156,8 +155,9 @@ namespace Services.Broadcast.ApplicationServices
             var inventorySource = _ParseInventorySource(inventorySourceString);
             var stationManifests = _inventoryRepository.GetStationManifestsBySourceStationCodeAndDates(inventorySource,
                 stationCode, startDate, endDate);
-            var programs = _GetStationProgramsFromStationInventoryManifest(stationManifests);
-
+            _SetDisplayDaypartForInventoryManifest(stationManifests);
+            _SetAudienceForInventoryManifest(stationManifests);
+            var programs = _GetStationProgramsFromStationInventoryManifest(stationManifests);            
             return programs;
         }
 
@@ -628,6 +628,7 @@ namespace Services.Broadcast.ApplicationServices
         private List<StationInventoryManifestRate> _MapManifestRates(StationProgram stationProgram)
         {
             var spotLength15Id = _SpotLengthMap[15];
+            var spotLength30Id = _SpotLengthMap[30];
             var manifestRates = new List<StationInventoryManifestRate>();
             var has15SecondsRate = stationProgram.Rate15 != null;
 
@@ -640,8 +641,8 @@ namespace Services.Broadcast.ApplicationServices
                 });
             }
 
-            if (stationProgram.Rate30 == null) 
-                return manifestRates;
+            if (stationProgram.Rate30 == null)
+                stationProgram.Rate30 = (decimal)(_SpotLengthCostMultipliers[spotLength30Id] / _SpotLengthCostMultipliers[spotLength15Id]) * stationProgram.Rate15.Value;
 
             manifestRates.AddRange(_GetManifestRatesFromMultipliers(stationProgram.Rate30.Value, has15SecondsRate));
 
@@ -1004,41 +1005,22 @@ namespace Services.Broadcast.ApplicationServices
 
         private IEnumerable<StationInventoryManifestRate> _GetManifestRatesFromMultipliers(decimal rate, bool has15SecondsRate)
         {
+
             var manifestRates = new List<StationInventoryManifestRate>();
-            var spotLengthMultipliers = GetSpotLengthAndMultipliers();
 
-            if (!has15SecondsRate)
+            foreach (var spotLength in _SpotLengthMap)
             {
-                manifestRates.Add(new StationInventoryManifestRate
+                if (spotLength.Key == 15 && has15SecondsRate)
                 {
-                    Rate = rate*(decimal) spotLengthMultipliers[15],
-                    SpotLengthId = _SpotLengthMap[15]
-                });
+                    //skip 15s, already have it
+                    continue;
+                }
+
+                var manifestRate = new StationInventoryManifestRate();
+                manifestRate.SpotLengthId = _SpotLengthMap[spotLength.Key];
+                manifestRate.Rate = rate * (decimal)_SpotLengthCostMultipliers[spotLength.Value];
+                manifestRates.Add(manifestRate);
             }
-
-            manifestRates.Add(new StationInventoryManifestRate
-            {
-                Rate = rate,
-                SpotLengthId = _SpotLengthMap[30]
-            });
-
-            manifestRates.Add(new StationInventoryManifestRate
-            {
-                Rate = rate*(decimal) spotLengthMultipliers[60],
-                SpotLengthId = _SpotLengthMap[60]
-            });
-
-            manifestRates.Add(new StationInventoryManifestRate
-            {
-                Rate = rate*(decimal) spotLengthMultipliers[90],
-                SpotLengthId = _SpotLengthMap[90]
-            });
-
-            manifestRates.Add(new StationInventoryManifestRate
-            {
-                Rate = rate*(decimal) spotLengthMultipliers[120],
-                SpotLengthId = _SpotLengthMap[120]
-            });
 
             return manifestRates;
         }

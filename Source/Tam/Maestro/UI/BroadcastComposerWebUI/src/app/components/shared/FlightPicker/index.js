@@ -51,6 +51,7 @@ export default class FlightPicker extends Component {
 	}
 
 	toggle() {
+    if (this.props.isReadOnly) return;
 		this.setState({ show: !this.state.show });
 	}
 
@@ -212,7 +213,8 @@ export default class FlightPicker extends Component {
 							type="text"
 							value={`${moment(this.state.startDate).format('M/D/YYYY')} - ${moment(this.state.endDate).format('M/D/YYYY')}`}
 							onChange={() => null}
-							inputRef={(ref) => { this.input = ref; }}
+              inputRef={(ref) => { this.input = ref; }}
+              disabled={this.props.isReadOnly}
 						/>
 						<InputGroup.Addon><span className="glyphicon glyphicon-calendar" aria-hidden="true" /></InputGroup.Addon>
 				</InputGroup>
@@ -371,5 +373,6 @@ FlightPicker.propTypes = {
 	startDate: PropTypes.string,
 	endDate: PropTypes.string,
 	flightWeeks: PropTypes.array,
-	onApply: PropTypes.func,
+  onApply: PropTypes.func,
+  isReadOnly: PropTypes.bool.isRequired,
 };
