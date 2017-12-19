@@ -12,3 +12,8 @@
 .Select-menu-outer {
   z-index: 999 !important;
 }
+
+.Select.is-disabled>.Select-control {
+  cursor: not-allowed;
+  background-color: #eee;
+}

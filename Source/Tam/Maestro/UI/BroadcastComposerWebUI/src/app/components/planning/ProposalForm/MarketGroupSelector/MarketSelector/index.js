@@ -122,13 +122,14 @@ MarketSelector.propTypes = {
     Display: PropTypes.string,
   })),
 
-  onMarketsSelectionChange: PropTypes.func.isRequired,
+  onMarketsSelectionChange: PropTypes.func,
 };
 
 MarketSelector.defaultProps = {
   marketGroups: [],
   markets: [],
   selectedMarkets: [],
+  onMarketsSelectionChange: null,
 };
 
 export default CSSModules(MarketSelector, styles);

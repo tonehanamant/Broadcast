@@ -2807,6 +2807,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     },
                     HouseHoldImpressions = 1000,
+                    Rate15 = 15,
                     Rating = 50,
                     ProgramName = "Testing Program",
                     StationCode = stationCode,
@@ -2850,6 +2851,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     },
                     HouseHoldImpressions = 1000,
+                    Rate30 = 20,
                     Rating = 50,
                     ProgramName = "Edited Program Name 54",
                     StationCode = stationCode,
@@ -2892,6 +2894,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     },
                     HouseHoldImpressions = 1000,
+                    Rate15 = 15,
+                    Rate30 = 20,
                     Rating = 50,
                     ProgramName = "Edited Program Name 54",
                     StationCode = stationCode,
@@ -2960,6 +2964,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     },
                     HouseHoldImpressions = 1000,
+                    Rate30 = 30,
                     Rating = 50,
                     ProgramName = "Multiple Flight Weeks",
                     StationCode = stationCode,
