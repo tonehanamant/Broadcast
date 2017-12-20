@@ -324,3 +324,8 @@ export const modelNewProposalDetail = flight => ({
   type: ACTIONS.MODEL_NEW_PROPOSAL_DETAIL,
   payload: flight,
 });
+
+export const unorderProposal = id => ({
+  type: ACTIONS.UNORDER_PROPOSAL,
+  payload: id,
+});

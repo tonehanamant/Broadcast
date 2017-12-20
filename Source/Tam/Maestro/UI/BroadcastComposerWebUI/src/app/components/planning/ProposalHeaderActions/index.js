@@ -12,6 +12,7 @@ export default class ProposalHeaderActions extends Component {
     this.onSaveVersion = this.onSaveVersion.bind(this);
     this.onSwitchVersions = this.onSwitchVersions.bind(this);
     this.onDeleteProposal = this.onDeleteProposal.bind(this);
+    this.onUnorder = this.onUnorder.bind(this);
   }
 
   onChangeStatus(value) {
@@ -37,6 +38,22 @@ export default class ProposalHeaderActions extends Component {
         actionButtonText: 'Continue',
         actionButtonBsStyle: 'danger',
         action: () => this.props.deleteProposal(this.props.proposalEditForm.Id),
+        dismiss: () => {},
+      },
+    });
+  }
+
+  onUnorder() {
+    this.props.toggleModal({
+      modal: 'confirmModal',
+      active: true,
+      properties: {
+        titleText: 'Unorder Proposal',
+        bodyText: 'Operation will Archive contracted version of the proposal and create new version for editing. Select Continue to complete. Select Cancel to cancel.',
+        closeButtonText: 'Cancel',
+        actionButtonText: 'Continue',
+        actionButtonBsStyle: 'warning',
+        action: () => this.props.unorderProposal(this.props.proposalEditForm.Id),
         dismiss: () => {},
       },
     });
@@ -108,6 +125,7 @@ ProposalHeaderActions.propTypes = {
   getProposalVersions: PropTypes.func.isRequired,
   deleteProposal: PropTypes.func.isRequired,
   saveProposalAsVersion: PropTypes.func.isRequired,
+  unorderProposal: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
 };

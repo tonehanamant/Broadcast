@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { toggleModal, createAlert } from 'Ducks/app';
-import { getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid } from 'Ducks/planning';
+import { getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal } from 'Ducks/planning';
 
 import ProposalHeader from 'Components/planning/ProposalHeader';
 import ProposalActions from 'Components/planning/ProposalActions';
@@ -21,7 +21,7 @@ const mapStateToProps = ({ planning: { proposalLock }, planning: { initialdata }
 });
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleModal, createAlert, getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposal, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid }, dispatch)
+  bindActionCreators({ toggleModal, createAlert, getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposal, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal }, dispatch)
 );
 
 /* eslint-disable react/prefer-stateless-function */
@@ -42,7 +42,7 @@ export class SectionPlanningProposal extends Component {
   }
 
   render() {
-    const { toggleModal, createAlert, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail, updateProposalEditFormDetailGrid } = this.props;
+    const { toggleModal, createAlert, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal } = this.props;
     const isReadOnly = proposal.Status != null ? (proposal.Status === 3 || proposal.Status === 4) : false;
     // console.log('proposal is read only', proposal, isReadOnly);
     return (
@@ -71,6 +71,7 @@ export class SectionPlanningProposal extends Component {
               getProposalVersions={getProposalVersions}
               deleteProposal={deleteProposal}
               saveProposalAsVersion={saveProposalAsVersion}
+              unorderProposal={unorderProposal}
               versions={versions}
               isReadOnly={isReadOnly}
             />
@@ -133,6 +134,7 @@ SectionPlanningProposal.propTypes = {
   saveProposal: PropTypes.func.isRequired,
   deleteProposal: PropTypes.func.isRequired,
   saveProposalAsVersion: PropTypes.func.isRequired,
+  unorderProposal: PropTypes.func.isRequired,
   modelNewProposalDetail: PropTypes.func.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
