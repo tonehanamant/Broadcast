@@ -1,4 +1,5 @@
 import moment from 'moment';
+import update from 'immutability-helper';
 
 // Actions
 import * as ACTIONS from './actionTypes.js';
@@ -106,7 +107,6 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.UPDATE_PROPOSAL_EDIT_FORM_DETAIL: {
       const details = [...state.proposalEditForm.Details];
       const detailIndex = details.findIndex(detail => detail.Id === payload.id);
-      console.log('>>>>>>>>>>> UPDATE_PROPOSAL_EDIT_FORM_DETAIL', details, detailIndex);
       return Object.assign({}, state, {
         proposalEditForm: {
           ...state.proposalEditForm,
@@ -127,8 +127,64 @@ export default function reducer(state = initialState, action) {
       });
     }
 
+    case ACTIONS.UPDATE_PROPOSAL_EDIT_FORM_DETAIL_GRID: {
+      const details = [...state.proposalEditForm.Details];
+      const detailIndex = details.findIndex(detail => detail.Id === payload.id);
+      const quarterIndex = payload.quarterIndex;
+      const weekIndex = payload.weekIndex;
+      const rowIndex = details[detailIndex].GridQuarterWeeks.findIndex(row => row._key === payload.row);
+
+      let newState = { ...state };
+
+      if (quarterIndex !== null && weekIndex === null) {
+        newState = update(state, {
+          proposalEditForm: {
+            Details: {
+              [detailIndex]: {
+                Quarters: {
+                  [quarterIndex]: {
+                    [payload.key]: { $set: payload.value },
+                    DistributeGoals: { $set: payload.key === 'ImpressionGoal' },
+                  },
+                },
+                GridQuarterWeeks: {
+                  [rowIndex]: {
+                    [payload.key]: { $set: payload.value },
+                  },
+                },
+              },
+            },
+          },
+        });
+      } else if (quarterIndex !== null && weekIndex !== null) {
+        newState = update(state, {
+          proposalEditForm: {
+            Details: {
+              [detailIndex]: {
+                Quarters: {
+                  [quarterIndex]: {
+                    Weeks: {
+                      [weekIndex]: {
+                        [payload.key]: { $set: payload.value },
+                      },
+                    },
+                  },
+                },
+                GridQuarterWeeks: {
+                  [rowIndex]: {
+                    [payload.key]: { $set: payload.value },
+                  },
+                },
+              },
+            },
+          },
+        });
+      }
+
+      return newState;
+    }
+
     case ACTIONS.RECEIVE_NEW_PROPOSAL_DETAIL: {
-      console.log('DETAIL PAYLOAD', payload);
       return {
         ...state,
         proposalEditForm: {
@@ -144,7 +200,6 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.DELETE_PROPOSAL_DETAIL: {
       const details = [...state.proposalEditForm.Details];
       const detailIndex = details.findIndex(detail => detail.Id === payload.id);
-      console.log('>>>>>>>>>>> DELETE_PROPOSAL_DETAIL', details, detailIndex);
       return Object.assign({}, state, {
         proposalEditForm: {
           ...state.proposalEditForm,
@@ -252,6 +307,11 @@ export const updateProposalEditForm = keyValue => ({
 
 export const updateProposalEditFormDetail = idKeyValue => ({
   type: ACTIONS.UPDATE_PROPOSAL_EDIT_FORM_DETAIL,
+  payload: idKeyValue,
+});
+
+export const updateProposalEditFormDetailGrid = idKeyValue => ({
+  type: ACTIONS.UPDATE_PROPOSAL_EDIT_FORM_DETAIL_GRID,
   payload: idKeyValue,
 });
 

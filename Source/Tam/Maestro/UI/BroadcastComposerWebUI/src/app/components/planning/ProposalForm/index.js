@@ -320,7 +320,7 @@ export default class ProposalForm extends Component {
 										<FormGroup controlId="proposalTargetCPM">
 											<ControlLabel><strong>Target CPM</strong></ControlLabel>
 											<FormControl.Static>
-												<CurrencyDollarWhole amount={proposalEditForm.TotalCPM} /> / <CurrencyDollarWhole amount={proposalEditForm.TargetCPM} /> <Label bsStyle="success"><PercentWhole percent={proposalEditForm.TotalCPMPercent} /></Label>
+												<CurrencyDollarWhole dash amount={proposalEditForm.TotalCPM} /> / <CurrencyDollarWhole dash amount={proposalEditForm.TargetCPM} /> <Label bsStyle="success"><PercentWhole dash percent={proposalEditForm.TotalCPMPercent} /></Label>
 											</FormControl.Static>
 										</FormGroup>
 									</Col>
@@ -328,7 +328,7 @@ export default class ProposalForm extends Component {
 										<FormGroup controlId="proposalTargetBudget">
 											<ControlLabel><strong>Target Budget</strong></ControlLabel>
 											<FormControl.Static>
-												<CurrencyDollarWhole amount={proposalEditForm.TotalCost} /> / <CurrencyDollarWhole amount={proposalEditForm.TargetBudget} /> <Label bsStyle="success"><PercentWhole percent={proposalEditForm.TotalCostPercent} /></Label>
+												<CurrencyDollarWhole dash amount={proposalEditForm.TotalCost} /> / <CurrencyDollarWhole dash amount={proposalEditForm.TargetBudget} /> <Label bsStyle="success"><PercentWhole dash percent={proposalEditForm.TotalCostPercent} /></Label>
 											</FormControl.Static>
 										</FormGroup>
 									</Col>
@@ -336,7 +336,7 @@ export default class ProposalForm extends Component {
 										<FormGroup controlId="proposalTargetImpressions">
 											<ControlLabel><strong>Target Impressions</strong></ControlLabel>
 											<FormControl.Static>
-												<NumberCommaWhole number={proposalEditForm.TotalImpressions / 1000} /> / <NumberCommaWhole number={proposalEditForm.TargetImpressions / 1000} /> <Label bsStyle="danger"><PercentWhole percent={proposalEditForm.TotalImpressionsPercent} /></Label>
+												<NumberCommaWhole dash number={proposalEditForm.TotalImpressions / 1000} /> / <NumberCommaWhole dash number={proposalEditForm.TargetImpressions / 1000} /> <Label bsStyle="danger"><PercentWhole dash percent={proposalEditForm.TotalImpressionsPercent} /></Label>
 											</FormControl.Static>
 										</FormGroup>
 									</Col>
@@ -344,7 +344,7 @@ export default class ProposalForm extends Component {
 										<FormGroup controlId="proposalTargetUnits">
 											<ControlLabel><strong>Target Units</strong></ControlLabel>
 											<FormControl.Static>
-												{proposalEditForm.TargetUnits}
+												{proposalEditForm.TargetUnits || '-'}
 											</FormControl.Static>
 										</FormGroup>
 									</Col>

@@ -9,8 +9,15 @@ export default class NumberCommaWhole extends Component {
   // }
 
   render() {
+    const { number, dash } = this.props;
+
+    // 0, null or undefined
+    if (dash && !number) {
+      return '-';
+    }
+
     return (
-			<span>{ numeral(this.props.number).format('0,0') }</span>
+			<span>{ numeral(number).format('0,0') }</span>
     );
 	}
 }
@@ -20,4 +27,9 @@ NumberCommaWhole.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  dash: PropTypes.bool,
+};
+
+NumberCommaWhole.defaultProps = {
+  dash: false,
 };

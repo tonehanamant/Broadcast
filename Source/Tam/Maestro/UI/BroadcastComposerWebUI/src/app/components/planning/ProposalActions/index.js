@@ -28,6 +28,7 @@ export default class ProposalActions extends Component {
 							this.props.updateProposalEditForm({ key: 'ValidationWarning', value: null });
 							this.props.saveProposal({ proposal: this.props.proposalEditForm, force: true });
 						},
+						dismiss: () => {},
 					},
 			});
 		}

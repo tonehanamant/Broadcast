@@ -37,6 +37,7 @@ export default class ProposalHeaderActions extends Component {
         actionButtonText: 'Continue',
         actionButtonBsStyle: 'danger',
         action: () => this.props.deleteProposal(this.props.proposalEditForm.Id),
+        dismiss: () => {},
       },
     });
   }
