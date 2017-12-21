@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Label, FormGroup, InputGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { Row, Col, Label, FormGroup, InputGroup, ControlLabel, FormControl, HelpBlock, Tooltip, Glyphicon, Button, OverlayTrigger } from 'react-bootstrap';
 import Select from 'react-select';
 import DateMDYYYY from 'Components/shared/TextFormatters/DateMDYYYY';
 import CurrencyDollarWhole from 'Components/shared/TextFormatters/CurrencyDollarWhole';
@@ -224,6 +224,25 @@ export default class ProposalForm extends Component {
     // selected market group
     const selectedMarketGroup = this.state.selectedMarketGroup || marketOptions[0];
 
+    //  handle hiatus flights tips display
+    let hasTip = false;
+    const checkFlightWeeksTip = (flightWeeks) => {
+      if (flightWeeks.length < 1) return '';
+      const tip = [<div key="flight">Hiatus Weeks</div>];
+      flightWeeks.forEach((flight, idx) => {
+        if (flight.IsHiatus) {
+          hasTip = true;
+          const key = `flight_ + ${idx}`;
+          tip.push(<div key={key}><DateMDYYYY date={flight.StartDate} /><span> - </span><DateMDYYYY date={flight.EndDate} /></div>);
+        }
+      });
+      const display = tip;
+      return (
+        <Tooltip id="flightstooltip">{display}</Tooltip>
+      );
+    };
+    const tooltip = checkFlightWeeksTip(this.props.proposalEditForm.FlightWeeks);
+
     return (
       <div id="proposal-form">
 					<form>
@@ -425,6 +444,11 @@ export default class ProposalForm extends Component {
 											<ControlLabel><strong>Flight</strong></ControlLabel>
 											<FormControl.Static>
 												<DateMDYYYY date={proposalEditForm.FlightStartDate} /><span> - </span><DateMDYYYY date={proposalEditForm.FlightEndDate} />
+                        {hasTip &&
+                          <OverlayTrigger placement="top" overlay={tooltip}>
+                          <Button bsStyle="link"><Glyphicon style={{ color: 'black' }} glyph="info-sign" /></Button>
+                          </OverlayTrigger>
+                        }
 											</FormControl.Static>
 										</FormGroup>
 									</Col>
@@ -468,3 +492,4 @@ ProposalForm.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func,
 };
+
