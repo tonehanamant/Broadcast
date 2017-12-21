@@ -959,7 +959,45 @@ export function* modelNewProposalDetail({ payload: params }) {
     }
     const payload = yield assignIdFlightWeeks(data.Data, flight.FlightWeeks);
     payload.GridQuarterWeeks = yield flattenDetail(payload);
-    // console.log('RECEIVE_NEW_PROPOSAL_DETAIL flatten', payload);
+    payload.SpotLengthId = 3; // Default SpotLength
+    const Detail = { ...payload };
+    let warnings = [];
+    if (Detail) {
+      if (Detail.DefaultPostingBooks &&
+          Detail.DefaultPostingBooks.DefautlHutBook &&
+          Detail.DefaultPostingBooksDefautlHutBook.HasWarning) {
+          warnings.push(Detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+          warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
+
+          payload.DefaultPostingBooksDefautlHutBook.HasWarning = false; // Unset to stop repeat unless BE explicit changes
+      }
+      if (Detail.DefaultPostingBooks &&
+          Detail.DefaultPostingBooks.DefaultShareBook &&
+          Detail.DefaultPostingBooks.DefaultShareBook.HasWarning) {
+          warnings.push(Detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+          warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
+
+          payload.DefaultPostingBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
+      }
+    }
+    yield put({
+      type: ACTIONS.TOGGLE_MODAL,
+      modal: {
+        modal: 'confirmModal',
+        active: warnings.length > 0,
+        properties: {
+          titleText: 'Warning',
+          bodyText: null,
+          bodyList: warnings,
+          closeButtonText: 'Cancel',
+          closeButtonBsStyle: 'default',
+          actionButtonText: 'Continue',
+          actionButtonBsStyle: 'warning',
+          action: () => {},
+          dismiss: () => {},
+        },
+      },
+    });
     yield put({
       type: ACTIONS.RECEIVE_NEW_PROPOSAL_DETAIL,
       payload,
@@ -1032,25 +1070,25 @@ export function* updateProposal() { // { payload: params }
     }
     // TODO resolve to get entire proposal
     data.Data = yield flattenProposalDetails(data.Data);
-    yield put({
-      type: ACTIONS.RECEIVE_UPDATED_PROPOSAL,
-      data,
-    });
     const { Details } = data.Data;
     let warnings = [];
     if (Details) {
-      Details.forEach((detail) => {
+      Details.forEach((detail, index) => {
         if (detail.DefaultPostingBooks &&
             detail.DefaultPostingBooks.DefautlHutBook &&
             detail.DefaultPostingBooksDefautlHutBook.HasWarning) {
             warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
             warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
+
+            data.Data.Details[index].DefaultPostingBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
         }
         if (detail.DefaultPostingBooks &&
             detail.DefaultPostingBooks.DefaultShareBook &&
             detail.DefaultPostingBooks.DefaultShareBook.HasWarning) {
             warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
             warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
+
+            data.Data.Details[index].DefaultPostingBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
         }
       });
     }
@@ -1071,6 +1109,10 @@ export function* updateProposal() { // { payload: params }
           dismiss: () => {},
         },
       },
+    });
+    yield put({
+      type: ACTIONS.RECEIVE_UPDATED_PROPOSAL,
+      data,
     });
   } catch (e) {
     if (e.response) {

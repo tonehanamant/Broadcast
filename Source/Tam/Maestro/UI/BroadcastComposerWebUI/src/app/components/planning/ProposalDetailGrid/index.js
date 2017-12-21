@@ -37,10 +37,16 @@ export default class ProposalDetailGrid extends Component {
     return can;
   }
 
+  componentWillReceiveProps(nextProps) {
+  }
+
    /* ////////////////////////////////// */
   /* // COMPONENT RENDER FUNC
   /* ////////////////////////////////// */
   render() {
+    const { proposalValidationStates } = this.props;
+    const { DetailGridsInvalid } = proposalValidationStates;
+
     /* ////////////////////////////////// */
     /* // REACT-REDUX-GRID CONFIGURATION
     /* ////////////////////////////////// */
@@ -123,6 +129,7 @@ export default class ProposalDetailGrid extends Component {
                   valueKey="Cpm"
                   isEditable={isEditable}
                   emptyZeroDefault
+                  onSaveShowValidation={DetailGridsInvalid}
                   blurAction={inputCpm}
                   enterKeyPressAction={inputCpm}
                   maskType="createNumber"
@@ -140,10 +147,10 @@ export default class ProposalDetailGrid extends Component {
                 valueKey="Units"
                 isEditable={isEditable}
                 emptyZeroDefault
+                onSaveShowValidation={DetailGridsInvalid}
                 blurAction={inputUnits}
                 enterKeyPressAction={inputUnits}
-                maskType="createNumber"
-                maskIncludeThousandsSeparator={false}
+                maskType="default"
               />
             );
           },
@@ -172,7 +179,9 @@ export default class ProposalDetailGrid extends Component {
             };
 
             const inputImpressions = (event) => {
-              const storeValue = (Number(event.target.value) * 1000);
+              const unmaskedValue = event.target.value.replace(/,/g, '');
+              const storeValue = Number(unmaskedValue) * 1000;
+              // const storeValue = (Number(event.target.value) * 1000);
               const storeKey = event.target.getAttribute('valueKey');
               this.props.updateProposalEditFormDetailGrid({
                 id: this.props.detailId,
@@ -208,6 +217,7 @@ export default class ProposalDetailGrid extends Component {
                     actionButtonBsStyle: 'warning',
                   }}
                   toggleModal={this.props.toggleModal}
+                  onSaveShowValidation={DetailGridsInvalid}
                   blurAction={inputImpressionGoal}
                   enterKeyPressAction={inputImpressionGoal}
                   maskType="createNumber"
@@ -225,6 +235,7 @@ export default class ProposalDetailGrid extends Component {
                 valueKey="Impressions"
                 isEditable={isEditable}
                 emptyZeroDefault
+                onSaveShowValidation={DetailGridsInvalid}
                 blurAction={inputImpressions}
                 enterKeyPressAction={inputImpressions}
                 maskType="createNumber"
@@ -321,4 +332,5 @@ ProposalDetailGrid.propTypes = {
   updateProposalEditFormDetailGrid: PropTypes.func.isRequired,
   onUpdateProposal: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
+  proposalValidationStates: PropTypes.object.isRequired,
 };
