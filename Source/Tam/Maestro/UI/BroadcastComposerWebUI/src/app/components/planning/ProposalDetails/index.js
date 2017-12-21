@@ -16,7 +16,7 @@ export default class ProposalDetails extends Component {
   }
 
   render() {
-    const { proposalEditForm, initialdata, updateProposalEditFormDetail, deleteProposalDetail, toggleModal, modelNewProposalDetail } = this.props;
+    const { proposalEditForm, initialdata, updateProposalEditFormDetail, deleteProposalDetail, toggleModal, modelNewProposalDetail, updateProposalEditFormDetailGrid } = this.props;
     return (
       <div id="proposal-details">
 				<h5 style={{ textAlign: 'center', color: '#1e5fa8' }}><strong>Proposal Details</strong></h5>
@@ -27,14 +27,17 @@ export default class ProposalDetails extends Component {
             detail={detail}
             initialdata={initialdata}
             updateProposalEditFormDetail={updateProposalEditFormDetail}
+            updateProposalEditFormDetailGrid={updateProposalEditFormDetailGrid}
             onUpdateProposal={() => this.onUpdateProposal()}
             deleteProposalDetail={deleteProposalDetail}
             toggleModal={toggleModal}
+            isReadOnly={this.props.isReadOnly}
 					/>
         ))}
         <ProposalDetail
           initialdata={initialdata}
           modelNewProposalDetail={modelNewProposalDetail}
+          isReadOnly={this.props.isReadOnly}
         />
 			</div>
     );
@@ -48,8 +51,10 @@ ProposalDetails.propTypes = {
   proposalEditForm: PropTypes.object.isRequired,
   initialdata: PropTypes.object.isRequired,
   updateProposalEditFormDetail: PropTypes.func.isRequired,
+  updateProposalEditFormDetailGrid: PropTypes.func.isRequired,
   updateProposal: PropTypes.func.isRequired,
   modelNewProposalDetail: PropTypes.func.isRequired,
   deleteProposalDetail: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
 };

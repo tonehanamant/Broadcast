@@ -72,7 +72,7 @@ const planning = {
     call(DELETE, `${apiBase}Proposals/DeleteProposal/${id}`, {})
   ),
   unorderProposal: id => (
-    call(GET, `${apiBase}Proposals/UnorderProposal?proposalId=${id}`, {})
+    call(POST, `${apiBase}Proposals/UnorderProposal?proposalId=${id}`, {})
   ),
   getProposalDetail: params => (
     call(POST, `${apiBase}Proposals/GetProposalDetail`, params)

@@ -72,6 +72,7 @@ export default class ProposalDetail extends Component {
         actionButtonText: 'Continue',
         actionButtonBsStyle: 'danger',
         action: () => this.props.deleteProposalDetail({ id: this.props.detail.Id }),
+        dismiss: () => {},
       },
     });
   }
@@ -89,6 +90,7 @@ export default class ProposalDetail extends Component {
           actionButtonText: 'Continue',
           actionButtonBsStyle: 'warning',
           action: () => this.FlightPickerApply(flight),
+          dismiss: () => {},
         },
       });
     } else {
@@ -136,7 +138,7 @@ export default class ProposalDetail extends Component {
 
   render() {
 		/* eslint-disable no-unused-vars */
-    const { detail, proposalEditForm, initialdata, updateProposalEditFormDetail } = this.props;
+    const { detail, proposalEditForm, initialdata, updateProposalEditFormDetail, updateProposalEditFormDetailGrid, onUpdateProposal, isReadOnly, toggleModal } = this.props;
     return (
 			<Well bsSize="small">
         <Row>
@@ -149,6 +151,7 @@ export default class ProposalDetail extends Component {
                   endDate={detail && detail.FlightEndDate ? detail.FlightEndDate : null}
                   flightWeeks={detail && detail.FlightWeeks ? detail.FlightWeeks : null}
                   onApply={flight => this.onFlightPickerApply(flight)}
+                  isReadOnly={isReadOnly}
                 />
               </FormGroup>
               {detail &&
@@ -164,19 +167,20 @@ export default class ProposalDetail extends Component {
                   onChange={this.onChangeSpotLength}
                   clearable={false}
                   wrapperStyle={{ float: 'left', minWidth: '70px' }}
+                  disabled={isReadOnly}
                 />
               </FormGroup>
               }
               {detail &&
               <FormGroup controlId="proposalDetailDaypart" validationState={this.state.daypartInvalid}>
                 <ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart</ControlLabel>
-                  <FormControl type="text" value={detail.Daypart && detail.Daypart.Text ? detail.Daypart.Text : ''} readOnly />
+                  <FormControl type="text" value={detail.Daypart && detail.Daypart.Text ? detail.Daypart.Text : ''} disabled={isReadOnly} readOnly />
               </FormGroup>
               }
               {detail &&
               <FormGroup controlId="proposalDetailDaypartCode" validationState={this.state.daypartCodeInvalid}>
                 <ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart Code</ControlLabel>
-                  <FormControl type="text" style={{ width: '80px' }} value={detail.DaypartCode ? detail.DaypartCode : ''} onChange={this.onChangeDaypartCode} />
+                  <FormControl type="text" style={{ width: '80px' }} value={detail.DaypartCode ? detail.DaypartCode : ''} onChange={this.onChangeDaypartCode} disabled={isReadOnly} />
               </FormGroup>
               }
               {detail &&
@@ -187,11 +191,11 @@ export default class ProposalDetail extends Component {
               }
               {detail &&
               <FormGroup controlId="proposalDetailADU">
-                <Checkbox checked={detail.Adu} onChange={this.onChangeAdu} />
+                <Checkbox checked={detail.Adu} onChange={this.onChangeAdu} disabled={isReadOnly} />
                 <ControlLabel style={{ margin: '0 0 0 6px' }}>ADU</ControlLabel>
               </FormGroup>
               }
-              {detail &&
+              {(detail && !isReadOnly) &&
               <Button bsStyle="link" style={{ float: 'right' }} onClick={this.onDeleteProposalDetail}><Glyphicon style={{ color: 'red', fontSize: '16px' }} glyph="trash" /></Button>
               }
               {detail &&
@@ -214,7 +218,10 @@ export default class ProposalDetail extends Component {
               detailId={detail.Id}
               GridQuarterWeeks={detail.GridQuarterWeeks}
               isAdu={detail.Adu}
-              // todo isReadonly
+              isReadOnly={isReadOnly}
+              updateProposalEditFormDetailGrid={updateProposalEditFormDetailGrid}
+              onUpdateProposal={onUpdateProposal}
+              toggleModal={toggleModal}
             />
           </Col>
         </Row>
@@ -226,6 +233,7 @@ export default class ProposalDetail extends Component {
           updateProposalEditFormDetail={updateProposalEditFormDetail}
           initialdata={initialdata}
           detail={detail}
+          isReadOnly={isReadOnly}
         />
 			</Well>
     );
@@ -236,6 +244,7 @@ ProposalDetail.defaultProps = {
   detail: null,
   proposalEditForm: {},
   updateProposalEditFormDetail: () => {},
+  updateProposalEditFormDetailGrid: () => {},
   onUpdateProposal: () => {},
   deleteProposalDetail: () => {},
   modelNewProposalDetail: () => {},
@@ -247,8 +256,10 @@ ProposalDetail.propTypes = {
 	detail: PropTypes.object,
   proposalEditForm: PropTypes.object,
   updateProposalEditFormDetail: PropTypes.func,
+  updateProposalEditFormDetailGrid: PropTypes.func,
   onUpdateProposal: PropTypes.func,
   deleteProposalDetail: PropTypes.func,
   modelNewProposalDetail: PropTypes.func,
   toggleModal: PropTypes.func,
+  isReadOnly: PropTypes.bool.isRequired,
 };

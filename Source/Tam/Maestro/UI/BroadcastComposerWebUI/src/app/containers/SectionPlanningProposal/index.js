@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { toggleModal, createAlert } from 'Ducks/app';
-import { getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail } from 'Ducks/planning';
+import { getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal } from 'Ducks/planning';
 
 import ProposalHeader from 'Components/planning/ProposalHeader';
 import ProposalActions from 'Components/planning/ProposalActions';
@@ -21,7 +21,7 @@ const mapStateToProps = ({ planning: { proposalLock }, planning: { initialdata }
 });
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleModal, createAlert, getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposal, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail }, dispatch)
+  bindActionCreators({ toggleModal, createAlert, getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposal, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal }, dispatch)
 );
 
 /* eslint-disable react/prefer-stateless-function */
@@ -42,8 +42,9 @@ export class SectionPlanningProposal extends Component {
   }
 
   render() {
-    const { toggleModal, createAlert, proposalLock, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail } = this.props;
-    console.log('PROPOSAL LOCK', proposalLock);
+    const { toggleModal, createAlert, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal } = this.props;
+    const isReadOnly = proposal.Status != null ? (proposal.Status === 3 || proposal.Status === 4) : false;
+    // console.log('proposal is read only', proposal, isReadOnly);
     return (
       <div id="planning-section-proposal" style={{ paddingBottom: 80 }}>
         {
@@ -70,16 +71,20 @@ export class SectionPlanningProposal extends Component {
               getProposalVersions={getProposalVersions}
               deleteProposal={deleteProposal}
               saveProposalAsVersion={saveProposalAsVersion}
+              unorderProposal={unorderProposal}
               versions={versions}
+              isReadOnly={isReadOnly}
             />
             <ProposalDetails
               proposalEditForm={proposalEditForm}
               initialdata={initialdata}
               toggleModal={toggleModal}
               updateProposalEditFormDetail={updateProposalEditFormDetail}
+              updateProposalEditFormDetailGrid={updateProposalEditFormDetailGrid}
               updateProposal={updateProposal}
               deleteProposalDetail={deleteProposalDetail}
               modelNewProposalDetail={modelNewProposalDetail}
+              isReadOnly={isReadOnly}
             />
             <ProposalActions
               toggleModal={toggleModal}
@@ -109,7 +114,7 @@ SectionPlanningProposal.defaultProps = {
 
 SectionPlanningProposal.propTypes = {
   match: PropTypes.object.isRequired,
-  proposalLock: PropTypes.object.isRequired,
+  // proposalLock: PropTypes.object.isRequired,
   initialdata: PropTypes.object.isRequired,
   proposal: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
@@ -123,11 +128,13 @@ SectionPlanningProposal.propTypes = {
   updateProposalEditForm: PropTypes.func.isRequired,
 
   updateProposalEditFormDetail: PropTypes.func.isRequired,
+  updateProposalEditFormDetailGrid: PropTypes.func.isRequired,
   updateProposal: PropTypes.func.isRequired,
   deleteProposalDetail: PropTypes.func.isRequired,
   saveProposal: PropTypes.func.isRequired,
   deleteProposal: PropTypes.func.isRequired,
   saveProposalAsVersion: PropTypes.func.isRequired,
+  unorderProposal: PropTypes.func.isRequired,
   modelNewProposalDetail: PropTypes.func.isRequired,
 
   toggleModal: PropTypes.func.isRequired,

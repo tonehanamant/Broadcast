@@ -12,6 +12,7 @@ export default class ProposalHeaderActions extends Component {
     this.onSaveVersion = this.onSaveVersion.bind(this);
     this.onSwitchVersions = this.onSwitchVersions.bind(this);
     this.onDeleteProposal = this.onDeleteProposal.bind(this);
+    this.onUnorder = this.onUnorder.bind(this);
   }
 
   onChangeStatus(value) {
@@ -37,6 +38,23 @@ export default class ProposalHeaderActions extends Component {
         actionButtonText: 'Continue',
         actionButtonBsStyle: 'danger',
         action: () => this.props.deleteProposal(this.props.proposalEditForm.Id),
+        dismiss: () => {},
+      },
+    });
+  }
+
+  onUnorder() {
+    this.props.toggleModal({
+      modal: 'confirmModal',
+      active: true,
+      properties: {
+        titleText: 'Unorder Proposal',
+        bodyText: 'Operation will Archive contracted version of the proposal and create new version for editing. Select Continue to complete. Select Cancel to cancel.',
+        closeButtonText: 'Cancel',
+        actionButtonText: 'Continue',
+        actionButtonBsStyle: 'warning',
+        action: () => this.props.unorderProposal(this.props.proposalEditForm.Id),
+        dismiss: () => {},
       },
     });
   }
@@ -46,6 +64,7 @@ export default class ProposalHeaderActions extends Component {
     const { initialdata, proposalEditForm } = this.props;
     const copyStatuses = [...initialdata.Statuses];
     const statusOptions = (proposalEditForm.Status !== 4) ? copyStatuses.filter(item => item.Id !== 4) : copyStatuses;
+    // console.log('header actions read only', this.props.isReadOnly);
     return (
       <Row>
         <Col md={10}>
@@ -57,6 +76,7 @@ export default class ProposalHeaderActions extends Component {
               <Col sm={10}>
                 <Select
                   name="proposalStatus"
+                  disabled={this.props.isReadOnly}
                   value={proposalEditForm.Status}
                   // placeholder=""
                   options={statusOptions}
@@ -71,7 +91,7 @@ export default class ProposalHeaderActions extends Component {
         </Col>
         <Col md={2}>
           <div style={{ float: 'right' }}>
-            { this.props.proposalEditForm.Status !== 3 &&
+            { !this.props.isReadOnly &&
               <DropdownButton bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="header_actions">
                   <MenuItem eventKey="1" onClick={this.onSaveVersion}>Save As Version</MenuItem>
                   <MenuItem eventKey="2" onClick={this.onSwitchVersions}>Switch Version</MenuItem>
@@ -79,7 +99,7 @@ export default class ProposalHeaderActions extends Component {
 
               </DropdownButton>
             }
-            { this.props.proposalEditForm.Status === 3 &&
+            { this.props.isReadOnly &&
               <DropdownButton bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="header_actions">
                   <MenuItem eventKey="1" onClick={this.onSwitchVersions}>Save As Version</MenuItem>
                   <MenuItem eventKey="2" onClick={this.onUnorder}>Unorder</MenuItem>
@@ -94,6 +114,7 @@ export default class ProposalHeaderActions extends Component {
 }
 
 ProposalHeaderActions.defaultProps = {
+  // isReadOnly: false,
 };
 
 /* eslint-disable react/no-unused-prop-types */
@@ -104,5 +125,7 @@ ProposalHeaderActions.propTypes = {
   getProposalVersions: PropTypes.func.isRequired,
   deleteProposal: PropTypes.func.isRequired,
   saveProposalAsVersion: PropTypes.func.isRequired,
+  unorderProposal: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
 };
