@@ -7,9 +7,9 @@ import { FormGroup, ControlLabel, Checkbox, Button, Modal, HelpBlock } from 'rea
 import Select from 'react-select';
 
 import { toggleModal } from 'Ducks/app';
-import { updateEquivalized, updatePostingBook, updatePlaybackType, updateDemos, savePostFileEdit } from 'Ducks/post';
+import { updateEquivalized, updatePostingBook, updatePlaybackType, updateDemos, savePostFileEdit } from 'Ducks/postPrePosting';
 
-const mapStateToProps = ({ app: { modals: { postFileEditModal: modal } }, post: { initialdata: formOptions, fileEditForm: fileEditFormValues } }) => ({
+const mapStateToProps = ({ app: { modals: { postFileEditModal: modal } }, postPrePosting: { initialdata: formOptions, fileEditForm: fileEditFormValues } }) => ({
   modal,
   formOptions,
   fileEditFormValues,
@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch => (
   bindActionCreators({ toggleModal, updateEquivalized, updatePostingBook, updatePlaybackType, updateDemos, savePostFileEdit }, dispatch)
 );
 
-export class PostFileEditModal extends Component {
+export class PostPrePostingFileEditModal extends Component {
   constructor(props) {
     super(props);
     this.close = this.close.bind(this);
@@ -202,7 +202,7 @@ export class PostFileEditModal extends Component {
   }
 }
 
-PostFileEditModal.defaultProps = {
+PostPrePostingFileEditModal.defaultProps = {
   modal: {
     active: false, // modal closed by default
     properties: {},
@@ -218,7 +218,7 @@ PostFileEditModal.defaultProps = {
 };
 
 /* eslint-disable react/no-unused-prop-types */
-PostFileEditModal.propTypes = {
+PostPrePostingFileEditModal.propTypes = {
   formOptions: PropTypes.object.isRequired,
   fileEditFormValues: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
@@ -230,4 +230,4 @@ PostFileEditModal.propTypes = {
   updateDemos: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostFileEditModal);
+export default connect(mapStateToProps, mapDispatchToProps)(PostPrePostingFileEditModal);

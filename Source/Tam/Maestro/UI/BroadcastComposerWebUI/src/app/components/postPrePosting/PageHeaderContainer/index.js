@@ -8,7 +8,7 @@ import SearchInputButton from 'Components/shared/SearchInputButton';
 import UploadButton from 'Components/shared/UploadButton';
 
 import { createAlert } from 'Ducks/app';
-import { getPostFiltered } from 'Ducks/post';
+import { getPostFiltered } from 'Ducks/postPrePosting';
 
 const mapStateToProps = ({ routing }) => ({
   routing,

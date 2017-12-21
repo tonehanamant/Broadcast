@@ -22,7 +22,7 @@ const app = {
   ),
 };
 
-const post = {
+const postPrePosting = {
   getPostInitialData: () => (
     call(GET, `${apiBase}Post/InitialData`, {})
   ),
@@ -85,7 +85,7 @@ const planning = {
 // Calls
 const api = {
   app,
-  post,
+  postPrePosting,
   planning,
 };
 

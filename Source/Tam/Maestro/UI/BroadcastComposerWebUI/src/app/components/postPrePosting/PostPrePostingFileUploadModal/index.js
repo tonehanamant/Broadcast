@@ -7,9 +7,9 @@ import { FormGroup, ControlLabel, Checkbox, Button, Modal, HelpBlock } from 'rea
 import Select from 'react-select';
 
 import { toggleModal, clearFile } from 'Ducks/app';
-import { updateUploadEquivalized, updateUploadPostingBook, updateUploadPlaybackType, updateUploadDemos, uploadPostFile, clearFileUploadForm } from 'Ducks/post';
+import { updateUploadEquivalized, updateUploadPostingBook, updateUploadPlaybackType, updateUploadDemos, uploadPostFile, clearFileUploadForm } from 'Ducks/postPrePosting';
 
-const mapStateToProps = ({ app: { employee, modals: { postFileUploadModal: modal }, file }, post: { initialdata: formOptions, fileUploadForm: fileUploadFormValues } }) => ({
+const mapStateToProps = ({ app: { employee, modals: { postFileUploadModal: modal }, file }, postPrePosting: { initialdata: formOptions, fileUploadForm: fileUploadFormValues } }) => ({
   employee,
   modal,
   file,
@@ -30,7 +30,7 @@ const mapDispatchToProps = dispatch => (
   }, dispatch)
 );
 
-export class PostFileUploadModal extends Component {
+export class PostPrePostingFileUploadModal extends Component {
   constructor(props) {
     super(props);
     this.close = this.close.bind(this);
@@ -225,7 +225,7 @@ export class PostFileUploadModal extends Component {
   }
 }
 
-PostFileUploadModal.defaultProps = {
+PostPrePostingFileUploadModal.defaultProps = {
   modal: {
     active: false, // modal closed by default
     properties: {},
@@ -247,7 +247,7 @@ PostFileUploadModal.defaultProps = {
 };
 
 /* eslint-disable react/no-unused-prop-types */
-PostFileUploadModal.propTypes = {
+PostPrePostingFileUploadModal.propTypes = {
   file: PropTypes.object.isRequired,
   formOptions: PropTypes.object.isRequired,
   fileUploadFormValues: PropTypes.object.isRequired,
@@ -263,5 +263,5 @@ PostFileUploadModal.propTypes = {
   updateUploadDemos: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostFileUploadModal);
+export default connect(mapStateToProps, mapDispatchToProps)(PostPrePostingFileUploadModal);
 

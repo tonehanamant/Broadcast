@@ -44,6 +44,7 @@ export class NavigationBar extends Component {
                 <NavItem componentClass={Link} href="/broadcast/planning" to="/broadcast/planning">Planning</NavItem>
                 <NavItem componentClass={Link} href="/broadcast/traffic" to="/broadcast/traffic">Traffic</NavItem>
                 <NavItem componentClass={Link} href="/broadcast/Home/TrackerPrePosting" to="/broadcast/Home/TrackerPrePosting">Tracker Pre Posting</NavItem>
+                <NavItem componentClass={Link} href="/broadcastreact/post-pre-posting" to="/broadcastreact/post-pre-posting" active={this.props.routing.location.pathname === '/broadcastreact/post-pre-posting'}>Post Pre Posting</NavItem>
                 <NavItem componentClass={Link} href="/broadcastreact/post" to="/broadcastreact/post" active={this.props.routing.location.pathname === '/broadcastreact/post'}>Post</NavItem>
               </Nav>
             </Navbar.Collapse>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleModal, createAlert, setOverlayLoading } from 'Ducks/app';
-import { getPostInitialData, getPost, getPostFiltered, deletePost, getPostFileEdit } from 'Ducks/post';
+import { getPostInitialData, getPost, getPostFiltered, deletePost, getPostFileEdit } from 'Ducks/postPrePosting';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
 import Sorter from 'Utils/react-redux-grid-sorter';
@@ -22,7 +22,7 @@ const { doLocalSort } = GridActions;
 /* ////////////////////////////////// */
 /* // MAPPING STATE AND DISPATCH
 /* ////////////////////////////////// */
-const mapStateToProps = ({ post: { initialdata }, post: { post }, grid, dataSource, menu }) => ({
+const mapStateToProps = ({ postPrePosting: { initialdata }, postPrePosting: { post }, grid, dataSource, menu }) => ({
   // App
   initialdata,
   post,

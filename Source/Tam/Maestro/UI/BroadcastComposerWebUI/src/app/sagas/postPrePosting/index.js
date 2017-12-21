@@ -4,16 +4,16 @@ import FuzzySearch from 'fuzzy-search';
 import moment from 'moment';
 
 import * as appActions from 'Ducks/app/actionTypes';
-import * as postActions from 'Ducks/post/actionTypes';
+import * as postPrePostingActions from 'Ducks/postPrePosting/actionTypes';
 import api from '../api';
 
-const ACTIONS = { ...appActions, ...postActions };
+const ACTIONS = { ...appActions, ...postPrePostingActions };
 
 /* ////////////////////////////////// */
 /* REQUEST POST INITIAL DATA */
 /* ////////////////////////////////// */
 export function* requestPostInitialData() {
-  const { getPostInitialData } = api.post;
+  const { getPostInitialData } = api.postPrePosting;
 
   try {
     yield put({
@@ -81,7 +81,7 @@ export function* requestPostInitialData() {
 /* REQUEST POST */
 /* ////////////////////////////////// */
 export function* requestPost() {
-  const { getPosts } = api.post;
+  const { getPosts } = api.postPrePosting;
 
   try {
     yield put({
@@ -232,7 +232,7 @@ export function* requestPostFiltered({ payload: query }) {
 /* DELETE POST BY ID */
 /* ////////////////////////////////// */
 export function* deletePostById({ payload: id }) {
-  const { deletePost } = api.post;
+  const { deletePost } = api.postPrePosting;
 
   try {
     const response = yield deletePost(id);
@@ -293,7 +293,7 @@ export function* deletePostById({ payload: id }) {
 /* REQUEST POST FILE EDIT  */
 /* ////////////////////////////////// */
 export function* requestPostFileEdit({ payload: id }) {
-  const { getPost } = api.post;
+  const { getPost } = api.postPrePosting;
   try {
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,
@@ -368,7 +368,7 @@ export function* requestPostFileEdit({ payload: id }) {
 /* SAVE POST FILE EDIT */
 /* ////////////////////////////////// */
 export function* savePostFileEdit({ payload: params }) {
-  const { savePost } = api.post;
+  const { savePost } = api.postPrePosting;
   try {
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
@@ -453,7 +453,7 @@ export function* savePostFileEdit({ payload: params }) {
 /* UPLOAD POST FILE */
 /* ////////////////////////////////// */
 export function* uploadPostFile({ payload: params }) {
-  const { uploadPost } = api.post;
+  const { uploadPost } = api.postPrePosting;
   try {
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,

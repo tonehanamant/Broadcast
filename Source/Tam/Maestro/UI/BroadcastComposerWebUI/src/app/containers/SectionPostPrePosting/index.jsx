@@ -2,10 +2,10 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import AppBody from 'Components/body/AppBody';
 import PageTitle from 'Components/shared/PageTitle';
-import PageHeaderContainer from 'Components/post/PageHeaderContainer';
-import DataGridContainer from 'Components/post/DataGridContainer';
-import PostFileEditModal from 'Components/post/PostFileEditModal';
-import PostFileUploadModal from 'Components/post/PostFileUploadModal';
+import PageHeaderContainer from 'Components/postPrePosting/PageHeaderContainer';
+import DataGridContainer from 'Components/postPrePosting/DataGridContainer';
+import PostPrePostingFileEditModal from 'Components/postPrePosting/PostPrePostingFileEditModal';
+import PostPrePostingFileUploadModal from 'Components/postPrePosting/PostPrePostingFileUploadModal';
 import Dropzone from 'Components/shared/Dropzone';
 
 import styles from './index.style.scss';
@@ -24,11 +24,11 @@ export const SectionPost = () => (
       }}
     >
       <AppBody>
-          <PageTitle title="Posting" />
+          <PageTitle title="Post Pre Posting" />
           <PageHeaderContainer />
           <DataGridContainer />
-          <PostFileEditModal />
-          <PostFileUploadModal />
+          <PostPrePostingFileEditModal />
+          <PostPrePostingFileUploadModal />
       </AppBody>
     </Dropzone>
   </div>
