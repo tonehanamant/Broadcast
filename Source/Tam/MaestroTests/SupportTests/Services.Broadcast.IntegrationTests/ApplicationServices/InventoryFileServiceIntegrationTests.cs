@@ -3058,7 +3058,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void StationConflictsUpdateConflictTest()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -3075,6 +3074,52 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }, 24538);
 
                 Assert.IsFalse(conflicted);
+            }
+        }
+
+        [Test]
+        public void DeleteProgramTest()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                const int manifestId = 26684;
+
+                _InventoryFileService.DeleteProgram(manifestId);
+
+                var allStationPrograms = _InventoryFileService.GetAllStationPrograms("OpenMarket", 123);
+
+                var deletedStationProgram = allStationPrograms.FirstOrDefault(p => p.Id == manifestId);
+
+                Assert.IsNull(deletedStationProgram);
+            }
+        }
+
+        [Test]
+        public void ExpireManifestTest()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                const int manifestId = 26684;
+                var expireDate = new DateTime(2017, 9, 17);
+
+                _InventoryFileService.ExpireManifest(manifestId, expireDate);
+
+                var allStationPrograms = _InventoryFileService.GetAllStationPrograms("OpenMarket", 5319);
+
+                var manifest = allStationPrograms.First(p => p.Id == manifestId);
+
+                Assert.AreEqual(expireDate, manifest.EndDate);
+            }
+        }
+
+        [Test]
+        public void HasSpotsAllocatedTest()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var hasSpotAllocated = _InventoryFileService.HasSpotsAllocated(26672);
+
+                Assert.IsTrue(hasSpotAllocated);
             }
         }
     }

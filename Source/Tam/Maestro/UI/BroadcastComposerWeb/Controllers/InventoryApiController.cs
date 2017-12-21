@@ -246,5 +246,37 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                 .GetStationProgramConflicted(conflict, programId));
         }
+
+        [HttpDelete]
+        [Route("Programs/{programId}")]
+        public BaseResponse<bool> DeleteProgra(int programId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                        .DeleteProgram(programId));
+        }
+
+        [HttpPost]
+        [Route("Programs/{ProgramId}/Flight")]
+        public BaseResponse<bool> TrimProgramFlight(int programId, [FromUri] DateTime endDate)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () =>
+                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                            .ExpireManifest(programId, endDate));
+        }
+
+        [HttpGet]
+        [Route("Programs/{ProgramId}/HasSpotsAllocated")]
+        public BaseResponse<bool> HasSpotsAllocated(int programId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () =>
+                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                            .HasSpotsAllocated(programId));
+        }
     }
 }
