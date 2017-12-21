@@ -828,6 +828,82 @@ export function* deleteProposalById({ payload: id }) {
 /* UNORDER PROPOSAL */
 /* ////////////////////////////////// */
 
+export function* unorderProposal({ payload: id }) {
+  const { unorderProposal } = api.planning;
+
+  try {
+    yield put({
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
+      overlay: {
+        id: 'unorderProposal',
+        processing: true,
+      },
+    });
+    const response = yield unorderProposal(id);
+    const { status, data } = response;
+    yield put({
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
+      overlay: {
+        id: 'unorderProposal',
+        processing: false,
+      },
+    });
+    if (status !== 200) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No proposal version data returned.',
+          message: `The server encountered an error processing the request (unorder proposal data ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Success) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No unorder proposal data returned.',
+          message: data.Message || 'The server encountered an error processing the request (unorder proposal data). Please try again or contact your administrator to review error logs.',
+        },
+      });
+      throw new Error();
+    }
+    data.Data = yield flattenProposalDetails(data.Data);
+    yield put({
+      type: ACTIONS.RECEIVE_PROPOSAL,
+      data,
+    });
+  } catch (e) {
+    if (e.response) {
+      // capture here if 401 with data.Message only/ need to close overlay
+      // console.log('unorder error catch', e.response);
+      yield put({
+        type: ACTIONS.SET_OVERLAY_PROCESSING,
+        overlay: {
+          id: 'unorderProposal',
+          processing: false,
+        },
+      });
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No unorder proposal data returned.',
+          message: e.response.data.Message || 'The server encountered an error processing the request (unorder proposal data). Please try again or contact your administrator to review error logs.',
+          exception: e.response.data.ExceptionMessage || '',
+        },
+      });
+    }
+    if (!e.response && e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
 // . . .
 
 
@@ -1068,6 +1144,10 @@ export function* watchUpdateProposal() {
 
 export function* watchModelNewProposalDetail() {
   yield takeEvery(ACTIONS.MODEL_NEW_PROPOSAL_DETAIL, modelNewProposalDetail);
+}
+
+export function* watchModelUnorderProposal() {
+  yield takeEvery(ACTIONS.UNORDER_PROPOSAL, unorderProposal);
 }
 
 // if assign watcher > assign in sagas/index rootSaga also

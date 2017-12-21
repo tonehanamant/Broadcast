@@ -252,7 +252,7 @@ var RateStationView = BaseView.extend({
         switch (menuId) {
             case 1:
                 var title = 'Delete this program',
-                    message = 'Are you sure you want to delete ' + rec.Program + ' (' + itemId + ')' + '?';
+                    message = 'Are you sure you want to delete <strong>' + rec.ProgramName + ' (' + itemId + ')' + '</strong>?';
                 //change to pass record - as BE needs additional data
                 util.confirm(title, message, this.controller.apiDeleteStationRate.bind(this.controller, rec));
                 break;
