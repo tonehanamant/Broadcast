@@ -16,7 +16,7 @@ using ControllerBase = Tam.Maestro.Web.Common.ControllerBase;
 
 namespace BroadcastComposerWeb.Controllers
 {
-    [RoutePrefix("api/Post")]
+    [RoutePrefix("api/PostPrePosting")]
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class PostApiController : BroadcastControllerBase
     {
