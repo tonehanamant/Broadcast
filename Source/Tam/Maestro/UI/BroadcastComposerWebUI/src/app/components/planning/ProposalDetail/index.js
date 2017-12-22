@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import { Well, Form, FormGroup, ControlLabel, Row, Col, FormControl, Button, Checkbox, Glyphicon } from 'react-bootstrap';
+import { Well, Form, FormGroup, ControlLabel, Row, Col, FormControl, Button, Checkbox, Glyphicon, HelpBlock } from 'react-bootstrap';
 import FlightPicker from 'Components/shared/FlightPicker';
 import ProposalDetailGrid from 'Components/planning/ProposalDetailGrid';
 import Sweeps from './Sweeps';
@@ -10,50 +10,65 @@ export default class ProposalDetail extends Component {
   constructor(props) {
     super(props);
 
+    this.onFlightPickerApply = this.onFlightPickerApply.bind(this);
     this.onChangeSpotLength = this.onChangeSpotLength.bind(this);
     this.onChangeDaypartCode = this.onChangeDaypartCode.bind(this);
     this.onChangeAdu = this.onChangeAdu.bind(this);
     this.onDeleteProposalDetail = this.onDeleteProposalDetail.bind(this);
-    this.onFlightPickerApply = this.onFlightPickerApply.bind(this);
-    this.FlightPickerApply = this.FlightPickerApply.bind(this);
 
-    this.checkValid = this.checkValid.bind(this);
-    this.setValidationState = this.setValidationState.bind(this);
-    this.clearValidationStates = this.clearValidationStates.bind(this);
-
+    this.flightPickerApply = this.flightPickerApply.bind(this);
     this.openSweepsModal = this.openSweepsModal.bind(this);
 
+    this.setValidationState = this.setValidationState.bind(this);
+    this.onSaveShowValidation = this.onSaveShowValidation.bind(this);
+    this.checkValidSpotLength = this.checkValidSpotLength.bind(this);
+    this.checkValidDaypart = this.checkValidDaypart.bind(this);
+    this.checkValidDaypartCode = this.checkValidDaypartCode.bind(this);
+
     this.state = {
-      activeDetail: true, // temp use prop
-      spotLengthInvalid: null,
-      datpartInvalid: null,
-      daypartCodeInvalid: null,
+      validationStates: {
+        SpotLengthId: null,
+        Daypart: null,
+        DaypartCode: null,
+        DaypartCode_Alphanumeric: null,
+        DaypartCode_MaxChar: null,
+      },
     };
   }
 
-  openSweepsModal() {
-    this.props.toggleModal({
-      modal: 'sweepsModal',
-      active: true,
-      properties: { detailId: this.props.detail.Id },
-    });
+  onFlightPickerApply(flight) {
+    if (this.props.detail) {
+      this.props.toggleModal({
+        modal: 'confirmModal',
+        active: true,
+        properties: {
+          titleText: 'Flight Change',
+          bodyText: 'Existing data will be affected by this Flight change. Click Continue to proceed',
+          closeButtonText: 'Cancel',
+          closeButtonBsStyle: 'default',
+          actionButtonText: 'Continue',
+          actionButtonBsStyle: 'warning',
+          action: () => this.flightPickerApply(flight),
+          dismiss: () => {},
+        },
+      });
+    } else {
+      this.flightPickerApply(flight);
+    }
   }
 
   onChangeSpotLength(value) {
     const val = value ? value.Id : null;
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'SpotLengthId', value: val });
-    this.setValidationState('spotLengthInvalid', val ? null : 'error');
-    // console.log('onChangeSpotLength', value, this.props.detail);
+    this.checkValidSpotLength(val);
   }
 
   // onChangeDaypart - TODO with validation
 
   onChangeDaypartCode(event) {
-    const re = /^[a-z0-9]+$/i; // check alphanumeric
-    const val = event.target.value ? event.target.value : '';
+    const val = event.target.value || '';
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'DaypartCode', value: val });
-    this.setValidationState('daypartCodeInvalid', re.test(val) && val.length <= 10 ? null : 'error');
-    // console.log('onChangeDaypartCode', event.target.value, this.props.detail);
+    this.checkValidDaypartCode(val);
   }
 
   onChangeAdu(event) {
@@ -77,28 +92,7 @@ export default class ProposalDetail extends Component {
     });
   }
 
-  onFlightPickerApply(flight) {
-    if (this.props.detail) {
-      this.props.toggleModal({
-        modal: 'confirmModal',
-        active: true,
-        properties: {
-          titleText: 'Flight Change',
-          bodyText: 'Existing data will be affected by this Flight change. Click Continue to proceed',
-          closeButtonText: 'Cancel',
-          closeButtonBsStyle: 'default',
-          actionButtonText: 'Continue',
-          actionButtonBsStyle: 'warning',
-          action: () => this.FlightPickerApply(flight),
-          dismiss: () => {},
-        },
-      });
-    } else {
-      this.FlightPickerApply(flight);
-    }
-  }
-
-  FlightPickerApply(flight) {
+  flightPickerApply(flight) {
     if (this.props.detail) {
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightStartDate', value: flight.StartDate });
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightEndDate', value: flight.EndDate });
@@ -110,35 +104,58 @@ export default class ProposalDetail extends Component {
     }
   }
 
-  setValidationState(type, state) {
-    this.state[type] = state;
-  }
-
-  clearValidationStates() {
-    this.setState({
-      spotLengthInvalid: null,
-      datpartInvalid: null,
-      daypartCodeInvalid: null,
+  openSweepsModal() {
+    this.props.toggleModal({
+      modal: 'sweepsModal',
+      active: true,
+      properties: { detailId: this.props.detail.Id },
     });
   }
 
-  checkValid() {
-    const spotValid = this.props.detail.SpotLengthId != null;
-    const daypartValid = this.props.detail.Daypart != null;
-    const daypartcodeValid = (this.props.detail.DaypartCode != null) && (this.props.detail.DaypartCode !== ''); // presumably alphanumeric already tested
-    if (spotValid && daypartValid && daypartcodeValid) {
-      this.clearValidationStates();
-      return true;
+  setValidationState(type, state) {
+    this.setState(prevState => ({
+      ...prevState,
+      validationStates: {
+        ...prevState.validationStates,
+        [type]: state,
+      },
+    }));
+  }
+
+  onSaveShowValidation(nextProps) {
+    const { SpotLengthId, Daypart, DaypartCode } = nextProps.detail;
+    this.checkValidSpotLength(SpotLengthId);
+    this.checkValidDaypart(Daypart);
+    this.checkValidDaypartCode(DaypartCode);
+  }
+
+  checkValidSpotLength(value) {
+    const val = value;
+    this.setValidationState('SpotLengthId', val ? null : 'error');
+  }
+
+  checkValidDaypart(value) {
+    const val = value;
+    this.setValidationState('Daypart', val ? null : 'error');
+  }
+
+  checkValidDaypartCode(value) {
+    const val = value || '';
+    this.setValidationState('DaypartCode', val !== '' ? null : 'error');
+    const re = /^[a-z0-9]+$/i; // check alphanumeric
+    this.setValidationState('DaypartCode_Alphanumeric', (re.test(val) || val === '') ? null : 'error');
+    this.setValidationState('DaypartCode_MaxChar', val.length <= 10 ? null : 'error');
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.proposalValidationStates.DetailInvalid === true) {
+      this.onSaveShowValidation(nextProps);
     }
-    this.setValidationState('spotLengthInvalid', spotValid ? null : 'error');
-    this.setValidationState('daypartInvalid', daypartValid ? null : 'error');
-    this.setValidationState('daypartCodeInvalid', daypartcodeValid ? null : 'error');
-    return false;
   }
 
   render() {
 		/* eslint-disable no-unused-vars */
-    const { detail, proposalEditForm, initialdata, updateProposalEditFormDetail, updateProposalEditFormDetailGrid, onUpdateProposal, isReadOnly, toggleModal } = this.props;
+    const { detail, proposalEditForm, initialdata, updateProposalEditFormDetail, updateProposalEditFormDetailGrid, onUpdateProposal, isReadOnly, toggleModal, proposalValidationStates } = this.props;
     return (
 			<Well bsSize="small">
         <Row>
@@ -155,7 +172,7 @@ export default class ProposalDetail extends Component {
                 />
               </FormGroup>
               {detail &&
-              <FormGroup controlId="proposalDetailSpotLength" validationState={this.state.spotLengthInvalid}>
+              <FormGroup controlId="proposalDetailSpotLength" validationState={this.state.validationStates.SpotLengthId}>
                 <ControlLabel style={{ float: 'left', margin: '8px 10px 0 16px' }}>Spot Length</ControlLabel>
                 <Select
                   name="proposalDetailSpotLength"
@@ -169,18 +186,38 @@ export default class ProposalDetail extends Component {
                   wrapperStyle={{ float: 'left', minWidth: '70px' }}
                   disabled={isReadOnly}
                 />
+                {this.state.validationStates.SpotLengthId != null &&
+                <HelpBlock style={{ margin: '0 0 0 16px' }}>
+                  <span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
+                </HelpBlock>
+                }
               </FormGroup>
               }
               {detail &&
-              <FormGroup controlId="proposalDetailDaypart" validationState={this.state.daypartInvalid}>
+              <FormGroup controlId="proposalDetailDaypart" validationState={null}>
                 <ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart</ControlLabel>
                   <FormControl type="text" value={detail.Daypart && detail.Daypart.Text ? detail.Daypart.Text : ''} disabled={isReadOnly} readOnly />
               </FormGroup>
               }
               {detail &&
-              <FormGroup controlId="proposalDetailDaypartCode" validationState={this.state.daypartCodeInvalid}>
+              <FormGroup controlId="proposalDetailDaypartCode" validationState={this.state.validationStates.DaypartCode || this.state.validationStates.DaypartCode_Alphanumeric || this.state.validationStates.DaypartCode_MaxChar}>
                 <ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart Code</ControlLabel>
-                  <FormControl type="text" style={{ width: '80px' }} value={detail.DaypartCode ? detail.DaypartCode : ''} onChange={this.onChangeDaypartCode} disabled={isReadOnly} />
+                <FormControl type="text" style={{ width: '80px' }} value={detail.DaypartCode ? detail.DaypartCode : ''} onChange={this.onChangeDaypartCode} disabled={isReadOnly} />
+                {this.state.validationStates.DaypartCode != null &&
+                <HelpBlock style={{ margin: '0 0 0 16px' }}>
+                  <span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
+                </HelpBlock>
+                }
+                {this.state.validationStates.DaypartCode_Alphanumeric != null &&
+                <HelpBlock style={{ margin: '0 0 0 16px' }}>
+                  <span className="text-danger" style={{ fontSize: 11 }}>Please enter only alphanumeric characters.</span>
+                </HelpBlock>
+                }
+                {this.state.validationStates.DaypartCode_MaxChar != null &&
+                <HelpBlock style={{ margin: '0 0 0 16px' }}>
+                  <span className="text-danger" style={{ fontSize: 11 }}>Please enter no more than 10 characters.</span>
+                </HelpBlock>
+                }
               </FormGroup>
               }
               {detail &&
@@ -196,7 +233,7 @@ export default class ProposalDetail extends Component {
               </FormGroup>
               }
               {(detail && !isReadOnly) &&
-              <Button bsStyle="link" style={{ float: 'right' }} onClick={this.onDeleteProposalDetail}><Glyphicon style={{ color: 'red', fontSize: '16px' }} glyph="trash" /></Button>
+              <Button bsStyle="link" style={{ float: 'right' }} onClick={this.onDeleteProposalDetail}><Glyphicon style={{ color: '#c12e2a', fontSize: '16px' }} glyph="trash" /></Button>
               }
               {detail &&
               <Button
@@ -222,6 +259,7 @@ export default class ProposalDetail extends Component {
               updateProposalEditFormDetailGrid={updateProposalEditFormDetailGrid}
               onUpdateProposal={onUpdateProposal}
               toggleModal={toggleModal}
+              proposalValidationStates={proposalValidationStates}
             />
           </Col>
         </Row>
@@ -243,6 +281,7 @@ export default class ProposalDetail extends Component {
 ProposalDetail.defaultProps = {
   detail: null,
   proposalEditForm: {},
+  proposalValidationStates: {},
   updateProposalEditFormDetail: () => {},
   updateProposalEditFormDetailGrid: () => {},
   onUpdateProposal: () => {},
@@ -262,4 +301,6 @@ ProposalDetail.propTypes = {
   modelNewProposalDetail: PropTypes.func,
   toggleModal: PropTypes.func,
   isReadOnly: PropTypes.bool.isRequired,
+
+  proposalValidationStates: PropTypes.object,
 };

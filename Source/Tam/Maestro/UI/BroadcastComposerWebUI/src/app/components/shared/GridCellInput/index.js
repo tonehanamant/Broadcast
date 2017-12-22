@@ -9,14 +9,26 @@ export default class GridCellInput extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
+			touched: false,
 			inputValue: this.props.value,
 		};
+		this.onInputFocus = this.onInputFocus.bind(this);
 		this.onInputChange = this.onInputChange.bind(this);
 		this.onInput = this.onInput.bind(this);
 	}
 
+	onInputFocus() {
+		if (this.state.inputValue === 0 || this.state.inputValue === '0') {
+			this.setState({
+				touched: true,
+				inputValue: '',
+			});
+		}
+	}
+
 	onInputChange(event) {
 		this.setState({
+			touched: true,
 			inputValue: event.target.value,
 		});
 	}
@@ -44,7 +56,12 @@ export default class GridCellInput extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.value !== this.props.value) { this.setState({ inputValue: nextProps.value }); }
+		if (nextProps.value !== this.props.value) {
+			this.setState({
+				touched: true,
+				inputValue: nextProps.value,
+			});
+		}
 	}
 
   render() {
@@ -73,16 +90,21 @@ export default class GridCellInput extends Component {
 			}
 		};
 
+		const editableClass = this.props.isEditable ? 'editable-cell' : 'non-editable-cell';
+		const touchedClass = this.state.touched && this.props.isEditable ? 'editable-cell-changed' : '';
+		const hasErrorTouchedClass = (this.state.touched && (this.state.inputValue === 0 || this.state.inputValue === '0')) && this.props.isEditable ? 'editable-cell-has-error' : '';
+		const hasErrorOnSaveClass = (this.props.onSaveShowValidation && (this.state.inputValue === 0 || this.state.inputValue === '0')) && this.props.isEditable ? 'editable-cell-has-error' : '';
 
     return (
 			<MaskedTextInput
-				className={`${(this.props.isEditable ? 'editable-cell' : 'non-editable-cell')}`}
+				className={`${editableClass} ${touchedClass} ${hasErrorTouchedClass} ${hasErrorOnSaveClass}`}
 				name={this.props.name}
 				placeholder={this.props.placeholder}
 				value={this.state.inputValue}
 				valuekey={this.props.valueKey}
 
 				disabled={!this.props.isEditable}
+				onFocus={this.onInputFocus}
 				onChange={this.onInputChange}
 				onKeyPress={(event) => {
 					if (event.key === 'Enter') { event.currentTarget.blur(); }
@@ -108,6 +130,7 @@ GridCellInput.defaultProps = {
 		actionButtonBsStyle: 'warning',
 	},
 	toggleModal: () => {},
+	onSaveShowValidation: false,
 
 	blurAction: () => {},
 	enterKeyPressAction: () => {},
@@ -142,6 +165,7 @@ GridCellInput.propTypes = {
 	confirmInput: PropTypes.bool,
 	confirmModalProperties: PropTypes.object,
 	toggleModal: PropTypes.func,
+	onSaveShowValidation: PropTypes.bool,
 
 	blurAction: PropTypes.func,
 	// enterKeyPressAction: PropTypes.func,

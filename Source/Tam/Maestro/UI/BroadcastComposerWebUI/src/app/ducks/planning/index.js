@@ -51,6 +51,11 @@ const initialState = {
   },
   proposalEditForm: {},
   versions: [],
+  proposalValidationStates: {
+    FormInvalid: false,
+    DetailInvalid: false,
+    DetailGridsInvalid: false,
+  },
 };
 
 initialState.proposalEditForm = { ...initialState.proposal };
@@ -132,7 +137,10 @@ export default function reducer(state = initialState, action) {
       const detailIndex = details.findIndex(detail => detail.Id === payload.id);
       const quarterIndex = payload.quarterIndex;
       const weekIndex = payload.weekIndex;
-      const rowIndex = details[detailIndex].GridQuarterWeeks.findIndex(row => row._key === payload.row);
+      let rowIndex = details[detailIndex].GridQuarterWeeks.findIndex(row => row._key === payload.row);
+      if (rowIndex === -1) rowIndex = payload.row.replace(/row-/, '');
+
+      console.log('PAYLOAD!!!', payload, rowIndex);
 
       let newState = { ...state };
 
@@ -144,7 +152,7 @@ export default function reducer(state = initialState, action) {
                 Quarters: {
                   [quarterIndex]: {
                     [payload.key]: { $set: payload.value },
-                    DistributeGoals: { $set: payload.key === 'ImpressionGoal' },
+                    DistributeGoals: { $set: (payload.key === 'ImpressionGoal' || payload.key === 'Impressions') },
                   },
                 },
                 GridQuarterWeeks: {
@@ -163,6 +171,7 @@ export default function reducer(state = initialState, action) {
               [detailIndex]: {
                 Quarters: {
                   [quarterIndex]: {
+                    DistributeGoals: { $set: false },
                     Weeks: {
                       [weekIndex]: {
                         [payload.key]: { $set: payload.value },
@@ -238,6 +247,14 @@ export default function reducer(state = initialState, action) {
         Details: data.Data.Details,
       },
     };
+
+    case ACTIONS.SET_PROPOSAL_VALIDATION_STATE:
+    return Object.assign({}, state, {
+      proposalValidationStates: {
+        ...state.proposalValidationStates,
+        [payload.type]: payload.state,
+      },
+    });
 
     default:
       return state;
@@ -328,4 +345,9 @@ export const modelNewProposalDetail = flight => ({
 export const unorderProposal = id => ({
   type: ACTIONS.UNORDER_PROPOSAL,
   payload: id,
+});
+
+export const setProposalValidationState = typeState => ({
+  type: ACTIONS.SET_PROPOSAL_VALIDATION_STATE,
+  payload: typeState,
 });

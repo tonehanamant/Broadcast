@@ -62,6 +62,9 @@ namespace Services.Broadcast.ApplicationServices
         List<StationProgram> GetAllStationPrograms(string inventorySource, int stationCode);
         bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId);
         List<StationProgram> GetStationProgramConflicts(StationProgramConflictRequest conflict);
+        bool DeleteProgram(int programId);
+        bool ExpireManifest(int programId, DateTime endDate);
+        bool HasSpotsAllocated(int programId);
     }
 
     public class InventoryService : IInventoryService
@@ -1058,6 +1061,25 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return _GetStationProgramsFromStationInventoryManifest(filteredPrograms);
+        }
+
+        public bool DeleteProgram(int programId)
+        {
+            _inventoryRepository.RemoveManifest(programId);
+
+            return true;
+        }
+
+        public bool ExpireManifest(int programId, DateTime endDate)
+        {
+            _inventoryRepository.ExpireManifest(programId, endDate);
+
+            return true;
+        }
+
+        public bool HasSpotsAllocated(int programId)
+        {
+            return _inventoryRepository.HasSpotsAllocated(programId);
         }
 
         private static bool _DateRangesIntersect(DateTime startDate1, DateTime endDate1, DateTime startDate2, DateTime endDate2)
