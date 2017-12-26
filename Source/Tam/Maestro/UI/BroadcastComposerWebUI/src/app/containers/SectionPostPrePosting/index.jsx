@@ -4,8 +4,8 @@ import AppBody from 'Components/body/AppBody';
 import PageTitle from 'Components/shared/PageTitle';
 import PageHeaderContainer from 'Components/postPrePosting/PageHeaderContainer';
 import DataGridContainer from 'Components/postPrePosting/DataGridContainer';
-// import PostPrePostingFileEditModal from 'Components/postPrePosting/PostPrePostingFileEditModal';
-// import PostPrePostingFileUploadModal from 'Components/postPrePosting/PostPrePostingFileUploadModal';
+import PostPrePostingFileEditModal from 'Components/postPrePosting/PostPrePostingFileEditModal';
+import PostPrePostingFileUploadModal from 'Components/postPrePosting/PostPrePostingFileUploadModal';
 import Dropzone from 'Components/shared/Dropzone';
 
 import styles from './index.style.scss';
@@ -27,8 +27,8 @@ export const SectionPost = () => (
           <PageTitle title="Post Pre Posting" />
           <PageHeaderContainer />
           <DataGridContainer />
-          {/* <PostPrePostingFileEditModal />
-          <PostPrePostingFileUploadModal /> */}
+          <PostPrePostingFileEditModal />
+          <PostPrePostingFileUploadModal />
       </AppBody>
     </Dropzone>
   </div>

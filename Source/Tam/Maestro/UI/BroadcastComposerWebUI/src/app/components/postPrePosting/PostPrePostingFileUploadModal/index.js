@@ -7,7 +7,7 @@ import { FormGroup, ControlLabel, Checkbox, Button, Modal, HelpBlock } from 'rea
 import Select from 'react-select';
 
 import { toggleModal, clearFile } from 'Ducks/app';
-import { updateUploadEquivalized, updateUploadPostingBook, updateUploadPlaybackType, updateUploadDemos, uploadPostFile, clearFileUploadForm } from 'Ducks/postPrePosting';
+import { updateUploadEquivalized, updateUploadPostingBook, updateUploadPlaybackType, updateUploadDemos, uploadPostPrePostingFile, clearFileUploadForm } from 'Ducks/postPrePosting';
 
 const mapStateToProps = ({ app: { employee, modals: { postFileUploadModal: modal }, file }, postPrePosting: { initialdata: formOptions, fileUploadForm: fileUploadFormValues } }) => ({
   employee,
@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => (
     updateUploadPostingBook,
     updateUploadPlaybackType,
     updateUploadDemos,
-    uploadPostFile,
+    uploadPostPrePostingFile,
   }, dispatch)
 );
 
@@ -80,7 +80,7 @@ export class PostPrePostingFileUploadModal extends Component {
         ...postFile,
       };
     // console.log('save posting', ret);
-      this.props.uploadPostFile(ret);
+      this.props.uploadPostPrePostingFile(ret);
     }
   }
 
@@ -256,7 +256,7 @@ PostPrePostingFileUploadModal.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   clearFile: PropTypes.func.isRequired,
   clearFileUploadForm: PropTypes.func.isRequired,
-  uploadPostFile: PropTypes.func.isRequired,
+  uploadPostPrePostingFile: PropTypes.func.isRequired,
   updateUploadEquivalized: PropTypes.func.isRequired,
   updateUploadPostingBook: PropTypes.func.isRequired,
   updateUploadPlaybackType: PropTypes.func.isRequired,

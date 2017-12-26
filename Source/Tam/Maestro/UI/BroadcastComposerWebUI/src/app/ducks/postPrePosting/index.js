@@ -248,12 +248,12 @@ export const getPostPrePostingFileEdit = id => ({
   payload: id,
 });
 
-export const savePostFileEdit = params => ({
-  type: ACTIONS.REQUEST_POST_FILE_EDIT_SAVE,
+export const savePostPrePostingFileEdit = params => ({
+  type: ACTIONS.REQUEST_POST_PRE_POSTING_FILE_EDIT_SAVE,
   payload: params,
 });
 
-export const uploadPostFile = params => ({
-  type: ACTIONS.REQUEST_POST_FILE_UPLOAD,
+export const uploadPostPrePostingFile = params => ({
+  type: ACTIONS.REQUEST_POST_PRE_POSTING_FILE_UPLOAD,
   payload: params,
 });

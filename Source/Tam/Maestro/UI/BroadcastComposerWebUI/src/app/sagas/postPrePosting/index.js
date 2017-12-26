@@ -365,9 +365,9 @@ export function* requestPostPrePostingFileEdit({ payload: id }) {
 }
 
 /* ////////////////////////////////// */
-/* SAVE POST FILE EDIT */
+/* SAVE POST PRE POSTING FILE EDIT */
 /* ////////////////////////////////// */
-export function* savePostFileEdit({ payload: params }) {
+export function* savePostPrePostingFileEdit({ payload: params }) {
   const { savePost } = api.postPrePosting;
   try {
     yield put({
@@ -407,7 +407,7 @@ export function* savePostFileEdit({ payload: params }) {
       throw new Error();
     }
     yield put({
-      type: ACTIONS.RECEIVE_POST_FILE_EDIT_SAVE,
+      type: ACTIONS.RECEIVE_POST_PRE_POSTING_FILE_EDIT_SAVE,
       data,
     });
     yield put({
@@ -425,7 +425,7 @@ export function* savePostFileEdit({ payload: params }) {
       },
     });
     yield put({
-      type: ACTIONS.REQUEST_POST,
+      type: ACTIONS.REQUEST_POST_PRE_POSTING,
     });
   } catch (e) {
     if (e.response) {
@@ -450,9 +450,9 @@ export function* savePostFileEdit({ payload: params }) {
 }
 
 /* ////////////////////////////////// */
-/* UPLOAD POST FILE */
+/* UPLOAD POST PRE POSTING FILE */
 /* ////////////////////////////////// */
-export function* uploadPostFile({ payload: params }) {
+export function* uploadPostPrePostingFile({ payload: params }) {
   const { uploadPost } = api.postPrePosting;
   try {
     yield put({
@@ -516,7 +516,7 @@ export function* uploadPostFile({ payload: params }) {
       type: ACTIONS.CLEAR_FILE_UPLOAD_FORM,
     });
     yield put({
-      type: ACTIONS.REQUEST_POST,
+      type: ACTIONS.REQUEST_POST_PRE_POSTING,
     });
   } catch (e) {
     if (e.response) {
@@ -568,12 +568,12 @@ export function* watchRequestPostPrePostingFileEdit() {
   yield takeEvery(ACTIONS.REQUEST_POST_PRE_POSTING_FILE_EDIT, requestPostPrePostingFileEdit);
 }
 
-export function* watchSavePostFileEdit() {
-  yield takeEvery(ACTIONS.REQUEST_POST_FILE_EDIT_SAVE, savePostFileEdit);
+export function* watchSavePostPrePostingFileEdit() {
+  yield takeEvery(ACTIONS.REQUEST_POST_PRE_POSTING_FILE_EDIT_SAVE, savePostPrePostingFileEdit);
 }
 
-export function* watchUploadPostFile() {
-  yield takeEvery(ACTIONS.REQUEST_POST_FILE_UPLOAD, uploadPostFile);
+export function* watchUploadPostPrePostingFile() {
+  yield takeEvery(ACTIONS.REQUEST_POST_PRE_POSTING_FILE_UPLOAD, uploadPostPrePostingFile);
 }
 
 // if assign watcher > assign in sagas/index rootSaga also

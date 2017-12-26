@@ -7,7 +7,7 @@ import { FormGroup, ControlLabel, Checkbox, Button, Modal, HelpBlock } from 'rea
 import Select from 'react-select';
 
 import { toggleModal } from 'Ducks/app';
-import { updateEquivalized, updatePostingBook, updatePlaybackType, updateDemos, savePostFileEdit } from 'Ducks/postPrePosting';
+import { updateEquivalized, updatePostingBook, updatePlaybackType, updateDemos, savePostPrePostingFileEdit } from 'Ducks/postPrePosting';
 
 const mapStateToProps = ({ app: { modals: { postFileEditModal: modal } }, postPrePosting: { initialdata: formOptions, fileEditForm: fileEditFormValues } }) => ({
   modal,
@@ -16,7 +16,7 @@ const mapStateToProps = ({ app: { modals: { postFileEditModal: modal } }, postPr
 });
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleModal, updateEquivalized, updatePostingBook, updatePlaybackType, updateDemos, savePostFileEdit }, dispatch)
+  bindActionCreators({ toggleModal, updateEquivalized, updatePostingBook, updatePlaybackType, updateDemos, savePostPrePostingFileEdit }, dispatch)
 );
 
 export class PostPrePostingFileEditModal extends Component {
@@ -57,7 +57,7 @@ export class PostPrePostingFileEditModal extends Component {
         Audiences: this.props.fileEditFormValues.Demos,
       };
     // console.log('save posting', ret);
-      this.props.savePostFileEdit(ret);
+      this.props.savePostPrePostingFileEdit(ret);
     }
   }
 
@@ -223,7 +223,7 @@ PostPrePostingFileEditModal.propTypes = {
   fileEditFormValues: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
   toggleModal: PropTypes.func.isRequired,
-  savePostFileEdit: PropTypes.func.isRequired,
+  savePostPrePostingFileEdit: PropTypes.func.isRequired,
   updateEquivalized: PropTypes.func.isRequired,
   updatePostingBook: PropTypes.func.isRequired,
   updatePlaybackType: PropTypes.func.isRequired,

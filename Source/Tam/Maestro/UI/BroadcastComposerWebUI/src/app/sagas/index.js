@@ -15,8 +15,8 @@ export default function* rootSaga() {
     postPrePostingSaga.watchRequestPostPrePostingFiltered(),
     postPrePostingSaga.watchDeletePostPrePostingById(),
     postPrePostingSaga.watchRequestPostPrePostingFileEdit(),
-    postPrePostingSaga.watchSavePostFileEdit(),
-    postPrePostingSaga.watchUploadPostFile(),
+    postPrePostingSaga.watchSavePostPrePostingFileEdit(),
+    postPrePostingSaga.watchUploadPostPrePostingFile(),
 
     planningSaga.watchRequestProposalInitialData(),
     planningSaga.watchRequestProposals(),
