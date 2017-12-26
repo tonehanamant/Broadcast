@@ -14,19 +14,23 @@
   "Market": "Birmingham (Ann and Tusc)",
   "Programs": [
     {
-      "Airtime": {
-        "endTime": 61200,
-        "fri": true,
-        "mon": true,
-        "sat": false,
-        "startTime": 57600,
-        "sun": false,
-        "Text": "M-F 4PM-5PM",
-        "thu": true,
-        "tue": true,
-        "wed": true
-      },
-      "AirtimePreview": "M-F 4PM-5PM",
+      "AirtimePreviews": [
+        "M-F 4PM-5PM"
+      ],
+      "Airtimes": [
+        {
+          "endTime": 61200,
+          "fri": true,
+          "mon": true,
+          "sat": false,
+          "startTime": 57600,
+          "sun": false,
+          "Text": "M-F 4PM-5PM",
+          "thu": true,
+          "tue": true,
+          "wed": true
+        }
+      ],
       "Conflicts": null,
       "EffectiveDate": "2016-09-26T00:00:00",
       "EndDate": "2016-10-09T00:00:00",
@@ -45,7 +49,9 @@
         }
       ],
       "HouseHoldImpressions": 26100.0,
-      "ProgramName": "CADENT NEWS AT 11:30AM",
+      "ProgramNames": [
+        "CADENT NEWS AT 11:30AM"
+      ],
       "Rate15": 81.2500,
       "Rate30": 125.0000,
       "RateSource": null,

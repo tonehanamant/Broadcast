@@ -307,7 +307,6 @@
     <Compile Include="BroadcastConstants.cs" />
     <Compile Include="BusinessEngines\BvsPostingEngine.cs" />
     <Compile Include="BusinessEngines\ProposalProgramsCalculationEngine.cs" />
-    <Compile Include="BusinessEngines\ProposalSpotDistributionEngine.cs" />
     <Compile Include="BusinessEngines\QuarterCalculationEngine.cs" />
     <Compile Include="BusinessEngines\TrackingEngine.cs" />
     <Compile Include="Converters\BvsConverter.cs" />

@@ -61,7 +61,9 @@ var StationModalNewRate = function (view) {
             this.newProgram = {
                 //StationCode: null, //StationCode ?
                 RateSource: _view.controller.getSource(),
-                ProgramName: null,
+                //new: handle as arrays ProgramNames, Airtimes
+                // ProgramName: null,
+                ProgramNames: [],
                 Rate15: null,
                 Rate30: null,
                 HouseHoldImpressions: null,
@@ -71,6 +73,7 @@ var StationModalNewRate = function (view) {
                 Genres: [], //currently one item but will change
                 FlightWeeks: [], //StartDate, EndDate, IsHiatus
                 Airtime: null, //airtime object
+                Airtimes: [], //to send to BE
                 Conflicts: [] //flights in conflicts should only show changes
             };
         },
@@ -123,7 +126,10 @@ var StationModalNewRate = function (view) {
             var me = this;
             if ($("#new_program_form").valid()) {
                 me.newProgram.Conflicts = this.getConflictsForSave(this.$ProgramConflictGrid.records);
-                me.newProgram.ProgramName = $('#new_program_name_input').val();
+                //new change return to arrays ProgramNames, Airtimes
+                // me.newProgram.ProgramName = $('#new_program_name_input').val();
+                me.newProgram.ProgramNames = [$('#new_program_name_input').val()];
+                me.newProgram.Airtimes = [me.newProgram.Airtime]; //adjust here for BE return
                 //not currenlty processsing Genres
                 //me.newProgram.Genres = me.processGenres();
                 me.newProgram.Rate15 = $('#new_program_spot15_input').val() ? parseFloat($('#new_program_spot15_input').val().replace(/[$,]+/g, "")) : null;
@@ -341,7 +347,7 @@ var StationModalNewRate = function (view) {
         onSelectFormDaypart: function (dateObject) {
             //console.log('onSelectFormDaypart', dateObject);
             //need to store values and then either reinitilize with new values (after destroy)
-            this.newProgram.Airtime = dateObject;
+            this.newProgram.Airtime = dateObject;  //neds to be array Airtimes on save - needed here change on save
             this.checkNewProgramConflicts();
             var me = this;
             //timeout is needed or the picker does not get detroyed in time for the reset
@@ -436,6 +442,9 @@ var StationModalNewRate = function (view) {
                 item.hasConflict = true;
                 item.OriginalFlightStartDate = item.EffectiveDate;
                 item.OriginalFlightEndDate = item.EndDate;
+                //deal with arrays from BE changes
+                item.ProgramName = item.ProgramNames[0];
+                item.AirtimePreview = item.AirtimePreviews[0];
                 ret.push(item);
             });
 

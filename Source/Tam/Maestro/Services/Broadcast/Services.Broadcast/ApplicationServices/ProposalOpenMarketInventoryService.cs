@@ -89,7 +89,7 @@ namespace Services.Broadcast.ApplicationServices
                 .OrderBy(n => n.Display)
                 .ToList();
             dto.DisplayFilter.ProgramNames = stations.Where(p => p.Programs.Any())
-                .SelectMany(p => p.Programs.Where(l => l != null).Select(z => z.ProgramName))
+                .SelectMany(p => p.Programs.Where(l => l != null).Select(z => z.ProgramNames.First())) 
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .OrderBy(m => m)
                 .ToList();
@@ -160,7 +160,7 @@ namespace Services.Broadcast.ApplicationServices
             if (dto.Filter == null) return;
             var filter = dto.Filter;
 
-            // to be used to filter programs with/without pots
+            // to be used to filter programs with/without spots
             var listOfPrograms =
                 dto.Weeks.SelectMany(
                     a =>
@@ -195,18 +195,16 @@ namespace Services.Broadcast.ApplicationServices
                                             a =>
                                                 filter.DayParts == null || !filter.DayParts.Any() ||
                                                 filter.DayParts.Any(
-                                                    d =>
-                                                        DisplayDaypart.Intersects(DaypartDto.ConvertDaypartDto(d),
-                                                            DaypartCache.GetDisplayDaypart(a.Daypart.Id))))
+                                                    filtersDaypart => a.Dayparts.Any(dp => DisplayDaypart.Intersects(DaypartDto.ConvertDaypartDto(filtersDaypart),
+                                                        DaypartCache.GetDisplayDaypart(dp.Id))))) 
                                         // filter program names
                                         .Where(
                                             p =>
                                                 filter.ProgramNames == null || !filter.ProgramNames.Any() ||
                                                 filter.ProgramNames.Any(
-                                                    c =>
-                                                        string.Compare(p.ProgramName, c,
-                                                            StringComparison.OrdinalIgnoreCase) == 0))
-                                        // filter genres
+                                                    filterProgramName =>
+                                                        p.ProgramNames.Any(manifestProgramName => string.Compare(manifestProgramName, filterProgramName,
+                                                                                                      StringComparison.OrdinalIgnoreCase) == 0)))                                        // filter genres
                                         .Where(
                                             sp =>
                                                 filter.Genres == null || !filter.Genres.Any() ||
@@ -227,9 +225,8 @@ namespace Services.Broadcast.ApplicationServices
                                         .Select(pro => new ProposalInventoryMarketDto.InventoryMarketStationProgram
                                         {
                                             ProgramId = pro.ProgramId,
-                                            ManifestDaypartId = pro.ManifestDaypartId,
-                                            ProgramName = pro.ProgramName,
-                                            Daypart = pro.Daypart,
+                                            ProgramNames = pro.ProgramNames,
+                                            Dayparts = pro.Dayparts,
                                             TargetCpm = pro.TargetCpm,
                                             TargetImpressions = pro.TargetImpressions,
                                             UnitImpressions = pro.UnitImpressions,
@@ -282,7 +279,7 @@ namespace Services.Broadcast.ApplicationServices
                             {
                                 // it can either be a null program just for filling the grid or the actual program with values
                                 // if it is null, does not matter, FE will just fake the program
-                                var weekProgram = weekPrograms.SingleOrDefault(a => a != null && a.ProgramId == program.ProgramId && a.ManifestDaypartId == program.ManifestDaypartId);
+                                var weekProgram = weekPrograms.SingleOrDefault(a => a != null && a.ProgramId == program.ProgramId);
                                 weekStation.Programs.Add(weekProgram);
                             }
                         }
@@ -310,7 +307,7 @@ namespace Services.Broadcast.ApplicationServices
             _SetFlightWeeks(dto, programs);
 
             //// represents the actual program names before any refine is applied
-            dto.RefineFilterPrograms = programs.Where(l => l != null).Select(z => z.ProgramName)
+            dto.RefineFilterPrograms = programs.Where(l => l != null).SelectMany(z => z.ManifestDayparts.Select(md => md.ProgramName))
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .OrderBy(m => m)
                 .ToList();
@@ -319,8 +316,11 @@ namespace Services.Broadcast.ApplicationServices
             var filteredProgramsWithAllocations = new List<int>();
             programs.RemoveAll(p =>
             {
-                if (!DaypartCache.GetDisplayDaypart(p.DayPartId).Intersects(proposalDetailDaypart))
-                    return true;
+                foreach (var manifestDaypart in p.ManifestDayparts)
+                {
+                    if (!DaypartCache.GetDisplayDaypart(manifestDaypart.DaypartId).Intersects(proposalDetailDaypart))
+                        return true;
+                }
 
                 //if (FilterByGenreAndProgramNameCriteria(p, dto.Criteria))
                 //{
@@ -471,7 +471,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var criteria in marketCriterion.ProgramNameSearchCriteria.GroupBy(c => c.Contain)
                 .Select(g => new { Type = g.Key, ProgramNames = g.Select(gb => gb.ProgramName) }))
             {
-                var includeProgramName = criteria.ProgramNames.Any(c => string.Equals(program.ProgramName, c, StringComparison.CurrentCultureIgnoreCase));
+                var includeProgramName = criteria.ProgramNames.Any(c => program.ManifestDayparts.Select(md => md.ProgramName).Any(pn => string.Equals(pn, c, StringComparison.CurrentCultureIgnoreCase)));
                 if (criteria.Type == ContainTypeEnum.Include && !includeProgramName)
                 {
                     return true;
@@ -526,7 +526,6 @@ namespace Services.Broadcast.ApplicationServices
                                 existingAllocations.Count(
                                     a => a.MediaWeekId == week.MediaWeekId && a.ManifestId == program.ProgramId);
                             weekProgram.ProgramId = program.ProgramId;
-                            weekProgram.ManifestDaypartId = program.ManifestDaypartId;
                             weekProgram.Spots = numberOfSpotsAllocated;
                             weekProgram.UnitImpression = program.UnitImpressions;
                             weekProgram.UnitCost = programFlightweek.Rate;
@@ -579,21 +578,28 @@ namespace Services.Broadcast.ApplicationServices
         {
             var impressionRequests = new List<ManifestDetailDaypart>();
             var stationDetailImpressions = new Dictionary<int, ProposalProgramDto>();
+            var manifestDaypartImpressions = new Dictionary<int, double>();
 
             var proposalDetailDaypart = DaypartDto.ConvertDaypartDto(proposalDetail.DetailDaypart);
             foreach (var program in programs)
             {
-                var intersectingDaypart =
-                    DisplayDaypart.Intersect(
-                        Common.Services.DaypartCache.Instance.GetDisplayDaypart(program.DayPart.Id),
-                        proposalDetailDaypart);
-                var stationDaypart = new ManifestDetailDaypart
+                foreach (var manifestDaypart in program.ManifestDayparts)
                 {
-                    LegacyCallLetters = program.Station.LegacyCallLetters,
-                    Id = program.ManifestId,
-                    DisplayDaypart = intersectingDaypart
-                };
-                impressionRequests.Add(stationDaypart);
+
+                    var intersectingDaypart =
+                        DisplayDaypart.Intersect(
+                            Common.Services.DaypartCache.Instance.GetDisplayDaypart(manifestDaypart.DaypartId),
+                            proposalDetailDaypart);
+                    var stationDaypart = new ManifestDetailDaypart
+                    {
+                        LegacyCallLetters = program.Station.LegacyCallLetters,
+                        Id = manifestDaypart.Id,
+                        DisplayDaypart = intersectingDaypart
+                    };
+                    impressionRequests.Add(stationDaypart);
+                    manifestDaypartImpressions.Add(manifestDaypart.Id, 0); //initialize with zero
+
+                }
                 stationDetailImpressions[program.ManifestId] = program;
             }
 
@@ -607,19 +613,33 @@ namespace Services.Broadcast.ApplicationServices
             var programImpressions = GetImpressions(proposalDetail, ratingAudiences, impressionRequests);
             foreach (var imp in programImpressions)
             {
-                stationDetailImpressions[imp.id].UnitImpressions += imp.impressions;
+                manifestDaypartImpressions[imp.id] += imp.impressions;
+            }
+
+            foreach (var program in programs)
+            {
+                var programManifestDaypartIds = program.ManifestDayparts.Select(d => d.Id).ToList();
+                var programDaypartImpressions =
+                    manifestDaypartImpressions.Where(i => programManifestDaypartIds.Contains(i.Key)).ToList();
+                var daypartCount = programManifestDaypartIds.Count;
+                if (daypartCount > 0)
+                {
+                    program.UnitImpressions = programDaypartImpressions.Sum(i => i.Value) / daypartCount;    
+                }              
             }
         }
 
         private void _ApplyDaypartNames(List<ProposalProgramDto> programs)
         {
-            var programDaypartIds = programs.Select(p => p.DayPartId).Distinct().ToList();
+            var programDaypartIds = programs.SelectMany(p => p.ManifestDayparts.Select(md => md.DaypartId)).Distinct().ToList();
             var programDayparts = DaypartCache.GetDisplayDayparts(programDaypartIds);
 
             foreach (var program in programs)
             {
-                program.DayPart = new LookupDto(program.DayPartId, programDayparts[program.DayPartId].ToString());
-            }
+                program.DayParts =
+                    program.ManifestDayparts.Select(md => md.DaypartId).Select(daypartId => new LookupDto(daypartId, programDayparts[daypartId].ToString()))
+                        .ToList();
+            }                
         }
 
         private void _ApplyInventoryMarketRankings(int mediaMonthId, IEnumerable<ProposalInventoryMarketDto> inventoryMarkets)
@@ -653,12 +673,11 @@ namespace Services.Broadcast.ApplicationServices
                         Programs = s.Select(p => new ProposalInventoryMarketDto.InventoryMarketStationProgram
                         {
                             ProgramId = p.ManifestId,
-                            ManifestDaypartId = p.ManifestDaypartId,
-                            ProgramName = p.ProgramName,
+                            ProgramNames = p.ManifestDayparts.Select(md => md.ProgramName).ToList(),
                             TargetCpm = p.TargetCpm,
                             UnitImpressions = p.UnitImpressions,
                             TargetImpressions = p.TargetImpressions,
-                            Daypart = p.DayPart,
+                            Dayparts = p.DayParts,
                             Spots = p.TotalSpots,
                             FlightWeeks = p.FlightWeeks,
                             Genres = p.Genres,

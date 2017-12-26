@@ -190,7 +190,7 @@ namespace Services.Broadcast.Converters
                         {
                             Id = p.ProgramId,
                             LegacyCallLetters =s.LegacyCallLetters
-                            ,DisplayDaypart = _DaypartCache.GetDisplayDaypart(p.Daypart.Id)
+                            //,DisplayDaypart = _DaypartCache.GetDisplayDaypart(p.Daypart.Id) 
                         })).ToList();
 
             List<StationImpressions> stationImpressions;
@@ -315,7 +315,7 @@ namespace Services.Broadcast.Converters
     
                 var demoRating = new Ratingdata();
 
-                demoRating.DaypartId = program.Daypart.Id;
+                //demoRating.DaypartId = program.Daypart.Id;
                 demoRating.StationCode = program.StationCode;
                 var impressions = demo.Impressions
                     .Where(i => i.id == program.ProgramId)

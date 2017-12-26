@@ -350,8 +350,8 @@
     "ProgramNames": [
       "Multiple Flight Weeks"
     ],
-    "Rate15": 19.5000,
-    "Rate30": 30.0000,
+    "Rate15": 0.0,
+    "Rate30": 0.0,
     "RateSource": null,
     "Rating": 50.0,
     "SpotLength": 30,
@@ -397,8 +397,8 @@
     "ProgramNames": [
       "Multiple Flight Weeks"
     ],
-    "Rate15": 19.5000,
-    "Rate30": 30.0000,
+    "Rate15": 0.0,
+    "Rate30": 0.0,
     "RateSource": null,
     "Rating": 50.0,
     "SpotLength": 30,

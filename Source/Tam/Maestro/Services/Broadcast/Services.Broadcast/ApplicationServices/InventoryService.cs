@@ -574,7 +574,7 @@ namespace Services.Broadcast.ApplicationServices
             var audienceRepository = _broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
             var householdeAudience = audienceRepository.GetDisplayAudienceByCode(householdAudienceCode);
             var inventorySource = _ParseInventorySource(stationProgram.RateSource);
-            var displayDaypart = DaypartDto.ConvertDaypartDto(stationProgram.Airtime);
+            var displayDayparts = stationProgram.Airtimes.Select(a => DaypartDto.ConvertDaypartDto(a)).ToList();
             var manifestRates = _MapManifestRates(stationProgram);
             var spotLengthId = _GetSpotLengthIdForManifest(stationProgram);
 
@@ -590,14 +590,13 @@ namespace Services.Broadcast.ApplicationServices
                 InventorySourceId = inventorySource.Id,
                 SpotLengthId = spotLengthId,
                 ManifestRates = manifestRates,
-                ManifestDayparts = new List<StationInventoryManifestDaypart>
-                {
+                ManifestDayparts = displayDayparts.Select(md =>
                     new StationInventoryManifestDaypart
                     {
-                        Daypart = displayDaypart,
-                        ProgramName = stationProgram.ProgramName
+                        Daypart = md,
+                        ProgramName = stationProgram.ProgramNames.FirstOrDefault() //TODO: This needs to be updated once UI can handle multipe program names
                     }
-                },
+                ).ToList(),
                 ManifestAudiencesReferences = new List<StationInventoryManifestAudience>
                 {
                     new StationInventoryManifestAudience
@@ -610,7 +609,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
             };
 
-            _daypartCache.SyncDaypartsToIds(new List<DisplayDaypart> {displayDaypart});
+            _daypartCache.SyncDaypartsToIds(displayDayparts);
 
             return manifest;
         }
@@ -776,13 +775,12 @@ namespace Services.Broadcast.ApplicationServices
             List<StationInventoryManifest> stationManifests)
         {
             return (from manifest in stationManifests
-                from daypart in manifest.ManifestDayparts
                 select new StationProgram()
                 {
                     Id = manifest.Id ?? 0,
-                    ProgramName = daypart.ProgramName,
-                    Airtime = DaypartDto.ConvertDisplayDaypart(daypart.Daypart),
-                    AirtimePreview = daypart.Daypart.Preview,
+                    ProgramNames = manifest.ManifestDayparts.Select(md => md.ProgramName).ToList(),
+                    Airtimes = manifest.ManifestDayparts.Select(md => DaypartDto.ConvertDisplayDaypart(md.Daypart)).ToList(),
+                    AirtimePreviews = manifest.ManifestDayparts.Select(md => md.Daypart.Preview).ToList(),
                     EffectiveDate = manifest.EffectiveDate,
                     EndDate = manifest.EndDate,
                     StationCode = manifest.Station.Code,

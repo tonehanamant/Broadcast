@@ -1,18 +1,22 @@
 ﻿[
   {
-    "Airtime": {
-      "endTime": 64800,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 21600,
-      "sun": false,
-      "Text": "M-F 6AM-6PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 6AM-6PM",
+    "AirtimePreviews": [
+      "M-F 6AM-6PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 64800,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 21600,
+        "sun": false,
+        "Text": "M-F 6AM-6PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2017-01-25T00:00:00",
     "EndDate": "2018-01-02T00:00:00",
@@ -319,7 +323,9 @@
       }
     ],
     "HouseHoldImpressions": 1000.0,
-    "ProgramName": "Testing",
+    "ProgramNames": [
+      "Testing"
+    ],
     "Rate15": 0.0,
     "Rate30": 0.0,
     "RateSource": null,
@@ -329,19 +335,23 @@
     "StationCode": 7353
   },
   {
-    "Airtime": {
-      "endTime": 86400,
-      "fri": true,
-      "mon": true,
-      "sat": true,
-      "startTime": 21600,
-      "sun": true,
-      "Text": "M-SU 6AM-12AM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-SU 6AM-12AM",
+    "AirtimePreviews": [
+      "M-SU 6AM-12AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 86400,
+        "fri": true,
+        "mon": true,
+        "sat": true,
+        "startTime": 21600,
+        "sun": true,
+        "Text": "M-SU 6AM-12AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2017-12-01T00:00:00",
     "EndDate": "2018-01-01T00:00:00",
@@ -384,7 +394,9 @@
       }
     ],
     "HouseHoldImpressions": 1000.0,
-    "ProgramName": "Edited Program Name 54",
+    "ProgramNames": [
+      "Edited Program Name 54"
+    ],
     "Rate15": 15.0000,
     "Rate30": 20.0000,
     "RateSource": null,
