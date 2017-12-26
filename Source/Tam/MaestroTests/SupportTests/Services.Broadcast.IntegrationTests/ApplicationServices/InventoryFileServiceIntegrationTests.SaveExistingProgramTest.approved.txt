@@ -1,17 +1,17 @@
 ﻿[
   {
     "AirtimePreviews": [
-      "M-SU 6AM-12AM"
+      "M-F 6AM-6PM"
     ],
     "Airtimes": [
       {
-        "endTime": 86400,
+        "endTime": 64800,
         "fri": true,
         "mon": true,
-        "sat": true,
+        "sat": false,
         "startTime": 21600,
-        "sun": true,
-        "Text": "M-SU 6AM-12AM",
+        "sun": false,
+        "Text": "M-F 6AM-6PM",
         "thu": true,
         "tue": true,
         "wed": true
@@ -60,7 +60,7 @@
     ],
     "HouseHoldImpressions": 1000.0,
     "ProgramNames": [
-      "Edited Program Name 54"
+      "Testing"
     ],
     "Rate15": 13.0000,
     "Rate30": 20.0000,
