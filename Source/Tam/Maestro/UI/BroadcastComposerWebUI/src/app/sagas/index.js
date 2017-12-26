@@ -9,12 +9,12 @@ export default function* rootSaga() {
     appSaga.watchRequestEmployee(),
     appSaga.watchReadFileB64(),
 
-    postPrePostingSaga.watchRequestPostInitialData(),
-    postPrePostingSaga.watchRequestPost(),
+    postPrePostingSaga.requestPostPrePostingInitialData(),
+    postPrePostingSaga.watchRequestPostPrePosting(),
     postPrePostingSaga.watchRequestAssignPostDisplay(),
-    postPrePostingSaga.watchRequestPostFiltered(),
-    postPrePostingSaga.watchDeletePostById(),
-    postPrePostingSaga.watchRequestPostFileEdit(),
+    postPrePostingSaga.watchRequestPostPrePostingFiltered(),
+    postPrePostingSaga.watchDeletePostPrePostingById(),
+    postPrePostingSaga.watchRequestPostPrePostingFileEdit(),
     postPrePostingSaga.watchSavePostFileEdit(),
     postPrePostingSaga.watchUploadPostFile(),
 

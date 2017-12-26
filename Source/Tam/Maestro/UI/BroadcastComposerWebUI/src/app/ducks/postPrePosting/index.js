@@ -27,7 +27,7 @@ export default function reducer(state = initialState, action) {
 
   switch (type) {
     // POST INITIAL DATA
-    case ACTIONS.RECEIVE_POST_INITIALDATA:
+    case ACTIONS.RECEIVE_POST_PRE_POSTING_INITIALDATA:
       return {
         ...state,
         initialdata: data.Data,
@@ -55,7 +55,7 @@ export default function reducer(state = initialState, action) {
         postUnfiltered: data,
       };
 
-    case ACTIONS.RECEIVE_FILTERED_POST:
+    case ACTIONS.RECEIVE_FILTERED_POST_PRE_POSTING:
       return {
         ...state,
         post: data,
@@ -163,18 +163,18 @@ export default function reducer(state = initialState, action) {
 }
 
 // Action Creators
-export const getPostInitialData = () => ({
-  type: ACTIONS.REQUEST_POST_INITIALDATA,
+export const getPostPrePostingInitialData = () => ({
+  type: ACTIONS.REQUEST_POST_PRE_POSTING_INITIALDATA,
   payload: {},
 });
 
-export const getPost = () => ({
-  type: ACTIONS.REQUEST_POST,
+export const getPostPrePosting = () => ({
+  type: ACTIONS.REQUEST_POST_PRE_POSTING,
   payload: {},
 });
 
-export const getPostFiltered = query => ({
-  type: ACTIONS.REQUEST_FILTERED_POST,
+export const getPostPrePostingFiltered = query => ({
+  type: ACTIONS.REQUEST_FILTERED_POST_PRE_POSTING,
   payload: query,
 });
 
@@ -238,13 +238,13 @@ export const clearFileUploadForm = () => ({
   type: ACTIONS.CLEAR_FILE_UPLOAD_FORM,
 });
 
-export const deletePost = id => ({
-  type: ACTIONS.DELETE_POST,
+export const deletePostPrePosting = id => ({
+  type: ACTIONS.DELETE_POST_PRE_POSTING,
   payload: id,
 });
 
-export const getPostFileEdit = id => ({
-  type: ACTIONS.REQUEST_POST_FILE_EDIT,
+export const getPostPrePostingFileEdit = id => ({
+  type: ACTIONS.REQUEST_POST_PRE_POSTING_FILE_EDIT,
   payload: id,
 });
 

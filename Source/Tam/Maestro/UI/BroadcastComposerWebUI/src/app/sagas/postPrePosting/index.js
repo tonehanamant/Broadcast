@@ -10,10 +10,10 @@ import api from '../api';
 const ACTIONS = { ...appActions, ...postPrePostingActions };
 
 /* ////////////////////////////////// */
-/* REQUEST POST INITIAL DATA */
+/* REQUEST POST PRE POSTING INITIAL DATA */
 /* ////////////////////////////////// */
-export function* requestPostInitialData() {
-  const { getPostInitialData } = api.postPrePosting;
+export function* requestPostPrePostingInitialData() {
+  const { getPrePostInitialData } = api.postPrePosting;
 
   try {
     yield put({
@@ -22,7 +22,7 @@ export function* requestPostInitialData() {
         id: 'postInitialData',
         loading: true },
       });
-    const response = yield getPostInitialData();
+    const response = yield getPrePostInitialData();
     const { status, data } = response;
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,
@@ -52,7 +52,7 @@ export function* requestPostInitialData() {
       throw new Error();
     }
     yield put({
-      type: ACTIONS.RECEIVE_POST_INITIALDATA,
+      type: ACTIONS.RECEIVE_POST_PRE_POSTING_INITIALDATA,
       data,
     });
   } catch (e) {
@@ -78,9 +78,9 @@ export function* requestPostInitialData() {
 }
 
 /* ////////////////////////////////// */
-/* REQUEST POST */
+/* REQUEST POST PRE POSTING */
 /* ////////////////////////////////// */
-export function* requestPost() {
+export function* requestPostPrePosting() {
   const { getPosts } = api.postPrePosting;
 
   try {
@@ -120,7 +120,7 @@ export function* requestPost() {
       throw new Error();
     }
     yield put({
-      type: ACTIONS.RECEIVE_POST,
+      type: ACTIONS.RECEIVE_POST_PRE_POSTING,
       data,
     });
     yield put({
@@ -203,9 +203,9 @@ export function* assignPostDisplay({ payload: request }) {
 }
 
 /* ////////////////////////////////// */
-/* REQUEST POST FILTERED */
+/* REQUEST POST PRE POSTING FILTERED */
 /* ////////////////////////////////// */
-export function* requestPostFiltered({ payload: query }) {
+export function* requestPostPrePostingFiltered({ payload: query }) {
   const postUnfiltered = yield select(state => state.post.postUnfiltered);
   const searcher = new FuzzySearch(postUnfiltered, ['FileName', 'DisplayDemos', 'DisplayUploadDate', 'DisplayModifiedDate'], { caseSensitive: false });
   const postFiltered = () => searcher.search(query);
@@ -213,7 +213,7 @@ export function* requestPostFiltered({ payload: query }) {
   try {
     const filtered = yield postFiltered();
     yield put({
-      type: ACTIONS.RECEIVE_FILTERED_POST,
+      type: ACTIONS.RECEIVE_FILTERED_POST_PRE_POSTING,
       data: filtered,
     });
   } catch (e) {
@@ -229,9 +229,9 @@ export function* requestPostFiltered({ payload: query }) {
 }
 
 /* ////////////////////////////////// */
-/* DELETE POST BY ID */
+/* DELETE POST PRE POSTING BY ID */
 /* ////////////////////////////////// */
-export function* deletePostById({ payload: id }) {
+export function* deletePostPrePostingById({ payload: id }) {
   const { deletePost } = api.postPrePosting;
 
   try {
@@ -266,7 +266,7 @@ export function* deletePostById({ payload: id }) {
       },
     });
     yield put({
-      type: ACTIONS.REQUEST_POST });
+      type: ACTIONS.REQUEST_POST_PRE_POSTING });
   } catch (e) {
     if (e.response) {
       yield put({
@@ -292,7 +292,7 @@ export function* deletePostById({ payload: id }) {
 /* ////////////////////////////////// */
 /* REQUEST POST FILE EDIT  */
 /* ////////////////////////////////// */
-export function* requestPostFileEdit({ payload: id }) {
+export function* requestPostPrePostingFileEdit({ payload: id }) {
   const { getPost } = api.postPrePosting;
   try {
     yield put({
@@ -332,7 +332,7 @@ export function* requestPostFileEdit({ payload: id }) {
       throw new Error();
     }
     yield put({
-      type: ACTIONS.RECEIVE_POST_FILE_EDIT,
+      type: ACTIONS.RECEIVE_POST_PRE_POSTING_FILE_EDIT,
       data,
     });
     yield put({
@@ -544,28 +544,28 @@ export function* uploadPostFile({ payload: params }) {
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
-export function* watchRequestPostInitialData() {
-  yield takeEvery(ACTIONS.REQUEST_POST_INITIALDATA, requestPostInitialData);
+export function* watchRequestPostPrePostingInitialData() {
+  yield takeEvery(ACTIONS.REQUEST_POST_PRE_POSTING_INITIALDATA, requestPostPrePostingInitialData);
 }
 
-export function* watchRequestPost() {
-  yield takeEvery(ACTIONS.REQUEST_POST, requestPost);
+export function* watchRequestPostPrePosting() {
+  yield takeEvery(ACTIONS.REQUEST_POST_PRE_POSTING, requestPostPrePosting);
 }
 
 export function* watchRequestAssignPostDisplay() {
   yield takeEvery(ACTIONS.REQUEST_ASSIGN_POST_DISPLAY, assignPostDisplay);
 }
 
-export function* watchRequestPostFiltered() {
-  yield takeEvery(ACTIONS.REQUEST_FILTERED_POST, requestPostFiltered);
+export function* watchRequestPostPrePostingFiltered() {
+  yield takeEvery(ACTIONS.REQUEST_FILTERED_POST_PRE_POSTING, requestPostPrePostingFiltered);
 }
 
-export function* watchDeletePostById() {
-  yield takeEvery(ACTIONS.DELETE_POST, deletePostById);
+export function* watchDeletePostPrePostingById() {
+  yield takeEvery(ACTIONS.DELETE_POST_PRE_POSTING, deletePostPrePostingById);
 }
 
-export function* watchRequestPostFileEdit() {
-  yield takeEvery(ACTIONS.REQUEST_POST_FILE_EDIT, requestPostFileEdit);
+export function* watchRequestPostPrePostingFileEdit() {
+  yield takeEvery(ACTIONS.REQUEST_POST_PRE_POSTING_FILE_EDIT, requestPostPrePostingFileEdit);
 }
 
 export function* watchSavePostFileEdit() {

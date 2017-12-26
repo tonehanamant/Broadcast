@@ -23,23 +23,23 @@ const app = {
 };
 
 const postPrePosting = {
-  getPostInitialData: () => (
-    call(GET, `${apiBase}Post/InitialData`, {})
+  getPrePostInitialData: () => (
+    call(GET, `${apiBase}PostPrePosting/InitialData`, {})
   ),
   getPosts: () => (
-    call(GET, `${apiBase}Post`, {})
+    call(GET, `${apiBase}PostPrePosting`, {})
   ),
   getPost: id => (
-    call(GET, `${apiBase}Post/${id}`, {})
+    call(GET, `${apiBase}PostPrePosting/${id}`, {})
   ),
   uploadPost: params => (
-    call(POST, `${apiBase}Post`, params)
+    call(POST, `${apiBase}PostPrePosting`, params)
   ),
   savePost: params => (
-    call(PUT, `${apiBase}Post`, params)
+    call(PUT, `${apiBase}PostPrePosting`, params)
   ),
   deletePost: id => (
-    call(DELETE, `${apiBase}Post/${id}`, {})
+    call(DELETE, `${apiBase}PostPrePosting/${id}`, {})
   ),
 };
 

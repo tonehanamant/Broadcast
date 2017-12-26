@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleModal, createAlert, setOverlayLoading } from 'Ducks/app';
-import { getPostInitialData, getPost, getPostFiltered, deletePost, getPostFileEdit } from 'Ducks/post';
+import { getPost, getPostFiltered, deletePost, getPostFileEdit } from 'Ducks/post';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
 import Sorter from 'Utils/react-redux-grid-sorter';
@@ -19,12 +19,8 @@ const { showMenu, hideMenu } = MenuActions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
 
-/* ////////////////////////////////// */
-/* // MAPPING STATE AND DISPATCH
-/* ////////////////////////////////// */
-const mapStateToProps = ({ post: { initialdata }, post: { post }, grid, dataSource, menu }) => ({
+const mapStateToProps = ({ post: { post }, grid, dataSource, menu }) => ({
   // App
-  initialdata,
   post,
   // React-Redux-Grid
   grid,
@@ -35,7 +31,6 @@ const mapStateToProps = ({ post: { initialdata }, post: { post }, grid, dataSour
 const mapDispatchToProps = dispatch => (bindActionCreators(
   {
     // App
-    getPostInitialData,
     getPost,
     getPostFiltered,
     createAlert,
@@ -52,23 +47,13 @@ const mapDispatchToProps = dispatch => (bindActionCreators(
   }, dispatch)
 );
 
-/* ////////////////////////////////// */
-/* // DATAGRIDCONTAINER COMPONENT
-/* ////////////////////////////////// */
-
 export class DataGridContainer extends Component {
   constructor(props, context) {
 		super(props, context);
     this.context = context;
-    this.contextMenuDeleteAction = this.contextMenuDeleteAction.bind(this);
-    this.contextMenuFileSettingsAction = this.contextMenuFileSettingsAction.bind(this);
   }
 
-  /* ////////////////////////////////// */
-  /* LIFE-CYCLE METHODS */
-  /* ////////////////////////////////// */
   componentWillMount() {
-    this.props.getPostInitialData();
     this.props.getPost();
   }
 
@@ -78,54 +63,33 @@ export class DataGridContainer extends Component {
         id: 'gridPostMain',
         loading: true,
       });
-      // Evaluate if sort directions is set on column or default
-      // Sort dataSource using Sorter
+
+      // evaluate column sort direction
       setTimeout(() => {
         const cols = this.props.grid.get('gridPostMain').get('columns');
         let sortCol = cols.find(x => x.sortDirection);
         if (!sortCol) sortCol = cols.find(x => x.defaultSortDirection);
+
         if (sortCol) {
           const datasource = this.props.dataSource.get('gridPostMain');
           const sorted = Sorter.sortBy(sortCol.dataIndex, sortCol.sortDirection || sortCol.defaultSortDirection, datasource);
+
           this.props.doLocalSort({
             data: sorted,
             stateKey: 'gridPostMain',
           });
         }
+
         this.props.setOverlayLoading({
           id: 'gridPostMain',
           loading: false,
         });
-      }, 0); // SET_DATA is completed, for dataSource
+      }, 0);
 
       // Hide Context Menu (assumes visible)
       this.props.hideMenu({ stateKey: 'gridPostMain' });
     }
   }
-
-
-  /* ////////////////////////////////// */
-  /* GRID CONTEXT MENU METHODS  */
-  /* ////////////////////////////////// */
-  contextMenuDeleteAction(rowData) {
-    this.props.toggleModal({
-      modal: 'confirmModal',
-      active: true,
-      properties: {
-        titleText: 'Delete Post File',
-        bodyText: `Are you sure you want to delete ${rowData.FileName}?`,
-        closeButtonText: 'Cancel',
-        actionButtonText: 'Continue',
-        actionButtonBsStyle: 'danger',
-        action: () => this.props.deletePost(rowData.Id),
-      },
-    });
-  }
-
-  contextMenuFileSettingsAction(id) {
-    this.props.getPostFileEdit(id);
-  }
-
 
   /* ////////////////////////////////// */
   /* // GRID ACTION METHOD BINDINGS
@@ -143,24 +107,8 @@ export class DataGridContainer extends Component {
     this.props.deselectAll(ref);
   }
 
-  /* ////////////////////////////////// */
-  /* // COMPONENT RENDER FUNC
-  /* ////////////////////////////////// */
   render() {
-    /* ////////////////////////////////// */
-    /* // REACT-REDUX-GRID CONFIGURATION
-    /* ////////////////////////////////// */
     const stateKey = 'gridPostMain';
-
-    /* GRID RENDERERS */
-    // const renderers = {
-    //   uploadDate: ({ value, row }) => (
-    //     <span>{row.DisplayUploadDate}</span>
-    //   ),
-    //   modifiedDate: ({ value, row }) => (
-    //     <span>{row.DisplayModifiedDate}</span>
-    //   ),
-    // };
 
     /* GRID COLUMNS */
     const columns = [
@@ -224,59 +172,6 @@ export class DataGridContainer extends Component {
         activeCls: 'active',
         selectionEvent: 'singleclick',
       },
-      GRID_ACTIONS: {
-        iconCls: 'action-icon',
-        menu: [
-          {
-            text: 'File Settings',
-            key: 'menu-file-settings',
-            EVENT_HANDLER: ({ metaData }) => {
-              this.contextMenuFileSettingsAction(metaData.rowData.Id);
-            },
-          },
-          {
-            text: 'Post Report',
-            key: 'menu-post-report',
-            EVENT_HANDLER: ({ metaData }) => {
-              window.open(`${window.location.origin}/broadcast/api/Post/Report/${metaData.rowData.Id}`, '_blank');
-            },
-          },
-          {
-            text: 'Delete',
-            key: 'menu-delete',
-            EVENT_HANDLER: ({ metaData }) => {
-              this.contextMenuDeleteAction(metaData.rowData);
-            },
-          },
-        ],
-      },
-      ROW: {
-        enabled: true,
-        renderer: ({ rowProps, cells, row }) => {
-          const stateKey = cells[0].props.stateKey;
-          const rowId = cells[0].props.rowId;
-          const updatedRowProps = { ...rowProps,
-            onClick: (e) => {
-              rowProps.onClick(e);
-              this.hideContextMenu({ stateKey });
-            },
-            onContextMenu: (e) => {
-              e.preventDefault();
-
-              const rowElement = e.target.closest('.react-grid-row');
-              const contextMenuContainer = rowElement.querySelector('.react-grid-action-icon');
-              contextMenuContainer.setAttribute('style', `right: ${(rowElement.clientWidth - e.clientX) - 102}px`); // 102 contextMenu width
-
-              this.deselectAll({ stateKey });
-              this.selectRow({ rowId, stateKey });
-              this.showContextMenu({ id: rowId, stateKey });
-            },
-          };
-          return (
-            <tr {...updatedRowProps}>{ cells }</tr>
-          );
-        },
-      },
     };
 
     /* GRID EVENT HANDLERS */
@@ -299,9 +194,6 @@ export class DataGridContainer extends Component {
   }
 }
 
-/* ////////////////////////////////// */
-/* // PROPTYPES
-/* ////////////////////////////////// */
 DataGridContainer.propTypes = {
   grid: PropTypes.object.isRequired,
   dataSource: PropTypes.object.isRequired,

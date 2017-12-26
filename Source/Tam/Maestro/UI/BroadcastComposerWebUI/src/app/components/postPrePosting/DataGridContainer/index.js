@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleModal, createAlert, setOverlayLoading } from 'Ducks/app';
-import { getPostInitialData, getPost, getPostFiltered, deletePost, getPostFileEdit } from 'Ducks/postPrePosting';
+import { getPostPrePostingInitialData, getPostPrePosting, getPostPrePostingFiltered, deletePostPrePosting, getPostPrePostingFileEdit } from 'Ducks/postPrePosting';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
 import Sorter from 'Utils/react-redux-grid-sorter';
@@ -35,13 +35,13 @@ const mapStateToProps = ({ postPrePosting: { initialdata }, postPrePosting: { po
 const mapDispatchToProps = dispatch => (bindActionCreators(
   {
     // App
-    getPostInitialData,
-    getPost,
-    getPostFiltered,
+    getPostPrePostingInitialData,
+    getPostPrePosting,
+    getPostPrePostingFiltered,
     createAlert,
     toggleModal,
-    deletePost,
-    getPostFileEdit,
+    deletePostPrePosting,
+    getPostPrePostingFileEdit,
     setOverlayLoading,
     // React-Redux-Grid
     showMenu,
@@ -68,8 +68,8 @@ export class DataGridContainer extends Component {
   /* LIFE-CYCLE METHODS */
   /* ////////////////////////////////// */
   componentWillMount() {
-    this.props.getPostInitialData();
-    this.props.getPost();
+    this.props.getPostPrePostingInitialData();
+    this.props.getPostPrePosting();
   }
 
   componentDidUpdate(prevProps) {
@@ -117,13 +117,13 @@ export class DataGridContainer extends Component {
         closeButtonText: 'Cancel',
         actionButtonText: 'Continue',
         actionButtonBsStyle: 'danger',
-        action: () => this.props.deletePost(rowData.Id),
+        action: () => this.props.deletePostPrePosting(rowData.Id),
       },
     });
   }
 
   contextMenuFileSettingsAction(id) {
-    this.props.getPostFileEdit(id);
+    this.props.getPostPrePostingFileEdit(id);
   }
 
 
@@ -308,13 +308,13 @@ DataGridContainer.propTypes = {
   menu: PropTypes.object.isRequired,
   post: PropTypes.array.isRequired,
 
-  getPostInitialData: PropTypes.func.isRequired,
-  getPost: PropTypes.func.isRequired,
-  getPostFiltered: PropTypes.func.isRequired,
+  getPostPrePostingInitialData: PropTypes.func.isRequired,
+  getPostPrePosting: PropTypes.func.isRequired,
+  getPostPrePostingFiltered: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   createAlert: PropTypes.func.isRequired,
-  deletePost: PropTypes.func.isRequired,
-  getPostFileEdit: PropTypes.func.isRequired,
+  deletePostPrePosting: PropTypes.func.isRequired,
+  getPostPrePostingFileEdit: PropTypes.func.isRequired,
   setOverlayLoading: PropTypes.func.isRequired,
 
   showMenu: PropTypes.func.isRequired,
