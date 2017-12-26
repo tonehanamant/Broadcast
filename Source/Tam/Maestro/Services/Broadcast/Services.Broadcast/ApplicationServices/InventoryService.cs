@@ -458,12 +458,6 @@ namespace Services.Broadcast.ApplicationServices
             return _stationContactsRepository.GetLatestContactsByName(query);
         }
 
-        public class FlightWeekGroup
-        {
-            public DateTime StartDate { get; set; }
-            public DateTime EndDate { get; set; }
-        }
-
         public bool SaveProgram(StationProgram stationProgram,string userName)
         {
             using (var transaction = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -473,11 +467,11 @@ namespace Services.Broadcast.ApplicationServices
                 if (stationProgram.Id == 0)
                 {
                     _UpdateConflicts(stationProgram.Conflicts);
-                    _AddNewPrograms(stationProgram, manifest, userName);
+                    _AddNewProgram(stationProgram, manifest, userName);
                 }
                 else
                 {
-                    _UpdatePrograms(stationProgram, manifest,userName);
+                    _UpdateProgram(stationProgram, manifest, userName);
                 }
 
                 transaction.Complete();
@@ -526,19 +520,24 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("The program must have at least one valid flight week");
         }
 
-        private void _UpdatePrograms(StationProgram stationProgram, StationInventoryManifest manifest,string userName)
+        private void _UpdateProgram(StationProgram stationProgram, StationInventoryManifest manifest, string userName)
         {
+            var timeStamp = DateTime.Now;
             var previousManifest = _inventoryRepository.GetStationManifest(stationProgram.Id);
 
-            if (previousManifest.EffectiveDate != manifest.EffectiveDate)
+            _SetManifestValuesFromPreviousManifest(manifest, previousManifest);
+
+            if (manifest.EffectiveDate > previousManifest.EffectiveDate)
             {
                 manifest.EndDate = previousManifest.EndDate;
-                manifest.Station = new DisplayBroadcastStation
-                {
-                    Code = previousManifest.Station.Code
-                };
-
                 previousManifest.EndDate = manifest.EffectiveDate.AddDays(-1);
+
+                _inventoryRepository.SaveStationInventoryManifest(manifest);
+                _inventoryRepository.UpdateStationInventoryManifest(previousManifest);
+            }
+            else if (manifest.EffectiveDate < previousManifest.EffectiveDate)
+            {
+                manifest.EndDate = previousManifest.EffectiveDate.AddDays(-1);
 
                 _inventoryRepository.SaveStationInventoryManifest(manifest);
                 _inventoryRepository.UpdateStationInventoryManifest(previousManifest);
@@ -546,12 +545,22 @@ namespace Services.Broadcast.ApplicationServices
             else
             {
                 _inventoryRepository.UpdateStationInventoryManifest(manifest);
-            }
-            var timeStamp = DateTime.Now;
+            }          
+
             _stationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp);
         }
 
-        private void _AddNewPrograms(StationProgram stationProgram, StationInventoryManifest manifest,string userName)
+        private void _SetManifestValuesFromPreviousManifest(StationInventoryManifest manifest,
+            StationInventoryManifest previousManifest)
+        {
+            manifest.ManifestDayparts = previousManifest.ManifestDayparts;
+            manifest.Station = new DisplayBroadcastStation
+            {
+                Code = previousManifest.Station.Code
+            };
+        }
+
+        private void _AddNewProgram(StationProgram stationProgram, StationInventoryManifest manifest,string userName)
         {
             _ValidateFlightWeeks(stationProgram.FlightWeeks);
 
@@ -574,9 +583,12 @@ namespace Services.Broadcast.ApplicationServices
             var audienceRepository = _broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
             var householdeAudience = audienceRepository.GetDisplayAudienceByCode(householdAudienceCode);
             var inventorySource = _ParseInventorySource(stationProgram.RateSource);
-            var displayDayparts = stationProgram.Airtimes.Select(a => DaypartDto.ConvertDaypartDto(a)).ToList();
             var manifestRates = _MapManifestRates(stationProgram);
             var spotLengthId = _GetSpotLengthIdForManifest(stationProgram);
+            var displayDayparts = new List<DisplayDaypart>();
+
+            if (stationProgram.Id == 0)
+                displayDayparts = stationProgram.Airtimes.Select(DaypartDto.ConvertDaypartDto).ToList();
 
             var manifest = new StationInventoryManifest
             {
