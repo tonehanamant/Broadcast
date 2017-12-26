@@ -2,7 +2,7 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import AppBody from 'Components/body/AppBody';
 import PageTitle from 'Components/shared/PageTitle';
-// import PageHeaderContainer from 'Components/postPrePosting/PageHeaderContainer';
+import PageHeaderContainer from 'Components/postPrePosting/PageHeaderContainer';
 import DataGridContainer from 'Components/postPrePosting/DataGridContainer';
 // import PostPrePostingFileEditModal from 'Components/postPrePosting/PostPrePostingFileEditModal';
 // import PostPrePostingFileUploadModal from 'Components/postPrePosting/PostPrePostingFileUploadModal';
@@ -25,7 +25,7 @@ export const SectionPost = () => (
     >
       <AppBody>
           <PageTitle title="Post Pre Posting" />
-          {/* <PageHeaderContainer /> */}
+          <PageHeaderContainer />
           <DataGridContainer />
           {/* <PostPrePostingFileEditModal />
           <PostPrePostingFileUploadModal /> */}
