@@ -109,6 +109,9 @@ var RateStationView = BaseView.extend({
         $.each(displayData, function (index, value) {
             var item = value;
             item.recid = index + 1;
+            //deal with arrays from BE changes
+            item.ProgramName = item.ProgramNames[0];
+            item.AirtimePreview = item.AirtimePreviews[0];
             ret.push(item);
         });
 

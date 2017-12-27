@@ -804,13 +804,14 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
                 {
-                    var pv = context.proposal_version_details.Include(pvd => pvd.proposal_versions.proposal)
-                                                             .Include(pvd => pvd.proposal_version_detail_quarters.Select(dq => dq.proposal_version_detail_quarter_weeks))
-                                                             .Include(pvd => pvd.proposal_versions.proposal_version_flight_weeks)
-                                                             .Include(pvd => pvd.proposal_version_detail_criteria_cpm)
-                                                             .Include(pvd => pvd.proposal_version_detail_criteria_genres)
-                                                             .Include(pvd => pvd.proposal_version_detail_criteria_programs)
-                                                             .Single(d => d.id == proposalDetailId, string.Format("The proposal detail information you have entered [{0}] does not exist.", proposalDetailId));
+                    var pv = context.proposal_version_details
+                            .Include(pvd => pvd.proposal_versions.proposal)
+                            .Include(pvd => pvd.proposal_version_detail_quarters.Select(dq => dq.proposal_version_detail_quarter_weeks))
+                            .Include(pvd => pvd.proposal_versions.proposal_version_flight_weeks)
+                            .Include(pvd => pvd.proposal_version_detail_criteria_cpm)
+                            .Include(pvd => pvd.proposal_version_detail_criteria_genres)
+                            .Include(pvd => pvd.proposal_version_detail_criteria_programs)
+                            .Single(d => d.id == proposalDetailId, string.Format("The proposal detail information you have entered [{0}] does not exist.", proposalDetailId));
 
                     var dto = new ProposalDetailOpenMarketInventoryDto();
                     dto.Margin = pv.proposal_versions.margin;

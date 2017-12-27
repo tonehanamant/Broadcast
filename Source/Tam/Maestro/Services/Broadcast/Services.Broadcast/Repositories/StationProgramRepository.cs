@@ -1,5 +1,7 @@
-﻿using System.Data.Entity;
+﻿using System.Data.Common;
+using System.Data.Entity;
 using System.IO.Compression;
+using System.Management.Automation;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
+using Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -38,7 +41,7 @@ namespace Services.Broadcast.Repositories
                 return _InReadUncommitedTransaction(
                     context =>
                     {
-                        var programs = context.station_inventory_manifest
+                        var manifests = context.station_inventory_manifest
                             .Include(a => a.station_inventory_manifest_dayparts)
                             .Include(b => b.station_inventory_manifest_audiences)
                             .Include(m => m.station_inventory_manifest_rates)
@@ -51,40 +54,37 @@ namespace Services.Broadcast.Repositories
                             .ToList();
 
                         if (proposalMarketIds != null & proposalMarketIds.Count > 0)
-                            programs = programs.Where(b => proposalMarketIds.Contains(b.station.market_code)).ToList();
+                            manifests = manifests.Where(b => proposalMarketIds.Contains(b.station.market_code)).ToList();
 
-                        return (from manifest in programs
-                            from daypart in manifest.station_inventory_manifest_dayparts
-                            select new ProposalProgramDto
+                        var spotLengthId = context.spot_lengths.Where(l => l.length == spotLength).Select(l => l.id).Single();
+
+                        return (manifests.Select(m =>
+                            new ProposalProgramDto()
                             {
-                                ManifestId = manifest.id,
-                                DayPartId = daypart.daypart_id,
-                                ManifestDaypartId = daypart.id,
-                                ProgramName = daypart.program_name,
-                                StartDate = manifest.effective_date,
-                                EndDate = manifest.end_date,
-                                TotalSpots = manifest.spots_per_week ?? 0,
+                                ManifestId = m.id,
+                                ManifestDayparts = m.station_inventory_manifest_dayparts.Select(md => new ProposalProgramDto.ManifestDaypartDto
+                                {
+                                    Id = md.id,
+                                    DaypartId = md.daypart_id,
+                                    ProgramName = md.program_name
+                                }).ToList(),
+                                StartDate = m.effective_date,
+                                EndDate = m.end_date,
+                                SpotCost = m.station_inventory_manifest_rates.Where(r => r.spot_length_id == spotLengthId).Select( r => r.rate).SingleOrDefault(),
+                                TotalSpots = m.spots_per_week ?? 0,
                                 Station = new DisplayScheduleStation
                                 {
-                                    StationCode = manifest.station_code,
-                                    LegacyCallLetters = manifest.station.legacy_call_letters,
-                                    Affiliation = manifest.station.affiliation,
-                                    CallLetters = manifest.station.station_call_letters
+                                    StationCode = m.station_code,
+                                    LegacyCallLetters = m.station.legacy_call_letters,
+                                    Affiliation = m.station.affiliation,
+                                    CallLetters = m.station.station_call_letters
                                 },
                                 Market = new LookupDto
                                 {
-                                    Id = manifest.station.market_code,
-                                    Display = manifest.station.market.geography_name
+                                    Id = m.station.market_code,
+                                    Display = m.station.market.geography_name
                                 },
-                                ManifestRates =
-                                    manifest.station_inventory_manifest_rates.Select(
-                                        r => new StationInventoryManifestRate
-                                        {
-                                            Id = r.id,
-                                            SpotLengthId = r.spot_length_id,
-                                            Rate = r.rate
-                                        }).ToList(),
-                                Allocations = manifest.station_inventory_spots.Select(r => new StationInventorySpots
+                                Allocations = m.station_inventory_spots.Select(r => new StationInventorySpots
                                     {
                                         ManifestId = r.station_inventory_manifest_id,
                                         ProposalVersionDetailQuarterWeekId = r.proposal_version_detail_quarter_week_id,
@@ -92,7 +92,7 @@ namespace Services.Broadcast.Repositories
                                     }).ToList()
                                 // todo : still undefined
                                 //Genres = 
-                            }).ToList();
+                            }).ToList());
 
                         /*
                         // build up the list of stationprograms based on the filters above

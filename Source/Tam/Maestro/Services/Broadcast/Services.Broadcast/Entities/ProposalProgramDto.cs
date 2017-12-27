@@ -8,10 +8,9 @@ namespace Services.Broadcast.Entities
     public class ProposalProgramDto
     {
         public int ManifestId { get; set; }
-        public string ProgramName { get; set; }        
-        public int DayPartId { get; set; }
+        public List<ManifestDaypartDto> ManifestDayparts { get; set; } 
+        public List<LookupDto> DayParts { get; set; }
         public int ManifestDaypartId { get; set; }
-        public LookupDto DayPart { get; set; }
         public List<LookupDto> Genres { get; set; }
         public DisplayScheduleStation Station { get; set; }
         public LookupDto Market { get; set; }
@@ -39,5 +38,22 @@ namespace Services.Broadcast.Entities
         public double UnitImpressions { get; set; }
         public List<StationInventoryManifestRate> ManifestRates { get; set; }
         public List<StationInventorySpots> Allocations { get; set; }
+
+        public ProposalProgramDto()
+        {
+            Allocations = new List<StationInventorySpots>();
+            ManifestRates = new List<StationInventoryManifestRate>();
+            FlightWeeks = new List<ProposalProgramFlightWeek>();
+            ManifestDayparts = new List<ManifestDaypartDto>();
+            DayParts = new List<LookupDto>();
+            Genres = new List<LookupDto>();
+        }
+
+        public class ManifestDaypartDto
+        {
+            public int Id { get; set; }
+            public int DaypartId { get; set; }
+            public string ProgramName { get; set; }
+        }
     }
 }

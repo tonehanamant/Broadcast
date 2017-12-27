@@ -1,18 +1,22 @@
 ﻿[
   {
-    "Airtime": {
-      "endTime": 86400,
-      "fri": true,
-      "mon": true,
-      "sat": true,
-      "startTime": 21600,
-      "sun": true,
-      "Text": "M-SU 6AM-12AM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-SU 6AM-12AM",
+    "AirtimePreviews": [
+      "M-SU 6AM-12AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 86400,
+        "fri": true,
+        "mon": true,
+        "sat": true,
+        "startTime": 21600,
+        "sun": true,
+        "Text": "M-SU 6AM-12AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2017-12-01T00:00:00",
     "EndDate": "2018-01-01T00:00:00",
@@ -55,7 +59,9 @@
       }
     ],
     "HouseHoldImpressions": 1000.0,
-    "ProgramName": "Testing Program",
+    "ProgramNames": [
+      "Testing Program"
+    ],
     "Rate15": 15.0000,
     "Rate30": 23.0769,
     "RateSource": null,

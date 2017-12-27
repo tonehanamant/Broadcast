@@ -443,14 +443,15 @@
                 event.preventDefault();
             }
         };
+        //combined columns change - arrays for Dayparts, ProgramNames - Friends/Seinfeld | 8a-9p/11-12p
         var columns = [
                 {
-                    field: 'DayPart',
-                    caption: 'Airing Time',
+                    field: 'ProgramName',
+                    caption: 'Program | Airing Time',
                     resizable: false,
                     frozen: true,
                     sortable: false,
-                    size: '280px',
+                    size: '480px',
                     render: function (record, index, column_index) {
                         if (record.w2ui && record.w2ui.summary) return '';
                         if (record.isMarket) {
@@ -459,12 +460,39 @@
                         } else if (record.isStation) {
                             return '<strong>' + record.StationName + ' (' + record.Affiliation + ')</strong>';
                         } else {
-                            //return (record.DayPart && record.DayPart.Display) ? record.DayPart.Display : ' - ';
-                            return (record.Daypart && record.Daypart.Display) ? record.Daypart.Display : ' - ';
+                            //return (record.Daypart && record.Daypart.Display) ? record.Daypart.Display : ' - ';
+                            //ProgramNames, can be empty like [null] OR [name, null, name]
+                            // var programDisplay = (record.ProgramNames.length && record.ProgramNames[0]) ? record.ProgramNames.join('/') : ' - ';
+                            var programDisplay = ' - ';
+                            if (record.ProgramNames.length) {
+                                var resPrograms = '';
+                                var lastProgram = record.ProgramNames.length - 1;
+                                $.each(record.ProgramNames, function (idx, program) {
+                                    if (program) {
+                                        resPrograms += program;
+                                        if (idx < lastProgram) resPrograms += '/';
+                                    }
+                                });
+                                programDisplay = resPrograms;
+                            }
+
+                            var airtimeDisplay = ' - ';
+                            if (record.Dayparts.length) {
+                                var resAir = '';
+                                var lastAir = record.Dayparts.length - 1;
+                                $.each(record.Dayparts, function (idx, air) {
+                                    resAir += air.Display;
+                                    if (idx < lastAir) resAir += '/';
+                                });
+                                airtimeDisplay = resAir;
+                            }
+                                
+                            return programDisplay + ' | ' + airtimeDisplay;
                         }
                     }
                 },
 				//should be empty for market/station
+                /*
                 {
                     field: 'ProgramName',
                     caption: 'Program',
@@ -473,6 +501,7 @@
                     sortable: false,
                     size: '200px'
                 },
+                */
                 {
                     field: 'TargetCpm',
                     //TBD? toggle between w2ui-sort-up / w2ui-sort-down

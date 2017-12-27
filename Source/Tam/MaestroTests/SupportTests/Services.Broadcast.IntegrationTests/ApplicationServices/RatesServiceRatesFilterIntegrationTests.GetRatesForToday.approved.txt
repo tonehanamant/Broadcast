@@ -1,18 +1,22 @@
 ﻿[
   {
-    "Airtime": {
-      "endTime": 43200,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 41400,
-      "sun": false,
-      "Text": "M-F 11:30AM-12PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 11:30AM-12PM",
+    "AirtimePreviews": [
+      "M-F 11:30AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 41400,
+        "sun": false,
+        "Text": "M-F 11:30AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2015-12-28T00:00:00",
     "EndDate": "2016-03-27T00:00:00",
@@ -97,7 +101,9 @@
       }
     ],
     "HouseHoldImpressions": 10500.0,
-    "ProgramName": "Q1 CADENT NEWS AT 11:30AM",
+    "ProgramNames": [
+      "Q1 CADENT NEWS AT 11:30AM"
+    ],
     "Rate15": 110.0000,
     "Rate30": 0.0,
     "RateSource": null,

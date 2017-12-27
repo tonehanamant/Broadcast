@@ -1,18 +1,22 @@
 ﻿[
   {
-    "Airtime": {
-      "endTime": 54000,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 50400,
-      "sun": false,
-      "Text": "M-F 2PM-3PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 2PM-3PM",
+    "AirtimePreviews": [
+      "M-F 2PM-3PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 54000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 50400,
+        "sun": false,
+        "Text": "M-F 2PM-3PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -84,7 +88,9 @@
       }
     ],
     "HouseHoldImpressions": 86000.0,
-    "ProgramName": "GENERAL HOSPITAL",
+    "ProgramNames": [
+      "GENERAL HOSPITAL"
+    ],
     "Rate15": 650.0000,
     "Rate30": 1000.0000,
     "RateSource": null,
@@ -94,19 +100,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 36000,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 32400,
-      "sun": false,
-      "Text": "M-F 9AM-10AM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 9AM-10AM",
+    "AirtimePreviews": [
+      "M-F 9AM-10AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 36000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 32400,
+        "sun": false,
+        "Text": "M-F 9AM-10AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -178,7 +188,9 @@
       }
     ],
     "HouseHoldImpressions": 103000.0,
-    "ProgramName": "LIVE WITH KELLY",
+    "ProgramNames": [
+      "LIVE WITH KELLY"
+    ],
     "Rate15": 585.0000,
     "Rate30": 900.0000,
     "RateSource": null,
@@ -188,19 +200,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 46800,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 43200,
-      "sun": false,
-      "Text": "M-F 12PM-1PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 12PM-1PM",
+    "AirtimePreviews": [
+      "M-F 12PM-1PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 46800,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 43200,
+        "sun": false,
+        "Text": "M-F 12PM-1PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -272,7 +288,9 @@
       }
     ],
     "HouseHoldImpressions": 91000.0,
-    "ProgramName": "THE CHEW",
+    "ProgramNames": [
+      "THE CHEW"
+    ],
     "Rate15": 520.0000,
     "Rate30": 800.0000,
     "RateSource": null,
@@ -282,19 +300,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 39600,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 36000,
-      "sun": false,
-      "Text": "M-F 10AM-11AM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 10AM-11AM",
+    "AirtimePreviews": [
+      "M-F 10AM-11AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 39600,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 36000,
+        "sun": false,
+        "Text": "M-F 10AM-11AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -366,7 +388,9 @@
       }
     ],
     "HouseHoldImpressions": 103000.0,
-    "ProgramName": "THE VIEW",
+    "ProgramNames": [
+      "THE VIEW"
+    ],
     "Rate15": 715.0000,
     "Rate30": 1100.0000,
     "RateSource": null,
@@ -376,19 +400,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 50400,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 46800,
-      "sun": false,
-      "Text": "M-F 1PM-2PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 1PM-2PM",
+    "AirtimePreviews": [
+      "M-F 1PM-2PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 50400,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 46800,
+        "sun": false,
+        "Text": "M-F 1PM-2PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -460,7 +488,9 @@
       }
     ],
     "HouseHoldImpressions": 60000.0,
-    "ProgramName": "WINDY CITY LIVE",
+    "ProgramNames": [
+      "WINDY CITY LIVE"
+    ],
     "Rate15": 520.0000,
     "Rate30": 800.0000,
     "RateSource": null,
@@ -470,19 +500,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 55800,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 54000,
-      "sun": false,
-      "Text": "M-F 3PM-3:30PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 3PM-3:30PM",
+    "AirtimePreviews": [
+      "M-F 3PM-3:30PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 55800,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 54000,
+        "sun": false,
+        "Text": "M-F 3PM-3:30PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -554,7 +588,9 @@
       }
     ],
     "HouseHoldImpressions": 114000.0,
-    "ProgramName": "INSIDE EDITION",
+    "ProgramNames": [
+      "INSIDE EDITION"
+    ],
     "Rate15": 520.0000,
     "Rate30": 800.0000,
     "RateSource": null,
@@ -564,19 +600,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 57600,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 55800,
-      "sun": false,
-      "Text": "M-F 3:30PM-4PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 3:30PM-4PM",
+    "AirtimePreviews": [
+      "M-F 3:30PM-4PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 57600,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 55800,
+        "sun": false,
+        "Text": "M-F 3:30PM-4PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -648,7 +688,9 @@
       }
     ],
     "HouseHoldImpressions": 169000.0,
-    "ProgramName": "JEOPARDY",
+    "ProgramNames": [
+      "JEOPARDY"
+    ],
     "Rate15": 585.0000,
     "Rate30": 900.0000,
     "RateSource": null,
@@ -658,19 +700,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 7200,
-      "fri": false,
-      "mon": false,
-      "sat": true,
-      "startTime": 3600,
-      "sun": false,
-      "Text": "SA 1AM-2AM",
-      "thu": false,
-      "tue": false,
-      "wed": false
-    },
-    "AirtimePreview": "SA 1AM-2AM",
+    "AirtimePreviews": [
+      "SA 1AM-2AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 7200,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 3600,
+        "sun": false,
+        "Text": "SA 1AM-2AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-12-10T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -692,7 +738,9 @@
       }
     ],
     "HouseHoldImpressions": 43000.0,
-    "ProgramName": "ABC7 LATE NEWS (R)",
+    "ProgramNames": [
+      "ABC7 LATE NEWS (R)"
+    ],
     "Rate15": 65.0000,
     "Rate30": 100.0000,
     "RateSource": null,
@@ -702,19 +750,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 5700,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 3900,
-      "sun": false,
-      "Text": "M-F 1:05AM-1:35AM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 1:05AM-1:35AM",
+    "AirtimePreviews": [
+      "M-F 1:05AM-1:35AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 5700,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 3900,
+        "sun": false,
+        "Text": "M-F 1:05AM-1:35AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -786,7 +838,9 @@
       }
     ],
     "HouseHoldImpressions": 48000.0,
-    "ProgramName": "ABC7 LATE NEWS (R)",
+    "ProgramNames": [
+      "ABC7 LATE NEWS (R)"
+    ],
     "Rate15": 97.5000,
     "Rate30": 150.0000,
     "RateSource": null,
@@ -796,19 +850,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 1800,
-      "fri": false,
-      "mon": false,
-      "sat": true,
-      "startTime": 84600,
-      "sun": false,
-      "Text": "SA 11:30PM-12:30AM",
-      "thu": false,
-      "tue": false,
-      "wed": false
-    },
-    "AirtimePreview": "SA 11:30PM-12:30AM",
+    "AirtimePreviews": [
+      "SA 11:30PM-12:30AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 1800,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 84600,
+        "sun": false,
+        "Text": "SA 11:30PM-12:30AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-03T00:00:00",
@@ -865,7 +923,9 @@
       }
     ],
     "HouseHoldImpressions": 73000.0,
-    "ProgramName": "CASTLE",
+    "ProgramNames": [
+      "CASTLE"
+    ],
     "Rate15": 260.0000,
     "Rate30": 400.0000,
     "RateSource": null,
@@ -875,19 +935,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 5400,
-      "fri": false,
-      "mon": false,
-      "sat": true,
-      "startTime": 1800,
-      "sun": false,
-      "Text": "SA 12:30AM-1:30AM",
-      "thu": false,
-      "tue": false,
-      "wed": false
-    },
-    "AirtimePreview": "SA 12:30AM-1:30AM",
+    "AirtimePreviews": [
+      "SA 12:30AM-1:30AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 5400,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 1800,
+        "sun": false,
+        "Text": "SA 12:30AM-1:30AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-03T00:00:00",
@@ -944,7 +1008,9 @@
       }
     ],
     "HouseHoldImpressions": 50000.0,
-    "ProgramName": "CASTLE",
+    "ProgramNames": [
+      "CASTLE"
+    ],
     "Rate15": 195.0000,
     "Rate30": 300.0000,
     "RateSource": null,
@@ -954,19 +1020,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 86400,
-      "fri": false,
-      "mon": false,
-      "sat": true,
-      "startTime": 82800,
-      "sun": false,
-      "Text": "SA 11PM-12AM",
-      "thu": false,
-      "tue": false,
-      "wed": false
-    },
-    "AirtimePreview": "SA 11PM-12AM",
+    "AirtimePreviews": [
+      "SA 11PM-12AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 86400,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 82800,
+        "sun": false,
+        "Text": "SA 11PM-12AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-12-10T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -988,7 +1058,9 @@
       }
     ],
     "HouseHoldImpressions": 107000.0,
-    "ProgramName": "CASTLE",
+    "ProgramNames": [
+      "CASTLE"
+    ],
     "Rate15": 325.0000,
     "Rate30": 500.0000,
     "RateSource": null,
@@ -998,19 +1070,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 3600,
-      "fri": false,
-      "mon": false,
-      "sat": true,
-      "startTime": 0,
-      "sun": false,
-      "Text": "SA 12AM-1AM",
-      "thu": false,
-      "tue": false,
-      "wed": false
-    },
-    "AirtimePreview": "SA 12AM-1AM",
+    "AirtimePreviews": [
+      "SA 12AM-1AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 3600,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 0,
+        "sun": false,
+        "Text": "SA 12AM-1AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-12-10T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -1032,7 +1108,9 @@
       }
     ],
     "HouseHoldImpressions": 59000.0,
-    "ProgramName": "CASTLE",
+    "ProgramNames": [
+      "CASTLE"
+    ],
     "Rate15": 260.0000,
     "Rate30": 400.0000,
     "RateSource": null,
@@ -1042,19 +1120,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 84600,
-      "fri": false,
-      "mon": false,
-      "sat": false,
-      "startTime": 82800,
-      "sun": true,
-      "Text": "SU 11PM-11:30PM",
-      "thu": false,
-      "tue": false,
-      "wed": false
-    },
-    "AirtimePreview": "SU 11PM-11:30PM",
+    "AirtimePreviews": [
+      "SU 11PM-11:30PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 84600,
+        "fri": false,
+        "mon": false,
+        "sat": false,
+        "startTime": 82800,
+        "sun": true,
+        "Text": "SU 11PM-11:30PM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -1126,7 +1208,9 @@
       }
     ],
     "HouseHoldImpressions": 94000.0,
-    "ProgramName": "INSIDE EDITION W",
+    "ProgramNames": [
+      "INSIDE EDITION W"
+    ],
     "Rate15": 650.0000,
     "Rate30": 1000.0000,
     "RateSource": null,
@@ -1136,19 +1220,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 85020,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 81300,
-      "sun": false,
-      "Text": "M-F 10:35PM-11:37PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 10:35PM-11:37PM",
+    "AirtimePreviews": [
+      "M-F 10:35PM-11:37PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 85020,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 81300,
+        "sun": false,
+        "Text": "M-F 10:35PM-11:37PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -1220,7 +1308,9 @@
       }
     ],
     "HouseHoldImpressions": 123000.0,
-    "ProgramName": "JIMMY KIMMEL",
+    "ProgramNames": [
+      "JIMMY KIMMEL"
+    ],
     "Rate15": 845.0000,
     "Rate30": 1300.0000,
     "RateSource": null,
@@ -1230,19 +1320,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 420,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 85020,
-      "sun": false,
-      "Text": "M-F 11:37PM-12:07AM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 11:37PM-12:07AM",
+    "AirtimePreviews": [
+      "M-F 11:37PM-12:07AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 420,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 85020,
+        "sun": false,
+        "Text": "M-F 11:37PM-12:07AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -1314,7 +1408,9 @@
       }
     ],
     "HouseHoldImpressions": 82000.0,
-    "ProgramName": "NIGHTLINE",
+    "ProgramNames": [
+      "NIGHTLINE"
+    ],
     "Rate15": 422.5000,
     "Rate30": 650.0000,
     "RateSource": null,
@@ -1324,19 +1420,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 3900,
-      "fri": false,
-      "mon": false,
-      "sat": false,
-      "startTime": 300,
-      "sun": true,
-      "Text": "SU 12:05AM-1:05AM",
-      "thu": false,
-      "tue": false,
-      "wed": false
-    },
-    "AirtimePreview": "SU 12:05AM-1:05AM",
+    "AirtimePreviews": [
+      "SU 12:05AM-1:05AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 3900,
+        "fri": false,
+        "mon": false,
+        "sat": false,
+        "startTime": 300,
+        "sun": true,
+        "Text": "SU 12:05AM-1:05AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -1408,7 +1508,9 @@
       }
     ],
     "HouseHoldImpressions": 44000.0,
-    "ProgramName": "SCANDAL",
+    "ProgramNames": [
+      "SCANDAL"
+    ],
     "Rate15": 227.5000,
     "Rate30": 350.0000,
     "RateSource": null,
@@ -1418,19 +1520,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 7500,
-      "fri": false,
-      "mon": false,
-      "sat": false,
-      "startTime": 3900,
-      "sun": true,
-      "Text": "SU 1:05AM-2:05AM",
-      "thu": false,
-      "tue": false,
-      "wed": false
-    },
-    "AirtimePreview": "SU 1:05AM-2:05AM",
+    "AirtimePreviews": [
+      "SU 1:05AM-2:05AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 7500,
+        "fri": false,
+        "mon": false,
+        "sat": false,
+        "startTime": 3900,
+        "sun": true,
+        "Text": "SU 1:05AM-2:05AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -1502,7 +1608,9 @@
       }
     ],
     "HouseHoldImpressions": 30000.0,
-    "ProgramName": "SCANDAL",
+    "ProgramNames": [
+      "SCANDAL"
+    ],
     "Rate15": 162.5000,
     "Rate30": 250.0000,
     "RateSource": null,
@@ -1512,19 +1620,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 4200,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 480,
-      "sun": false,
-      "Text": "M-F 12:08AM-1:10AM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 12:08AM-1:10AM",
+    "AirtimePreviews": [
+      "M-F 12:08AM-1:10AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 4200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 480,
+        "sun": false,
+        "Text": "M-F 12:08AM-1:10AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -1596,7 +1708,9 @@
       }
     ],
     "HouseHoldImpressions": 53000.0,
-    "ProgramName": "WINDY CITY LIVE B",
+    "ProgramNames": [
+      "WINDY CITY LIVE B"
+    ],
     "Rate15": 260.0000,
     "Rate30": 400.0000,
     "RateSource": null,
@@ -1606,19 +1720,23 @@
     "StationCode": 5060
   },
   {
-    "Airtime": {
-      "endTime": 86400,
-      "fri": false,
-      "mon": false,
-      "sat": false,
-      "startTime": 84600,
-      "sun": true,
-      "Text": "SU 11:30PM-12AM",
-      "thu": false,
-      "tue": false,
-      "wed": false
-    },
-    "AirtimePreview": "SU 11:30PM-12AM",
+    "AirtimePreviews": [
+      "SU 11:30PM-12AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 86400,
+        "fri": false,
+        "mon": false,
+        "sat": false,
+        "startTime": 84600,
+        "sun": true,
+        "Text": "SU 11:30PM-12AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -1690,7 +1808,9 @@
       }
     ],
     "HouseHoldImpressions": 66000.0,
-    "ProgramName": "WINDY CITY WKND",
+    "ProgramNames": [
+      "WINDY CITY WKND"
+    ],
     "Rate15": 390.0000,
     "Rate30": 600.0000,
     "RateSource": null,
