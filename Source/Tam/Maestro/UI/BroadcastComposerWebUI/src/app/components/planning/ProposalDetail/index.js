@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Well, Form, FormGroup, ControlLabel, Row, Col, FormControl, Button, Checkbox, Glyphicon, HelpBlock } from 'react-bootstrap';
 import FlightPicker from 'Components/shared/FlightPicker';
+import DayPartPicker from 'Components/shared/DayPartPicker';
 import ProposalDetailGrid from 'Components/planning/ProposalDetailGrid';
 import Sweeps from './Sweeps';
 
@@ -196,7 +197,11 @@ export default class ProposalDetail extends Component {
               {detail &&
               <FormGroup controlId="proposalDetailDaypart" validationState={null}>
                 <ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart</ControlLabel>
-                  <FormControl type="text" value={detail.Daypart && detail.Daypart.Text ? detail.Daypart.Text : ''} disabled={isReadOnly} readOnly />
+                {/* <FormControl type="text" value={detail.Daypart && detail.Daypart.Text ? detail.Daypart.Text : ''} readOnly /> */}
+                <DayPartPicker
+                  dayPart={detail.Daypart || undefined}
+                  onApply={() => {}}
+                />
               </FormGroup>
               }
               {detail &&
