@@ -342,6 +342,9 @@
     <Compile Include="proposal_version_detail_quarter_weeks.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="proposal_version_detail_quarter_week_iscis.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="proposal_version_flight_weeks.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

@@ -1,0 +1,133 @@
+﻿{
+  "AdvertiserId": 0,
+  "BlackoutMarketGroup": null,
+  "BlackoutMarketGroupId": null,
+  "CanDelete": false,
+  "Details": [
+    {
+      "Adu": false,
+      "DaypartCode": "NAV",
+      "DefaultPostingBooks": null,
+      "FlightEdited": false,
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2016-06-06T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 649,
+          "StartDate": "2016-05-30T00:00:00"
+        }
+      ],
+      "HutPostingBookId": -1,
+      "PlaybackType": 4,
+      "Quarters": [
+        {
+          "Cpm": 20.0000,
+          "DistributeGoals": false,
+          "ImpressionGoal": 100000.0,
+          "Quarter": 2,
+          "QuarterText": "2016 Q2",
+          "Weeks": [
+            {
+              "Cost": 2000.00,
+              "EndDate": "2016-06-06T00:00:00",
+              "Impressions": 100000.0,
+              "Iscis": [
+                {
+                  "Brand": null,
+                  "ClientIsci": "AAAAAAAA",
+                  "HouseIsci": "AAAAAAAA",
+                  "MarriedHouseIsci": false
+                },
+                {
+                  "Brand": null,
+                  "ClientIsci": "BBBBBBBB",
+                  "HouseIsci": "BBBBBBBBB",
+                  "MarriedHouseIsci": false
+                },
+                {
+                  "Brand": "Test 1",
+                  "ClientIsci": "CCCCCCCCCC",
+                  "HouseIsci": "CCCCCCCCCC",
+                  "MarriedHouseIsci": true
+                },
+                {
+                  "Brand": "Test 2",
+                  "ClientIsci": "DDDDDDDDD",
+                  "HouseIsci": "DDDDDDDD",
+                  "MarriedHouseIsci": false
+                },
+                {
+                  "Brand": null,
+                  "ClientIsci": "EEEEEEEEEE",
+                  "HouseIsci": "EEEEEEEEEEE",
+                  "MarriedHouseIsci": true
+                },
+                {
+                  "Brand": "Testing 45",
+                  "ClientIsci": "ZZZZZZ",
+                  "HouseIsci": "ZZZZZZ",
+                  "MarriedHouseIsci": true
+                }
+              ],
+              "IsHiatus": false,
+              "MediaWeekId": 649,
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 10,
+              "Week": "5/30/2016"
+            }
+          ],
+          "Year": 2016
+        }
+      ],
+      "SharePostingBookId": 410,
+      "SinglePostingBookId": 410,
+      "SpotLengthId": 1,
+      "TotalCost": 2000.00,
+      "TotalImpressions": 100000.0,
+      "TotalUnits": 10
+    }
+  ],
+  "Equivalized": false,
+  "FlightEndDate": "2016-06-06T00:00:00",
+  "FlightStartDate": "2016-05-30T00:00:00",
+  "FlightWeeks": [
+    {
+      "EndDate": "2016-06-06T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 649,
+      "StartDate": "2016-05-30T00:00:00"
+    }
+  ],
+  "GuaranteedDemoId": 0,
+  "Margin": null,
+  "MarketGroup": null,
+  "MarketGroupId": 0,
+  "Notes": null,
+  "PostType": 0,
+  "ProposalName": null,
+  "SecondaryDemos": [],
+  "SpotLengths": [
+    {
+      "Display": "30"
+    }
+  ],
+  "Status": 0,
+  "TargetBudget": 2000.00,
+  "TargetCPM": 20.00,
+  "TargetImpressions": 100000.0,
+  "TargetUnits": 10,
+  "TotalCost": 0.0,
+  "TotalCostMarginAchieved": false,
+  "TotalCostPercent": 0.0,
+  "TotalCPM": 0.0,
+  "TotalCPMMarginAchieved": false,
+  "TotalCPMPercent": 0.0,
+  "TotalImpressions": 0.0,
+  "TotalImpressionsMarginAchieved": false,
+  "TotalImpressionsPercent": 0.0,
+  "ValidationWarning": null,
+  "Version": null,
+  "VersionId": 0
+}
