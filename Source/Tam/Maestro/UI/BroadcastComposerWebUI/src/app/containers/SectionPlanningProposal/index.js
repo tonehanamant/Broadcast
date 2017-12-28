@@ -109,7 +109,7 @@ export class SectionPlanningProposal extends Component {
     });
     // console.log('VALID DETAILS', validDetails);
 
-    return !validDetails.includes(null);
+    return !validDetails.includes(null || false);
   }
 
   isValidProposalDetailGrids() {
