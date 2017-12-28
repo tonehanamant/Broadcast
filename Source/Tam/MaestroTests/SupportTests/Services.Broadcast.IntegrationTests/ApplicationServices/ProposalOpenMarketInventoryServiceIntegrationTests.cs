@@ -197,7 +197,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDetailId = GetProposalDetailId();
+                var proposal = new ProposalDto();
+                var proposalDetailId = GetProposalDetailId(ref proposal);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 var dtoMarkets = dto.Markets;
@@ -215,7 +216,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             // affiliation COZ
             using (new TransactionScopeWrapper())
             {
-                var proposalDetailId = GetProposalDetailId();
+                var proposal = new ProposalDto();
+                var proposalDetailId = GetProposalDetailId(ref proposal);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 var dtoPrograms = dto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs)).ToList();
@@ -229,11 +231,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        private int GetProposalDetailId()
+        private int GetProposalDetailId(ref ProposalDto proposal)
         {
             int proposalDetailId = 8123;
             var proposalId = _ProposalService.GetAllProposals().First(p => p.ProposalName == ProposalPickleTestName).Id;
-            var proposal = _ProposalService.GetProposalById(proposalId);
+            proposal = _ProposalService.GetProposalById(proposalId);
             proposalDetailId = proposal.Details.First().Id.Value;
             return proposalDetailId;
         }
@@ -244,7 +246,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             // open market program
             using (new TransactionScopeWrapper())
             {
-                var proposalDetailId = GetProposalDetailId();
+                var proposal = new ProposalDto();
+                var proposalDetailId = GetProposalDetailId(ref proposal);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 var dtoPrograms = dto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs));
@@ -266,7 +269,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             // open market program
             using (new TransactionScopeWrapper())
             {
-                var proposalDetailId = GetProposalDetailId();
+                var proposal = new ProposalDto();
+                var proposalDetailId = GetProposalDetailId(ref proposal);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 var dtoPrograms = dto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs));
@@ -287,7 +291,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             // open market program
             using (new TransactionScopeWrapper())
             {
-                var proposalDetailId = GetProposalDetailId();
+                var proposal = new ProposalDto();
+                var proposalDetailId = GetProposalDetailId(ref proposal);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 var dtoPrograms = dto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs));
@@ -303,30 +308,84 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(filtereddaypartCount == 1);
             }
         }
-        [Ignore]
+
         [Test]
-        public void CanFilterOpenMarketProposalProgramsWithSpot()
+        public void CanFilterOpenMarketProposalProgramsWithOutSpotsAllocated()
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDetailId = GetProposalDetailId();
+                var proposal = new ProposalDto();
+                var proposalDetailId = GetProposalDetailId(ref proposal);
+
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
+
+                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+
+                dto.Filter.SpotFilter = ProposalOpenMarketFilter.OpenMarketSpotFilter.ProgramWithoutSpots;
+
+                var filteredDto = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketInventory(dto);
+                var filteredProgramsWithSpot =
+                    filteredDto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs)).Count();
+                // the first tow programs have spots agasint it
+                Assert.IsTrue(filteredProgramsWithSpot > 0);
+            }
+        }
+
+        [Test]
+        public void CanFilterOpenMarketProposalProgramsWithSpotsAllocated()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = new ProposalDto();
+                var proposalDetailId = GetProposalDetailId(ref proposal);
 
                 var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416,413 );
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
-                var filteredDto = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketInventory(dto);
-                var filteredProgramsWithSpot =
-                    filteredDto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs)).Count();
+                var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
+                
+                AllocationProgram(proposalDetailId, programId,proposal.FlightWeeks.First().MediaWeekId);
+
+                dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
 
                 dto.Filter.SpotFilter = ProposalOpenMarketFilter.OpenMarketSpotFilter.ProgramWithSpots;
 
-                filteredDto = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketInventory(dto);
-                filteredProgramsWithSpot =
+                var filteredDto = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketInventory(dto);
+                var filteredProgramsWithSpot =
                     filteredDto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs)).Count();
                 // the first tow programs have spots agasint it
-                Assert.IsTrue(filteredProgramsWithSpot >= 1);
+                Assert.IsTrue(filteredProgramsWithSpot == 1);
             }
+        }
+
+        private void AllocationProgram(int proposalDetailId, int programId,int mediaWeekId)
+        {
+            var request = new OpenMarketAllocationSaveRequest
+            {
+                ProposalVersionDetailId = proposalDetailId,
+                Username = "test-user",
+                Weeks = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek>
+                {
+                    new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeek
+                    {
+                        MediaWeekId = mediaWeekId,
+                        Programs = new List<OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram>
+                        {
+                            new OpenMarketAllocationSaveRequest.OpenMarketAllocationWeekProgram
+                            {
+                                UnitImpressions = 1000,
+                                TotalImpressions = 10000,
+                                ProgramId = programId,
+                                Spots = 10
+                            }
+                        }
+                    }
+                }
+            };
+
+            _ProposalOpenMarketInventoryService.SaveInventoryAllocations(request);
         }
 
         [Test]

@@ -1,0 +1,19 @@
+.ant-time-picker-panel-inner {
+	border: 1px solid rgb(102, 175, 233) !important;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6) !important;
+}
+
+.ant-time-picker-panel-input-wrap{
+	border-bottom: 1px solid rgb(102, 175, 233) !important;
+}
+
+.ant-time-picker-input {
+	&:hover {
+		border: 1px solid rgb(102, 175, 233) !important;
+	}
+
+	&:focus {
+		border: 1px solid rgb(102, 175, 233) !important;
+		box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6) !important;
+	}
+}

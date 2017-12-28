@@ -14,6 +14,7 @@ import ErrorModal from 'Components/shared/ErrorModal';
 import ConfirmModal from 'Components/shared/ConfirmModal';
 import Overlay from 'Components/shared/Overlay';
 
+import 'antd/dist/antd.css';
 import styles from './index.style.scss';
 
 /* eslint-disable no-unused-vars */
