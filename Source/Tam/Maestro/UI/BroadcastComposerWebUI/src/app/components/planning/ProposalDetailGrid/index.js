@@ -39,9 +39,6 @@ export default class ProposalDetailGrid extends Component {
     return can;
   }
 
-  componentWillReceiveProps(nextProps) {
-  }
-
    /* ////////////////////////////////// */
   /* // COMPONENT RENDER FUNC
   /* ////////////////////////////////// */
@@ -347,7 +344,12 @@ export default class ProposalDetailGrid extends Component {
     };
 
     return (
-      <Grid {...grid} data={this.props.GridQuarterWeeks} store={this.context.store} height="false" />
+      <Grid
+        {...grid}
+        data={this.props.GridQuarterWeeks}
+        store={this.context.store}
+        height="false"
+      />
     );
   }
 }

@@ -444,7 +444,7 @@ export default class ProposalForm extends Component {
 											<ControlLabel><strong>Spot Length</strong></ControlLabel>
 											<FormControl.Static>
                         { proposalEditForm.SpotLengths.length <= 0 && <span> - </span> }
-												{ proposalEditForm.SpotLengths.map((spot, index, arr) => (arr.length !== index ? `${spot.Display}` : `${spot.Display}, `)) }
+												{ proposalEditForm.SpotLengths.map((spot, index, arr) => (arr.length !== (index + 1) ? `${spot.Display}, ` : `${spot.Display}`)) }
 											</FormControl.Static>
 										</FormGroup>
 									</Col>

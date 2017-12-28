@@ -140,8 +140,6 @@ export default function reducer(state = initialState, action) {
       let rowIndex = details[detailIndex].GridQuarterWeeks.findIndex(row => row._key === payload.row);
       if (rowIndex === -1) rowIndex = payload.row.replace(/row-/, '');
 
-      console.log('PAYLOAD!!!', payload, rowIndex);
-
       let newState = { ...state };
 
       if (quarterIndex !== null && weekIndex === null) {

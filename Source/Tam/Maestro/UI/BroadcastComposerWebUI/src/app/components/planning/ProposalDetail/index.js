@@ -64,7 +64,9 @@ export default class ProposalDetail extends Component {
     this.checkValidSpotLength(val);
   }
 
-  // onChangeDaypart - TODO with validation
+  onDayPartPickerApply(daypart) {
+      this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'Daypart', value: daypart });
+  }
 
   onChangeDaypartCode(event) {
     const val = event.target.value || '';
@@ -98,8 +100,10 @@ export default class ProposalDetail extends Component {
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightStartDate', value: flight.StartDate });
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightEndDate', value: flight.EndDate });
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightWeeks', value: flight.FlightWeeks });
-      this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightEdited', value: true });
-      this.props.onUpdateProposal();
+      this.props.updateProposalEditFormDetail(
+        { id: this.props.detail.Id, key: 'FlightEdited', value: true },
+        () => this.props.onUpdateProposal(),
+      );
     } else {
       this.props.modelNewProposalDetail(flight);
     }
@@ -195,14 +199,20 @@ export default class ProposalDetail extends Component {
               </FormGroup>
               }
               {detail &&
-              <FormGroup controlId="proposalDetailDaypart" validationState={null}>
-                <ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart</ControlLabel>
-                {/* <FormControl type="text" value={detail.Daypart && detail.Daypart.Text ? detail.Daypart.Text : ''} readOnly /> */}
+              // <FormGroup controlId="proposalDetailDaypart" validationState={this.state.validationStates.Daypart}>
+              //   <ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart</ControlLabel>
                 <DayPartPicker
                   dayPart={detail.Daypart || undefined}
-                  onApply={() => {}}
+                  onApply={daypart => this.onDayPartPickerApply(daypart)}
+                  isReadOnly={isReadOnly}
+                  validationState={this.state.validationStates.Daypart}
                 />
-              </FormGroup>
+              //   {this.state.validationStates.Daypart != null &&
+              //   <HelpBlock style={{ margin: '0 0 0 16px' }}>
+              //     <span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
+              //   </HelpBlock>
+              //   }
+              // </FormGroup>
               }
               {detail &&
               <FormGroup controlId="proposalDetailDaypartCode" validationState={this.state.validationStates.DaypartCode || this.state.validationStates.DaypartCode_Alphanumeric || this.state.validationStates.DaypartCode_MaxChar}>

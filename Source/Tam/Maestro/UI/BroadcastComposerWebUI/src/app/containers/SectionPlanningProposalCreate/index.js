@@ -75,6 +75,13 @@ export class SectionPlanningProposalCreate extends Component {
         return valid.required;
       };
 
+      const validDaypart = (value) => {
+        const valid = {
+          required: value !== null,
+        };
+        return valid.required;
+      };
+
       const validDaypartCode = (value) => {
         const alphanumeric = /^[A-Za-z0-9- ]+$/i;
         const valid = {
@@ -85,12 +92,12 @@ export class SectionPlanningProposalCreate extends Component {
         return valid.required && valid.alphaNumeric && valid.maxChar10;
       };
 
-      const validDetail = validSpothLength(detail.SpothLengthId) && validDaypartCode(detail.DaypartCode);
+      const validDetail = validSpothLength(detail.SpothLengthId) && validDaypart(detail.Daypart) && validDaypartCode(detail.DaypartCode);
       validDetails.push(validDetail);
     });
     // console.log('VALID DETAILS', validDetails);
 
-    return !validDetails.includes(null);
+    return !validDetails.includes(null || false);
   }
 
   isValidProposalDetailGrids() {

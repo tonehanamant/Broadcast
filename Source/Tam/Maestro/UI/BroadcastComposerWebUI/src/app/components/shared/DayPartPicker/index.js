@@ -7,7 +7,7 @@ import moment from 'moment';
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-plusplus */
 
-import { Row, Col, Well, Form, FormGroup, Panel, ListGroup, ListGroupItem, Checkbox, Radio, ButtonToolbar, Button, InputGroup, ControlLabel, FormControl, Overlay } from 'react-bootstrap';
+import { Row, Col, Well, Form, FormGroup, Panel, ListGroup, ListGroupItem, Checkbox, Radio, ButtonToolbar, Button, InputGroup, ControlLabel, FormControl, HelpBlock, Overlay } from 'react-bootstrap';
 
 // required field
 // standard daypart picker allowing user to select days of week and time of day.
@@ -80,17 +80,44 @@ export default class DayPartPicker extends Component {
 			weekends: false,
 		};
 		this.toggle = this.toggle.bind(this);
-		// this.resetFromProps = this.resetFromProps.bind(this);
 		this.onStartTimeChange = this.onStartTimeChange.bind(this);
 		this.onEndTimeChange = this.onEndTimeChange.bind(this);
 		this.onDaySelect = this.onDaySelect.bind(this);
 		this.onQuickOptionSelect = this.onQuickOptionSelect.bind(this);
 		this.setQuickOptions = this.setQuickOptions.bind(this);
 		this.updateInput = this.updateInput.bind(this);
+		this.onApply = this.onApply.bind(this);
 	}
 
 	toggle() {
+		if (this.props.isReadOnly) return;
+		if (this.state.show === false) {
+			this.updateInput();
+		}
 		this.setState({ show: !this.state.show });
+	}
+
+	resetDaypartDefault() {
+		this.setState(
+			{
+				startTime: moment().startOf('day').add(this.props.dayPart.startTime, 'seconds'),
+				startTimeSeconds: this.props.dayPart.startTime,
+				endTime: moment().startOf('day').add(this.props.dayPart.endTime, 'seconds'),
+				endTimeSeconds: this.props.dayPart.endTime,
+				text: this.props.dayPart.Text,
+				mon: this.props.dayPart.mon,
+				tue: this.props.dayPart.tue,
+				wed: this.props.dayPart.wed,
+				thu: this.props.dayPart.thu,
+				fri: this.props.dayPart.fri,
+				sat: this.props.dayPart.sat,
+				sun: this.props.dayPart.sun,
+				everyday: false,
+				weekdays: false,
+				weekends: false,
+			},
+			() => this.setQuickOptions(),
+		);
 	}
 
 	onStartTimeChange(time, timeString) {
@@ -178,7 +205,6 @@ export default class DayPartPicker extends Component {
 	}
 
 	setQuickOptions() {
-		console.log(this.state);
 		if (this.state.mon === true &&
 					this.state.tue === true &&
 					this.state.wed === true &&
@@ -241,6 +267,23 @@ export default class DayPartPicker extends Component {
 		});
 	}
 
+	onApply() {
+		const daypart = {
+			Text: this.state.text,
+			startTime: this.state.startTimeSeconds,
+			endTime: this.state.endTimeSeconds,
+			mon: this.state.mon,
+			tue: this.state.tue,
+			wed: this.state.wed,
+			thu: this.state.thu,
+			fri: this.state.fri,
+			sat: this.state.sat,
+			sun: this.state.sun,
+		};
+		this.props.onApply(daypart);
+		this.toggle();
+	}
+
 	componentDidMount() {
 		this.setQuickOptions();
 	}
@@ -251,25 +294,35 @@ export default class DayPartPicker extends Component {
 				id="daypart-picker"
 				style={{ position: 'relative', display: 'inline' }}
 			>
-				<FormGroup validationState={null}>
+				<FormGroup validationState={this.props.validationState}>
+					<ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart</ControlLabel>
 					<InputGroup onClick={this.toggle}>
 						<FormControl
 							type="text"
 							value={this.state.text}
 							onChange={this.props.onApply}
 							inputRef={(ref) => { this.input = ref; }}
+							disabled={this.props.isReadOnly}
 						/>
 						<InputGroup.Addon><span className="glyphicon glyphicon-time" aria-hidden="true" /></InputGroup.Addon>
 					</InputGroup>
+					{this.props.validationState != null &&
+						<HelpBlock style={{ margin: '0 0 0 16px' }}>
+							<span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
+						</HelpBlock>
+					}
 				</FormGroup>
 				<Overlay
 					show={this.state.show}
-					onHide={() => this.setState({ show: false })}
+					onHide={() => {
+						this.setState({ show: false });
+						this.resetDaypartDefault();
+					}}
 					placement="bottom"
 					container={this}
 					target={this.input}
 					shouldUpdatePosition={false}
-					// rootClose
+					rootClose
 				>
 					<div
 						style={{
@@ -368,9 +421,11 @@ export default class DayPartPicker extends Component {
 													onChange={this.onStartTimeChange}
 													use12Hours
 													format={'h:mm a'}
-													// minuteStep={15}
+													allowEmpty={false}
+													getPopupContainer={() => document.getElementById('startTimePicker')}
 												/>
 											</FormGroup>
+											<div id="startTimePicker" />
 										</Col>
 										<Col md={6}>
 											<FormGroup controlId="endTime" validationState={null}>
@@ -380,9 +435,11 @@ export default class DayPartPicker extends Component {
 													onChange={this.onEndTimeChange}
 													use12Hours
 													format={'h:mm a'}
-													// minuteStep={15}
+													allowEmpty={false}
+													getPopupContainer={() => document.getElementById('endTimePicker')}
 												/>
 											</FormGroup>
+											<div id="endTimePicker" />
 										</Col>
 									</Row>
 								</Panel>
@@ -397,15 +454,13 @@ export default class DayPartPicker extends Component {
 										bsSize="small"
 										onClick={() => {
 											this.toggle();
-											// this.clearValidationStates();
-                      // this.resetOrRestore();
+											this.resetDaypartDefault();
 										}}
 									>Cancel</Button>
 									<Button
 										bsStyle="success"
 										bsSize="small"
 										onClick={this.onApply}
-										// disabled={this.state.validationStates.startDate || this.state.validationStates.endDate === 'warning'}
 									>Apply</Button>
 								</ButtonToolbar>
 							</Col>
@@ -430,9 +485,13 @@ DayPartPicker.defaultProps = {
 		sat: true,
 		sun: true,
 	},
+	isReadOnly: false,
+	validationState: null,
 };
 
 DayPartPicker.propTypes = {
 	dayPart: PropTypes.object,
 	onApply: PropTypes.func.isRequired,
+	isReadOnly: PropTypes.bool,
+	validationState: PropTypes.oneOfType([null, PropTypes.string]),
 };

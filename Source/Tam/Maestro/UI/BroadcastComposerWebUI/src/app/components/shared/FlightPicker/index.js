@@ -221,7 +221,10 @@ export default class FlightPicker extends Component {
 				</FormGroup>
 				<Overlay
 					show={this.state.show}
-					onHide={() => this.setState({ show: false })}
+					onHide={() => {
+						this.setState({ show: false });
+						this.resetOrRestore();
+					}}
 					placement="bottom"
 					container={this}
 					target={this.input}

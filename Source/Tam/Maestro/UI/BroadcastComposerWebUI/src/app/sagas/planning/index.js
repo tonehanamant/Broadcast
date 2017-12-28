@@ -543,17 +543,16 @@ export function* requestProposalVersion({ payload: id, version }) {
 /* PRE-SAVE (CLEAR Id WHERE Persisted: false) */
 /* ////////////////////////////////// */
 export function preSaveDetailIdNull(proposal) {
-  // const proposalData = { ...proposal };
-  // proposalData.Details.map((detail) => {
-  //   const set = detail;
-  //   if (detail.Persisted === false) {
-  //     set.Persisted = null;
-  //     set.Id = null;
-  //   }
-  //   return set;
-  // });
-  // return proposalData;
-  return proposal;
+  const proposalData = { ...proposal };
+  proposalData.Details.map((detail) => {
+    const set = detail;
+    if (detail.Id < 0) {
+      set.Id = null;
+    }
+    return set;
+  });
+  return proposalData;
+  // return proposal;
 }
 
 /* ////////////////////////////////// */
@@ -915,7 +914,7 @@ export function* modelNewProposalDetail({ payload: params }) {
   /* eslint-disable no-shadow */
   const { getProposalDetail } = api.planning;
   const assignIdFlightWeeks = (data, flightWeeks) => {
-    let detail = { ...data, Id: moment().unix(), Persisted: false };
+    let detail = { ...data, Id: moment().unix() * -1 }; // Negative identifies as unsaved
     detail = { ...detail, FlightWeeks: flightWeeks };
     return detail;
   };
