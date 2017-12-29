@@ -203,6 +203,7 @@
     <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailTotalsDto.cs" />
     <Compile Include="Entities\ProposalHeaderTotalsDto.cs" />
+    <Compile Include="Entities\ProposalWeekIsciDto.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationConflict.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationRequest.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposal.cs" />

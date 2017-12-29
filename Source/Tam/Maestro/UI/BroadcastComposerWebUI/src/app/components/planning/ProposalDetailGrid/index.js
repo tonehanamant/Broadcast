@@ -7,6 +7,7 @@ import { Grid } from 'react-redux-grid';
 import numeral from 'numeral';
 
 import GridCellInput from 'Components/shared/GridCellInput';
+import GridIsciCell from './GridIsciCell';
 
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
@@ -16,6 +17,7 @@ export default class ProposalDetailGrid extends Component {
     super(props, context);
     this.context = context;
     this.checkEditable = this.checkEditable.bind(this);
+    // this.isciCellItems = {};
   }
 
   checkEditable(values, isUnits) {
@@ -35,9 +37,6 @@ export default class ProposalDetailGrid extends Component {
     }
     // console.log('checkEditable', can);
     return can;
-  }
-
-  componentWillReceiveProps(nextProps) {
   }
 
    /* ////////////////////////////////// */
@@ -257,6 +256,40 @@ export default class ProposalDetailGrid extends Component {
             return '';
           },
       },
+      {
+        name: 'ISCIs',
+        dataIndex: 'Iscis',
+        width: '20%',
+        editable: false,
+        renderer: ({ value, row }) => {
+          // console.log('ISCIs Render', value, row);
+          if (row.Type === 'week') {
+            const inputIscis = (IscisValue) => {
+              this.props.updateProposalEditFormDetailGrid({
+                id: this.props.detailId,
+                quarterIndex: row.QuarterIdx,
+                weekIndex: row.WeekIdx,
+                key: 'Iscis',
+                value: IscisValue,
+                row: row._key,
+              });
+              // console.log('called InputIscis', IscisValue, row, this);
+            };
+            return (
+            <GridIsciCell
+              Iscis={value}
+              saveInputIscis={inputIscis}
+              // isciRef={(ref) => { this.isciCellItems[row._key] = ref; }}
+              // popoverRef={(pop) => { this.popoverItem = pop; }
+              // /* eslint-disable no-return-assign */
+              // popoverRef={el => this.popoverItem = el}
+            />
+          );
+        }
+          // empty for quarter, total
+          return '';
+        },
+    },
     ];
 
     /* GRID PLGUINS */
@@ -311,7 +344,12 @@ export default class ProposalDetailGrid extends Component {
     };
 
     return (
-      <Grid {...grid} data={this.props.GridQuarterWeeks} store={this.context.store} height="false" />
+      <Grid
+        {...grid}
+        data={this.props.GridQuarterWeeks}
+        store={this.context.store}
+        height="false"
+      />
     );
   }
 }
