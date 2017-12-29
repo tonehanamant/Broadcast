@@ -34,13 +34,19 @@ class Sweeps extends Component {
     const { initialdata, detail, updateProposalEditFormDetail } = this.props;
 
     if (detail) {
-      const shareBookId = detail.SharePostingBookId || detail.DefaultPostingBooks.DefaultShareBook.PostingBookId;
-      const hutBookId = detail.HutPostingBookId || detail.DefaultPostingBooks.DefaultHutBook.PostingBookId;
-      const playbackTypeId = detail.PlaybackType || detail.DefaultPostingBooks.DefaultPlaybackType;
+      let shareBookId = detail.SharePostingBookId;
+      let hutBookId = detail.HutPostingBookId;
+      let playbackTypeId = detail.PlaybackType;
+
+      if (detail.DefaultPostingBooks) {
+        shareBookId = shareBookId || detail.DefaultPostingBooks.DefaultShareBook.PostingBookId;
+        hutBookId = hutBookId || detail.DefaultPostingBooks.DefaultHutBook.PostingBookId;
+        playbackTypeId = playbackTypeId || detail.DefaultPostingBooks.DefaultPlaybackType;
+      }
 
       // select options
       const shareBookOptions = [...initialdata.ForecastDefaults.CrunchedMonths];
-      const hutBookOptions = [{ Id: -1, Display: 'Use Share Only' }, ...initialdata.ForecastDefaults.CrunchedMonths];
+      const hutBookOptions = [{ Id: null, Display: 'Use Share Only' }, ...initialdata.ForecastDefaults.CrunchedMonths];
       const playbackTypeOptions = initialdata.ForecastDefaults.PlaybackTypes;
 
       // selected option

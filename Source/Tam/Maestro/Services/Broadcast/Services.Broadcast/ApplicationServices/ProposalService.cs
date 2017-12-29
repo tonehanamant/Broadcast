@@ -350,21 +350,20 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SetProposalDetailsRatingBooksId(ProposalDto saveRequest)
         {
-
             foreach (var proposalDetailDto in saveRequest.Details)
             {
-                if (proposalDetailDto.HutPostingBookId == ProposalConstants.UseShareBookOnlyId &&
+                if (proposalDetailDto.HutPostingBookId == null &&
                     proposalDetailDto.SharePostingBookId != null)
                 {
                     proposalDetailDto.SinglePostingBookId = proposalDetailDto.SharePostingBookId;
                     proposalDetailDto.HutPostingBookId = null;
                     proposalDetailDto.SharePostingBookId = null;
-            }
-            else
-            {
+                }
+                else
+                {
                     proposalDetailDto.SinglePostingBookId = null;
+                }
             }
-        }
         }
 
         private int _SaveProposal(ProposalDto proposalDto, string userName)
@@ -731,9 +730,6 @@ namespace Services.Broadcast.ApplicationServices
             if (proposalDetailDto.SharePostingBookId == null)
                 throw new Exception("Cannot save proposal without specifying a Share Book");
 
-            if (proposalDetailDto.HutPostingBookId == null)
-                throw new Exception("Cannot save proposal without specifying a Hut Book");
-
             if (proposalDetailDto.PlaybackType == null)
                 throw new Exception("Cannot save proposal without specifying a Playback Type");
 
@@ -790,7 +786,6 @@ namespace Services.Broadcast.ApplicationServices
                 if (proposalDetailDto.SinglePostingBookId != null)
             {
                     proposalDetailDto.SharePostingBookId = proposalDetailDto.SinglePostingBookId;
-                    proposalDetailDto.HutPostingBookId = ProposalConstants.UseShareBookOnlyId;
                 }
             }
         }

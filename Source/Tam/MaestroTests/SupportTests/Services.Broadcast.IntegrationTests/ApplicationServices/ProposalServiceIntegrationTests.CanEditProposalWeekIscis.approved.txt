@@ -19,7 +19,7 @@
           "StartDate": "2016-05-30T00:00:00"
         }
       ],
-      "HutPostingBookId": -1,
+      "HutPostingBookId": null,
       "PlaybackType": 4,
       "Quarters": [
         {
