@@ -22,6 +22,22 @@ const app = {
   ),
 };
 
+const post = {
+  getPosts: () => call(() => (
+    {
+      status: 200,
+      data: {
+        Success: true,
+        Data: [
+          { FileName: 'Teste', Source: 'Strata', UploadDate: '05/10/17' },
+          { FileName: 'Teste2', Source: 'Strata', UploadDate: '05/10/17' },
+          { FileName: 'Teste3', Source: 'Strata', UploadDate: '05/04/17' },
+        ],
+      },
+    }
+  )),
+};
+
 const postPrePosting = {
   getPrePostInitialData: () => (
     call(GET, `${apiBase}PostPrePosting/InitialData`, {})
@@ -85,6 +101,7 @@ const planning = {
 // Calls
 const api = {
   app,
+  post,
   postPrePosting,
   planning,
 };

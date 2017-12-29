@@ -1,4 +1,5 @@
 import * as appSaga from './app';
+import * as postSaga from './post';
 import * as postPrePostingSaga from './postPrePosting';
 import * as planningSaga from './planning';
 
@@ -9,9 +10,12 @@ export default function* rootSaga() {
     appSaga.watchRequestEmployee(),
     appSaga.watchReadFileB64(),
 
+    postSaga.watchRequestPost(),
+    postSaga.watchRequestPostFiltered(),
+
     postPrePostingSaga.requestPostPrePostingInitialData(),
     postPrePostingSaga.watchRequestPostPrePosting(),
-    postPrePostingSaga.watchRequestAssignPostDisplay(),
+    postPrePostingSaga.watchRequestAssignPostPrePostingDisplay(),
     postPrePostingSaga.watchRequestPostPrePostingFiltered(),
     postPrePostingSaga.watchDeletePostPrePostingById(),
     postPrePostingSaga.watchRequestPostPrePostingFileEdit(),

@@ -34,14 +34,14 @@ export default function reducer(state = initialState, action) {
       };
 
     // POST
-    case ACTIONS.RECEIVE_POST:
+    case ACTIONS.RECEIVE_POST_PRE_POSTING:
       return {
         ...state,
         post: data.Data,
         postUnfiltered: data.Data, // store copy to be used by filter
       };
 
-    case ACTIONS.ASSIGN_POST_DISPLAY:
+    case ACTIONS.ASSIGN_POST_PRE_POST_DISPLAY:
       return {
         ...state,
         post: data,

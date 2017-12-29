@@ -124,7 +124,7 @@ export function* requestPostPrePosting() {
       data,
     });
     yield put({
-      type: ACTIONS.REQUEST_ASSIGN_POST_DISPLAY,
+      type: ACTIONS.REQUEST_ASSIGN_POST_PRE_POSTING_DISPLAY,
       payload: {
         data: data.Data,
       },
@@ -154,7 +154,7 @@ export function* requestPostPrePosting() {
 /* ////////////////////////////////// */
 /* ASSIGN POST DISPLAY */
 /* ////////////////////////////////// */
-export function* assignPostDisplay({ payload: request }) {
+export function* assignPostPrePostingDisplay({ payload: request }) {
   const assignDisplay = () => request.data.map((item) => {
       const post = item;
       // DemoLookups
@@ -552,8 +552,8 @@ export function* watchRequestPostPrePosting() {
   yield takeEvery(ACTIONS.REQUEST_POST_PRE_POSTING, requestPostPrePosting);
 }
 
-export function* watchRequestAssignPostDisplay() {
-  yield takeEvery(ACTIONS.REQUEST_ASSIGN_POST_DISPLAY, assignPostDisplay);
+export function* watchRequestAssignPostPrePostingDisplay() {
+  yield takeEvery(ACTIONS.REQUEST_ASSIGN_POST_PRE_POSTING_DISPLAY, assignPostPrePostingDisplay);
 }
 
 export function* watchRequestPostPrePostingFiltered() {

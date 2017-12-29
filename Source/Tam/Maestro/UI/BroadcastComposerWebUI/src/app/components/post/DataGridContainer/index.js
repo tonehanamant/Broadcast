@@ -3,26 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleModal, createAlert, setOverlayLoading } from 'Ducks/app';
-import { getPost, getPostFiltered, deletePost, getPostFileEdit } from 'Ducks/post';
+import { getPost } from 'Ducks/post';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
 import Sorter from 'Utils/react-redux-grid-sorter';
 
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
-
-/* ////////////////////////////////// */
-/* // REACT-REDUX-GRID ACTIONS
-/* ////////////////////////////////// */
 const { MenuActions, SelectionActions, GridActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
 
 const mapStateToProps = ({ post: { post }, grid, dataSource, menu }) => ({
-  // App
   post,
-  // React-Redux-Grid
   grid,
   dataSource,
   menu,
@@ -30,15 +22,10 @@ const mapStateToProps = ({ post: { post }, grid, dataSource, menu }) => ({
 
 const mapDispatchToProps = dispatch => (bindActionCreators(
   {
-    // App
     getPost,
-    getPostFiltered,
     createAlert,
     toggleModal,
-    deletePost,
-    getPostFileEdit,
     setOverlayLoading,
-    // React-Redux-Grid
     showMenu,
     hideMenu,
     selectRow,
@@ -109,8 +96,6 @@ export class DataGridContainer extends Component {
 
   render() {
     const stateKey = 'gridPostMain';
-
-    /* GRID COLUMNS */
     const columns = [
       {
           name: 'File Name',
@@ -118,30 +103,17 @@ export class DataGridContainer extends Component {
           width: '20%',
       },
       {
-          name: 'Demos',
-          dataIndex: 'DisplayDemos',
+          name: 'Source',
+          dataIndex: 'Source',
           width: '40%',
       },
       {
           name: 'Upload Date',
           dataIndex: 'UploadDate',
-          defaultSortDirection: 'ASC',
-          width: '20%',
-          renderer: ({ value, row }) => (
-            <span>{row.DisplayUploadDate}</span>
-          ),
-      },
-      {
-          name: 'Last Modified',
-          dataIndex: 'ModifiedDate',
-          width: '20%',
-          renderer: ({ value, row }) => (
-            <span>{row.DisplayModifiedDate}</span>
-          ),
+          width: '40%',
       },
     ];
 
-    /* GRID PLGUINS */
     const plugins = {
       COLUMN_MANAGER: {
         resizable: true,
@@ -174,7 +146,6 @@ export class DataGridContainer extends Component {
       },
     };
 
-    /* GRID EVENT HANDLERS */
     const events = {
       HANDLE_BEFORE_SORT: () => {
         this.deselectAll({ stateKey });
@@ -200,13 +171,9 @@ DataGridContainer.propTypes = {
   menu: PropTypes.object.isRequired,
   post: PropTypes.array.isRequired,
 
-  getPostInitialData: PropTypes.func.isRequired,
   getPost: PropTypes.func.isRequired,
-  getPostFiltered: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   createAlert: PropTypes.func.isRequired,
-  deletePost: PropTypes.func.isRequired,
-  getPostFileEdit: PropTypes.func.isRequired,
   setOverlayLoading: PropTypes.func.isRequired,
 
   showMenu: PropTypes.func.isRequired,
