@@ -289,6 +289,7 @@ export function flattenDetail(detailSet) {
   // NORMALIZE editing values for grid display/editing: EditUnits(quarter Cpm, week Units) EditImpressions (quarter ImpressionGoal, week Impressions)
   const detail = { ...detailSet };
   const ret = [];
+  // count weeks and determine last for NEXT handling - take into account IsHiatus
   let weekCnt = 0;
   const qtrLast = detail.Quarters.length - 1;
   detail.Quarters.forEach((item, qidx) => {
@@ -298,15 +299,18 @@ export function flattenDetail(detailSet) {
     const weekLast = item.Weeks.length - 1;
     item.Weeks.forEach((weekItem, widx) => {
       const week = { ...weekItem };
-      const isLast = (qtrLast === qidx) && (weekLast === widx);
-      weekCnt += 1;
+      // only add WeekCnt and IsLast if not hiatus
+      if (!week.IsHiatus) {
+        const isLast = (qtrLast === qidx) && (weekLast === widx);
+        weekCnt += 1;
+        week.WeekCnt = weekCnt;
+        week.IsLast = isLast;
+      }
       // store for finding later
       week.QuarterId = item.Id;
       // store indexes
       week.QuarterIdx = qidx;
       week.WeekIdx = widx;
-      week.WeekCnt = weekCnt;
-      week.IsLast = isLast;
       week.Type = 'week';
       week.EditImpressions = week.Impressions / 1000;
       week.EditUnits = week.Units;

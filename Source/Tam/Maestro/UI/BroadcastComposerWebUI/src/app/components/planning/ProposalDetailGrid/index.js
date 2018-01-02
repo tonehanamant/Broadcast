@@ -263,7 +263,7 @@ export default class ProposalDetailGrid extends Component {
         editable: false,
         renderer: ({ value, row }) => {
           // console.log('ISCIs Render', value, row);
-          if (row.Type === 'week') {
+          if (row.Type === 'week' && !row.IsHiatus) {
             const inputIscis = (IscisValue, next) => {
               this.props.updateProposalEditFormDetailGrid({
                 id: this.props.detailId,
