@@ -4,251 +4,279 @@
     "CallLetters": "KCYU-LD 41.1",
     "Code": 1045,
     "LegacyCallLetters": "KCYU",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 410,
     "OriginMarket": "Yakima-Pasco-Rchlnd-Knnwck",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "FOX",
     "CallLetters": "KFNB 20.1",
     "Code": 1160,
     "LegacyCallLetters": "KFNB",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 367,
     "OriginMarket": "Casper-Riverton",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "ABC",
     "CallLetters": "KHQA-TV 7.2",
     "Code": 2279,
     "LegacyCallLetters": "NHQA",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 317,
     "OriginMarket": "Quincy-Hannibal-Keokuk",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "CW",
     "CallLetters": "KCWQ",
     "Code": 2772,
     "LegacyCallLetters": "KCWQ",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 404,
     "OriginMarket": "Palm Springs",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "CW",
     "CallLetters": "KION-TV 46.2",
     "Code": 2784,
     "LegacyCallLetters": "NION",
+    "ManifestMaxEndDate": "2017-09-22T00:00:00",
     "MarketCode": 428,
     "OriginMarket": "Monterey-Salinas",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/22/2017"
   },
   {
     "Affiliation": "NBC",
     "CallLetters": "KNBN-DT 21.1",
     "Code": 3503,
     "LegacyCallLetters": "KNBN",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 364,
     "OriginMarket": "Rapid City",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "NBC",
     "CallLetters": "WVTM-TV 13.1",
     "Code": 5044,
     "LegacyCallLetters": "WVTM",
+    "ManifestMaxEndDate": "2016-12-25T00:00:00",
     "MarketCode": 230,
     "OriginMarket": "Birmingham (Ann and Tusc)",
-    "RateDataThrough": "-"
+    "RateDataThrough": "12/25/2016"
   },
   {
     "Affiliation": "CBS",
     "CallLetters": "KHQA-TV 7.1",
     "Code": 5192,
     "LegacyCallLetters": "KHQA",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 317,
     "OriginMarket": "Quincy-Hannibal-Keokuk",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "NBC",
     "CallLetters": "WGEM-TV 10.1",
     "Code": 5198,
     "LegacyCallLetters": "WGEM",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 317,
     "OriginMarket": "Quincy-Hannibal-Keokuk",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "CBS",
     "CallLetters": "KIDK 3.1",
     "Code": 5225,
     "LegacyCallLetters": "KIDK",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 358,
     "OriginMarket": "Idaho Fals-Pocatllo(Jcksn)",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "ABC",
     "CallLetters": "KIII 3.1",
     "Code": 5319,
     "LegacyCallLetters": "KIII",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 200,
     "OriginMarket": "Corpus Christi",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "ABC",
     "CallLetters": "KTWO-TV 2.1",
     "Code": 5408,
     "LegacyCallLetters": "KTWO",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 367,
     "OriginMarket": "Casper-Riverton",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "CBS",
     "CallLetters": "KXGN-TV 5.1",
     "Code": 5465,
     "LegacyCallLetters": "KXGN",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 398,
     "OriginMarket": "Glendive",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "CBS",
     "CallLetters": "KION-TV 46.1",
     "Code": 5927,
     "LegacyCallLetters": "KION",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 428,
     "OriginMarket": "Monterey-Salinas",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "ABC",
     "CallLetters": "WWSB 40.1",
     "Code": 5942,
     "LegacyCallLetters": "WWSB",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 139,
     "OriginMarket": "Tampa-St. Pete (Sarasota)",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "ABC",
     "CallLetters": "KATN 2.1",
     "Code": 6069,
     "LegacyCallLetters": "KATN",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 345,
     "OriginMarket": "Fairbanks",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "ABC",
     "CallLetters": "KYUR 13.1",
     "Code": 6072,
     "LegacyCallLetters": "KYUR",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 343,
     "OriginMarket": "Anchorage",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "FOX",
     "CallLetters": "WDBD 40.1",
     "Code": 6173,
     "LegacyCallLetters": "WDBD",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 318,
     "OriginMarket": "Jackson, MS",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "NBC",
     "CallLetters": "KTFT-LD 7.1",
     "Code": 6269,
     "LegacyCallLetters": "KTFT",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 360,
     "OriginMarket": "Twin Falls",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "FOX",
     "CallLetters": "WNTZ-TV 48.1",
     "Code": 6433,
     "LegacyCallLetters": "WNTZ",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 244,
     "OriginMarket": "Alexandria, LA",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "FOX",
     "CallLetters": "KXPI-LD 34.2",
     "Code": 6444,
     "LegacyCallLetters": "KXPI",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 358,
     "OriginMarket": "Idaho Fals-Pocatllo(Jcksn)",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "FOX",
     "CallLetters": "KTBY 4.1",
     "Code": 6682,
     "LegacyCallLetters": "KTBY",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 343,
     "OriginMarket": "Anchorage",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "ABC",
     "CallLetters": "KJUD 8.1",
     "Code": 6684,
     "LegacyCallLetters": "KJUD",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 347,
     "OriginMarket": "Juneau",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "FOX",
     "CallLetters": "KDFX-CD 39.1",
     "Code": 7011,
     "LegacyCallLetters": "KDFX",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 404,
     "OriginMarket": "Palm Springs",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "AZA",
     "CallLetters": "AZSD",
     "Code": 7353,
     "LegacyCallLetters": "AZSD",
+    "ManifestMaxEndDate": "2018-01-01T00:00:00",
     "MarketCode": 425,
     "OriginMarket": "San Diego",
-    "RateDataThrough": "-"
+    "RateDataThrough": "1/1/2018"
   },
   {
     "Affiliation": "FOX",
     "CallLetters": "WGEM-TV 10.3",
     "Code": 7634,
     "LegacyCallLetters": "GGEM",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 317,
     "OriginMarket": "Quincy-Hannibal-Keokuk",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "FOX",
     "CallLetters": "KJNB-LD 39.1",
     "Code": 10686,
     "LegacyCallLetters": "KJNB",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 334,
     "OriginMarket": "Jonesboro",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   },
   {
     "Affiliation": "CBS",
     "CallLetters": "KJNB-LD 39.2",
     "Code": 10736,
     "LegacyCallLetters": "NJNB",
+    "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 334,
     "OriginMarket": "Jonesboro",
-    "RateDataThrough": "-"
+    "RateDataThrough": "9/24/2017"
   }
 ]

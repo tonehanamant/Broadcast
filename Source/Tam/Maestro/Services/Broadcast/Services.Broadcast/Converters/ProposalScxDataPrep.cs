@@ -83,8 +83,6 @@ namespace Services.Broadcast.Converters
         private void _SetMarketSurveyData(ScxData data, ProposalDetailDto proposalDetailDto)
         {
             var bookingMediaMonthId = proposalDetailDto.HutPostingBookId ?? proposalDetailDto.SinglePostingBookId.Value;
-            if (bookingMediaMonthId == ProposalConstants.UseShareBookOnlyId)
-                bookingMediaMonthId = proposalDetailDto.SharePostingBookId.Value;
 
             var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
             var mediaMonth = _MediaMonthAndWeekCache.GetMediaMonthById(bookingMediaMonthId);
@@ -136,8 +134,7 @@ namespace Services.Broadcast.Converters
         private void _GetDemoUniverseData(ScxData data, ProposalDetailDto proposalDetailDto)
         {
             var postingBookMonthId = proposalDetailDto.HutPostingBookId ?? proposalDetailDto.SinglePostingBookId;
-            if (postingBookMonthId == ProposalConstants.UseShareBookOnlyId
-                || postingBookMonthId == null)
+            if (postingBookMonthId == null)
                 postingBookMonthId = proposalDetailDto.SharePostingBookId.Value;
 
             foreach (var demo in data.Demos)

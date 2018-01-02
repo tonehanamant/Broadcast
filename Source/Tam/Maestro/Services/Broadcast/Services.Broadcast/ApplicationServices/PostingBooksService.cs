@@ -64,19 +64,18 @@ namespace Services.Broadcast.ApplicationServices
                 DefaultShareBook = shareBook,
                 DefaultHutBook = _GetHutPostingBook(dateTime, shareBook.PostingBookId),
                 DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
-                UseShareBookOnlyId = ProposalConstants.UseShareBookOnlyId
             };
 
             return defaultPostingBookDto;
         }
 
-        private PostingBookResultDto _GetHutPostingBook(DateTime dateTime, int shareBookMonthId)
+        private PostingBookResultDto _GetHutPostingBook(DateTime dateTime, int? shareBookMonthId)
         {
             var mediaMonthForQuarter = _MediaMonthAndWeekAggregateCache.GetMediaMonthContainingDate(dateTime);
 
             if (mediaMonthForQuarter.Quarter == _QuarterToUseShareBookOnly)
             {
-                return new PostingBookResultDto { PostingBookId = ProposalConstants.UseShareBookOnlyId };
+                return new PostingBookResultDto();
             }
 
             var crunchedMonths =
@@ -105,7 +104,6 @@ namespace Services.Broadcast.ApplicationServices
                 if (lastAvailableBook.MediaMonth == null)
                     return new PostingBookResultDto
                     {
-                        PostingBookId = ProposalConstants.UseShareBookOnlyId,
                         HasWarning = true,
                         WarningMessage = HutBookNotFound
                     };
@@ -148,7 +146,6 @@ namespace Services.Broadcast.ApplicationServices
                 if (lastAvailableBook.MediaMonth == null)
                     return new PostingBookResultDto
                     {
-                        PostingBookId = ProposalConstants.ShareBookNotFoundId,
                         HasWarning = true,
                         WarningMessage = ShareBookNotFound
                     }; 

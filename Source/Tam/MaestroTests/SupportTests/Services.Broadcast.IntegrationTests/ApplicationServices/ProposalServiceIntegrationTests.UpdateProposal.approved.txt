@@ -49,7 +49,7 @@
           "StartDate": "2017-04-03T00:00:00"
         }
       ],
-      "HutPostingBookId": -1,
+      "HutPostingBookId": null,
       "PlaybackType": 3,
       "Quarters": [
         {
@@ -159,7 +159,7 @@
           "StartDate": "2017-09-25T00:00:00"
         }
       ],
-      "HutPostingBookId": -1,
+      "HutPostingBookId": null,
       "PlaybackType": 3,
       "Quarters": [
         {

@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
     public class DisplayBroadcastStation
     {
-        public DisplayBroadcastStation()
-        {
-            FlightWeeks = new List<FlightWeekDto>();
-        }
-            
         public enum StationFilter
         {
             WithTodaysData,
@@ -23,12 +17,12 @@ namespace Services.Broadcast.Entities
         public int MarketCode { get; set; }
         public string Affiliation { get; set; }
         public string RateDataThrough { get; set; }
-        public List<FlightWeekDto> FlightWeeks { get; set; }
         public DateTime ModifiedDate { get; set; }
+        public DateTime? ManifestMaxEndDate { get; set; }
 
         public override string ToString()
         {
-            return string.Format("lcl={0};mc={1}; DisplayBroadcastStation", LegacyCallLetters,MarketCode);
+            return string.Format("lcl={0};mc={1}; DisplayBroadcastStation", LegacyCallLetters, MarketCode);
         }
     }
 }

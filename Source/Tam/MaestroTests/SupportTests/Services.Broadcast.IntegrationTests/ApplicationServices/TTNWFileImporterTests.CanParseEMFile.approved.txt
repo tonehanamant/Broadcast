@@ -159,8 +159,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WCBS-TV 2.1",
               "Code": 5012,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -264,8 +264,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WNBC 4.1",
               "Code": 5013,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WNBC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -369,8 +369,8 @@
               "Affiliation": "CW",
               "CallLetters": "WPIX 11.1",
               "Code": 5014,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPIX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -474,8 +474,8 @@
               "Affiliation": "CW",
               "CallLetters": "WPIX 11.1",
               "Code": 5014,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPIX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -579,8 +579,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WBBM-TV 2.1",
               "Code": 5050,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBBM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 202,
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -684,8 +684,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFLD 32.1",
               "Code": 5716,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
+              "ManifestMaxEndDate": null,
               "MarketCode": 202,
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -789,8 +789,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KDFW 4.1",
               "Code": 5035,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 223,
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -894,8 +894,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHAG-TV 25.1",
               "Code": 5733,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHAG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -999,8 +999,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTTG 5.1",
               "Code": 5109,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTTG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -1104,8 +1104,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTTG 5.1",
               "Code": 5109,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTTG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -1209,8 +1209,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WUSA 9.1",
               "Code": 5098,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -1314,8 +1314,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KHOU 11.1",
               "Code": 5138,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KHOU",
+              "ManifestMaxEndDate": null,
               "MarketCode": 218,
               "OriginMarket": "Houston",
               "RateDataThrough": null
@@ -1515,8 +1515,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WBTS-LD 8.1",
               "Code": 11704,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBTS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -1620,8 +1620,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WBZ-TV 4.1",
               "Code": 5054,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBZ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -1725,8 +1725,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WCVB-TV 5.1",
               "Code": 5420,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -1830,8 +1830,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WCVB-TV 5.1",
               "Code": 5420,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -1935,8 +1935,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WCVB-TV 5.1",
               "Code": 5420,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -2040,8 +2040,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFXT-DT 25.1",
               "Code": 6705,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFXT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -2145,8 +2145,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -2250,8 +2250,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WSB-TV 2.1",
               "Code": 5102,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -2355,8 +2355,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WXIA-TV 11.1",
               "Code": 5117,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WXIA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -2460,8 +2460,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTVT 13.1",
               "Code": 5321,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 139,
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -2565,8 +2565,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTVT 13.1",
               "Code": 5321,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 139,
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -2670,8 +2670,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WDIV-TV 4.1",
               "Code": 5114,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -2775,8 +2775,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -2880,8 +2880,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KCPQ 13.1",
               "Code": 6019,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KCPQ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 419,
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -2985,8 +2985,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KCPQ 13.1",
               "Code": 6019,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KCPQ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 419,
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -3090,8 +3090,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WFOR-TV 4.1",
               "Code": 5508,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3195,8 +3195,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WFOR-TV 4.1",
               "Code": 5508,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3300,8 +3300,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WPLG 10.1",
               "Code": 5412,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPLG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3405,8 +3405,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WPLG 10.1",
               "Code": 5412,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPLG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3510,8 +3510,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WSVN 7.1",
               "Code": 5375,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3615,8 +3615,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3720,8 +3720,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -3825,8 +3825,8 @@
               "Affiliation": "CW",
               "CallLetters": "WKCF 18.1",
               "Code": 5557,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKCF",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -3930,8 +3930,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WKMG-TV 6.1",
               "Code": 5259,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -4035,8 +4035,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WOFL 35.1",
               "Code": 6818,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -4140,8 +4140,8 @@
               "Affiliation": "CW",
               "CallLetters": "WCCB 18.1",
               "Code": 5765,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 117,
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -4245,8 +4245,8 @@
               "Affiliation": "IND",
               "CallLetters": "KUSI-TV 51.1",
               "Code": 6907,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 425,
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -4350,8 +4350,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WTNH 8.1",
               "Code": 5094,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTNH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 133,
               "OriginMarket": "Hartford & New Haven",
               "RateDataThrough": null
@@ -4455,8 +4455,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KENS 5.1",
               "Code": 5022,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 241,
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -4560,8 +4560,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KENS 5.1",
               "Code": 5022,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 241,
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -4665,8 +4665,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KENS 5.1",
               "Code": 5022,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 241,
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -4770,8 +4770,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WSYX 6.1",
               "Code": 5112,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSYX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 135,
               "OriginMarket": "Columbus, OH",
               "RateDataThrough": null
@@ -4875,8 +4875,8 @@
               "Affiliation": "ABC",
               "CallLetters": "KMBC-TV 9.1",
               "Code": 5163,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 216,
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -4980,8 +4980,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WPMT 43.1",
               "Code": 5717,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -5085,8 +5085,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WPMT 43.1",
               "Code": 5717,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -5190,8 +5190,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WOOD-TV 8.1",
               "Code": 5081,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WOOD",
+              "ManifestMaxEndDate": null,
               "MarketCode": 163,
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -5295,8 +5295,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WBRC 6.1",
               "Code": 5052,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBRC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 230,
               "OriginMarket": "Birmingham (Ann and Tusc)",
               "RateDataThrough": null
@@ -5400,8 +5400,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KRQE 13.1",
               "Code": 181,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 390,
               "OriginMarket": "Albuquerque-Santa Fe",
               "RateDataThrough": null
@@ -5505,8 +5505,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WWL-TV 4.1",
               "Code": 5417,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 222,
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -5610,8 +5610,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WLNE-TV 6.1",
               "Code": 5696,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WLNE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 121,
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -5715,8 +5715,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WPRI-TV 12.1",
               "Code": 5208,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPRI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 121,
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -5820,8 +5820,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WIVB-TV 4.1",
               "Code": 5049,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WIVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 114,
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -5925,8 +5925,8 @@
               "Affiliation": "CW",
               "CallLetters": "WNLO 23.1",
               "Code": 6333,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WNLO",
+              "ManifestMaxEndDate": null,
               "MarketCode": 114,
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -6030,8 +6030,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WBBH-TV 20.1",
               "Code": 5974,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -6135,8 +6135,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WZVN-TV 26.1",
               "Code": 5712,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WZVN",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -6240,8 +6240,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WRGT-TV 45.1",
               "Code": 6154,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WRGT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 142,
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -6345,8 +6345,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KKTV 11.1",
               "Code": 5130,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -6450,8 +6450,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KKTV 11.1",
               "Code": 5130,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -6555,8 +6555,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KOAA-TV 5.1",
               "Code": 5151,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KOAA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -6660,8 +6660,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WANE-TV 15.1",
               "Code": 5848,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 109,
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -6765,8 +6765,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WANE-TV 15.1",
               "Code": 5848,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 109,
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -6870,8 +6870,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KSBW 8.1",
               "Code": 5180,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 428,
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -6985,8 +6985,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WCBS-TV 2.1",
               "Code": 5012,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -7090,8 +7090,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WNBC 4.1",
               "Code": 5013,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WNBC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -7195,8 +7195,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WNYW 5.1",
               "Code": 5010,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WNYW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -7300,8 +7300,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFLD 32.1",
               "Code": 5716,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
+              "ManifestMaxEndDate": null,
               "MarketCode": 202,
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -7405,8 +7405,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KDFW 4.1",
               "Code": 5035,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 223,
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -7510,8 +7510,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHAG-TV 25.1",
               "Code": 5733,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHAG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -7615,8 +7615,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WJLA-TV 7.1",
               "Code": 5085,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJLA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -7720,8 +7720,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WUSA 9.1",
               "Code": 5098,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -7921,8 +7921,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WCVB-TV 5.1",
               "Code": 5420,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -8026,8 +8026,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFXT-DT 25.1",
               "Code": 6705,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFXT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -8131,8 +8131,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -8236,8 +8236,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WGCL-TV 46.1",
               "Code": 5893,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WGCL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -8341,8 +8341,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WXIA-TV 11.1",
               "Code": 5117,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WXIA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -8446,8 +8446,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTVT 13.1",
               "Code": 5321,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 139,
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -8551,8 +8551,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -8656,8 +8656,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KCPQ 13.1",
               "Code": 6019,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KCPQ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 419,
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -8761,8 +8761,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WFOR-TV 4.1",
               "Code": 5508,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -8866,8 +8866,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WFOR-TV 4.1",
               "Code": 5508,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -8971,8 +8971,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WSVN 7.1",
               "Code": 5375,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -9076,8 +9076,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -9181,8 +9181,8 @@
               "Affiliation": "CW",
               "CallLetters": "WKCF 18.1",
               "Code": 5557,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKCF",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -9286,8 +9286,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WKMG-TV 6.1",
               "Code": 5259,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -9391,8 +9391,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WOFL 35.1",
               "Code": 6818,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -9496,8 +9496,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WOFL 35.1",
               "Code": 6818,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -9601,8 +9601,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WOFL 35.1",
               "Code": 6818,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -9706,8 +9706,8 @@
               "Affiliation": "CW",
               "CallLetters": "WCCB 18.1",
               "Code": 5765,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 117,
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -9811,8 +9811,8 @@
               "Affiliation": "CW",
               "CallLetters": "WCCB 18.1",
               "Code": 5765,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 117,
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -9916,8 +9916,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KFMB-TV 8.1",
               "Code": 5024,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KFMB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 425,
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -10021,8 +10021,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WTNH 8.1",
               "Code": 5094,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTNH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 133,
               "OriginMarket": "Hartford & New Haven",
               "RateDataThrough": null
@@ -10126,8 +10126,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KENS 5.1",
               "Code": 5022,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 241,
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -10231,8 +10231,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WSYX 6.1",
               "Code": 5112,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSYX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 135,
               "OriginMarket": "Columbus, OH",
               "RateDataThrough": null
@@ -10336,8 +10336,8 @@
               "Affiliation": "ABC",
               "CallLetters": "KMBC-TV 9.1",
               "Code": 5163,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 216,
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -10441,8 +10441,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WLOS 13.1",
               "Code": 5289,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WLOS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 167,
               "OriginMarket": "Greenvll-Spart-Ashevll-And",
               "RateDataThrough": null
@@ -10546,8 +10546,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KOKH-TV 25.1",
               "Code": 6704,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KOKH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 250,
               "OriginMarket": "Oklahoma City",
               "RateDataThrough": null
@@ -10651,8 +10651,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WHP-TV 21.1",
               "Code": 5734,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHP",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -10756,8 +10756,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WPMT 43.1",
               "Code": 5717,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -10861,8 +10861,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WPMT 43.1",
               "Code": 5717,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -10966,8 +10966,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WZZM 13.1",
               "Code": 5681,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 163,
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -11071,8 +11071,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WZZM 13.1",
               "Code": 5681,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 163,
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -11176,8 +11176,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WBRC 6.1",
               "Code": 5052,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBRC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 230,
               "OriginMarket": "Birmingham (Ann and Tusc)",
               "RateDataThrough": null
@@ -11281,8 +11281,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KRQE 13.1",
               "Code": 181,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 390,
               "OriginMarket": "Albuquerque-Santa Fe",
               "RateDataThrough": null
@@ -11386,8 +11386,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WWL-TV 4.1",
               "Code": 5417,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 222,
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -11491,8 +11491,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WWL-TV 4.1",
               "Code": 5417,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 222,
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -11596,8 +11596,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WLNE-TV 6.1",
               "Code": 5696,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WLNE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 121,
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -11701,8 +11701,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WPRI-TV 12.1",
               "Code": 5208,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPRI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 121,
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -11806,8 +11806,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WIVB-TV 4.1",
               "Code": 5049,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WIVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 114,
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -11911,8 +11911,8 @@
               "Affiliation": "CW",
               "CallLetters": "WNLO 23.1",
               "Code": 6333,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WNLO",
+              "ManifestMaxEndDate": null,
               "MarketCode": 114,
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -12016,8 +12016,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFTX-TV 36.1",
               "Code": 6247,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFTX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -12121,8 +12121,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WZVN-TV 26.1",
               "Code": 5712,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WZVN",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -12226,8 +12226,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WKEF 22.1",
               "Code": 5777,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKEF",
+              "ManifestMaxEndDate": null,
               "MarketCode": 142,
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -12331,8 +12331,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WRGT-TV 45.1",
               "Code": 6154,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WRGT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 142,
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -12436,8 +12436,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WACH 57.1",
               "Code": 6873,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WACH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 146,
               "OriginMarket": "Columbia, SC",
               "RateDataThrough": null
@@ -12541,8 +12541,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KKTV 11.1",
               "Code": 5130,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -12646,8 +12646,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KOAA-TV 5.1",
               "Code": 5151,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KOAA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -12751,8 +12751,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KXRM-TV 21.1",
               "Code": 6176,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KXRM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -12952,8 +12952,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WANE-TV 15.1",
               "Code": 5848,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 109,
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -13057,8 +13057,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KSBW 8.1",
               "Code": 5180,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 428,
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -13172,8 +13172,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WCBS-TV 2.1",
               "Code": 5012,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -13277,8 +13277,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WNBC 4.1",
               "Code": 5013,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WNBC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -13382,8 +13382,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WNYW 5.1",
               "Code": 5010,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WNYW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -13487,8 +13487,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFLD 32.1",
               "Code": 5716,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
+              "ManifestMaxEndDate": null,
               "MarketCode": 202,
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -13592,8 +13592,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KDFW 4.1",
               "Code": 5035,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 223,
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -13697,8 +13697,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHAG-TV 25.1",
               "Code": 5733,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHAG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -13802,8 +13802,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WJLA-TV 7.1",
               "Code": 5085,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJLA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -13907,8 +13907,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WUSA 9.1",
               "Code": 5098,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -14012,8 +14012,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WBZ-TV 4.1",
               "Code": 5054,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBZ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -14117,8 +14117,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WCVB-TV 5.1",
               "Code": 5420,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -14222,8 +14222,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFXT-DT 25.1",
               "Code": 6705,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFXT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -14327,8 +14327,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -14432,8 +14432,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WGCL-TV 46.1",
               "Code": 5893,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WGCL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -14537,8 +14537,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WXIA-TV 11.1",
               "Code": 5117,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WXIA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -14642,8 +14642,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTVT 13.1",
               "Code": 5321,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 139,
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -14747,8 +14747,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -14852,8 +14852,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KCPQ 13.1",
               "Code": 6019,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KCPQ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 419,
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -14957,8 +14957,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WFOR-TV 4.1",
               "Code": 5508,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -15062,8 +15062,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WFOR-TV 4.1",
               "Code": 5508,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -15167,8 +15167,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WPLG 10.1",
               "Code": 5412,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPLG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -15272,8 +15272,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WSVN 7.1",
               "Code": 5375,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -15377,8 +15377,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -15482,8 +15482,8 @@
               "Affiliation": "CW",
               "CallLetters": "WKCF 18.1",
               "Code": 5557,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKCF",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -15587,8 +15587,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WKMG-TV 6.1",
               "Code": 5259,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -15692,8 +15692,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WOFL 35.1",
               "Code": 6818,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -15797,8 +15797,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WOFL 35.1",
               "Code": 6818,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -15902,8 +15902,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WOFL 35.1",
               "Code": 6818,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -16007,8 +16007,8 @@
               "Affiliation": "CW",
               "CallLetters": "WCCB 18.1",
               "Code": 5765,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 117,
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -16112,8 +16112,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KFMB-TV 8.1",
               "Code": 5024,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KFMB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 425,
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -16217,8 +16217,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WTNH 8.1",
               "Code": 5094,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTNH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 133,
               "OriginMarket": "Hartford & New Haven",
               "RateDataThrough": null
@@ -16322,8 +16322,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KENS 5.1",
               "Code": 5022,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 241,
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -16427,8 +16427,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WSYX 6.1",
               "Code": 5112,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSYX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 135,
               "OriginMarket": "Columbus, OH",
               "RateDataThrough": null
@@ -16532,8 +16532,8 @@
               "Affiliation": "ABC",
               "CallLetters": "KMBC-TV 9.1",
               "Code": 5163,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 216,
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -16637,8 +16637,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WLOS 13.1",
               "Code": 5289,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WLOS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 167,
               "OriginMarket": "Greenvll-Spart-Ashevll-And",
               "RateDataThrough": null
@@ -16742,8 +16742,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KOKH-TV 25.1",
               "Code": 6704,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KOKH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 250,
               "OriginMarket": "Oklahoma City",
               "RateDataThrough": null
@@ -16847,8 +16847,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WHP-TV 21.1",
               "Code": 5734,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHP",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -16952,8 +16952,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WPMT 43.1",
               "Code": 5717,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -17057,8 +17057,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WPMT 43.1",
               "Code": 5717,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -17162,8 +17162,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WOOD-TV 8.1",
               "Code": 5081,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WOOD",
+              "ManifestMaxEndDate": null,
               "MarketCode": 163,
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -17267,8 +17267,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WZZM 13.1",
               "Code": 5681,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 163,
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -17372,8 +17372,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WBRC 6.1",
               "Code": 5052,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBRC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 230,
               "OriginMarket": "Birmingham (Ann and Tusc)",
               "RateDataThrough": null
@@ -17477,8 +17477,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KRQE 13.1",
               "Code": 181,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 390,
               "OriginMarket": "Albuquerque-Santa Fe",
               "RateDataThrough": null
@@ -17582,8 +17582,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WWL-TV 4.1",
               "Code": 5417,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 222,
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -17687,8 +17687,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WWL-TV 4.1",
               "Code": 5417,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 222,
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -17792,8 +17792,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WLNE-TV 6.1",
               "Code": 5696,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WLNE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 121,
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -17897,8 +17897,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WPRI-TV 12.1",
               "Code": 5208,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPRI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 121,
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -18002,8 +18002,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WIVB-TV 4.1",
               "Code": 5049,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WIVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 114,
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -18107,8 +18107,8 @@
               "Affiliation": "CW",
               "CallLetters": "WNLO 23.1",
               "Code": 6333,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WNLO",
+              "ManifestMaxEndDate": null,
               "MarketCode": 114,
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -18212,8 +18212,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFTX-TV 36.1",
               "Code": 6247,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFTX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -18317,8 +18317,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WZVN-TV 26.1",
               "Code": 5712,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WZVN",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -18422,8 +18422,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WKEF 22.1",
               "Code": 5777,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKEF",
+              "ManifestMaxEndDate": null,
               "MarketCode": 142,
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -18527,8 +18527,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WRGT-TV 45.1",
               "Code": 6154,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WRGT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 142,
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -18632,8 +18632,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KKTV 11.1",
               "Code": 5130,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -18737,8 +18737,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KOAA-TV 5.1",
               "Code": 5151,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KOAA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -18842,8 +18842,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KXRM-TV 21.1",
               "Code": 6176,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KXRM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -19043,8 +19043,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WANE-TV 15.1",
               "Code": 5848,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 109,
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -19148,8 +19148,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KSBW 8.1",
               "Code": 5180,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 428,
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -19253,8 +19253,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KSBW 8.1",
               "Code": 5180,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 428,
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -19368,8 +19368,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WCBS-TV 2.1",
               "Code": 5012,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -19473,8 +19473,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WCBS-TV 2.1",
               "Code": 5012,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -19578,8 +19578,8 @@
               "Affiliation": "CW",
               "CallLetters": "WPIX 11.1",
               "Code": 5014,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPIX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -19683,8 +19683,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WBBM-TV 2.1",
               "Code": 5050,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBBM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 202,
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -19788,8 +19788,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WBBM-TV 2.1",
               "Code": 5050,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBBM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 202,
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -19893,8 +19893,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFLD 32.1",
               "Code": 5716,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
+              "ManifestMaxEndDate": null,
               "MarketCode": 202,
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -19998,8 +19998,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KDFW 4.1",
               "Code": 5035,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 223,
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -20103,8 +20103,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHAG-TV 25.1",
               "Code": 5733,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHAG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -20208,8 +20208,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WJLA-TV 7.1",
               "Code": 5085,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJLA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -20313,8 +20313,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTTG 5.1",
               "Code": 5109,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTTG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -20418,8 +20418,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WUSA 9.1",
               "Code": 5098,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -20502,8 +20502,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KHOU 11.1",
               "Code": 5138,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KHOU",
+              "ManifestMaxEndDate": null,
               "MarketCode": 218,
               "OriginMarket": "Houston",
               "RateDataThrough": null
@@ -20607,8 +20607,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WCVB-TV 5.1",
               "Code": 5420,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -20712,8 +20712,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFXT-DT 25.1",
               "Code": 6705,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFXT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -20817,8 +20817,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -20922,8 +20922,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -21027,8 +21027,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -21132,8 +21132,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WGCL-TV 46.1",
               "Code": 5893,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WGCL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -21237,8 +21237,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WSB-TV 2.1",
               "Code": 5102,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -21342,8 +21342,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WSB-TV 2.1",
               "Code": 5102,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -21447,8 +21447,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTVT 13.1",
               "Code": 5321,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 139,
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -21552,8 +21552,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTVT 13.1",
               "Code": 5321,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 139,
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -21657,8 +21657,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WDIV-TV 4.1",
               "Code": 5114,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -21762,8 +21762,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WDIV-TV 4.1",
               "Code": 5114,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -21867,8 +21867,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WDIV-TV 4.1",
               "Code": 5114,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -21972,8 +21972,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -22077,8 +22077,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -22182,8 +22182,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -22287,8 +22287,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KCPQ 13.1",
               "Code": 6019,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KCPQ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 419,
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -22392,8 +22392,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WPLG 10.1",
               "Code": 5412,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPLG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -22497,8 +22497,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WPLG 10.1",
               "Code": 5412,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPLG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -22602,8 +22602,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -22707,8 +22707,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -22812,8 +22812,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WESH 2.1",
               "Code": 5376,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WESH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -22917,8 +22917,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WKMG-TV 6.1",
               "Code": 5259,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -23022,8 +23022,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WOFL 35.1",
               "Code": 6818,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -23127,8 +23127,8 @@
               "Affiliation": "CW",
               "CallLetters": "WCCB 18.1",
               "Code": 5765,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 117,
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -23232,8 +23232,8 @@
               "Affiliation": "IND",
               "CallLetters": "KUSI-TV 51.1",
               "Code": 6907,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 425,
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -23337,8 +23337,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KENS 5.1",
               "Code": 5022,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 241,
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -23442,8 +23442,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KENS 5.1",
               "Code": 5022,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 241,
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -23547,8 +23547,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTTE 28.1",
               "Code": 6995,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTTE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 135,
               "OriginMarket": "Columbus, OH",
               "RateDataThrough": null
@@ -23652,8 +23652,8 @@
               "Affiliation": "ABC",
               "CallLetters": "KMBC-TV 9.1",
               "Code": 5163,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 216,
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -23757,8 +23757,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KOKH-TV 25.1",
               "Code": 6704,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KOKH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 250,
               "OriginMarket": "Oklahoma City",
               "RateDataThrough": null
@@ -23862,8 +23862,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WHP-TV 21.1",
               "Code": 5734,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHP",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -23967,8 +23967,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WZZM 13.1",
               "Code": 5681,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 163,
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -24072,8 +24072,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WWL-TV 4.1",
               "Code": 5417,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 222,
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -24177,8 +24177,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WNAC-TV 64.1",
               "Code": 6924,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WNAC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 121,
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -24282,8 +24282,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WIVB-TV 4.1",
               "Code": 5049,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WIVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 114,
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -24387,8 +24387,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WBBH-TV 20.1",
               "Code": 5974,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -24492,8 +24492,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WBBH-TV 20.1",
               "Code": 5974,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -24597,8 +24597,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WZVN-TV 26.1",
               "Code": 5712,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WZVN",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -24702,8 +24702,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WRGT-TV 45.1",
               "Code": 6154,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WRGT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 142,
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -24807,8 +24807,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WRGT-TV 45.1",
               "Code": 6154,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WRGT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 142,
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -24912,8 +24912,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WACH 57.1",
               "Code": 6873,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WACH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 146,
               "OriginMarket": "Columbia, SC",
               "RateDataThrough": null
@@ -25017,8 +25017,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KKTV 11.1",
               "Code": 5130,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -25122,8 +25122,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTAT-TV 24.1",
               "Code": 6239,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTAT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 119,
               "OriginMarket": "Charleston, SC",
               "RateDataThrough": null
@@ -25227,8 +25227,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WANE-TV 15.1",
               "Code": 5848,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 109,
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -25332,8 +25332,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WANE-TV 15.1",
               "Code": 5848,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 109,
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -25437,8 +25437,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WILX-TV 10.1",
               "Code": 5494,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WILX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 151,
               "OriginMarket": "Lansing",
               "RateDataThrough": null
@@ -25542,8 +25542,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KSBW 8.1",
               "Code": 5180,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 428,
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -25657,8 +25657,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WCBS-TV 2.1",
               "Code": 5012,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -25762,8 +25762,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WCBS-TV 2.1",
               "Code": 5012,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -25867,8 +25867,8 @@
               "Affiliation": "CW",
               "CallLetters": "WPIX 11.1",
               "Code": 5014,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPIX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -25972,8 +25972,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WBBM-TV 2.1",
               "Code": 5050,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBBM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 202,
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -26056,8 +26056,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WBBM-TV 2.1",
               "Code": 5050,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBBM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 202,
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -26161,8 +26161,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFLD 32.1",
               "Code": 5716,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
+              "ManifestMaxEndDate": null,
               "MarketCode": 202,
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -26266,8 +26266,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KDFW 4.1",
               "Code": 5035,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 223,
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -26371,8 +26371,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHAG-TV 25.1",
               "Code": 5733,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHAG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -26476,8 +26476,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WJLA-TV 7.1",
               "Code": 5085,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJLA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -26581,8 +26581,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTTG 5.1",
               "Code": 5109,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTTG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -26686,8 +26686,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WUSA 9.1",
               "Code": 5098,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -26791,8 +26791,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KHOU 11.1",
               "Code": 5138,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KHOU",
+              "ManifestMaxEndDate": null,
               "MarketCode": 218,
               "OriginMarket": "Houston",
               "RateDataThrough": null
@@ -26992,8 +26992,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WBZ-TV 4.1",
               "Code": 5054,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBZ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -27097,8 +27097,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WCVB-TV 5.1",
               "Code": 5420,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -27202,8 +27202,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -27307,8 +27307,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -27412,8 +27412,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WGCL-TV 46.1",
               "Code": 5893,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WGCL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -27517,8 +27517,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WSB-TV 2.1",
               "Code": 5102,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -27622,8 +27622,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTVT 13.1",
               "Code": 5321,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 139,
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -27727,8 +27727,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTVT 13.1",
               "Code": 5321,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 139,
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -27832,8 +27832,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WDIV-TV 4.1",
               "Code": 5114,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -27937,8 +27937,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -28042,8 +28042,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -28147,8 +28147,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -28252,8 +28252,8 @@
               "Affiliation": "IND",
               "CallLetters": "KZJO 22.1",
               "Code": 6193,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KZJO",
+              "ManifestMaxEndDate": null,
               "MarketCode": 419,
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -28357,8 +28357,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WFOR-TV 4.1",
               "Code": 5508,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -28462,8 +28462,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WPLG 10.1",
               "Code": 5412,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPLG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -28567,8 +28567,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -28672,8 +28672,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -28777,8 +28777,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WESH 2.1",
               "Code": 5376,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WESH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -28882,8 +28882,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WKMG-TV 6.1",
               "Code": 5259,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -28987,8 +28987,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WOFL 35.1",
               "Code": 6818,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -29092,8 +29092,8 @@
               "Affiliation": "CW",
               "CallLetters": "WCCB 18.1",
               "Code": 5765,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 117,
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -29197,8 +29197,8 @@
               "Affiliation": "IND",
               "CallLetters": "KUSI-TV 51.1",
               "Code": 6907,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 425,
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -29302,8 +29302,8 @@
               "Affiliation": "IND",
               "CallLetters": "KUSI-TV 51.1",
               "Code": 6907,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 425,
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -29407,8 +29407,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WTNH 8.1",
               "Code": 5094,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTNH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 133,
               "OriginMarket": "Hartford & New Haven",
               "RateDataThrough": null
@@ -29512,8 +29512,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KENS 5.1",
               "Code": 5022,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 241,
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -29617,8 +29617,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KENS 5.1",
               "Code": 5022,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 241,
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -29722,8 +29722,8 @@
               "Affiliation": "ABC",
               "CallLetters": "KMBC-TV 9.1",
               "Code": 5163,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 216,
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -29827,8 +29827,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WLOS 13.1",
               "Code": 5289,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WLOS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 167,
               "OriginMarket": "Greenvll-Spart-Ashevll-And",
               "RateDataThrough": null
@@ -29932,8 +29932,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WPMT 43.1",
               "Code": 5717,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -30037,8 +30037,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WZZM 13.1",
               "Code": 5681,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 163,
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -30142,8 +30142,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KRQE 13.1",
               "Code": 181,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 390,
               "OriginMarket": "Albuquerque-Santa Fe",
               "RateDataThrough": null
@@ -30247,8 +30247,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WWL-TV 4.1",
               "Code": 5417,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 222,
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -30352,8 +30352,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WLNE-TV 6.1",
               "Code": 5696,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WLNE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 121,
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -30457,8 +30457,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WPRI-TV 12.1",
               "Code": 5208,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPRI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 121,
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -30562,8 +30562,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WIVB-TV 4.1",
               "Code": 5049,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WIVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 114,
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -30667,8 +30667,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WBBH-TV 20.1",
               "Code": 5974,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -30772,8 +30772,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WBBH-TV 20.1",
               "Code": 5974,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -30877,8 +30877,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFTX-TV 36.1",
               "Code": 6247,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFTX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -30982,8 +30982,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WKEF 22.1",
               "Code": 5777,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKEF",
+              "ManifestMaxEndDate": null,
               "MarketCode": 142,
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -31087,8 +31087,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KKTV 11.1",
               "Code": 5130,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -31192,8 +31192,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KOAA-TV 5.1",
               "Code": 5151,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KOAA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -31297,8 +31297,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KXRM-TV 21.1",
               "Code": 6176,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KXRM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -31402,8 +31402,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WTVC 9.1",
               "Code": 5437,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 175,
               "OriginMarket": "Chattanooga",
               "RateDataThrough": null
@@ -31603,8 +31603,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WANE-TV 15.1",
               "Code": 5848,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 109,
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -31708,8 +31708,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WILX-TV 10.1",
               "Code": 5494,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WILX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 151,
               "OriginMarket": "Lansing",
               "RateDataThrough": null
@@ -31813,8 +31813,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KSBW 8.1",
               "Code": 5180,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 428,
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -31928,8 +31928,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WCBS-TV 2.1",
               "Code": 5012,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -32012,8 +32012,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WCBS-TV 2.1",
               "Code": 5012,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -32117,8 +32117,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WNBC 4.1",
               "Code": 5013,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WNBC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -32222,8 +32222,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFLD 32.1",
               "Code": 5716,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
+              "ManifestMaxEndDate": null,
               "MarketCode": 202,
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -32327,8 +32327,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KDFW 4.1",
               "Code": 5035,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 223,
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -32432,8 +32432,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WJLA-TV 7.1",
               "Code": 5085,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJLA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -32537,8 +32537,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WUSA 9.1",
               "Code": 5098,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -32642,8 +32642,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WUSA 9.1",
               "Code": 5098,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -32747,8 +32747,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WBTS-LD 8.1",
               "Code": 11704,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBTS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -32852,8 +32852,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WBZ-TV 4.1",
               "Code": 5054,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBZ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -32957,8 +32957,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WCVB-TV 5.1",
               "Code": 5420,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -33062,8 +33062,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WCVB-TV 5.1",
               "Code": 5420,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -33167,8 +33167,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFXT-DT 25.1",
               "Code": 6705,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFXT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -33272,8 +33272,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -33377,8 +33377,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -33502,8 +33502,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WAGA-TV 5.1",
               "Code": 5045,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WAGA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -33607,8 +33607,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WSB-TV 2.1",
               "Code": 5102,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -33712,8 +33712,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTVT 13.1",
               "Code": 5321,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 139,
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -33817,8 +33817,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WDIV-TV 4.1",
               "Code": 5114,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -33922,8 +33922,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -34027,8 +34027,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -34132,8 +34132,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -34237,8 +34237,8 @@
               "Affiliation": "IND",
               "CallLetters": "KZJO 22.1",
               "Code": 6193,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KZJO",
+              "ManifestMaxEndDate": null,
               "MarketCode": 419,
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -34342,8 +34342,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WFOR-TV 4.1",
               "Code": 5508,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -34447,8 +34447,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WSVN 7.1",
               "Code": 5375,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -34552,8 +34552,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WSVN 7.1",
               "Code": 5375,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -34657,8 +34657,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -34762,8 +34762,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -34867,8 +34867,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -34972,8 +34972,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WESH 2.1",
               "Code": 5376,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WESH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -35077,8 +35077,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WKMG-TV 6.1",
               "Code": 5259,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -35182,8 +35182,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WOFL 35.1",
               "Code": 6818,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -35287,8 +35287,8 @@
               "Affiliation": "CW",
               "CallLetters": "WCCB 18.1",
               "Code": 5765,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 117,
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -35392,8 +35392,8 @@
               "Affiliation": "IND",
               "CallLetters": "KUSI-TV 51.1",
               "Code": 6907,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 425,
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -35497,8 +35497,8 @@
               "Affiliation": "IND",
               "CallLetters": "KUSI-TV 51.1",
               "Code": 6907,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 425,
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -35602,8 +35602,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WTNH 8.1",
               "Code": 5094,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTNH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 133,
               "OriginMarket": "Hartford & New Haven",
               "RateDataThrough": null
@@ -35707,8 +35707,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KENS 5.1",
               "Code": 5022,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 241,
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -35812,8 +35812,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTTE 28.1",
               "Code": 6995,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTTE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 135,
               "OriginMarket": "Columbus, OH",
               "RateDataThrough": null
@@ -35917,8 +35917,8 @@
               "Affiliation": "ABC",
               "CallLetters": "KMBC-TV 9.1",
               "Code": 5163,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 216,
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -36022,8 +36022,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WPMT 43.1",
               "Code": 5717,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -36127,8 +36127,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WPMT 43.1",
               "Code": 5717,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -36232,8 +36232,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WZZM 13.1",
               "Code": 5681,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 163,
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -36337,8 +36337,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KRQE 13.1",
               "Code": 181,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 390,
               "OriginMarket": "Albuquerque-Santa Fe",
               "RateDataThrough": null
@@ -36442,8 +36442,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WWL-TV 4.1",
               "Code": 5417,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 222,
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -36547,8 +36547,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WLNE-TV 6.1",
               "Code": 5696,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WLNE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 121,
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -36652,8 +36652,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WPRI-TV 12.1",
               "Code": 5208,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPRI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 121,
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -36757,8 +36757,8 @@
               "Affiliation": "CW",
               "CallLetters": "WNLO 23.1",
               "Code": 6333,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WNLO",
+              "ManifestMaxEndDate": null,
               "MarketCode": 114,
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -36862,8 +36862,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WBBH-TV 20.1",
               "Code": 5974,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -36967,8 +36967,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFTX-TV 36.1",
               "Code": 6247,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFTX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -37072,8 +37072,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WKEF 22.1",
               "Code": 5777,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKEF",
+              "ManifestMaxEndDate": null,
               "MarketCode": 142,
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -37177,8 +37177,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WACH 57.1",
               "Code": 6873,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WACH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 146,
               "OriginMarket": "Columbia, SC",
               "RateDataThrough": null
@@ -37282,8 +37282,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KKTV 11.1",
               "Code": 5130,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -37387,8 +37387,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KOAA-TV 5.1",
               "Code": 5151,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KOAA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -37492,8 +37492,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WTVC 9.1",
               "Code": 5437,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 175,
               "OriginMarket": "Chattanooga",
               "RateDataThrough": null
@@ -37597,8 +37597,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WAFB 9.1",
               "Code": 5629,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WAFB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 316,
               "OriginMarket": "Baton Rouge",
               "RateDataThrough": null
@@ -37702,8 +37702,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTAT-TV 24.1",
               "Code": 6239,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTAT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 119,
               "OriginMarket": "Charleston, SC",
               "RateDataThrough": null
@@ -37807,8 +37807,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WANE-TV 15.1",
               "Code": 5848,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 109,
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -37912,8 +37912,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WILX-TV 10.1",
               "Code": 5494,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WILX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 151,
               "OriginMarket": "Lansing",
               "RateDataThrough": null
@@ -38017,8 +38017,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KSBW 8.1",
               "Code": 5180,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 428,
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -38122,8 +38122,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KSBW 8.1",
               "Code": 5180,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 428,
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -38237,8 +38237,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WCBS-TV 2.1",
               "Code": 5012,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -38321,8 +38321,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WCBS-TV 2.1",
               "Code": 5012,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCBS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -38426,8 +38426,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WNBC 4.1",
               "Code": 5013,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WNBC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 101,
               "OriginMarket": "New York",
               "RateDataThrough": null
@@ -38531,8 +38531,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFLD 32.1",
               "Code": 5716,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFLD",
+              "ManifestMaxEndDate": null,
               "MarketCode": 202,
               "OriginMarket": "Chicago",
               "RateDataThrough": null
@@ -38636,8 +38636,8 @@
               "Affiliation": "FOX",
               "CallLetters": "KDFW 4.1",
               "Code": 5035,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KDFW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 223,
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
@@ -38741,8 +38741,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WJLA-TV 7.1",
               "Code": 5085,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJLA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -38846,8 +38846,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WUSA 9.1",
               "Code": 5098,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -38951,8 +38951,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WUSA 9.1",
               "Code": 5098,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WUSA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 111,
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
@@ -39056,8 +39056,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WBTS-LD 8.1",
               "Code": 11704,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBTS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -39161,8 +39161,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WBZ-TV 4.1",
               "Code": 5054,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBZ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -39266,8 +39266,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WCVB-TV 5.1",
               "Code": 5420,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -39371,8 +39371,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WCVB-TV 5.1",
               "Code": 5420,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCVB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -39476,8 +39476,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFXT-DT 25.1",
               "Code": 6705,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFXT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -39581,8 +39581,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -39686,8 +39686,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WHDH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 106,
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
@@ -39811,8 +39811,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WAGA-TV 5.1",
               "Code": 5045,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WAGA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -39916,8 +39916,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WSB-TV 2.1",
               "Code": 5102,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 124,
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
@@ -40021,8 +40021,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTVT 13.1",
               "Code": 5321,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 139,
               "OriginMarket": "Tampa-St. Pete (Sarasota)",
               "RateDataThrough": null
@@ -40126,8 +40126,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WDIV-TV 4.1",
               "Code": 5114,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WDIV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -40231,8 +40231,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -40336,8 +40336,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -40441,8 +40441,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WJBK 2.1",
               "Code": 5075,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
               "MarketCode": 105,
               "OriginMarket": "Detroit",
               "RateDataThrough": null
@@ -40546,8 +40546,8 @@
               "Affiliation": "IND",
               "CallLetters": "KZJO 22.1",
               "Code": 6193,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KZJO",
+              "ManifestMaxEndDate": null,
               "MarketCode": 419,
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
@@ -40651,8 +40651,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WFOR-TV 4.1",
               "Code": 5508,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFOR",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -40756,8 +40756,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WSVN 7.1",
               "Code": 5375,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -40861,8 +40861,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WSVN 7.1",
               "Code": 5375,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WSVN",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -40966,8 +40966,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -41071,8 +41071,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -41176,8 +41176,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WTVJ 6.1",
               "Code": 5111,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
               "MarketCode": 128,
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
@@ -41281,8 +41281,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WESH 2.1",
               "Code": 5376,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WESH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -41386,8 +41386,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WKMG-TV 6.1",
               "Code": 5259,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKMG",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -41491,8 +41491,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WOFL 35.1",
               "Code": 6818,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WOFL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 134,
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
@@ -41596,8 +41596,8 @@
               "Affiliation": "CW",
               "CallLetters": "WCCB 18.1",
               "Code": 5765,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WCCB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 117,
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
@@ -41701,8 +41701,8 @@
               "Affiliation": "IND",
               "CallLetters": "KUSI-TV 51.1",
               "Code": 6907,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 425,
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -41806,8 +41806,8 @@
               "Affiliation": "IND",
               "CallLetters": "KUSI-TV 51.1",
               "Code": 6907,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KUSI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 425,
               "OriginMarket": "San Diego",
               "RateDataThrough": null
@@ -41911,8 +41911,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WTNH 8.1",
               "Code": 5094,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTNH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 133,
               "OriginMarket": "Hartford & New Haven",
               "RateDataThrough": null
@@ -42016,8 +42016,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KENS 5.1",
               "Code": 5022,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KENS",
+              "ManifestMaxEndDate": null,
               "MarketCode": 241,
               "OriginMarket": "San Antonio",
               "RateDataThrough": null
@@ -42121,8 +42121,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTTE 28.1",
               "Code": 6995,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTTE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 135,
               "OriginMarket": "Columbus, OH",
               "RateDataThrough": null
@@ -42226,8 +42226,8 @@
               "Affiliation": "ABC",
               "CallLetters": "KMBC-TV 9.1",
               "Code": 5163,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KMBC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 216,
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
@@ -42331,8 +42331,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WPMT 43.1",
               "Code": 5717,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -42436,8 +42436,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WPMT 43.1",
               "Code": 5717,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPMT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 166,
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
@@ -42541,8 +42541,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WZZM 13.1",
               "Code": 5681,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WZZM",
+              "ManifestMaxEndDate": null,
               "MarketCode": 163,
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
@@ -42646,8 +42646,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KRQE 13.1",
               "Code": 181,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KRQE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 390,
               "OriginMarket": "Albuquerque-Santa Fe",
               "RateDataThrough": null
@@ -42751,8 +42751,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WWL-TV 4.1",
               "Code": 5417,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WWL",
+              "ManifestMaxEndDate": null,
               "MarketCode": 222,
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
@@ -42856,8 +42856,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WLNE-TV 6.1",
               "Code": 5696,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WLNE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 121,
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -42961,8 +42961,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WPRI-TV 12.1",
               "Code": 5208,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WPRI",
+              "ManifestMaxEndDate": null,
               "MarketCode": 121,
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
@@ -43066,8 +43066,8 @@
               "Affiliation": "CW",
               "CallLetters": "WNLO 23.1",
               "Code": 6333,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WNLO",
+              "ManifestMaxEndDate": null,
               "MarketCode": 114,
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
@@ -43171,8 +43171,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WBBH-TV 20.1",
               "Code": 5974,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WBBH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -43276,8 +43276,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WFTX-TV 36.1",
               "Code": 6247,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WFTX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 171,
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
@@ -43381,8 +43381,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WKEF 22.1",
               "Code": 5777,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WKEF",
+              "ManifestMaxEndDate": null,
               "MarketCode": 142,
               "OriginMarket": "Dayton",
               "RateDataThrough": null
@@ -43486,8 +43486,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WACH 57.1",
               "Code": 6873,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WACH",
+              "ManifestMaxEndDate": null,
               "MarketCode": 146,
               "OriginMarket": "Columbia, SC",
               "RateDataThrough": null
@@ -43591,8 +43591,8 @@
               "Affiliation": "CBS",
               "CallLetters": "KKTV 11.1",
               "Code": 5130,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KKTV",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -43696,8 +43696,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KOAA-TV 5.1",
               "Code": 5151,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KOAA",
+              "ManifestMaxEndDate": null,
               "MarketCode": 352,
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
@@ -43801,8 +43801,8 @@
               "Affiliation": "ABC",
               "CallLetters": "WTVC 9.1",
               "Code": 5437,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTVC",
+              "ManifestMaxEndDate": null,
               "MarketCode": 175,
               "OriginMarket": "Chattanooga",
               "RateDataThrough": null
@@ -43906,8 +43906,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WAFB 9.1",
               "Code": 5629,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WAFB",
+              "ManifestMaxEndDate": null,
               "MarketCode": 316,
               "OriginMarket": "Baton Rouge",
               "RateDataThrough": null
@@ -44011,8 +44011,8 @@
               "Affiliation": "FOX",
               "CallLetters": "WTAT-TV 24.1",
               "Code": 6239,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WTAT",
+              "ManifestMaxEndDate": null,
               "MarketCode": 119,
               "OriginMarket": "Charleston, SC",
               "RateDataThrough": null
@@ -44116,8 +44116,8 @@
               "Affiliation": "CBS",
               "CallLetters": "WANE-TV 15.1",
               "Code": 5848,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WANE",
+              "ManifestMaxEndDate": null,
               "MarketCode": 109,
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
@@ -44221,8 +44221,8 @@
               "Affiliation": "NBC",
               "CallLetters": "WILX-TV 10.1",
               "Code": 5494,
-              "FlightWeeks": [],
               "LegacyCallLetters": "WILX",
+              "ManifestMaxEndDate": null,
               "MarketCode": 151,
               "OriginMarket": "Lansing",
               "RateDataThrough": null
@@ -44326,8 +44326,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KSBW 8.1",
               "Code": 5180,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 428,
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
@@ -44431,8 +44431,8 @@
               "Affiliation": "NBC",
               "CallLetters": "KSBW 8.1",
               "Code": 5180,
-              "FlightWeeks": [],
               "LegacyCallLetters": "KSBW",
+              "ManifestMaxEndDate": null,
               "MarketCode": 428,
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null

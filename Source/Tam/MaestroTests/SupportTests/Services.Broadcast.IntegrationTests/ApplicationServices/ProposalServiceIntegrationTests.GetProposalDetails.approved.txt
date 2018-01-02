@@ -13,8 +13,7 @@
       "HasWarning": true,
       "PostingBookId": 416,
       "WarningMessage": "The share book for the current quarter is not available, the default share book is the latest available"
-    },
-    "UseShareBookOnlyId": -1
+    }
   },
   "FlightEdited": false,
   "FlightEndDate": "2016-12-31T00:00:00",

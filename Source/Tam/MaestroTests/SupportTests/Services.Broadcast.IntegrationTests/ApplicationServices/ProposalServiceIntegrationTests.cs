@@ -879,7 +879,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 proposal.Details.Add(detail);
 
-                detail.HutPostingBookId = ProposalConstants.UseShareBookOnlyId;
+                detail.HutPostingBookId = null;
                 detail.SharePostingBookId = shareBookMonthId;
 
                 var resultProposal = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
@@ -887,7 +887,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.AreEqual(shareBookMonthId, resultProposalDetail.SinglePostingBookId);
                 Assert.AreEqual(shareBookMonthId, resultProposalDetail.SharePostingBookId);
-                Assert.AreEqual(-1, resultProposalDetail.HutPostingBookId);
+                Assert.Null(resultProposalDetail.HutPostingBookId);
             }
         }
 
@@ -901,7 +901,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var firstDetail = proposal.Details.First();
 
                 Assert.AreEqual(413, firstDetail.SharePostingBookId);
-                Assert.AreEqual(-1, firstDetail.HutPostingBookId);
+                Assert.Null(firstDetail.HutPostingBookId);
             }
         }
 
