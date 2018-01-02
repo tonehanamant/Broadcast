@@ -206,15 +206,14 @@ export default class GridIsciCell extends Component {
       const tooltip = <Tooltip id="Iscistooltip"><span style={{ fontSize: '9px' }}>ISCIs <br />{this.state.iscisValue}</span></Tooltip>;
     return (
         <div>
-        <OverlayTrigger trigger="click" placement="bottom" overlay={popoverIsciEditor} rootClose ref={(ref) => { this.popover = ref; }}>
-          {button}
-        </OverlayTrigger>
-
-        { isEdit &&
+          { isEdit &&
           <OverlayTrigger placement="top" overlay={tooltip}>
           <Button bsStyle="link" style={{ fontSize: '11px', padding: '2px' }}><Glyphicon style={{ color: '#999' }} glyph="info-sign" /></Button>
           </OverlayTrigger>
          }
+        <OverlayTrigger trigger="click" placement="bottom" overlay={popoverIsciEditor} rootClose ref={(ref) => { this.popover = ref; }}>
+          {button}
+        </OverlayTrigger>
          </div>
     );
 	}
