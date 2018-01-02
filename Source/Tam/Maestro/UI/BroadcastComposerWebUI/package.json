@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "animatewithsass": "^3.2.1",
+    "antd": "^3.0.3",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.26.0",
     "babel-preset-stage-0": "^6.24.1",
@@ -20,7 +21,7 @@
     "font-awesome": "^4.7.0",
     "fuzzy-search": "^2.0.1",
     "history": "^4.7.2",
-    "immutability-helper": "^2.4.0",
+    "immutability-helper": "^2.6.2",
     "lodash": "^4.17.4",
     "moment": "^2.19.0",
     "numeral": "^2.0.6",

@@ -1,4 +1,5 @@
 import moment from 'moment';
+import update from 'immutability-helper';
 
 // Actions
 import * as ACTIONS from './actionTypes.js';
@@ -50,6 +51,11 @@ const initialState = {
   },
   proposalEditForm: {},
   versions: [],
+  proposalValidationStates: {
+    FormInvalid: false,
+    DetailInvalid: false,
+    DetailGridsInvalid: false,
+  },
 };
 
 initialState.proposalEditForm = { ...initialState.proposal };
@@ -106,7 +112,6 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.UPDATE_PROPOSAL_EDIT_FORM_DETAIL: {
       const details = [...state.proposalEditForm.Details];
       const detailIndex = details.findIndex(detail => detail.Id === payload.id);
-      console.log('>>>>>>>>>>> UPDATE_PROPOSAL_EDIT_FORM_DETAIL', details, detailIndex);
       return Object.assign({}, state, {
         proposalEditForm: {
           ...state.proposalEditForm,
@@ -127,8 +132,66 @@ export default function reducer(state = initialState, action) {
       });
     }
 
+    case ACTIONS.UPDATE_PROPOSAL_EDIT_FORM_DETAIL_GRID: {
+      const details = [...state.proposalEditForm.Details];
+      const detailIndex = details.findIndex(detail => detail.Id === payload.id);
+      const quarterIndex = payload.quarterIndex;
+      const weekIndex = payload.weekIndex;
+      let rowIndex = details[detailIndex].GridQuarterWeeks.findIndex(row => row._key === payload.row);
+      if (rowIndex === -1) rowIndex = payload.row.replace(/row-/, '');
+
+      let newState = { ...state };
+
+      if (quarterIndex !== null && weekIndex === null) {
+        newState = update(state, {
+          proposalEditForm: {
+            Details: {
+              [detailIndex]: {
+                Quarters: {
+                  [quarterIndex]: {
+                    [payload.key]: { $set: payload.value },
+                    DistributeGoals: { $set: (payload.key === 'ImpressionGoal' || payload.key === 'Impressions') },
+                  },
+                },
+                GridQuarterWeeks: {
+                  [rowIndex]: {
+                    [payload.key]: { $set: payload.value },
+                  },
+                },
+              },
+            },
+          },
+        });
+      } else if (quarterIndex !== null && weekIndex !== null) {
+        newState = update(state, {
+          proposalEditForm: {
+            Details: {
+              [detailIndex]: {
+                Quarters: {
+                  [quarterIndex]: {
+                    DistributeGoals: { $set: false },
+                    Weeks: {
+                      [weekIndex]: {
+                        [payload.key]: { $set: payload.value },
+                      },
+                    },
+                  },
+                },
+                GridQuarterWeeks: {
+                  [rowIndex]: {
+                    [payload.key]: { $set: payload.value },
+                  },
+                },
+              },
+            },
+          },
+        });
+      }
+
+      return newState;
+    }
+
     case ACTIONS.RECEIVE_NEW_PROPOSAL_DETAIL: {
-      console.log('DETAIL PAYLOAD', payload);
       return {
         ...state,
         proposalEditForm: {
@@ -144,7 +207,6 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.DELETE_PROPOSAL_DETAIL: {
       const details = [...state.proposalEditForm.Details];
       const detailIndex = details.findIndex(detail => detail.Id === payload.id);
-      console.log('>>>>>>>>>>> DELETE_PROPOSAL_DETAIL', details, detailIndex);
       return Object.assign({}, state, {
         proposalEditForm: {
           ...state.proposalEditForm,
@@ -183,6 +245,14 @@ export default function reducer(state = initialState, action) {
         Details: data.Data.Details,
       },
     };
+
+    case ACTIONS.SET_PROPOSAL_VALIDATION_STATE:
+    return Object.assign({}, state, {
+      proposalValidationStates: {
+        ...state.proposalValidationStates,
+        [payload.type]: payload.state,
+      },
+    });
 
     default:
       return state;
@@ -255,6 +325,11 @@ export const updateProposalEditFormDetail = idKeyValue => ({
   payload: idKeyValue,
 });
 
+export const updateProposalEditFormDetailGrid = idKeyValue => ({
+  type: ACTIONS.UPDATE_PROPOSAL_EDIT_FORM_DETAIL_GRID,
+  payload: idKeyValue,
+});
+
 export const deleteProposalDetail = params => ({
   type: ACTIONS.DELETE_PROPOSAL_DETAIL,
   payload: params,
@@ -263,4 +338,14 @@ export const deleteProposalDetail = params => ({
 export const modelNewProposalDetail = flight => ({
   type: ACTIONS.MODEL_NEW_PROPOSAL_DETAIL,
   payload: flight,
+});
+
+export const unorderProposal = id => ({
+  type: ACTIONS.UNORDER_PROPOSAL,
+  payload: id,
+});
+
+export const setProposalValidationState = typeState => ({
+  type: ACTIONS.SET_PROPOSAL_VALIDATION_STATE,
+  payload: typeState,
 });

@@ -186,6 +186,7 @@
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\BvsTrackingAudience.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
+    <Compile Include="Entities\FlightWeekGroup.cs" />
     <Compile Include="Entities\IHavePostingBooks.cs" />
     <Compile Include="Entities\InventorySourceEnum.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailTotalsDto.cs" />
     <Compile Include="Entities\ProposalHeaderTotalsDto.cs" />
+    <Compile Include="Entities\ProposalWeekIsciDto.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationConflict.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationRequest.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposal.cs" />
@@ -307,7 +309,6 @@
     <Compile Include="BroadcastConstants.cs" />
     <Compile Include="BusinessEngines\BvsPostingEngine.cs" />
     <Compile Include="BusinessEngines\ProposalProgramsCalculationEngine.cs" />
-    <Compile Include="BusinessEngines\ProposalSpotDistributionEngine.cs" />
     <Compile Include="BusinessEngines\QuarterCalculationEngine.cs" />
     <Compile Include="BusinessEngines\TrackingEngine.cs" />
     <Compile Include="Converters\BvsConverter.cs" />

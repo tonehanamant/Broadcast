@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Label, FormGroup, InputGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { Row, Col, Label, FormGroup, InputGroup, ControlLabel, FormControl, HelpBlock, Tooltip, Glyphicon, Button, OverlayTrigger } from 'react-bootstrap';
 import Select from 'react-select';
+
+import moment from 'moment';
+
 import DateMDYYYY from 'Components/shared/TextFormatters/DateMDYYYY';
 import CurrencyDollarWhole from 'Components/shared/TextFormatters/CurrencyDollarWhole';
 import PercentWhole from 'Components/shared/TextFormatters/PercentWhole';
@@ -20,66 +23,32 @@ export default class ProposalForm extends Component {
     this.onChangeSecondaryDemos = this.onChangeSecondaryDemos.bind(this);
     this.onChangeNotes = this.onChangeNotes.bind(this);
 
-    this.checkValid = this.checkValid.bind(this);
     this.setValidationState = this.setValidationState.bind(this);
-    this.clearValidationStates = this.clearValidationStates.bind(this);
 
     this.onMarketGroupChange = this.onMarketGroupChange.bind(this);
     this.marketSelectorOptionRenderer = this.marketSelectorOptionRenderer.bind(this);
     this.marketSelectorValueRenderer = this.marketSelectorValueRenderer.bind(this);
     this.updateMarketCount = this.updateMarketCount.bind(this);
 
+    this.setValidationState = this.setValidationState.bind(this);
+    this.onSaveShowValidation = this.onSaveShowValidation.bind(this);
+    this.checkValidProposalName = this.checkValidProposalName.bind(this);
+    this.checkValidAdvertiserId = this.checkValidAdvertiserId.bind(this);
+
     this.state = {
       validationStates: {
-        proposalName: null,
-        proposalMarket: null,
-        proposalPostType: null,
-        proposalEquivalized: null,
-        proposalAdvertiserId: null,
-        proposalGuaranteedDemoId: null,
-        proposalSecondaryDemo: null,
-        proposalNotes: null,
+        Name: null,
+        Name_Alphanumeric: null,
+        Name_MaxChar: null,
+        AdvertiserId: null,
       },
     };
-
-    this.state.Invalid = null;
-  }
-
-  checkValid() {
-    const nameValid = (this.props.proposalEditForm.ProposalName !== '' || null);
-    const advertiserValid = this.props.proposalEditForm.AdvertiserId !== null;
-    if (nameValid && advertiserValid) {
-      this.clearValidationStates();
-      return true;
-    }
-    this.setValidationState('nameInvalid', nameValid ? null : 'error');
-    this.setValidationState('advertiserInvalid', advertiserValid ? null : 'error');
-    return false;
-  }
-
-  clearValidationStates() {
-    this.setState({
-      validationStates: {
-        proposalName: null,
-        proposalMarket: null,
-        proposalPostType: null,
-        proposalEquivalized: null,
-        proposalAdvertiserId: null,
-        proposalGuaranteedDemoId: null,
-        proposalNotes: null,
-      },
-    });
-  }
-
-  setValidationState(type, state) {
-    this.state.validationStates[type] = state;
   }
 
   onChangeProposalName(event) {
-    const re = /^[A-Za-z0-9- ]+$/i; // check alphanumeric
-    const val = event.target.value || '';
+    const val = event.target.value;
     this.props.updateProposalEditForm({ key: 'ProposalName', value: val });
-    this.setValidationState('proposalName', re.test(val) && val.length <= 100 ? null : 'error');
+    this.checkValidProposalName(val);
   }
 
   onMarketGroupChange(selectedMarketGroup) {
@@ -103,6 +72,37 @@ export default class ProposalForm extends Component {
     }
 
     this.setState({ selectedMarketGroup: option });
+  }
+
+  onChangePostType(value) {
+    const val = value ? value.Id : null;
+    this.props.updateProposalEditForm({ key: 'PostType', value: val });
+  }
+
+  onChangeEquivalized(value) {
+    const val = value ? value.Bool : null;
+    this.props.updateProposalEditForm({ key: 'Equivalized', value: val });
+  }
+
+  onChangeAdvertiserId(value) {
+    const val = value ? value.Id : null;
+    this.props.updateProposalEditForm({ key: 'AdvertiserId', value: val });
+    this.checkValidAdvertiserId(val);
+  }
+
+  onChangeGuaranteedDemoId(value) {
+    const val = value ? value.Id : null;
+    this.props.updateProposalEditForm({ key: 'GuaranteedDemoId', value: val });
+  }
+
+  onChangeSecondaryDemos(value) {
+    const val = value.map(item => item.Id);
+    this.props.updateProposalEditForm({ key: 'SecondaryDemos', value: val });
+  }
+
+  onChangeNotes(event) {
+    const val = event.target.value;
+    this.props.updateProposalEditForm({ key: 'Notes', value: val });
   }
 
   marketSelectorOptionRenderer(option) {
@@ -151,40 +151,34 @@ export default class ProposalForm extends Component {
     });
   }
 
-  onChangePostType(value) {
-    const val = value ? value.Id : null;
-    this.props.updateProposalEditForm({ key: 'PostType', value: val });
-    // this.setValidationState('proposalPostType', val ? null : 'error'); // Not required
+  setValidationState(type, state) {
+    this.setState(prevState => ({
+      ...prevState,
+      validationStates: {
+        ...prevState.validationStates,
+        [type]: state,
+      },
+    }));
   }
 
-  onChangeEquivalized(value) {
-    const val = value ? value.Bool : null;
-    this.props.updateProposalEditForm({ key: 'Equivalized', value: val });
-    // this.setValidationState('proposalEquivalized', val ? null : 'error'); // Not required
+  onSaveShowValidation(nextProps) {
+    const { ProposalName, AdvertiserId } = nextProps.proposalEditForm;
+    this.checkValidProposalName(ProposalName);
+    this.checkValidAdvertiserId(AdvertiserId);
   }
 
-  onChangeAdvertiserId(value) {
-    const val = value ? value.Id : null;
-    this.props.updateProposalEditForm({ key: 'AdvertiserId', value: val });
-    this.setValidationState('proposalAdvertiserId', val ? null : 'error');
+  checkValidProposalName(value) {
+    const val = value || '';
+    this.setValidationState('Name', val !== '' ? null : 'error');
+    this.setValidationState('Name', val === '' ? 'error' : null);
+    const re = /^[A-Za-z0-9- ]+$/i; // check alphanumeric
+    this.setValidationState('Name_Alphanumeric', (re.test(val) || val === '') ? null : 'error');
+    this.setValidationState('Name_MaxChar', val.length <= 100 ? null : 'error');
   }
 
-  onChangeGuaranteedDemoId(value) {
-    const val = value ? value.Id : null;
-    this.props.updateProposalEditForm({ key: 'GuaranteedDemoId', value: val });
-    // this.setValidationState('proposalGuaranteedDemoId', val ? null : 'error'); // Not required
-  }
-
-  onChangeSecondaryDemos(value) {
-    const val = value.map(item => item.Id);
-    this.props.updateProposalEditForm({ key: 'SecondaryDemos', value: val });
-    // this.setValidationState('proposalSecondaryDemos', val ? null : 'error'); // Not required
-  }
-
-  onChangeNotes(event) {
-    const val = event.target.value || '';
-    this.props.updateProposalEditForm({ key: 'Notes', value: val });
-    // this.setValidationState('proposalNotes', val ? null : 'error'); // Not required
+  checkValidAdvertiserId(value) {
+    const val = value;
+    this.setValidationState('AdvertiserId', val ? null : 'error');
   }
 
   componentWillMount() {
@@ -210,6 +204,12 @@ export default class ProposalForm extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.proposalValidationStates.FormInvalid === true) {
+      this.onSaveShowValidation(nextProps);
+    }
+  }
+
   render() {
     const { initialdata, proposalEditForm, isReadOnly } = this.props;
 
@@ -224,6 +224,25 @@ export default class ProposalForm extends Component {
     // selected market group
     const selectedMarketGroup = this.state.selectedMarketGroup || marketOptions[0];
 
+    //  handle hiatus flights tips display
+    let hasTip = false;
+    const checkFlightWeeksTip = (flightWeeks) => {
+      if (flightWeeks.length < 1) return '';
+      const tip = [<div key="flight">Hiatus Weeks</div>];
+      flightWeeks.forEach((flight, idx) => {
+        if (flight.IsHiatus) {
+          hasTip = true;
+          const key = `flight_ + ${idx}`;
+          tip.push(<div key={key}><DateMDYYYY date={flight.StartDate} /><span> - </span><DateMDYYYY date={flight.EndDate} /></div>);
+        }
+      });
+      const display = tip;
+      return (
+        <Tooltip id="flightstooltip">{display}</Tooltip>
+      );
+    };
+    const tooltip = checkFlightWeeksTip(this.props.proposalEditForm.FlightWeeks);
+
     return (
       <div id="proposal-form">
 					<form>
@@ -231,40 +250,48 @@ export default class ProposalForm extends Component {
 							<Col md={6}>
 								<Row>
 									<Col md={5}>
-										<FormGroup controlId="proposalName" validationState={this.state.validationStates.proposalName} >
+										<FormGroup controlId="proposalName" validationState={this.state.validationStates.Name || this.state.validationStates.Name_Alphanumeric || this.state.validationStates.Name_MaxChar} >
 											<ControlLabel><strong>Proposal Name</strong></ControlLabel>
-											<InputGroup>
+                      { !proposalEditForm.Id &&
+                      <FormControl
+                        type="text"
+                        defaultValue={proposalEditForm.ProposalName || ''}
+                        onChange={this.onChangeProposalName}
+                        disabled={isReadOnly}
+                      />
+                      }
+                      { proposalEditForm.Id &&
+                      <InputGroup>
 												<FormControl
 													type="text"
 													defaultValue={proposalEditForm.ProposalName || ''}
                           onChange={this.onChangeProposalName}
                           disabled={isReadOnly}
 												/>
-												{ proposalEditForm.Id &&
-														<InputGroup.Addon>
-															Id: {proposalEditForm.Id}
-														</InputGroup.Addon>
-												}
+                        <InputGroup.Addon>
+                          Id: {proposalEditForm.Id}
+                        </InputGroup.Addon>
 											</InputGroup>
-											{this.state.validationStates.proposalName != null &&
+                      }
+											{this.state.validationStates.Name != null &&
 											<HelpBlock>
-												<span className="text-danger">Required.</span>
+												<span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
 											</HelpBlock>
                       }
-                      {this.state.validationStates.proposalName != null &&
+                      {this.state.validationStates.Name_Alphanumeric != null &&
 											<HelpBlock>
-												<span className="text-danger">Please enter only alphanumeric characters.</span>
+												<span className="text-danger" style={{ fontSize: 11 }}>Please enter only alphanumeric characters.</span>
 											</HelpBlock>
                       }
-                      {this.state.validationStates.proposalName != null &&
+                      {this.state.validationStates.Name_MaxChar != null &&
 											<HelpBlock>
-												<span className="text-danger">Please enter no more than 100 characters.</span>
+												<span className="text-danger" style={{ fontSize: 11 }}>Please enter no more than 100 characters.</span>
 											</HelpBlock>
                       }
 										</FormGroup>
 									</Col>
 									<Col md={3}>
-                    <FormGroup controlId="proposalMarket" validationState={this.state.validationStates.proposalMarket} >
+                    <FormGroup controlId="proposalMarket">
                       <ControlLabel><strong>Market</strong></ControlLabel>
                       <Select
                         name="marketGroup"
@@ -281,7 +308,7 @@ export default class ProposalForm extends Component {
                     </FormGroup>
                   </Col>
 									<Col md={2}>
-										<FormGroup controlId="proposalPostType" validationState={this.state.validationStates.proposalPostType}>
+										<FormGroup controlId="proposalPostType">
 											<ControlLabel><strong>Post Type</strong></ControlLabel>
 											<Select
 												name="proposalPostType"
@@ -297,7 +324,7 @@ export default class ProposalForm extends Component {
 										</FormGroup>
 									</Col>
 									<Col md={2}>
-										<FormGroup controlId="proposalEquivalized" validationState={this.state.validationStates.proposalEquivalized}>
+										<FormGroup controlId="proposalEquivalized">
 											<ControlLabel><strong>Equivalized</strong></ControlLabel>
 											<Select
 												name="proposalEquivalized"
@@ -355,7 +382,7 @@ export default class ProposalForm extends Component {
 							<Col md={7}>
 								<Row>
 									<Col md={4}>
-										<FormGroup controlId="proposalAdvertiser" validationState={this.state.validationStates.proposalAdvertiserId} >
+										<FormGroup controlId="proposalAdvertiser" validationState={this.state.validationStates.AdvertiserId} >
 											<ControlLabel><strong>Advertiser</strong></ControlLabel>
 											<Select
 												name="proposalAdvertiser"
@@ -368,15 +395,15 @@ export default class ProposalForm extends Component {
                         clearable={false}
                         disabled={isReadOnly}
 											/>
-                      {this.state.validationStates.proposalAdvertiserId != null &&
+                      {this.state.validationStates.AdvertiserId != null &&
 											<HelpBlock>
-												<span className="text-danger">Required</span>
+												<span className="text-danger" style={{ fontSize: 11 }}>Required</span>
 											</HelpBlock>
 											}
 										</FormGroup>
 									</Col>
 									<Col md={4}>
-										<FormGroup controlId="proposalGuaranteedDemo" validationState={this.state.validationStates.proposalGuaranteedDemoId}>
+										<FormGroup controlId="proposalGuaranteedDemo">
 											<ControlLabel><strong>Guaranteed Demo</strong></ControlLabel>
 											<Select
 												name="proposalGuaranteedDemo"
@@ -392,7 +419,7 @@ export default class ProposalForm extends Component {
 										</FormGroup>
 									</Col>
 									<Col md={4}>
-										<FormGroup controlId="proposalSecondaryDemo" validationState={null}>
+										<FormGroup controlId="proposalSecondaryDemo">
 											<ControlLabel><strong>Secondary Demo</strong></ControlLabel>
 											<Select
 												name="proposalSecondaryDemo"
@@ -416,7 +443,8 @@ export default class ProposalForm extends Component {
 										<FormGroup controlId="proposalSpotLength">
 											<ControlLabel><strong>Spot Length</strong></ControlLabel>
 											<FormControl.Static>
-												{ proposalEditForm.SpotLengths.map((spot, index, arr) => (arr.length !== index ? `${spot.Display}` : `${spot.Display}, `)) }
+                        { proposalEditForm.SpotLengths.length <= 0 && <span> - </span> }
+												{ proposalEditForm.SpotLengths.map((spot, index, arr) => (arr.length !== (index + 1) ? `${spot.Display}, ` : `${spot.Display}`)) }
 											</FormControl.Static>
 										</FormGroup>
 									</Col>
@@ -424,12 +452,21 @@ export default class ProposalForm extends Component {
 										<FormGroup controlId="proposalFlight">
 											<ControlLabel><strong>Flight</strong></ControlLabel>
 											<FormControl.Static>
-												<DateMDYYYY date={proposalEditForm.FlightStartDate} /><span> - </span><DateMDYYYY date={proposalEditForm.FlightEndDate} />
+												{ moment(proposalEditForm.FlightStartDate).isValid() && moment(proposalEditForm.FlightEndDate).isValid() ?
+                          <span><DateMDYYYY date={proposalEditForm.FlightStartDate} /><span> - </span><DateMDYYYY date={proposalEditForm.FlightEndDate} /></span>
+                        :
+                          <span>-</span>
+                        }
+                        {hasTip &&
+                          <OverlayTrigger placement="top" overlay={tooltip}>
+                          <Button bsStyle="link"><Glyphicon style={{ color: 'black' }} glyph="info-sign" /></Button>
+                          </OverlayTrigger>
+                        }
 											</FormControl.Static>
 										</FormGroup>
 									</Col>
 									<Col md={4}>
-										<FormGroup controlId="proposalNotes" validationState={null}>
+										<FormGroup controlId="proposalNotes">
 											<ControlLabel>Notes</ControlLabel>
 											<FormControl
 												componentClass="textarea"
@@ -467,4 +504,7 @@ ProposalForm.propTypes = {
   updateProposalEditForm: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func,
+
+  proposalValidationStates: PropTypes.object.isRequired,
 };
+

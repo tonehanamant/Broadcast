@@ -2809,10 +2809,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     HouseHoldImpressions = 1000,
                     Rate15 = 15,
                     Rating = 50,
-                    ProgramName = "Testing Program",
+                    ProgramNames = new List<string>(){"Testing Program"},
                     StationCode = stationCode,
                     RateSource = "OpenMarket",
-                    Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
+                    Airtimes = new List<DaypartDto>() {DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))}
                 },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
@@ -2853,10 +2853,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     HouseHoldImpressions = 1000,
                     Rate30 = 20,
                     Rating = 50,
-                    ProgramName = "Edited Program Name 54",
+                    ProgramNames =  new List<string>() {"Edited Program Name 54"},
                     StationCode = stationCode,
                     RateSource = "OpenMarket",
-                    Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
+                    Airtimes = new List<DaypartDto>(){DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))}
                 },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
@@ -2897,7 +2897,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Rate15 = 15,
                     Rate30 = 20,
                     Rating = 50,
-                    ProgramName = "Edited Program Name 54",
+                    ProgramNames = new List<string>(){"Edited Program Name 54"},
                     StationCode = stationCode,
                     RateSource = "OpenMarket",
                     Conflicts = new List<StationProgram.StationProgramConflictChangeDto>
@@ -2915,7 +2915,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             }
                         }
                     },
-                    Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
+                    Airtimes = new List<DaypartDto>(){DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))}
                 },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
@@ -2966,7 +2966,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     HouseHoldImpressions = 1000,
                     Rate30 = 30,
                     Rating = 50,
-                    ProgramName = "Multiple Flight Weeks",
+                    ProgramNames = new List<string>(){"Multiple Flight Weeks"},
                     StationCode = stationCode,
                     RateSource = "OpenMarket",
                     Conflicts = new List<StationProgram.StationProgramConflictChangeDto>
@@ -2985,7 +2985,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             
                         }
                     },
-                    Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
+                    Airtimes = new List<DaypartDto>(){DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))}
                 },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
@@ -3058,7 +3058,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void StationConflictsUpdateConflictTest()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -3075,6 +3074,52 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }, 24538);
 
                 Assert.IsFalse(conflicted);
+            }
+        }
+
+        [Test]
+        public void DeleteProgramTest()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                const int manifestId = 26684;
+
+                _InventoryFileService.DeleteProgram(manifestId);
+
+                var allStationPrograms = _InventoryFileService.GetAllStationPrograms("OpenMarket", 123);
+
+                var deletedStationProgram = allStationPrograms.FirstOrDefault(p => p.Id == manifestId);
+
+                Assert.IsNull(deletedStationProgram);
+            }
+        }
+
+        [Test]
+        public void ExpireManifestTest()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                const int manifestId = 26684;
+                var expireDate = new DateTime(2017, 9, 17);
+
+                _InventoryFileService.ExpireManifest(manifestId, expireDate);
+
+                var allStationPrograms = _InventoryFileService.GetAllStationPrograms("OpenMarket", 5319);
+
+                var manifest = allStationPrograms.First(p => p.Id == manifestId);
+
+                Assert.AreEqual(expireDate, manifest.EndDate);
+            }
+        }
+
+        [Test]
+        public void HasSpotsAllocatedTest()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var hasSpotAllocated = _InventoryFileService.HasSpotsAllocated(26672);
+
+                Assert.IsTrue(hasSpotAllocated);
             }
         }
     }

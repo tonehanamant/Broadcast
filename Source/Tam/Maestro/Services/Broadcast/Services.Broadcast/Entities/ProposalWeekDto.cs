@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
     public class ProposalWeekDto
     {
+        public ProposalWeekDto()
+        {
+            Iscis = new List<ProposalWeekIsciDto>();
+        }
+
         public int? Id { get; set; }
         public int MediaWeekId { get; set; }
         public string Week { get; set; }
@@ -13,5 +19,6 @@ namespace Services.Broadcast.Entities
         public decimal Cost { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime StartDate { get; set; }
+        public List<ProposalWeekIsciDto> Iscis { get; set; }
     }
 }

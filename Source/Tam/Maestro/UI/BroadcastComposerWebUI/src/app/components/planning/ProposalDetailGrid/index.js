@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
-import { Grid, Actions } from 'react-redux-grid';
+import { Grid } from 'react-redux-grid';
 // import NumberCommaWhole from 'Components/shared/TextFormatters/NumberCommaWhole';
 import numeral from 'numeral';
 
-import CellInput from './CellInput';
+import GridCellInput from 'Components/shared/GridCellInput';
+import GridIsciCell from './GridIsciCell';
 
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
@@ -16,24 +17,7 @@ export default class ProposalDetailGrid extends Component {
     super(props, context);
     this.context = context;
     this.checkEditable = this.checkEditable.bind(this);
-    this.onUnitsChange = this.onUnitsChange.bind(this);
-  }
-
-  onUnitsChange(value, row, rowId, column, columns, columnIndex, store, stateKey, reactEvent) {
-    console.log('onUnitsChange', value, rowId, row, reactEvent.target.value, column, columns, columnIndex, stateKey, store, Actions, this.props);
-    let changedValue = reactEvent.target.value;
-    if (changedValue === '' || changedValue < 1) changedValue = value;
-    // const fixedVal = changedValue.toFixed();
-    store.dispatch(
-      Actions.EditorActions.updateCellValue({
-          value: changedValue,
-          name: column.dataIndex,
-          column,
-          columns,
-          stateKey,
-          rowId,
-      }),
-  );
+    // this.isciCellItems = {};
   }
 
   checkEditable(values, isUnits) {
@@ -51,7 +35,7 @@ export default class ProposalDetailGrid extends Component {
     if ((values.Type === 'week') && values.IsHiatus) {
       can = false;
     }
-    console.log('checkEditable', can);
+    // console.log('checkEditable', can);
     return can;
   }
 
@@ -59,21 +43,15 @@ export default class ProposalDetailGrid extends Component {
   /* // COMPONENT RENDER FUNC
   /* ////////////////////////////////// */
   render() {
+    const { proposalValidationStates } = this.props;
+    const { DetailGridsInvalid } = proposalValidationStates;
+
     /* ////////////////////////////////// */
     /* // REACT-REDUX-GRID CONFIGURATION
     /* ////////////////////////////////// */
     // TODO will need to be unique to each grid
     const stateKey = `detailGrid_${this.props.detailId}`;
     // console.log('DETAIL GRID PROPS', stateKey, this.props);
-    /* GRID RENDERERS */
-    // const renderers = {
-    //   uploadDate: ({ value, row }) => (
-    //     <span>{row.DisplayUploadDate}</span>
-    //   ),
-    //   modifiedDate: ({ value, row }) => (
-    //     <span>{row.DisplayModifiedDate}</span>
-    //   ),
-    // };
 
     /* GRID COLUMNS */
     // See saga FlattenDetail for data structure
@@ -82,21 +60,16 @@ export default class ProposalDetailGrid extends Component {
       {
         name: 'Type',
         dataIndex: 'Type',
-        editable: false,
-        // width: '20%',
         hidden: true,
       },
       {
         name: 'IsHiatus',
         dataIndex: 'IsHiatus',
-        editable: false,
-        // width: '20%',
         hidden: true,
       },
       {
           name: 'Week',
           dataIndex: 'Week',
-          editable: false,
           width: '20%',
           renderer: ({ value, row }) => {
             // console.log('CELL >>>>>>>>>', row);
@@ -109,87 +82,164 @@ export default class ProposalDetailGrid extends Component {
       {
           name: 'Units',
           dataIndex: 'EditUnits',
-         // editable: true,
-         // returns value, values
-         /*  validator: ({ value, values }) => {
-            const valid = value && value > 0;
-            console.log('validator Units', value, valid, values);
-            // base on type ?
-           return valid;
-          }, */
-          editor: (
-            /* eslint-disable  react/prop-types */
-            { column, columnIndex, row, stateKey, store, value, rowId },
-            /* eslint-enable  react/prop-types */
-        ) => (
-                <input
-                /* eslint-disable  react/jsx-no-bind */
-                    onChange={this.onUnitsChange.bind(this, value, row, rowId, column, columns, columnIndex, store, stateKey)}
-                    type="number"
-                    min="1"
-                    step="1"
-                    value={value}
-                />
-          ),
-         /* change: ({ values }) => ({
-            otherColDataIndex: 'newValue',
-          }), */
-          // returns object row with values, value, etc
-          // editable: ({ row }) => {
-          // // editable: (...args) => {
-          //   // console.log('edit units', args);
-          //   // console.log('edit Unit editable row', row);
-          //   const values = row.values;
-          //   return this.checkEditable(values, true);
-          // },
           width: '20%',
           renderer: ({ value, row }) => {
-            // TODO - edit indicator styling, validation etc
-            // now based on EditUnits
+            const isEditable = this.checkEditable(row, false);
+
+            const inputCpm = (event) => {
+              let unmaskedValue = event.target.value.replace(/CPM \$ /, '');
+                  unmaskedValue = unmaskedValue.replace(/,/g, '');
+              const storeValue = Number(unmaskedValue);
+              const storeKey = event.target.getAttribute('valueKey');
+              this.props.updateProposalEditFormDetailGrid({
+                id: this.props.detailId,
+                quarterIndex: row.QuarterIdx,
+                weekIndex: null,
+                key: storeKey,
+                value: storeValue,
+                row: row._key,
+              });
+              this.props.onUpdateProposal();
+            };
+
+            const inputUnits = (event) => {
+              const storeValue = Number(event.target.value);
+              const storeKey = event.target.getAttribute('valueKey');
+              this.props.updateProposalEditFormDetailGrid({
+                id: this.props.detailId,
+                quarterIndex: row.QuarterIdx,
+                weekIndex: row.WeekIdx,
+                key: storeKey,
+                value: storeValue,
+                row: row._key,
+              });
+              this.props.onUpdateProposal();
+            };
+
             if (row.Type === 'total') return row.TotalUnits ? numeral(row.TotalUnits).format('0,0') : '-';
             if (row.Type === 'quarter') {
-              const cpm = numeral(value).format('$0,0[.]00');
-              return <div><span style={{ color: '#808080' }}>CPM </span><span>{cpm}</span></div>;
+              // const cpm = numeral(value).format('$0,0[.]00');
+              // return <div><span style={{ color: '#808080' }}>CPM </span><span>{cpm}</span></div>;
+              return (
+                <GridCellInput
+                  name="Cpm"
+                  placeholder="CPM $"
+                  value={value}
+                  valueKey="Cpm"
+                  isEditable={isEditable}
+                  emptyZeroDefault
+                  onSaveShowValidation={DetailGridsInvalid}
+                  blurAction={inputCpm}
+                  enterKeyPressAction={inputCpm}
+                  maskType="createNumber"
+                  maskPrefix="CPM $ "
+                  maskAllowDecimal
+                  maskDecimalLimit={2}
+                />
+              );
             }
-            return numeral(value).format('0,0');
+            return (
+              <GridCellInput
+                name="Units"
+                placeholder=""
+                value={value}
+                valueKey="Units"
+                isEditable={isEditable}
+                emptyZeroDefault
+                onSaveShowValidation={DetailGridsInvalid}
+                blurAction={inputUnits}
+                enterKeyPressAction={inputUnits}
+                maskType="default"
+              />
+            );
           },
       },
       {
           name: 'Imp (000)',
           dataIndex: 'EditImpressions',
           width: '20%',
-          validator: ({ value, values }) => {
-            const valid = value && value > 0;
-            console.log('validator Impressions', value, valid, values);
-            // base on type ?
-           return valid;
-          },
-          // editable: ({ row }) => {
-          //   const values = row.values;
-          //   return this.checkEditable(values, false);
-          // },
           renderer: ({ value, row }) => {
-            // TODO - edit indicator styling, validation etc
-            // now based on EditImpressions
+            const isEditable = this.checkEditable(row, false);
+
+            const inputImpressionGoal = (event) => {
+              let unmaskedValue = event.target.value.replace(/Imp Goal \(000\) /, '');
+                  unmaskedValue = unmaskedValue.replace(/,/g, '');
+              const storeValue = (Number(unmaskedValue) * 1000);
+              const storeKey = event.target.getAttribute('valueKey');
+              this.props.updateProposalEditFormDetailGrid({
+                id: this.props.detailId,
+                quarterIndex: row.QuarterIdx,
+                weekIndex: null,
+                key: storeKey,
+                value: storeValue,
+                row: row._key,
+              });
+              this.props.onUpdateProposal();
+            };
+
+            const inputImpressions = (event) => {
+              const unmaskedValue = event.target.value.replace(/,/g, '');
+              const storeValue = Number(unmaskedValue) * 1000;
+              // const storeValue = (Number(event.target.value) * 1000);
+              const storeKey = event.target.getAttribute('valueKey');
+              this.props.updateProposalEditFormDetailGrid({
+                id: this.props.detailId,
+                quarterIndex: row.QuarterIdx,
+                weekIndex: row.WeekIdx,
+                key: storeKey,
+                value: storeValue,
+                row: row._key,
+              });
+              this.props.onUpdateProposal();
+            };
+
             if (row.Type === 'total') return row.TotalImpressions ? numeral(row.TotalImpressions / 1000).format('0,0.[000]') : '-';
             if (row.Type === 'quarter') {
               // const imp = numeral(value).format('0,0.[000]');
               // return <div><span style={{ color: '#808080' }}>Imp. Goal (000)  </span><span>{imp}</span></div>;
               return (
-                <CellInput
-                  name="cost"
+                <GridCellInput
+                  name="ImpressionGoal"
                   placeholder="Imp Goal (000)"
                   value={value}
-                  mask="ImpressionsGoalDecimalsLimit3"
+                  valueKey="ImpressionGoal"
+                  isEditable={isEditable}
+                  emptyZeroDefault
+                  confirmInput
+                  confirmModalProperties={{
+                    titleText: 'Warning',
+                    bodyText: 'You will loose one or more existing weekly goals for this quarter.', // string
+                    bodyList: null, // array
+                    closeButtonText: 'Cancel',
+                    closeButtonBsStyle: 'default',
+                    actionButtonText: 'Continue',
+                    actionButtonBsStyle: 'warning',
+                  }}
+                  toggleModal={this.props.toggleModal}
+                  onSaveShowValidation={DetailGridsInvalid}
+                  blurAction={inputImpressionGoal}
+                  enterKeyPressAction={inputImpressionGoal}
+                  maskType="createNumber"
+                  maskPrefix="Imp Goal (000) "
+                  maskAllowDecimal
+                  maskDecimalLimit={3}
                 />
               );
             }
             return (
-              <CellInput
-                name="cost"
-                placeholder="-"
+              <GridCellInput
+                name="Impressions"
+                placeholder=""
                 value={value}
-                mask="NumberDecimalsLimit3"
+                valueKey="Impressions"
+                isEditable={isEditable}
+                emptyZeroDefault
+                onSaveShowValidation={DetailGridsInvalid}
+                blurAction={inputImpressions}
+                enterKeyPressAction={inputImpressions}
+                maskType="createNumber"
+                maskAllowDecimal
+                maskDecimalLimit={3}
               />
             );
           },
@@ -206,6 +256,40 @@ export default class ProposalDetailGrid extends Component {
             return '';
           },
       },
+      {
+        name: 'ISCIs',
+        dataIndex: 'Iscis',
+        width: '20%',
+        editable: false,
+        renderer: ({ value, row }) => {
+          // console.log('ISCIs Render', value, row);
+          if (row.Type === 'week') {
+            const inputIscis = (IscisValue) => {
+              this.props.updateProposalEditFormDetailGrid({
+                id: this.props.detailId,
+                quarterIndex: row.QuarterIdx,
+                weekIndex: row.WeekIdx,
+                key: 'Iscis',
+                value: IscisValue,
+                row: row._key,
+              });
+              // console.log('called InputIscis', IscisValue, row, this);
+            };
+            return (
+            <GridIsciCell
+              Iscis={value}
+              saveInputIscis={inputIscis}
+              // isciRef={(ref) => { this.isciCellItems[row._key] = ref; }}
+              // popoverRef={(pop) => { this.popoverItem = pop; }
+              // /* eslint-disable no-return-assign */
+              // popoverRef={el => this.popoverItem = el}
+            />
+          );
+        }
+          // empty for quarter, total
+          return '';
+        },
+    },
     ];
 
     /* GRID PLGUINS */
@@ -253,17 +337,19 @@ export default class ProposalDetailGrid extends Component {
       },
     };
 
-   // const height = { height: false };
-
     const grid = {
       columns,
       plugins,
       stateKey,
-      // height,
     };
 
     return (
-      <Grid {...grid} data={this.props.GridQuarterWeeks} store={this.context.store} height="false" />
+      <Grid
+        {...grid}
+        data={this.props.GridQuarterWeeks}
+        store={this.context.store}
+        height="false"
+      />
     );
   }
 }
@@ -279,6 +365,10 @@ ProposalDetailGrid.propTypes = {
     PropTypes.number,
   ]).isRequired,
   GridQuarterWeeks: PropTypes.array.isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
   isAdu: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
+  updateProposalEditFormDetailGrid: PropTypes.func.isRequired,
+  onUpdateProposal: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  proposalValidationStates: PropTypes.object.isRequired,
 };

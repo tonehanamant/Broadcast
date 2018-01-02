@@ -81,7 +81,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                 Units = 3,
                                 MediaWeekId = 649,
                                 StartDate = new DateTime(2016, 05, 30),
-                                EndDate = new DateTime(2016, 06, 05)
+                                EndDate = new DateTime(2016, 06, 05),
+                                Iscis = new List<ProposalWeekIsciDto>
+                                {
+                                    new ProposalWeekIsciDto
+                                    {
+                                        ClientIsci = "AAAAAA",
+                                        HouseIsci = "AAAAAA",
+                                        Brand = "Testing",
+                                        MarriedHouseIsci = true
+                                    },
+                                    new ProposalWeekIsciDto
+                                    {
+                                        ClientIsci = "BBBBBBB",
+                                        HouseIsci = "BBBBBBB",
+                                        Brand = "Testing 2",
+                                        MarriedHouseIsci = false
+                                    }
+                                }
                             }
                         }
                     }
@@ -617,6 +634,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
                 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -743,8 +761,50 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "Markets");
 
-
                 var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanEditProposalWeekIscis()
+        {
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = _ProposalService.GetProposalById(253);
+
+                var firstWeek = proposalDto.Details.First().Quarters.First().Weeks.First();
+
+                firstWeek.Iscis.Add(new ProposalWeekIsciDto
+                {
+                    Brand = "Testing 45",
+                    ClientIsci = "ZZZZZZ",
+                    HouseIsci = "ZZZZZZ",
+                    MarriedHouseIsci = true
+                });
+
+                var result = _ProposalService.UpdateProposal(proposalDto.Details);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Daypart");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Markets");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
@@ -819,7 +879,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 proposal.Details.Add(detail);
 
-                detail.HutPostingBookId = ProposalConstants.UseShareBookOnlyId;
+                detail.HutPostingBookId = null;
                 detail.SharePostingBookId = shareBookMonthId;
 
                 var resultProposal = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
@@ -827,7 +887,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.AreEqual(shareBookMonthId, resultProposalDetail.SinglePostingBookId);
                 Assert.AreEqual(shareBookMonthId, resultProposalDetail.SharePostingBookId);
-                Assert.AreEqual(-1, resultProposalDetail.HutPostingBookId);
+                Assert.Null(resultProposalDetail.HutPostingBookId);
             }
         }
 
@@ -841,7 +901,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var firstDetail = proposal.Details.First();
 
                 Assert.AreEqual(413, firstDetail.SharePostingBookId);
-                Assert.AreEqual(-1, firstDetail.HutPostingBookId);
+                Assert.Null(firstDetail.HutPostingBookId);
             }
         }
 

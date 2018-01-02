@@ -231,7 +231,7 @@ namespace Services.Broadcast.Repositories
                             p.TimeAired,
                             p.TimeAired)));
         }
-        private static void WriteTableSQLDebug(List<ManifestDetailDaypart> stationDetails)
+        private static void WriteTableSQLDebug(IEnumerable<ManifestDetailDaypart> stationDetails)
         {
             stationDetails
                 .Distinct()
@@ -367,7 +367,7 @@ namespace Services.Broadcast.Repositories
                     {
                         Value = (char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)
                     };
-
+                    //WriteTableSQLDebug(stationDetails);
                     var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_TwoBooks" : "usp_GetImpressionsForMultiplePrograms_TwoBooks_Averages";
 
                     return c.Database.SqlQuery<StationImpressions>(string.Format(@"EXEC [nsi].[{0}] @hut_media_month_id, @share_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), hut, share, audienceId, ratingsRequest, minPlaybackType).ToList();

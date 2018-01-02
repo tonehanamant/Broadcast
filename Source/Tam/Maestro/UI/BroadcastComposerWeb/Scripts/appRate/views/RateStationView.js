@@ -109,6 +109,9 @@ var RateStationView = BaseView.extend({
         $.each(displayData, function (index, value) {
             var item = value;
             item.recid = index + 1;
+            //deal with arrays from BE changes
+            item.ProgramName = item.ProgramNames[0];
+            item.AirtimePreview = item.AirtimePreviews[0];
             ret.push(item);
         });
 
@@ -246,13 +249,13 @@ var RateStationView = BaseView.extend({
 
     onRatesMenuClick: function (event) {
         var rec = this.$RatesGrid.get(event.recid),
-            itemId = rec.Id,
+            // itemId = rec.Id,
             menuId = event.menuItem.id;
 
         switch (menuId) {
             case 1:
                 var title = 'Delete this program',
-                    message = 'Are you sure you want to delete ' + rec.Program + ' (' + itemId + ')' + '?';
+                    message = 'Are you sure you want to delete <strong>' + rec.ProgramName + '</strong>?';
                 //change to pass record - as BE needs additional data
                 util.confirm(title, message, this.controller.apiDeleteStationRate.bind(this.controller, rec));
                 break;

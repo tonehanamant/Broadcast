@@ -81,5 +81,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_manifest> station_inventory_manifest { get; set; }
         public virtual DbSet<station_inventory_spot_audiences> station_inventory_spot_audiences { get; set; }
         public virtual DbSet<station_inventory_spots> station_inventory_spots { get; set; }
+        public virtual DbSet<proposal_version_detail_quarter_week_iscis> proposal_version_detail_quarter_week_iscis { get; set; }
     }
 }

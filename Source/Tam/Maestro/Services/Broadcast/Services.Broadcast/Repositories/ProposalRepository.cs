@@ -328,7 +328,14 @@ namespace Services.Broadcast.Repositories
                                         units = quarterWeek.Units,
                                         media_week_id = quarterWeek.MediaWeekId,
                                         end_date = quarterWeek.EndDate,
-                                        start_date = quarterWeek.StartDate
+                                        start_date = quarterWeek.StartDate,
+                                        proposal_version_detail_quarter_week_iscis = quarterWeek.Iscis.Select(isic => new proposal_version_detail_quarter_week_iscis
+                                        {
+                                            client_isci = isic.ClientIsci,
+                                            house_isci = isic.HouseIsci,
+                                            brand = isic.Brand,
+                                            married_house_iscii = isic.MarriedHouseIsci
+                                        }).ToList()
                                     }).ToList()
                         }).ToList()
                 }).ToList());
@@ -434,6 +441,7 @@ namespace Services.Broadcast.Repositories
                             {
                                 var detatilQuarterWeek =
                                     detailQuarter.Weeks.Find(w => w.MediaWeekId == quarterWeek.media_week_id);
+
                                 if (detatilQuarterWeek != null)
                                 {
                                     quarterWeek.start_date = detatilQuarterWeek.StartDate;
@@ -442,6 +450,8 @@ namespace Services.Broadcast.Repositories
                                     quarterWeek.units = detatilQuarterWeek.Units;
                                     quarterWeek.impressions_goal = detatilQuarterWeek.Impressions;
                                     quarterWeek.cost = detatilQuarterWeek.Cost;
+
+                                    _UpdateProposalWeekIscis(context, detatilQuarterWeek, quarterWeek);
                                 }
                             });
                         }
@@ -450,6 +460,37 @@ namespace Services.Broadcast.Repositories
             });
 
             context.SaveChanges();
+        }
+
+        private static void _UpdateProposalWeekIscis(BroadcastContext context, ProposalWeekDto proposalWeek, proposal_version_detail_quarter_weeks quarterWeek)
+        {
+            context.proposal_version_detail_quarter_week_iscis.RemoveRange(
+                quarterWeek.proposal_version_detail_quarter_week_iscis);
+
+            var newIscis = _GetProposalDetailQuarterWeekIscis(proposalWeek.Iscis).ToList();
+
+            newIscis.ForEach(q => quarterWeek.proposal_version_detail_quarter_week_iscis.Add(q));
+        }
+
+        private static IEnumerable<proposal_version_detail_quarter_week_iscis> _GetProposalDetailQuarterWeekIscis(List<ProposalWeekIsciDto> proposalWeekIsciDtos)
+        {
+            var weekIscis = new List<proposal_version_detail_quarter_week_iscis>();
+
+            if (!proposalWeekIsciDtos.Any())
+                return weekIscis;
+
+            var newWeekIscis = proposalWeekIsciDtos.Select(
+                isci => new proposal_version_detail_quarter_week_iscis
+                {
+                    brand = isci.Brand,
+                    client_isci = isci.ClientIsci,
+                    house_isci = isci.HouseIsci,
+                    married_house_iscii = isci.MarriedHouseIsci,
+                }).ToList();
+
+            weekIscis.AddRange(newWeekIscis);
+
+            return weekIscis;
         }
 
         private static List<proposal_version_detail_quarters> _GetProposalVersionDetailQuarters(List<ProposalQuarterDto> proposalQuarterDtos)
@@ -689,7 +730,15 @@ namespace Services.Broadcast.Repositories
                         IsHiatus = week.is_hiatus,
                         Units = week.units,
                         MediaWeekId = week.media_week_id,
-                        Week = week.start_date.ToShortDateString()
+                        Week = week.start_date.ToShortDateString(),
+                        Iscis = week.proposal_version_detail_quarter_week_iscis.Select(isci => new ProposalWeekIsciDto
+                        {
+                            Id = isci.id,
+                            Brand = isci.brand,
+                            ClientIsci = isci.client_isci,
+                            HouseIsci = isci.house_isci,
+                            MarriedHouseIsci = isci.married_house_iscii
+                        }).ToList()
                     }).ToList()
                 }).ToList()
             }).ToList();
@@ -804,13 +853,14 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
                 {
-                    var pv = context.proposal_version_details.Include(pvd => pvd.proposal_versions.proposal)
-                                                             .Include(pvd => pvd.proposal_version_detail_quarters.Select(dq => dq.proposal_version_detail_quarter_weeks))
-                                                             .Include(pvd => pvd.proposal_versions.proposal_version_flight_weeks)
-                                                             .Include(pvd => pvd.proposal_version_detail_criteria_cpm)
-                                                             .Include(pvd => pvd.proposal_version_detail_criteria_genres)
-                                                             .Include(pvd => pvd.proposal_version_detail_criteria_programs)
-                                                             .Single(d => d.id == proposalDetailId, string.Format("The proposal detail information you have entered [{0}] does not exist.", proposalDetailId));
+                    var pv = context.proposal_version_details
+                            .Include(pvd => pvd.proposal_versions.proposal)
+                            .Include(pvd => pvd.proposal_version_detail_quarters.Select(dq => dq.proposal_version_detail_quarter_weeks))
+                            .Include(pvd => pvd.proposal_versions.proposal_version_flight_weeks)
+                            .Include(pvd => pvd.proposal_version_detail_criteria_cpm)
+                            .Include(pvd => pvd.proposal_version_detail_criteria_genres)
+                            .Include(pvd => pvd.proposal_version_detail_criteria_programs)
+                            .Single(d => d.id == proposalDetailId, string.Format("The proposal detail information you have entered [{0}] does not exist.", proposalDetailId));
 
                     var dto = new ProposalDetailOpenMarketInventoryDto();
                     dto.Margin = pv.proposal_versions.margin;

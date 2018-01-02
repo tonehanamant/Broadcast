@@ -39,15 +39,18 @@ Follow same instructions as release branch in context of the hotfix branch. Be s
 	 4. `git commit -m"descriptive comment"` (commit changes locally)
 	 5. `git push` (push commit(s) to remote branch release)
 
-**Back Merge Release into Develop: Cherry Picking**
+**Back Merge Release into Develop**
+We are no longer cherry picking code from branch to branch. Instead you need to back merge branches in their entirety (history included).
 
-For now, the GUI is your best bet here. Cherry pick the committed sha hash from release into develop one-by-one for better merge conflict context.
+Hotfix > Release > Develop
+
+If you encounter merge conflicts you need to address them in preference of the code being back merged in. If you encounter merge conflicts that are not of your doing then you need to follow up with the developer who did not back merge successfully after making changes.
 
 If you'd rather take the time to do this by the command line:
- 1. `git checkout develop` (checkout develop branch; this is the branch you'll merge your cherry-pick)
- 2. `git cherry-pick a1b23c` (replace a1b23c with the SHA of the commit from release branch you want to cherry-pick into develop)
- 3.  resolve any conflicts in preference of incoming cherry-pick from release
- 4.  Either `git commit -m"descriptive comment"` to explicitly describe the cherry-pick commit, or `git commit` to be prompted with a auto-drafted commit message with the commit message from cherry-pick.
+ 1. `git checkout develop` (checkout develop branch; this is the branch you'll merge into)
+ 2. `git merge release` 
+ 3.  resolve any conflicts in preference of incoming code from release
+ 4.  Either `git commit -m"descriptive comment"` to explicitly describe the merge, or `git commit` to be prompted with a auto-drafted commit message
  5. `git push` (push to remote branch develop)
 
 ### Develop Branch ###

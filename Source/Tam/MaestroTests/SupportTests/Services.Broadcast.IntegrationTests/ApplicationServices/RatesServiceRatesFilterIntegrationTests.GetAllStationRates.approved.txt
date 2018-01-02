@@ -1,18 +1,22 @@
 ﻿[
   {
-    "Airtime": {
-      "endTime": 43200,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 41400,
-      "sun": false,
-      "Text": "M-F 11:30AM-12PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 11:30AM-12PM",
+    "AirtimePreviews": [
+      "M-F 11:30AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 41400,
+        "sun": false,
+        "Text": "M-F 11:30AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2015-12-28T00:00:00",
     "EndDate": "2016-03-27T00:00:00",
@@ -97,7 +101,9 @@
       }
     ],
     "HouseHoldImpressions": 10500.0,
-    "ProgramName": "Q1 CADENT NEWS AT 11:30AM",
+    "ProgramNames": [
+      "Q1 CADENT NEWS AT 11:30AM"
+    ],
     "Rate15": 110.0000,
     "Rate30": 0.0,
     "RateSource": null,
@@ -107,19 +113,23 @@
     "StationCode": 5044
   },
   {
-    "Airtime": {
-      "endTime": 43200,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 41400,
-      "sun": false,
-      "Text": "M-F 11:30AM-12PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 11:30AM-12PM",
+    "AirtimePreviews": [
+      "M-F 11:30AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 41400,
+        "sun": false,
+        "Text": "M-F 11:30AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-03-28T00:00:00",
     "EndDate": "2016-06-26T00:00:00",
@@ -204,7 +214,9 @@
       }
     ],
     "HouseHoldImpressions": 20500.0,
-    "ProgramName": "Q2 CADENT NEWS AT 11:30AM",
+    "ProgramNames": [
+      "Q2 CADENT NEWS AT 11:30AM"
+    ],
     "Rate15": 78.0000,
     "Rate30": 120.0000,
     "RateSource": null,
@@ -214,19 +226,23 @@
     "StationCode": 5044
   },
   {
-    "Airtime": {
-      "endTime": 43200,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 41400,
-      "sun": false,
-      "Text": "M-F 11:30AM-12PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 11:30AM-12PM",
+    "AirtimePreviews": [
+      "M-F 11:30AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 41400,
+        "sun": false,
+        "Text": "M-F 11:30AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-06-27T00:00:00",
     "EndDate": "2016-09-25T00:00:00",
@@ -311,7 +327,9 @@
       }
     ],
     "HouseHoldImpressions": 30500.0,
-    "ProgramName": "Q3 CADENT NEWS AT 11:30AM",
+    "ProgramNames": [
+      "Q3 CADENT NEWS AT 11:30AM"
+    ],
     "Rate15": 0.0,
     "Rate30": 0.0,
     "RateSource": null,
@@ -321,19 +339,23 @@
     "StationCode": 5044
   },
   {
-    "Airtime": {
-      "endTime": 43200,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 41400,
-      "sun": false,
-      "Text": "M-F 11:30AM-12PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 11:30AM-12PM",
+    "AirtimePreviews": [
+      "M-F 11:30AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 41400,
+        "sun": false,
+        "Text": "M-F 11:30AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-10-02T00:00:00",
@@ -346,7 +368,9 @@
       }
     ],
     "HouseHoldImpressions": 40500.0,
-    "ProgramName": "Q4 CADENT NEWS AT 11:30AM",
+    "ProgramNames": [
+      "Q4 CADENT NEWS AT 11:30AM"
+    ],
     "Rate15": 0.0,
     "Rate30": 0.0,
     "RateSource": null,
@@ -356,19 +380,23 @@
     "StationCode": 5044
   },
   {
-    "Airtime": {
-      "endTime": 43200,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 41400,
-      "sun": false,
-      "Text": "M-F 11:30AM-12PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 11:30AM-12PM",
+    "AirtimePreviews": [
+      "M-F 11:30AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 41400,
+        "sun": false,
+        "Text": "M-F 11:30AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-10-03T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -447,7 +475,9 @@
       }
     ],
     "HouseHoldImpressions": 60500.0,
-    "ProgramName": "Q4 CADENT NEWS AT 11:30AM",
+    "ProgramNames": [
+      "Q4 CADENT NEWS AT 11:30AM"
+    ],
     "Rate15": 0.0,
     "Rate30": 0.0,
     "RateSource": null,
@@ -457,19 +487,23 @@
     "StationCode": 5044
   },
   {
-    "Airtime": {
-      "endTime": 43200,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 41400,
-      "sun": false,
-      "Text": "M-F 11:30AM-12PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 11:30AM-12PM",
+    "AirtimePreviews": [
+      "M-F 11:30AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 41400,
+        "sun": false,
+        "Text": "M-F 11:30AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-10-02T00:00:00",
@@ -482,7 +516,9 @@
       }
     ],
     "HouseHoldImpressions": 40500.0,
-    "ProgramName": "Q4 CADENT NEWS WITH 45SEC ADS",
+    "ProgramNames": [
+      "Q4 CADENT NEWS WITH 45SEC ADS"
+    ],
     "Rate15": 0.0,
     "Rate30": 0.0,
     "RateSource": null,
@@ -492,19 +528,23 @@
     "StationCode": 5044
   },
   {
-    "Airtime": {
-      "endTime": 43200,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 41400,
-      "sun": false,
-      "Text": "M-F 11:30AM-12PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 11:30AM-12PM",
+    "AirtimePreviews": [
+      "M-F 11:30AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 41400,
+        "sun": false,
+        "Text": "M-F 11:30AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-10-03T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -583,7 +623,9 @@
       }
     ],
     "HouseHoldImpressions": 60500.0,
-    "ProgramName": "Q4 CADENT NEWS WITH 45SEC ADS",
+    "ProgramNames": [
+      "Q4 CADENT NEWS WITH 45SEC ADS"
+    ],
     "Rate15": 0.0,
     "Rate30": 0.0,
     "RateSource": null,
@@ -593,19 +635,23 @@
     "StationCode": 5044
   },
   {
-    "Airtime": {
-      "endTime": 43200,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 41400,
-      "sun": false,
-      "Text": "M-F 11:30AM-12PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 11:30AM-12PM",
+    "AirtimePreviews": [
+      "M-F 11:30AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 41400,
+        "sun": false,
+        "Text": "M-F 11:30AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-10-02T00:00:00",
@@ -618,7 +664,9 @@
       }
     ],
     "HouseHoldImpressions": 40500.0,
-    "ProgramName": "Q4 CADENT NEWS WITH 180SEC ADS",
+    "ProgramNames": [
+      "Q4 CADENT NEWS WITH 180SEC ADS"
+    ],
     "Rate15": 0.0,
     "Rate30": 0.0,
     "RateSource": null,
@@ -628,19 +676,23 @@
     "StationCode": 5044
   },
   {
-    "Airtime": {
-      "endTime": 43200,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 41400,
-      "sun": false,
-      "Text": "M-F 11:30AM-12PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 11:30AM-12PM",
+    "AirtimePreviews": [
+      "M-F 11:30AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 41400,
+        "sun": false,
+        "Text": "M-F 11:30AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-10-03T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -719,7 +771,9 @@
       }
     ],
     "HouseHoldImpressions": 60500.0,
-    "ProgramName": "Q4 CADENT NEWS WITH 180SEC ADS",
+    "ProgramNames": [
+      "Q4 CADENT NEWS WITH 180SEC ADS"
+    ],
     "Rate15": 0.0,
     "Rate30": 0.0,
     "RateSource": null,
@@ -729,19 +783,23 @@
     "StationCode": 5044
   },
   {
-    "Airtime": {
-      "endTime": 43200,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 41400,
-      "sun": false,
-      "Text": "M-F 11:30AM-12PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 11:30AM-12PM",
+    "AirtimePreviews": [
+      "M-F 11:30AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 41400,
+        "sun": false,
+        "Text": "M-F 11:30AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-09-26T00:00:00",
     "EndDate": "2016-10-02T00:00:00",
@@ -754,7 +812,9 @@
       }
     ],
     "HouseHoldImpressions": 40500.0,
-    "ProgramName": "Q4 CADENT NEWS WITH 300SEC ADS",
+    "ProgramNames": [
+      "Q4 CADENT NEWS WITH 300SEC ADS"
+    ],
     "Rate15": 0.0,
     "Rate30": 0.0,
     "RateSource": null,
@@ -764,19 +824,23 @@
     "StationCode": 5044
   },
   {
-    "Airtime": {
-      "endTime": 43200,
-      "fri": true,
-      "mon": true,
-      "sat": false,
-      "startTime": 41400,
-      "sun": false,
-      "Text": "M-F 11:30AM-12PM",
-      "thu": true,
-      "tue": true,
-      "wed": true
-    },
-    "AirtimePreview": "M-F 11:30AM-12PM",
+    "AirtimePreviews": [
+      "M-F 11:30AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 41400,
+        "sun": false,
+        "Text": "M-F 11:30AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
     "Conflicts": null,
     "EffectiveDate": "2016-10-03T00:00:00",
     "EndDate": "2016-12-25T00:00:00",
@@ -855,7 +919,9 @@
       }
     ],
     "HouseHoldImpressions": 60500.0,
-    "ProgramName": "Q4 CADENT NEWS WITH 300SEC ADS",
+    "ProgramNames": [
+      "Q4 CADENT NEWS WITH 300SEC ADS"
+    ],
     "Rate15": 0.0,
     "Rate30": 0.0,
     "RateSource": null,

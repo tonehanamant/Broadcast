@@ -19,7 +19,8 @@ export class ConfirmModal extends Component {
   constructor(props) {
     super(props);
     this.close = this.close.bind(this);
-    this.actionButtonClick = this.actionButtonClick.bind(this);
+    this.action = this.action.bind(this);
+    this.dismiss = this.dismiss.bind(this);
   }
 
   close() {
@@ -30,17 +31,22 @@ export class ConfirmModal extends Component {
     });
   }
 
-  actionButtonClick() {
-    this.close();
+  action() {
     this.props.modal.properties.action();
+    this.close();
+  }
+
+  dismiss() {
+    this.props.modal.properties.dismiss();
+    this.close();
   }
 
   render() {
     return (
-      <Modal show={this.props.modal.active} onHide={this.close}>
+      <Modal show={this.props.modal.active} onHide={this.dismiss}>
         <Modal.Header>
           <Modal.Title style={{ display: 'inline-block' }}>{this.props.modal.properties.titleText}</Modal.Title>
-          <Button className="close" bsStyle="link" onClick={this.close} style={{ display: 'inline-block', float: 'right' }}>
+          <Button className="close" bsStyle="link" onClick={this.dismiss} style={{ display: 'inline-block', float: 'right' }}>
             <span>&times;</span>
           </Button>
         </Modal.Header>
@@ -57,8 +63,8 @@ export class ConfirmModal extends Component {
           }
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle={this.props.modal.properties.actionButtonBsStyle} onClick={this.actionButtonClick}>{this.props.modal.properties.actionButtonText}</Button>
-          <Button onClick={this.close} bsStyle={this.props.modal.properties.closeButtonBsStyle || 'default'}>{this.props.modal.properties.closeButtonText}</Button>
+          <Button bsStyle={this.props.modal.properties.actionButtonBsStyle} onClick={this.action}>{this.props.modal.properties.actionButtonText}</Button>
+          <Button onClick={this.dismiss} bsStyle={this.props.modal.properties.closeButtonBsStyle || 'default'}>{this.props.modal.properties.closeButtonText}</Button>
         </Modal.Footer>
       </Modal>
     );
@@ -77,6 +83,7 @@ ConfirmModal.defaultProps = {
       actionButtonText: 'Action',
       actionButtonBsStyle: 'warning',
       action: () => {},
+      dismiss: () => {},
     },
   },
 };

@@ -14,8 +14,7 @@ export default class ProposalHeader extends Component {
   }
 
   render() {
-    console.log('HEADER PROPS>>>>>>>>>>>>>>>>>', this.props);
-    const { toggleModal, isEdit, initialdata, proposal, proposalEditForm, updateProposalEditForm, getProposalVersions, deleteProposal, saveProposalAsVersion } = this.props;
+    const { toggleModal, isEdit, initialdata, proposal, proposalEditForm, updateProposalEditForm, getProposalVersions, deleteProposal, saveProposalAsVersion, unorderProposal, proposalValidationStates } = this.props;
     return (
       <div id="proposal-header">
         {isEdit &&
@@ -40,6 +39,7 @@ export default class ProposalHeader extends Component {
                 updateProposalEditForm={updateProposalEditForm}
                 deleteProposal={deleteProposal}
                 saveProposalAsVersion={saveProposalAsVersion}
+                unorderProposal={unorderProposal}
                 toggleModal={toggleModal}
                 isReadOnly={this.props.isReadOnly}
               />
@@ -60,6 +60,7 @@ export default class ProposalHeader extends Component {
               updateProposalEditForm={updateProposalEditForm}
               toggleModal={toggleModal}
               isReadOnly={this.props.isReadOnly}
+              proposalValidationStates={proposalValidationStates}
 						/>
 					</Panel>
         </Collapse>
@@ -73,6 +74,7 @@ ProposalHeader.defaultProps = {
   getProposalVersions: () => {},
   deleteProposal: () => {},
   saveProposalAsVersion: () => {},
+  unorderProposal: () => {},
   isReadOnly: false,
 };
 
@@ -84,9 +86,12 @@ ProposalHeader.propTypes = {
   proposalEditForm: PropTypes.object.isRequired,
   updateProposalEditForm: PropTypes.func.isRequired,
 
+  proposalValidationStates: PropTypes.object.isRequired,
+
   getProposalVersions: PropTypes.func,
   deleteProposal: PropTypes.func,
   saveProposalAsVersion: PropTypes.func,
+  unorderProposal: PropTypes.func,
 
   toggleModal: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,

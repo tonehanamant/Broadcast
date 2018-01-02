@@ -28,29 +28,33 @@ export default class ProposalActions extends Component {
 							this.props.updateProposalEditForm({ key: 'ValidationWarning', value: null });
 							this.props.saveProposal({ proposal: this.props.proposalEditForm, force: true });
 						},
+						dismiss: () => {},
 					},
 			});
 		}
 	}
 
 	checkValid() {
-    const nameValid = (this.props.proposalEditForm.ProposalName !== '' || null);
-    const advertiserValid = this.props.proposalEditForm.AdvertiserId != null;
-    if (nameValid && advertiserValid) {
-      return true;
-		}
-		this.props.createAlert({
-			type: 'danger',
-			// headline: '',
-			message: `${!nameValid ? 'Proposal Name is a required field. ' : ''}${!advertiserValid ? 'Advertiser is a required field. ' : ''}`,
-		});
-		// Proposal cannot be saved: Required Inputs Incomplete (in red)
-    return false;
+		const formValid = this.props.isValidProposalForm();
+		const detailValid = this.props.isValidProposalDetails();
+		const detailGridsValid = this.props.isValidProposalDetailGrids();
+
+		this.props.setProposalValidationState({ type: 'FormInvalid', state: !formValid });
+		this.props.setProposalValidationState({ type: 'DetailInvalid', state: !detailValid });
+		this.props.setProposalValidationState({ type: 'DetailGridsInvalid', state: !detailGridsValid });
+
+		return formValid && detailValid && detailGridsValid;
 	}
 
 	save() {
 		if (this.checkValid()) {
 			this.props.saveProposal({ proposal: this.props.proposalEditForm });
+		} else {
+			this.props.createAlert({
+				type: 'danger',
+				headline: '',
+				message: 'Proposal cannot be saved: Required Inputs Incomplete (in red)',
+			});
 		}
 	}
 
@@ -83,4 +87,8 @@ ProposalActions.propTypes = {
 	saveProposal: PropTypes.func.isRequired,
 	toggleModal: PropTypes.func.isRequired,
 	createAlert: PropTypes.func.isRequired,
+	setProposalValidationState: PropTypes.func.isRequired,
+	isValidProposalForm: PropTypes.func.isRequired,
+	isValidProposalDetails: PropTypes.func.isRequired,
+	isValidProposalDetailGrids: PropTypes.func.isRequired,
 };
