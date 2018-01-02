@@ -17,7 +17,7 @@ export default class ProposalDetailGrid extends Component {
     super(props, context);
     this.context = context;
     this.checkEditable = this.checkEditable.bind(this);
-    // this.isciCellItems = {};
+    this.isciCellItems = {};
   }
 
   checkEditable(values, isUnits) {
@@ -264,7 +264,7 @@ export default class ProposalDetailGrid extends Component {
         renderer: ({ value, row }) => {
           // console.log('ISCIs Render', value, row);
           if (row.Type === 'week') {
-            const inputIscis = (IscisValue) => {
+            const inputIscis = (IscisValue, next) => {
               this.props.updateProposalEditFormDetailGrid({
                 id: this.props.detailId,
                 quarterIndex: row.QuarterIdx,
@@ -273,16 +273,21 @@ export default class ProposalDetailGrid extends Component {
                 value: IscisValue,
                 row: row._key,
               });
-              // console.log('called InputIscis', IscisValue, row, this);
+              // console.log('called InputIscis', IscisValue, row, next);
+              if (next) {
+                const nextKey = `isci_cell_${next}`;
+                const nextIsci = this.isciCellItems[nextKey];
+                if (nextIsci) nextIsci.showPopover();
+              }
             };
+            const cellKey = `isci_cell_${row.WeekCnt}`;
             return (
             <GridIsciCell
               Iscis={value}
               saveInputIscis={inputIscis}
-              // isciRef={(ref) => { this.isciCellItems[row._key] = ref; }}
-              // popoverRef={(pop) => { this.popoverItem = pop; }
-              // /* eslint-disable no-return-assign */
-              // popoverRef={el => this.popoverItem = el}
+              hasNext={!row.IsLast}
+              weekCnt={row.WeekCnt}
+              ref={(ref) => { this.isciCellItems[cellKey] = ref; }}
             />
           );
         }

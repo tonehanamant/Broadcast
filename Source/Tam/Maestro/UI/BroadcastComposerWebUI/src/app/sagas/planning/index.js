@@ -289,18 +289,24 @@ export function flattenDetail(detailSet) {
   // NORMALIZE editing values for grid display/editing: EditUnits(quarter Cpm, week Units) EditImpressions (quarter ImpressionGoal, week Impressions)
   const detail = { ...detailSet };
   const ret = [];
+  let weekCnt = 0;
+  const qtrLast = detail.Quarters.length - 1;
   detail.Quarters.forEach((item, qidx) => {
     const impEditGoal = item.ImpressionGoal / 1000;
     const qtr = { Id: item.Id, QuarterIdx: qidx, Type: 'quarter', QuarterText: item.QuarterText, Cpm: item.Cpm, EditUnits: item.Cpm, ImpressionGoal: item.ImpressionGoal, EditImpressions: impEditGoal };
     ret.push(qtr);
-
+    const weekLast = item.Weeks.length - 1;
     item.Weeks.forEach((weekItem, widx) => {
       const week = { ...weekItem };
+      const isLast = (qtrLast === qidx) && (weekLast === widx);
+      weekCnt += 1;
       // store for finding later
       week.QuarterId = item.Id;
       // store indexes
       week.QuarterIdx = qidx;
       week.WeekIdx = widx;
+      week.WeekCnt = weekCnt;
+      week.IsLast = isLast;
       week.Type = 'week';
       week.EditImpressions = week.Impressions / 1000;
       week.EditUnits = week.Units;
