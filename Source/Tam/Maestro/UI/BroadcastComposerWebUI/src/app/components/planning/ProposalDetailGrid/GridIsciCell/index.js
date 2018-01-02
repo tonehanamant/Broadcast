@@ -177,6 +177,15 @@ export default class GridIsciCell extends Component {
             </HelpBlock>
           }
         </FormGroup>
+        {this.props.hasNext &&
+        <ButtonToolbar style={{ marginLeft: '5px', marginBottom: '8px', float: 'right', borderLeft: '1px solid #DDDDDD' }}>
+          <Button
+            bsStyle="success"
+            bsSize="small"
+            onClick={this.onSaveIscisNext}
+          >Next</Button>
+        </ButtonToolbar>
+        }
         <ButtonToolbar style={{ marginBottom: '8px', float: 'right' }}>
           <Button
             bsStyle="default"
@@ -187,14 +196,7 @@ export default class GridIsciCell extends Component {
             bsStyle="success"
             bsSize="small"
             onClick={this.onSaveIscis}
-          >OK</Button>
-          {this.props.hasNext &&
-          <Button
-            bsStyle="default"
-            bsSize="small"
-            onClick={this.onSaveIscisNext}
-          >Next</Button>
-          }
+          >Ok</Button>
 				</ButtonToolbar>
       </Popover>
     );
