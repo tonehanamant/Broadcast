@@ -19,6 +19,8 @@ export default class GridIsciCell extends Component {
     this.readIscisFromData = this.readIscisFromData.bind(this);
     this.writeIscisFromValues = this.writeIscisFromValues.bind(this);
     this.onSaveIscis = this.onSaveIscis.bind(this);
+    this.onSaveIscisNext = this.onSaveIscisNext.bind(this);
+    this.saveIscis = this.saveIscis.bind(this);
     this.getValidationWarnings = this.getValidationWarnings.bind(this);
     this.popover = null;
     this.closePopover = this.closePopover.bind(this);
@@ -94,20 +96,31 @@ export default class GridIsciCell extends Component {
   }
 
   onSaveIscis() {
+    this.saveIscis(false);
+  }
+  // next - send the week count + 1 - detail grid will open as needed
+  onSaveIscisNext() {
+    if (this.props.hasNext) {
+      const next = this.props.weekCnt + 1;
+      this.saveIscis(next);
+    }
+  }
+
+  saveIscis(next) {
     // does overall check  - if invalid then iterate for specific display
     const checkIscis = this.writeIscisFromValues(this.state.iscisValue);
     if (checkIscis.isValid) {
       // save iscis
       this.closePopover();
-      this.props.saveInputIscis(checkIscis.data);
-      console.log('onSaveiscis Valid', checkIscis, this);
+      this.props.saveInputIscis(checkIscis.data, next);
+      // console.log('onSaveiscis Valid', checkIscis, this);
       // this.setState({ isEdit: true });
     } else {
       // else show invalid
       const errors = this.getValidationWarnings(checkIscis.data);
       this.setState({ validationErrors: errors });
       this.setState({ isValid: 'error' });
-      console.log('onSaveiscis Invalid', checkIscis, this);
+      // console.log('onSaveiscis Invalid', checkIscis, this);
     }
   }
   /* eslint-disable class-methods-use-this */
@@ -164,6 +177,15 @@ export default class GridIsciCell extends Component {
             </HelpBlock>
           }
         </FormGroup>
+        {this.props.hasNext &&
+        <ButtonToolbar style={{ marginLeft: '5px', marginBottom: '8px', float: 'right', borderLeft: '1px solid #DDDDDD' }}>
+          <Button
+            bsStyle="success"
+            bsSize="small"
+            onClick={this.onSaveIscisNext}
+          >Next</Button>
+        </ButtonToolbar>
+        }
         <ButtonToolbar style={{ marginBottom: '8px', float: 'right' }}>
           <Button
             bsStyle="default"
@@ -174,7 +196,7 @@ export default class GridIsciCell extends Component {
             bsStyle="success"
             bsSize="small"
             onClick={this.onSaveIscis}
-          >OK</Button>
+          >Ok</Button>
 				</ButtonToolbar>
       </Popover>
     );
@@ -184,15 +206,14 @@ export default class GridIsciCell extends Component {
       const tooltip = <Tooltip id="Iscistooltip"><span style={{ fontSize: '9px' }}>ISCIs <br />{this.state.iscisValue}</span></Tooltip>;
     return (
         <div>
-        <OverlayTrigger trigger="click" placement="bottom" overlay={popoverIsciEditor} rootClose ref={(ref) => { this.popover = ref; }}>
-          {button}
-        </OverlayTrigger>
-
-        { isEdit &&
+          { isEdit &&
           <OverlayTrigger placement="top" overlay={tooltip}>
           <Button bsStyle="link" style={{ fontSize: '11px', padding: '2px' }}><Glyphicon style={{ color: '#999' }} glyph="info-sign" /></Button>
           </OverlayTrigger>
          }
+        <OverlayTrigger trigger="click" placement="bottom" overlay={popoverIsciEditor} rootClose ref={(ref) => { this.popover = ref; }}>
+          {button}
+        </OverlayTrigger>
          </div>
     );
 	}
@@ -201,11 +222,11 @@ export default class GridIsciCell extends Component {
 GridIsciCell.defaultProps = {
   Iscis: [],
   saveInputIscis: () => {},
-  // isciRef: null,
 };
 
 GridIsciCell.propTypes = {
   Iscis: PropTypes.array.isRequired,
   saveInputIscis: PropTypes.func,
-  // isciRef: PropTypes.func,
+  hasNext: PropTypes.bool.isRequired,
+  weekCnt: PropTypes.number.isRequired,
 };

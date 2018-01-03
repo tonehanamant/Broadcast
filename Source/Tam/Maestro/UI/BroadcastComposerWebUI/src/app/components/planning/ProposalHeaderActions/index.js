@@ -101,9 +101,9 @@ export default class ProposalHeaderActions extends Component {
             }
             { this.props.isReadOnly &&
               <DropdownButton bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="header_actions">
-                  <MenuItem eventKey="1" onClick={this.onSwitchVersions}>Save As Version</MenuItem>
+                  <MenuItem eventKey="1" onClick={this.onSwitchVersions}>Switch Version</MenuItem>
                   <MenuItem eventKey="2" onClick={this.onUnorder}>Unorder</MenuItem>
-                  <MenuItem eventKey="3" onClick={this.onGenerateSCX}>Generate SCX</MenuItem>
+                  <MenuItem eventKey="3" onClick={this.onGenerateSCX} disabled>Generate SCX</MenuItem>
               </DropdownButton>
             }
           </div>
