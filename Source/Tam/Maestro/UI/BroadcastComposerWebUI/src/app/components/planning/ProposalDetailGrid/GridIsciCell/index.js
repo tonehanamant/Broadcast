@@ -31,6 +31,7 @@ export default class GridIsciCell extends Component {
     // console.log('NEXT Props', nextProps);
     this.setState({ validationErrors: '' });
     this.setState({ isValid: null });
+    // this.setState({ isChanged: false });
     // this.readIscisFromData(this.props.Iscis);
     this.readIscisFromData(nextProps.Iscis);
   }
@@ -204,8 +205,9 @@ export default class GridIsciCell extends Component {
     const button = isEdit ? <Button bsStyle="link" style={{ padding: '2px', fontSize: '11px' }}><div className="truncate-iscis">{this.state.iscisDisplay.join(' | ')}</div></Button> :
       <Button bsStyle="link" style={{ padding: '2px', fontSize: '11px' }}><Glyphicon style={{ marginRight: '6px' }} glyph="plus" />Add Isci</Button>;
       const tooltip = <Tooltip id="Iscistooltip"><span style={{ fontSize: '9px' }}>ISCIs <br />{this.state.iscisValue}</span></Tooltip>;
+      const touchedClass = this.state.isChanged ? 'editable-cell-changed' : '';
     return (
-        <div>
+        <div className={touchedClass}>
           { isEdit &&
           <OverlayTrigger placement="top" overlay={tooltip}>
           <Button bsStyle="link" style={{ fontSize: '11px', padding: '2px' }}><Glyphicon style={{ color: '#999' }} glyph="info-sign" /></Button>
