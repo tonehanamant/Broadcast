@@ -100,10 +100,8 @@ export default class ProposalDetail extends Component {
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightStartDate', value: flight.StartDate });
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightEndDate', value: flight.EndDate });
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightWeeks', value: flight.FlightWeeks });
-      this.props.updateProposalEditFormDetail(
-        { id: this.props.detail.Id, key: 'FlightEdited', value: true },
-        () => this.props.onUpdateProposal(),
-      );
+      this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightEdited', value: true });
+      this.props.onUpdateProposal();
     } else {
       this.props.modelNewProposalDetail(flight);
     }
