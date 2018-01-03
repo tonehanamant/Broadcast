@@ -100,7 +100,7 @@ export class DataGridContainer extends Component {
       {
           name: 'File Name',
           dataIndex: 'FileName',
-          width: '20%',
+          width: '40%',
       },
       {
           name: 'Source',
@@ -110,7 +110,11 @@ export class DataGridContainer extends Component {
       {
           name: 'Upload Date',
           dataIndex: 'UploadDate',
-          width: '40%',
+          defaultSortDirection: 'ASC',
+          width: '20%',
+          renderer: ({ row }) => (
+            <span>{row.DisplayUploadDate}</span>
+          ),
       },
     ];
 

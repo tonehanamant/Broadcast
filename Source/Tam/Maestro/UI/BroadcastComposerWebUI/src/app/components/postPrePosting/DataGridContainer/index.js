@@ -75,31 +75,31 @@ export class DataGridContainer extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.post !== this.props.post) {
       this.props.setOverlayLoading({
-        id: 'gridPostMain',
+        id: 'gridPostPrePostingMain',
         loading: true,
       });
       // Evaluate if sort directions is set on column or default
       // Sort dataSource using Sorter
       setTimeout(() => {
-        const cols = this.props.grid.get('gridPostMain').get('columns');
+        const cols = this.props.grid.get('gridPostPrePostingMain').get('columns');
         let sortCol = cols.find(x => x.sortDirection);
         if (!sortCol) sortCol = cols.find(x => x.defaultSortDirection);
         if (sortCol) {
-          const datasource = this.props.dataSource.get('gridPostMain');
+          const datasource = this.props.dataSource.get('gridPostPrePostingMain');
           const sorted = Sorter.sortBy(sortCol.dataIndex, sortCol.sortDirection || sortCol.defaultSortDirection, datasource);
           this.props.doLocalSort({
             data: sorted,
-            stateKey: 'gridPostMain',
+            stateKey: 'gridPostPrePostingMain',
           });
         }
         this.props.setOverlayLoading({
-          id: 'gridPostMain',
+          id: 'gridPostPrePostingMain',
           loading: false,
         });
       }, 0); // SET_DATA is completed, for dataSource
 
       // Hide Context Menu (assumes visible)
-      this.props.hideMenu({ stateKey: 'gridPostMain' });
+      this.props.hideMenu({ stateKey: 'gridPostPrePostingMain' });
     }
   }
 
@@ -150,7 +150,7 @@ export class DataGridContainer extends Component {
     /* ////////////////////////////////// */
     /* // REACT-REDUX-GRID CONFIGURATION
     /* ////////////////////////////////// */
-    const stateKey = 'gridPostMain';
+    const stateKey = 'gridPostPrePostingMain';
 
     /* GRID RENDERERS */
     // const renderers = {

@@ -152,7 +152,7 @@ export function* requestPostPrePosting() {
 }
 
 /* ////////////////////////////////// */
-/* ASSIGN POST DISPLAY */
+/* ASSIGN POST PRE POSTING DISPLAY */
 /* ////////////////////////////////// */
 export function* assignPostPrePostingDisplay({ payload: request }) {
   const assignDisplay = () => request.data.map((item) => {
@@ -176,18 +176,18 @@ export function* assignPostPrePostingDisplay({ payload: request }) {
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,
       overlay: {
-        id: 'postPostsDisplay',
+        id: 'postPostsPrePostingDisplay',
         loading: true },
       });
     const post = yield assignDisplay();
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,
       overlay: {
-        id: 'postPostsDisplay',
+        id: 'postPostsPrePostingDisplay',
         loading: false },
       });
     yield put({
-      type: ACTIONS.ASSIGN_POST_DISPLAY,
+      type: ACTIONS.ASSIGN_POST_PRE_POSTING_DISPLAY,
       data: post,
     });
   } catch (e) {

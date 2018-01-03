@@ -1,5 +1,7 @@
 import { takeEvery, put, select } from 'redux-saga/effects';
 import FuzzySearch from 'fuzzy-search';
+import moment from 'moment';
+
 import * as appActions from 'Ducks/app/actionTypes';
 import * as postActions from 'Ducks/post/actionTypes';
 import api from '../api';
@@ -77,9 +79,51 @@ export function* requestPost() {
   }
 }
 
+/* ////////////////////////////////// */
+/* ASSIGN POST DISPLAY */
+/* ////////////////////////////////// */
+export function* assignPostDisplay({ payload: request }) {
+  const assignDisplay = () => request.data.map((item) => {
+      const post = item;
+      // UploadDate
+      post.DisplayUploadDate = moment(post.UploadDate).format('M/D/YYYY');
+      return post;
+    },
+  );
+
+  try {
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'postPostsDisplay',
+        loading: true },
+      });
+    const post = yield assignDisplay();
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'postPostsDisplay',
+        loading: false },
+      });
+    yield put({
+      type: ACTIONS.ASSIGN_POST_DISPLAY,
+      data: post,
+    });
+  } catch (e) {
+    if (e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
 export function* requestPostFiltered({ payload: query }) {
   const postUnfiltered = yield select(state => state.post.postUnfiltered);
-  const searcher = new FuzzySearch(postUnfiltered, ['FileName', 'DisplayDemos', 'DisplayUploadDate', 'DisplayModifiedDate'], { caseSensitive: false });
+  const searcher = new FuzzySearch(postUnfiltered, ['FileName', 'Source', 'DisplayUploadDate', 'Status'], { caseSensitive: false });
   const postFiltered = () => searcher.search(query);
 
   try {
@@ -106,6 +150,10 @@ export function* requestPostFiltered({ payload: query }) {
 
 export function* watchRequestPost() {
   yield takeEvery(ACTIONS.REQUEST_POST, requestPost);
+}
+
+export function* watchRequestAssignPostDisplay() {
+  yield takeEvery(ACTIONS.REQUEST_ASSIGN_POST_DISPLAY, assignPostDisplay);
 }
 
 export function* watchRequestPostFiltered() {
