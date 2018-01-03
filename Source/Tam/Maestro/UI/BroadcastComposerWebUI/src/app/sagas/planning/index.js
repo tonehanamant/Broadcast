@@ -291,26 +291,22 @@ export function flattenDetail(detailSet) {
   const ret = [];
   // count weeks and determine last for NEXT handling - take into account IsHiatus
   let weekCnt = 0;
-  let overallValidCnt = -1;
-  let overallCnt = -1;
-  const qtrLast = detail.Quarters.length - 1;
+  // const qtrLast = detail.Quarters.length - 1;
+  let lastWeek = null;
   detail.Quarters.forEach((item, qidx) => {
     const impEditGoal = item.ImpressionGoal / 1000;
     const qtr = { Id: item.Id, QuarterIdx: qidx, Type: 'quarter', QuarterText: item.QuarterText, Cpm: item.Cpm, EditUnits: item.Cpm, ImpressionGoal: item.ImpressionGoal, EditImpressions: impEditGoal };
     ret.push(qtr);
-    overallValidCnt += 1;
-    overallCnt += 1;
-    const weekLast = item.Weeks.length - 1;
+    // const weekLast = item.Weeks.length - 1;
     item.Weeks.forEach((weekItem, widx) => {
       const week = { ...weekItem };
-      // only add WeekCnt and IsLast if not hiatus
-      overallCnt += 1;
+      // only add WeekCnt if not hiatus
       if (!week.IsHiatus) {
-        const isLast = (qtrLast === qidx) && (weekLast === widx);
+        // const isLast = (qtrLast === qidx) && (weekLast === widx);
         weekCnt += 1;
         week.WeekCnt = weekCnt;
-        week.IsLast = isLast;
-        overallValidCnt += 1;
+        week.IsLast = false; // set default
+        lastWeek = week; // store last
       }
       // store for finding later
       week.QuarterId = item.Id;
@@ -325,7 +321,7 @@ export function flattenDetail(detailSet) {
   });
   const totals = { TotalUnits: detail.TotalUnits, TotalCost: detail.TotalCost, TotalImpressions: detail.TotalImpressions, Id: 'total', Type: 'total' }; // construct totals
   ret.push(totals);
-  console.log('flatten', ret, overallCnt, overallValidCnt);
+  lastWeek.IsLast = true; // set last
   return ret;
 }
 
