@@ -371,6 +371,7 @@
                 {
                     field: 'Rating',
                     caption: 'Rating',
+                    style: 'text-align: left',
                     render: 'float:2',
                     size: '10%',
                     sortable: true
