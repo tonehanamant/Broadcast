@@ -26,7 +26,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("SaveAffidavit")]
-        public BaseResponse<bool> SaveAffidavit(AffadavitSaveRequest saveRequest)
+        public BaseResponse<bool> SaveAffidavit(AffidavitSaveRequest saveRequest)
         {
             return
                 _ConvertToBaseResponse(() =>
