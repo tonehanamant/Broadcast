@@ -118,6 +118,7 @@ export class DataGridContainer extends Component {
         actionButtonText: 'Continue',
         actionButtonBsStyle: 'danger',
         action: () => this.props.deletePostPrePosting(rowData.Id),
+        dismiss: () => {},
       },
     });
   }
