@@ -45,7 +45,7 @@ export default class ProposalDetailGrid extends Component {
   render() {
     const { proposalValidationStates } = this.props;
     const { DetailGridsInvalid } = proposalValidationStates;
-
+    // this.isciCellItems = {};
     /* ////////////////////////////////// */
     /* // REACT-REDUX-GRID CONFIGURATION
     /* ////////////////////////////////// */

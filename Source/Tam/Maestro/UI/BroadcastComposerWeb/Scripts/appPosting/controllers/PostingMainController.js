@@ -3,7 +3,7 @@ var PostingMainController = BaseController.extend({
     view: null,
     viewModel: null,
     postingData: null,
-    apiUrl: baseUrl + "api/Post/",
+    apiUrl: baseUrl + "api/PostPrePosting/",
 
     initController: function () {
         this.viewModel = new PostingUploadViewModel(this);
@@ -117,7 +117,7 @@ var PostingMainController = BaseController.extend({
     //remove a file from the grid
     apiDeletePostingFile: function (postingId, callback) {
         var self = this;
-        var url = baseUrl + "api/Post/" + postingId;
+        var url = baseUrl + "api/PostPrePosting/" + postingId;
         httpService.remove(url,
             callback.bind(this),
             null,

@@ -5,18 +5,20 @@ import { bindActionCreators } from 'redux';
 
 import { Row, Col } from 'react-bootstrap';
 import SearchInputButton from 'Components/shared/SearchInputButton';
+import UploadButton from 'Components/shared/UploadButton';
 
 import { createAlert } from 'Ducks/app';
-import { getPostFiltered } from 'Ducks/post';
+import { getPostPrePostingFiltered } from 'Ducks/postPrePosting';
 
 const mapStateToProps = ({ routing }) => ({
   routing,
 });
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ createAlert, getPostFiltered }, dispatch)
+  bindActionCreators({ createAlert, getPostPrePostingFiltered }, dispatch)
 );
 
+/* eslint-disable react/prefer-stateless-function */
 export class PageHeaderContainer extends Component {
   constructor(props) {
 		super(props);
@@ -25,17 +27,32 @@ export class PageHeaderContainer extends Component {
 	}
 
 	SearchInputAction() {
-		this.props.getPostFiltered();
+		this.props.getPostPrePostingFiltered();
 	}
 
 	SearchSubmitAction(value) {
-		this.props.getPostFiltered(value);
+		this.props.getPostPrePostingFiltered(value);
   }
 
   render() {
     return (
 			<Row>
-				<Col xs={6} />
+				<Col xs={6}>
+          <UploadButton
+            text="Upload"
+            bsStyle="success"
+            bsSize="small"
+            acceptedMimeTypes="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            fileType="Excel"
+            fileTypeExtension=".xlsx"
+            postProcessFiles={{
+              toggleModal: {
+                modal: 'postFileUploadModal',
+                active: true,
+              },
+            }}
+          />
+				</Col>
         <Col xs={6}>
 					<SearchInputButton
             inputAction={this.SearchInputAction}
@@ -49,7 +66,7 @@ export class PageHeaderContainer extends Component {
 }
 
 PageHeaderContainer.propTypes = {
-  getPostFiltered: PropTypes.func.isRequired,
+  getPostPrePostingFiltered: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageHeaderContainer);

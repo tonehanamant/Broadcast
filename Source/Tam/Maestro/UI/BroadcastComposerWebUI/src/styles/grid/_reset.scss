@@ -147,6 +147,12 @@
       font-family: Verdana, Arial, sans-serif !important;
     }
 
+    .react-grid-table {
+      .react-grid-row:last-child {
+        border-bottom: 1px solid #fafafa !important;
+      }
+    }
+
   }
   
   .react-grid-action-container {
