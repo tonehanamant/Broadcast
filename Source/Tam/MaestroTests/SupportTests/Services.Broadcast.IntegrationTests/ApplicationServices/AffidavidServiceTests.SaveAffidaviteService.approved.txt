@@ -1,0 +1,22 @@
+﻿{
+  "affidavit_file_details": [
+    {
+      "adjusted_air_date": "0001-01-01T00:00:00",
+      "air_time": 36240,
+      "genre": null,
+      "isci": "ISCI",
+      "leadin_genre": null,
+      "leadin_program_name": null,
+      "leadout_genre": null,
+      "leadout_program_name": null,
+      "original_air_date": "2018-12-29T00:00:00",
+      "program_name": "Programs R Us",
+      "spot_length_id": 1,
+      "station": "WNBC"
+    }
+  ],
+  "file_hash": "abc123",
+  "file_name": "test.file",
+  "media_month_id": 0,
+  "source_id": 1
+}

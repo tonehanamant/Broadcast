@@ -16,7 +16,7 @@ namespace Services.Broadcast.ApplicationServices
 
     public interface IAffidavitService : IApplicationService
     {
-        bool SaveAffidavit(AffidavitSaveRequest saveRequest);
+        int SaveAffidavit(AffidavitSaveRequest saveRequest);
     }
 
     public class AffidavitService : IAffidavitService
@@ -27,37 +27,37 @@ namespace Services.Broadcast.ApplicationServices
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
         }
-        public bool SaveAffidavit(AffidavitSaveRequest saveRequest)
+        public int SaveAffidavit(AffidavitSaveRequest saveRequest)
         {
-//            Dictionary<int, int> spotLengthDict = null;
+            Dictionary<int, int> spotLengthDict = null;
 
             if (saveRequest == null)
             {
                 throw new Exception("No affidavit data received.");
             }
 
+            var affidavit_file = new affidavit_files();
+            affidavit_file.created_date = DateTime.Now;
+            affidavit_file.file_hash = saveRequest.FileHash;
+            affidavit_file.file_name = saveRequest.FileName;
+            affidavit_file.source_id = saveRequest.Source;
 
-            //var affidavit_file = new affidavit_files();
-            //affidavit_file.created_date = DateTime.Now;
-            //affidavit_file.file_hash = saveRequest.FileHash;
-            //affidavit_file.file_name = saveRequest.FileName;
-            //affidavit_file.source_id = saveRequest.Source;
+            foreach (var detail in saveRequest.Details)
+            {
+                var det = new affidavit_file_details();
+                det.air_time = Convert.ToInt32(detail.AirTime.TimeOfDay.TotalSeconds);
+                det.original_air_date = detail.AirTime;
+                det.isci = detail.Isci;
+                det.program_name = detail.ProgramName;
+                det.spot_length_id = GetSpotlength(detail.SpotLength,ref spotLengthDict);
+                det.station = detail.Station;
 
-            //foreach (var detail in saveRequest.Details)
-            //{
-            //    var det = new affidavit_file_details();
-            //    det.air_time = Convert.ToInt16(detail.AirTime.TimeOfDay.TotalSeconds);
-            //    det.original_air_date = detail.AirTime;
-            //    det.isci = detail.Isci;
-            //    det.program_name = detail.ProgramName;
-            //    det.spot_length_id = GetSpotlength(detail.SpotLength,ref spotLengthDict);
-            //    det.station = detail.Station;
+                affidavit_file.affidavit_file_details.Add(det);
+            }
+            var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
+            int id = repo.SaveAffidavitFile(affidavit_file);
 
-            //    affidavit_file.affidavit_file_details.Add(det);
-            //}
-            //var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
-            //repo.SaveAffidavitFile(affidavit_file);
-            return true;
+            return id;
         }
 
         private int GetSpotlength(int spotLength, ref Dictionary<int, int> spotLengthDict)

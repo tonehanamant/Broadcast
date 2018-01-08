@@ -12,7 +12,8 @@ namespace Services.Broadcast.Repositories
 {
     public interface IAffidavitRepository : IDataRepository
     {
-        void SaveAffidavitFile(affidavit_files affidatite_file);
+        int SaveAffidavitFile(affidavit_files affidatite_file);
+        affidavit_files GetAffidavit(int affidavit_id);
     }
 
     public class AffidavitRepository: BroadcastRepositoryBase, IAffidavitRepository
@@ -23,9 +24,30 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public void SaveAffidavitFile(affidavit_files affidatite_file)
+        public int SaveAffidavitFile(affidavit_files affidatite_file)
         {
-            throw new NotImplementedException();
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    context.affidavit_files.Add(affidatite_file);
+                    context.SaveChanges();
+                });
+            return affidatite_file.id;
+        }
+
+        public affidavit_files GetAffidavit(int affidavit_id)
+        {
+            affidavit_files affidavit_file = null;
+            
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    affidavit_file = context.affidavit_files
+                        .Include("affidavit_file_details")
+                        .Single(a => a.id == affidavit_id);
+                });
+            return affidavit_file;
+
         }
     }    
 }
