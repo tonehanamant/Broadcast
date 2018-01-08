@@ -493,5 +493,5 @@ DayPartPicker.propTypes = {
 	dayPart: PropTypes.object,
 	onApply: PropTypes.func.isRequired,
 	isReadOnly: PropTypes.bool,
-	validationState: PropTypes.oneOfType([null, PropTypes.string]),
+	validationState: PropTypes.oneOfType([PropTypes.string]),
 };
