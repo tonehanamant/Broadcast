@@ -393,18 +393,11 @@ namespace Services.Broadcast.ApplicationServices
         {
             foreach (var program in programs)
             {
-                var manifestRate = program.ManifestRates.FirstOrDefault(r => r.SpotLengthId == dto.DetailSpotLengthId);
-
-                decimal rate = 0;
-
-                if (manifestRate != null)
-                    rate = manifestRate.Rate;
-
-                program.FlightWeeks = _GetFlightWeeks(program, rate);
+                program.FlightWeeks = _GetFlightWeeks(program);
             }
         }
 
-        private List<ProposalProgramFlightWeek> _GetFlightWeeks(ProposalProgramDto programDto, decimal rate)
+        private List<ProposalProgramFlightWeek> _GetFlightWeeks(ProposalProgramDto programDto)
         {
             var nonNullableEndDate = programDto.EndDate.HasValue ? programDto.EndDate.Value : programDto.StartDate.AddYears(1);
 
@@ -421,7 +414,7 @@ namespace Services.Broadcast.ApplicationServices
                     StartDate = displayMediaWeek.WeekStartDate,
                     EndDate = displayMediaWeek.WeekEndDate,
                     MediaWeekId = displayMediaWeek.Id,
-                    Rate = rate,
+                    Rate = programDto.SpotCost,
                     Allocations = new List<OpenMarketAllocationDto>
                     {
                         new OpenMarketAllocationDto
