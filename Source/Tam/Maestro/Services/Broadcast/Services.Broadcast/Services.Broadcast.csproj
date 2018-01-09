@@ -183,7 +183,7 @@
     <Compile Include="Converters\ProposalScxDataPrep.cs" />
     <Compile Include="Converters\ProposalScxConverter.cs" />
     <Compile Include="DaypartCache.cs" />
-    <Compile Include="Entities\AffadavitSaveRequest.cs" />
+    <Compile Include="Entities\AffidavitSaveRequest.cs" />
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\BvsTrackingAudience.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
@@ -383,6 +383,7 @@
     <Compile Include="Entities\OpenMarketAllocationDto.cs" />
     <Compile Include="Repositories\ExternalRatingRepositoryBase.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposalDto.cs" />
+    <Compile Include="Repositories\AffidavitRepository.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
     <Compile Include="Repositories\MarketDmaMapRepository.cs" />
     <Compile Include="Repositories\PostRepository.cs" />

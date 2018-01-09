@@ -142,6 +142,116 @@ END
 
 /*************************************** BCOP-2261 - END ***************************************************************/
 
+
+
+
+
+
+/******************** START BCOP-2316 *********************************************************************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES 
+           WHERE TABLE_NAME = N'affidavit_files')
+BEGIN
+  
+	CREATE TABLE [dbo].[affidavit_files](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[file_name] [VARCHAR](255) NOT NULL,
+		[file_hash] [VARCHAR](255) NOT NULL,
+		[source_id] [INT] NOT NULL,
+		[created_date] [DATETIME] NOT NULL,
+		[media_month_id] [INT] NOT NULL, --for partitioning and archiving
+	 CONSTRAINT [PK_affidavit] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+END
+
+GO
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES 
+           WHERE TABLE_NAME = N'affidavit_file_details')
+BEGIN
+  
+	CREATE TABLE [dbo].[affidavit_file_details](
+		[id] [BIGINT] IDENTITY(1,1) NOT NULL,
+		[affidavit_file_id] [INT] NOT NULL,
+		[station] [VARCHAR](15) NOT NULL,
+		[original_air_date] [DATE] NOT NULL,
+		[adjusted_air_date] [DATE] NOT NULL,
+		[air_time] [INT] NOT NULL,
+		[spot_length_id] [INT] NOT NULL,
+		[isci] [VARCHAR](63) NOT NULL,
+		[program_name] [VARCHAR](255) NULL,
+		[genre] [varchar](255) NULL,
+		[leadin_genre] [varchar](255) NULL,
+		[leadin_program_name] [varchar](255) NULL,
+		[leadout_genre] [varchar](255) NULL,
+		[leadout_program_name] [varchar](255) NULL,
+
+	 CONSTRAINT [PK_affidavit_details] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[affidavit_file_details]  WITH CHECK ADD  CONSTRAINT [FK_affidavit_files_affidavit_file_details] FOREIGN KEY([affidavit_file_id])
+	REFERENCES [dbo].[affidavit_files] ([id])
+	ON DELETE CASCADE
+
+
+	CREATE NONCLUSTERED INDEX IX_affidavit_file_details_affidavit_id
+		ON dbo.affidavit_file_details (affidavit_file_id)
+
+END
+
+GO
+
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE name = 'affidavit_client_scrubs')
+BEGIN
+	CREATE TABLE [dbo].[affidavit_client_scrubs](
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[affidavit_file_detail_id] [BIGINT] NOT NULL,
+		[proposal_version_detail_quarter_week_id] [INT] NOT NULL,
+		[match_program] [BIT] NOT NULL,
+		[match_genre] [BIT] NOT NULL,
+		[match_market] [BIT] NOT NULL,
+		[match_time] [BIT] NOT NULL,
+		[status] [INT] NOT NULL,
+		[comment] VARCHAR(1023) NULL,
+		[modified_by] VARCHAR(255) NOT NULL,
+		[modified_date] DATETIME 
+	 CONSTRAINT [PK_affidavit_client_scrubs] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+	
+	ALTER TABLE [dbo].[affidavit_client_scrubs]  WITH CHECK ADD  CONSTRAINT [FK_affidavit_file_details_affidavit_client_scrubs] FOREIGN KEY([affidavit_file_detail_id])
+	REFERENCES [dbo].[affidavit_file_details] ([id])
+	ON DELETE CASCADE
+	
+	CREATE NONCLUSTERED INDEX IX_affidavit_client_scrubs_affidavit_file_detail_id
+	ON [dbo].[affidavit_client_scrubs]  (affidavit_file_detail_id)
+
+
+	ALTER TABLE [dbo].[affidavit_client_scrubs]  WITH CHECK ADD  CONSTRAINT [FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs] FOREIGN KEY([proposal_version_detail_quarter_week_id])
+	REFERENCES [dbo].[proposal_version_detail_quarter_weeks] ([id])
+	ON DELETE CASCADE
+
+	CREATE NONCLUSTERED INDEX IX_affidavit_client_scrubs_proposal_version_detail_quarter_week_id
+	ON [dbo].[affidavit_client_scrubs]  (proposal_version_detail_quarter_week_id)
+
+END
+GO
+
+/******************** END BCOP-2316 *********************************************************************************************/
+
+
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

@@ -237,6 +237,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="affidavit_client_scrubs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="affidavit_files.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="affidavit_file_details.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="audience.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

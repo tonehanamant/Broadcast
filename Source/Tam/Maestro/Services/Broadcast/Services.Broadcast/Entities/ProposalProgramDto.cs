@@ -36,13 +36,11 @@ namespace Services.Broadcast.Entities
         public double AdditionalAudienceSubscribers { get; set; }
         public bool IsOverlapping { get; set; }
         public double UnitImpressions { get; set; }
-        public List<StationInventoryManifestRate> ManifestRates { get; set; }
         public List<StationInventorySpots> Allocations { get; set; }
 
         public ProposalProgramDto()
         {
             Allocations = new List<StationInventorySpots>();
-            ManifestRates = new List<StationInventoryManifestRate>();
             FlightWeeks = new List<ProposalProgramFlightWeek>();
             ManifestDayparts = new List<ManifestDaypartDto>();
             DayParts = new List<LookupDto>();
