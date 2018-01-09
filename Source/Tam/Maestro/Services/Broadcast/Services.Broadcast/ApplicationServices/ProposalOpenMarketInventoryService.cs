@@ -316,11 +316,9 @@ namespace Services.Broadcast.ApplicationServices
             var filteredProgramsWithAllocations = new List<int>();
             programs.RemoveAll(p =>
             {
-                foreach (var manifestDaypart in p.ManifestDayparts)
-                {
-                    if (!DaypartCache.GetDisplayDaypart(manifestDaypart.DaypartId).Intersects(proposalDetailDaypart))
-                        return true;
-                }
+                return
+                    p.ManifestDayparts.All(
+                        d => !DaypartCache.GetDisplayDaypart(d.DaypartId).Intersects(proposalDetailDaypart));                
 
                 //if (FilterByGenreAndProgramNameCriteria(p, dto.Criteria))
                 //{
@@ -339,7 +337,6 @@ namespace Services.Broadcast.ApplicationServices
                 //    return true;
                 //}
 
-                return false;
             });
 
             if (filteredProgramsWithAllocations.Any())
