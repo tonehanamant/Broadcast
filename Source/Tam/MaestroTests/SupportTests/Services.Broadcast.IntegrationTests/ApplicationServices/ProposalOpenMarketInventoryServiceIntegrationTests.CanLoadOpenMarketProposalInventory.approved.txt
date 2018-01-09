@@ -48,10 +48,19 @@
   "DetailTotalCpm": 1000.00,
   "DetailTotalImpressions": 1000.0,
   "DisplayFilter": {
-    "Affiliations": [],
+    "Affiliations": [
+      "NBC"
+    ],
     "Genres": [],
-    "Markets": [],
-    "ProgramNames": []
+    "Markets": [
+      {
+        "Display": "New York",
+        "Id": 101
+      }
+    ],
+    "ProgramNames": [
+      "Test Program"
+    ]
   },
   "Equivalized": false,
   "Filter": {
@@ -64,7 +73,69 @@
   "GuaranteedAudience": 31,
   "HutPostingBookId": 413,
   "Margin": 20.0,
-  "Markets": [],
+  "Markets": [
+    {
+      "MarketId": 101,
+      "MarketName": "New York",
+      "MarketRank": 1,
+      "MarketSubscribers": 7368320.0,
+      "Stations": [
+        {
+          "Affiliation": "NBC",
+          "CallLetters": "WNBC 4.1",
+          "LegacyCallLetters": "WNBC",
+          "Programs": [
+            {
+              "Dayparts": [
+                {
+                  "Display": "M-F 9AM-10AM",
+                  "Id": 6724
+                }
+              ],
+              "FlightWeeks": [
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 649,
+                      "Spots": 0
+                    }
+                  ],
+                  "EndDate": "2016-06-05T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 649,
+                  "Rate": 10.0000,
+                  "StartDate": "2016-05-30T00:00:00"
+                },
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 650,
+                      "Spots": 0
+                    }
+                  ],
+                  "EndDate": "2016-06-12T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 650,
+                  "Rate": 10.0000,
+                  "StartDate": "2016-06-06T00:00:00"
+                }
+              ],
+              "ProgramId": 46003,
+              "ProgramNames": [
+                "Test Program"
+              ],
+              "Spots": 0,
+              "StationCode": 5013,
+              "TargetCpm": 0.01,
+              "TargetImpressions": 0.0,
+              "UnitImpressions": 1911748.62902999
+            }
+          ],
+          "StationCode": 5013
+        }
+      ]
+    }
+  ],
   "NewCriteriaAffectsExistingAllocations": false,
   "PlaybackType": 4,
   "PostType": 1,
@@ -124,7 +195,32 @@
       "ImpressionsPercent": 0.0,
       "ImpressionsTotal": 0.0,
       "IsHiatus": false,
-      "Markets": [],
+      "Markets": [
+        {
+          "Cost": 0.0,
+          "Impressions": 0.0,
+          "MarketId": 101,
+          "Spots": 0,
+          "Stations": [
+            {
+              "Programs": [
+                {
+                  "Cost": 10.0000,
+                  "EFF": 0.0,
+                  "ProgramId": 46003,
+                  "Spots": 0,
+                  "TargetCpm": 0.0,
+                  "TargetImpressions": 0.0,
+                  "TotalImpressions": 1911748.62902999,
+                  "UnitCost": 10.0000,
+                  "UnitImpression": 1911748.62902999
+                }
+              ],
+              "StationCode": 5013
+            }
+          ]
+        }
+      ],
       "MediaWeekId": 649,
       "ProposalVersionDetailQuarterWeekId": 7,
       "QuarterText": "Q2",

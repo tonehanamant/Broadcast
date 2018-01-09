@@ -4076,7 +4076,7 @@
     "CallLetters": "WNBC 4.1",
     "Code": 5013,
     "LegacyCallLetters": "WNBC",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2016-06-06T00:00:00",
     "OriginMarket": "New York"
   },
   {
