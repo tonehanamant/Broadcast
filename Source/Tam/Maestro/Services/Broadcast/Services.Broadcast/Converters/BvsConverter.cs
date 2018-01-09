@@ -392,7 +392,9 @@ namespace Services.Broadcast.Converters
         }
         private string _GetCellValue(int row, string columnName)
         {
-            return _Worksheet.Cells[row, _Headers[columnName]].Text.Trim();
+            var value = _Worksheet.Cells[row, _Headers[columnName]].Value ?? "";
+            return value.ToString().Trim();
+
         }
 
         private string _GetCellValue(int row, int column)
