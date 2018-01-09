@@ -59,7 +59,8 @@
       }
     ],
     "ProgramNames": [
-      "Test Program"
+      "Test Program",
+      "Test Program On Separate Daypart"
     ]
   },
   "Equivalized": false,
