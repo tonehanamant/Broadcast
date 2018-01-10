@@ -125,7 +125,6 @@
                   "StartDate": "2016-06-06T00:00:00"
                 }
               ],
-              "ProgramId": 46003,
               "ProgramNames": [
                 "Test Program",
                 "Test Program On Separate Daypart"
@@ -213,7 +212,6 @@
                 {
                   "Cost": 10.0000,
                   "EFF": 0.0,
-                  "ProgramId": 46003,
                   "Spots": 0,
                   "TargetCpm": 0.0,
                   "TargetImpressions": 0.0,
