@@ -5,12 +5,15 @@ using Common.Services.WebComponents;
 using Newtonsoft.Json;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Entities;
+using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/AffidavitUpload")]
+    [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class AffidavitUploadApiController : ControllerBase
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;

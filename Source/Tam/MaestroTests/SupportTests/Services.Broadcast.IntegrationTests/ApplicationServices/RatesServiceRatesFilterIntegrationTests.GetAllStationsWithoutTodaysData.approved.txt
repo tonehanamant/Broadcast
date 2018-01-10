@@ -5090,16 +5090,6 @@
     "RateDataThrough": "-"
   },
   {
-    "Affiliation": "NBC",
-    "CallLetters": "WNBC 4.1",
-    "Code": 5013,
-    "LegacyCallLetters": "WNBC",
-    "ManifestMaxEndDate": null,
-    "MarketCode": 101,
-    "OriginMarket": "New York",
-    "RateDataThrough": "-"
-  },
-  {
     "Affiliation": "CW",
     "CallLetters": "WPIX 11.1",
     "Code": 5014,

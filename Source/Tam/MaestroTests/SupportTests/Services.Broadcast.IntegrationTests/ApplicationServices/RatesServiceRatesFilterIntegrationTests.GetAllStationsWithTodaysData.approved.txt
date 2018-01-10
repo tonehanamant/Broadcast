@@ -61,6 +61,16 @@
   },
   {
     "Affiliation": "NBC",
+    "CallLetters": "WNBC 4.1",
+    "Code": 5013,
+    "LegacyCallLetters": "WNBC",
+    "ManifestMaxEndDate": "2016-06-06T00:00:00",
+    "MarketCode": 101,
+    "OriginMarket": "New York",
+    "RateDataThrough": "6/6/2016"
+  },
+  {
+    "Affiliation": "NBC",
     "CallLetters": "WVTM-TV 13.1",
     "Code": 5044,
     "LegacyCallLetters": "WVTM",

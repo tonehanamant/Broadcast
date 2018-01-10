@@ -16,8 +16,14 @@ export default class ProposalDetailGrid extends Component {
   constructor(props, context) {
     super(props, context);
     this.context = context;
-    this.checkEditable = this.checkEditable.bind(this);
+
+    this.state = {
+      DetailGridsInvalid: this.props.proposalValidationStates.DetailGridsInvalid,
+    };
+
     this.isciCellItems = {};
+
+    this.checkEditable = this.checkEditable.bind(this);
   }
 
   checkEditable(values, isUnits) {
@@ -39,13 +45,18 @@ export default class ProposalDetailGrid extends Component {
     return can;
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.proposalValidationStates.DetailGridsInvalid !== nextProps.proposalValidationStates.DetailGridsInvalid) {
+      this.setState({
+        DetailGridsInvalid: nextProps.proposalValidationStates.DetailGridsInvalid,
+      });
+    }
+  }
+
    /* ////////////////////////////////// */
   /* // COMPONENT RENDER FUNC
   /* ////////////////////////////////// */
   render() {
-    const { proposalValidationStates } = this.props;
-    const { DetailGridsInvalid } = proposalValidationStates;
-    // this.isciCellItems = {};
     /* ////////////////////////////////// */
     /* // REACT-REDUX-GRID CONFIGURATION
     /* ////////////////////////////////// */
@@ -128,7 +139,7 @@ export default class ProposalDetailGrid extends Component {
                   valueKey="Cpm"
                   isEditable={isEditable}
                   emptyZeroDefault
-                  onSaveShowValidation={DetailGridsInvalid}
+                  onSaveShowValidation={this.state.DetailGridsInvalid}
                   blurAction={inputCpm}
                   enterKeyPressAction={inputCpm}
                   maskType="createNumber"
@@ -146,7 +157,7 @@ export default class ProposalDetailGrid extends Component {
                 valueKey="Units"
                 isEditable={isEditable}
                 emptyZeroDefault
-                onSaveShowValidation={DetailGridsInvalid}
+                onSaveShowValidation={this.state.DetailGridsInvalid}
                 blurAction={inputUnits}
                 enterKeyPressAction={inputUnits}
                 maskType="default"
@@ -216,7 +227,7 @@ export default class ProposalDetailGrid extends Component {
                     actionButtonBsStyle: 'warning',
                   }}
                   toggleModal={this.props.toggleModal}
-                  onSaveShowValidation={DetailGridsInvalid}
+                  onSaveShowValidation={this.state.DetailGridsInvalid}
                   blurAction={inputImpressionGoal}
                   enterKeyPressAction={inputImpressionGoal}
                   maskType="createNumber"
@@ -234,7 +245,7 @@ export default class ProposalDetailGrid extends Component {
                 valueKey="Impressions"
                 isEditable={isEditable}
                 emptyZeroDefault
-                onSaveShowValidation={DetailGridsInvalid}
+                onSaveShowValidation={this.state.DetailGridsInvalid}
                 blurAction={inputImpressions}
                 enterKeyPressAction={inputImpressions}
                 maskType="createNumber"
@@ -297,6 +308,8 @@ export default class ProposalDetailGrid extends Component {
     },
     ];
 
+    this.gridColumns = columns;
+
     /* GRID PLGUINS */
     const plugins = {
       COLUMN_MANAGER: {
@@ -354,6 +367,7 @@ export default class ProposalDetailGrid extends Component {
         data={this.props.GridQuarterWeeks}
         store={this.context.store}
         height="false"
+        key={this.props.proposalValidationStates.DetailGridsInvalid} // force cell update
       />
     );
   }
