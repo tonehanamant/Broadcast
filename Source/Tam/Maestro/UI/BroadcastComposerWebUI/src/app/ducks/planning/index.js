@@ -254,6 +254,13 @@ export default function reducer(state = initialState, action) {
       },
     });
 
+    case ACTIONS.RESTORE_PLANNING_PROPOSAL: {
+      return {
+        ...state,
+        planning: payload,
+      };
+    }
+
     default:
       return state;
   }
@@ -348,4 +355,9 @@ export const unorderProposal = id => ({
 export const setProposalValidationState = typeState => ({
   type: ACTIONS.SET_PROPOSAL_VALIDATION_STATE,
   payload: typeState,
+});
+
+export const restorePlanningProposal = planningState => ({
+  type: ACTIONS.RESTORE_PLANNING_PROPOSAL,
+  payload: planningState,
 });

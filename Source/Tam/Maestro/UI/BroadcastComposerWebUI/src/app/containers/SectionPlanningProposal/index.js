@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import _ from 'lodash';
+
 import { toggleModal, createAlert } from 'Ducks/app';
 import { getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, setProposalValidationState } from 'Ducks/planning';
+
+// import { loadLocalStorageState } from 'SRCRoot/index.store.localstorage.js';
 
 import ProposalHeader from 'Components/planning/ProposalHeader';
 import ProposalActions from 'Components/planning/ProposalActions';
@@ -32,6 +36,7 @@ export class SectionPlanningProposal extends Component {
     this.isValidProposalForm = this.isValidProposalForm.bind(this);
     this.isValidProposalDetails = this.isValidProposalDetails.bind(this);
     this.isValidProposalDetailGrids = this.isValidProposalDetailGrids.bind(this);
+    this.isDirty = this.isDirty.bind(this);
   }
 
   componentWillMount() {
@@ -40,6 +45,15 @@ export class SectionPlanningProposal extends Component {
 
     this.props.getProposalLock(id);
     this.props.getProposalInitialData();
+
+    // const localStorageState = loadLocalStorageState();
+    // const { planning } = localStorageState;
+    // const { proposal } = planning;
+
+    // if (proposal && proposal.Id === id) {
+    //   console.log('!!!! RESTORING PROPOSAL !!!!');
+    //   this.props.restorePlanningProposal(planning);
+    // } else
 
     if (id && version) {
       this.props.getProposalVersion(id, version);
@@ -134,6 +148,10 @@ export class SectionPlanningProposal extends Component {
     return validDetailQuarters && validDetailQuarterWeeks;
   }
 
+  isDirty() {
+    return !_.isEqual(this.props.proposalEditForm, this.props.proposal);
+  }
+
 
   render() {
     const { toggleModal, createAlert, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, proposalValidationStates, setProposalValidationState } = this.props;
@@ -180,7 +198,9 @@ export class SectionPlanningProposal extends Component {
               deleteProposalDetail={deleteProposalDetail}
               modelNewProposalDetail={modelNewProposalDetail}
               isReadOnly={isReadOnly}
+              isDirty={this.isDirty}
               proposalValidationStates={proposalValidationStates}
+              createAlert={createAlert}
             />
             <ProposalActions
               toggleModal={toggleModal}
@@ -193,6 +213,7 @@ export class SectionPlanningProposal extends Component {
               isValidProposalForm={this.isValidProposalForm}
               isValidProposalDetails={this.isValidProposalDetails}
               isValidProposalDetailGrids={this.isValidProposalDetailGrids}
+              isDirty={this.isDirty}
             />
           </div>
         }
@@ -222,6 +243,8 @@ SectionPlanningProposal.propTypes = {
 
   proposalValidationStates: PropTypes.object.isRequired,
   setProposalValidationState: PropTypes.func.isRequired,
+
+  // restorePlanningProposal: PropTypes.func.isRequired,
 
   getProposalLock: PropTypes.func.isRequired,
   getProposalInitialData: PropTypes.func.isRequired,
