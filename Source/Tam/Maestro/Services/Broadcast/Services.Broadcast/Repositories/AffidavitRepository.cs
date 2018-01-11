@@ -1,10 +1,9 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
-using System;
-using System.Collections.Generic;
+using Services.Broadcast.Entities;
+using System.Data.Entity;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 
@@ -13,7 +12,7 @@ namespace Services.Broadcast.Repositories
     public interface IAffidavitRepository : IDataRepository
     {
         int SaveAffidavitFile(affidavit_files affidatite_file);
-        affidavit_files GetAffidavit(int affidavit_id);
+        AffidavitFile GetAffidavit(int affidavit_id);
     }
 
     public class AffidavitRepository: BroadcastRepositoryBase, IAffidavitRepository
@@ -35,19 +34,49 @@ namespace Services.Broadcast.Repositories
             return affidatite_file.id;
         }
 
-        public affidavit_files GetAffidavit(int affidavit_id)
+        public AffidavitFile GetAffidavit(int affidavitId)
         {
-            affidavit_files affidavit_file = null;
-            
-            _InReadUncommitedTransaction(
+            return _InReadUncommitedTransaction(
                 context =>
                 {
-                    affidavit_file = context.affidavit_files
-                        .Include("affidavit_file_details")
-                        .Single(a => a.id == affidavit_id);
-                });
-            return affidavit_file;
+                    var affidavitFile = context.affidavit_files
+                        .Include(a => a.affidavit_file_details)
+                        .Include(a => a.affidavit_file_details.Select(d => d.affidavit_file_detail_audiences))
+                        .Single(a => a.id == affidavitId);
 
-        }
-    }    
+                    return new AffidavitFile
+                    {
+                        Id = affidavitFile.id,
+                        FileName = affidavitFile.file_name,
+                        FileHash = affidavitFile.file_hash,
+                        SourceId = affidavitFile.source_id,
+                        CreatedDate = affidavitFile.created_date,
+                        MediaMonthId = affidavitFile.media_month_id,
+                        AffidavitFileDetails = affidavitFile.affidavit_file_details.Select(d => new AffidavitFileDetail
+                        {
+                            Id = d.id,
+                            AffidavitFileId = d.affidavit_file_id,
+                            Station = d.station,
+                            OriginalAirDate = d.original_air_date,
+                            AdjustedAirDate = d.adjusted_air_date,
+                            AirTime = d.air_time,
+                            SpotLengthId = d.spot_length_id,
+                            Isci = d.isci,
+                            ProgramName = d.program_name,
+                            Genre = d.genre,
+                            LeadinGenre = d.leadin_genre,
+                            LeadinProgramName = d.leadin_program_name,
+                            LeadoutGenre = d.leadout_genre,
+                            LeadoutProgramName = d.leadin_program_name,
+                            AffidavitFileDetailAudiences = d.affidavit_file_detail_audiences.Select(a => new AffidavitFileDetailAudience
+                            {
+                                AffidavitFileDetailId = a.affidavit_file_detail_id,
+                                AudienceId = a.audience_id,
+                                Impressions = a.impressions
+                            }).ToList()
+                        }).ToList()
+                    };
+                });
+        }       
+    }
 }

@@ -1,22 +1,108 @@
 ﻿{
-  "affidavit_file_details": [
+  "AffidavitFileDetails": [
     {
-      "adjusted_air_date": "0001-01-01T00:00:00",
-      "air_time": 36240,
-      "genre": null,
-      "isci": "ISCI",
-      "leadin_genre": null,
-      "leadin_program_name": null,
-      "leadout_genre": null,
-      "leadout_program_name": null,
-      "original_air_date": "2018-12-29T00:00:00",
-      "program_name": "Programs R Us",
-      "spot_length_id": 1,
-      "station": "WNBC"
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "AffidavitFileDetailAudiences": [
+        {
+          "AudienceId": 4,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 5,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 6,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 7,
+          "Impressions": 804.25
+        },
+        {
+          "AudienceId": 13,
+          "Impressions": 8376.875
+        },
+        {
+          "AudienceId": 14,
+          "Impressions": 13284.5
+        },
+        {
+          "AudienceId": 15,
+          "Impressions": 22158.25
+        },
+        {
+          "AudienceId": 19,
+          "Impressions": 781.625
+        },
+        {
+          "AudienceId": 20,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 21,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 22,
+          "Impressions": 849.0
+        },
+        {
+          "AudienceId": 28,
+          "Impressions": 10079.375
+        },
+        {
+          "AudienceId": 29,
+          "Impressions": 9154.25
+        },
+        {
+          "AudienceId": 30,
+          "Impressions": 3803.875
+        },
+        {
+          "AudienceId": 31,
+          "Impressions": 85873.375
+        },
+        {
+          "AudienceId": 46,
+          "Impressions": 1567.75
+        },
+        {
+          "AudienceId": 284,
+          "Impressions": 3441.25
+        },
+        {
+          "AudienceId": 290,
+          "Impressions": 6214.125
+        },
+        {
+          "AudienceId": 339,
+          "Impressions": 2153.875
+        },
+        {
+          "AudienceId": 347,
+          "Impressions": 12969.625
+        },
+        {
+          "AudienceId": 348,
+          "Impressions": 1971.875
+        }
+      ],
+      "AirTime": 36240,
+      "Genre": null,
+      "Isci": "ISCI",
+      "LeadinGenre": null,
+      "LeadinProgramName": null,
+      "LeadoutGenre": null,
+      "LeadoutProgramName": null,
+      "OriginalAirDate": "2018-12-29T00:00:00",
+      "ProgramName": "Programs R Us",
+      "SpotLengthId": 1,
+      "Station": "WNBC"
     }
   ],
-  "file_hash": "abc123",
-  "file_name": "test.file",
-  "media_month_id": 0,
-  "source_id": 1
+  "FileHash": "abc123",
+  "FileName": "test.file",
+  "MediaMonthId": 0,
+  "SourceId": 1
 }

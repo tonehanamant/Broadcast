@@ -27,7 +27,6 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-
         public DisplayAudience GetDisplayAudienceByAgeAndSubcategory(string subcategory, int ageFrom, int ageTo)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))

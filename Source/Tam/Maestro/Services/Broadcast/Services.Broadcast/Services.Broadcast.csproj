@@ -183,6 +183,9 @@
     <Compile Include="Converters\ProposalScxDataPrep.cs" />
     <Compile Include="Converters\ProposalScxConverter.cs" />
     <Compile Include="DaypartCache.cs" />
+    <Compile Include="Entities\AffidavitFile.cs" />
+    <Compile Include="Entities\AffidavitFileDetail.cs" />
+    <Compile Include="Entities\AffidavitFileDetailAudience.cs" />
     <Compile Include="Entities\AffidavitSaveRequest.cs" />
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\BvsTrackingAudience.cs" />
