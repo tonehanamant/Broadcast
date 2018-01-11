@@ -146,6 +146,9 @@
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_files_affidavit_file_details" />
+        <EntityTypeShape EntityType="BroadcastModel.affidavit_file_detail_audiences" Width="1.5" PointX="24.875" PointY="6.25" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_audiences_affidavit_file_details" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_audiences_audiences" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

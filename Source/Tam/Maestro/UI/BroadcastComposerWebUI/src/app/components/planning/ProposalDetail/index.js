@@ -203,7 +203,6 @@ export default class ProposalDetail extends Component {
 			<Well bsSize="small">
         <Row>
           <Col md={12}>
-            {this.props.isDirty() ? <span>DIRTY</span> : <span>CLEAN</span>}
             <Form inline>
               <FormGroup controlId="detailFlight">
                 <ControlLabel style={{ margin: '0 10px 0 0' }}>Flight</ControlLabel>

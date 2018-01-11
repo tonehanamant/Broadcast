@@ -1,16 +1,14 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using EntityFrameworkMapping.Broadcast;
 using IntegrationTests.Common;
+using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Services.Broadcast.Converters;
-using Services.Broadcast.Entities;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
+using System;
+using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -18,54 +16,78 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class AffidavidServiceTests
     {
-        private readonly IAffidavitService _Sut;
-        private readonly IAffidavitRepository _Repo;
-
-        public AffidavidServiceTests()
-        {
-            _Sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitService>();
-            _Repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+        private readonly IAffidavitRepository _AffidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
                 .GetDataRepository<IAffidavitRepository>();
+
+        private static AffidavitService _SetupAffidavitService()
+        {
+            var mockPostingBookService = new Mock<IPostingBooksService>();
+
+            mockPostingBookService.Setup(x => x.GetDefaultPostingBooks()).Returns(new DefaultPostingBooksDto
+            {
+                DefaultShareBook = new PostingBookResultDto
+                {
+                    PostingBookId = 416
+                }
+            });
+
+            var affidavitService =
+                new AffidavitService(
+                    IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory,
+                    new BroadcastAudiencesCache(
+                        IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory),
+                    mockPostingBookService.Object);
+            return affidavitService;
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SaveAffidaviteService()
         {
-            using (new TransactionScopeWrapper())
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                AffidavitSaveRequest request = new AffidavitSaveRequest();
-                request.FileHash = "abc123";
-                request.Source = (int) AffidaviteFileSource.Strata;
-                request.FileName = "test.file";
+                var affidavitService = _SetupAffidavitService();
 
-                var detail = new AffidavitSaveRequestDetail();
-                detail.AirTime = DateTime.Parse("12/29/2018 10:04AM");
-                detail.Isci = "ISCI";
-                detail.ProgramName = "Programs R Us";
-                detail.SpotLength = 30;
-                detail.Station = "WNBC";
-                request.Details.Add(detail);
+                var affidavitSaveRequest = new AffidavitSaveRequest
+                {
+                    FileHash = "abc123",
+                    Source = (int) AffidaviteFileSource.Strata,
+                    FileName = "test.file"
+                };
 
-                int id = _Sut.SaveAffidavit(request);
+                var affidavitSaveRequestDetail = new AffidavitSaveRequestDetail
+                {
+                    AirTime = DateTime.Parse("12/29/2018 10:04AM"),
+                    Isci = "ISCI",
+                    ProgramName = "Programs R Us",
+                    SpotLength = 30,
+                    Station = "WNBC"
+                };
 
-                var affidavite = _Repo.GetAffidavit(id);
+                affidavitSaveRequest.Details.Add(affidavitSaveRequestDetail);
+
+                var affidavitId = affidavitService.SaveAffidavit(affidavitSaveRequest);
+
+                var affidavitFile = _AffidavitRepository.GetAffidavit(affidavitId);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(affidavit_files), "created_date");
-                jsonResolver.Ignore(typeof(affidavit_files), "id");
-                jsonResolver.Ignore(typeof(affidavit_file_details), "id");
-                jsonResolver.Ignore(typeof(affidavit_file_details), "affidavit_client_scrubs");
-                jsonResolver.Ignore(typeof(affidavit_file_details), "affidavit_file_id");
 
-                var jsonSettings = new JsonSerializerSettings()
+                jsonResolver.Ignore(typeof(AffidavitFile), "CreatedDate");
+                jsonResolver.Ignore(typeof(AffidavitFile), "Id");
+                jsonResolver.Ignore(typeof(AffidavitFileDetail), "Id");
+                jsonResolver.Ignore(typeof(AffidavitFileDetail), "AffidavitFileId");
+                jsonResolver.Ignore(typeof(AffidavitFileDetail), "AffidavitFileDetailId");
+                jsonResolver.Ignore(typeof(AffidavitFileDetailAudience), "AffidavitFileDetailId");
+
+                var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                var json = IntegrationTestHelper.ConvertToJson(affidavite, jsonSettings);
-                Approvals.Verify(json);
 
+                var json = IntegrationTestHelper.ConvertToJson(affidavitFile, jsonSettings);
+
+                Approvals.Verify(json);
             }
         }
     }
