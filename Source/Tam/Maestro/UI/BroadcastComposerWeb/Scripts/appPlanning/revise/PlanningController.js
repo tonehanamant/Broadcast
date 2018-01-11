@@ -190,6 +190,14 @@ var PlanningController = BaseController.extend({
             });
     },
 
+    //redirect back to react proposal
+    handleOpenInventoryError: function () {
+        var $scope = this;
+        setTimeout(function () {
+            $scope.editProposal($scope.activeModalParams.proposalId);
+        }, 3000);
+    },
+
     //INVENTORY MODAL
 
     //from proposalView - open here
@@ -208,10 +216,10 @@ var PlanningController = BaseController.extend({
 
     apiGetProposalInventory: function (detailId, callback, fromInventory) {
         var url = baseUrl + 'api/Inventory/Proprietary/Detail/' + detailId;
-
+        
         httpService.get(url,
             callback.bind(this),
-            null,
+            fromInventory ? null : this.handleOpenInventoryError.bind(this),
             {
                 $ViewElement: fromInventory ? $('#proposal_inventory_view') : $('#planning_view'),
                 ErrorMessage: 'Proposal Inventory',
@@ -274,7 +282,7 @@ var PlanningController = BaseController.extend({
 
         httpService.get(url,
             callback.bind(this),
-            null,
+            fromInventory ? null : this.handleOpenInventoryError.bind(this),
             {
                 $ViewElement: fromInventory ? $('#proposal_openmarket_view') : $('#planning_view'),
                 ErrorMessage: 'Proposal Open Market Inventory',
