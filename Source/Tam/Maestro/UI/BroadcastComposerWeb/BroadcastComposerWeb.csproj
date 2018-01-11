@@ -233,6 +233,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\appPlanning\revise\CriteriaBuilderViewModel.js" />
+    <Content Include="Scripts\appPlanning\revise\FilterViewModel.js" />
+    <Content Include="Scripts\appPlanning\revise\PlanningController.js" />
+    <Content Include="Scripts\appPlanning\revise\ProposalDetailInventoryView.js" />
+    <Content Include="Scripts\appPlanning\revise\ProposalDetailOpenMarketView.js" />
     <Content Include="Scripts\app\config\jqvalidate.js" />
     <Content Include="Scripts\app\config\w2ui.js" />
     <Content Include="Scripts\app\utilities\array.js" />
@@ -578,7 +583,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61711/</IISUrl>
+          <IISUrl>http://localhost:61713/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

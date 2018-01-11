@@ -126,8 +126,9 @@ namespace BroadcastComposerWeb
                 "~/Scripts/appPlanning/config/PlanningConfig.js",
 
                 /* Controllers */
-                "~/Scripts/appPlanning/controllers/PlanningMainController.js",
-                "~/Scripts/appPlanning/controllers/ProposalController.js",
+                //"~/Scripts/appPlanning/controllers/PlanningMainController.js",
+                 "~/Scripts/appPlanning/revise/PlanningController.js",
+                //"~/Scripts/appPlanning/controllers/ProposalController.js",
 
                 /* View Models */
                 "~/Scripts/appPlanning/viewmodels/PlanningSearchViewModel.js",
@@ -136,8 +137,10 @@ namespace BroadcastComposerWeb
                 "~/Scripts/appPlanning/viewmodels/CustomMarketsSelectorViewModel.js",
                 "~/Scripts/appPlanning/viewmodels/ProposalDetailInventoryViewModel.js",
                 "~/Scripts/appPlanning/viewmodels/ProposalDetailOpenMarketViewModel.js",
-                "~/Scripts/appPlanning/viewmodels/CriteriaBuilderViewModel.js",
-                "~/Scripts/appPlanning/viewmodels/FilterViewModel.js",
+                 "~/Scripts/appPlanning/revise/CriteriaBuilderViewModel.js",
+                "~/Scripts/appPlanning/revise/FilterViewModel.js",
+                //"~/Scripts/appPlanning/viewmodels/CriteriaBuilderViewModel.js",
+                //"~/Scripts/appPlanning/viewmodels/FilterViewModel.js",
                 "~/Scripts/appPlanning/viewmodels/SwitchProposalVersionViewModel.js",
                 "~/Scripts/appPlanning/viewmodels/VersionCreatedOptionsViewModel.js",
                 "~/Scripts/appPlanning/viewmodels/ProposalUpdateWarningViewModel.js",
@@ -145,13 +148,15 @@ namespace BroadcastComposerWeb
 
                 /* Views */
                 "~/Scripts/appPlanning/views/PlanningMainView.js",
-                "~/Scripts/appPlanning/views/ProposalView.js",
-                "~/Scripts/appPlanning/views/ProposalDetailInventoryView.js",
-                "~/Scripts/appPlanning/views/ProposalDetailOpenMarketView.js",
-                "~/Scripts/appPlanning/views/SwitchProposalVersionView.js",
+                //"~/Scripts/appPlanning/views/ProposalView.js",
+                //"~/Scripts/appPlanning/views/ProposalDetailInventoryView.js",
+                "~/Scripts/appPlanning/revise/ProposalDetailInventoryView.js",
+                //"~/Scripts/appPlanning/views/ProposalDetailOpenMarketView.js",
+                 "~/Scripts/appPlanning/revise/ProposalDetailOpenMarketView.js"
+                //"~/Scripts/appPlanning/views/SwitchProposalVersionView.js",
 
                 /* Hybrid */
-                "~/Scripts/appPlanning/ProposalDetailSet.js"
+                //"~/Scripts/appPlanning/ProposalDetailSet.js"
                 );
 
             var trackerScrubBundle = new ScriptBundle("~/bundles/trackerScrub").Include(

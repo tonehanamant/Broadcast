@@ -535,7 +535,7 @@ const post = {
 };
 
 const postPrePosting = {
-  getPrePostInitialData: () => (
+  getInitialData: () => (
     call(GET, `${apiBase}PostPrePosting/InitialData`, {})
   ),
   getPosts: () => (
