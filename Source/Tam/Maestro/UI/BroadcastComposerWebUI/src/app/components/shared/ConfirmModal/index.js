@@ -63,8 +63,8 @@ export class ConfirmModal extends Component {
           }
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle={this.props.modal.properties.actionButtonBsStyle} onClick={this.action}>{this.props.modal.properties.actionButtonText}</Button>
           <Button onClick={this.dismiss} bsStyle={this.props.modal.properties.closeButtonBsStyle || 'default'}>{this.props.modal.properties.closeButtonText}</Button>
+          <Button bsStyle={this.props.modal.properties.actionButtonBsStyle} onClick={this.action}>{this.props.modal.properties.actionButtonText}</Button>
         </Modal.Footer>
       </Modal>
     );
