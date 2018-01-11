@@ -26,7 +26,7 @@ var PlanningMainController = BaseController.extend({
     // loads options -- if successful then opens the proposal form
     createProposal: function () {
 
-        var url = 'broadcastreact/planning/proposal/create';
+        var url = window.location.origin + '/broadcastreact/planning/proposal/create';
         window.location = url;
         //var $scope = this;
 
@@ -47,7 +47,7 @@ var PlanningMainController = BaseController.extend({
 
         $scope.proposalsController.apiGetLock(proposalId, function (lockResponse) {
             if (lockResponse.Success) {
-                var url = 'broadcastreact/planning/proposal/' + proposalId;
+                var url = window.location.origin + '/broadcastreact/planning/proposal/' + proposalId;
                 window.location = url;
                 //$scope.proposalsController.apiGetOptions(function(options) {
                 //    $scope.proposalsController.proposalViewModel.loadOptions(options);
