@@ -16,7 +16,8 @@ import ProposalSwitchVersionModal from 'Components/planning/ProposalSwitchVersio
 import ProposalDetails from 'Components/planning/ProposalDetails';
 
 
-const mapStateToProps = ({ planning: { proposalLock, initialdata, proposal, versions, proposalEditForm, proposalValidationStates } }) => ({
+const mapStateToProps = ({ app: { employee }, planning: { proposalLock, initialdata, proposal, versions, proposalEditForm, proposalValidationStates } }) => ({
+  employee,
   proposalLock,
   initialdata,
   proposal,
@@ -37,6 +38,7 @@ export class SectionPlanningProposal extends Component {
     this.isValidProposalDetails = this.isValidProposalDetails.bind(this);
     this.isValidProposalDetailGrids = this.isValidProposalDetailGrids.bind(this);
     this.isDirty = this.isDirty.bind(this);
+    this.isLocked = this.isLocked.bind(this);
   }
 
   componentWillMount() {
@@ -59,6 +61,24 @@ export class SectionPlanningProposal extends Component {
       this.props.getProposalVersion(id, version);
     } else if (id) {
       this.props.getProposal(id);
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.isLocked()) {
+      this.props.toggleModal({
+        modal: 'confirmModal',
+        active: true,
+        properties: {
+          titleText: 'Proposal Locked',
+          bodyText: `This Proposal is currently in use by ${this.props.proposalLock.LockedUserName}. Please try again later.`,
+          closeButtonText: 'Cancel',
+          actionButtonText: 'Okay',
+          actionButtonBsStyle: 'primary',
+          action: () => window.open(`${window.location.origin}/broadcast/planning`, '_self'),
+          dismiss: () => window.open(`${window.location.origin}/broadcast/planning`, '_self'),
+        },
+      });
     }
   }
 
@@ -152,6 +172,21 @@ export class SectionPlanningProposal extends Component {
     return !_.isEqual(this.props.proposalEditForm, this.props.proposal);
   }
 
+  isLocked() {
+    const { proposalLock, employee } = this.props;
+
+    const proposalLockResolved = proposalLock && proposalLock.Key;
+    const employeeResolved = employee && employee._Accountdomainsid;
+
+    if (proposalLockResolved && proposalLock.Success === true) { return false; } // Proposal not locked
+    if (proposalLockResolved && proposalLock.Success === false) {
+      if (employeeResolved && (employee._Accountdomainsid === proposalLock.LockedUserId)) {
+        return false; // Proposal locked by user; not locked to user
+      }
+      return true; // Propsal lock by another user
+    }
+    return false; // Assume not locked
+  }
 
   render() {
     const { toggleModal, createAlert, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, proposalValidationStates, setProposalValidationState } = this.props;
@@ -160,8 +195,9 @@ export class SectionPlanningProposal extends Component {
     return (
       <div id="planning-section-proposal" style={{ paddingBottom: 80 }}>
         {
-          // Object.keys(proposalLock).length > 0 &&
-          // !proposalLock.LockedUserId &&
+          this.props.proposalLock.Success &&
+          !this.isLocked() &&
+
           Object.keys(initialdata).length > 0 &&
           Object.keys(proposal).length > 0 &&
           Object.keys(proposalEditForm).length > 0 &&
@@ -235,7 +271,8 @@ SectionPlanningProposal.defaultProps = {
 
 SectionPlanningProposal.propTypes = {
   match: PropTypes.object.isRequired,
-  // proposalLock: PropTypes.object.isRequired,
+  employee: PropTypes.object.isRequired,
+  proposalLock: PropTypes.object.isRequired,
   initialdata: PropTypes.object.isRequired,
   proposal: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
