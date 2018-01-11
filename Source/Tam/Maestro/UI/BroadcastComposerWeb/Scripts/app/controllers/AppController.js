@@ -1,16 +1,28 @@
-﻿var AppController = BaseController.extend({
+﻿
+//change to synchronized on load - before initializing page controller
+var AppController = BaseController.extend({
 
     pageController: null,
+    pageControllerActivated: false,
     user: null,
+    environment: null,
     initControllerPage: function (pageController) {
         var $scope = this;
-
+        $scope.pageController = pageController;
         $scope.apiGetEmployeeInfo();
         $scope.apiGetEnvironment();
 
-        $scope.pageController = pageController;
-        $scope.pageController.initController();
+       //wait until processed
+        //$scope.pageController.initController();
 
+    },
+
+    //when both are ready - proceeed
+    checkUserEnvironmentReady: function () {
+        if (this.user && this.environment) {
+            if (!this.pageControllerActivated) this.pageController.initController();
+            this.pageControllerActivated = true;
+        }
     },
 
     apiGetEmployeeInfo: function () {
@@ -32,6 +44,7 @@
     onEmployeeApi: function (user) {
         this.user = user;
         this.displayApiUser(user);
+        this.checkUserEnvironmentReady();
     },
 
     displayApiUser: function (user) {
@@ -70,7 +83,9 @@
 
     //after authenticate
     onGetEnvironmentCompleteApi: function (data) {
+        this.environment = data;
         this.displayeEvironment(data);
+        this.checkUserEnvironmentReady();
     }
 
 });
