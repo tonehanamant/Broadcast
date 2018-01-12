@@ -121,6 +121,7 @@ namespace BroadcastComposerWeb
 
                 );
 
+            /* See revise directory - revisions for React intgration */
             var planningBundle = new ScriptBundle("~/bundles/planning").Include(
                 /* Config */
                 "~/Scripts/appPlanning/config/PlanningConfig.js",
@@ -132,19 +133,19 @@ namespace BroadcastComposerWeb
 
                 /* View Models */
                 "~/Scripts/appPlanning/viewmodels/PlanningSearchViewModel.js",
-                "~/Scripts/appPlanning/viewmodels/ProposalViewModel.js",
-                "~/Scripts/appPlanning/viewmodels/CustomMarketsViewModel.js",
-                "~/Scripts/appPlanning/viewmodels/CustomMarketsSelectorViewModel.js",
+                //"~/Scripts/appPlanning/viewmodels/ProposalViewModel.js",
+                //"~/Scripts/appPlanning/viewmodels/CustomMarketsViewModel.js",
+                //"~/Scripts/appPlanning/viewmodels/CustomMarketsSelectorViewModel.js",
                 "~/Scripts/appPlanning/viewmodels/ProposalDetailInventoryViewModel.js",
                 "~/Scripts/appPlanning/viewmodels/ProposalDetailOpenMarketViewModel.js",
                  "~/Scripts/appPlanning/revise/CriteriaBuilderViewModel.js",
                 "~/Scripts/appPlanning/revise/FilterViewModel.js",
                 //"~/Scripts/appPlanning/viewmodels/CriteriaBuilderViewModel.js",
                 //"~/Scripts/appPlanning/viewmodels/FilterViewModel.js",
-                "~/Scripts/appPlanning/viewmodels/SwitchProposalVersionViewModel.js",
-                "~/Scripts/appPlanning/viewmodels/VersionCreatedOptionsViewModel.js",
-                "~/Scripts/appPlanning/viewmodels/ProposalUpdateWarningViewModel.js",
-                "~/Scripts/appPlanning/viewmodels/ManageRatingsViewModel.js",
+                //"~/Scripts/appPlanning/viewmodels/SwitchProposalVersionViewModel.js",
+                //"~/Scripts/appPlanning/viewmodels/VersionCreatedOptionsViewModel.js",
+                //"~/Scripts/appPlanning/viewmodels/ProposalUpdateWarningViewModel.js",
+                //"~/Scripts/appPlanning/viewmodels/ManageRatingsViewModel.js",
 
                 /* Views */
                 "~/Scripts/appPlanning/views/PlanningMainView.js",
