@@ -134,8 +134,11 @@ class Sweeps extends Component {
     return (
       <div>
         <Modal show={show}>
-          <Modal.Header closeButton>
-            <Modal.Title>Manage Ratings</Modal.Title>
+          <Modal.Header>
+            <Button className="close" bsStyle="link" onClick={this.onCancel} style={{ display: 'inline-block', float: 'right' }}>
+            <span>&times;</span>
+          </Button>
+          <Modal.Title>Manage Ratings</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
@@ -200,7 +203,10 @@ class Sweeps extends Component {
         </Modal>
 
         <Modal show={showConfirmation}>
-          <Modal.Header closeButton>
+          <Modal.Header>
+          <Button className="close" bsStyle="link" onClick={() => this.setState({ showConfirmation: false })} style={{ display: 'inline-block', float: 'right' }}>
+            <span>&times;</span>
+          </Button>
             <Modal.Title>Are you sure?</Modal.Title>
           </Modal.Header>
 
@@ -215,8 +221,11 @@ class Sweeps extends Component {
         </Modal>
 
         <Modal show={showError}>
-          <Modal.Header closeButton>
-            <Modal.Title>Error</Modal.Title>
+          <Modal.Header>
+            <Button className="close" bsStyle="link" onClick={() => this.setState({ showError: false })} style={{ display: 'inline-block', float: 'right' }}>
+            <span>&times;</span>
+          </Button>
+          <Modal.Title>Error</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
