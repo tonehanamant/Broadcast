@@ -90,7 +90,7 @@
       ],
       "AirTime": 36240,
       "Genre": null,
-      "Isci": "ISCI",
+      "Isci": "AAAAAAAA",
       "LeadinGenre": null,
       "LeadinProgramName": null,
       "LeadoutGenre": null,
