@@ -165,6 +165,7 @@
     <Compile Include="ApplicationServices\PostingBooksService.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryGroupService.cs" />
+    <Compile Include="BusinessEngines\AffidavitMatchingEngine.cs" />
     <Compile Include="BusinessEngines\ImpressionAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailHeaderTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailWeekTotalsCalculationEngine.cs" />
@@ -183,10 +184,12 @@
     <Compile Include="Converters\ProposalScxDataPrep.cs" />
     <Compile Include="Converters\ProposalScxConverter.cs" />
     <Compile Include="DaypartCache.cs" />
+    <Compile Include="Entities\AffidavitMatchingDetail.cs" />
     <Compile Include="Entities\AffidavitFile.cs" />
     <Compile Include="Entities\AffidavitFileDetail.cs" />
     <Compile Include="Entities\AffidavitFileDetailAudience.cs" />
     <Compile Include="Entities\AffidavitSaveRequest.cs" />
+    <Compile Include="Entities\AffidavitMatchingProposalWeek.cs" />
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\BvsTrackingAudience.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
@@ -238,6 +241,7 @@
     <Compile Include="Entities\StationProgramConflictRequest.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
     <Compile Include="Entities\ValidationWarningDto.cs" />
+    <Compile Include="Exceptions\BroadcastAffidavitException.cs" />
     <Compile Include="Extensions\Bvs.cs" />
     <Compile Include="ReportGenerators\IReportGenerator.cs" />
     <Compile Include="ReportGenerators\PostExcelReportGenerator.cs" />

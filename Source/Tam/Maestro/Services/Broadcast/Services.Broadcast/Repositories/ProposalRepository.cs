@@ -52,6 +52,8 @@ namespace Services.Broadcast.Repositories
         void SaveProposalTotals(int proposalVersionId, ProposalHeaderTotalsDto proposalTotals);
         void ResetAllTotals(int proposalId, int proposalVersion);
         void DeleteProposal(int proposalId);
+
+        List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByHouseIsci(string isci);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -1264,5 +1266,43 @@ namespace Services.Broadcast.Repositories
                 context.SaveChanges();
             });
         }
+
+        public List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByHouseIsci(string isci)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var weeks = context.proposal_version_detail_quarter_week_iscis.Where(
+                        i => i.house_isci.Equals(isci, StringComparison.InvariantCultureIgnoreCase))
+                        .Where(i => i.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details
+                            .proposal_versions.status == (int)ProposalEnums.ProposalStatusType.Contracted)
+                        .Include(i => i.proposal_version_detail_quarter_weeks
+                                .proposal_version_detail_quarters.proposal_version_details)
+                        .Select(
+                            i => new AffidavitMatchingProposalWeek()
+                            {
+                                ProposalVersionId = i.proposal_version_detail_quarter_weeks
+                                                        .proposal_version_detail_quarters
+                                                        .proposal_version_details
+                                                        .proposal_version_id,
+                                ProposalVersionDetailId = i.proposal_version_detail_quarter_weeks
+                                                        .proposal_version_detail_quarters
+                                                        .proposal_version_detail_id,
+                                ProposalVersionDetailWeekStart = i.proposal_version_detail_quarter_weeks.start_date,
+                                ProposalVersionDetailWeekEnd = i.proposal_version_detail_quarter_weeks.end_date,
+                                Spots = i.proposal_version_detail_quarter_weeks.units,
+                                ProposalVersionDetailDaypartId = i.proposal_version_detail_quarter_weeks
+                                                        .proposal_version_detail_quarters
+                                                        .proposal_version_details.daypart_id,
+                                ProposalVersionDetailQuarterWeekId = i.proposal_version_detail_quarter_week_id,
+                                ClientIsci = i.client_isci,
+                                HouseIsci = i.house_isci,
+                                MarriedHouseIsci = i.married_house_iscii,
+                                Brand = i.brand
+                            }).ToList();
+                    return weeks;
+                });
+        }
+
     }
 }
