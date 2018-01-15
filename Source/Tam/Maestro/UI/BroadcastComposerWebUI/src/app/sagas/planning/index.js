@@ -588,6 +588,7 @@ export function* saveProposal({ payload: params }) {
           proposal.ValidationWarning = null;
         }
         proposal = yield preSaveDetailIdNull(proposal);
+    const isNew = proposal.Id === null;
     const response = yield saveProposal(proposal);
     const { status, data } = response;
     yield put({
@@ -627,11 +628,15 @@ export function* saveProposal({ payload: params }) {
         },
       });
     }
+    if (isNew) {
+      window.location.assign(`/broadcastreact/planning/proposal/${data.Data.Id}`);
+    } else {
     data.Data = yield flattenProposalDetails(data.Data);
     yield put({
       type: ACTIONS.RECEIVE_PROPOSAL,
       data,
     });
+  }
   } catch (e) {
     if (e.response) {
       yield put({
