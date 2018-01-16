@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 
 import { toggleModal, createAlert } from 'Ducks/app';
-import { getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, setProposalValidationState } from 'Ducks/planning';
+import { getProposalLock, getProposalUnlock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, setProposalValidationState } from 'Ducks/planning';
 
 // import { loadLocalStorageState } from 'SRCRoot/index.store.localstorage.js';
 
@@ -27,7 +27,7 @@ const mapStateToProps = ({ app: { employee }, planning: { proposalLock, initiald
 });
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleModal, createAlert, getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposal, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, setProposalValidationState }, dispatch)
+  bindActionCreators({ toggleModal, createAlert, getProposalLock, getProposalUnlock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposal, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, setProposalValidationState }, dispatch)
 );
 
 /* eslint-disable react/prefer-stateless-function */
@@ -189,7 +189,7 @@ export class SectionPlanningProposal extends Component {
   }
 
   render() {
-    const { toggleModal, createAlert, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, proposalValidationStates, setProposalValidationState } = this.props;
+    const { toggleModal, createAlert, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, getProposalUnlock, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, proposalValidationStates, setProposalValidationState } = this.props;
     const isReadOnly = proposal.Status != null ? (proposal.Status === 3 || proposal.Status === 4) : false;
     // console.log('proposal is read only', proposal, isReadOnly);
     return (
@@ -245,6 +245,8 @@ export class SectionPlanningProposal extends Component {
               proposalEditForm={proposalEditForm}
               updateProposalEditForm={updateProposalEditForm}
               saveProposal={saveProposal}
+              getProposalUnlock={getProposalUnlock}
+              isCreate={false}
               setProposalValidationState={setProposalValidationState}
               isValidProposalForm={this.isValidProposalForm}
               isValidProposalDetails={this.isValidProposalDetails}
@@ -284,6 +286,7 @@ SectionPlanningProposal.propTypes = {
   // restorePlanningProposal: PropTypes.func.isRequired,
 
   getProposalLock: PropTypes.func.isRequired,
+  getProposalUnlock: PropTypes.func.isRequired,
   getProposalInitialData: PropTypes.func.isRequired,
   getProposal: PropTypes.func.isRequired,
   getProposalVersions: PropTypes.func.isRequired,
