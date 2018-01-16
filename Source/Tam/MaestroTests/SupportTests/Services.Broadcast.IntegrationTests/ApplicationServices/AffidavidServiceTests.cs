@@ -5,7 +5,9 @@ using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
 using System;
 using System.Transactions;
@@ -31,9 +33,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             });
 
+            var affidavitMatchingEngine =
+                IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitMatchingEngine>();
+
             var affidavitService =
                 new AffidavitService(
                     IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory,
+                    affidavitMatchingEngine,
                     new BroadcastAudiencesCache(
                         IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory),
                     mockPostingBookService.Object);
@@ -58,7 +64,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var affidavitSaveRequestDetail = new AffidavitSaveRequestDetail
                 {
                     AirTime = DateTime.Parse("12/29/2018 10:04AM"),
-                    Isci = "ISCI",
+                    Isci = "AAAAAAAA",
                     ProgramName = "Programs R Us",
                     SpotLength = 30,
                     Station = "WNBC"
@@ -66,7 +72,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 affidavitSaveRequest.Details.Add(affidavitSaveRequestDetail);
 
-                var affidavitId = affidavitService.SaveAffidavit(affidavitSaveRequest);
+                var affidavitId = affidavitService.SaveAffidavit(affidavitSaveRequest, "testuser", DateTime.Now);
 
                 var affidavitFile = _AffidavitRepository.GetAffidavit(affidavitId);
 
@@ -88,6 +94,48 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var json = IntegrationTestHelper.ConvertToJson(affidavitFile, jsonSettings);
 
                 Approvals.Verify(json);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteServiceThrowsException()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var affidavitService = _SetupAffidavitService();
+
+                var affidavitSaveRequest = new AffidavitSaveRequest
+                {
+                    FileHash = "abc123",
+                    Source = (int)AffidaviteFileSource.Strata,
+                    FileName = "test.file"
+                };
+
+                var affidavitSaveRequestDetail = new AffidavitSaveRequestDetail
+                {
+                    AirTime = DateTime.Parse("12/29/2018 10:04AM"),
+                    Isci = "ISCI_NOT_FOUND",
+                    ProgramName = "Programs R Us",
+                    SpotLength = 30,
+                    Station = "WNBC"
+                };
+
+                affidavitSaveRequest.Details.Add(affidavitSaveRequestDetail);
+
+                try
+                {
+                    var affidavitId = affidavitService.SaveAffidavit(affidavitSaveRequest, "testuser", DateTime.Now);
+                    Assert.Fail("Should have thrown an exception due to unmatched affidavit isci.");
+                }
+                catch (BroadcastAffidavitException ex)
+                {
+
+                    var json = IntegrationTestHelper.ConvertToJson(ex.ErrorList);
+
+                    Approvals.Verify(json);
+                }
+                
             }
         }
     }

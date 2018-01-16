@@ -1,10 +1,15 @@
-﻿using Common.Services.ApplicationServices;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Common.Services;
+using Common.Services.ApplicationServices;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
+using Services.Broadcast.BusinessEngines;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -17,27 +22,30 @@ namespace Services.Broadcast.ApplicationServices
 
     public interface IAffidavitService : IApplicationService
     {
-        int SaveAffidavit(AffidavitSaveRequest saveRequest);
+        int SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime);
     }
 
     public class AffidavitService : IAffidavitService
     {
         private const ProposalEnums.ProposalPlaybackType DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3;
-
+        private readonly IAffidavitMatchingEngine _AffidavitMatchingEngine;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
         private readonly IPostingBooksService _PostingBooksService;
         private readonly IAffidavitRepository _AffidavitRepository;
 
-        public AffidavitService(IDataRepositoryFactory broadcastDataRepositoryFactory, IBroadcastAudiencesCache broadcastAudiencesCache, IPostingBooksService postingBooksService)
+        public AffidavitService(IDataRepositoryFactory broadcastDataRepositoryFactory,
+            IAffidavitMatchingEngine affidavitMatchingEngine,
+            IBroadcastAudiencesCache broadcastAudiencesCache,
+            IPostingBooksService postingBooksService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
+            _AffidavitMatchingEngine = affidavitMatchingEngine;
             _BroadcastAudiencesCache = broadcastAudiencesCache;
             _PostingBooksService = postingBooksService;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
         }
-
-        public int SaveAffidavit(AffidavitSaveRequest saveRequest)
+        public int SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime)
         {
             Dictionary<int, int> spotLengthDict = null;
 
@@ -46,45 +54,74 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("No affidavit data received.");
             }
 
+            var matchedAffidavitDetails = _LinkAndValidateContractIscis(saveRequest);
+
             var affidavit_file = new affidavit_files();
             affidavit_file.created_date = DateTime.Now;
             affidavit_file.file_hash = saveRequest.FileHash;
             affidavit_file.file_name = saveRequest.FileName;
             affidavit_file.source_id = saveRequest.Source;
 
-            foreach (var detail in saveRequest.Details)
+            foreach (var matchedAffidavitDetail in matchedAffidavitDetails)
             {
                 var det = new affidavit_file_details();
-                det.air_time = Convert.ToInt32(detail.AirTime.TimeOfDay.TotalSeconds);
-                det.original_air_date = detail.AirTime;
-                det.isci = detail.Isci;
-                det.program_name = detail.ProgramName;
-                det.spot_length_id = GetSpotlength(detail.SpotLength, ref spotLengthDict);
-                det.station = detail.Station;
+                det.air_time = Convert.ToInt32(matchedAffidavitDetail.AffidavitDetail.AirTime.TimeOfDay.TotalSeconds);
+                det.original_air_date = matchedAffidavitDetail.AffidavitDetail.AirTime;
+                det.isci = matchedAffidavitDetail.AffidavitDetail.Isci;
+                det.program_name = matchedAffidavitDetail.AffidavitDetail.ProgramName;
+                det.spot_length_id = _GetSpotlength(matchedAffidavitDetail.AffidavitDetail.SpotLength, ref spotLengthDict);
+                det.station = matchedAffidavitDetail.AffidavitDetail.Station;
+                det.affidavit_client_scrubs =
+                    matchedAffidavitDetail.ProposalDetailWeeks.Select(
+                        w => new affidavit_client_scrubs()
+                        {
+                            proposal_version_detail_quarter_week_id = w.ProposalVersionDetailQuarterWeekId,
+                            match_time = w.AirtimeMatch,                            
+                            modified_by = username,
+                            modified_date = currentDateTime
+                        }).ToList();
 
                 affidavit_file.affidavit_file_details.Add(det);
             }
 
-            var postingBookId = GetPostingBookId();
+            var postingBookId = _GetPostingBookId();
 
-            CalculateAffidavitImpressions(affidavit_file, postingBookId);
+            _CalculateAffidavitImpressions(affidavit_file, postingBookId);
 
             var id = _AffidavitRepository.SaveAffidavitFile(affidavit_file);
 
             return id;
         }
 
-        private int GetPostingBookId()
+        private List<AffidavitMatchingDetail> _LinkAndValidateContractIscis(AffidavitSaveRequest saveRequest)
         {
-            var defaultPostingBooks = _PostingBooksService.GetDefaultPostingBooks();
+            var matchedAffidavitDetails = new List<AffidavitMatchingDetail>();
+            var matchingProblems = new List<String>();
 
-            if (!defaultPostingBooks.DefaultShareBook.PostingBookId.HasValue)
-                throw new Exception("No default posting book available");
+            foreach (var requestDetail in saveRequest.Details)
+            {
+                var proposalWeeks =
+                    _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
+                        .GetAffidavitMatchingProposalWeeksByHouseIsci(requestDetail.Isci);
 
-            return defaultPostingBooks.DefaultShareBook.PostingBookId.Value;
+                var matchedProposalWeeks = _AffidavitMatchingEngine.Match(requestDetail, proposalWeeks); //TODO: combine errors and matches in one results in order to avoid concurrency issues.
+                matchingProblems.AddRange(_AffidavitMatchingEngine.MatchingProblems());
+                matchedAffidavitDetails.Add(new AffidavitMatchingDetail()
+                {
+                    AffidavitDetail = requestDetail,
+                    ProposalDetailWeeks = matchedProposalWeeks
+                });
+
+            }
+            if (matchingProblems.Any())
+            {
+                throw new BroadcastAffidavitException("Found isci problems in the system", matchingProblems);
+            }
+
+            return matchedAffidavitDetails;
         }
 
-        private int GetSpotlength(int spotLength, ref Dictionary<int, int> spotLengthDict)
+        private int _GetSpotlength(int spotLength, ref Dictionary<int, int> spotLengthDict)
         {
             if (spotLengthDict == null)
                 spotLengthDict = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
@@ -95,7 +132,17 @@ namespace Services.Broadcast.ApplicationServices
             return spotLengthDict[spotLength];
         }
 
-        private void CalculateAffidavitImpressions(affidavit_files affidavitFile, int postingBookId)
+        private int _GetPostingBookId()
+        {
+            var defaultPostingBooks = _PostingBooksService.GetDefaultPostingBooks();
+
+            if (!defaultPostingBooks.DefaultShareBook.PostingBookId.HasValue)
+                throw new Exception("No default posting book available");
+
+            return defaultPostingBooks.DefaultShareBook.PostingBookId.Value;
+        }
+
+        private void _CalculateAffidavitImpressions(affidavit_files affidavitFile, int postingBookId)
         {
             var audiencesRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             var allAudiences = _BroadcastAudiencesCache.GetAllEntities().Select(x => x.Id).ToList();
