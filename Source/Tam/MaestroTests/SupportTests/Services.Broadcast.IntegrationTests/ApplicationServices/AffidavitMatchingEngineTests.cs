@@ -12,7 +12,7 @@ using Services.Broadcast.Entities;
 using ApprovalTests;
 using IntegrationTests.Common;
 
-namespace Services.Broadcast.IntegrationTests.BusinessEngines
+namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     [UseReporter(typeof(DiffReporter))]
