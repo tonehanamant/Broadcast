@@ -9,7 +9,8 @@ export default class ProposalActions extends Component {
     super(props);
 		this.state = {};
 		this.checkValid = this.checkValid.bind(this);
-		this.save = this.save.bind(this);
+    this.save = this.save.bind(this);
+    this.cancel = this.cancel.bind(this);
 	}
 
 	componentDidUpdate() {
@@ -56,7 +57,14 @@ export default class ProposalActions extends Component {
 				message: 'Proposal cannot be saved: Required Inputs Incomplete (in red)',
 			});
 		}
-	}
+  }
+  cancel() {
+    if (!this.props.isCreate) {
+      // console.log('cancel', this.props.isCreate, this.props.proposal.Id);
+      this.props.getProposalUnlock(this.props.proposal.Id);
+    }
+    window.location = '/broadcast/planning';
+  }
 
   render() {
     // const { proposalEditForm, updateProposalEditForm } = this.props;
@@ -66,7 +74,7 @@ export default class ProposalActions extends Component {
 					<Col md={12}>
 						<hr />
 						<ButtonToolbar style={{ float: 'right' }}>
-							<Button bsStyle="default" href="/broadcast/planning">Cancel</Button>
+							<Button bsStyle="default" onClick={this.cancel}>Cancel</Button>
 							<Button bsStyle="success" onClick={this.save}>Save</Button>
 						</ButtonToolbar>
 					</Col>
@@ -77,6 +85,7 @@ export default class ProposalActions extends Component {
 }
 
 ProposalActions.defaultProps = {
+  getProposalUnlock: () => {},
 };
 
 /* eslint-disable react/no-unused-prop-types */
@@ -84,7 +93,9 @@ ProposalActions.propTypes = {
 	proposal: PropTypes.object.isRequired,
 	proposalEditForm: PropTypes.object.isRequired,
 	updateProposalEditForm: PropTypes.func.isRequired,
-	saveProposal: PropTypes.func.isRequired,
+  saveProposal: PropTypes.func.isRequired,
+  getProposalUnlock: PropTypes.func,
+  isCreate: PropTypes.bool.isRequired,
 	toggleModal: PropTypes.func.isRequired,
 	createAlert: PropTypes.func.isRequired,
 	setProposalValidationState: PropTypes.func.isRequired,
