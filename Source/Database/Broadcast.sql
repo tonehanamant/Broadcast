@@ -250,7 +250,19 @@ GO
 /******************** END BCOP-2316 *********************************************************************************************/
 
 
+/**********************BEGIN BCOP2321 *******************************************************************************************/
 
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'match_station'
+          AND Object_ID = Object_ID(N'affidavit_client_scrubs'))
+BEGIN
+    alter table affidavit_client_scrubs add 
+		match_station bit not null CONSTRAINT DF_match_station DEFAULT 0
+WITH VALUES
+END
+
+
+/**********************END BCOP2321 *******************************************************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

@@ -3,6 +3,7 @@ using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.Entities;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -15,6 +16,8 @@ namespace Services.Broadcast.Repositories
         void RemoveAllocations(List<OpenMarketInventoryAllocation> allocationToRemove);
         void AddAllocations(List<OpenMarketInventoryAllocation> allocationToAdd, int guaranteedAudienceId);
         void RemoveAllocations(List<int> programIds, int proposalDetailId);
+
+        Dictionary<int,station_inventory_manifest> GetStationManifestFromQuarterWeeks(List<int> quarterWeekIds);
     }
 
     public class ProposalOpenMarketInventoryRepository : BroadcastRepositoryBase, IProposalOpenMarketInventoryRepository
@@ -119,6 +122,22 @@ namespace Services.Broadcast.Repositories
 
                 c.SaveChanges();
             });
-        }   
+        }
+
+        public Dictionary<int, station_inventory_manifest> GetStationManifestFromQuarterWeeks(List<int> quarterWeekIds)
+        {
+            Dictionary<int, station_inventory_manifest> manifests = new Dictionary<int, station_inventory_manifest>();
+            _InReadUncommitedTransaction(context =>
+            {
+                manifests = (from sis in context.station_inventory_spots
+                        join manifest in context.station_inventory_manifest on sis.station_inventory_manifest_id equals
+                            manifest.id
+                        where sis.proposal_version_detail_quarter_week_id.HasValue &&
+                              quarterWeekIds.Contains(sis.proposal_version_detail_quarter_week_id.Value)
+                        select new {manifest, q = sis.proposal_version_detail_quarter_week_id})
+                    .ToDictionary(k => k.q.Value, v => v.manifest);
+            });
+            return manifests;
+        }
     }
 }
