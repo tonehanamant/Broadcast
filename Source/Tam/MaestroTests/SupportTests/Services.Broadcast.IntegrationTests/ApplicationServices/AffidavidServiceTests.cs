@@ -46,6 +46,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return affidavitService;
         }
 
+        private static JsonSerializerSettings _SetupJsonSettings()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+
+            jsonResolver.Ignore(typeof(AffidavitFile), "CreatedDate");
+            jsonResolver.Ignore(typeof(AffidavitFile), "Id");
+            jsonResolver.Ignore(typeof(AffidavitFileDetail), "Id");
+            jsonResolver.Ignore(typeof(AffidavitFileDetail), "AffidavitFileId");
+            jsonResolver.Ignore(typeof(AffidavitFileDetail), "AffidavitFileDetailId");
+            jsonResolver.Ignore(typeof(AffidavitFileDetailAudience), "AffidavitFileDetailId");
+            jsonResolver.Ignore(typeof(AffidavitClientScrub), "Id");
+            jsonResolver.Ignore(typeof(AffidavitClientScrub), "AffidavitFileDetailId");
+            jsonResolver.Ignore(typeof(AffidavitClientScrub), "ModifiedDate");
+
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            return jsonSettings;
+        }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SaveAffidaviteService()
@@ -76,20 +98,45 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var affidavitFile = _AffidavitRepository.GetAffidavit(affidavitId);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
+                var jsonSettings = _SetupJsonSettings();
 
-                jsonResolver.Ignore(typeof(AffidavitFile), "CreatedDate");
-                jsonResolver.Ignore(typeof(AffidavitFile), "Id");
-                jsonResolver.Ignore(typeof(AffidavitFileDetail), "Id");
-                jsonResolver.Ignore(typeof(AffidavitFileDetail), "AffidavitFileId");
-                jsonResolver.Ignore(typeof(AffidavitFileDetail), "AffidavitFileDetailId");
-                jsonResolver.Ignore(typeof(AffidavitFileDetailAudience), "AffidavitFileDetailId");
+                var json = IntegrationTestHelper.ConvertToJson(affidavitFile, jsonSettings);
 
-                var jsonSettings = new JsonSerializerSettings
+                Approvals.Verify(json);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteServiceInSpec()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var affidavitService = _SetupAffidavitService();
+
+                var affidavitSaveRequest = new AffidavitSaveRequest
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
+                    FileHash = "abc123",
+                    Source = (int)AffidaviteFileSource.Strata,
+                    FileName = "test.file"
                 };
+
+                var affidavitSaveRequestDetail = new AffidavitSaveRequestDetail
+                {
+                    AirTime = DateTime.Parse("06/01/2016 08:58AM"),
+                    Isci = "AAAAAAAA",
+                    ProgramName = "Programs R Us",
+                    SpotLength = 30,
+                    Station = "WNBC"
+                };
+
+                affidavitSaveRequest.Details.Add(affidavitSaveRequestDetail);
+
+                var affidavitId = affidavitService.SaveAffidavit(affidavitSaveRequest, "testuser", DateTime.Now);
+
+                var affidavitFile = _AffidavitRepository.GetAffidavit(affidavitId);
+
+                var jsonSettings = _SetupJsonSettings();
 
                 var json = IntegrationTestHelper.ConvertToJson(affidavitFile, jsonSettings);
 
@@ -125,17 +172,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 try
                 {
-                    var affidavitId = affidavitService.SaveAffidavit(affidavitSaveRequest, "testuser", DateTime.Now);
+                    affidavitService.SaveAffidavit(affidavitSaveRequest, "testuser", DateTime.Now);
+                    
                     Assert.Fail("Should have thrown an exception due to unmatched affidavit isci.");
                 }
                 catch (BroadcastAffidavitException ex)
                 {
-
                     var json = IntegrationTestHelper.ConvertToJson(ex.ErrorList);
 
                     Approvals.Verify(json);
-                }
-                
+                }                
             }
         }
     }

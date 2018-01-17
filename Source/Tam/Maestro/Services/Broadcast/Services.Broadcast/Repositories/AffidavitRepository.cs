@@ -1,5 +1,6 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using System.Data.Entity;
 using System.Linq;
@@ -68,6 +69,21 @@ namespace Services.Broadcast.Repositories
                             LeadinProgramName = d.leadin_program_name,
                             LeadoutGenre = d.leadout_genre,
                             LeadoutProgramName = d.leadin_program_name,
+                            AffidavitClientScrubs = d.affidavit_client_scrubs.Select(a => new AffidavitClientScrub
+                            {
+                                Id = a.id,
+                                AffidavitFileDetailId = a.affidavit_file_detail_id,
+                                ProposalVersionDetailQuarterWeekId = a.proposal_version_detail_quarter_week_id,
+                                MatchProgram =  a.match_program,
+                                MatchGenre = a.match_genre,
+                                MatchMarket = a.match_market,
+                                MatchTime = a.match_time,
+                                Status = (AffidavitClientScrubStatus)a.status,
+                                Comment = a.comment,
+                                ModifiedBy = a.modified_by,
+                                ModifiedDate = a.modified_date,
+                                LeadIn = a.lead_in
+                            }).ToList(),
                             AffidavitFileDetailAudiences = d.affidavit_file_detail_audiences.Select(a => new AffidavitFileDetailAudience
                             {
                                 AffidavitFileDetailId = a.affidavit_file_detail_id,

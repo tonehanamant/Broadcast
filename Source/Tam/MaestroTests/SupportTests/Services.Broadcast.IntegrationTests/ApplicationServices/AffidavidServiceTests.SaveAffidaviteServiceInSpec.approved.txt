@@ -5,52 +5,52 @@
       "AffidavitClientScrubs": [
         {
           "Comment": null,
-          "LeadIn": false,
+          "LeadIn": true,
           "MatchGenre": false,
           "MatchMarket": false,
           "MatchProgram": false,
-          "MatchTime": false,
+          "MatchTime": true,
           "ModifiedBy": "testuser",
           "ProposalVersionDetailQuarterWeekId": 18,
-          "Status": 2
+          "Status": 1
         }
       ],
       "AffidavitFileDetailAudiences": [
         {
           "AudienceId": 4,
-          "Impressions": 0.0
+          "Impressions": 537.2
         },
         {
           "AudienceId": 5,
-          "Impressions": 0.0
+          "Impressions": 1954.65
         },
         {
           "AudienceId": 6,
-          "Impressions": 0.0
+          "Impressions": 655.0
         },
         {
           "AudienceId": 7,
-          "Impressions": 804.25
+          "Impressions": 299.35
         },
         {
           "AudienceId": 13,
-          "Impressions": 8376.875
+          "Impressions": 16312.6
         },
         {
           "AudienceId": 14,
-          "Impressions": 13284.5
+          "Impressions": 35719.7
         },
         {
           "AudienceId": 15,
-          "Impressions": 22158.25
+          "Impressions": 58468.25
         },
         {
           "AudienceId": 19,
-          "Impressions": 781.625
+          "Impressions": 294.1
         },
         {
           "AudienceId": 20,
-          "Impressions": 0.0
+          "Impressions": 618.3
         },
         {
           "AudienceId": 21,
@@ -58,57 +58,57 @@
         },
         {
           "AudienceId": 22,
-          "Impressions": 849.0
+          "Impressions": 2267.35
         },
         {
           "AudienceId": 28,
-          "Impressions": 10079.375
+          "Impressions": 7300.15
         },
         {
           "AudienceId": 29,
-          "Impressions": 9154.25
+          "Impressions": 16007.85
         },
         {
           "AudienceId": 30,
-          "Impressions": 3803.875
+          "Impressions": 10674.8
         },
         {
           "AudienceId": 31,
-          "Impressions": 85873.375
+          "Impressions": 176822.05
         },
         {
           "AudienceId": 46,
-          "Impressions": 1567.75
+          "Impressions": 4127.8
         },
         {
           "AudienceId": 284,
-          "Impressions": 3441.25
+          "Impressions": 3402.5
         },
         {
           "AudienceId": 290,
-          "Impressions": 6214.125
+          "Impressions": 9714.65
         },
         {
           "AudienceId": 339,
-          "Impressions": 2153.875
+          "Impressions": 3243.15
         },
         {
           "AudienceId": 347,
-          "Impressions": 12969.625
+          "Impressions": 35171.45
         },
         {
           "AudienceId": 348,
-          "Impressions": 1971.875
+          "Impressions": 5321.65
         }
       ],
-      "AirTime": 36240,
+      "AirTime": 32280,
       "Genre": null,
       "Isci": "AAAAAAAA",
       "LeadinGenre": null,
       "LeadinProgramName": null,
       "LeadoutGenre": null,
       "LeadoutProgramName": null,
-      "OriginalAirDate": "2018-12-29T00:00:00",
+      "OriginalAirDate": "2016-06-01T00:00:00",
       "ProgramName": "Programs R Us",
       "SpotLengthId": 1,
       "Station": "WNBC"
