@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Common.Services;
-using Common.Services.ApplicationServices;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
-using Services.Broadcast.BusinessEngines;
+﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -45,6 +42,7 @@ namespace Services.Broadcast.ApplicationServices
             _PostingBooksService = postingBooksService;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
         }
+
         public int SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime)
         {
             Dictionary<int, int> spotLengthDict = null;
@@ -73,12 +71,14 @@ namespace Services.Broadcast.ApplicationServices
                 det.station = matchedAffidavitDetail.AffidavitDetail.Station;
                 det.affidavit_client_scrubs =
                     matchedAffidavitDetail.ProposalDetailWeeks.Select(
-                        w => new affidavit_client_scrubs()
+                        w => new affidavit_client_scrubs
                         {
                             proposal_version_detail_quarter_week_id = w.ProposalVersionDetailQuarterWeekId,
-                            match_time = w.AirtimeMatch,                            
+                            match_time = w.AirtimeMatch,                      
                             modified_by = username,
-                            modified_date = currentDateTime
+                            modified_date = currentDateTime,
+                            lead_in = w.IsLeadInMatch,
+                            status = _GetScrubStatus(w)
                         }).ToList();
 
                 affidavit_file.affidavit_file_details.Add(det);
@@ -91,6 +91,14 @@ namespace Services.Broadcast.ApplicationServices
             var id = _AffidavitRepository.SaveAffidavitFile(affidavit_file);
 
             return id;
+        }
+
+        private int _GetScrubStatus(AffidavitMatchingProposalWeek affidavitMatchingProposalWeek)
+        {
+            if (!affidavitMatchingProposalWeek.AirtimeMatch)
+                return (int) AffidavitClientScrubStatus.OutOfSpec;
+            
+            return (int) AffidavitClientScrubStatus.InSpec;
         }
 
         private List<AffidavitMatchingDetail> _LinkAndValidateContractIscis(AffidavitSaveRequest saveRequest)

@@ -281,6 +281,24 @@ END
 
 /*************************************** BCOP-2320 - END ***************************************************************/
 
+/*************************************** BCOP-2341 - START ***************************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+			  WHERE Name = N'lead_in' AND 
+			  OBJECT_ID = OBJECT_ID(N'affidavit_client_scrubs'))
+BEGIN
+	ALTER TABLE affidavit_client_scrubs
+	ADD lead_in BIT NULL
+	
+	EXEC('UPDATE affidavit_client_scrubs
+		  SET lead_in = 0')
+
+	ALTER TABLE affidavit_client_scrubs
+	ALTER COLUMN lead_in BIT NOT NULL
+END
+
+/*************************************** BCOP-2341 - END ***************************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 ------------------------------------------------------------------------------------------------------------------

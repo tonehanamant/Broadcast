@@ -184,6 +184,8 @@
     <Compile Include="Converters\ProposalScxDataPrep.cs" />
     <Compile Include="Converters\ProposalScxConverter.cs" />
     <Compile Include="DaypartCache.cs" />
+    <Compile Include="Entities\AffidavitClientScrub.cs" />
+    <Compile Include="Entities\AffidavitClientScrubStatus.cs" />
     <Compile Include="Entities\AffidavitMatchingDetail.cs" />
     <Compile Include="Entities\AffidavitFile.cs" />
     <Compile Include="Entities\AffidavitFileDetail.cs" />
