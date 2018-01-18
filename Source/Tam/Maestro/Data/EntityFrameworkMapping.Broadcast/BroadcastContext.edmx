@@ -20,6 +20,7 @@
           <Property Name="comment" Type="varchar" MaxLength="1023" />
           <Property Name="modified_by" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="modified_date" Type="datetime" />
+          <Property Name="lead_in" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="affidavit_file_detail_audiences">
           <Key>
@@ -4569,6 +4570,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="modified_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="affidavit_file_details" Relationship="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" FromRole="affidavit_client_scrubs" ToRole="affidavit_file_details" />
           <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" FromRole="affidavit_client_scrubs" ToRole="proposal_version_detail_quarter_weeks" />
+          <Property Name="lead_in" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="affidavit_file_details">
           <Key>
@@ -5451,6 +5453,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="affidavit_client_scrubs">
             <EntityTypeMapping TypeName="BroadcastModel.affidavit_client_scrubs">
               <MappingFragment StoreEntitySet="affidavit_client_scrubs">
+                <ScalarProperty Name="lead_in" ColumnName="lead_in" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
                 <ScalarProperty Name="comment" ColumnName="comment" />
