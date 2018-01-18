@@ -53,8 +53,8 @@ export default class ProposalActions extends Component {
 		} else {
 			this.props.createAlert({
 				type: 'danger',
-				headline: '',
-				message: 'Proposal cannot be saved: Required Inputs Incomplete (in red)',
+				headline: 'Proposal Cannot Be Saved',
+				message: 'Required Inputs Incomplete (in red)',
 			});
 		}
   }
