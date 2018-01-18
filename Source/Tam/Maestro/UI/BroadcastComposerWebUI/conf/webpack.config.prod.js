@@ -2,6 +2,8 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 require ('babel-polyfill');
+require ('react');
+require ('react-dom');
 
 var { resolve } = require('path');
 var AutoPrefixer = require('autoprefixer');
@@ -12,8 +14,17 @@ var webpackConfig = {
   context: resolve(__dirname, '../src'),
 
   entry: {
-    app: ['babel-polyfill', './index.jsx'],
-    vendor: HELPERS.exclude,
+    app: [
+      'babel-polyfill',
+      'react',
+      'react-dom',
+      './index.jsx'
+    ],
+    vendor: [
+      'babel-polyfill',
+      'react',
+      'react-dom',
+    ].concat(HELPERS.exclude),
   },
 
   output: {
@@ -40,7 +51,7 @@ var webpackConfig = {
       name: 'vendor'
     }),
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
+      sourceMap: false,
       output: {
         comments: false
       },
@@ -60,6 +71,7 @@ var webpackConfig = {
       filename: '[name]-style-[hash].css',
     }),
     new HtmlWebpackPlugin({
+      favicon: resolve(__dirname, '../src/assets/icons/favicon.ico'),
       template: './index.html',
     }),
   ],

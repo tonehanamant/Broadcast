@@ -367,7 +367,7 @@ export default class ProposalDetailGrid extends Component {
         data={this.props.GridQuarterWeeks}
         store={this.context.store}
         height="false"
-        key={this.props.proposalValidationStates.DetailGridsInvalid} // force cell update
+        key={`${this.props.proposalValidationStates.DetailGridsInvalid}${this.props.isReadOnly}`} // force cell update
       />
     );
   }
