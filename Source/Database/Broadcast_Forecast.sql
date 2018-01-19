@@ -75,14 +75,8 @@ BEGIN
 		WHERE [version] = '5.8.12' -- Previous release version
 		OR [version] = '18.02.1') -- Current release version
 	BEGIN
-		PRINT 'Database Successfully Updated'
-		COMMIT TRANSACTION
-		DROP TABLE #previous_version
-	END
-	ELSE
-	BEGIN
-		PRINT 'Incorrect Previous Database Version'
 		ROLLBACK TRANSACTION
+		RAISERROR('Incorrect Previous Database Version', 11, 1)
 	END
 
 END
@@ -91,25 +85,6 @@ GO
 IF(XACT_STATE() = -1)
 BEGIN
 	ROLLBACK TRANSACTION
-	PRINT 'Database Update Failed. Transaction rolled back.'
+	RAISERROR('Database Update Failed. Transaction rolled back.', 11, 1)
 END
 GO
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
