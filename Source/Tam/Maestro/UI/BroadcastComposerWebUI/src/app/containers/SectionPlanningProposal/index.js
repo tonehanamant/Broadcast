@@ -39,6 +39,20 @@ export class SectionPlanningProposal extends Component {
     this.isValidProposalDetailGrids = this.isValidProposalDetailGrids.bind(this);
     this.isDirty = this.isDirty.bind(this);
     this.isLocked = this.isLocked.bind(this);
+    this.onUnload = this.onUnload.bind(this);
+  }
+
+  onUnload() {
+      // console.log('CALLLLLLLLLLLLLLLEEEEEEEEEED');
+      this.props.getProposalUnlock(this.props.proposal.Id);
+  }
+
+  componentDidMount() {
+    window.addEventListener('beforeunload', this.onUnload);
+  }
+
+  componentWillUnmount() {
+      window.removeEventListener('beforeunload', this.onUnload);
   }
 
   componentWillMount() {

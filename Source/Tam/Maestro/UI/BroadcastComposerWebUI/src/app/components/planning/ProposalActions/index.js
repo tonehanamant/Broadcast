@@ -53,8 +53,8 @@ export default class ProposalActions extends Component {
 		} else {
 			this.props.createAlert({
 				type: 'danger',
-				headline: '',
-				message: 'Proposal cannot be saved: Required Inputs Incomplete (in red)',
+				headline: 'Proposal Cannot Be Saved',
+				message: 'Required Inputs Incomplete (in red)',
 			});
 		}
   }
@@ -63,7 +63,9 @@ export default class ProposalActions extends Component {
       // console.log('cancel', this.props.isCreate, this.props.proposal.Id);
       this.props.getProposalUnlock(this.props.proposal.Id);
     }
-    window.location = '/broadcast/planning';
+    setTimeout(() => {
+      window.location = '/broadcast/planning';
+    }, 500);
   }
 
   render() {
