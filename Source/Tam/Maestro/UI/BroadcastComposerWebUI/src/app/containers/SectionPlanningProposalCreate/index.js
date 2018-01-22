@@ -131,6 +131,7 @@ export class SectionPlanningProposalCreate extends Component {
 
   render() {
     const { toggleModal, createAlert, initialdata, proposal, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, updateProposalEditFormDetail, updateProposalEditFormDetailGrid, modelNewProposalDetail, proposalValidationStates, setProposalValidationState } = this.props;
+    const isCreate = true;
     return (
       <div id="planning-section-proposal" style={{ paddingBottom: 80 }}>
         {
@@ -171,6 +172,7 @@ export class SectionPlanningProposalCreate extends Component {
               proposalEditForm={proposalEditForm}
               updateProposalEditForm={updateProposalEditForm}
               saveProposal={saveProposal}
+              isCreate
               setProposalValidationState={setProposalValidationState}
               isValidProposalForm={this.isValidProposalForm}
               isValidProposalDetails={this.isValidProposalDetails}
