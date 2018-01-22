@@ -37,6 +37,7 @@ namespace Services.Broadcast.ApplicationServices
         ProposalDto UnorderProposal(int proposalId, string username);
         Tuple<string, Stream> GenerateScxFileArchive(int proposalIds);
         ValidationWarningDto DeleteProposal(int proposalId);
+        List<LookupDto> FindGenres(string genreSearchString);
     }
 
     public class ProposalService : IProposalService
@@ -51,6 +52,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDaypartCache _DaypartCache;
         private readonly IProposalInventoryRepository _ProposalInventoryRepository;
         private readonly IStationRepository _StationRepository;
+        private readonly IGenreRepository _GenreRepository;
         private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine;
         private readonly IProposalScxConverter _ProposalScxConverter;
         private readonly IPostingBooksService _PostingBooksService;
@@ -84,6 +86,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalInventoryRepository =
                 _BroadcastDataRepositoryFactory.GetDataRepository<IProposalInventoryRepository>();
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
+            _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
             _ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
             _ProposalScxConverter = proposalScxConverter;
             _PostingBooksService = postingBooksService;
@@ -1251,6 +1254,12 @@ namespace Services.Broadcast.ApplicationServices
         private string _FileDateFormat(DateTime date)
         {
             return date.ToString("MMddyyyyy");
+        }
+
+
+        public List<LookupDto> FindGenres(string genreSearchString)
+        {
+            return _GenreRepository.FindGenres(genreSearchString);
         }
     }
 }

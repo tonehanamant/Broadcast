@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using System.Globalization;
+using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace Services.Broadcast.Repositories
         LookupDto GetGenre(string name);
         int AddGenre(LookupDto genre, string userName);
         List<LookupDto> GetAllGenres();
+
+        List<LookupDto> FindGenres(string genreSearchString);
     }
 
     public class GenreRepository: BroadcastRepositoryBase, IGenreRepository
@@ -78,6 +81,21 @@ namespace Services.Broadcast.Repositories
                 context => (from x in context.genres
                     orderby x.name ascending
                     select new LookupDto() {Id = x.id, Display = x.name}).ToList());
+        }
+
+
+        public List<LookupDto> FindGenres(string genreSearchString)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.genres.Where(g => g.name.ToLower().Contains(genreSearchString.ToLower())).Select(
+                        g => new LookupDto()
+                        {
+                            Display = g.name,
+                            Id = g.id
+                        }).ToList();
+                });
         }
     }    
 }
