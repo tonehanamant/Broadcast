@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { AppContainer } from 'react-hot-loader';
+import 'Utils/element-closest'; // Element.closest polyfill
 
 import AppRoot from 'Containers/AppRoot';
 
