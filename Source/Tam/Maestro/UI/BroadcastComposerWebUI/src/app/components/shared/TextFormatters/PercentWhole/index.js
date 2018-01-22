@@ -10,7 +10,7 @@ export default class PercentWhole extends Component {
 
   render() {
     return (
-			<span>{ numeral(this.props.percent).format('0%') }</span>
+			<span>{ numeral(this.props.percent / 100).format('0%') }</span>
     );
 	}
 }

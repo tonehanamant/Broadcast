@@ -27,11 +27,16 @@ var PlanningController = BaseController.extend({
         //determine if open modal
         if (urlModalParams) {
             this.activeModalParams = urlModalParams;
-            if (this.activeModalParams.modal == 'inventory') {
-                this.openDetailInventory(this.activeModalParams);
-            } else if (this.activeModalParams.modal == 'openMarket') {
-                this.openDetailOpenMarketInventory(this.activeModalParams);
-            }
+            $scope.apiGetLock(this.activeModalParams.proposalId, function (lockResponse) {
+                //allow either way?
+                //if (lockResponse.Success) {
+                    if (this.activeModalParams.modal == 'inventory') {
+                        this.openDetailInventory(this.activeModalParams);
+                    } else if (this.activeModalParams.modal == 'openMarket') {
+                        this.openDetailOpenMarketInventory(this.activeModalParams);
+                    }
+                //}
+             });
         } else {
             // view
             $scope.view = new PlanningMainView();
