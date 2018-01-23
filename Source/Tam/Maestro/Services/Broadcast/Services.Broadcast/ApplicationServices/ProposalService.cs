@@ -37,6 +37,7 @@ namespace Services.Broadcast.ApplicationServices
         ProposalDto UnorderProposal(int proposalId, string username);
         Tuple<string, Stream> GenerateScxFileArchive(int proposalIds);
         ValidationWarningDto DeleteProposal(int proposalId);
+        Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
     }
 
     public class ProposalService : IProposalService
@@ -767,16 +768,33 @@ namespace Services.Broadcast.ApplicationServices
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 var proposal = _ProposalRepository.GetProposalById(proposalId);
-                _SetProposalDetailDaypart(proposal.Details);
-                _SetProposalSpotLengths(proposal);
-                _SetProposalDetailFlightWeeks(proposal);
-                _SetProposalFlightWeeksAndIds(proposal);
-                _SetProposalMarketGroups(proposal);
-                _SetProposalRatingBooks(proposal);
-                _SetProposalMargins(proposal);
-                _SetProposalCanBeDeleted(proposal);
+
+                SetupProposalDto(proposal);
                 return proposal;
             }
+        }
+
+        private void SetupProposalDto(ProposalDto proposal)
+        {
+            _SetProposalDetailDaypart(proposal.Details);
+            _SetProposalSpotLengths(proposal);
+            _SetProposalDetailFlightWeeks(proposal);
+            _SetProposalFlightWeeksAndIds(proposal);
+            _SetProposalMarketGroups(proposal);
+            _SetProposalRatingBooks(proposal);
+            _SetProposalMargins(proposal);
+            _SetProposalCanBeDeleted(proposal);
+        }
+
+        public Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds)
+        {
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                var proposals = _ProposalRepository.GetProposalsByQuarterWeeks(quarterWeekIds);
+                proposals.Values.ForEach(SetupProposalDto);
+                return proposals;
+            }
+
         }
 
         private void _SetProposalRatingBooks(ProposalDto proposal)

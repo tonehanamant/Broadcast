@@ -7,11 +7,11 @@
           "Comment": null,
           "LeadIn": false,
           "MatchGenre": false,
-          "MatchMarket": false,
+          "MatchMarket": true,
           "MatchProgram": false,
-          "MatchTime": false,
+          "MatchTime": true,
           "ModifiedBy": "test user",
-          "ProposalVersionDetailQuarterWeekId": 18,
+          "ProposalVersionDetailQuarterWeekId": 8522,
           "Status": 0
         }
       ],
@@ -103,7 +103,7 @@
       ],
       "AirTime": 29040,
       "Genre": null,
-      "Isci": "DDDDDDDD",
+      "Isci": "WAWA",
       "LeadinGenre": null,
       "LeadinProgramName": null,
       "LeadoutGenre": null,

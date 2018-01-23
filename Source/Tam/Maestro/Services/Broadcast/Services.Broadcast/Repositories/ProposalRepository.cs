@@ -1346,8 +1346,9 @@ namespace Services.Broadcast.Repositories
                         join qw in context.proposal_version_detail_quarter_weeks on q.id equals qw
                             .proposal_version_quarter_id
                         where quarterWeekIds.Contains(qw.id)
-                        select new {p, v, quarterWeekId = qw.id})
-                    .ToDictionary(k => k.quarterWeekId, val => _MapToProposalDto(val.p, val.v));
+                        select new {p, v,pd = d, quarterWeekId = qw.id})
+                    .GroupBy(g => g.quarterWeekId).ToList()
+                    .ToDictionary(k => k.Key, val => val.Select(v => _MapToProposalDto(v.p, v.v)).Single());
 
                 return proposals;
             });

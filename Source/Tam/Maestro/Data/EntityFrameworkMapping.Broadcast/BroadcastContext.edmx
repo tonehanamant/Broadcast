@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BroadcastModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BroadcastModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="affidavit_client_scrubs">
           <Key>
             <PropertyRef Name="id" />
@@ -21,6 +21,7 @@
           <Property Name="modified_by" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="modified_date" Type="datetime" />
           <Property Name="lead_in" Type="bit" Nullable="false" />
+          <Property Name="match_station" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="affidavit_file_detail_audiences">
           <Key>
@@ -4571,6 +4572,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="affidavit_file_details" Relationship="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" FromRole="affidavit_client_scrubs" ToRole="affidavit_file_details" />
           <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" FromRole="affidavit_client_scrubs" ToRole="proposal_version_detail_quarter_weeks" />
           <Property Name="lead_in" Type="Boolean" Nullable="false" />
+          <Property Name="match_station" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="affidavit_file_details">
           <Key>
@@ -5453,6 +5455,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="affidavit_client_scrubs">
             <EntityTypeMapping TypeName="BroadcastModel.affidavit_client_scrubs">
               <MappingFragment StoreEntitySet="affidavit_client_scrubs">
+                <ScalarProperty Name="match_station" ColumnName="match_station" />
                 <ScalarProperty Name="lead_in" ColumnName="lead_in" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />

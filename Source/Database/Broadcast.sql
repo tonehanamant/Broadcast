@@ -270,6 +270,17 @@ BEGIN
 	ON DELETE CASCADE
 
 	ALTER TABLE affidavit_file_detail_audiences CHECK CONSTRAINT FK_affidavit_file_detail_audiences_affidavit_file_details
+	ALTER TABLE affidavit_file_detail_audiences WITH CHECK ADD CONSTRAINT FK_affidavit_file_detail_audiences_audiences
+	FOREIGN KEY (audience_id)
+	REFERENCES audiences (id)
+	ON DELETE CASCADE
+
+	ALTER TABLE affidavit_file_detail_audiences CHECK CONSTRAINT FK_affidavit_file_detail_audiences_audiences
+END
+
+/*************************************** BCOP-2320 - END ***************************************************************/
+
+
 /**********************BEGIN BCOP2321 *******************************************************************************************/
 
 IF NOT EXISTS(SELECT 1 FROM sys.columns 
@@ -283,15 +294,7 @@ END
 
 
 /**********************END BCOP2321 *******************************************************************************************/
-	ALTER TABLE affidavit_file_detail_audiences WITH CHECK ADD CONSTRAINT FK_affidavit_file_detail_audiences_audiences
-	FOREIGN KEY (audience_id)
-	REFERENCES audiences (id)
-	ON DELETE CASCADE
 
-	ALTER TABLE affidavit_file_detail_audiences CHECK CONSTRAINT FK_affidavit_file_detail_audiences_audiences
-END
-
-/*************************************** BCOP-2320 - END ***************************************************************/
 
 /*************************************** BCOP-2341 - START ***************************************************************/
 
