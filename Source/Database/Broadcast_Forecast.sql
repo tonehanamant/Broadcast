@@ -81,7 +81,6 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		PRINT 'Incorrect Previous Database Version'
 		ROLLBACK TRANSACTION
 		RAISERROR('Incorrect Previous Database Version', 11, 1)
 	END

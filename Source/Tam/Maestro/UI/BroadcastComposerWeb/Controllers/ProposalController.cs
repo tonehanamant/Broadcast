@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Services.ContractInterfaces;
@@ -165,6 +166,15 @@ namespace BroadcastComposerWeb.Controllers
             var key = string.Format("broadcast_proposal : {0}", proposalId);
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().ReleaseObject(key));
+        }
+
+        [HttpGet]
+        [Route("FindGenres/{genreSearchString}")]
+        public BaseResponse<List<LookupDto>> FindGenres(string genreSearchString)
+        {
+
+            return _ConvertToBaseResponse(
+                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindGenres(genreSearchString));
         }
     }
 }

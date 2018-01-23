@@ -13,8 +13,10 @@ import configureStore, { history } from './index.store';
 import 'react-select/dist/react-select.css';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
+// import 'antd/dist/antd.css';
 import './index.css';
 import './index.scss';
+import 'antd/dist/antd.css';
 
 
 require('./assets/icons/favicon.png');
