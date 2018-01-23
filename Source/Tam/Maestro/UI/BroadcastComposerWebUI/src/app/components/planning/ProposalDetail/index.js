@@ -25,6 +25,7 @@ export default class ProposalDetail extends Component {
     this.checkValidSpotLength = this.checkValidSpotLength.bind(this);
     this.checkValidDaypart = this.checkValidDaypart.bind(this);
     this.checkValidDaypartCode = this.checkValidDaypartCode.bind(this);
+    this.openInventory = this.openInventory.bind(this);
 
     this.state = {
       validationStates: {
@@ -150,6 +151,45 @@ export default class ProposalDetail extends Component {
     this.setValidationState('DaypartCode_MaxChar', val.length <= 10 ? null : 'error');
   }
 
+  openInventory(type) {
+    const isDirty = this.props.isDirty();
+    if (isDirty) {
+      this.props.createAlert({
+        type: 'warning',
+        headline: 'Proposal Not Saved',
+        message: 'To access Inventory Planner you must save proposal first.',
+      });
+      return;
+  }
+    const detailId = this.props.detail.Id;
+    const proposalId = this.props.proposalEditForm.Id;
+    const readOnly = this.props.isReadOnly;
+    const modalUrl = `/broadcast/planning?modal=${type}&proposalId=${proposalId}&detailId=${detailId}&readOnly=${readOnly}`;
+    // console.log('openInventory', modalUrl, type, detailId, proposalId, readOnly, this.props.proposalEditForm);
+    if (readOnly) {
+      const title = (type === 'inventory') ? 'Inventory Read Only' : 'Open Market Inventory Read Only';
+      const { Statuses } = this.props.initialdata;
+      const status = this.props.proposalEditForm.Status;
+      const statusDisplay = Statuses.find(statusItem => statusItem.Id === status);
+      const body = `Proposal Status of ${statusDisplay.Display}, you will not be able to save inventory.  Press "Continue" to go to Inventory.`;
+      this.props.toggleModal({
+        modal: 'confirmModal',
+        active: true,
+        properties: {
+          titleText: title,
+          bodyText: body,
+          closeButtonText: 'Cancel',
+          actionButtonText: 'Continue',
+          actionButtonBsStyle: 'warning',
+          action: () => { window.location = modalUrl; },
+          dismiss: () => {},
+        },
+      });
+      return;
+    }
+    window.location = modalUrl;
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.proposalValidationStates.DetailInvalid === true) {
       this.onSaveShowValidation(nextProps);
@@ -234,10 +274,10 @@ export default class ProposalDetail extends Component {
               </FormGroup>
               }
               {detail &&
-              <Button bsStyle="primary" bsSize="xsmall" style={{ margin: '0 10px 0 24px' }}>Inventory</Button>
+              <Button bsStyle="primary" bsSize="xsmall" style={{ margin: '0 10px 0 24px' }} onClick={() => this.openInventory('inventory')}>Inventory</Button>
               }
               {detail &&
-              <Button bsStyle="primary" bsSize="xsmall" style={{ margin: '0 16px 0 0' }}>Open Market Inventory</Button>
+              <Button bsStyle="primary" bsSize="xsmall" style={{ margin: '0 16px 0 0' }} onClick={() => this.openInventory('openMarket')}>Open Market Inventory</Button>
               }
               {detail &&
               <FormGroup controlId="proposalDetailADU">
@@ -301,6 +341,7 @@ ProposalDetail.defaultProps = {
   deleteProposalDetail: () => {},
   modelNewProposalDetail: () => {},
   toggleModal: () => {},
+  createAlert: () => {},
 };
 
 ProposalDetail.propTypes = {
@@ -314,6 +355,8 @@ ProposalDetail.propTypes = {
   modelNewProposalDetail: PropTypes.func,
   toggleModal: PropTypes.func,
   isReadOnly: PropTypes.bool.isRequired,
+  createAlert: PropTypes.func,
+  isDirty: PropTypes.func.isRequired,
 
   proposalValidationStates: PropTypes.object,
 };

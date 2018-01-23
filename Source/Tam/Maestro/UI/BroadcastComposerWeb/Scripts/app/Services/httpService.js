@@ -24,7 +24,7 @@
     //CHANGE: allow for Problems handling in success false in result as error callback
     ajax: function (url, success, error, method, args) {
         if (args.$ViewElement) {
-            this.showProcessing(args.$ViewElement);
+            this.showProcessing(args.$ViewElement, null, url);
         }
 
         var me = this;
@@ -40,7 +40,7 @@
                 if (result.Success) {
                     if (result.Data || result.Data === false || result.Data === 0) {
                         state = 'success';
-                        if (me.clearProcessing) me.clearProcessing();
+                        if (me.clearProcessing) me.clearProcessing(url);
 
                         if (result.Message)
                             me.showMessage(result.Message);
@@ -81,7 +81,7 @@
             },
             complete: function (xhr, textStatus) {
                 if (state == 'error' && me.clearProcessing) {
-                    me.clearProcessing();
+                    me.clearProcessing(url);
                 }
                 me.setStatus(state, args.StatusMessage);
             }
@@ -102,10 +102,13 @@
 
     clearProcessing: null,
 
-    showProcessing: function (el, msg) {
+    showProcessing: function (el, msg, url) {
         msg = msg || config.processingMsg;
         w2utils.lock(el, msg, true);
-        this.clearProcessing = function () {
+        // console.log('show Processing', el, url);
+        //issue is other calls can cancel if not synced
+        this.clearProcessing = function (url) {
+            // console.log('clear processing', el, url);
             w2utils.unlock(el);
         };
     },

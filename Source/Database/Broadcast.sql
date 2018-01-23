@@ -249,7 +249,27 @@ GO
 
 /******************** END BCOP-2316 *********************************************************************************************/
 
+/*************************************** BCOP-2320 - START ***************************************************************/
 
+IF OBJECT_ID('affidavit_file_detail_audiences', 'U') IS NULL
+BEGIN
+	CREATE TABLE affidavit_file_detail_audiences
+	(
+		affidavit_file_detail_id BIGINT NOT NULL,
+		audience_id INT NOT NULL,
+		impressions FLOAT NOT NULL,
+		CONSTRAINT [PK_affidavit_file_detail_audiences] PRIMARY KEY CLUSTERED
+		(
+			affidavit_file_detail_id, audience_id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	)
+
+	ALTER TABLE affidavit_file_detail_audiences WITH CHECK ADD CONSTRAINT FK_affidavit_file_detail_audiences_affidavit_file_details
+	FOREIGN KEY (affidavit_file_detail_id)
+	REFERENCES affidavit_file_details (id)
+	ON DELETE CASCADE
+
+	ALTER TABLE affidavit_file_detail_audiences CHECK CONSTRAINT FK_affidavit_file_detail_audiences_affidavit_file_details
 /**********************BEGIN BCOP2321 *******************************************************************************************/
 
 IF NOT EXISTS(SELECT 1 FROM sys.columns 
@@ -263,6 +283,33 @@ END
 
 
 /**********************END BCOP2321 *******************************************************************************************/
+	ALTER TABLE affidavit_file_detail_audiences WITH CHECK ADD CONSTRAINT FK_affidavit_file_detail_audiences_audiences
+	FOREIGN KEY (audience_id)
+	REFERENCES audiences (id)
+	ON DELETE CASCADE
+
+	ALTER TABLE affidavit_file_detail_audiences CHECK CONSTRAINT FK_affidavit_file_detail_audiences_audiences
+END
+
+/*************************************** BCOP-2320 - END ***************************************************************/
+
+/*************************************** BCOP-2341 - START ***************************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+			  WHERE Name = N'lead_in' AND 
+			  OBJECT_ID = OBJECT_ID(N'affidavit_client_scrubs'))
+BEGIN
+	ALTER TABLE affidavit_client_scrubs
+	ADD lead_in BIT NULL
+	
+	EXEC('UPDATE affidavit_client_scrubs
+		  SET lead_in = 0')
+
+	ALTER TABLE affidavit_client_scrubs
+	ALTER COLUMN lead_in BIT NOT NULL
+END
+
+/*************************************** BCOP-2341 - END ***************************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

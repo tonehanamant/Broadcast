@@ -13,7 +13,7 @@ const ACTIONS = { ...appActions, ...postPrePostingActions };
 /* REQUEST POST PRE POSTING INITIAL DATA */
 /* ////////////////////////////////// */
 export function* requestPostPrePostingInitialData() {
-  const { getPrePostInitialData } = api.postPrePosting;
+  const { getInitialData } = api.postPrePosting;
 
   try {
     yield put({
@@ -22,7 +22,7 @@ export function* requestPostPrePostingInitialData() {
         id: 'postInitialData',
         loading: true },
       });
-    const response = yield getPrePostInitialData();
+    const response = yield getInitialData();
     const { status, data } = response;
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,

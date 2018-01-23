@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import _ from 'lodash';
+
 import { toggleModal, createAlert } from 'Ducks/app';
 import { getProposalInitialData, getProposal, updateProposalEditForm, updateProposalEditFormDetail, updateProposalEditFormDetailGrid, updateProposal, deleteProposalDetail, saveProposal, modelNewProposalDetail, setProposalValidationState } from 'Ducks/planning';
 
@@ -30,6 +32,7 @@ export class SectionPlanningProposalCreate extends Component {
     this.isValidProposalForm = this.isValidProposalForm.bind(this);
     this.isValidProposalDetails = this.isValidProposalDetails.bind(this);
     this.isValidProposalDetailGrids = this.isValidProposalDetailGrids.bind(this);
+    this.isDirty = this.isDirty.bind(this);
   }
 
   componentWillMount() {
@@ -122,8 +125,13 @@ export class SectionPlanningProposalCreate extends Component {
     return validDetailQuarters && validDetailQuarterWeeks;
   }
 
+  isDirty() {
+    return !_.isEqual(this.props.proposalEditForm, this.props.proposal);
+  }
+
   render() {
     const { toggleModal, createAlert, initialdata, proposal, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, updateProposalEditFormDetail, updateProposalEditFormDetailGrid, modelNewProposalDetail, proposalValidationStates, setProposalValidationState } = this.props;
+    const isCreate = true;
     return (
       <div id="planning-section-proposal" style={{ paddingBottom: 80 }}>
         {
@@ -153,7 +161,9 @@ export class SectionPlanningProposalCreate extends Component {
               deleteProposalDetail={deleteProposalDetail}
               modelNewProposalDetail={modelNewProposalDetail}
               isReadOnly={false}
+              isDirty={this.isDirty}
               proposalValidationStates={proposalValidationStates}
+              createAlert={createAlert}
             />
             <ProposalActions
               toggleModal={toggleModal}
@@ -162,10 +172,12 @@ export class SectionPlanningProposalCreate extends Component {
               proposalEditForm={proposalEditForm}
               updateProposalEditForm={updateProposalEditForm}
               saveProposal={saveProposal}
+              isCreate
               setProposalValidationState={setProposalValidationState}
               isValidProposalForm={this.isValidProposalForm}
               isValidProposalDetails={this.isValidProposalDetails}
               isValidProposalDetailGrids={this.isValidProposalDetailGrids}
+              isDirty={this.isDirty}
             />
           </div>
         }

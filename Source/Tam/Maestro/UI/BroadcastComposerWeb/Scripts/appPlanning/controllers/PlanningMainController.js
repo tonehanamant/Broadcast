@@ -22,18 +22,23 @@ var PlanningMainController = BaseController.extend({
         $scope.proposalsController.initController($scope);
     },
 
+    //CHANGE - open react view
     // loads options -- if successful then opens the proposal form
     createProposal: function () {
-        var $scope = this;
 
-        $scope.proposalsController.proposalViewModel.viewMode(viewModes.create);
+        var url = window.location.origin + '/broadcastreact/planning/proposal/create';
+        window.location = url;
+        //var $scope = this;
 
-        $scope.proposalsController.apiGetOptions(function (options) {
-            $scope.proposalsController.proposalViewModel.loadOptions(options);
-            $scope.proposalsController.proposalView.showModal();
-        });
+        //$scope.proposalsController.proposalViewModel.viewMode(viewModes.create);
+
+        //$scope.proposalsController.apiGetOptions(function (options) {
+        //    $scope.proposalsController.proposalViewModel.loadOptions(options);
+        //    $scope.proposalsController.proposalView.showModal();
+        //});
     },
 
+    //CHANGE - open react view after locking
     // loads options everytime -- if successful then loads the proposal form
     editProposal: function (proposalId) {
         var $scope = this;
@@ -42,16 +47,18 @@ var PlanningMainController = BaseController.extend({
 
         $scope.proposalsController.apiGetLock(proposalId, function (lockResponse) {
             if (lockResponse.Success) {
-                $scope.proposalsController.apiGetOptions(function(options) {
-                    $scope.proposalsController.proposalViewModel.loadOptions(options);
+                var url = window.location.origin + '/broadcastreact/planning/proposal/' + proposalId;
+                window.location = url;
+                //$scope.proposalsController.apiGetOptions(function(options) {
+                //    $scope.proposalsController.proposalViewModel.loadOptions(options);
 
-                    $scope.apiGetPrimaryProposal(proposalId, function(proposal) {
-                        $scope.proposalsController.proposalViewModel.viewMode(viewModes.view);
-                        $scope.proposalsController.proposalViewModel.load(proposal);
-                        $scope.proposalsController.proposalView.setProposal(proposal);
-                        $scope.proposalsController.proposalView.showModal();
-                    });
-                }, proposalId);
+                //    $scope.apiGetPrimaryProposal(proposalId, function(proposal) {
+                //        $scope.proposalsController.proposalViewModel.viewMode(viewModes.view);
+                //        $scope.proposalsController.proposalViewModel.load(proposal);
+                //        $scope.proposalsController.proposalView.setProposal(proposal);
+                //        $scope.proposalsController.proposalView.showModal();
+                //    });
+                //}, proposalId);
             } else {
               util.notify("Proposal Locked", "danger");
               var msg = 'This Proposal is currently in use by ' + lockResponse.LockedUserName + '. Please try again later.';

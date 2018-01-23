@@ -12,6 +12,7 @@ class Sweeps extends Component {
   constructor(props) {
     super(props);
 
+    this.handleOnSaveClick = this.handleOnSaveClick.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -27,6 +28,7 @@ class Sweeps extends Component {
       currentPlaybackType: null,
       playbackTypeOptions: [],
       showConfirmation: false,
+      showError: false,
     };
   }
 
@@ -75,6 +77,16 @@ class Sweeps extends Component {
     }
   }
 
+  handleOnSaveClick() {
+    const { currentShareBook, currentHutBook } = this.state;
+
+    if (currentHutBook.Id !== -1 && currentHutBook.Id >= currentShareBook.Id) {
+      this.setState({ showError: true });
+    } else {
+      this.setState({ showConfirmation: true });
+    }
+  }
+
   onSave() {
     const { updateProposalEditFormDetail, detail } = this.props;
     const { currentShareBook, currentHutBook, currentPlaybackType } = this.state;
@@ -116,14 +128,17 @@ class Sweeps extends Component {
 
   render() {
     const { isReadOnly, modal, detail } = this.props;
-    const { currentShareBook, currentHutBook, currentPlaybackType, showConfirmation, shareBookOptions, hutBookOptions, playbackTypeOptions } = this.state;
+    const { currentShareBook, currentHutBook, currentPlaybackType, showConfirmation, showError, shareBookOptions, hutBookOptions, playbackTypeOptions } = this.state;
     const show = (detail && modal && modal.properties.detailId === detail.Id) ? modal.active : false;
 
     return (
       <div>
         <Modal show={show}>
-          <Modal.Header closeButton>
-            <Modal.Title>Manage Ratings</Modal.Title>
+          <Modal.Header>
+            <Button className="close" bsStyle="link" onClick={this.onCancel} style={{ display: 'inline-block', float: 'right' }}>
+            <span>&times;</span>
+          </Button>
+          <Modal.Title>Manage Ratings</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
@@ -183,12 +198,15 @@ class Sweeps extends Component {
 
           <Modal.Footer>
             <Button onClick={this.onCancel} bsStyle="default">Cancel</Button>
-            {!isReadOnly && <Button onClick={() => this.setState({ showConfirmation: true })} bsStyle="success">Save</Button>}
+            {!isReadOnly && <Button onClick={this.handleOnSaveClick} bsStyle="success">Save</Button>}
           </Modal.Footer>
         </Modal>
 
         <Modal show={showConfirmation}>
-          <Modal.Header closeButton>
+          <Modal.Header>
+          <Button className="close" bsStyle="link" onClick={() => this.setState({ showConfirmation: false })} style={{ display: 'inline-block', float: 'right' }}>
+            <span>&times;</span>
+          </Button>
             <Modal.Title>Are you sure?</Modal.Title>
           </Modal.Header>
 
@@ -199,6 +217,23 @@ class Sweeps extends Component {
           <Modal.Footer>
             <Button onClick={() => this.setState({ showConfirmation: false })} bsStyle="default">Cancel</Button>
             <Button onClick={this.onSave} bsStyle="success">Save</Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={showError}>
+          <Modal.Header>
+            <Button className="close" bsStyle="link" onClick={() => this.setState({ showError: false })} style={{ display: 'inline-block', float: 'right' }}>
+            <span>&times;</span>
+          </Button>
+          <Modal.Title>Error</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            Hut Media Month must be earlier(Less than) the Share Media Month
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button onClick={() => this.setState({ showError: false })} bsStyle="warning">Okay</Button>
           </Modal.Footer>
         </Modal>
       </div>

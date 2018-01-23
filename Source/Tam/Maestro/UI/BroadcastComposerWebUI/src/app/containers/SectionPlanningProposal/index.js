@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import _ from 'lodash';
+
 import { toggleModal, createAlert } from 'Ducks/app';
-import { getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, setProposalValidationState } from 'Ducks/planning';
+import { getProposalLock, getProposalUnlock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposalEditFormDetail, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, setProposalValidationState } from 'Ducks/planning';
+
+// import { loadLocalStorageState } from 'SRCRoot/index.store.localstorage.js';
 
 import ProposalHeader from 'Components/planning/ProposalHeader';
 import ProposalActions from 'Components/planning/ProposalActions';
@@ -12,7 +16,8 @@ import ProposalSwitchVersionModal from 'Components/planning/ProposalSwitchVersio
 import ProposalDetails from 'Components/planning/ProposalDetails';
 
 
-const mapStateToProps = ({ planning: { proposalLock, initialdata, proposal, versions, proposalEditForm, proposalValidationStates } }) => ({
+const mapStateToProps = ({ app: { employee }, planning: { proposalLock, initialdata, proposal, versions, proposalEditForm, proposalValidationStates } }) => ({
+  employee,
   proposalLock,
   initialdata,
   proposal,
@@ -22,7 +27,7 @@ const mapStateToProps = ({ planning: { proposalLock, initialdata, proposal, vers
 });
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleModal, createAlert, getProposalLock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposal, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, setProposalValidationState }, dispatch)
+  bindActionCreators({ toggleModal, createAlert, getProposalLock, getProposalUnlock, getProposalInitialData, getProposal, getProposalVersions, getProposalVersion, updateProposalEditForm, updateProposal, updateProposalEditFormDetail, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, setProposalValidationState }, dispatch)
 );
 
 /* eslint-disable react/prefer-stateless-function */
@@ -32,6 +37,8 @@ export class SectionPlanningProposal extends Component {
     this.isValidProposalForm = this.isValidProposalForm.bind(this);
     this.isValidProposalDetails = this.isValidProposalDetails.bind(this);
     this.isValidProposalDetailGrids = this.isValidProposalDetailGrids.bind(this);
+    this.isDirty = this.isDirty.bind(this);
+    this.isLocked = this.isLocked.bind(this);
   }
 
   componentWillMount() {
@@ -41,10 +48,37 @@ export class SectionPlanningProposal extends Component {
     this.props.getProposalLock(id);
     this.props.getProposalInitialData();
 
+    // const localStorageState = loadLocalStorageState();
+    // const { planning } = localStorageState;
+    // const { proposal } = planning;
+
+    // if (proposal && proposal.Id === id) {
+    //   console.log('!!!! RESTORING PROPOSAL !!!!');
+    //   this.props.restorePlanningProposal(planning);
+    // } else
+
     if (id && version) {
       this.props.getProposalVersion(id, version);
     } else if (id) {
       this.props.getProposal(id);
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.isLocked()) {
+      this.props.toggleModal({
+        modal: 'confirmModal',
+        active: true,
+        properties: {
+          titleText: 'Proposal Locked',
+          bodyText: `This Proposal is currently in use by ${this.props.proposalLock.LockedUserName}. Please try again later.`,
+          closeButtonText: 'Cancel',
+          actionButtonText: 'Okay',
+          actionButtonBsStyle: 'primary',
+          action: () => window.open(`${window.location.origin}/broadcast/planning`, '_self'),
+          dismiss: () => window.open(`${window.location.origin}/broadcast/planning`, '_self'),
+        },
+      });
     }
   }
 
@@ -134,16 +168,36 @@ export class SectionPlanningProposal extends Component {
     return validDetailQuarters && validDetailQuarterWeeks;
   }
 
+  isDirty() {
+    return !_.isEqual(this.props.proposalEditForm, this.props.proposal);
+  }
+
+  isLocked() {
+    const { proposalLock, employee } = this.props;
+
+    const proposalLockResolved = proposalLock && proposalLock.Key;
+    const employeeResolved = employee && employee._Accountdomainsid;
+
+    if (proposalLockResolved && proposalLock.Success === true) { return false; } // Proposal not locked
+    if (proposalLockResolved && proposalLock.Success === false) {
+      if (employeeResolved && (employee._Accountdomainsid === proposalLock.LockedUserId)) {
+        return false; // Proposal locked by user; not locked to user
+      }
+      return true; // Propsal lock by another user
+    }
+    return false; // Assume not locked
+  }
 
   render() {
-    const { toggleModal, createAlert, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, proposalValidationStates, setProposalValidationState } = this.props;
+    const { toggleModal, createAlert, initialdata, proposal, versions, getProposalVersions, proposalEditForm, updateProposalEditForm, updateProposal, deleteProposalDetail, getProposalUnlock, saveProposal, deleteProposal, saveProposalAsVersion, updateProposalEditFormDetail, modelNewProposalDetail, updateProposalEditFormDetailGrid, unorderProposal, proposalValidationStates, setProposalValidationState } = this.props;
     const isReadOnly = proposal.Status != null ? (proposal.Status === 3 || proposal.Status === 4) : false;
     // console.log('proposal is read only', proposal, isReadOnly);
     return (
       <div id="planning-section-proposal" style={{ paddingBottom: 80 }}>
         {
-          // Object.keys(proposalLock).length > 0 &&
-          // !proposalLock.LockedUserId &&
+          this.props.proposalLock.Success &&
+          !this.isLocked() &&
+
           Object.keys(initialdata).length > 0 &&
           Object.keys(proposal).length > 0 &&
           Object.keys(proposalEditForm).length > 0 &&
@@ -180,7 +234,9 @@ export class SectionPlanningProposal extends Component {
               deleteProposalDetail={deleteProposalDetail}
               modelNewProposalDetail={modelNewProposalDetail}
               isReadOnly={isReadOnly}
+              isDirty={this.isDirty}
               proposalValidationStates={proposalValidationStates}
+              createAlert={createAlert}
             />
             <ProposalActions
               toggleModal={toggleModal}
@@ -189,10 +245,13 @@ export class SectionPlanningProposal extends Component {
               proposalEditForm={proposalEditForm}
               updateProposalEditForm={updateProposalEditForm}
               saveProposal={saveProposal}
+              getProposalUnlock={getProposalUnlock}
+              isCreate={false}
               setProposalValidationState={setProposalValidationState}
               isValidProposalForm={this.isValidProposalForm}
               isValidProposalDetails={this.isValidProposalDetails}
               isValidProposalDetailGrids={this.isValidProposalDetailGrids}
+              isDirty={this.isDirty}
             />
           </div>
         }
@@ -214,7 +273,8 @@ SectionPlanningProposal.defaultProps = {
 
 SectionPlanningProposal.propTypes = {
   match: PropTypes.object.isRequired,
-  // proposalLock: PropTypes.object.isRequired,
+  employee: PropTypes.object.isRequired,
+  proposalLock: PropTypes.object.isRequired,
   initialdata: PropTypes.object.isRequired,
   proposal: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
@@ -223,7 +283,10 @@ SectionPlanningProposal.propTypes = {
   proposalValidationStates: PropTypes.object.isRequired,
   setProposalValidationState: PropTypes.func.isRequired,
 
+  // restorePlanningProposal: PropTypes.func.isRequired,
+
   getProposalLock: PropTypes.func.isRequired,
+  getProposalUnlock: PropTypes.func.isRequired,
   getProposalInitialData: PropTypes.func.isRequired,
   getProposal: PropTypes.func.isRequired,
   getProposalVersions: PropTypes.func.isRequired,

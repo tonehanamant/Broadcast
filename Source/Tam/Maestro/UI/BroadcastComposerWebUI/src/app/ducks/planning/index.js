@@ -31,7 +31,7 @@ const initialState = {
     ProposalName: null,
     SecondaryDemos: [],
     SpotLengths: [],
-    Status: null,
+    Status: 1,
     TargetBudget: 0,
     TargetCPM: 0,
     TargetImpressions: 0,
@@ -47,7 +47,7 @@ const initialState = {
     TotalImpressionsPercent: 0,
     ValidationWarning: null,
     Version: null,
-    VersionId: null,
+    VersionId: 0,
   },
   proposalEditForm: {},
   versions: [],
@@ -254,6 +254,13 @@ export default function reducer(state = initialState, action) {
       },
     });
 
+    case ACTIONS.RESTORE_PLANNING_PROPOSAL: {
+      return {
+        ...state,
+        planning: payload,
+      };
+    }
+
     default:
       return state;
   }
@@ -348,4 +355,9 @@ export const unorderProposal = id => ({
 export const setProposalValidationState = typeState => ({
   type: ACTIONS.SET_PROPOSAL_VALIDATION_STATE,
   payload: typeState,
+});
+
+export const restorePlanningProposal = planningState => ({
+  type: ACTIONS.RESTORE_PLANNING_PROPOSAL,
+  payload: planningState,
 });

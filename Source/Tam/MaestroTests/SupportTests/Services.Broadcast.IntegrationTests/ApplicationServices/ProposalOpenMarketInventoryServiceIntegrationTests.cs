@@ -55,8 +55,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
+                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "ProgramId");
                 jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
+                jsonResolver.Ignore(typeof(ProposalOpenMarketInventoryWeekDto.InventoryWeekProgram), "ProgramId");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
                 jsonResolver.Ignore(typeof (ProposalProgramDto), "ManifestId");

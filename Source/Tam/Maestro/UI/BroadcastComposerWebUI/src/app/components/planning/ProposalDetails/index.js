@@ -16,7 +16,7 @@ export default class ProposalDetails extends Component {
   }
 
   render() {
-    const { proposalEditForm, initialdata, updateProposalEditFormDetail, deleteProposalDetail, toggleModal, modelNewProposalDetail, updateProposalEditFormDetailGrid, proposalValidationStates } = this.props;
+    const { proposalEditForm, initialdata, updateProposalEditFormDetail, deleteProposalDetail, toggleModal, createAlert, modelNewProposalDetail, updateProposalEditFormDetailGrid, proposalValidationStates } = this.props;
     return (
       <div id="proposal-details">
 				<h5 style={{ textAlign: 'center', color: '#1e5fa8' }}><strong>Proposal Details</strong></h5>
@@ -32,13 +32,16 @@ export default class ProposalDetails extends Component {
             deleteProposalDetail={deleteProposalDetail}
             toggleModal={toggleModal}
             isReadOnly={this.props.isReadOnly}
+            isDirty={this.props.isDirty}
             proposalValidationStates={proposalValidationStates}
+            createAlert={createAlert}
 					/>
         ))}
         <ProposalDetail
           initialdata={initialdata}
           modelNewProposalDetail={modelNewProposalDetail}
           isReadOnly={this.props.isReadOnly}
+          isDirty={this.props.isDirty}
         />
 			</div>
     );
@@ -58,6 +61,8 @@ ProposalDetails.propTypes = {
   deleteProposalDetail: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
+  isDirty: PropTypes.func.isRequired,
 
+  createAlert: PropTypes.func.isRequired,
   proposalValidationStates: PropTypes.object.isRequired,
 };

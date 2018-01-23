@@ -26,6 +26,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
         public bool match_station { get; set; }
+        public bool lead_in { get; set; }
     
         public virtual affidavit_file_details affidavit_file_details { get; set; }
         public virtual proposal_version_detail_quarter_weeks proposal_version_detail_quarter_weeks { get; set; }

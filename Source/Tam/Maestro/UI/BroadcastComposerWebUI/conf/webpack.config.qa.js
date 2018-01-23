@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 require ('babel-polyfill');
+require('string.prototype.startswith');
 
 var { resolve } = require('path');
 var AutoPrefixer = require('autoprefixer');
@@ -12,7 +13,7 @@ var webpackConfig = {
   context: resolve(__dirname, '../src'),
 
   entry: {
-    app: ['babel-polyfill', './index.jsx'],
+    app: ['babel-polyfill', 'string.prototype.startswith', './index.jsx'],
     vendor: HELPERS.exclude,
   },
 
@@ -40,7 +41,7 @@ var webpackConfig = {
       name: 'vendor'
     }),
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
+      sourceMap: false,
       output: {
         comments: false
       },
