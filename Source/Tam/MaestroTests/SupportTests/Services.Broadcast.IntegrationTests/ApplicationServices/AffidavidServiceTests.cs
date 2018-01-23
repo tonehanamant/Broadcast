@@ -40,8 +40,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new AffidavitService(
                     IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory,
                     affidavitMatchingEngine,
-                    new BroadcastAudiencesCache(
-                        IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory),
                     mockPostingBookService.Object);
             return affidavitService;
         }

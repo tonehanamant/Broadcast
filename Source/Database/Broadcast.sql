@@ -412,8 +412,97 @@ go
 /*************************************** BCOP-2411/2456 - END ***************************************************************/
 
 
+/*************************************** BCOP-2320/2420 - START ***************************************************************/
 
-/*************************************** END UPDATE SCRIPT *******************************************************/
+IF OBJECT_ID('nsi_component_audiences', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[nsi_component_audiences] (
+		[audience_id] [int] NOT NULL,
+		[category_code] [tinyint] NOT NULL,
+		[sub_category_code] [char](1) NOT NULL,
+		[range_start] [int] NULL,
+		[range_end] [int] NULL,
+		[custom] [bit] NOT NULL,
+		[code] [varchar](15) NOT NULL,
+		[name] [varchar](127) NOT NULL,
+		CONSTRAINT [PK_nsi_component_audiences] PRIMARY KEY CLUSTERED 
+		(
+			[audience_id] ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+
+	ALTER TABLE [dbo].[nsi_component_audiences]  WITH CHECK ADD CONSTRAINT [FK_nsi_component_audiences_audiences] FOREIGN KEY(audience_id)
+	REFERENCES [dbo].[audiences] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[nsi_component_audiences] CHECK CONSTRAINT [FK_nsi_component_audiences_audiences]
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (4, 0, N'F', 12, 14, 0, N'F12-14', N'Females 12-14')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (5, 0, N'F', 15, 17, 0, N'F15-17', N'Females 15-17')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (6, 0, N'F', 18, 20, 0, N'F18-20', N'Females 18-20')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (7, 0, N'F', 21, 24, 0, N'F21-24', N'Females 21-24')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (13, 0, N'F', 50, 54, 0, N'F50-54', N'Females 50-54')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (14, 0, N'F', 55, 64, 0, N'F55-64', N'Females 55-64')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (15, 0, N'F', 65, 99, 0, N'F65+', N'Females 65+')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (19, 0, N'M', 12, 14, 0, N'M12-14', N'Males 12-14')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name])
+	VALUES (20, 0, N'M', 15, 17, 0, N'M15-17', N'Males 15-17')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (21, 0, N'M', 18, 20, 0, N'M18-20', N'Males 18-20')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (22, 0, N'M', 21, 24, 0, N'M21-24', N'Males 21-24')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (28, 0, N'M', 50, 54, 0, N'M50-54', N'Males 50-54')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name])
+	VALUES (29, 0, N'M', 55, 64, 0, N'M55-64', N'Males 55-64')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (30, 0, N'M', 65, 99, 0, N'M65+', N'Males 65+')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name])
+	VALUES (31, 0, N'H', 0, 99, 0, N'HH', N'House Holds')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (46, 0, N'K', 6, 11, 1, N'K6-11', N'Kids 6-11')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (284, 0, N'M', 25, 34, 1, N'M25-34', N'Males 25-34')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (290, 0, N'M', 35, 49, 1, N'M35-49', N'Males 35-49')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (339, 0, N'K', 2, 5, 1, N'K2-5', N'Kids 2-5')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (347, 0, N'F', 35, 49, 1, N'F35-49', N'Females 35-49')
+	
+	INSERT [dbo].[nsi_component_audiences] ([audience_id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) 
+	VALUES (348, 0, N'F', 25, 34, 1, N'F25-34', N'Females 25-34')
+END
+
+/*************************************** BCOP-2320/2420 - START ***************************************************************/
 
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------

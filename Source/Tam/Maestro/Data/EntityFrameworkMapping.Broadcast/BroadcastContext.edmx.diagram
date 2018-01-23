@@ -149,6 +149,8 @@
         <EntityTypeShape EntityType="BroadcastModel.affidavit_file_detail_audiences" Width="1.5" PointX="24.875" PointY="6.25" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_audiences_affidavit_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_audiences_audiences" />
+        <EntityTypeShape EntityType="BroadcastModel.nsi_component_audiences" Width="1.5" PointX="9.5" PointY="0.5" />
+        <AssociationConnector Association="BroadcastModel.FK_nsi_component_audiences_audiences" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
