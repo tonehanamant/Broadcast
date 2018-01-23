@@ -43,7 +43,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IAffidavitMatchingEngine _AffidavitMatchingEngine;
         protected readonly IProposalService _ProposalService;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
-        private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
         private readonly IPostingBooksService _PostingBooksService;
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine; 
@@ -51,14 +50,12 @@ namespace Services.Broadcast.ApplicationServices
             IAffidavitMatchingEngine affidavitMatchingEngine,
             IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
             IProposalService proposalService,
-            IBroadcastAudiencesCache broadcastAudiencesCache,
             IPostingBooksService postingBooksService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitMatchingEngine = affidavitMatchingEngine;
             _ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
             _ProposalService = proposalService;
-            _BroadcastAudiencesCache = broadcastAudiencesCache;
             _PostingBooksService = postingBooksService;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
         }
@@ -258,21 +255,19 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _CalculateAffidavitImpressions(affidavit_files affidavitFile, int postingBookId)
         {
-            var audiencesRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
-            var allAudiences = _BroadcastAudiencesCache.GetAllEntities().Select(x => x.Id).ToList();
-            var ratingAudiences =
-                audiencesRepository.GetRatingsAudiencesByMaestroAudience(allAudiences)
-                    .Select(r => r.rating_audience_id)
-                    .Distinct()
-                    .ToList();
+            var audiencesRepository = _BroadcastDataRepositoryFactory.GetDataRepository<INsiComponentAudienceRepository>();
+            var audiencesIds =
+                audiencesRepository.GetAllNsiComponentAudiences().
+                Select(a => a.Id).
+                ToList();
 
             foreach (var affidavitFileDetail in affidavitFile.affidavit_file_details)
             {
-                affidavitFileDetail.affidavit_file_detail_audiences = _CalculdateImpressionsForNielsenAudiences(affidavitFileDetail, ratingAudiences, postingBookId);
+                affidavitFileDetail.affidavit_file_detail_audiences = _CalculdateImpressionsForNielsenAudiences(affidavitFileDetail, audiencesIds, postingBookId);
             }
         }
 
-        private List<affidavit_file_detail_audiences> _CalculdateImpressionsForNielsenAudiences(affidavit_file_details affidavitFileDetail, List<int> ratingAudiences, int postingBookId)
+        private List<affidavit_file_detail_audiences> _CalculdateImpressionsForNielsenAudiences(affidavit_file_details affidavitFileDetail, List<int> audiencesIds, int postingBookId)
         {
             var affidavitAudiences = new List<affidavit_file_detail_audiences>();
             var stationDetails = new List<StationDetailPointInTime>
@@ -286,7 +281,7 @@ namespace Services.Broadcast.ApplicationServices
             };
 
             var ratingForecastRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
-            var impressionsPointInTime = ratingForecastRepository.GetImpressionsPointInTime(postingBookId, ratingAudiences, stationDetails,
+            var impressionsPointInTime = ratingForecastRepository.GetImpressionsPointInTime(postingBookId, audiencesIds, stationDetails,
                 DefaultPlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
 
             foreach (var impressionsWithAudience in impressionsPointInTime)

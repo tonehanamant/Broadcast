@@ -45,5 +45,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual ICollection<station_inventory_spot_audiences> station_inventory_spot_audiences { get; set; }
         public virtual ICollection<affidavit_file_detail_audiences> affidavit_file_detail_audiences { get; set; }
+        public virtual nsi_component_audiences nsi_component_audiences { get; set; }
     }
 }

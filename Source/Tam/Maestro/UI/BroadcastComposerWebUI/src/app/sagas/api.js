@@ -566,7 +566,7 @@ const planning = {
     call(GET, `${apiBase}Proposals/Proposal/${id}/Lock`, {})
   ),
   getProposalUnlock: id => (
-    call(GET, `${apiBase}Proposals/Proposal/${id}/Lock`, {})
+    call(GET, `${apiBase}Proposals/Proposal/${id}/UnLock`, {})
   ),
   getProposal: id => (
     call(GET, `${apiBase}Proposals/Proposal/${id}`, {})

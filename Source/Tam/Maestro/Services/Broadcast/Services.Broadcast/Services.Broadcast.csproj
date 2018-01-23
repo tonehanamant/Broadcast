@@ -395,6 +395,7 @@
     <Compile Include="Repositories\AffidavitRepository.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
     <Compile Include="Repositories\MarketDmaMapRepository.cs" />
+    <Compile Include="Repositories\NsiComponentAudienceRepository.cs" />
     <Compile Include="Repositories\PostRepository.cs" />
     <Compile Include="Repositories\MarketRepository.cs" />
     <Compile Include="Repositories\MediaMonthAndWeekAggregateRepository.cs" />

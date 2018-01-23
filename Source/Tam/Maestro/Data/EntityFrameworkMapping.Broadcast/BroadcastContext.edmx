@@ -259,6 +259,19 @@
           <Property Name="start_date" Type="datetime" Nullable="false" />
           <Property Name="end_date" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="nsi_component_audiences">
+          <Key>
+            <PropertyRef Name="audience_id" />
+          </Key>
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="category_code" Type="tinyint" Nullable="false" />
+          <Property Name="sub_category_code" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="range_start" Type="int" />
+          <Property Name="range_end" Type="int" />
+          <Property Name="custom" Type="bit" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
+        </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
             <PropertyRef Name="post_file_id" />
@@ -994,6 +1007,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="media_weeks">
               <PropertyRef Name="media_month_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nsi_component_audiences_audiences">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="nsi_component_audiences" Type="Self.nsi_component_audiences" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nsi_component_audiences">
+              <PropertyRef Name="audience_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1905,6 +1932,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="markets" EntityType="Self.markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="media_months" EntityType="Self.media_months" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="media_weeks" EntityType="Self.media_weeks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nsi_component_audiences" EntityType="Self.nsi_component_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_demos" EntityType="Self.post_file_demos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_detail_impressions" EntityType="Self.post_file_detail_impressions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_details" EntityType="Self.post_file_details" Schema="dbo" store:Type="Tables" />
@@ -2032,6 +2060,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_media_weeks_media_months" Association="Self.FK_media_weeks_media_months">
             <End Role="media_months" EntitySet="media_months" />
             <End Role="media_weeks" EntitySet="media_weeks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nsi_component_audiences_audiences" Association="Self.FK_nsi_component_audiences_audiences">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="nsi_component_audiences" EntitySet="nsi_component_audiences" />
           </AssociationSet>
           <AssociationSet Name="FK_post_file_demos_post_files" Association="Self.FK_post_file_demos_post_files">
             <End Role="post_files" EntitySet="post_files" />
@@ -2704,6 +2736,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="audience" EntitySet="audiences" />
             <End Role="affidavit_file_detail_audiences" EntitySet="affidavit_file_detail_audiences" />
           </AssociationSet>
+          <EntitySet Name="nsi_component_audiences" EntityType="BroadcastModel.nsi_component_audiences" />
+          <AssociationSet Name="FK_nsi_component_audiences_audiences" Association="BroadcastModel.FK_nsi_component_audiences_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="nsi_component_audiences" EntitySet="nsi_component_audiences" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -2737,6 +2774,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_audiences" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" FromRole="audience" ToRole="station_inventory_manifest_audiences" />
           <NavigationProperty Name="station_inventory_spot_audiences" Relationship="BroadcastModel.FK_station_inventory_spot_audiences_audiences" FromRole="audience" ToRole="station_inventory_spot_audiences" />
           <NavigationProperty Name="affidavit_file_detail_audiences" Relationship="BroadcastModel.FK_affidavit_file_detail_audiences_audiences" FromRole="audience" ToRole="affidavit_file_detail_audiences" />
+          <NavigationProperty Name="nsi_component_audiences" Relationship="BroadcastModel.FK_nsi_component_audiences_audiences" FromRole="audience" ToRole="nsi_component_audiences" />
         </EntityType>
         <EntityType Name="bvs_file_details">
           <Key>
@@ -4689,6 +4727,34 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="nsi_component_audiences">
+          <Key>
+            <PropertyRef Name="audience_id" />
+          </Key>
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="category_code" Type="Byte" Nullable="false" />
+          <Property Name="sub_category_code" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="range_start" Type="Int32" />
+          <Property Name="range_end" Type="Int32" />
+          <Property Name="custom" Type="Boolean" Nullable="false" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_nsi_component_audiences_audiences" FromRole="nsi_component_audiences" ToRole="audience" />
+        </EntityType>
+        <Association Name="FK_nsi_component_audiences_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.nsi_component_audiences" Role="nsi_component_audiences" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nsi_component_audiences">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5509,6 +5575,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="impressions" ColumnName="impressions" />
                 <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="affidavit_file_detail_id" ColumnName="affidavit_file_detail_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nsi_component_audiences">
+            <EntityTypeMapping TypeName="BroadcastModel.nsi_component_audiences">
+              <MappingFragment StoreEntitySet="nsi_component_audiences">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+                <ScalarProperty Name="range_end" ColumnName="range_end" />
+                <ScalarProperty Name="range_start" ColumnName="range_start" />
+                <ScalarProperty Name="sub_category_code" ColumnName="sub_category_code" />
+                <ScalarProperty Name="category_code" ColumnName="category_code" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

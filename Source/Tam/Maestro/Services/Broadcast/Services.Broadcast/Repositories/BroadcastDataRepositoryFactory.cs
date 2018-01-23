@@ -69,6 +69,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IDisplayDaypartRepository, DisplayDaypartBroadcastRepository>();
             instance.RegisterType<IInventoryRepository, InventoryRepository>();
             instance.RegisterType<IAffidavitRepository, AffidavitRepository>();
+            instance.RegisterType<INsiComponentAudienceRepository, NsiComponentAudienceRepository>();
 
             WasRegistered = true;
         }
