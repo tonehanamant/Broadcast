@@ -22,11 +22,13 @@
     },
 
     //CHANGE: allow for Problems handling in success false in result as error callback
+    //REVISE - need to allow bypass errors altogether to handle aggregated import problems
     ajax: function (url, success, error, method, args) {
         if (args.$ViewElement) {
             this.showProcessing(args.$ViewElement, null, url);
         }
-
+        //allow bypass
+        var bypassError = args.bypassErrorShow || false;
         var me = this;
         var ajaxObj = {
             url: url,
@@ -50,9 +52,11 @@
                     } else {
                         state = 'error';
                         var msg = me.getApiErrorMsg(xhr, args.ErrorMessage);
-                        me.showDefaultError(msg, args.TitleErrorMessage);
-                       // console.log('AJAX error', error);
-                        if (error) error(xhr);
+                        if (!bypassError) {
+                            me.showDefaultError(msg, args.TitleErrorMessage);
+                        }
+                        // console.log('AJAX error', error);
+                        if (error) error(xhr, msg);
                     }
                 } else {
                     state = 'error';
@@ -62,21 +66,27 @@
                             //console.log('service error Problems', result.Data);
                             error(xhr, result.Data);
                         } else {
-                            error(xhr);
+                            error(xhr, result.Message);
                             //dont bypass default error message
-                            me.showDefaultError(result.Message);
+                            if (!bypassError) {
+                                me.showDefaultError(result.Message);
+                            }
                         }
                     } else {
-                        me.showDefaultError(result.Message);
+                        if (!bypassError) {
+                            me.showDefaultError(result.Message);
+                        }
                     }
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
                 state = 'error';
                 var msg = me.getApiErrorMsg(xhr, args.ErrorMessage);
-                me.showDefaultError(msg, args.TitleErrorMessage);
-               // console.log('AJAX error', error);
-                if (error) error(xhr);
+                if (!bypassError) {
+                    me.showDefaultError(msg, args.TitleErrorMessage);
+                }
+                // console.log('AJAX error', error);
+                if (error) error(xhr, msg);
                 me.debug('error', xhr);
             },
             complete: function (xhr, textStatus) {
@@ -92,7 +102,7 @@
         }
 
         if (method == 'GET' && args.data) {
-            console.log('Get', args.data);
+            //console.log('Get', args.data);
             ajaxObj.processData = true;
             ajaxObj.data = args.data;
         }
@@ -114,10 +124,10 @@
     },
 
     //show default error modal - dont need refresh option?
-    showDefaultError: function (msg, headtxt, showRefresh) {
+    showDefaultError: function (msg, headtxt, showRefresh, formatted) {
         msg = msg || config.defaultErrorMsg;
         headtxt = headtxt || config.headError;
-        var mrkup = '<p>' + msg + '</p>';
+        var mrkup = formatted ? msg : ('<p>' + msg + '</p>');
         if (showRefresh) mrkup += '<p>' + config.refreshMessage + '</p>';
         $('#default_error_modal').modal({ backdrop: false });
         $('#default_error_modal').modal('show');

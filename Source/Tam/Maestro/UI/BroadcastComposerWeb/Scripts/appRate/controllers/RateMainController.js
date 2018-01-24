@@ -10,6 +10,11 @@ var RateMainController = BaseController.extend({
 
     isThirdParty: false, //on tab change in main view set this property so other sections can use
 
+    //handle open market imports as queue and aggregate errors
+    importFileQueue: null,
+    importFileQueueOriginalLength: 0,
+    importFileErrors: [], // {fileName, message, problems}
+
     //init the controller; create view, get initial data
     initController: function () {
         this.view = new RateMainView(this);
@@ -24,7 +29,7 @@ var RateMainController = BaseController.extend({
     //load stations data - filter (optional filter), set source (rate source), 
     apiLoadStations: function (filter, source) {
         source = source || this.activeRateSource;
-       
+
         var data = null,
             url = baseUrl + 'api/RatesManager/' + source + '/Stations',
             validate = (function (options) {
@@ -61,7 +66,7 @@ var RateMainController = BaseController.extend({
     },
 
     //clear data in view else data will remain in old state - via rate Source
-    onApiLoadStationsError: function() {
+    onApiLoadStationsError: function () {
         this.view.setStations(null);
     },
 
@@ -70,42 +75,101 @@ var RateMainController = BaseController.extend({
     refreshApiLoadStations: function (withFilter) {
         var filter = (withFilter && this.activeStationsDataFilter) ? this.activeStationsDataFilter : false;
         this.apiLoadStations(filter);
-        if(!withFilter) this.view.StationsTextSearch = null;//reset state to clear text search
+        if (!withFilter) this.view.StationsTextSearch = null;//reset state to clear text search
+    },
+
+    //REVISED from upload manager to view process multiple files
+    apiQueueInventoryFiles: function (fileRequests) {
+        var queue = [];
+        //this.importFileQueue.length = fileRequests.length;
+        $.each(fileRequests, function (idx, req) {
+            //console.log('req', req, idx);
+            queue.push(req.FileName);
+        });
+        this.importFileQueue = queue;
+        //console.log(queue, fileRequests, this.importFileQueue);
+        this.importFileQueueOriginalLength = fileRequests.length;
+        var $scope = this;
+        $.each(fileRequests, function (index, rateFileRequest) {
+            $scope.apiUploadInventoryFile(rateFileRequest);
+        });
     },
 
     //upload Rate file
+    //REVISING to queue uploads and handle aggregated errors/ success - remove callback?
     apiUploadInventoryFile: function (rateFileRequest, callback) {
         var url = baseUrl + 'api/RatesManager/UploadInventoryFile';
         var jsonObj = JSON.stringify(rateFileRequest);
         httpService.post(url,
             this.onApiUploadInventoryFile.bind(this, callback),
-            this.onApiUploadInventoryFileErrorProblems.bind(this),
+            this.onApiUploadInventoryFileErrorProblems.bind(this, rateFileRequest.FileName),  //add the fileName
             jsonObj,
             {
                 $ViewElement: $('#rate_view'),
                 ErrorMessage: 'Error Uploading Rate File',
                 TitleErrorMessage: 'Rate File Not Uploaded',
-                StatusMessage: 'Upload Rate File'
+                StatusMessage: 'Upload Rate File',
+                bypassErrorShow: true //test bypass
             });
     },
 
-    //handle Rate upload return; show problems in view if present
-    //CHANGE: handle problems as error status false - intercept as error - wiew will handle modal display text
-    onApiUploadInventoryFile: function (callback, data) {
-        if (callback) callback(data);
-        util.notify("Rate File Uploaded");
-        this.refreshApiLoadStations(false);
-    },
-
-    //error callback if Problems
-    onApiUploadInventoryFileErrorProblems: function (xhr, response) {
-        var hasProblems = response && response.Problems && response.Problems.length;
-        if (hasProblems) {
-            //console.log('onApiUploadInventoryFileErrorProblems', response);
-            this.view.showUploadFileIssues(response.Problems);
+    checkImportFileQueue: function () {
+        //console.log('check queue', this.importFileQueue);
+        this.importFileQueue.pop();
+        if (this.importFileQueue.length == 0) {
+            return true;
+        } else {
+            return false;
         }
     },
-    
+
+    //handdle aggregated erros if needed and success responses to notify
+    resolveFileImportsComplete: function () {
+        var notifyType = 'success';
+        var notifyMessage = 'Rate File(s) Uploaded';
+        var hasErrors = this.importFileErrors.length > 0;
+        var allFailed = false;
+        if (hasErrors) {
+            //aggregate and show
+            //resolve notify if some success
+            allFailed = this.importFileQueueOriginalLength == this.importFileErrors.length;
+            notifyType = allFailed ? 'danger' : 'warning';
+            notifyMessage = allFailed ? 'Error Uploading Rate File(s)' : 'Error Uploading Some Rate File(s)';
+            this.view.showUploadFileIssues(this.importFileErrors);
+        }
+        util.notify(notifyMessage, notifyType);
+        this.importFileErrors = [];
+        this.importFileQueue = null;
+        this.importFileQueueOriginalLength = 0;
+        if (!hasErrors || !allFailed) this.refreshApiLoadStations(false);
+    },
+
+    //handle Rate upload return; show problems in view if present
+    //CHANGE: handle problems as error status false - intercept as error - view will handle modal display text
+    //REVISE - queued
+    onApiUploadInventoryFile: function (callback, data) {
+        if (callback) callback(data);
+        var check = this.checkImportFileQueue();
+        if (check) this.resolveFileImportsComplete();
+        //util.notify("Rate File Uploaded");
+        //this.refreshApiLoadStations(false);
+    },
+
+    //error callback if Problems or NOW handle all errors - response.Problems or response as message with file name bind
+    //REVISE queued
+    onApiUploadInventoryFileErrorProblems: function (fileName, xhr, response) {
+        var errorItem = { fileName: fileName, message: response, problems: null };
+        var hasProblems = response && response.Problems && response.Problems.length;
+        if (hasProblems) {
+            errorItem.message = null;
+            errorItem.problems = response.Problems;
+        }
+        this.importFileErrors.push(errorItem);
+        var check = this.checkImportFileQueue();
+        if (check) this.resolveFileImportsComplete();
+        //console.log('onApiUploadInventoryFileErrorProblems', check, fileName, response, xhr);
+    },
+
     //TBD - add this in when creating Station Specifics C/V/VM
     //Station detail Initialization
     //from view select rate for station
@@ -145,7 +209,7 @@ var RateMainController = BaseController.extend({
             });
     },
 
-    apiGetFileImportOptions: function(callback) {
+    apiGetFileImportOptions: function (callback) {
         var url = baseUrl + 'api/RatesManager/InitialData';
 
         httpService.get(url,
