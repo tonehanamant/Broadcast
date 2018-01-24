@@ -49,8 +49,19 @@
           "StartDate": "2017-04-03T00:00:00"
         }
       ],
+      "GenreCriteria": [
+        {
+          "Contain": 2,
+          "GenreId": 5
+        },
+        {
+          "Contain": 2,
+          "GenreId": 10
+        }
+      ],
       "HutPostingBookId": null,
       "PlaybackType": 3,
+      "ProgramCriteria": [],
       "Quarters": [
         {
           "Cpm": 12.5300,
@@ -159,8 +170,10 @@
           "StartDate": "2017-09-25T00:00:00"
         }
       ],
+      "GenreCriteria": [],
       "HutPostingBookId": null,
       "PlaybackType": 3,
+      "ProgramCriteria": [],
       "Quarters": [
         {
           "Cpm": 84.2000,

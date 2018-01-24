@@ -43,8 +43,10 @@
           "StartDate": "2017-05-29T00:00:00"
         }
       ],
+      "GenreCriteria": [],
       "HutPostingBookId": null,
       "PlaybackType": 3,
+      "ProgramCriteria": [],
       "Quarters": [
         {
           "Cpm": 0.0,
