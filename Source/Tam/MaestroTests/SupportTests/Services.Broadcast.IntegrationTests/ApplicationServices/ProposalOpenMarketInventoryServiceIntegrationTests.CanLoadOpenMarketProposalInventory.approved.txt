@@ -133,7 +133,7 @@
               "StationCode": 5013,
               "TargetCpm": 0.01,
               "TargetImpressions": 0.0,
-              "UnitImpressions": 955874.31451499
+              "UnitImpressions": 1597225.04468796
             }
           ],
           "StationCode": 5013
@@ -215,9 +215,9 @@
                   "Spots": 0,
                   "TargetCpm": 0.0,
                   "TargetImpressions": 0.0,
-                  "TotalImpressions": 955874.31451499,
+                  "TotalImpressions": 1597225.04468796,
                   "UnitCost": 10.0000,
-                  "UnitImpression": 955874.31451499
+                  "UnitImpression": 1597225.04468796
                 }
               ],
               "StationCode": 5013

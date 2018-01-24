@@ -220,7 +220,7 @@ namespace Services.Broadcast.Repositories
                         string.Format(
                             "INSERT INTO @ratings_request SELECT {0},'{1}',{2},{3},{4},{5},{6},{7},{8},{9},{10}",
                             p.Id,
-                            string.Format("'{0}'", p.LegacyCallLetters),
+                            string.Format("{0}", p.LegacyCallLetters),
                             p.DayOfWeek == DayOfWeek.Monday ? "1" : "0",
                             p.DayOfWeek == DayOfWeek.Tuesday ? "1" : "0",
                             p.DayOfWeek == DayOfWeek.Wednesday ? "1" : "0",
@@ -240,7 +240,7 @@ namespace Services.Broadcast.Repositories
                         string.Format(
                             "INSERT INTO @ratings_request SELECT {0},'{1}',{2},{3},{4},{5},{6},{7},{8},{9},{10}",
                             p.Id,
-                            string.Format("'{0}'", p.LegacyCallLetters),
+                            string.Format("{0}", p.LegacyCallLetters),
                             p.DisplayDaypart.Monday ? "1" : "0",
                             p.DisplayDaypart.Tuesday ? "1" : "0",
                             p.DisplayDaypart.Wednesday ? "1" : "0",
