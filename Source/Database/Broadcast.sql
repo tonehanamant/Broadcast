@@ -324,6 +324,7 @@ delete from genres where modified_date < '2018-01-01'
 go
 if not exists(select 1 from genres)
 begin
+dbcc checkident ('genres', reseed, 0)
 insert into genres (name, created_by, created_date, modified_by, modified_date)
 values ('Action', 'System', current_timestamp, 'System', current_timestamp)
 insert into genres (name, created_by, created_date, modified_by, modified_date)

@@ -35,8 +35,19 @@
           "StartDate": "2016-05-30T00:00:00"
         }
       ],
+      "GenreCriteria": [
+        {
+          "Contain": 1,
+          "GenreId": 10
+        },
+        {
+          "Contain": 1,
+          "GenreId": 12
+        }
+      ],
       "HutPostingBookId": 410,
       "PlaybackType": 4,
+      "ProgramCriteria": [],
       "Quarters": [
         {
           "Cpm": 21.1300,
