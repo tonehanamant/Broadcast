@@ -314,6 +314,9 @@
     <Compile Include="media_weeks.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="nsi_component_audiences.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="post_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

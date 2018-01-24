@@ -1,4 +1,6 @@
 ﻿using Common.Services.ApplicationServices;
+using System.Data.Entity.Core.Mapping;
+using System.Linq;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.BusinessEngines;
@@ -8,6 +10,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
@@ -17,48 +20,63 @@ namespace Services.Broadcast.ApplicationServices
         Strata = 1
     };
 
+    public enum ScrubbingStatus
+    {
+        OutOfSpec = 0,
+        InSpec = 1
+    }
+
     public interface IAffidavitService : IApplicationService
     {
         int SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime);
-    }
 
+        ///
+        /// Scrubs, but does not save results
+        ///
+        void ScrubAffidavitFile(affidavit_files affidavit_file);
+
+    }
+        
     public class AffidavitService : IAffidavitService
     {
         private const ProposalEnums.ProposalPlaybackType DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3;
         private readonly IAffidavitMatchingEngine _AffidavitMatchingEngine;
+        protected readonly IProposalService _ProposalService;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
-        private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
         private readonly IPostingBooksService _PostingBooksService;
         private readonly IAffidavitRepository _AffidavitRepository;
-
+        private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine; 
         public AffidavitService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IAffidavitMatchingEngine affidavitMatchingEngine,
-            IBroadcastAudiencesCache broadcastAudiencesCache,
+            IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
+            IProposalService proposalService,
             IPostingBooksService postingBooksService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitMatchingEngine = affidavitMatchingEngine;
-            _BroadcastAudiencesCache = broadcastAudiencesCache;
+            _ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
+            _ProposalService = proposalService;
             _PostingBooksService = postingBooksService;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
         }
 
         public int SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime)
         {
+            affidavit_files affidavit_file = new affidavit_files();
             Dictionary<int, int> spotLengthDict = null;
-
             if (saveRequest == null)
             {
                 throw new Exception("No affidavit data received.");
             }
 
-            var matchedAffidavitDetails = _LinkAndValidateContractIscis(saveRequest);
+            affidavit_file = new affidavit_files();
 
-            var affidavit_file = new affidavit_files();
             affidavit_file.created_date = DateTime.Now;
             affidavit_file.file_hash = saveRequest.FileHash;
             affidavit_file.file_name = saveRequest.FileName;
             affidavit_file.source_id = saveRequest.Source;
+
+            var matchedAffidavitDetails = _LinkAndValidateContractIscis(saveRequest);
 
             foreach (var matchedAffidavitDetail in matchedAffidavitDetails)
             {
@@ -84,21 +102,106 @@ namespace Services.Broadcast.ApplicationServices
                 affidavit_file.affidavit_file_details.Add(det);
             }
 
-            var postingBookId = _GetPostingBookId();
+            ScrubAffidavitFile(affidavit_file);
 
+            var postingBookId = _GetPostingBookId();
             _CalculateAffidavitImpressions(affidavit_file, postingBookId);
 
             var id = _AffidavitRepository.SaveAffidavitFile(affidavit_file);
 
             return id;
+
         }
 
+        public void ScrubAffidavitFile(affidavit_files affidavit_file)
+        {
+            var callLetters = affidavit_file.affidavit_file_details.Select(a => a.station).ToList();
+            var stations = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
+                .GetBroadcastStationListByLegacyCallLetters(callLetters).ToDictionary(k => k.LegacyCallLetters, v => v);
+
+            foreach (var affidavitFileDetail in affidavit_file.affidavit_file_details)
+            {
+                if (!stations.ContainsKey(affidavitFileDetail.station))
+                {
+                    affidavitFileDetail.affidavit_client_scrubs.ForEach(s =>
+                    {
+                        s.status = (int) ScrubbingStatus.OutOfSpec;
+                        s.match_station = false;
+                    });
+                    continue;
+                }
+
+                var quarterWeekIds =
+                    affidavitFileDetail.affidavit_client_scrubs.Select(s => s.proposal_version_detail_quarter_week_id).ToList();
+                var stationManifests = _BroadcastDataRepositoryFactory
+                    .GetDataRepository<IProposalOpenMarketInventoryRepository>()
+                    .GetStationManifestFromQuarterWeeks(quarterWeekIds);
+                var proposals = _ProposalService.GetProposalsByQuarterWeeks(quarterWeekIds);
+
+                var affidavitStation = stations[affidavitFileDetail.station];
+                foreach (var scrub in affidavitFileDetail.affidavit_client_scrubs)
+                {
+                    if (!stationManifests.Any())
+                    {
+                        scrub.match_station = false;
+                        scrub.match_market = false;
+                    }
+                    else
+                    {
+                        var quarterWeekId = scrub.proposal_version_detail_quarter_week_id;
+                        var scrubManifests = stationManifests[quarterWeekId];
+                        scrub.match_station = true;
+                        scrub.match_market = true;
+
+
+                        if (scrubManifests.All(m =>
+                            m.station.legacy_call_letters != affidavitStation.LegacyCallLetters))
+                        {
+                            scrub.match_station = false;
+                            scrub.match_market = false;
+                        }
+                        else
+                        {
+                            var proposal = proposals[quarterWeekId];
+                            var detail = proposal.Details.Single(d =>
+                                d.Quarters.Any(q => q.Weeks.Any(w => w.Id == quarterWeekId)));
+
+                            var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, detail);
+
+                            var marketGeoName = affidavitStation.OriginMarket;
+                            scrub.match_market = false;
+                            if (markets.Any(m => m.Display == marketGeoName))
+                            {
+                                scrub.match_market = true;
+                            }
+                        }
+                    }
+
+                    EnsureScrubadubdubed(scrub);
+                }
+
+            }
+
+        }
+
+        private void EnsureScrubadubdubed(affidavit_client_scrubs scrub)
+        {
+            scrub.status = (int)ScrubbingStatus.OutOfSpec;
+            if (scrub.match_station
+                && scrub.match_market
+                && scrub.match_genre
+                && scrub.match_program
+                && scrub.match_time)
+            {
+                scrub.status = (int) ScrubbingStatus.InSpec;
+            }
+        }
         private int _GetScrubStatus(AffidavitMatchingProposalWeek affidavitMatchingProposalWeek)
         {
-            if (!affidavitMatchingProposalWeek.AirtimeMatch)
-                return (int) AffidavitClientScrubStatus.OutOfSpec;
+                if (!affidavitMatchingProposalWeek.AirtimeMatch)
+                    return (int) AffidavitClientScrubStatus.OutOfSpec;
             
-            return (int) AffidavitClientScrubStatus.InSpec;
+                return (int) AffidavitClientScrubStatus.InSpec;
         }
 
         private List<AffidavitMatchingDetail> _LinkAndValidateContractIscis(AffidavitSaveRequest saveRequest)
@@ -152,21 +255,19 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _CalculateAffidavitImpressions(affidavit_files affidavitFile, int postingBookId)
         {
-            var audiencesRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
-            var allAudiences = _BroadcastAudiencesCache.GetAllEntities().Select(x => x.Id).ToList();
-            var ratingAudiences =
-                audiencesRepository.GetRatingsAudiencesByMaestroAudience(allAudiences)
-                    .Select(r => r.rating_audience_id)
-                    .Distinct()
-                    .ToList();
+            var audiencesRepository = _BroadcastDataRepositoryFactory.GetDataRepository<INsiComponentAudienceRepository>();
+            var audiencesIds =
+                audiencesRepository.GetAllNsiComponentAudiences().
+                Select(a => a.Id).
+                ToList();
 
             foreach (var affidavitFileDetail in affidavitFile.affidavit_file_details)
             {
-                affidavitFileDetail.affidavit_file_detail_audiences = _CalculdateImpressionsForNielsenAudiences(affidavitFileDetail, ratingAudiences, postingBookId);
+                affidavitFileDetail.affidavit_file_detail_audiences = _CalculdateImpressionsForNielsenAudiences(affidavitFileDetail, audiencesIds, postingBookId);
             }
         }
 
-        private List<affidavit_file_detail_audiences> _CalculdateImpressionsForNielsenAudiences(affidavit_file_details affidavitFileDetail, List<int> ratingAudiences, int postingBookId)
+        private List<affidavit_file_detail_audiences> _CalculdateImpressionsForNielsenAudiences(affidavit_file_details affidavitFileDetail, List<int> audiencesIds, int postingBookId)
         {
             var affidavitAudiences = new List<affidavit_file_detail_audiences>();
             var stationDetails = new List<StationDetailPointInTime>
@@ -180,7 +281,7 @@ namespace Services.Broadcast.ApplicationServices
             };
 
             var ratingForecastRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
-            var impressionsPointInTime = ratingForecastRepository.GetImpressionsPointInTime(postingBookId, ratingAudiences, stationDetails,
+            var impressionsPointInTime = ratingForecastRepository.GetImpressionsPointInTime(postingBookId, audiencesIds, stationDetails,
                 DefaultPlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
 
             foreach (var impressionsWithAudience in impressionsPointInTime)

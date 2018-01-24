@@ -24,7 +24,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
         private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
-        private const string ProposalPickleTestName = "Pickle Rick Test";
 
         [TestCase(MinMaxEnum.Min)]
         [TestCase(MinMaxEnum.Max)]
@@ -200,7 +199,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var proposal = new ProposalDto();
-                var proposalDetailId = GetProposalDetailId(ref proposal);
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 var dtoMarkets = dto.Markets;
@@ -219,7 +218,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var proposal = new ProposalDto();
-                var proposalDetailId = GetProposalDetailId(ref proposal);
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 var dtoPrograms = dto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs)).ToList();
@@ -233,15 +232,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        private int GetProposalDetailId(ref ProposalDto proposal)
-        {
-            int proposalDetailId = 8123;
-            var proposalId = _ProposalService.GetAllProposals().First(p => p.ProposalName == ProposalPickleTestName).Id;
-            proposal = _ProposalService.GetProposalById(proposalId);
-            proposalDetailId = proposal.Details.First().Id.Value;
-            return proposalDetailId;
-        }
-
         [Test]
         public void CanFilterOpenMarketProposalInventoryByProgramName_SingleProgramName()
         {
@@ -249,7 +239,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var proposal = new ProposalDto();
-                var proposalDetailId = GetProposalDetailId(ref proposal);
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 var dtoPrograms = dto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs));
@@ -272,7 +262,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var proposal = new ProposalDto();
-                var proposalDetailId = GetProposalDetailId(ref proposal);
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 var dtoPrograms = dto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs));
@@ -294,7 +284,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var proposal = new ProposalDto();
-                var proposalDetailId = GetProposalDetailId(ref proposal);
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 var dtoPrograms = dto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs));
@@ -317,7 +307,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var proposal = new ProposalDto();
-                var proposalDetailId = GetProposalDetailId(ref proposal);
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
 
                 var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
@@ -340,7 +330,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var proposal = new ProposalDto();
-                var proposalDetailId = GetProposalDetailId(ref proposal);
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
 
                 var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416,413 );

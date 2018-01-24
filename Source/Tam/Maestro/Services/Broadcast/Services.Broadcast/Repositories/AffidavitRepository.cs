@@ -13,7 +13,7 @@ namespace Services.Broadcast.Repositories
     public interface IAffidavitRepository : IDataRepository
     {
         int SaveAffidavitFile(affidavit_files affidatite_file);
-        AffidavitFile GetAffidavit(int affidavit_id);
+        AffidavitFile GetAffidavit(int affidavitId, bool includeScrubbingDetail = false);
     }
 
     public class AffidavitRepository: BroadcastRepositoryBase, IAffidavitRepository
@@ -35,15 +35,19 @@ namespace Services.Broadcast.Repositories
             return affidatite_file.id;
         }
 
-        public AffidavitFile GetAffidavit(int affidavitId)
+        public AffidavitFile GetAffidavit(int affidavitId,bool includeScrubbingDetail = false)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var affidavitFile = context.affidavit_files
+                    var query = context.affidavit_files
                         .Include(a => a.affidavit_file_details)
-                        .Include(a => a.affidavit_file_details.Select(d => d.affidavit_file_detail_audiences))
-                        .Single(a => a.id == affidavitId);
+                        .Include(a => a.affidavit_file_details.Select(d => d.affidavit_file_detail_audiences));
+
+                    if (includeScrubbingDetail)
+                        query.Include(a => a.affidavit_file_details.Select(d => d.affidavit_client_scrubs));
+
+                    var affidavitFile = query.Single(a => a.id == affidavitId);
 
                     return new AffidavitFile
                     {

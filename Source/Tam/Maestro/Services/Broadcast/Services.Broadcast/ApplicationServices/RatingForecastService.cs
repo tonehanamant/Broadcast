@@ -7,7 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using Tam.Maestro.Common;
+using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
@@ -49,11 +51,15 @@ namespace Services.Broadcast.ApplicationServices
         {
             var sweepsMonths = _MediaMonthAndWeekAggregateCache.GetAllSweepsMonthsBeforeCurrentMonth();
 
-            var nielsonMarkets = _ExternalRatingRepository.GetNielsonMarkets(sweepsMonths);
-            var forecastDetails = _RatingForecastRepository.GetForecastDetails(sweepsMonths);
-            return forecastDetails.Select(s => new MediaMonthCrunchStatus(s, nielsonMarkets.First(m => m.Item1 == s.MediaMonth).Item2))
-                                  .OrderByDescending(d => d.MediaMonth.Id)
-                                  .ToList();
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                var nielsonMarkets = _ExternalRatingRepository.GetNielsonMarkets(sweepsMonths);
+                var forecastDetails = _RatingForecastRepository.GetForecastDetails(sweepsMonths);
+                return forecastDetails.Select(s =>
+                        new MediaMonthCrunchStatus(s, nielsonMarkets.First(m => m.Item1 == s.MediaMonth).Item2))
+                    .OrderByDescending(d => d.MediaMonth.Id)
+                    .ToList();
+            }
         }
 
         public RatingForecastResponse ForecastRatings(RatingForecastRequest forecastRequest)
