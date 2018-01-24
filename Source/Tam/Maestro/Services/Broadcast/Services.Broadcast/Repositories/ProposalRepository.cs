@@ -327,6 +327,11 @@ namespace Services.Broadcast.Repositories
                     hut_posting_book_id = proposalDetail.HutPostingBookId,
                     share_posting_book_id = proposalDetail.SharePostingBookId,
                     playback_type = (byte) proposalDetail.PlaybackType,
+                    proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
+                    {
+                        genre_id = g.GenreId,
+                        contain_type = (byte) g.Contain
+                    }).ToList(),
                     proposal_version_detail_quarters =
                         proposalDetail.Quarters.Select(quarter => new proposal_version_detail_quarters
                         {
@@ -410,6 +415,17 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.hut_posting_book_id = detail.HutPostingBookId;
                     updatedDetail.share_posting_book_id = detail.SharePostingBookId;
                     updatedDetail.playback_type = (byte) detail.PlaybackType;
+
+                    context.proposal_version_detail_criteria_genres.RemoveRange(
+                        context.proposal_version_detail_criteria_genres.Where(g => g.proposal_version_detail_id == detail.Id));
+                    if (detail.GenreCriteria != null && detail.GenreCriteria.Count > 0)
+                        context.proposal_version_detail_criteria_genres.AddRange(
+                            detail.GenreCriteria.Select(
+                                g => new proposal_version_detail_criteria_genres()
+                                {
+                                    genre_id = g.GenreId,
+                                    contain_type = (byte) g.Contain
+                                }));
 
                     // deal with quarters that have been deleted 
                     // scenario where user maintain the detail but change completely the flight generating new quarters for this particular detail
@@ -747,6 +763,12 @@ namespace Services.Broadcast.Repositories
                 SharePostingBookId = version.share_posting_book_id,
                 HutPostingBookId = version.hut_posting_book_id,
                 PlaybackType = (ProposalEnums.ProposalPlaybackType) version.playback_type,
+                GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
+                {
+                    Id = c.id,
+                    GenreId = c.genre_id,
+                    Contain = (ContainTypeEnum) c.contain_type
+                }).ToList(),
                 Quarters = version.proposal_version_detail_quarters.Select(quarter => new ProposalQuarterDto
                 {
                     Cpm = quarter.cpm,
@@ -946,7 +968,8 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var proposalDetail = context.proposal_version_details.Single(pvd => pvd.id == proposalDetailId,
+                var proposalDetail = context.proposal_version_details.Include(pvd => pvd.proposal_version_detail_criteria_genres)
+                .Single(pvd => pvd.id == proposalDetailId,
                     string.Format("The proposal detail information you have entered [{0}] does not exist.",
                         proposalDetailId));
 
@@ -966,7 +989,13 @@ namespace Services.Broadcast.Repositories
                     SinglePostingBookId = proposalDetail.single_posting_book_id,
                     SharePostingBookId = proposalDetail.share_posting_book_id,
                     HutPostingBookId = proposalDetail.hut_posting_book_id,
-                    PlaybackType = (ProposalEnums.ProposalPlaybackType) proposalDetail.playback_type
+                    PlaybackType = (ProposalEnums.ProposalPlaybackType)proposalDetail.playback_type,
+                    GenreCriteria = proposalDetail.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
+                    {
+                        Id = c.id,
+                        GenreId = c.genre_id,
+                        Contain = (ContainTypeEnum)c.contain_type
+                    }).ToList()
                 };
 
                 return proposalDetailDto;

@@ -8,6 +8,8 @@ namespace Services.Broadcast.Entities
     {
         public int? Id { get; set; }
         private List<ProposalFlightWeek> _ProposalFlightWeeks;
+        private List<GenreCriteria> _GenreCriteria;
+        private List<ProgramCriteria> _ProgramCriteria; 
 
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }
@@ -32,5 +34,17 @@ namespace Services.Broadcast.Entities
         public int? HutPostingBookId { get; set; }
         public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
         public DefaultPostingBooksDto DefaultPostingBooks { get; set; }
+
+        public List<GenreCriteria> GenreCriteria
+        {
+            get { return _GenreCriteria ?? (_GenreCriteria = new List<GenreCriteria>()); }
+            set { _GenreCriteria = value; }
+        }
+
+        public List<ProgramCriteria> ProgramCriteria
+        {
+            get { return _ProgramCriteria ?? (_ProgramCriteria = new List<ProgramCriteria>()); }
+            set { _ProgramCriteria = value; }
+        } 
     }
 }

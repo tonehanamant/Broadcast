@@ -31,8 +31,10 @@
           "StartDate": "2016-05-30T00:00:00"
         }
       ],
+      "GenreCriteria": [],
       "HutPostingBookId": 410,
       "PlaybackType": 4,
+      "ProgramCriteria": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -90,8 +92,10 @@
           "StartDate": "2016-05-30T00:00:00"
         }
       ],
+      "GenreCriteria": [],
       "HutPostingBookId": 410,
       "PlaybackType": 4,
+      "ProgramCriteria": [],
       "Quarters": [
         {
           "Cpm": 20.0000,

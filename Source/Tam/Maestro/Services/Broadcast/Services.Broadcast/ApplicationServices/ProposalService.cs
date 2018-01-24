@@ -763,6 +763,9 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (string.IsNullOrWhiteSpace(detail.DaypartCode))
                     throw new Exception(string.Format("Invalid daypart code for proposal detail with flight '{0}-{1}'.", detail.FlightStartDate.Date, detail.FlightEndDate.Date));
+
+                if (detail.GenreCriteria.Exists(g => g.Contain == ContainTypeEnum.Include) && detail.GenreCriteria.Exists(g => g.Contain == ContainTypeEnum.Exclude))
+                    throw new Exception("Cannot save proposal detail that contains both genre inclusion and genre exclusion criteria.");
             }
         }
 
