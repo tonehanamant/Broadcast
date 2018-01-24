@@ -131,7 +131,7 @@ export default class DayPartPicker extends Component {
 	}
 
 	onEndTimeChange(time, timeString) {
-		const timeSeconds = moment(time).diff(moment().startOf('day'), 'seconds');
+		const timeSeconds = moment(time).diff(moment(time).startOf('day'), 'seconds');
 		this.setState({
 			endTime: time,
 			endTimeSeconds: timeSeconds,

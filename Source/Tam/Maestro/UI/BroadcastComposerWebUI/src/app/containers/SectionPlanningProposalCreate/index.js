@@ -88,7 +88,7 @@ export class SectionPlanningProposalCreate extends Component {
       const validDaypartCode = (value) => {
         const alphanumeric = /^[A-Za-z0-9- ]+$/i;
         const valid = {
-          required: (value !== '' || null),
+          required: value !== '' && value !== null,
           alphaNumeric: (alphanumeric.test(value) || value === ''),
           maxChar10: (value && value.length <= 10),
         };
