@@ -42,3 +42,21 @@
     #import_thirdparty_form .select2-container--bootstrap .select2-selection--single {
         padding: 5px 12px 6px 6px;
     }
+
+
+    .error-item {
+        margin: 2px 0 4px 0;
+    }
+    .error-item > a {
+        text-decoration: none;
+    }
+
+    .error-item > a:before {
+        font-family: FontAwesome;
+        content:"\f068";
+        padding-right: 5px;
+    }
+
+    .error-item > a.collapsed:before {
+        content:"\f067";
+    }

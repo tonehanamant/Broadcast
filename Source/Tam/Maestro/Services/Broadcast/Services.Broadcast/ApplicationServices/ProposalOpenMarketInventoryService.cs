@@ -570,21 +570,18 @@ namespace Services.Broadcast.ApplicationServices
             var stationDetailImpressions = new Dictionary<int, ProposalProgramDto>();
             var manifestDaypartImpressions = new Dictionary<int, double>();
 
-            var proposalDetailDaypart = DaypartDto.ConvertDaypartDto(proposalDetail.DetailDaypart);
             foreach (var program in programs)
             {
                 foreach (var manifestDaypart in program.ManifestDayparts)
                 {
 
-                    var intersectingDaypart =
-                        DisplayDaypart.Intersect(
-                            Common.Services.DaypartCache.Instance.GetDisplayDaypart(manifestDaypart.DaypartId),
-                            proposalDetailDaypart);
+                    var manifestDp = Common.Services.DaypartCache.Instance.GetDisplayDaypart(manifestDaypart.DaypartId);
+
                     var stationDaypart = new ManifestDetailDaypart
                     {
                         LegacyCallLetters = program.Station.LegacyCallLetters,
                         Id = manifestDaypart.Id,
-                        DisplayDaypart = intersectingDaypart
+                        DisplayDaypart = manifestDp
                     };
                     impressionRequests.Add(stationDaypart);
                     manifestDaypartImpressions.Add(manifestDaypart.Id, 0); //initialize with zero
