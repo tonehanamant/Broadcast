@@ -135,7 +135,7 @@ var RateMainController = BaseController.extend({
             allFailed = this.importFileQueueOriginalLength == this.importFileErrors.length;
             notifyType = allFailed ? 'danger' : 'warning';
             notifyMessage = allFailed ? 'Error Uploading Rate File(s)' : 'Error Uploading Some Rate File(s)';
-            this.view.showUploadFileIssues(this.importFileErrors);
+            this.view.showUploadFileIssues(this.importFileErrors, this.importFileQueueOriginalLength);
         }
         util.notify(notifyMessage, notifyType);
         this.importFileErrors = [];

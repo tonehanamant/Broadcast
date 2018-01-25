@@ -67,9 +67,10 @@ var RateMainView = BaseView.extend({
 
     //REVISE to aggregated importFileErrors
     //TODO grouping
-    showUploadFileIssues: function (errors) {
+    showUploadFileIssues: function (errors, overallFileCount) {
         var title = 'Import Errors';
-        var ret = '<p>Encountered errors uploading the following files:</p>';
+        var status = '<strong>' + errors.length + ' of ' + overallFileCount + '</strong> files failed.<br/>';
+        var ret = status + '<p>Encountered errors uploading the following files:</p>';
         var $scope = this;
         $.each(errors, function (index, errorItem) {
             var msg = errorItem.message;
