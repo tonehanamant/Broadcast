@@ -104,7 +104,6 @@ export class DataGridContainer extends Component {
     }
   }
 
-
   /* ////////////////////////////////// */
   /* GRID CONTEXT MENU METHODS  */
   /* ////////////////////////////////// */
@@ -127,7 +126,6 @@ export class DataGridContainer extends Component {
   contextMenuFileSettingsAction(id) {
     this.props.getPostPrePostingFileEdit(id);
   }
-
 
   /* ////////////////////////////////// */
   /* // GRID ACTION METHOD BINDINGS
