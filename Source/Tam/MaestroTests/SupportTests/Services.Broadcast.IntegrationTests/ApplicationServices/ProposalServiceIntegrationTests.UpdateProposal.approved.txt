@@ -52,11 +52,17 @@
       "GenreCriteria": [
         {
           "Contain": 2,
-          "GenreId": 5
+          "Genre": {
+            "Display": null,
+            "Id": 5
+          }
         },
         {
           "Contain": 2,
-          "GenreId": 10
+          "Genre": {
+            "Display": null,
+            "Id": 10
+          }
         }
       ],
       "HutPostingBookId": null,

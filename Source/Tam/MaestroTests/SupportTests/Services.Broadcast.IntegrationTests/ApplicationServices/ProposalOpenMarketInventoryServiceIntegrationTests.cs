@@ -791,8 +791,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var newCriteria = new List<GenreCriteria>
             {
-                new GenreCriteria {Contain = ContainTypeEnum.Include, GenreId = 1},
-                new GenreCriteria {Contain = ContainTypeEnum.Exclude, GenreId = 2}
+                new GenreCriteria {Contain = ContainTypeEnum.Include,Genre = new LookupDto(1,"")},
+                new GenreCriteria {Contain = ContainTypeEnum.Exclude,Genre = new LookupDto(2,"")}
             };
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
@@ -836,8 +836,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     GenreSearchCriteria = new List<GenreCriteria>
                     {
-                        new GenreCriteria {Contain = ContainTypeEnum.Include, GenreId = 1, Id = deleteCriteriaIds.First()},
-                        new GenreCriteria {Contain = ContainTypeEnum.Exclude, GenreId = 2, Id = deleteCriteriaIds.Last()}
+                        new GenreCriteria {Contain = ContainTypeEnum.Include, Id = deleteCriteriaIds.First(),Genre = new LookupDto(1,"")},
+                        new GenreCriteria {Contain = ContainTypeEnum.Exclude, Id = deleteCriteriaIds.Last(),Genre = new LookupDto(2,"")}
                     }
                 }
             };
@@ -853,7 +853,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void ClearExistingCriteria_Deletes_OldGenreCriteria_And_AddNewGenreCriteria()
         {
             var deleteCriteriaIds = new List<int> { 420 };
-            var newCriteria = new List<GenreCriteria> { new GenreCriteria { Contain = ContainTypeEnum.Include, GenreId = 123 } };
+            var newCriteria = new List<GenreCriteria>(123) { new GenreCriteria { Contain = ContainTypeEnum.Include} };
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
             mock.Setup(m => m.UpdateCriteria(It.IsAny<int>(), It.IsAny<List<CpmCriteria>>(),
@@ -871,8 +871,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     GenreSearchCriteria = new List<GenreCriteria>
                     {
-                        new GenreCriteria {Contain = ContainTypeEnum.Exclude, GenreId = 2, Id = 322},
-                        new GenreCriteria {Contain = ContainTypeEnum.Exclude, GenreId = 2, Id = deleteCriteriaIds.First()}
+                        new GenreCriteria {Contain = ContainTypeEnum.Exclude, Id = 322,Genre = new LookupDto(2,"")},
+                        new GenreCriteria {Contain = ContainTypeEnum.Exclude, Id = deleteCriteriaIds.First(),Genre = new LookupDto(2,"")}
                     }
                 }
             };
@@ -1033,7 +1033,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.GenreSearchCriteria = new List<GenreCriteria>
             {
-                new GenreCriteria {Contain =ContainTypeEnum.Include, GenreId = 5}
+                new GenreCriteria {Contain =ContainTypeEnum.Include,Genre = new LookupDto {Id=5}}
             };
             var program = new ProposalProgramDto { Genres = new List<LookupDto> { new LookupDto { Id = 6 } } };
             Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
@@ -1045,7 +1045,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.GenreSearchCriteria = new List<GenreCriteria>
             {
-                new GenreCriteria {Contain =ContainTypeEnum.Include, GenreId = 5}
+                new GenreCriteria {Contain =ContainTypeEnum.Include,Genre = new LookupDto {Id=5}}
             };
             var program = new ProposalProgramDto { Genres = new List<LookupDto> { new LookupDto { Id = 5 } } };
             Assert.False(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
@@ -1057,7 +1057,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.GenreSearchCriteria = new List<GenreCriteria>
             {
-                new GenreCriteria {Contain =ContainTypeEnum.Exclude, GenreId = 5}
+                new GenreCriteria {Contain =ContainTypeEnum.Exclude,Genre = new LookupDto {Id=5}}
             };
             var program = new ProposalProgramDto { Genres = new List<LookupDto> { new LookupDto { Id = 5 } } };
             Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
@@ -1069,7 +1069,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.GenreSearchCriteria = new List<GenreCriteria>
             {
-                new GenreCriteria {Contain =ContainTypeEnum.Exclude, GenreId = 5}
+                new GenreCriteria {Contain =ContainTypeEnum.Exclude,Genre = new LookupDto {Id=5}}
             };
             var program = new ProposalProgramDto { Genres = new List<LookupDto> { new LookupDto { Id = 6 } } };
             Assert.False(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));

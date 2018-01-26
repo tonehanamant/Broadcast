@@ -8,7 +8,7 @@
           "LeadIn": false,
           "MatchGenre": false,
           "MatchMarket": false,
-          "MatchProgram": false,
+          "MatchProgram": true,
           "MatchTime": false,
           "ModifiedBy": "test user",
           "ProposalVersionDetailQuarterWeekId": 18,
@@ -102,14 +102,14 @@
         }
       ],
       "AirTime": 29040,
-      "Genre": null,
+      "Genre": "Do It Yourself",
       "Isci": "DDDDDDDD",
       "LeadinGenre": null,
       "LeadinProgramName": null,
       "LeadoutGenre": null,
       "LeadoutProgramName": null,
       "OriginalAirDate": "2017-06-29T00:00:00",
-      "ProgramName": "Good Morning America",
+      "ProgramName": "Program Names R us",
       "SpotLengthId": 1,
       "Station": "WWSB"
     }

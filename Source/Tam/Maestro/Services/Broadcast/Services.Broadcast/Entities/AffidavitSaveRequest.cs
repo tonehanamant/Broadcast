@@ -23,6 +23,7 @@ namespace Services.Broadcast.Entities
         public string Station { get; set; }
         public DateTime AirTime { get; set; }
         public string ProgramName { get; set; }
+        public string Genre { get; set; }
         public int SpotLength { get; set; }
         public string Isci { get; set; }
     }

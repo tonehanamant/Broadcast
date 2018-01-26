@@ -85,6 +85,7 @@ namespace Services.Broadcast.ApplicationServices
                 det.original_air_date = matchedAffidavitDetail.AffidavitDetail.AirTime;
                 det.isci = matchedAffidavitDetail.AffidavitDetail.Isci;
                 det.program_name = matchedAffidavitDetail.AffidavitDetail.ProgramName;
+                det.genre = matchedAffidavitDetail.AffidavitDetail.Genre;
                 det.spot_length_id = _GetSpotlength(matchedAffidavitDetail.AffidavitDetail.SpotLength, ref spotLengthDict);
                 det.station = matchedAffidavitDetail.AffidavitDetail.Station;
                 det.affidavit_client_scrubs =
@@ -141,40 +142,51 @@ namespace Services.Broadcast.ApplicationServices
                 var affidavitStation = stations[affidavitFileDetail.station];
                 foreach (var scrub in affidavitFileDetail.affidavit_client_scrubs)
                 {
-                    if (!stationManifests.Any())
-                    {
-                        scrub.match_station = false;
-                        scrub.match_market = false;
-                    }
-                    else
-                    {
-                        var quarterWeekId = scrub.proposal_version_detail_quarter_week_id;
+                    scrub.match_station = false;
+                    scrub.match_market = false;
+
+                    var quarterWeekId = scrub.proposal_version_detail_quarter_week_id;
+                    var proposal = proposals[quarterWeekId];
+                    var proposalDetail = proposal.Details.Single(d =>
+                        d.Quarters.Any(q => q.Weeks.Any(w => w.Id == quarterWeekId)));
+
+                    // match market/station
+                    if (stationManifests.Any())
+                    {   
                         var scrubManifests = stationManifests[quarterWeekId];
-                        scrub.match_station = true;
-                        scrub.match_market = true;
 
-
-                        if (scrubManifests.All(m =>
-                            m.station.legacy_call_letters != affidavitStation.LegacyCallLetters))
+                        if (scrubManifests.Any(m =>
+                            m.station.legacy_call_letters == affidavitStation.LegacyCallLetters))
                         {
-                            scrub.match_station = false;
-                            scrub.match_market = false;
-                        }
-                        else
-                        {
-                            var proposal = proposals[quarterWeekId];
-                            var detail = proposal.Details.Single(d =>
-                                d.Quarters.Any(q => q.Weeks.Any(w => w.Id == quarterWeekId)));
-
-                            var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, detail);
+                            scrub.match_station = true;
+                            var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, proposalDetail);
 
                             var marketGeoName = affidavitStation.OriginMarket;
-                            scrub.match_market = false;
                             if (markets.Any(m => m.Display == marketGeoName))
                             {
                                 scrub.match_market = true;
                             }
                         }
+                    }
+
+                    scrub.match_program = true;
+                    if (proposalDetail.ProgramCriteria.Any())
+                    {
+                        var progCriteria = proposalDetail.ProgramCriteria.SingleOrDefault(pc =>
+                                                pc.ProgramName == affidavitFileDetail.program_name);
+
+                        if (progCriteria != null)
+                            scrub.match_program = progCriteria.Contain == ContainTypeEnum.Include;
+                    }
+
+                    scrub.match_program = true;
+                    if (proposalDetail.GenreCriteria.Any())
+                    {
+                        var genreCriteria = proposalDetail.GenreCriteria.SingleOrDefault(pc =>
+                            pc.Genre.Display == affidavitFileDetail.genre);
+
+                        if (genreCriteria != null)
+                            scrub.match_program = genreCriteria.Contain == ContainTypeEnum.Include;
                     }
 
                     EnsureScrubadubdubed(scrub);

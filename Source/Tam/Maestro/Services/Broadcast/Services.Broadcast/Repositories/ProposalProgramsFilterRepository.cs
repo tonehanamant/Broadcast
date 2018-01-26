@@ -4,6 +4,7 @@ using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 
@@ -64,7 +65,7 @@ namespace Services.Broadcast.Repositories
 
         private static GenreCriteria Convert(proposal_version_detail_criteria_genres c)
         {
-            return new GenreCriteria { Id = c.id, Contain = (ContainTypeEnum)c.contain_type, GenreId = c.genre_id };
+            return new GenreCriteria() { Id = c.id, Contain = (ContainTypeEnum)c.contain_type,Genre = new LookupDto(c.genre_id,"") };
         }
 
         private static CpmCriteria Convert(proposal_version_detail_criteria_cpm c)
@@ -79,7 +80,7 @@ namespace Services.Broadcast.Repositories
 
         private static proposal_version_detail_criteria_genres Convert(GenreCriteria filter, int proposalDetailId)
         {
-            return new proposal_version_detail_criteria_genres { contain_type = (byte)filter.Contain, proposal_version_detail_id = proposalDetailId, genre_id = filter.GenreId };
+            return new proposal_version_detail_criteria_genres { contain_type = (byte)filter.Contain, proposal_version_detail_id = proposalDetailId, genre_id = filter.Genre.Id };
         }
 
         private static proposal_version_detail_criteria_cpm Convert(CpmCriteria filter, int proposalDetailId)
