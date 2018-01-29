@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Services.Broadcast.Repositories;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities
 {
@@ -26,8 +28,8 @@ namespace Services.Broadcast.Entities
     public class GenreCriteria
     {
         public ContainTypeEnum Contain { get; set; }
-        public int GenreId { get; set; }
         public int? Id { get; set; }
+        public LookupDto Genre { get; set; }
     }
 
     public class CpmCriteria

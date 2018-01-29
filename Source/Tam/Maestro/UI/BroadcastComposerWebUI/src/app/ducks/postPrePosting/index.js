@@ -26,14 +26,12 @@ export default function reducer(state = initialState, action) {
   const { type, data, payload } = action;
 
   switch (type) {
-    // POST INITIAL DATA
     case ACTIONS.RECEIVE_POST_PRE_POSTING_INITIALDATA:
       return {
         ...state,
         initialdata: data.Data,
       };
 
-    // POST
     case ACTIONS.RECEIVE_POST_PRE_POSTING:
       return {
         ...state,
@@ -48,7 +46,6 @@ export default function reducer(state = initialState, action) {
         postUnfiltered: data, // store copy to be used by filter
       };
 
-    // POST FILTERED
     case ACTIONS.STORE_POST_UNFILTERED:
       return {
         ...state,
@@ -154,6 +151,19 @@ export default function reducer(state = initialState, action) {
           PostingBookId: null,
           PlaybackType: null,
           Demos: null,
+        },
+      };
+
+    case ACTIONS.RECEIVE_POST_PRE_POSTING_FILE_EDIT:
+      return {
+        ...state,
+        fileEditForm: {
+          Id: data.Data.Id,
+          FileName: data.Data.FileName,
+          Equivalized: data.Data.Equivalized,
+          PostingBookId: data.Data.PostingBookId,
+          PlaybackType: data.Data.PlaybackType,
+          Demos: data.Data.Demos,
         },
       };
 

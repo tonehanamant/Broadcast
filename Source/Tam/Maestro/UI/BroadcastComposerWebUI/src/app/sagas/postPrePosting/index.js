@@ -206,7 +206,7 @@ export function* assignPostPrePostingDisplay({ payload: request }) {
 /* REQUEST POST PRE POSTING FILTERED */
 /* ////////////////////////////////// */
 export function* requestPostPrePostingFiltered({ payload: query }) {
-  const postUnfiltered = yield select(state => state.post.postUnfiltered);
+  const postUnfiltered = yield select(state => state.postPrePosting.postUnfiltered);
   const searcher = new FuzzySearch(postUnfiltered, ['FileName', 'DisplayDemos', 'DisplayUploadDate', 'DisplayModifiedDate'], { caseSensitive: false });
   const postFiltered = () => searcher.search(query);
 
@@ -302,8 +302,10 @@ export function* requestPostPrePostingFileEdit({ payload: id }) {
         loading: true,
       },
     });
+
     const response = yield getPost(id);
     const { status, data } = response;
+
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,
       overlay: {
@@ -311,6 +313,7 @@ export function* requestPostPrePostingFileEdit({ payload: id }) {
         loading: false,
       },
     });
+
     if (status !== 200) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
@@ -321,6 +324,7 @@ export function* requestPostPrePostingFileEdit({ payload: id }) {
       });
       throw new Error();
     }
+
     if (!data.Success) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
@@ -331,10 +335,12 @@ export function* requestPostPrePostingFileEdit({ payload: id }) {
       });
       throw new Error();
     }
+
     yield put({
       type: ACTIONS.RECEIVE_POST_PRE_POSTING_FILE_EDIT,
       data,
     });
+
     yield put({
       type: ACTIONS.TOGGLE_MODAL,
       modal: {

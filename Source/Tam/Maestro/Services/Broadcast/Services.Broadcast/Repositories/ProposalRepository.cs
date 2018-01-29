@@ -6,6 +6,8 @@ using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
 using Services.Broadcast.BusinessEngines;
@@ -329,7 +331,7 @@ namespace Services.Broadcast.Repositories
                     playback_type = (byte) proposalDetail.PlaybackType,
                     proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
                     {
-                        genre_id = g.GenreId,
+                        genre_id = g.Genre.Id,
                         contain_type = (byte) g.Contain
                     }).ToList(),
                     proposal_version_detail_quarters =
@@ -423,8 +425,21 @@ namespace Services.Broadcast.Repositories
                             detail.GenreCriteria.Select(
                                 g => new proposal_version_detail_criteria_genres()
                                 {
-                                    genre_id = g.GenreId,
-                                    contain_type = (byte) g.Contain
+                                    genre_id = g.Genre.Id,
+                                    contain_type = (byte) g.Contain,
+                                    proposal_version_detail_id = detail.Id.Value
+                                }));
+
+                    context.proposal_version_detail_criteria_programs.RemoveRange(
+                        context.proposal_version_detail_criteria_programs.Where(g => g.proposal_version_detail_id == detail.Id));
+                    if (detail.ProgramCriteria != null && detail.ProgramCriteria.Count > 0)
+                        context.proposal_version_detail_criteria_programs.AddRange(
+                            detail.ProgramCriteria.Select(
+                                p => new proposal_version_detail_criteria_programs()
+                                {
+                                    program_name = p.ProgramName,
+                                    contain_type = (byte)p.Contain,
+                                    proposal_version_detail_id = detail.Id.Value
                                 }));
 
                     // deal with quarters that have been deleted 
@@ -665,15 +680,18 @@ namespace Services.Broadcast.Repositories
         public ProposalDto GetProposalById(int proposalId)
         {
             return _InReadUncommitedTransaction(
-                context => (from p in context.proposals
-                        join v in context.proposal_versions on p.id equals v.proposal_id
-                        where p.primary_version_id == v.id
-                              && p.id == proposalId
-                        select new {p, v})
-                    .ToList().Select(pv => _MapToProposalDto(pv.p, pv.v))
-                    .Single(string.Format(
-                        "The Proposal information you have entered [{0}] does not exist. Please try again.",
-                        proposalId)));
+                context =>
+                {
+                    return (from p in context.proposals
+                            join v in context.proposal_versions on p.id equals v.proposal_id
+                            where p.primary_version_id == v.id
+                                  && p.id == proposalId
+                            select new {p, v})
+                        .ToList().Select(pv => _MapToProposalDto(pv.p, pv.v))
+                        .Single(string.Format(
+                            "The Proposal information you have entered [{0}] does not exist. Please try again.",
+                            proposalId));
+                });
         }
 
         public int GetPrimaryProposalVersionNumber(int proposalId)
@@ -766,8 +784,8 @@ namespace Services.Broadcast.Repositories
                 GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                 {
                     Id = c.id,
-                    GenreId = c.genre_id,
-                    Contain = (ContainTypeEnum) c.contain_type
+                    Contain = (ContainTypeEnum) c.contain_type,
+                    Genre = new LookupDto { Id = c.genre.id ,Display = c.genre.name}
                 }).ToList(),
                 Quarters = version.proposal_version_detail_quarters.Select(quarter => new ProposalQuarterDto
                 {
@@ -930,11 +948,11 @@ namespace Services.Broadcast.Repositories
                     CpmCriteria = pv.proposal_version_detail_criteria_cpm.Select(c =>
                         new CpmCriteria {Id = c.id, MinMax = (MinMaxEnum) c.min_max, Value = c.value}).ToList(),
                     GenreSearchCriteria = pv.proposal_version_detail_criteria_genres.Select(c =>
-                            new GenreCriteria
+                            new GenreCriteria()
                             {
                                 Id = c.id,
                                 Contain = (ContainTypeEnum) c.contain_type,
-                                GenreId = c.genre_id
+                                Genre = new LookupDto(c.genre_id,"")
                             })
                         .ToList(),
                     ProgramNameSearchCriteria = pv.proposal_version_detail_criteria_programs.Select(c =>
@@ -993,8 +1011,8 @@ namespace Services.Broadcast.Repositories
                     GenreCriteria = proposalDetail.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,
-                        GenreId = c.genre_id,
-                        Contain = (ContainTypeEnum)c.contain_type
+                        Contain = (ContainTypeEnum)c.contain_type,
+                        Genre = new LookupDto { Id = c.genre_id}
                     }).ToList()
                 };
 

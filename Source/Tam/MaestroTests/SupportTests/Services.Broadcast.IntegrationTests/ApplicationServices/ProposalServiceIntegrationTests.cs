@@ -66,15 +66,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
                 GenreCriteria = new List<GenreCriteria>()
                 {
-                    new GenreCriteria()
+                    new GenreCriteria
                     {
-                        Contain = ContainTypeEnum.Include,
-                        GenreId = 10
+                        Contain = ContainTypeEnum.Include,Genre = new LookupDto {Id=10}
                     },
-                    new GenreCriteria()
+                    new GenreCriteria
                     {
-                        Contain = ContainTypeEnum.Include,
-                        GenreId = 12
+                        Contain = ContainTypeEnum.Include,Genre = new LookupDto {Id=12}
                     }
                 },
                 Quarters = new List<ProposalQuarterDto>
@@ -536,15 +534,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             proposalDto.Details[0].GenreCriteria = new List<GenreCriteria>()
             {
-                new GenreCriteria()
+                new GenreCriteria
                     {
-                        Contain = ContainTypeEnum.Exclude,
-                        GenreId = 5
+                        Contain = ContainTypeEnum.Exclude,Genre = new LookupDto {Id=5}
                     },
-                    new GenreCriteria()
+                    new GenreCriteria
                     {
-                        Contain = ContainTypeEnum.Exclude,
-                        GenreId = 10
+                        Contain = ContainTypeEnum.Exclude,Genre = new LookupDto {Id=10}
                     }
             };
 
@@ -689,15 +685,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 proposalDetailDto.GenreCriteria.AddRange(new List<GenreCriteria>()
                 {
-                    new GenreCriteria()
+                    new GenreCriteria
                     {
-                        GenreId = 10,
-                        Contain = ContainTypeEnum.Include
+                        Contain = ContainTypeEnum.Include,Genre = new LookupDto {Id=10}
                     },
-                    new GenreCriteria()
+                    new GenreCriteria
                     {
-                        GenreId = 11,
-                        Contain = ContainTypeEnum.Exclude
+                        Contain = ContainTypeEnum.Exclude,Genre = new LookupDto {Id=11}
                     }
                 });
 

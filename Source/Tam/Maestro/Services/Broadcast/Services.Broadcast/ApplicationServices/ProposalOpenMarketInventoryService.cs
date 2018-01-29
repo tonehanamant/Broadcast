@@ -446,7 +446,7 @@ namespace Services.Broadcast.ApplicationServices
         internal static bool FilterByGenreAndProgramNameCriteria(ProposalProgramDto program, OpenMarketCriterion marketCriterion)
         {
             foreach (var criteria in marketCriterion.GenreSearchCriteria.GroupBy(c => c.Contain)
-                .Select(g => new { Type = g.Key, GenreIds = g.Select(gb => gb.GenreId) }))
+                .Select(g => new { Type = g.Key, GenreIds = g.Select(gb => gb.Genre.Id) }))
             {
                 var includeGenre = criteria.GenreIds.Intersect(program.Genres.Select(g => g.Id)).Any();
                 if (criteria.Type == ContainTypeEnum.Include && !includeGenre)

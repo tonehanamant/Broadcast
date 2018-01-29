@@ -38,11 +38,15 @@
       "GenreCriteria": [
         {
           "Contain": 1,
-          "GenreId": 10
+          "Genre": {
+            "Display": "Competition"
+          }
         },
         {
           "Contain": 1,
-          "GenreId": 12
+          "Genre": {
+            "Display": "Documentary"
+          }
         }
       ],
       "HutPostingBookId": 410,

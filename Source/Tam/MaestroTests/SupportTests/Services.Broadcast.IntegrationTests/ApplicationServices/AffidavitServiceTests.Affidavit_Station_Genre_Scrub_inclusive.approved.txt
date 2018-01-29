@@ -7,7 +7,7 @@
           "Comment": null,
           "LeadIn": false,
           "MatchGenre": false,
-          "MatchMarket": true,
+          "MatchMarket": false,
           "MatchProgram": true,
           "MatchTime": true,
           "ModifiedBy": "test user",
