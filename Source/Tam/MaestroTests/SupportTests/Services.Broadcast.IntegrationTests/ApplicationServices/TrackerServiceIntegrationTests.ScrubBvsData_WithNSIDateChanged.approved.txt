@@ -547,7 +547,7 @@
       "EstimateId": 3416,
       "HasLeadInScheduleMatches": false,
       "Id": 10502,
-      "Impressions": 1683.7799999999998,
+      "Impressions": 1683.7799999999997,
       "Isci": "ADUBOLU081H",
       "LinkedToBlock": false,
       "LinkedToLeadin": false,
