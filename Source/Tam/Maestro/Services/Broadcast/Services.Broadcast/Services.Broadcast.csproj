@@ -165,6 +165,7 @@
     <Compile Include="ApplicationServices\PostingBooksService.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryGroupService.cs" />
+    <Compile Include="ApplicationServices\WhosWatchingTvService.cs" />
     <Compile Include="BusinessEngines\AffidavitMatchingEngine.cs" />
     <Compile Include="BusinessEngines\ImpressionAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailHeaderTotalsCalculationEngine.cs" />
@@ -243,6 +244,7 @@
     <Compile Include="Entities\StationProgramConflictRequest.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
     <Compile Include="Entities\ValidationWarningDto.cs" />
+    <Compile Include="Entities\WhosWatchingTvSearchResult.cs" />
     <Compile Include="Exceptions\BroadcastAffidavitException.cs" />
     <Compile Include="Extensions\Bvs.cs" />
     <Compile Include="ReportGenerators\IReportGenerator.cs" />

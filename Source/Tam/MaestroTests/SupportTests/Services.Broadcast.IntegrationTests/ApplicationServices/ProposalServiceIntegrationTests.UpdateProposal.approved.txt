@@ -67,7 +67,16 @@
       ],
       "HutPostingBookId": null,
       "PlaybackType": 3,
-      "ProgramCriteria": [],
+      "ProgramCriteria": [
+        {
+          "Contain": 2,
+          "ProgramName": "Shopping"
+        },
+        {
+          "Contain": 2,
+          "ProgramName": "Paid"
+        }
+      ],
       "Quarters": [
         {
           "Cpm": 12.5300,

@@ -16,6 +16,8 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\..\Solutions\MaestroComplete\</SolutionDir>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -182,6 +184,7 @@
     <Compile Include="ApplicationServices\ProposalWeeklyTotalCalculationEngineTests.cs" />
     <Compile Include="ApplicationServices\TrafficServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\TTNWFileImporterTests.cs" />
+    <Compile Include="ApplicationServices\WhosWatchingTvServiceTests.cs" />
     <Compile Include="AttributeIgnorer.cs" />
     <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />
     <Compile Include="Repositories\ProposalInventoryRepositoryIntegrationTests.cs" />
