@@ -173,13 +173,16 @@ export default class ProposalDetail extends Component {
   }
     const detailId = this.props.detail.Id;
     const proposalId = this.props.proposalEditForm.Id;
-    const readOnly = this.props.isReadOnly;
+    // change readOnly determination to specific inventory variations (1 proposed and 4)
+    // const readOnly = this.props.isReadOnly;
+    const status = this.props.proposalEditForm.Status;
+    const readOnly = status != null ? (status === 1 || status === 4) : false;
     const modalUrl = `/broadcast/planning?modal=${type}&proposalId=${proposalId}&detailId=${detailId}&readOnly=${readOnly}`;
     // console.log('openInventory', modalUrl, type, detailId, proposalId, readOnly, this.props.proposalEditForm);
     if (readOnly) {
       const title = (type === 'inventory') ? 'Inventory Read Only' : 'Open Market Inventory Read Only';
       const { Statuses } = this.props.initialdata;
-      const status = this.props.proposalEditForm.Status;
+      // const status = this.props.proposalEditForm.Status;
       const statusDisplay = Statuses.find(statusItem => statusItem.Id === status);
       const body = `Proposal Status of ${statusDisplay.Display}, you will not be able to save inventory.  Press "Continue" to go to Inventory.`;
       this.props.toggleModal({
