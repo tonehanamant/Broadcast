@@ -50,6 +50,7 @@
           <Property Name="leadin_program_name" Type="varchar" MaxLength="255" />
           <Property Name="leadout_genre" Type="varchar" MaxLength="255" />
           <Property Name="leadout_program_name" Type="varchar" MaxLength="255" />
+          <Property Name="market" Type="varchar" MaxLength="63" />
         </EntityType>
         <EntityType Name="affidavit_files">
           <Key>
@@ -4633,6 +4634,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="affidavit_client_scrubs" Relationship="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" FromRole="affidavit_file_details" ToRole="affidavit_client_scrubs" />
           <NavigationProperty Name="affidavit_files" Relationship="BroadcastModel.FK_affidavit_files_affidavit_file_details" FromRole="affidavit_file_details" ToRole="affidavit_files" />
           <NavigationProperty Name="affidavit_file_detail_audiences" Relationship="BroadcastModel.FK_affidavit_file_detail_audiences_affidavit_file_details" FromRole="affidavit_file_details" ToRole="affidavit_file_detail_audiences" />
+          <Property Name="market" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="affidavit_files">
           <Key>
@@ -5540,6 +5542,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="affidavit_file_details">
             <EntityTypeMapping TypeName="BroadcastModel.affidavit_file_details">
               <MappingFragment StoreEntitySet="affidavit_file_details">
+                <ScalarProperty Name="market" ColumnName="market" />
                 <ScalarProperty Name="leadout_program_name" ColumnName="leadout_program_name" />
                 <ScalarProperty Name="leadout_genre" ColumnName="leadout_genre" />
                 <ScalarProperty Name="leadin_program_name" ColumnName="leadin_program_name" />

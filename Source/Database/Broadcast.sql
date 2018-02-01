@@ -43,7 +43,7 @@ CREATE TABLE #previous_version
 )
 GO
 
--- Only run this script when the schema is in the correct pervious version
+-- Only run this script when the schema is in the correct previous version
 INSERT INTO #previous_version
 		SELECT parameter_value 
 		FROM system_component_parameters 
@@ -52,7 +52,17 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-2450 *********************************************************/
 
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'market'
+              AND OBJECT_ID = OBJECT_ID('affidavit_file_details'))
+BEGIN
+    ALTER TABLE affidavit_file_details
+	ADD market VARCHAR(63) NULL
+END
+
+/*************************************** END BCOP-2450 ***********************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

@@ -34,6 +34,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string leadin_program_name { get; set; }
         public string leadout_genre { get; set; }
         public string leadout_program_name { get; set; }
+        public string market { get; set; }
     
         public virtual ICollection<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual affidavit_files affidavit_files { get; set; }

@@ -164,6 +164,8 @@ namespace Services.Broadcast.ApplicationServices
                             var marketGeoName = affidavitStation.OriginMarket;
                             if (markets.Any(m => m.Display == marketGeoName))
                             {
+                                affidavitFileDetail.market = marketGeoName;
+
                                 scrub.match_market = true;
                             }
                         }
