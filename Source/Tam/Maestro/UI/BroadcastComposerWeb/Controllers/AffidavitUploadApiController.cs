@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Principal;
+using System.IO;
+using System.Management.Automation;
+using System.Net.Http;
 using System.Web.Http;
 using Common.Services.WebComponents;
 using Newtonsoft.Json;
@@ -22,7 +23,8 @@ namespace BroadcastComposerWeb.Controllers
 
         public AffidavitUploadApiController(
             IWebLogger logger,
-            BroadcastApplicationServiceFactory applicationServiceFactory) : base(logger, new ControllerNameRetriever("AffidavitUploadApiController"))
+            BroadcastApplicationServiceFactory applicationServiceFactory) : base(logger,
+            new ControllerNameRetriever("AffidavitUploadApiController"))
         {
             _ApplicationServiceFactory = applicationServiceFactory;
             _Logger = logger;

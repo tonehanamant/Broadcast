@@ -184,6 +184,7 @@
     <Compile Include="Converters\Post\PostParsingException.cs" />
     <Compile Include="Converters\ProposalScxDataPrep.cs" />
     <Compile Include="Converters\ProposalScxConverter.cs" />
+    <Compile Include="Converters\TextFileLineReader.cs" />
     <Compile Include="DaypartCache.cs" />
     <Compile Include="Entities\AffidavitClientScrub.cs" />
     <Compile Include="Entities\AffidavitClientScrubStatus.cs" />
