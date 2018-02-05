@@ -91,18 +91,20 @@ var RateMainController = BaseController.extend({
         this.importFileQueueOriginalLength = fileRequests.length;
         var $scope = this;
         $.each(fileRequests, function (index, rateFileRequest) {
-            $scope.apiUploadInventoryFile(rateFileRequest);
+            $scope.apiUploadQueueInventoryFile(rateFileRequest);
         });
     },
 
     //upload Rate file
-    //REVISING to queue uploads and handle aggregated errors/ success - remove callback?
-    apiUploadInventoryFile: function (rateFileRequest, callback) {
+    //REVISING to queue uploads and handle aggregated errors/ success
+
+    //need to distinguish between types - and not use Queue if single thirdparty
+    apiUploadQueueInventoryFile: function (rateFileRequest, callback) {
         var url = baseUrl + 'api/RatesManager/UploadInventoryFile';
         var jsonObj = JSON.stringify(rateFileRequest);
         httpService.post(url,
-            this.onApiUploadInventoryFile.bind(this, callback),
-            this.onApiUploadInventoryFileErrorProblems.bind(this, rateFileRequest.FileName),  //add the fileName
+            this.onApiUploadQueueInventoryFile.bind(this, callback),
+            this.onApiUploadQueueInventoryFileErrorProblems.bind(this, rateFileRequest.FileName),  //add the fileName
             jsonObj,
             {
                 $ViewElement: $('#rate_view'),
@@ -110,6 +112,21 @@ var RateMainController = BaseController.extend({
                 TitleErrorMessage: 'Rate File Not Uploaded',
                 StatusMessage: 'Upload Rate File',
                 bypassErrorShow: true //test bypass
+            });
+    },
+    //simpler third part - single files - no specific error handling
+    apiUploadInventoryFile: function (rateFileRequest, callback) {
+        var url = baseUrl + 'api/RatesManager/UploadInventoryFile';
+        var jsonObj = JSON.stringify(rateFileRequest);
+        httpService.post(url,
+            callback ? callback.bind(this) : null,
+            null,
+            jsonObj,
+            {
+                $ViewElement: $('#rate_view'),
+                ErrorMessage: 'Error Uploading Rate File',
+                TitleErrorMessage: 'Rate File Not Uploaded',
+                StatusMessage: 'Upload Rate File'
             });
     },
 
@@ -146,8 +163,8 @@ var RateMainController = BaseController.extend({
 
     //handle Rate upload return; show problems in view if present
     //CHANGE: handle problems as error status false - intercept as error - view will handle modal display text
-    //REVISE - queued
-    onApiUploadInventoryFile: function (callback, data) {
+    //REVISE - queued - Make specific to this type
+    onApiUploadQueueInventoryFile: function (callback, data) {
         if (callback) callback(data);
         var check = this.checkImportFileQueue();
         if (check) this.resolveFileImportsComplete();
@@ -157,7 +174,7 @@ var RateMainController = BaseController.extend({
 
     //error callback if Problems or NOW handle all errors - response.Problems or response as message with file name bind
     //REVISE queued
-    onApiUploadInventoryFileErrorProblems: function (fileName, xhr, response) {
+    onApiUploadQueueInventoryFileErrorProblems: function (fileName, xhr, response) {
         var errorItem = { fileName: fileName, message: response, problems: null };
         var hasProblems = response && response.Problems && response.Problems.length;
         if (hasProblems) {

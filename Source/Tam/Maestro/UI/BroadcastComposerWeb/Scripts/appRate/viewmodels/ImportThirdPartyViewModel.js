@@ -229,6 +229,7 @@ var ImportThirdPartyViewModel = function (controller) {
             console.log('uploadFile', fileData);
             controller.apiUploadInventoryFile(fileData,
                 function (data) {
+                    util.notify('Rate File Uploaded', 'success');
                     $scope.showModal(false);
                 }
             );
