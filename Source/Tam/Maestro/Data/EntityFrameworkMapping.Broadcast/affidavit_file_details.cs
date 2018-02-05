@@ -18,6 +18,7 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.affidavit_client_scrubs = new HashSet<affidavit_client_scrubs>();
             this.affidavit_file_detail_audiences = new HashSet<affidavit_file_detail_audiences>();
+            this.affidavit_file_detail_problems = new HashSet<affidavit_file_detail_problems>();
         }
     
         public long id { get; set; }
@@ -34,9 +35,11 @@ namespace EntityFrameworkMapping.Broadcast
         public string leadin_program_name { get; set; }
         public string leadout_genre { get; set; }
         public string leadout_program_name { get; set; }
+        public string market { get; set; }
     
         public virtual ICollection<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual affidavit_files affidavit_files { get; set; }
         public virtual ICollection<affidavit_file_detail_audiences> affidavit_file_detail_audiences { get; set; }
+        public virtual ICollection<affidavit_file_detail_problems> affidavit_file_detail_problems { get; set; }
     }
 }

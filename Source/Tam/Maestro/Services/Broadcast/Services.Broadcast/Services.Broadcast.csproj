@@ -187,6 +187,7 @@
     <Compile Include="DaypartCache.cs" />
     <Compile Include="Entities\AffidavitClientScrub.cs" />
     <Compile Include="Entities\AffidavitClientScrubStatus.cs" />
+    <Compile Include="Entities\AffidavitFileDetailProblem.cs" />
     <Compile Include="Entities\AffidavitMatchingDetail.cs" />
     <Compile Include="Entities\AffidavitFile.cs" />
     <Compile Include="Entities\AffidavitFileDetail.cs" />

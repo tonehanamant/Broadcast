@@ -219,7 +219,6 @@ namespace Services.Broadcast.ApplicationServices
         private List<AffidavitMatchingDetail> _LinkAndValidateContractIscis(AffidavitSaveRequest saveRequest)
         {
             var matchedAffidavitDetails = new List<AffidavitMatchingDetail>();
-            var matchingProblems = new List<String>();
 
             foreach (var requestDetail in saveRequest.Details)
             {
@@ -227,18 +226,15 @@ namespace Services.Broadcast.ApplicationServices
                     _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
                         .GetAffidavitMatchingProposalWeeksByHouseIsci(requestDetail.Isci);
 
-                var matchedProposalWeeks = _AffidavitMatchingEngine.Match(requestDetail, proposalWeeks); //TODO: combine errors and matches in one results in order to avoid concurrency issues.
-                matchingProblems.AddRange(_AffidavitMatchingEngine.MatchingProblems());
+                var matchedProposalWeeks = _AffidavitMatchingEngine.Match(requestDetail, proposalWeeks);
+                var matchingProblems = _AffidavitMatchingEngine.MatchingProblems();
                 matchedAffidavitDetails.Add(new AffidavitMatchingDetail()
                 {
                     AffidavitDetail = requestDetail,
-                    ProposalDetailWeeks = matchedProposalWeeks
+                    ProposalDetailWeeks = matchedProposalWeeks,
+                    AffidavitDetailProblems = matchingProblems
                 });
 
-            }
-            if (matchingProblems.Any())
-            {
-                throw new BroadcastAffidavitException("Found isci problems in the system", matchingProblems);
             }
 
             return matchedAffidavitDetails;
