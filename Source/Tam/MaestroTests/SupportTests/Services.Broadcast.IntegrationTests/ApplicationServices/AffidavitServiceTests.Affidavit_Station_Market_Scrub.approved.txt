@@ -108,6 +108,7 @@
       "LeadinProgramName": null,
       "LeadoutGenre": null,
       "LeadoutProgramName": null,
+      "Market": "Tampa-St. Pete (Sarasota)",
       "OriginalAirDate": "2017-06-29T00:00:00",
       "ProgramName": "Program Names R us",
       "SpotLengthId": 1,

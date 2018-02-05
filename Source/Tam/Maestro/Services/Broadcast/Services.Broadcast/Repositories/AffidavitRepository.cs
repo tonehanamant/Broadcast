@@ -73,6 +73,7 @@ namespace Services.Broadcast.Repositories
                             LeadinProgramName = d.leadin_program_name,
                             LeadoutGenre = d.leadout_genre,
                             LeadoutProgramName = d.leadin_program_name,
+                            Market = d.market,
                             AffidavitClientScrubs = d.affidavit_client_scrubs.Select(a => new AffidavitClientScrub
                             {
                                 Id = a.id,

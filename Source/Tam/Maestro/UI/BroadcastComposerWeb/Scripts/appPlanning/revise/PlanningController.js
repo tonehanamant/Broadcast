@@ -56,6 +56,8 @@ var PlanningController = BaseController.extend({
         if (params['modal'] && params['proposalId'] && params['detailId']) {
             var readOnly = (params['readOnly'] && (params['readOnly'] == 'true')) ? true : false;
             ret = { modal: params['modal'], proposalId: parseInt(params['proposalId']), detailId: parseInt(params['detailId']), readOnly: readOnly };
+            //handle possible version
+            if (params['version']) ret.version = parseInt(params['version']);
         }
         return ret;
     },
@@ -78,6 +80,7 @@ var PlanningController = BaseController.extend({
 
     //CHANGE - open react view after locking - should we call lock always if going back from modal?
     // loads options everytime -- if successful then loads the proposal form
+    //REVISE to handle possible version redirection
     editProposal: function (proposalId) {
         var $scope = this;
         //TEMP
@@ -86,6 +89,8 @@ var PlanningController = BaseController.extend({
         $scope.apiGetLock(proposalId, function (lockResponse) {
             if (lockResponse.Success) {
                 var url = window.location.origin + '/broadcastreact/planning/proposal/' + proposalId;
+                //handle possible version
+                if (this.activeModalParams && this.activeModalParams.version) url += ('/version/' + this.activeModalParams.version);
                 window.location = url;
                 //$scope.proposalsController.apiGetOptions(function(options) {
                 //    $scope.proposalsController.proposalViewModel.loadOptions(options);

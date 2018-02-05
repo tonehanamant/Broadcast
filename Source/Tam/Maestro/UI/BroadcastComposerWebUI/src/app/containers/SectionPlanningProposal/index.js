@@ -169,8 +169,10 @@ export class SectionPlanningProposal extends Component {
     let validDetailQuarterWeeks = true;
 
     Details.forEach((detail) => {
+      const isAdu = detail.Adu;
       detail.Quarters.forEach((quarter) => {
-        if (quarter.Cpm === 0) validDetailQuarters = false;
+        // handle detail ADU
+        if (isAdu !== true && quarter.Cpm === 0) validDetailQuarters = false;
         if (quarter.ImpressionGoal === 0) validDetailQuarters = false;
         return quarter.Weeks.forEach((week) => {
           if (week.IsHiatus === false && week.Impressions === 0) validDetailQuarterWeeks = false;

@@ -217,6 +217,7 @@
     <Compile Include="Controllers\BroadcastControllerBase.cs" />
     <Compile Include="Controllers\EnvironmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MaintenanceController.cs" />
     <Compile Include="Controllers\TrafficApiController.cs" />
     <Compile Include="Controllers\TrafficController.cs" />
     <Compile Include="Controllers\PostController.cs" />
@@ -509,6 +510,7 @@
     <Content Include="Styles\fonts\OpenSans-SemiBold-Latin-Ext.woff2" />
     <Content Include="Styles\fonts\OpenSans-SemiBold-Latin.woff2" />
     <Content Include="Styles\fonts\OpenSans-SemiBold-Vietnamese.woff2" />
+    <Content Include="Views\Maintenance\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Services\Broadcast\Services.Broadcast\Services.Broadcast.csproj">
