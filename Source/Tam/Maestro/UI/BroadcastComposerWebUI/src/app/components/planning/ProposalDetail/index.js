@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Select from 'react-select';
 import { Well, Form, FormGroup, ControlLabel, Row, Col, FormControl, Button, Checkbox, Glyphicon, HelpBlock } from 'react-bootstrap';
 import FlightPicker from 'Components/shared/FlightPicker';
@@ -7,7 +8,11 @@ import DayPartPicker from 'Components/shared/DayPartPicker';
 import ProposalDetailGrid from 'Components/planning/ProposalDetailGrid';
 import Sweeps from './Sweeps';
 
-export default class ProposalDetail extends Component {
+const mapStateToProps = ({ routing }) => ({
+  routing,
+});
+
+export class ProposalDetail extends Component {
   constructor(props) {
     super(props);
 
@@ -163,12 +168,17 @@ export default class ProposalDetail extends Component {
       return;
   }
     const detailId = this.props.detail.Id;
+    const version = this.props.proposalEditForm.Version;
     const proposalId = this.props.proposalEditForm.Id;
     // change readOnly determination to specific inventory variations (1 proposed and 4)
     // const readOnly = this.props.isReadOnly;
+    // adjust to check route location for version mode
     const status = this.props.proposalEditForm.Status;
     const readOnly = status != null ? (status === 1 || status === 4) : false;
-    const modalUrl = `/broadcast/planning?modal=${type}&proposalId=${proposalId}&detailId=${detailId}&readOnly=${readOnly}`;
+    const fromVersion = this.props.routing.location.pathname.indexOf('/version/') !== -1;
+    // console.log('fromVersion', fromVersion);
+    const modalUrl = fromVersion ? `/broadcast/planning?modal=${type}&proposalId=${proposalId}&detailId=${detailId}&readOnly=${readOnly}&version=${version}` :
+      `/broadcast/planning?modal=${type}&proposalId=${proposalId}&detailId=${detailId}&readOnly=${readOnly}`;
     // console.log('openInventory', modalUrl, type, detailId, proposalId, readOnly, this.props.proposalEditForm);
     if (readOnly) {
       const title = (type === 'inventory') ? 'Inventory Read Only' : 'Open Market Inventory Read Only';
@@ -361,6 +371,8 @@ ProposalDetail.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
   createAlert: PropTypes.func,
   isDirty: PropTypes.func.isRequired,
-
+  routing: PropTypes.object.isRequired,
   proposalValidationStates: PropTypes.object,
 };
+
+export default connect(mapStateToProps)(ProposalDetail);
