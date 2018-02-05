@@ -79,6 +79,7 @@ export default class ProposalDetail extends Component {
 
   onChangeAdu(event) {
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'Adu', value: event.target.checked });
+    this.props.onUpdateProposal();
     console.log('onChangeAdu', event.target.value, event.target.checked, this.props.detail);
   }
 
