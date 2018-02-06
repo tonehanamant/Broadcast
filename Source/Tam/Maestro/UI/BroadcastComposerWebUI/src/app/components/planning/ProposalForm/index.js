@@ -184,7 +184,6 @@ export default class ProposalForm extends Component {
   componentWillMount() {
     const { initialdata, proposalEditForm } = this.props;
     const { MarketGroup, Markets, BlackoutMarketGroup } = proposalEditForm;
-
     let selectedMarketGroup = MarketGroup;
     let customMarketCount = 0;
 
@@ -347,7 +346,7 @@ export default class ProposalForm extends Component {
 										<FormGroup controlId="proposalTargetCPM">
 											<ControlLabel><strong>Target CPM</strong></ControlLabel>
 											<FormControl.Static>
-												<CurrencyDollarWhole dash amount={proposalEditForm.TotalCPM} /> / <CurrencyDollarWhole dash amount={proposalEditForm.TargetCPM} /> <Label bsStyle="success"><PercentWhole dash percent={proposalEditForm.TotalCPMPercent} /></Label>
+												<CurrencyDollarWhole dash amount={proposalEditForm.TotalCPM} /> / <CurrencyDollarWhole dash amount={proposalEditForm.TargetCPM} /> <Label bsStyle={proposalEditForm.TotalCPMPercent <= 100 ? 'success' : 'danger'}><PercentWhole dash percent={proposalEditForm.TotalCPMPercent} /></Label>
 											</FormControl.Static>
 										</FormGroup>
 									</Col>
@@ -355,7 +354,7 @@ export default class ProposalForm extends Component {
 										<FormGroup controlId="proposalTargetBudget">
 											<ControlLabel><strong>Target Budget</strong></ControlLabel>
 											<FormControl.Static>
-												<CurrencyDollarWhole dash amount={proposalEditForm.TotalCost} /> / <CurrencyDollarWhole dash amount={proposalEditForm.TargetBudget} /> <Label bsStyle="success"><PercentWhole dash percent={proposalEditForm.TotalCostPercent} /></Label>
+												<CurrencyDollarWhole dash amount={proposalEditForm.TotalCost} /> / <CurrencyDollarWhole dash amount={proposalEditForm.TargetBudget} /> <Label bsStyle={proposalEditForm.TotalCostPercent < 100 ? 'success' : 'danger'}><PercentWhole dash percent={proposalEditForm.TotalCostPercent} /></Label>
 											</FormControl.Static>
 										</FormGroup>
 									</Col>
@@ -363,7 +362,7 @@ export default class ProposalForm extends Component {
 										<FormGroup controlId="proposalTargetImpressions">
 											<ControlLabel><strong>Target Impressions</strong></ControlLabel>
 											<FormControl.Static>
-												<NumberCommaWhole dash number={proposalEditForm.TotalImpressions / 1000} /> / <NumberCommaWhole dash number={proposalEditForm.TargetImpressions / 1000} /> <Label bsStyle="danger"><PercentWhole dash percent={proposalEditForm.TotalImpressionsPercent} /></Label>
+												<NumberCommaWhole dash number={proposalEditForm.TotalImpressions / 1000} /> / <NumberCommaWhole dash number={proposalEditForm.TargetImpressions / 1000} /> <Label bsStyle={proposalEditForm.TotalImpressionsPercent >= 100 ? 'success' : 'danger'}><PercentWhole dash percent={proposalEditForm.TotalImpressionsPercent} /></Label>
 											</FormControl.Static>
 										</FormGroup>
 									</Col>
