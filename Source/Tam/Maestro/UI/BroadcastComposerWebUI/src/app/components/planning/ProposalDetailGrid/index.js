@@ -95,7 +95,8 @@ export default class ProposalDetailGrid extends Component {
           dataIndex: 'EditUnits',
           width: '20%',
           renderer: ({ value, row }) => {
-            const isEditable = this.checkEditable(row, false);
+            const isEditable = this.checkEditable(row, true);
+            // console.log('units is editable', isEditable);
 
             const inputCpm = (event) => {
               let unmaskedValue = event.target.value.replace(/CPM \$ /, '');
