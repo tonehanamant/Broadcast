@@ -45,7 +45,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override InventorySource InventorySource { get; set; }
 
-        public override void ExtractFileData(System.IO.Stream stream, InventoryFile inventoryFile, DateTime effectiveDate,List<InventoryFileProblem> fileProblems)
+        public override void ExtractFileData(System.IO.Stream stream, InventoryFile inventoryFile, DateTime effectiveDate)
         {
             var spotLengthId = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds()[_TTNWStandardSpotLength];
 
@@ -56,10 +56,10 @@ namespace Services.Broadcast.Converters.RateImport
 
                 if (dataTable.SpotColumns.Count == 0)
                 {
-                    fileProblems.Add(new InventoryFileProblem(string.Format("No valid daypart codes (spot columns) found in file.")));
+                    FileProblems.Add(new InventoryFileProblem(string.Format("No valid daypart codes (spot columns) found in file.")));
                 }
 
-                var ttnwRecords = _GetTTNWRecords(sheet, dataTable, fileProblems);
+                var ttnwRecords = _GetTTNWRecords(sheet, dataTable);
 
                 if (ttnwRecords.Count == 0)
                 {
@@ -70,7 +70,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                 if (validStations == null || validStations.Count == 0)
                 {
-                    fileProblems.Add(new InventoryFileProblem("There are no known stations in the file"));
+                    FileProblems.Add(new InventoryFileProblem("There are no known stations in the file"));
                     return;
                 }
 
@@ -82,10 +82,10 @@ namespace Services.Broadcast.Converters.RateImport
 
                     if(!validStations.TryGetValue(ttnwRecord.StationLetters, out station))
                     {
-                        fileProblems.Add(new InventoryFileProblem(string.Format("Invalid station: {0}", ttnwRecord.StationLetters)));
+                        FileProblems.Add(new InventoryFileProblem(string.Format("Invalid station: {0}", ttnwRecord.StationLetters)));
                     }
 
-                    var dayparts = _ParseDayparts(ttnwRecord.DaypartsString, ttnwRecord.StationLetters, fileProblems);
+                    var dayparts = _ParseDayparts(ttnwRecord.DaypartsString, ttnwRecord.StationLetters);
 
                     var manifestDayparts = dayparts.Select(
                         d => new StationInventoryManifestDaypart()
@@ -179,7 +179,7 @@ namespace Services.Broadcast.Converters.RateImport
             return manifestAudiences;
         }
 
-        private List<DisplayDaypart> _ParseDayparts(string daypartInput, string station, List<InventoryFileProblem> fileProblems)
+        private List<DisplayDaypart> _ParseDayparts(string daypartInput, string station)
         {
             List<DisplayDaypart> dayparts = new List<DisplayDaypart>();
             var daypartProblems = new List<InventoryFileProblem>();
@@ -248,7 +248,7 @@ namespace Services.Broadcast.Converters.RateImport
                 daypartProblems.Add(new InventoryFileProblem(string.Format("Invalid daypart for station: {0}", station)));
             }
 
-            fileProblems.AddRange(daypartProblems);
+            FileProblems.AddRange(daypartProblems);
             return dayparts;
         }
 
@@ -273,7 +273,7 @@ namespace Services.Broadcast.Converters.RateImport
                                 _stationRepository.GetBroadcastStationByCallLetters(stationName);
         }
 
-        private List<TTNWFileRecord> _GetTTNWRecords(ExcelWorksheet sheet, SpreadsheetTableDescriptor dataTable, List<InventoryFileProblem> fileProblems)
+        private List<TTNWFileRecord> _GetTTNWRecords(ExcelWorksheet sheet, SpreadsheetTableDescriptor dataTable)
         {
             var recordList = new List<TTNWFileRecord>();
             
@@ -307,7 +307,7 @@ namespace Services.Broadcast.Converters.RateImport
                         }
                         else
                         {
-                            fileProblems.Add(new InventoryFileProblem(string.Format("Invalid number of spots for station {0}", row.StationLetters)));
+                            FileProblems.Add(new InventoryFileProblem(string.Format("Invalid number of spots for station {0}", row.StationLetters)));
                         }
                     }
                 }

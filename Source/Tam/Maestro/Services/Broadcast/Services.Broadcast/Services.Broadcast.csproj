@@ -249,6 +249,7 @@
     <Compile Include="Entities\ValidationWarningDto.cs" />
     <Compile Include="Entities\WhosWatchingTvSearchResult.cs" />
     <Compile Include="Exceptions\BroadcastAffidavitException.cs" />
+    <Compile Include="Exceptions\FileUploadException.cs" />
     <Compile Include="Extensions\Bvs.cs" />
     <Compile Include="ReportGenerators\IReportGenerator.cs" />
     <Compile Include="ReportGenerators\PostExcelReportGenerator.cs" />
