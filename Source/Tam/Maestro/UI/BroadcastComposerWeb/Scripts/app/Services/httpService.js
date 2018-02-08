@@ -61,10 +61,11 @@
                 } else {
                     state = 'error';
                     if (error) {
-                        if (result.Data && result.Data.Problems && result.Data.Problems.length) {
+                        //revise per new structure
+                        if (result && result.Problems && result.Problems.length) {
                             //bypass default error if Problems - callback will handle
                             //console.log('service error Problems', result.Data);
-                            error(xhr, result.Data);
+                            error(xhr, result);
                         } else {
                             error(xhr, result.Message);
                             //dont bypass default error message

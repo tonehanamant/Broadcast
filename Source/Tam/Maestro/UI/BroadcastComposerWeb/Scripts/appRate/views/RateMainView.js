@@ -66,7 +66,7 @@ var RateMainView = BaseView.extend({
     },
 
     //REVISE to aggregated importFileErrors
-    //TODO grouping
+    //with grouping
     showUploadFileIssues: function (errors, overallFileCount) {
         var title = 'Import Errors';
         var status = '<strong>' + errors.length + ' of ' + overallFileCount + '</strong> files failed.<br/>';
@@ -83,6 +83,17 @@ var RateMainView = BaseView.extend({
             ret += append;
         });
         //console.log('issues', ret);
+        httpService.showDefaultError(ret, title, false, true);
+    },
+
+    //single file version - error will contain message or problems and fileName
+    showSingleUploadFileError: function (errorItem) {
+        var title = 'Import Error';
+        
+        var ret = '<p>Encountered error uploading the following file: <strong>' + errorItem.fileName + '</strong></p>';
+        var msg = errorItem.message;
+        if (errorItem.problems) msg = this.getUploadFileProblems(errorItem.problems);
+        ret += ('<p>' + msg + '</p>');
         httpService.showDefaultError(ret, title, false, true);
     },
 
