@@ -23,12 +23,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class TTNWFileImporterTests
     {
-        private TTNWFileImporter _ttnwFileImporter = new TTNWFileImporter();
-
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanParseLNFile()
         {
+            var _ttnwFileImporter = new TTNWFileImporter();
+
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -66,6 +66,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void CanParseEMFile()
         {
+            var _ttnwFileImporter = new TTNWFileImporter();
+
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -104,6 +106,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void CanParseENFile()
         {
+            var _ttnwFileImporter = new TTNWFileImporter();
+
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -141,6 +145,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void InvalidStation()
         {
+            var _ttnwFileImporter = new TTNWFileImporter();
+
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -173,6 +179,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void NoKnownStations()
         {
+            var _ttnwFileImporter = new TTNWFileImporter();
+
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -203,6 +211,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void InvalidDaypartSpots()
         {
+            var _ttnwFileImporter = new TTNWFileImporter();
+
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -233,6 +243,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void ValidDayparts()
         {
+            var _ttnwFileImporter = new TTNWFileImporter();
+
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -270,6 +282,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void InvalidDaypart()
         {
+            var _ttnwFileImporter = new TTNWFileImporter();
+
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -302,6 +316,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void ZeroInDaypartSpot()
         {
+            var _ttnwFileImporter = new TTNWFileImporter();
+
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
