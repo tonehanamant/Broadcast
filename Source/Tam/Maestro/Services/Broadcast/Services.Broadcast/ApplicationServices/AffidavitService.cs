@@ -188,14 +188,14 @@ namespace Services.Broadcast.ApplicationServices
                             scrub.match_program = progCriteria.Contain == ContainTypeEnum.Include;
                     }
 
-                    scrub.match_program = true;
+                    scrub.match_genre = true;
                     if (proposalDetail.GenreCriteria.Any())
                     {
                         var genreCriteria = proposalDetail.GenreCriteria.SingleOrDefault(pc =>
                             pc.Genre.Display == affidavitFileDetail.genre);
 
                         if (genreCriteria != null)
-                            scrub.match_program = genreCriteria.Contain == ContainTypeEnum.Include;
+                            scrub.match_genre = genreCriteria.Contain == ContainTypeEnum.Include;
                     }
 
                     EnsureScrubadubdubed(scrub);

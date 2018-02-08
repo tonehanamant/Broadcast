@@ -163,6 +163,7 @@
     <Compile Include="ApplicationServices\Inventory\CNNStationInventoryGroupService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryManifestService.cs" />
     <Compile Include="ApplicationServices\PostingBooksService.cs" />
+    <Compile Include="ApplicationServices\PostService.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryGroupService.cs" />
     <Compile Include="ApplicationServices\WhosWatchingTvService.cs" />
@@ -219,8 +220,8 @@
     <Compile Include="Entities\ProprietaryInventoryAllocationConflict.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationRequest.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposal.cs" />
-    <Compile Include="Entities\PostDto.cs" />
-    <Compile Include="ApplicationServices\PostService.cs" />
+    <Compile Include="Entities\PostPrePostingDto.cs" />
+    <Compile Include="ApplicationServices\PostPrePostingService.cs" />
     <Compile Include="ApplicationServices\ProposalProprietaryInventoryService.cs" />
     <Compile Include="BusinessEngines\ThirdPartySpotCostCalculationEngine.cs" />
     <Compile Include="Entities\BvsFileDetailKey.cs" />
@@ -255,7 +256,7 @@
     <Compile Include="Entities\InventoryDetailSlot.cs" />
     <Compile Include="Entities\InventoryDetailSlotComponents.cs" />
     <Compile Include="Entities\StationDetailPointInTime.cs" />
-    <Compile Include="Entities\PostFile.cs" />
+    <Compile Include="Entities\PostPrePostingFile.cs" />
     <Compile Include="BusinessEngines\PostEngine.cs" />
     <Compile Include="BusinessEngines\ProposalCalculationEngine.cs" />
     <Compile Include="Converters\AssemblyImportHelper.cs" />
@@ -400,7 +401,7 @@
     <Compile Include="Repositories\InventoryRepository.cs" />
     <Compile Include="Repositories\MarketDmaMapRepository.cs" />
     <Compile Include="Repositories\NsiComponentAudienceRepository.cs" />
-    <Compile Include="Repositories\PostRepository.cs" />
+    <Compile Include="Repositories\PostPrePostingRepository.cs" />
     <Compile Include="Repositories\MarketRepository.cs" />
     <Compile Include="Repositories\MediaMonthAndWeekAggregateRepository.cs" />
     <Compile Include="Repositories\NsiMarketRepository.cs" />
@@ -408,6 +409,7 @@
     <Compile Include="Repositories\PostingBookRepository.cs" />
     <Compile Include="Repositories\GenreRepository.cs" />
     <Compile Include="Entities\PostFileDetail.cs" />
+    <Compile Include="Repositories\PostRepository.cs" />
     <Compile Include="Repositories\ProposalInventoryRepository.cs" />
     <Compile Include="Repositories\ProposalOpenMarketInventoryRepository.cs" />
     <Compile Include="Repositories\ProposalProgramsFilterRepository.cs" />

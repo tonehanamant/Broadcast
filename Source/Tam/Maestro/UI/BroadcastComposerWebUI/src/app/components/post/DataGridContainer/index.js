@@ -7,6 +7,7 @@ import { getPost } from 'Ducks/post';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
 import Sorter from 'Utils/react-redux-grid-sorter';
+import CurrencyDollarWhole from 'Components/shared/TextFormatters/CurrencyDollarWhole';
 
 const { MenuActions, SelectionActions, GridActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
@@ -98,23 +99,41 @@ export class DataGridContainer extends Component {
     const stateKey = 'gridPostMain';
     const columns = [
       {
-          name: 'File Name',
-          dataIndex: 'FileName',
-          width: '40%',
+          name: 'Contract',
+          dataIndex: 'ContractName',
+          width: '20%',
       },
       {
-          name: 'Source',
-          dataIndex: 'Source',
-          width: '40%',
+          name: 'Contract Id',
+          dataIndex: 'ContractId',
+          width: '15%',
       },
       {
           name: 'Upload Date',
           dataIndex: 'UploadDate',
           defaultSortDirection: 'ASC',
-          width: '20%',
+          width: '15%',
           renderer: ({ row }) => (
             <span>{row.DisplayUploadDate}</span>
           ),
+      },
+      {
+        name: 'Spot in Spec',
+        dataIndex: 'SpotsInSpec',
+        width: '15%',
+      },
+      {
+        name: 'Spots Out of Spec',
+        dataIndex: 'SpotsOutOfSpec',
+        width: '15%',
+      },
+      {
+        name: 'Primary Demo Imp',
+        dataIndex: 'PrimaryAudienceImpressions',
+        width: '20%',
+        renderer: ({ row }) => (
+          <CurrencyDollarWhole amount={row.PrimaryDemo} dash={false} />
+        ),
       },
     ];
 
