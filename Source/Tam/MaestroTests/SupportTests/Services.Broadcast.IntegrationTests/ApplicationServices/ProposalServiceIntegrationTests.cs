@@ -1861,9 +1861,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _ProposalService.GetClientPostScrubbingProposalHeader(17616);
+                var result = _ProposalService.GetClientPostScrubbingProposalHeader(253);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(PostScrubbingProposalHeaderDTO), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1881,9 +1887,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _ProposalService.GetClientPostScrubbingProposalDetail(17616);
+                var result = _ProposalService.GetClientPostScrubbingProposalDetail(253, 14);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(PostScrubbingProposalDetailDTO), "Id");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {

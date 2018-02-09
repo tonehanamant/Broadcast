@@ -4,107 +4,100 @@
     {
       "Adu": false,
       "Daypart": {
-        "endTime": 75600,
+        "endTime": 36000,
         "fri": true,
         "mon": true,
-        "sat": true,
-        "startTime": 0,
-        "sun": true,
-        "Text": "M-SU 12AM-9PM",
+        "sat": false,
+        "startTime": 32400,
+        "sun": false,
+        "Text": "M-F 9AM-10AM",
         "thu": true,
         "tue": true,
         "wed": true
       },
-      "DaypartCode": "123",
+      "DaypartCode": "NAV",
       "DefaultPostingBooks": null,
       "FlightEdited": false,
-      "FlightEndDate": "2017-08-20T00:00:00",
-      "FlightStartDate": "2017-07-24T00:00:00",
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [],
       "GenreCriteria": [],
-      "HutPostingBookId": 418,
-      "Id": 2290,
+      "HutPostingBookId": null,
       "PlaybackType": 4,
       "ProgramCriteria": [],
       "Quarters": [
         {
-          "Cpm": 123.0000,
+          "Cpm": 20.0000,
           "DistributeGoals": false,
-          "Id": 2290,
-          "ImpressionGoal": 10000000.0,
-          "Quarter": 3,
-          "QuarterText": "2017 Q3",
+          "ImpressionGoal": 100000.0,
+          "Quarter": 2,
+          "QuarterText": "2016 Q2",
           "Weeks": [
             {
-              "Cost": 307500.0000,
-              "EndDate": "2017-07-30T00:00:00",
-              "Id": 2311,
-              "Impressions": 2500000.0,
-              "Iscis": [],
+              "Cost": 25.0000,
+              "EndDate": "2016-06-06T00:00:00",
+              "Impressions": 100000.0,
+              "Iscis": [
+                {
+                  "Brand": null,
+                  "ClientIsci": "AAAAAAAA",
+                  "HouseIsci": "AAAAAAAA",
+                  "MarriedHouseIsci": false
+                },
+                {
+                  "Brand": null,
+                  "ClientIsci": "BBBBBBBB",
+                  "HouseIsci": "BBBBBBBBB",
+                  "MarriedHouseIsci": false
+                },
+                {
+                  "Brand": "Test 1",
+                  "ClientIsci": "CCCCCCCCCC",
+                  "HouseIsci": "CCCCCCCCCC",
+                  "MarriedHouseIsci": true
+                },
+                {
+                  "Brand": "Test 2",
+                  "ClientIsci": "DDDDDDDDD",
+                  "HouseIsci": "DDDDDDDD",
+                  "MarriedHouseIsci": false
+                },
+                {
+                  "Brand": null,
+                  "ClientIsci": "EEEEEEEEEE",
+                  "HouseIsci": "EEEEEEEEEEE",
+                  "MarriedHouseIsci": true
+                }
+              ],
               "IsHiatus": false,
-              "MediaWeekId": 709,
-              "StartDate": "2017-07-24T00:00:00",
-              "Units": 1,
-              "Week": "7/24/2017"
-            },
-            {
-              "Cost": 307500.0000,
-              "EndDate": "2017-08-06T00:00:00",
-              "Id": 2312,
-              "Impressions": 2500000.0,
-              "Iscis": [],
-              "IsHiatus": false,
-              "MediaWeekId": 710,
-              "StartDate": "2017-07-31T00:00:00",
-              "Units": 1,
-              "Week": "7/31/2017"
-            },
-            {
-              "Cost": 307500.0000,
-              "EndDate": "2017-08-13T00:00:00",
-              "Id": 2313,
-              "Impressions": 2500000.0,
-              "Iscis": [],
-              "IsHiatus": false,
-              "MediaWeekId": 711,
-              "StartDate": "2017-08-07T00:00:00",
-              "Units": 1,
-              "Week": "8/7/2017"
-            },
-            {
-              "Cost": 307500.0000,
-              "EndDate": "2017-08-20T00:00:00",
-              "Id": 2314,
-              "Impressions": 2500000.0,
-              "Iscis": [],
-              "IsHiatus": false,
-              "MediaWeekId": 712,
-              "StartDate": "2017-08-14T00:00:00",
-              "Units": 1,
-              "Week": "8/14/2017"
+              "MediaWeekId": 649,
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 10,
+              "Week": "5/30/2016"
             }
           ],
-          "Year": 2017
+          "Year": 2016
         }
       ],
-      "SharePostingBookId": 422,
-      "SinglePostingBookId": null,
+      "SharePostingBookId": null,
+      "SinglePostingBookId": 410,
       "SpotLengthId": 1,
-      "TotalCost": 1230000.0000,
-      "TotalImpressions": 10000000.0,
-      "TotalUnits": 4
+      "TotalCost": 50.0000,
+      "TotalImpressions": 1000000.0,
+      "TotalUnits": 200
     }
   ],
   "GuaranteedDemo": "House Holds",
-  "Id": 17616,
   "Markets": [],
-  "Name": "Test",
+  "Name": "Proposal Test",
   "Notes": null,
-  "SecondaryDemos": [],
+  "SecondaryDemos": [
+    "House Holds",
+    "House Holds"
+  ],
   "SpotLengths": [
     {
-      "Display": "30",
-      "Id": 1
+      "Display": "30"
     }
   ]
 }

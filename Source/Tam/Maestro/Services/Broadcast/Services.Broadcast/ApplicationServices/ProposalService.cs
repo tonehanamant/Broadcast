@@ -1310,7 +1310,6 @@ namespace Services.Broadcast.ApplicationServices
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 var proposal = _ProposalRepository.GetProposalById(proposalId);
-
                 _SetProposalMarketGroups(proposal);
                 _SetProposalSpotLengths(proposal);
                 _SetProposalDetailDaypart(proposal.Details);
@@ -1338,25 +1337,26 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns></returns>
         public PostScrubbingProposalDetailDTO GetClientPostScrubbingProposalDetail(int proposalId, int detailId)
         {
-            PostScrubbingProposalDetailDTO result = new PostScrubbingProposalDetailDTO();
+            
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 ProposalDto proposal = _ProposalRepository.GetProposalById(proposalId);
-                ProposalDetailDto proposalDetail = _ProposalRepository.GetProposalDetail(detailId);
-
                 _SetProposalSpotLengths(proposal);
                 _SetProposalDetailDaypart(proposal.Details);
-                _SetProposalDetailFlightWeeks(proposal);
 
-                result.Id = proposal.Id;
-                result.FlightStartDate = proposal.FlightStartDate;
-                result.FlightEndDate = proposal.FlightEndDate;
-                result.SpotLength = proposal.SpotLengths.First(x => x.Id == proposalDetail.SpotLengthId).Display;
-                result.DayPart = proposalDetail.Daypart.Text;
+                ProposalDetailDto proposalDetail = proposal.Details.First(x => x.Id == detailId);
 
-                
-
-                return result;
+                return new PostScrubbingProposalDetailDTO
+                {
+                    Id = proposal.Id,
+                    FlightStartDate = proposal.FlightStartDate,
+                    FlightEndDate = proposal.FlightEndDate,
+                    SpotLength = proposal.SpotLengths.First(x => x.Id == proposalDetail.SpotLengthId).Display,
+                    DayPart = proposalDetail.Daypart.Text,
+                    Details = _ProposalRepository.GetProposalDetailPostScrubbing(detailId),
+                    Programs = proposalDetail.ProgramCriteria,
+                    Genres = proposalDetail.GenreCriteria
+                };
             }
         }
     }
