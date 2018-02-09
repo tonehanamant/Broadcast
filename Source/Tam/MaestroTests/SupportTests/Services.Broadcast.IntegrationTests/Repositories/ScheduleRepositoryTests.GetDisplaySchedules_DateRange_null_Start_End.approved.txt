@@ -113,840 +113,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
-    "DeliveryDetails": [
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      }
-    ],
+    "DeliveryDetails": [],
     "EndDate": "2016-08-07T00:00:00",
     "Estimate": 3447,
     "Id": 67,
@@ -975,91 +142,11 @@
     "DaypartRestrictionId": 0,
     "DeliveryDetails": [
       {
-        "Impressions": 34534.45,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 36958.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 41493.9,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 41493.9,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 30794.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 30794.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 16085.35,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 24234.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 24186.2,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 49052.6,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 28540.05,
-        "SpotLength": 60
-      },
-      {
         "Impressions": 32250.3,
         "SpotLength": 60
       },
       {
-        "Impressions": 60576.25,
-        "SpotLength": 60
-      },
-      {
         "Impressions": 32250.3,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 54640.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 11564.875,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 8027.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 4664.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6974.85,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 11676.4,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 39884.65,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 11451.8,
         "SpotLength": 60
       },
       {
@@ -1079,391 +166,211 @@
         "SpotLength": 60
       },
       {
-        "Impressions": 22762.7,
+        "Impressions": 6935.9,
         "SpotLength": 60
       },
       {
-        "Impressions": 22109.5,
+        "Impressions": 6754.4,
         "SpotLength": 60
       },
       {
-        "Impressions": 6519.9,
+        "Impressions": 6935.9,
         "SpotLength": 60
       },
       {
-        "Impressions": 4997.1,
+        "Impressions": 6935.9,
         "SpotLength": 60
       },
       {
-        "Impressions": 22535.65,
+        "Impressions": 8260.15,
         "SpotLength": 60
       },
       {
-        "Impressions": 22535.65,
+        "Impressions": 8260.15,
         "SpotLength": 60
       },
       {
-        "Impressions": 38390.7,
+        "Impressions": 11614.25,
         "SpotLength": 60
       },
       {
-        "Impressions": 38390.7,
+        "Impressions": 9555.75,
         "SpotLength": 60
       },
       {
-        "Impressions": 7510.6,
+        "Impressions": 11614.25,
         "SpotLength": 60
       },
       {
-        "Impressions": 20718.2,
+        "Impressions": 9745.95,
         "SpotLength": 60
       },
       {
-        "Impressions": 22792.25,
+        "Impressions": 15106.95,
         "SpotLength": 60
       },
       {
-        "Impressions": 37104.45,
+        "Impressions": 14485.0,
         "SpotLength": 60
       },
       {
-        "Impressions": 37104.45,
+        "Impressions": 5539.75,
         "SpotLength": 60
       },
       {
-        "Impressions": 9672.0,
+        "Impressions": 5931.0,
         "SpotLength": 60
       },
       {
-        "Impressions": 10726.95,
+        "Impressions": 6569.75,
         "SpotLength": 60
       },
       {
-        "Impressions": 17753.9,
+        "Impressions": 5931.0,
         "SpotLength": 60
       },
       {
-        "Impressions": 17536.1,
+        "Impressions": 6680.25,
         "SpotLength": 60
       },
       {
-        "Impressions": 13714.0,
+        "Impressions": 11355.5,
         "SpotLength": 60
       },
       {
-        "Impressions": 13714.0,
+        "Impressions": 17178.1,
         "SpotLength": 60
       },
       {
-        "Impressions": 2483.55,
+        "Impressions": 13188.25,
         "SpotLength": 60
       },
       {
-        "Impressions": 2696.95,
+        "Impressions": 25651.4,
         "SpotLength": 60
       },
       {
-        "Impressions": 2483.55,
+        "Impressions": 25343.55,
         "SpotLength": 60
       },
       {
-        "Impressions": 3415.25,
+        "Impressions": 3163.6,
         "SpotLength": 60
       },
       {
-        "Impressions": 56651.1,
+        "Impressions": 11930.0,
         "SpotLength": 60
       },
       {
-        "Impressions": 57340.65,
+        "Impressions": 3255.7000000000003,
         "SpotLength": 60
       },
       {
-        "Impressions": 11639.15,
+        "Impressions": 11776.9,
         "SpotLength": 60
       },
       {
-        "Impressions": 13162.65,
+        "Impressions": 5683.15,
         "SpotLength": 60
       },
       {
-        "Impressions": 11639.15,
+        "Impressions": 6860.3,
         "SpotLength": 60
       },
       {
-        "Impressions": 12298.2,
+        "Impressions": 13527.15,
         "SpotLength": 60
       },
       {
-        "Impressions": 18399.75,
+        "Impressions": 13527.15,
         "SpotLength": 60
       },
       {
-        "Impressions": 10245.75,
+        "Impressions": 2494.1,
         "SpotLength": 60
       },
       {
-        "Impressions": 8793.75,
+        "Impressions": 2494.1,
         "SpotLength": 60
       },
       {
-        "Impressions": 10245.75,
+        "Impressions": 12345.900000000001,
         "SpotLength": 60
       },
       {
-        "Impressions": 36805.75,
+        "Impressions": 13073.65,
         "SpotLength": 60
       },
       {
-        "Impressions": 36282.25,
+        "Impressions": 5927.15,
         "SpotLength": 60
       },
       {
-        "Impressions": 33644.65,
+        "Impressions": 19702.55,
         "SpotLength": 60
       },
       {
-        "Impressions": 34249.65,
+        "Impressions": 18425.8,
         "SpotLength": 60
       },
       {
-        "Impressions": 31490.45,
+        "Impressions": 19702.55,
         "SpotLength": 60
       },
       {
-        "Impressions": 25819.85,
+        "Impressions": 18425.8,
         "SpotLength": 60
       },
       {
-        "Impressions": 31490.45,
+        "Impressions": 15833.6,
         "SpotLength": 60
       },
       {
-        "Impressions": 25819.85,
+        "Impressions": 16223.75,
         "SpotLength": 60
       },
       {
-        "Impressions": 44898.0,
+        "Impressions": 18522.05,
         "SpotLength": 60
       },
       {
-        "Impressions": 46786.75,
+        "Impressions": 18522.05,
         "SpotLength": 60
       },
       {
-        "Impressions": 46786.75,
+        "Impressions": 18522.05,
         "SpotLength": 60
       },
       {
-        "Impressions": 6372.75,
+        "Impressions": 32258.85,
         "SpotLength": 60
       },
       {
-        "Impressions": 7255.45,
+        "Impressions": 31235.65,
         "SpotLength": 60
       },
       {
-        "Impressions": 19722.65,
+        "Impressions": 29585.6,
         "SpotLength": 60
       },
       {
-        "Impressions": 19722.65,
+        "Impressions": 40263.85,
         "SpotLength": 60
       },
       {
-        "Impressions": 40643.35,
+        "Impressions": 15616.7,
         "SpotLength": 60
       },
       {
-        "Impressions": 40643.35,
+        "Impressions": 17194.8,
         "SpotLength": 60
       },
       {
-        "Impressions": 13156.199999999999,
+        "Impressions": 17492.25,
         "SpotLength": 60
       },
       {
-        "Impressions": 11926.4,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 12728.550000000001,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 11926.4,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 11587.3,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 11587.3,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 40689.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 40899.35,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 47496.35,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 50508.25,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 9209.9,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 5601.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 7796.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 5601.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13996.45,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13996.45,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 16426.25,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 5174.5,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 252.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 2216.1,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 5563.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 11393.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 5563.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 11393.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 26868.8,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13986.5,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 27486.100000000002,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13986.5,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 25664.95,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 30200.95,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 7925.8,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 9093.6,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18829.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 19636.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 9287.0,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 30601.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 30601.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 19667.35,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 23740.350000000002,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 24987.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 25831.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18052.4,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 24729.6,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 16531.2,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18052.4,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 32355.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 37066.450000000004,
+        "Impressions": 16223.75,
         "SpotLength": 60
       },
       {
@@ -1491,731 +398,147 @@
         "SpotLength": 60
       },
       {
-        "Impressions": 10044.45,
+        "Impressions": 19667.35,
         "SpotLength": 60
       },
       {
-        "Impressions": 10044.45,
+        "Impressions": 23740.350000000002,
         "SpotLength": 60
       },
       {
-        "Impressions": 29585.6,
+        "Impressions": 24987.05,
         "SpotLength": 60
       },
       {
-        "Impressions": 40263.85,
+        "Impressions": 25831.75,
         "SpotLength": 60
       },
       {
-        "Impressions": 15616.7,
+        "Impressions": 32355.05,
         "SpotLength": 60
       },
       {
-        "Impressions": 17194.8,
+        "Impressions": 37066.450000000004,
         "SpotLength": 60
       },
       {
-        "Impressions": 24750.45,
+        "Impressions": 30200.95,
         "SpotLength": 60
       },
       {
-        "Impressions": 17492.25,
+        "Impressions": 7925.8,
         "SpotLength": 60
       },
       {
-        "Impressions": 22043.6,
+        "Impressions": 9093.6,
         "SpotLength": 60
       },
       {
-        "Impressions": 8539.1,
+        "Impressions": 18829.55,
         "SpotLength": 60
       },
       {
-        "Impressions": 10361.05,
+        "Impressions": 19636.75,
         "SpotLength": 60
       },
       {
-        "Impressions": 8761.35,
+        "Impressions": 9287.0,
         "SpotLength": 60
       },
       {
-        "Impressions": 9710.5,
+        "Impressions": 40899.35,
         "SpotLength": 60
       },
       {
-        "Impressions": 14875.900000000001,
+        "Impressions": 47496.35,
         "SpotLength": 60
       },
       {
-        "Impressions": 20847.45,
+        "Impressions": 5563.05,
         "SpotLength": 60
       },
       {
-        "Impressions": 18187.3,
+        "Impressions": 5563.05,
         "SpotLength": 60
       },
       {
-        "Impressions": 20847.45,
+        "Impressions": 26868.8,
         "SpotLength": 60
       },
       {
-        "Impressions": 27273.4,
+        "Impressions": 27486.100000000002,
         "SpotLength": 60
       },
       {
-        "Impressions": 20678.35,
+        "Impressions": 36805.75,
         "SpotLength": 60
       },
       {
-        "Impressions": 27273.4,
+        "Impressions": 36282.25,
         "SpotLength": 60
       },
       {
-        "Impressions": 20489.199999999997,
+        "Impressions": 33644.65,
         "SpotLength": 60
       },
       {
-        "Impressions": 20489.199999999997,
+        "Impressions": 34249.65,
         "SpotLength": 60
       },
       {
-        "Impressions": 35462.1,
+        "Impressions": 40643.35,
         "SpotLength": 60
       },
       {
-        "Impressions": 22674.55,
+        "Impressions": 40643.35,
         "SpotLength": 60
       },
       {
-        "Impressions": 35136.4,
+        "Impressions": 13714.0,
         "SpotLength": 60
       },
       {
-        "Impressions": 22674.55,
+        "Impressions": 13714.0,
         "SpotLength": 60
       },
       {
-        "Impressions": 14615.3,
+        "Impressions": 18399.75,
         "SpotLength": 60
       },
       {
-        "Impressions": 26570.4,
+        "Impressions": 10245.75,
         "SpotLength": 60
       },
       {
-        "Impressions": 26570.4,
+        "Impressions": 8793.75,
         "SpotLength": 60
       },
       {
-        "Impressions": 18258.9,
+        "Impressions": 10245.75,
         "SpotLength": 60
       },
       {
-        "Impressions": 18258.9,
+        "Impressions": 22762.7,
         "SpotLength": 60
       },
       {
-        "Impressions": 10066.8,
+        "Impressions": 22535.65,
         "SpotLength": 60
       },
       {
-        "Impressions": 9621.75,
+        "Impressions": 22535.65,
         "SpotLength": 60
       },
       {
-        "Impressions": 14526.95,
+        "Impressions": 7510.6,
         "SpotLength": 60
       },
       {
-        "Impressions": 14526.95,
+        "Impressions": 37104.45,
         "SpotLength": 60
       },
       {
-        "Impressions": 13184.5,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 14526.95,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 16223.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 16223.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13611.6,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13833.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 17317.85,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 20151.2,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 17317.85,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 20151.2,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 19787.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 17207.8,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18522.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18522.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18522.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18522.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 19360.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 17387.2,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 9108.45,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 9117.8,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 9117.8,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 9217.4,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 19044.699999999997,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 32258.85,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 31235.65,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 19044.699999999997,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 5927.15,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 4150.6,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 4567.0,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 10712.85,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 10712.85,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 3812.125,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 4352.875,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 8390.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 8322.45,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 8390.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 8271.1,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 21180.649999999998,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13812.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 25461.9,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 19807.6,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 19702.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18425.8,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 19702.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18425.8,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 15833.6,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 14359.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13527.15,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13527.15,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 2494.1,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 2494.1,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 12345.900000000001,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13073.65,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 12345.900000000001,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13073.65,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 3163.6,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 11930.0,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 3255.7000000000003,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 11776.9,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 16327.8,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18717.375,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18717.375,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 14205.5,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 14205.5,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 5683.15,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 19280.199999999997,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 29324.25,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 30411.3,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6860.3,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6680.25,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 26161.350000000002,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 25648.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6943.5,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 10128.1,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 10128.1,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 11355.5,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 17178.1,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 14247.25,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 21728.4,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6460.4,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6460.4,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6811.5,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6811.5,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13188.25,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 33019.7,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13188.25,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13188.25,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18373.0,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 21781.0,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18373.0,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18373.0,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 25651.4,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 25343.55,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6085.2,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 5976.65,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6113.8,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 5919.5,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 2425.45,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 10262.4,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 2184.0,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 7985.35,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 15106.95,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 8005.8,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 14485.0,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 3782.1,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6951.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6951.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6951.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6951.05,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 14650.3,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 14717.3,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 15446.45,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 15446.45,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 10753.3,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 3640.9,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 10431.8,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 3919.25,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 5539.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 5931.0,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6569.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 5931.0,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 18399.95,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 4045.6,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 3886.6000000000004,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 4045.6,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 3886.6000000000004,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 13832.8,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 14580.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 8834.65,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 8260.15,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 8935.5,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 8260.15,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 11614.25,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 9555.75,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 11614.25,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 9745.95,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 9786.1,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 9948.65,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 10780.35,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 10133.5,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6935.9,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6754.4,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6935.9,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 6935.9,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 9611.0500000000011,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 10325.95,
+        "Impressions": 37104.45,
         "SpotLength": 60
       }
     ],
@@ -2247,163 +570,11 @@
     "DaypartRestrictionId": 0,
     "DeliveryDetails": [
       {
-        "Impressions": 7908.75,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 5827.875,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 4515.4,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 6386.125,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 34448.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 7230.625,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 9509.875,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 5462.75,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 10858.375,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 2383.375,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 300.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 9337.35,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 10277.6,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 9804.7,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 9804.7,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 7482.25,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 9584.75,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 5381.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 2735.1,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 4003.75,
-        "SpotLength": 30
-      },
-      {
         "Impressions": 1772.3999999999999,
         "SpotLength": 30
       },
       {
-        "Impressions": 6326.0499999999993,
-        "SpotLength": 30
-      },
-      {
         "Impressions": 6010.8,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 819.6,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 1973.5,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 16507.850000000002,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 3573.625,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 2008.7999999999997,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 1495.1,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 1495.1,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 891.3,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 864.375,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 1221.875,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 704.95,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 1609.75,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 3728.25,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 5376.95,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 1511.55,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 2029.35,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 883.3,
         "SpotLength": 30
       }
     ],
@@ -2433,12 +604,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
-    "DeliveryDetails": [
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      }
-    ],
+    "DeliveryDetails": [],
     "EndDate": "2016-12-24T00:00:00",
     "Estimate": 8675309,
     "Id": 82,
@@ -2465,28 +631,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
-    "DeliveryDetails": [
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      }
-    ],
+    "DeliveryDetails": [],
     "EndDate": "2016-12-24T00:00:00",
     "Estimate": 7618419,
     "Id": 83,
@@ -2513,12 +658,7 @@
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
-    "DeliveryDetails": [
-      {
-        "Impressions": null,
-        "SpotLength": 30
-      }
-    ],
+    "DeliveryDetails": [],
     "EndDate": "2016-12-24T00:00:00",
     "Estimate": 7985133,
     "Id": 84,
@@ -2560,14 +700,6 @@
       },
       {
         "Impressions": 222931.65,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 55449.6,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 79280.55,
         "SpotLength": 30
       }
     ],
@@ -2655,26 +787,6 @@
       {
         "Impressions": 226069.7,
         "SpotLength": 15
-      },
-      {
-        "Impressions": 206756.44999999998,
-        "SpotLength": 60
-      },
-      {
-        "Impressions": 192029.7,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 222931.65,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 55449.6,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 79280.55,
-        "SpotLength": 30
       }
     ],
     "EndDate": "2016-04-24T00:00:00",
@@ -2707,10 +819,6 @@
       {
         "Impressions": 226069.7,
         "SpotLength": 15
-      },
-      {
-        "Impressions": 55449.6,
-        "SpotLength": 30
       }
     ],
     "EndDate": "2016-04-24T00:00:00",
@@ -5095,18 +3203,6 @@
       },
       {
         "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 0.0,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 2356.8999999999996,
-        "SpotLength": 30
-      },
-      {
-        "Impressions": 943.75,
         "SpotLength": 30
       },
       {

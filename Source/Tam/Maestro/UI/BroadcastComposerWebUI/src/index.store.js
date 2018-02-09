@@ -9,6 +9,9 @@ import { Reducers as gridReducers } from 'react-redux-grid';
 import * as reducers from './app/ducks';
 import sagas from './app/sagas';
 
+// import { loadLocalStorageState, saveLocalStorageState } from './index.store.localstorage.js';
+import { saveLocalStorageState } from './index.store.localstorage.js';
+
 export const history = createHistory();
 const mwSaga = createmiddlewareSaga();
 const mwLogger = createLogger();
@@ -24,6 +27,7 @@ const rootReducer = combineReducers({
 export default function configureStore(initialState) {
   const configuredStore = createStore(
     rootReducer,
+    // loadLocalStorageState() || initialState,
     initialState,
     createStoreWithMiddleware,
   );
@@ -37,6 +41,13 @@ export default function configureStore(initialState) {
       configuredStore.replaceReducer(nextReducer);
     });
   }
+
+  configuredStore.subscribe(() => {
+    saveLocalStorageState({
+      app: configuredStore.getState().app,
+      planning: configuredStore.getState().planning,
+    });
+  });
 
   return configuredStore;
 }

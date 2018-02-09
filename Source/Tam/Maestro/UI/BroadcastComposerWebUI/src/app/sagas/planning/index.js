@@ -1,7 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import { delay } from 'redux-saga';
-import { call, takeEvery, put } from 'redux-saga/effects';
+import { call, takeEvery, put, select } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
+import moment from 'moment';
 
 import * as appActions from 'Ducks/app/actionTypes';
 import * as planningActions from 'Ducks/planning/actionTypes';
@@ -282,6 +283,60 @@ export function* requestProposalUnlock({ payload: id }) {
 }
 
 /* ////////////////////////////////// */
+/* FLATTEN DETAIL HELPERS */
+/* ////////////////////////////////// */
+export function flattenDetail(detailSet) {
+  // NORMALIZE editing values for grid display/editing: EditUnits(quarter Cpm, week Units) EditImpressions (quarter ImpressionGoal, week Impressions)
+  const detail = { ...detailSet };
+  const ret = [];
+  // count weeks and determine last for NEXT handling - take into account IsHiatus
+  let weekCnt = 0;
+  // const qtrLast = detail.Quarters.length - 1;
+  let lastWeek = null;
+  detail.Quarters.forEach((item, qidx) => {
+    const impEditGoal = item.ImpressionGoal / 1000;
+    const qtr = { Id: item.Id, QuarterIdx: qidx, Type: 'quarter', QuarterText: item.QuarterText, Cpm: item.Cpm, EditUnits: item.Cpm, ImpressionGoal: item.ImpressionGoal, EditImpressions: impEditGoal };
+    ret.push(qtr);
+    // const weekLast = item.Weeks.length - 1;
+    item.Weeks.forEach((weekItem, widx) => {
+      const week = { ...weekItem };
+      // only add WeekCnt if not hiatus
+      if (!week.IsHiatus) {
+        // const isLast = (qtrLast === qidx) && (weekLast === widx);
+        weekCnt += 1;
+        week.WeekCnt = weekCnt;
+        week.IsLast = false; // set default
+        lastWeek = week; // store last
+      }
+      // store for finding later
+      week.QuarterId = item.Id;
+      // store indexes
+      week.QuarterIdx = qidx;
+      week.WeekIdx = widx;
+      week.Type = 'week';
+      week.EditImpressions = week.Impressions / 1000;
+      week.EditUnits = week.Units;
+      ret.push(week);
+    });
+  });
+  const totals = { TotalUnits: detail.TotalUnits, TotalCost: detail.TotalCost, TotalImpressions: detail.TotalImpressions, Id: 'total', Type: 'total' }; // construct totals
+  ret.push(totals);
+  lastWeek.IsLast = true; // set last
+  return ret;
+}
+
+export function flattenProposalDetails(proposal) {
+  const proposalData = { ...proposal };
+  // console.log('flattenProposalDetails', proposal, proposalData);
+  proposalData.Details.map((detail) => {
+    const set = detail;
+    set.GridQuarterWeeks = flattenDetail(detail);
+    return set;
+  });
+  return proposalData;
+}
+
+/* ////////////////////////////////// */
 /* REQUEST PROPOSAL */
 /* ////////////////////////////////// */
 export function* requestProposal({ payload: id }) {
@@ -323,6 +378,10 @@ export function* requestProposal({ payload: id }) {
       });
       throw new Error();
     }
+    // const payload = yield flattenProposalDetails(data.Data);
+    // console.log('receiveProposal flatten', payload);
+    data.Data = yield flattenProposalDetails(data.Data);
+    // console.log('receiveProposal flatten', data.Data);
     yield put({
       type: ACTIONS.RECEIVE_PROPOSAL,
       data,
@@ -395,6 +454,13 @@ export function* requestProposalVersions({ payload: id }) {
       type: ACTIONS.RECEIVE_PROPOSAL_VERSIONS,
       data,
     });
+    yield put({
+      type: ACTIONS.TOGGLE_MODAL,
+      modal: {
+        modal: 'planningSwitchVersionsModal',
+        active: true,
+      },
+    });
   } catch (e) {
     if (e.response) {
       yield put({
@@ -459,6 +525,7 @@ export function* requestProposalVersion({ payload: id, version }) {
       });
       throw new Error();
     }
+    data.Data = yield flattenProposalDetails(data.Data);
     yield put({
       type: ACTIONS.RECEIVE_PROPOSAL_VERSION,
       data,
@@ -486,6 +553,22 @@ export function* requestProposalVersion({ payload: id, version }) {
 }
 
 /* ////////////////////////////////// */
+/* PRE-SAVE (CLEAR Id WHERE Persisted: false) */
+/* ////////////////////////////////// */
+export function preSaveDetailIdNull(proposal) {
+  const proposalData = { ...proposal };
+  proposalData.Details.map((detail) => {
+    const set = detail;
+    if (detail.Id < 0) {
+      set.Id = null;
+    }
+    return set;
+  });
+  return proposalData;
+  // return proposal;
+}
+
+/* ////////////////////////////////// */
 /* SAVE PROPOSAL */
 /* ////////////////////////////////// */
 export function* saveProposal({ payload: params }) {
@@ -499,11 +582,13 @@ export function* saveProposal({ payload: params }) {
         processing: true,
       },
     });
-    const proposal = { ...params.proposal };
-    if (params.force) {
-      proposal.ForceSave = true;
-      proposal.ValidationWarning = null;
-    }
+    let proposal = { ...params.proposal };
+        if (params.force) {
+          proposal.ForceSave = true;
+          proposal.ValidationWarning = null;
+        }
+        proposal = yield preSaveDetailIdNull(proposal);
+    const isNew = proposal.Id === null;
     const response = yield saveProposal(proposal);
     const { status, data } = response;
     yield put({
@@ -543,10 +628,15 @@ export function* saveProposal({ payload: params }) {
         },
       });
     }
+    if (isNew) {
+      window.location.assign(`/broadcastreact/planning/proposal/${data.Data.Id}`);
+    } else {
+    data.Data = yield flattenProposalDetails(data.Data);
     yield put({
       type: ACTIONS.RECEIVE_PROPOSAL,
       data,
     });
+  }
   } catch (e) {
     if (e.response) {
       yield put({
@@ -583,8 +673,9 @@ export function* saveProposalAsVersion({ payload: params }) {
         processing: true,
       },
     });
-    const proposal = { ...params };
-          proposal.Version = null; // Set to null, BE assigns new version
+    let proposal = { ...params };
+        proposal.Version = null; // Set to null, BE assigns new version
+        proposal = yield preSaveDetailIdNull(proposal);
     const response = yield saveProposal(proposal);
     const { status, data } = response;
     yield put({
@@ -624,6 +715,7 @@ export function* saveProposalAsVersion({ payload: params }) {
         },
       });
     }
+    data.Data = yield flattenProposalDetails(data.Data);
     yield put({
       type: ACTIONS.RECEIVE_PROPOSAL,
       data,
@@ -641,6 +733,7 @@ export function* saveProposalAsVersion({ payload: params }) {
           actionButtonText: 'Exit',
           actionButtonBsStyle: 'default',
           action: () => window.location.assign('/broadcast/planning'),
+          dismiss: () => {},
         },
       },
     });
@@ -752,21 +845,209 @@ export function* deleteProposalById({ payload: id }) {
 /* UNORDER PROPOSAL */
 /* ////////////////////////////////// */
 
+export function* unorderProposal({ payload: id }) {
+  const { unorderProposal } = api.planning;
+
+  try {
+    yield put({
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
+      overlay: {
+        id: 'unorderProposal',
+        processing: true,
+      },
+    });
+    const response = yield unorderProposal(id);
+    const { status, data } = response;
+    yield put({
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
+      overlay: {
+        id: 'unorderProposal',
+        processing: false,
+      },
+    });
+    if (status !== 200) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No proposal version data returned.',
+          message: `The server encountered an error processing the request (unorder proposal data ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Success) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No unorder proposal data returned.',
+          message: data.Message || 'The server encountered an error processing the request (unorder proposal data). Please try again or contact your administrator to review error logs.',
+        },
+      });
+      throw new Error();
+    }
+    data.Data = yield flattenProposalDetails(data.Data);
+    yield put({
+      type: ACTIONS.RECEIVE_PROPOSAL,
+      data,
+    });
+  } catch (e) {
+    if (e.response) {
+      // capture here if 401 with data.Message only/ need to close overlay
+      // console.log('unorder error catch', e.response);
+      yield put({
+        type: ACTIONS.SET_OVERLAY_PROCESSING,
+        overlay: {
+          id: 'unorderProposal',
+          processing: false,
+        },
+      });
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No unorder proposal data returned.',
+          message: e.response.data.Message || 'The server encountered an error processing the request (unorder proposal data). Please try again or contact your administrator to review error logs.',
+          exception: e.response.data.ExceptionMessage || '',
+        },
+      });
+    }
+    if (!e.response && e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
 // . . .
 
+
 /* ////////////////////////////////// */
-/* REQUEST PROPOSAL DETAIL */
+/* REQUEST MODEL PROPOSAL DETAIL */
 /* ////////////////////////////////// */
 
-// . . .
+export function* modelNewProposalDetail({ payload: params }) {
+  /* eslint-disable no-shadow */
+  const { getProposalDetail } = api.planning;
+  const assignIdFlightWeeks = (data, flightWeeks) => {
+    let detail = { ...data, Id: moment().unix() * -1 }; // Negative identifies as unsaved
+    detail = { ...detail, FlightWeeks: flightWeeks };
+    return detail;
+  };
+  try {
+    yield put({
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
+      overlay: {
+        id: 'modelNewProposalDetail',
+        processing: true,
+      },
+    });
+    const flight = { ...params };
+    const response = yield getProposalDetail(flight);
+    const { status, data } = response;
+    yield put({
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
+      overlay: {
+        id: 'modelNewProposalDetail',
+        processing: false,
+      },
+    });
+    if (status !== 200) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'New detail not modeled.',
+          message: `The server encountered an error processing the request (model new detail). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Success) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'New detail not modeled.',
+          message: data.Message || 'The server encountered an error processing the request (model new detail). Please try again or contact your administrator to review error logs.',
+        },
+      });
+      throw new Error();
+    }
+    const payload = yield assignIdFlightWeeks(data.Data, flight.FlightWeeks);
+    payload.GridQuarterWeeks = yield flattenDetail(payload);
+    payload.SpotLengthId = 3; // Default SpotLength
+    const Detail = { ...payload };
+    let warnings = [];
+    if (Detail) {
+      if (Detail.DefaultPostingBooks &&
+          Detail.DefaultPostingBooks.DefautlHutBook &&
+          Detail.DefaultPostingBooksDefautlHutBook.HasWarning) {
+          warnings.push(Detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+          warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
+
+          payload.DefaultPostingBooksDefautlHutBook.HasWarning = false; // Unset to stop repeat unless BE explicit changes
+      }
+      if (Detail.DefaultPostingBooks &&
+          Detail.DefaultPostingBooks.DefaultShareBook &&
+          Detail.DefaultPostingBooks.DefaultShareBook.HasWarning) {
+          warnings.push(Detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+          warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
+
+          payload.DefaultPostingBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
+      }
+    }
+    yield put({
+      type: ACTIONS.TOGGLE_MODAL,
+      modal: {
+        modal: 'confirmModal',
+        active: warnings.length > 0,
+        properties: {
+          titleText: 'Warning',
+          bodyText: null,
+          bodyList: warnings,
+          closeButtonText: 'Cancel',
+          closeButtonBsStyle: 'default',
+          actionButtonText: 'Continue',
+          actionButtonBsStyle: 'warning',
+          action: () => {},
+          dismiss: () => {},
+        },
+      },
+    });
+    yield put({
+      type: ACTIONS.RECEIVE_NEW_PROPOSAL_DETAIL,
+      payload,
+    });
+  } catch (e) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'New detail not modeled.',
+          message: 'The server encountered an error processing the request (model new detail). Please try again or contact your administrator to review error logs.',
+          exception: e.response.data.ExceptionMessage || '',
+        },
+      });
+    }
+    if (e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
 
 /* ////////////////////////////////// */
 /* UPDATE PROPOSAL (FROM DETAILS) */
 /* ////////////////////////////////// */
-export function* updateProposal({ payload: params }) {
+export function* updateProposal() { // { payload: params }
   /* eslint-disable no-shadow */
-  console.log('PARMS', params);
   const { updateProposal } = api.planning;
+  const details = yield select(state => state.planning.proposalEditForm.Details);
   try {
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
@@ -775,7 +1056,7 @@ export function* updateProposal({ payload: params }) {
         processing: true,
       },
     });
-    const response = yield updateProposal(params);
+    const response = yield updateProposal(details);
     const { status, data } = response;
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
@@ -789,7 +1070,7 @@ export function* updateProposal({ payload: params }) {
         type: ACTIONS.DEPLOY_ERROR,
         error: {
           error: 'Proposal not updated.',
-          message: `The server encountered an error processing the request (update proposal ${params.FileId}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+          message: `The server encountered an error processing the request (update proposal). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
         },
       });
       throw new Error();
@@ -799,21 +1080,56 @@ export function* updateProposal({ payload: params }) {
         type: ACTIONS.DEPLOY_ERROR,
         error: {
           error: 'Proposal not updated.',
-          message: data.Message || `The server encountered an error processing the request (update proposal ${params.FileId}). Please try again or contact your administrator to review error logs.`,
+          message: data.Message || 'The server encountered an error processing the request (update proposal). Please try again or contact your administrator to review error logs.',
         },
       });
       throw new Error();
     }
+    // TODO resolve to get entire proposal
+    data.Data = yield flattenProposalDetails(data.Data);
+    const { Details } = data.Data;
+    let warnings = [];
+    if (Details) {
+      Details.forEach((detail, index) => {
+        if (detail.DefaultPostingBooks &&
+            detail.DefaultPostingBooks.DefautlHutBook &&
+            detail.DefaultPostingBooksDefautlHutBook.HasWarning) {
+            warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+            warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
+
+            data.Data.Details[index].DefaultPostingBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
+        }
+        if (detail.DefaultPostingBooks &&
+            detail.DefaultPostingBooks.DefaultShareBook &&
+            detail.DefaultPostingBooks.DefaultShareBook.HasWarning) {
+            warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+            warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
+
+            data.Data.Details[index].DefaultPostingBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
+        }
+      });
+    }
+    yield put({
+      type: ACTIONS.TOGGLE_MODAL,
+      modal: {
+        modal: 'confirmModal',
+        active: warnings.length > 0,
+        properties: {
+          titleText: 'Warning',
+          bodyText: null,
+          bodyList: warnings,
+          closeButtonText: 'Cancel',
+          closeButtonBsStyle: 'default',
+          actionButtonText: 'Continue',
+          actionButtonBsStyle: 'warning',
+          action: () => {},
+          dismiss: () => {},
+        },
+      },
+    });
     yield put({
       type: ACTIONS.RECEIVE_UPDATED_PROPOSAL,
       data,
-    }); // Is this an updated proposal object? // window.location to new version?
-    yield put({
-      type: ACTIONS.CREATE_ALERT,
-      alert: {
-        type: 'success',
-        headline: 'Proposal Updated',
-      },
     });
   } catch (e) {
     if (e.response) {
@@ -883,6 +1199,14 @@ export function* watchDeleteProposalById() {
 
 export function* watchUpdateProposal() {
   yield takeEvery(ACTIONS.UPDATE_PROPOSAL, updateProposal);
+}
+
+export function* watchModelNewProposalDetail() {
+  yield takeEvery(ACTIONS.MODEL_NEW_PROPOSAL_DETAIL, modelNewProposalDetail);
+}
+
+export function* watchModelUnorderProposal() {
+  yield takeEvery(ACTIONS.UNORDER_PROPOSAL, unorderProposal);
 }
 
 // if assign watcher > assign in sagas/index rootSaga also

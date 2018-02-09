@@ -13,6 +13,7 @@ namespace Services.Broadcast.BusinessEngines
     public interface IProposalMarketsCalculationEngine : IApplicationService
     {
         List<LookupDto> GetProposalMarketsList(int proposalId, int versionNumber, int proposalDetailDto);
+        List<LookupDto> GetProposalMarketsList(ProposalDto proposal, ProposalDetailDto proposalDetail);
     }
 
     public class ProposalMarketsCalculationEngine : IProposalMarketsCalculationEngine
@@ -28,13 +29,19 @@ namespace Services.Broadcast.BusinessEngines
 
         public List<LookupDto> GetProposalMarketsList(int proposalId, int versionNumber, int proposalDetailDto)
         {
+            var proposalDetail =
+                _DataRepositoryFactory.GetDataRepository<IProposalRepository>()
+                    .GetProposalDetail(proposalDetailDto);
+
             var proposal =
                 _DataRepositoryFactory.GetDataRepository<IProposalRepository>()
                     .GetProposalByIdAndVersion(proposalId, versionNumber);
 
-            var proposalDetail =
-                _DataRepositoryFactory.GetDataRepository<IProposalRepository>()
-                    .GetProposalDetail(proposalDetailDto);
+            return GetProposalMarketsList(proposal,proposalDetail);
+        }
+
+        public List<LookupDto> GetProposalMarketsList(ProposalDto proposal, ProposalDetailDto proposalDetail)
+        {
 
             var postingBookId = _ProposalPostingBooksEngine.GetPostingBookId(proposalDetail);
 

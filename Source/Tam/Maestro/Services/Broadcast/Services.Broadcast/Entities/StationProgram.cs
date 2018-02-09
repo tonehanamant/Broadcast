@@ -14,10 +14,10 @@ namespace Services.Broadcast.Entities
         public int StationCode { get; set; }
         public int SpotLength { get; set; }
         public int? SpotsPerWeek { get; set; }
-        public string ProgramName { get; set; }
+        public List<string> ProgramNames { get; set; }
         public string RateSource { get; set; }
-        public DaypartDto Airtime { get; set; }
-        public string AirtimePreview { get; set; }
+        public List<DaypartDto> Airtimes { get; set; }
+        public List<string> AirtimePreviews { get; set; }
         public DateTime EffectiveDate { get; set; }
         public DateTime? EndDate { get; set; }
         public decimal? Rate15 { get; set; }

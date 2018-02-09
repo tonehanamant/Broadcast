@@ -14,6 +14,13 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class proposal_version_detail_quarter_weeks
     {
+        public proposal_version_detail_quarter_weeks()
+        {
+            this.station_inventory_spots = new HashSet<station_inventory_spots>();
+            this.proposal_version_detail_quarter_week_iscis = new HashSet<proposal_version_detail_quarter_week_iscis>();
+            this.affidavit_client_scrubs = new HashSet<affidavit_client_scrubs>();
+        }
+    
         public int id { get; set; }
         public int proposal_version_quarter_id { get; set; }
         public int media_week_id { get; set; }
@@ -30,5 +37,8 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual media_weeks media_weeks { get; set; }
         public virtual proposal_version_detail_quarters proposal_version_detail_quarters { get; set; }
+        public virtual ICollection<station_inventory_spots> station_inventory_spots { get; set; }
+        public virtual ICollection<proposal_version_detail_quarter_week_iscis> proposal_version_detail_quarter_week_iscis { get; set; }
+        public virtual ICollection<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
     }
 }

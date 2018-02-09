@@ -79,5 +79,14 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual DbSet<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual DbSet<station_inventory_manifest> station_inventory_manifest { get; set; }
+        public virtual DbSet<station_inventory_spot_audiences> station_inventory_spot_audiences { get; set; }
+        public virtual DbSet<station_inventory_spots> station_inventory_spots { get; set; }
+        public virtual DbSet<proposal_version_detail_quarter_week_iscis> proposal_version_detail_quarter_week_iscis { get; set; }
+        public virtual DbSet<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
+        public virtual DbSet<affidavit_file_details> affidavit_file_details { get; set; }
+        public virtual DbSet<affidavit_files> affidavit_files { get; set; }
+        public virtual DbSet<affidavit_file_detail_audiences> affidavit_file_detail_audiences { get; set; }
+        public virtual DbSet<nsi_component_audiences> nsi_component_audiences { get; set; }
+        public virtual DbSet<affidavit_file_detail_problems> affidavit_file_detail_problems { get; set; }
     }
 }

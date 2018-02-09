@@ -1,0 +1,604 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2A781CE5-8B2F-4E9A-ABA8-0417228A2A3C}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BroadcastComposerWeb</RootNamespace>
+    <AssemblyName>BroadcastComposerWeb</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\..\Solutions\BroadcastComposerWeb\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
+    <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Owin, Version=1.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.SignalR.Owin.1.2.2\lib\net45\Microsoft.AspNet.SignalR.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.SemanticLogging">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\EnterpriseLibrary.SemanticLogging.2.0.1406.1\lib\net45\Microsoft.Practices.EnterpriseLibrary.SemanticLogging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.SemanticLogging.TextFile">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\EnterpriseLibrary.SemanticLogging.TextFile.2.0.1406.1\lib\net45\Microsoft.Practices.EnterpriseLibrary.SemanticLogging.TextFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Unity.2.0\lib\20\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Unity.2.0\lib\20\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Unity.2.0\lib\20\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Unity.2.0\lib\20\Microsoft.Practices.Unity.Interception.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Unity.2.0\lib\20\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.0.0.480, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Libraries\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\System.Management.Automation.dll.10.0.10586.0\lib\net40\System.Management.Automation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="Tam.Maestro.Common.Clients, Version=5.8.8.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Clients.5.8.8.2\lib\net45\Tam.Maestro.Common.Clients.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Tam.Maestro.Common.Logging, Version=5.8.8.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Logging.5.8.8.1\lib\net45\Tam.Maestro.Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Tam.Maestro.Common.Systems, Version=5.8.11.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.5.8.11.1\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Tam.Maestro.Web.Common, Version=5.8.8.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.5.8.8.1\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\BroadcastControllerBase\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\BroadcastControllerBase.cs" />
+    <Compile Include="Controllers\EnvironmentController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TrafficApiController.cs" />
+    <Compile Include="Controllers\TrafficController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\PostApiController.cs" />
+    <Compile Include="Controllers\ProposalController.cs" />
+    <Compile Include="Controllers\ProposalInventoryController.cs" />
+    <Compile Include="Controllers\InventoryApiController.cs" />
+    <Compile Include="Controllers\RatesController.cs" />
+    <Compile Include="Controllers\PlanningController.cs" />
+    <Compile Include="Controllers\TrackerController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\app\config\jqvalidate.js" />
+    <Content Include="Scripts\app\config\w2ui.js" />
+    <Content Include="Scripts\app\utilities\array.js" />
+    <Content Include="Scripts\app\utilities\date.js" />
+    <Content Include="Scripts\app\utilities\global.js" />
+    <Content Include="Scripts\app\utilities\impressions.js" />
+    <Content Include="Scripts\app\utilities\scroll.js" />
+    <Content Include="Styles\css\appPlanning.css" />
+    <Content Include="Styles\css\appPost.css" />
+    <Content Include="Styles\css\appRate.css" />
+    <Content Include="Styles\css\appTraffic.css" />
+    <Content Include="Styles\css\fonts\stack.css" />
+    <Content Include="Styles\css\library\animate.css" />
+    <Content Include="Styles\css\app.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Styles\fonts\fontawesome-webfont.svg" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Styles\images\cad_logo_rgb_pos.png" />
+    <Content Include="Styles\images\cad_logo_sm.png" />
+    <Content Include="Scripts\appPlanning\viewmodels\CriteriaBuilderViewModel.js" />
+    <Content Include="Scripts\appPlanning\viewmodels\CustomMarketsSelectorViewModel.js" />
+    <Content Include="Scripts\appPlanning\viewmodels\FilterViewModel.js" />
+    <Content Include="Scripts\appPlanning\views\ProposalDetailInventoryView.js" />
+    <Content Include="Scripts\appPlanning\viewmodels\ProposalDetailInventoryViewModel.js" />
+    <Content Include="Scripts\appPlanning\views\ProposalDetailOpenMarketView.js" />
+    <Content Include="Scripts\appPlanning\viewmodels\ProposalDetailOpenMarketViewModel.js" />
+    <Content Include="Scripts\appPlanning\ProposalDetailSet.js" />
+    <Content Include="Scripts\appPlanning\viewmodels\CustomMarketsViewModel.js" />
+    <Content Include="Scripts\appPlanning_original\CriteriaBuilderViewModel.js" />
+    <Content Include="Scripts\appPlanning_original\FilterViewModel.js" />
+    <Content Include="Scripts\appPlanning_original\ManageRatingsViewModel.js" />
+    <Content Include="Scripts\appPlanning_original\PlanningConfig.js" />
+    <Content Include="Scripts\appPlanning_original\PlanningMainController.js" />
+    <Content Include="Scripts\appPlanning_original\PlanningMainView.js" />
+    <Content Include="Scripts\appPlanning_original\PlanningSearchViewModel.js" />
+    <Content Include="Scripts\appPlanning_original\ProposalController.js" />
+    <Content Include="Scripts\appPlanning_original\ProposalView.js" />
+    <Content Include="Scripts\appPlanning_original\ProposalViewModel.js" />
+    <Content Include="Scripts\appPlanning_original\SwitchProposalVersionView.js" />
+    <Content Include="Scripts\appPlanning_original\SwitchProposalVersionViewModel.js" />
+    <Content Include="Scripts\appPlanning_original\VersionCreatedOptionsViewModel.js" />
+    <Content Include="Scripts\appPosting\config\PostingConfig.js" />
+    <Content Include="Scripts\appPosting\controllers\PostingMainController.js" />
+    <Content Include="Scripts\appPosting\views\PostingMainView.js" />
+    <Content Include="Scripts\appPosting\PostingUploadManager.js" />
+    <Content Include="Scripts\appPosting\views\PostingUploadView.js" />
+    <Content Include="Scripts\appPosting\viewmodels\PostingUploadViewModel.js" />
+    <Content Include="Scripts\appRate\viewmodels\ImportThirdPartyViewModel.js" />
+    <Content Include="Scripts\appRate\config\RateConfig.js" />
+    <Content Include="Scripts\appRate\controllers\RateMainController.js" />
+    <Content Include="Scripts\appRate\views\RateMainView.js" />
+    <Content Include="Scripts\appRate\controllers\RateStationController.js" />
+    <Content Include="Scripts\appRate\views\RateStationView.js" />
+    <Content Include="Scripts\appRate\viewmodels\RateStationViewModel.js" />
+    <Content Include="Scripts\appRate\RateUploadManager.js" />
+    <Content Include="Scripts\appRate\StationModalEditRate.js" />
+    <Content Include="Scripts\appRate\StationModalEditRateThirdParty.js" />
+    <Content Include="Scripts\appRate\StationModalEndFlight.js" />
+    <Content Include="Scripts\appRate\StationModalNewRate.js" />
+    <Content Include="Scripts\appPlanning\viewmodels\ManageRatingsViewModel.js" />
+    <Content Include="Scripts\appPlanning\controllers\ProposalController.js" />
+    <Content Include="Scripts\appPlanning\views\ProposalView.js" />
+    <Content Include="Scripts\appPlanning\viewmodels\ProposalViewModel.js" />
+    <Content Include="Scripts\appPlanning\views\SwitchProposalVersionView.js" />
+    <Content Include="Scripts\appPlanning\viewmodels\PlanningSearchViewModel.js" />
+    <Content Include="Scripts\appPlanning\config\PlanningConfig.js" />
+    <Content Include="Scripts\appPlanning\controllers\PlanningMainController.js" />
+    <Content Include="Scripts\appPlanning\views\PlanningMainView.js" />
+    <Content Include="Scripts\appPlanning\viewmodels\SwitchProposalVersionViewModel.js" />
+    <Content Include="Scripts\appPlanning\viewmodels\VersionCreatedOptionsViewModel.js" />
+    <Content Include="Scripts\appTracker\config\TrackerConfig.js" />
+    <Content Include="Scripts\appTracker\views\BvsFileListingView.js" />
+    <Content Include="Scripts\appTracker\controllers\TrackerMainController.js" />
+    <Content Include="Scripts\appTracker\views\TrackerMainView.js" />
+    <Content Include="Scripts\appTracker\TrackerManageRatingsBooks.js" />
+    <Content Include="Scripts\appTracker\viewmodels\TrackerScheduleViewModel.js" />
+    <Content Include="Scripts\appTracker\TrackerManageMappings.js" />
+    <Content Include="Scripts\appTracker\controllers\TrackerScrubController.js" />
+    <Content Include="Scripts\appTracker\views\TrackerScrubView.js" />
+    <Content Include="Scripts\appTracker\viewmodels\TrackerScrubViewModel.js" />
+    <Content Include="Scripts\appTracker\TrackerUploadManager.js" />
+    <Content Include="Scripts\appTraffic\config\TrafficConfig.js" />
+    <Content Include="Scripts\appTraffic\controllers\TrafficController.js" />
+    <Content Include="Scripts\appTraffic\views\TrafficView.js" />
+    <Content Include="Scripts\app\controllers\AppController.js" />
+    <Content Include="Scripts\app\controllers\BaseController.js" />
+    <Content Include="Scripts\app\views\BaseView.js" />
+    <Content Include="Scripts\app\vendor\Class.js" />
+    <Content Include="Scripts\app\config\config.js" />
+    <Content Include="Scripts\app\services\httpService.js" />
+    <Content Include="Scripts\app\views\UploadManager.js" />
+    <Content Include="Scripts\app\factories\wrappers.js" />
+    <Content Include="Styles\fonts\fontawesome-webfont.eot" />
+    <Content Include="Styles\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Styles\fonts\fontawesome-webfont.woff" />
+    <Content Include="Styles\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Styles\fonts\FontAwesome.otf" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Properties\PublishProfiles\QA %28OnDeck%29.pubxml" />
+    <None Include="Properties\PublishProfiles\QA.pubxml" />
+    <Content Include="Scripts\library\bootstrap-tagsinput\bootstrap-tagsinput.css" />
+    <Content Include="Scripts\library\bootstrap-tagsinput\bootstrap-tagsinput.js" />
+    <Content Include="Scripts\library\cadent-knockout\custom-bindings\bootstrap-tagsinput.js" />
+    <Content Include="Scripts\library\cadent-knockout\custom-bindings\flightweek-picker.js" />
+    <Content Include="Scripts\library\cadent-knockout\custom-bindings\modal.js" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\css\bootstrap-theme.css" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\css\bootstrap-theme.min.css" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\css\bootstrap.css" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\css\bootstrap.min.css" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\js\bootstrap-notify.min.js" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\js\bootstrap.js" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\js\bootstrap.min.js" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\js\npm.js" />
+    <Content Include="Scripts\library\daterangepicker\daterangepicker.css" />
+    <Content Include="Scripts\library\daterangepicker\daterangepicker.js" />
+    <Content Include="Scripts\library\daterangepicker\daterangepicker_modified.js" />
+    <Content Include="Scripts\library\cadent-daypart-dropdown\daypart-dropdown-broadcast.js" />
+    <Content Include="Scripts\library\cadent-daypart-dropdown\daypart-dropdown-traffic.js" />
+    <Content Include="Scripts\library\cadent-daypart-dropdown\daypart-dropdown.css" />
+    <Content Include="Scripts\library\cadent-daypart-dropdown\daypart-dropdown.js" />
+    <Content Include="Scripts\library\font-awesome\css\font-awesome.css" />
+    <Content Include="Scripts\library\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Scripts\library\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Scripts\library\jquery-2.2.3.min.js" />
+    <Content Include="Scripts\library\jquery-validate\require_from_group.js" />
+    <Content Include="Scripts\library\jquery-validate\jquery.validate.min.js" />
+    <Content Include="Scripts\library\cadent-knockout\custom-bindings\select2.js" />
+    <Content Include="Scripts\library\cadent-knockout\custom-bindings\stopBubble.js" />
+    <Content Include="Scripts\library\knockout\knockout-3.3.0.js" />
+    <Content Include="Scripts\library\knockout\knockout-3.4.0.js" />
+    <Content Include="Scripts\library\knockout\knockout.mapping.js" />
+    <Content Include="Scripts\library\knockout\knockout.validation.min.js" />
+    <Content Include="Scripts\library\lodash.min.js" />
+    <Content Include="Scripts\library\moment.js" />
+    <Content Include="Scripts\library\numeral.js" />
+    <Content Include="Scripts\library\select2\select2-bootstrap.min.css" />
+    <Content Include="Scripts\library\select2\select2.min.css" />
+    <Content Include="Scripts\library\select2\select2.min.js" />
+    <Content Include="Scripts\library\timepicker\jquery.timepicker.css" />
+    <Content Include="Scripts\library\timepicker\jquery.timepicker.js" />
+    <Content Include="Scripts\library\w2ui\w2ui-1.5.rc1.css" />
+    <Content Include="Scripts\library\w2ui\w2ui-1.5.rc1.js" />
+    <Content Include="Scripts\library\w2ui\w2ui-1.5.rc1.min.css" />
+    <Content Include="Scripts\library\w2ui\w2ui-1.5.rc1.min.js" />
+    <Content Include="Scripts\library\webui-popover\jquery.webui-popover.min.css" />
+    <Content Include="Scripts\library\webui-popover\jquery.webui-popover.min.js" />
+    <Content Include="Scripts\library\cadent-knockout\custom-bindings\daypart-dropdown.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\ErrorModal.cshtml" />
+    <Content Include="Views\Shared\ProgressModal.cshtml" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\css\bootstrap-theme.css.map" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\css\bootstrap.css.map" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Scripts\library\bootstrap-3.3.5\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Views\Shared\NavBar.cshtml" />
+    <Content Include="Views\Home\TrackerView.cshtml" />
+    <Content Include="Views\Home\ScheduleModal.cshtml" />
+    <Content Include="Views\Home\ScrubModal.cshtml" />
+    <Content Include="Scripts\library\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Scripts\library\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Scripts\library\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Scripts\library\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Scripts\library\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Scripts\library\font-awesome\less\animated.less" />
+    <Content Include="Scripts\library\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Scripts\library\font-awesome\less\core.less" />
+    <Content Include="Scripts\library\font-awesome\less\fixed-width.less" />
+    <Content Include="Scripts\library\font-awesome\less\font-awesome.less" />
+    <Content Include="Scripts\library\font-awesome\less\icons.less" />
+    <Content Include="Scripts\library\font-awesome\less\larger.less" />
+    <Content Include="Scripts\library\font-awesome\less\list.less" />
+    <Content Include="Scripts\library\font-awesome\less\mixins.less" />
+    <Content Include="Scripts\library\font-awesome\less\path.less" />
+    <Content Include="Scripts\library\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Scripts\library\font-awesome\less\screen-reader.less" />
+    <Content Include="Scripts\library\font-awesome\less\stacked.less" />
+    <Content Include="Scripts\library\font-awesome\less\variables.less" />
+    <Content Include="Scripts\library\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Scripts\library\font-awesome\scss\_animated.scss" />
+    <Content Include="Scripts\library\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Scripts\library\font-awesome\scss\_core.scss" />
+    <Content Include="Scripts\library\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Scripts\library\font-awesome\scss\_icons.scss" />
+    <Content Include="Scripts\library\font-awesome\scss\_larger.scss" />
+    <Content Include="Scripts\library\font-awesome\scss\_list.scss" />
+    <Content Include="Scripts\library\font-awesome\scss\_mixins.scss" />
+    <Content Include="Scripts\library\font-awesome\scss\_path.scss" />
+    <Content Include="Scripts\library\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Scripts\library\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="Scripts\library\font-awesome\scss\_stacked.scss" />
+    <Content Include="Scripts\library\font-awesome\scss\_variables.scss" />
+    <Content Include="Views\Rates\Index.cshtml" />
+    <Content Include="Views\Rates\StationModal.cshtml" />
+    <Content Include="Views\Rates\_StationModalEditRatesProgram.cshtml" />
+    <Content Include="Views\Rates\_StationModalMainGrid.cshtml" />
+    <Content Include="Views\Rates\_StationModalNewRatesProgram.cshtml" />
+    <Content Include="Views\Home\_ScrubMain.cshtml" />
+    <Content Include="Views\Home\_ScrubProgram.cshtml" />
+    <Content Include="Views\Home\_ScrubStation.cshtml" />
+    <Content Include="Views\Home\_ScrubProgramConfirm.cshtml" />
+    <Content Include="Views\Home\_ScrubTimeslot.cshtml" />
+    <Content Include="Views\Home\_ScrubVerifyLeadIn.cshtml" />
+    <Content Include="Views\Planning\Index.cshtml" />
+    <Content Include="Views\Planning\_ProposalView.cshtml" />
+    <Content Include="Views\Rates\_StationModalEndFlight.cshtml" />
+    <Content Include="Views\Planning\_VersionCreatedOptionsModal.cshtml" />
+    <Content Include="Views\Planning\_SwitchProposalVersionModal.cshtml" />
+    <Content Include="Views\Planning\_ManageRatings.cshtml" />
+    <Content Include="Views\Rates\_ImportThirdPartyModal.cshtml" />
+    <Content Include="Views\Home\_ManageMappingsModal.cshtml" />
+    <Content Include="Views\Rates\_StationModalEditRateThirdParty.cshtml" />
+    <Content Include="Views\Home\_ManageRatingsBooksModal.cshtml" />
+    <Content Include="Views\Planning\_CustomMarketsModal.cshtml" />
+    <Content Include="Views\Planning\_CustomMarketsSelector.cshtml" />
+    <Content Include="Views\LegacyPost\Index.cshtml" />
+    <Content Include="Views\Planning\_ProposalDetailInventoryModal.cshtml" />
+    <Content Include="Views\LegacyPost\PostingUploadModal.cshtml" />
+    <Content Include="Views\LegacyPost\PostingMainView.cshtml" />
+    <Content Include="Views\Shared\SuccessModal.cshtml" />
+    <Content Include="Views\Planning\_ProposalDetailOpenMarketModal.cshtml" />
+    <Content Include="Views\Planning\_ProposalUpdateWarningModal.cshtml" />
+    <Content Include="Views\Home\BvsFileListingModal.cshtml" />
+    <Content Include="Views\Planning\_CriteriaBuilderModal.cshtml" />
+    <Content Include="Views\Planning\_FilterModal.cshtml" />
+    <Content Include="Views\Traffic\Index.cshtml" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Cyrillic-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Cyrillic.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Greek-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Greek.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Latin-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Latin.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Bold-Vietnamese.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Cyrillic-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Cyrillic.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Greek-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Greek.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Latin-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Latin.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Italic-Vietnamese.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Cyrillic-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Cyrillic.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Greek-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Greek.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Latin-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Latin.woff2" />
+    <Content Include="Styles\fonts\OpenSans-Regular-Vietnamese.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Cyrillic-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Cyrillic.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Greek-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Greek.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Latin-Ext.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Latin.woff2" />
+    <Content Include="Styles\fonts\OpenSans-SemiBold-Vietnamese.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Services\Broadcast\Services.Broadcast\Services.Broadcast.csproj">
+      <Project>{ba718c31-1f25-4df1-a2af-eea92da4dab6}</Project>
+      <Name>Services.Broadcast</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'IntegrationTests|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QARelease|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <PublishDatabases>false</PublishDatabases>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReportingWebQA|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'TrafficComposerWebQA|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseComposerWebQA|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CableTrackQA|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BroadcastComposerWeb|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>63950</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+<<<<<<< HEAD
+          <IISUrl>http://localhost:61944/</IISUrl>
+=======
+          <IISUrl>http://localhost:62344/</IISUrl>
+>>>>>>> origin/develop
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>Copy /Y "$(TargetDir)ServiceCommonAppSettings.config" "$(TargetDir)..\ServiceCommonAppSettings.config"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

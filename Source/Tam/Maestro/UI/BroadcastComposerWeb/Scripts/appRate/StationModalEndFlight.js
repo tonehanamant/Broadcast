@@ -19,6 +19,7 @@ var StationModalEndFlight = function (view) {
             var me = this;
             //set active record each time; refer to it later after events called
             this.activeRecord = activeRecord;
+           
             if (!this.$EditModal) {
                 this.$EditModal = $('#station_end_flight_modal');
                 this.$EditModal.on('shown.bs.modal', function (event) {
@@ -39,7 +40,7 @@ var StationModalEndFlight = function (view) {
         // set modal fields with active station rate data
         populateForm: function () {
             //set program name ? somewhere? title
-            $('#end_flight_program_name_input').val(this.activeRecord.Program);
+            $('#end_flight_program_name_input').val(this.activeRecord.ProgramName);
             this.setFormFlightDatePicker($('#end_flight_date_input'));
         },
 
@@ -83,7 +84,7 @@ var StationModalEndFlight = function (view) {
             var currentDay = moment();
             // clone moment objects to avoid changing original values
             var endCurrent = currentDay.clone();
-            var lastDay = this.activeRecord.FlightEndDate;
+            var lastDay = this.activeRecord.EndDate;
             //var endOfWeek = currentDay.startOf('week').weekday(0);
             var endOfWeek = endCurrent.day() == 0 ? endCurrent : endCurrent.add(1, "week").startOf('week').weekday(0);
             var startOfWeek = currentDay.startOf('week').weekday(1);
@@ -125,7 +126,7 @@ var StationModalEndFlight = function (view) {
 
                 // check if before FlightEndDate
                 var effectiveDate = moment(value, 'YYYY/MM/DD');
-                var flightEndDate = (new Date(me.activeRecord.FlightEndDate));
+                var flightEndDate = (new Date(me.activeRecord.EndDate));
                 flightEndDate.setDate(flightEndDate.getDate() + 1);
 
                 if (effectiveDate > flightEndDate) {

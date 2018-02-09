@@ -37,10 +37,12 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
             {
                 Genres = new List<LookupDto>();
                 FlightWeeks = new List<ProposalProgramFlightWeek>();
+                ProgramNames = new List<string>();
+                Dayparts = new List<LookupDto>();
             } 
             public int ProgramId { get; set; }
-            public string ProgramName { get; set; }
-            public LookupDto Daypart { get; set; }
+            public List<string> ProgramNames { get; set; }
+            public List<LookupDto> Dayparts { get; set; }
             public decimal TargetCpm { get; set; }
             public double TargetImpressions { get; set; }
             public double UnitImpressions { get; set; }

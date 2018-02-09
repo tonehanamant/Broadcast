@@ -27,8 +27,9 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
         {
             public int ProgramId { get; set; }
             public int Spots { get; set; }
-            public double Impressions { get; set; }
-            public decimal SpotCost { get; set; }
+            public double TotalImpressions { get; set; }
+            public double UnitImpressions { get; set; }
+            public decimal UnitCost { get; set; }
         }
     }
 }

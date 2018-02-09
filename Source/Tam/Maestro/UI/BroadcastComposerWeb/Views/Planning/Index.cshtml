@@ -32,13 +32,14 @@
     <div id="proposal_grid"></div>
 </div>
 
-@Html.Partial("_ProposalView")
+@Html.Partial("_ProposalDetailInventoryModal")
+@Html.Partial("_ProposalDetailOpenMarketModal")
 
 @section scripts {
     @Scripts.Render("~/bundles/planning")
 
     <script>
-        var pageController = new PlanningMainController();
+        var pageController = new PlanningController();
         var appController = new AppController();
         $(document).ready(function () {
             (function () {

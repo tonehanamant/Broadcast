@@ -1,0 +1,219 @@
+/* React Redux Grid - restyling */
+
+.react-grid-container {
+  box-shadow: none !important;
+  position: relative;
+  border: 1px solid #c0c0c0 !important;
+  border-radius: 2px;
+  color: #000000 !important;
+  font-family: Verdana, Arial, sans-serif !important;
+
+  .react-grid-header {
+    font-size: 11px;
+    font-family: Verdana, Arial, sans-serif !important;
+    color: #000000 !important;
+    background-color: none !important;
+    background-image: -webkit-linear-gradient(#f9f9f9, #e4e4e4);
+    background-image: -moz-linear-gradient(#f9f9f9, #e4e4e4);
+    background-image: -ms-linear-gradient(#f9f9f9, #e4e4e4);
+    background-image: -o-linear-gradient(#f9f9f9, #e4e4e4);
+    background-image: linear-gradient(#f9f9f9, #e4e4e4);
+    box-shadow: 0px 1px 4px #dddddd;
+    border-bottom: none !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
+  
+    tr {
+      border: none !important;
+    }
+
+    th {
+      border-bottom: 1px solid #c5c5c5 !important;
+      border-left: 1px solid #c5c5c5;
+
+      &:first-child {
+        border-left: none !important;
+      }
+
+      &:last-child {
+        border-left: none !important;
+      }
+    }
+
+    .react-grid-column {
+      padding-left: 3px !important;
+      width: 96% !important;
+      top: 4px !important;
+      height: 21px !important;
+      font-weight: normal !important;
+    }
+  
+    .react-grid-sort-handle {
+      float: right !important;
+    }
+
+    .react-grid-drag-handle {
+      &:after {
+        /* remove wierd bordering shows white for dragging? */
+        border-right: none !important;
+        cursor: col-resize !important;
+        width: 3px !important;
+      }
+    }
+  
+    .react-grid-action-container {
+      width: 0px !important;
+      // border-left: 1px solid #c5c5c5 !important;
+
+      .react-grid-action-icon {
+        display: none;
+        padding-left: 0 !important;
+        // color: #c5c5c5;
+
+        &:before {
+          right: -11px !important;
+        }
+      }
+    }
+  
+    .react-grid-sort-handle {
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+      padding-left: 5px;
+    }
+
+    .react-grid-asc, .react-grid-desc {
+      &:before {
+        font-size: 14px !important;
+        color: #8d99a7 !important;
+        line-height: 2px;
+      }
+    }
+
+    .react-grid-desc {
+      &:before {
+        margin-left: 1px;
+      }
+    }
+
+    .react-grid-asc {
+      padding-top: 1px;
+      &:before {
+        margin-left: 2px;
+      }
+    }
+  
+  }
+
+  .react-grid-table-container {
+    // height: auto !important;
+    // max-height: 500px !important;
+
+    tr {
+      &:nth-child(even) {
+        background-color: #f3f6fa;
+      }
+    }
+  
+    td {
+      font-size: 11px;
+
+      &:not(:first-child) {
+        border-left: 1px solid #d6d5d7;
+      }
+    }
+  
+    .react-grid-row {
+      &:hover {
+        background-color: #d6e7ff !important;
+      }
+    }
+
+    .react-grid-active {
+      background-color: #b6d5ff !important;
+      color: #000000 !important;
+
+      &:hover {
+        background-color: #b6d5ff !important;
+      }
+
+    }
+      
+    .react-grid-cell {
+      padding: 0 3px !important;
+      border-bottom: 0 !important;
+      font-size: 11px;
+      font-family: Verdana, Arial, sans-serif !important;
+    }
+
+  }
+  
+  .react-grid-action-container {
+    // border-left: 1px solid #c5c5c5 !important;
+    border-bottom: none !important;
+    
+    .react-grid-action-icon {  
+      // display: none;
+      padding-left: 0 !important;
+
+      &:before {
+        display: none;
+        // right: -11px !important;
+      }
+    }
+  }
+
+  .react-grid-action-menu-selected {
+    .react-grid-action-icon {
+      &:before {
+        background-color: transparent !important;
+      }
+    }
+  }
+
+  .react-grid-action-menu-container {
+    top: auto !important;
+    box-shadow: 1px 2px 10px rgba(0,0,0,0.20) !important;
+    border: 2px solid #c5c5c5 !important;
+    right: 18px !important;
+
+    .react-grid-action-menu-item {
+      &:hover {
+        background-color: rgba(214,231,255,.5) !important;
+      }
+    }
+  }
+
+  .react-grid-top {
+    .react-grid-action-menu-container {
+      bottom: -14px !important;
+      // right: -6px !important;
+    }
+  }
+
+  .react-grid-bottom {
+    .react-grid-action-menu-container {
+      // right: -6px !important;
+    }
+  }
+  
+  .react-grid-pager-toolbar {
+    box-shadow: 0px -1px 4px #dddddd;
+    border-top: 1px solid #d6d5d7 !important;
+    font-size: 11px !important;
+  
+    span {
+      &:first-child {
+        font-size: 11px !important;
+      }
+    }
+    
+    button {
+      display: none;
+    }
+  
+  }
+
+}
+

@@ -98,9 +98,8 @@ var StationModalEditRate = function (view) {
         },
 
         saveRate: function () {
-            var me = this;
-
             if ($("#update_program_form").valid()) {
+                var programName = $('#update_program_name_input').val();
 
                 // unmasking form values
                 var rate15 = $('#update_program_spot15_input').val() ? parseFloat($('#update_program_spot15_input').val().replace(/[$,]+/g, "")) : null;
@@ -110,19 +109,12 @@ var StationModalEditRate = function (view) {
                     impressions = util.multiplyImpressions(impressions);
 
                 var rating = parseFloat($('#update_program_hhrating_input').val().replace(/,/g, ''));
-                //var audienceId = $('#update_program_audience_id_input').val();
-
                 var getEffectiveDate = $('#update_program_effective_date_input').val();
                 var effectiveDate = moment(new Date(getEffectiveDate)).isValid() ? moment(new Date(getEffectiveDate)).format('YYYY-MM-DD' + 'T00:00:00') : null;
                 
-                //not currently processing genres
-                //var genres = me.processGenres();
-
-                //adjust to BE specifications
                 var updatedProgram = {
-                    //UpdatedProgramId: me.activeRecord.Id,
-                    //Genres: genres,
                     Id: this.activeRecord.Id,
+                    ProgramName: programName,
                     RateSource: _view.controller.getSource(),
                     Rate15: rate15,
                     Rate30: rate30,
@@ -131,7 +123,6 @@ var StationModalEditRate = function (view) {
                     EffectiveDate: effectiveDate,
                     Airtime: this.activeRecord.Airtime,
                     EndDate: this.activeRecord.EndDate
-                   // AudienceId: audienceId
                 };
 
                 _view.controller.apiUpdateRatesProgram(updatedProgram);

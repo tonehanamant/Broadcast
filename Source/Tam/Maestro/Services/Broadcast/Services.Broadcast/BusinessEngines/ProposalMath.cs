@@ -41,5 +41,12 @@ namespace Services.Broadcast.BusinessEngines
             return (float)(universe != 0 ? targetImpressions / universe * 100 : 0);
         }
 
+        public static decimal CalculateManifestSpotAudienceRate(double impressionsPerSpot, decimal spotCost)
+        {
+            if (Math.Abs(impressionsPerSpot) < 0.001)
+                return 0;
+
+            return (spotCost / (decimal) impressionsPerSpot) * 1000;
+        }
     }
 }

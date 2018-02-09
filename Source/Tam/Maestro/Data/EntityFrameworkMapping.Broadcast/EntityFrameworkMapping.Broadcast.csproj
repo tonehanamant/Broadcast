@@ -237,6 +237,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="affidavit_client_scrubs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="affidavit_files.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="affidavit_file_details.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="affidavit_file_detail_audiences.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="affidavit_file_detail_problems.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="audience.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -302,6 +317,9 @@
     <Compile Include="media_weeks.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="nsi_component_audiences.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="post_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -340,6 +358,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="proposal_version_detail_quarter_weeks.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proposal_version_detail_quarter_week_iscis.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="proposal_version_flight_weeks.cs">
@@ -407,6 +428,12 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="station_inventory_manifest_rates.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="station_inventory_spots.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="station_inventory_spot_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="system_component_parameters.cs">

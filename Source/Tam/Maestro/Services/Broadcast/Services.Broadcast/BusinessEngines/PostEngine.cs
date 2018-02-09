@@ -26,7 +26,7 @@ namespace Services.Broadcast.BusinessEngines
 
         public void Post(post_files postFile)
         {
-            var postUploadRepository = _DataRepositoryFactory.GetDataRepository<IPostRepository>();
+            var postUploadRepository = _DataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>();
             var stationRepo = _DataRepositoryFactory.GetDataRepository<IStationRepository>();
 
             var postDetails = new List<StationDetailPointInTime>();

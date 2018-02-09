@@ -91,8 +91,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostEngine, PostEngine>();
             unityContainer.RegisterType<IPostFileParser, PostFileParser>();
             unityContainer.RegisterType<IPostFileParserFactory, PostFileParserFactory>();
-            unityContainer.RegisterType<IReportGenerator<PostFile>, PostExcelReportGenerator>();
-            unityContainer.RegisterType<IPostService, PostService>();
+            unityContainer.RegisterType<IReportGenerator<PostPrePostingFile>, PostExcelReportGenerator>();
+            unityContainer.RegisterType<IPostPrePostingService, PostPrePostingService>();
             unityContainer.RegisterType<IProprietarySpotCostCalculationEngine, ProprietarySpotCostCalculationEngine>();
             unityContainer.RegisterType<IImpressionAdjustmentEngine, ImpressionAdjustmentEngine>();
 			unityContainer.RegisterType<IPostingBooksService, PostingBooksService>();
@@ -103,6 +103,11 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
             unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();
             unityContainer.RegisterType<IStationInventoryManifestService, StationInventoryManifestService>();
+
+            unityContainer.RegisterType<IAffidavitService, AffidavitService>();
+            unityContainer.RegisterType<IAffidavitMatchingEngine, AffidavitMatchingEngine>();
+            unityContainer.RegisterType<IWhosWatchingTvService, WhosWatchingTvService>();
+            unityContainer.RegisterType<IPostService, PostService>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

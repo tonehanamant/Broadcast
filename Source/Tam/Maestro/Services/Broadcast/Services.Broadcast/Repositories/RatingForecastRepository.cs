@@ -220,7 +220,7 @@ namespace Services.Broadcast.Repositories
                         string.Format(
                             "INSERT INTO @ratings_request SELECT {0},'{1}',{2},{3},{4},{5},{6},{7},{8},{9},{10}",
                             p.Id,
-                            string.Format("'{0}'", p.LegacyCallLetters),
+                            string.Format("{0}", p.LegacyCallLetters),
                             p.DayOfWeek == DayOfWeek.Monday ? "1" : "0",
                             p.DayOfWeek == DayOfWeek.Tuesday ? "1" : "0",
                             p.DayOfWeek == DayOfWeek.Wednesday ? "1" : "0",
@@ -231,7 +231,7 @@ namespace Services.Broadcast.Repositories
                             p.TimeAired,
                             p.TimeAired)));
         }
-        private static void WriteTableSQLDebug(List<ManifestDetailDaypart> stationDetails)
+        private static void WriteTableSQLDebug(IEnumerable<ManifestDetailDaypart> stationDetails)
         {
             stationDetails
                 .Distinct()
@@ -240,7 +240,7 @@ namespace Services.Broadcast.Repositories
                         string.Format(
                             "INSERT INTO @ratings_request SELECT {0},'{1}',{2},{3},{4},{5},{6},{7},{8},{9},{10}",
                             p.Id,
-                            string.Format("'{0}'", p.LegacyCallLetters),
+                            string.Format("{0}", p.LegacyCallLetters),
                             p.DisplayDaypart.Monday ? "1" : "0",
                             p.DisplayDaypart.Tuesday ? "1" : "0",
                             p.DisplayDaypart.Wednesday ? "1" : "0",
@@ -367,7 +367,7 @@ namespace Services.Broadcast.Repositories
                     {
                         Value = (char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)
                     };
-
+                    //WriteTableSQLDebug(stationDetails);
                     var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_TwoBooks" : "usp_GetImpressionsForMultiplePrograms_TwoBooks_Averages";
 
                     return c.Database.SqlQuery<StationImpressions>(string.Format(@"EXEC [nsi].[{0}] @hut_media_month_id, @share_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), hut, share, audienceId, ratingsRequest, minPlaybackType).ToList();

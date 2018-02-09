@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using Services.Broadcast.Repositories;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities
 {
     public class ProposalProgramDto
     {
-        //public int Id { get; set; }
-        public int ProgramId { get; set; }
-        public string ProgramName { get; set; }        
-        public int DayPartId { get; set; }
-        public LookupDto DayPart { get; set; }
+        public int ManifestId { get; set; }
+        public List<ManifestDaypartDto> ManifestDayparts { get; set; } 
+        public List<LookupDto> DayParts { get; set; }
+        public int ManifestDaypartId { get; set; }
         public List<LookupDto> Genres { get; set; }
         public DisplayScheduleStation Station { get; set; }
         public LookupDto Market { get; set; }
@@ -29,12 +29,29 @@ namespace Services.Broadcast.Entities
         public double DemoRating { get; set; }
         public double HouseHoldRating { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public double AdditionalAudienceImpressions { get; set; }
         public double AdditionalDemoRating { get; set; }
         public decimal AdditonalAudienceCPM { get; set; }
         public double AdditionalAudienceSubscribers { get; set; }
         public bool IsOverlapping { get; set; }
         public double UnitImpressions { get; set; }
+        public List<StationInventorySpots> Allocations { get; set; }
+
+        public ProposalProgramDto()
+        {
+            Allocations = new List<StationInventorySpots>();
+            FlightWeeks = new List<ProposalProgramFlightWeek>();
+            ManifestDayparts = new List<ManifestDaypartDto>();
+            DayParts = new List<LookupDto>();
+            Genres = new List<LookupDto>();
+        }
+
+        public class ManifestDaypartDto
+        {
+            public int Id { get; set; }
+            public int DaypartId { get; set; }
+            public string ProgramName { get; set; }
+        }
     }
 }

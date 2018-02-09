@@ -12,7 +12,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
     {
         public override InventorySource InventorySource { get; set; }
         
-        public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, DateTime effectiveDate, List<InventoryFileProblem> fileProblems)
+        public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, DateTime effectiveDate)
         {
         }
 

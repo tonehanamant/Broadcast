@@ -123,7 +123,8 @@ namespace Services.Broadcast.Repositories
                                                    && sda.audience_rank == 1
                                              select sd.total_spots * sda.impressions).Sum(),
                         DeliveryDetails = (from bfd in context.bvs_file_details
-                                           where bfd.estimate_id == s.estimate_id
+                                           where bfd.estimate_id == s.estimate_id 
+                                                 && bfd.status == (int)TrackingStatus.InSpec
                                            select new ScheduleDeliveryDetails
                                            {
                                                SpotLength = bfd.spot_length,

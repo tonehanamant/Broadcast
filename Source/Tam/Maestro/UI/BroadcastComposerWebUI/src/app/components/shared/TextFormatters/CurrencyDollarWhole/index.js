@@ -9,8 +9,15 @@ export default class CurrencyDollarWhole extends Component {
   // }
 
   render() {
+    const { amount, dash } = this.props;
+
+    // 0, null or undefined
+    if (dash && !amount) {
+      return '-';
+    }
+
     return (
-			<span>{ numeral(this.props.amount).format('$0,0') }</span>
+			<span>{ numeral(amount).format('$0,0') }</span>
     );
 	}
 }
@@ -20,4 +27,9 @@ CurrencyDollarWhole.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  dash: PropTypes.bool,
+};
+
+CurrencyDollarWhole.defaultProps = {
+  dash: false,
 };

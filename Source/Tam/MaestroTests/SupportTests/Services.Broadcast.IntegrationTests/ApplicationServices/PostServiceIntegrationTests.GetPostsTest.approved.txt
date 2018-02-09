@@ -1,0 +1,10 @@
+﻿[
+  {
+    "ContractId": 253,
+    "ContractName": "Proposal Test",
+    "PrimaryAudienceImpressions": 0.0,
+    "SpotsInSpec": 0,
+    "SpotsOutOfSpec": 0,
+    "UploadDate": null
+  }
+]

@@ -1,6 +1,7 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
@@ -42,27 +43,19 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-
-                    return (from s in context.stations.Include(sa=>sa.station_inventory_manifest)
-                        select new DisplayBroadcastStation
-                        {
-                            Code = s.station_code,
-                            Affiliation = s.affiliation,
-                            CallLetters = s.station_call_letters,
-                            LegacyCallLetters = s.legacy_call_letters,
-                            OriginMarket = s.market.geography_name,
-                            MarketCode = s.market_code,
-                            ModifiedDate = s.modified_date,
-                            FlightWeeks = (from m in s.station_inventory_manifest
-                                           join p in context.station_inventory_manifest_generation on m.id equals p.station_inventory_manifest_id
-                                           where m.inventory_source_id == inventorySource.Id
-                                           select new FlightWeekDto
-                                           {
-                                               Id = p.media_week_id
-                                           }).Distinct().
-                                              OrderBy(a => a.Id).
-                                              ToList()
-                        }).ToList();
+                    return (from s in context.stations.Include(sa => sa.station_inventory_manifest)
+                            select new DisplayBroadcastStation
+                            {
+                                Code = s.station_code,
+                                Affiliation = s.affiliation,
+                                CallLetters = s.station_call_letters,
+                                LegacyCallLetters = s.legacy_call_letters,
+                                OriginMarket = s.market.geography_name,
+                                MarketCode = s.market_code,
+                                ModifiedDate = s.modified_date,
+                                ManifestMaxEndDate = (from m in s.station_inventory_manifest
+                                                      select m.end_date).Max()
+                            }).ToList();
                 });
         }
 
@@ -73,7 +66,7 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var query =
-                        context.stations.Where(
+                        context.stations.Include(sa => sa.station_inventory_manifest).Where(
                             s =>
                                 s.station_inventory_manifest.Any(
                                     m => (m.end_date == null || m.end_date > date)
@@ -91,7 +84,9 @@ namespace Services.Broadcast.Repositories
                             LegacyCallLetters = s.legacy_call_letters,
                             OriginMarket = s.market.geography_name,
                             ModifiedDate = s.modified_date,
-                            MarketCode = s.market_code
+                            MarketCode = s.market_code,
+                            ManifestMaxEndDate = (from m in s.station_inventory_manifest
+                                                  select m.end_date).Max()
                         }).ToList();
                     return result;
                 });

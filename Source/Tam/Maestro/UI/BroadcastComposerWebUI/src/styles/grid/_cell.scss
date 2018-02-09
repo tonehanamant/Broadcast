@@ -1,0 +1,33 @@
+.editable-cell {
+	min-height: 24px;
+	max-height: 24px;
+	width: 100%;
+	background: rgba(255,255,255,0);
+
+	box-sizing: border-box;
+
+	&:focus {
+		background: rgba(255,255,255,1);
+	}
+}
+
+.non-editable-cell {
+	min-height: 24px;
+  max-height: 24px;
+	width: 100%;
+	background: rgba(255,255,255,0);
+	cursor: pointer !important;
+
+	box-sizing: border-box;
+}
+
+.editable-cell-changed {
+	// background: url(data:image/gif;base64,R0lGODlhCgAKAJEAALAABf///wAAAAAAACH5BAEAAAIALAAAAAAKAAoAAAIPlI8Hy8mbxIsSUnup3rQAADs=) no-repeat top right; // danger red
+	// background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAARUlEQVR42mNgIAdEH7j3HxsmWjHRJhPtDKLdTLQHMQT///8vBsS8SBjEVwBibXSFIEl2IGaF0iC+JBCrY1MIUsQIpeEKAW2mfoqcRaGhAAAAAElFTkSuQmCC) no-repeat top right; // info light blue
+	// background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAARUlEQVR42mNgIAcYV239jw0TrZhok4l2BtFuJtqDGIL///8XA2JeJAziKwCxNrpCkCQ7ELNCaRBfEojVsSkEKWKE0nCFADNEcic1hOJlAAAAAElFTkSuQmCC) no-repeat top right; // primary blue
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAARUlEQVR42mNgIAd8WOv/HxsmWjHRJhPtDKLdTLQHMQT///8vBsS8SBjEVwBibXSFIEl2IGaF0iC+JBCrY1MIUsQIpeEKAWIPfXmmtNLhAAAAAElFTkSuQmCC) no-repeat top right; // warning yellow
+}
+
+.editable-cell-has-error {
+	border-color: #a94442 !important;
+}

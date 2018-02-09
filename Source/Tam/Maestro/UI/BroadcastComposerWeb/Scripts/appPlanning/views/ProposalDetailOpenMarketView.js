@@ -234,7 +234,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         var $scope = this;
         //if weekGroups.length?
         //set as empty headet to match height of weeks: 26 px = 12px height + top7 bottom7 padding
-        var colGroups = [{ span: 3, caption: '<div id="openmarket_programs_column_inner" style="height: 12px; padding-right: 5px; text-align: right;">' + this.weeksLength + ' WEEKS:</div>' }];
+        var colGroups = [{ span: 2, caption: '<div id="openmarket_programs_column_inner" style="height: 12px; padding-right: 5px; text-align: right;">' + this.weeksLength + ' WEEKS:</div>' }];
         //var colGroups = [{ span: 1, caption: 'Airing Time', master:true }, { span: 1, caption: 'Program', master:true }, { span: 1, caption: 'CPM', master:true }]; //this does not work
         $.each(weekGroups, function (idx, group) {
             colGroups.push({ caption: group, span: 3 })
@@ -642,7 +642,13 @@ var ProposalDetailOpenMarketView = BaseView.extend({
                 $.each(items, function (didx, data) {
                     //should be all isChanged
                     if (data.isChanged) {
-                        week.Programs.push({ ProgramId: data.ProgramId, Spots: data.Spots, Impressions: data.TotalImpressions });
+                        week.Programs.push({
+                            ProgramId: data.ProgramId,
+                            Spots: data.Spots,
+                            TotalImpressions: data.TotalImpressions,
+                            UnitCost: data.UnitCost,
+                            UnitImpressions: data.UnitImpression
+                        });
                     }
                 });
                 params.Weeks.push(week);

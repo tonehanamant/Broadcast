@@ -13,15 +13,16 @@
       "HasWarning": true,
       "PostingBookId": 416,
       "WarningMessage": "The share book for the current quarter is not available, the default share book is the latest available"
-    },
-    "UseShareBookOnlyId": -1
+    }
   },
   "FlightEdited": false,
   "FlightEndDate": "2016-12-31T00:00:00",
   "FlightStartDate": "2016-12-05T00:00:00",
   "FlightWeeks": [],
+  "GenreCriteria": [],
   "HutPostingBookId": null,
   "PlaybackType": 0,
+  "ProgramCriteria": [],
   "Quarters": [
     {
       "Cpm": 0.0,
@@ -34,6 +35,7 @@
           "Cost": 0.0,
           "EndDate": "2016-12-11T00:00:00",
           "Impressions": 0.0,
+          "Iscis": [],
           "IsHiatus": true,
           "MediaWeekId": 676,
           "StartDate": "2016-12-05T00:00:00",
@@ -44,6 +46,7 @@
           "Cost": 0.0,
           "EndDate": "2016-12-18T00:00:00",
           "Impressions": 0.0,
+          "Iscis": [],
           "IsHiatus": false,
           "MediaWeekId": 677,
           "StartDate": "2016-12-12T00:00:00",
@@ -54,6 +57,7 @@
           "Cost": 0.0,
           "EndDate": "2016-12-25T00:00:00",
           "Impressions": 0.0,
+          "Iscis": [],
           "IsHiatus": false,
           "MediaWeekId": 678,
           "StartDate": "2016-12-19T00:00:00",
