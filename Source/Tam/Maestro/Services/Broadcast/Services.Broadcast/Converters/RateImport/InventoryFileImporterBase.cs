@@ -27,6 +27,13 @@ namespace Services.Broadcast.Converters.RateImport
         private Dictionary<int, int> _SpotLengthIdsByLength;
         private Dictionary<int, int> _SpotLengthsById;
         private string _fileHash;
+        private List<InventoryFileProblem> _FileProblems = new List<InventoryFileProblem>();
+
+        public List<InventoryFileProblem> FileProblems
+        {
+            get { return _FileProblems; }
+            set { _FileProblems = value;  }
+        } 
 
         public InventoryFileSaveRequest Request { get; private set; }
 
@@ -121,8 +128,7 @@ namespace Services.Broadcast.Converters.RateImport
         public abstract void ExtractFileData(
             System.IO.Stream stream,
             InventoryFile inventoryFile,
-            DateTime effectiveDate,
-            System.Collections.Generic.List<InventoryFileProblem> fileProblems);
+            DateTime effectiveDate);
 
         private Dictionary<int, double> GetSpotLengthAndMultipliers()
         {

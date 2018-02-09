@@ -831,7 +831,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
-
+                jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {

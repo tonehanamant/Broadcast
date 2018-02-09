@@ -37,7 +37,6 @@
       "ProgramCriteria": [
         {
           "Contain": 2,
-          "Id": 19,
           "ProgramName": "Open Market Program"
         }
       ],

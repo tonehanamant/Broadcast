@@ -130,6 +130,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -218,10 +219,11 @@
     <Compile Include="Controllers\EnvironmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaintenanceController.cs" />
+    <Compile Include="Controllers\PostApiController.cs" />
     <Compile Include="Controllers\TrafficApiController.cs" />
     <Compile Include="Controllers\TrafficController.cs" />
-    <Compile Include="Controllers\PostController.cs" />
-    <Compile Include="Controllers\PostApiController.cs" />
+    <Compile Include="Controllers\PostPrePostingController.cs" />
+    <Compile Include="Controllers\PostPrePostingApiController.cs" />
     <Compile Include="Controllers\ProposalController.cs" />
     <Compile Include="Controllers\ProposalInventoryController.cs" />
     <Compile Include="Controllers\InventoryApiController.cs" />
@@ -471,10 +473,10 @@
     <Content Include="Views\Home\_ManageRatingsBooksModal.cshtml" />
     <Content Include="Views\Planning\_CustomMarketsModal.cshtml" />
     <Content Include="Views\Planning\_CustomMarketsSelector.cshtml" />
-    <Content Include="Views\LegacyPost\Index.cshtml" />
+    <Content Include="Views\PostPrePosting\Index.cshtml" />
     <Content Include="Views\Planning\_ProposalDetailInventoryModal.cshtml" />
-    <Content Include="Views\LegacyPost\PostingUploadModal.cshtml" />
-    <Content Include="Views\LegacyPost\PostingMainView.cshtml" />
+    <Content Include="Views\PostPrePosting\PostingUploadModal.cshtml" />
+    <Content Include="Views\PostPrePosting\PostingMainView.cshtml" />
     <Content Include="Views\Shared\SuccessModal.cshtml" />
     <Content Include="Views\Planning\_ProposalDetailOpenMarketModal.cshtml" />
     <Content Include="Views\Planning\_ProposalUpdateWarningModal.cshtml" />

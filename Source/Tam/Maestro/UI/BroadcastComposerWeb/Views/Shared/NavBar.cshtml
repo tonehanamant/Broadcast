@@ -18,7 +18,7 @@
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Traffic" ? "active" : "")">@Html.ActionLink("Traffic", "Index", "Traffic")</li>
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">@Html.ActionLink("Tracker Pre Posting", "TrackerPrePosting", "Home")</li>
                 <!--<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Post" ? "active" : "")">@Html.ActionLink("Post", "Index", "Post")</li>-->
-                <!--<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "LegacyPost" ? "active" : "")">@Html.ActionLink("Post", "Index", "LegacyPost")</li>-->
+                <!--<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "LegacyPost" ? "active" : "")">@Html.ActionLink("Post", "Index", "PostPrePosting")</li>-->
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Post" ? "active" : "")"><a href="/broadcastreact/post-pre-posting">Post Pre Posting</a></li>
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Post" ? "active" : "")"><a href="/broadcastreact/post">Post</a></li>
             </ul>

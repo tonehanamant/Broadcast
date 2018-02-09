@@ -227,9 +227,13 @@ namespace Services.Broadcast.ApplicationServices
 
         private InventoryFileSaveResult SetFileProblemWarnings(int fileId,List<InventoryFileProblem> fileProblems)
         {
+            if (fileProblems.Any())
+            {
+                throw new FileUploadException<InventoryFileProblem>(fileProblems);
+            }
+
             var ret = new InventoryFileSaveResult()
             {
-                Problems = fileProblems,
                 FileId = fileId
             };
             return ret;
@@ -253,21 +257,20 @@ namespace Services.Broadcast.ApplicationServices
 
             var stationLocks = new List<IDisposable>();
             var lockedStationCodes = new List<int>();
-            var fileProblems = new List<InventoryFileProblem>();
 
             try
             {
                 var startTime = DateTime.Now;
 
-                fileImporter.ExtractFileData(request.RatesStream, inventoryFile, request.EffectiveDate, fileProblems);
+                fileImporter.ExtractFileData(request.RatesStream, inventoryFile, request.EffectiveDate);
 
                 var endTime = DateTime.Now;
 
                 System.Diagnostics.Debug.WriteLine("Completed file parsing in {0}", endTime - startTime);
 
-                if (fileProblems.Any())
+                if (fileImporter.FileProblems.Any())
                 {
-                    return SetFileProblemWarnings(inventoryFile.Id,fileProblems);
+                    return SetFileProblemWarnings(inventoryFile.Id, fileImporter.FileProblems);
                 }
 
                 if ((inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 ||
@@ -279,22 +282,22 @@ namespace Services.Broadcast.ApplicationServices
 
                 var validationProblems = _inventoryFileValidator.ValidateInventoryFile(inventoryFile);
 
-                fileProblems.AddRange(validationProblems.InventoryFileProblems);
+                fileImporter.FileProblems.AddRange(validationProblems.InventoryFileProblems);
 
                 endTime = DateTime.Now;
 
                 System.Diagnostics.Debug.WriteLine("Completed file validation in {0}", endTime - startTime);
 
-                if (fileProblems.Any())
+                if (fileImporter.FileProblems.Any())
                 {
-                    return SetFileProblemWarnings(inventoryFile.Id, fileProblems);
+                    return SetFileProblemWarnings(inventoryFile.Id, fileImporter.FileProblems);
                 }
 
                 startTime = DateTime.Now;
 
                 var fileStationsDict =
                     inventoryFile.InventoryGroups.SelectMany(g => g.Manifests).Select(m => m.Station).Union(
-                        inventoryFile.InventoryManifests.Select(m => m.Station))
+                            inventoryFile.InventoryManifests.Select(m => m.Station))
                         .GroupBy(s => s.Code)
                         .ToDictionary(g => g.First().Code, g => g.First().LegacyCallLetters);
 
@@ -316,7 +319,8 @@ namespace Services.Broadcast.ApplicationServices
 
                     _AddNewStationInventoryGroups(request, inventoryFile);
                     _SaveInventoryFileContacts(request, inventoryFile);
-                    _stationRepository.UpdateStationList(fileStationsDict.Keys.ToList(), request.UserName, DateTime.Now);
+                    _stationRepository.UpdateStationList(fileStationsDict.Keys.ToList(), request.UserName,
+                        DateTime.Now);
                     inventoryFile.FileStatus = InventoryFile.FileStatusEnum.Loaded;
                     _inventoryFileRepository.UpdateInventoryFile(inventoryFile, request.UserName);
 
@@ -328,6 +332,10 @@ namespace Services.Broadcast.ApplicationServices
 
                     System.Diagnostics.Debug.WriteLine("Completed file saving in {0}", endTime - startTime);
                 }
+            }
+            catch (FileUploadException<InventoryFileProblem> e)
+            {
+                throw;
             }
             catch (BroadcastDuplicateInventoryFileException)
             {
@@ -350,7 +358,7 @@ namespace Services.Broadcast.ApplicationServices
                     string.Format("Error loading new inventory file: {0}", e.Message),
                     inventoryFile.Id, e);
             }
-            return SetFileProblemWarnings(inventoryFile.Id, fileProblems);
+            return SetFileProblemWarnings(inventoryFile.Id,new List<InventoryFileProblem>());
         }
 
     private void LockStations(Dictionary<int, string> fileStationsDict, List<int> lockedStationCodes,

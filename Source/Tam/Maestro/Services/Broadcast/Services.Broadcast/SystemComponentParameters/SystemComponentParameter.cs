@@ -305,6 +305,24 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(InventoryServiceSystemParameterNames.ComponentID , InventoryServiceSystemParameterNames.DailyImsStartHour); }
         }
 	 
+		public static string DailyTrafficImsKickoffDays  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(InventoryServiceSystemParameterNames.ComponentID , InventoryServiceSystemParameterNames.DailyTrafficImsKickoffDays); }
+        }
+	 
+		public static bool DailyTrafficImsProcessEnabled  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(InventoryServiceSystemParameterNames.ComponentID , InventoryServiceSystemParameterNames.DailyTrafficImsProcessEnabled); }
+        }
+	 
+		public static int DailyTrafficImsStartHour  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(InventoryServiceSystemParameterNames.ComponentID , InventoryServiceSystemParameterNames.DailyTrafficImsStartHour); }
+        }
+	 
 		public static bool EnableHistoricalAvailabilityStagingProcess  
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
@@ -473,6 +491,30 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(MaterialsServiceSystemParameterNames.ComponentID , MaterialsServiceSystemParameterNames.IsciScreenerDirectory); }
         }
 	 
+		public static string MaterialArchiveKickoffDays  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(MaterialsServiceSystemParameterNames.ComponentID , MaterialsServiceSystemParameterNames.MaterialArchiveKickoffDays); }
+        }
+	 
+		public static int MaterialArchiveNoOfDays  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(MaterialsServiceSystemParameterNames.ComponentID , MaterialsServiceSystemParameterNames.MaterialArchiveNoOfDays); }
+        }
+	 
+		public static bool MaterialArchiveProcessEnabled  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(MaterialsServiceSystemParameterNames.ComponentID , MaterialsServiceSystemParameterNames.MaterialArchiveProcessEnabled); }
+        }
+	 
+		public static int MaterialArchiveStartHour  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(MaterialsServiceSystemParameterNames.ComponentID , MaterialsServiceSystemParameterNames.MaterialArchiveStartHour); }
+        }
+	 
 		public static bool MonitorScreenersDirectoriesEnabled  
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
@@ -605,30 +647,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.AutoValidationAlarmThresholdSeconds); }
         }
 	 
-		public static int BrightHouseBusinessId  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<int>
-					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.BrightHouseBusinessId); }
-        }
-	 
-		public static string BrightHouseDirectory  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.BrightHouseDirectory); }
-        }
-	 
-		public static int CableOneBusinessId  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<int>
-					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.CableOneBusinessId); }
-        }
-	 
-		public static string CableOneDirectory  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.CableOneDirectory); }
-        }
-	 
 		public static int CableVisionBusinessId  
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
@@ -639,6 +657,18 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.CableVisionDirectory); }
+        }
+	 
+		public static int CentriplyBusinessId  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.CentriplyBusinessId); }
+        }
+	 
+		public static string CentriplyDirectory  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.CentriplyDirectory); }
         }
 	 
 		public static int ComcastBusinessId  
@@ -653,12 +683,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.ComcastDirectory); }
         }
 	 
-		public static string CoxApexDirectory  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.CoxApexDirectory); }
-        }
-	 
 		public static int CoxBusinessId  
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
@@ -669,12 +693,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.CoxDirectory); }
-        }
-	 
-		public static string CoxImwDirectory  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.CoxImwDirectory); }
         }
 	 
 		public static string DailyErrorDirectory  
@@ -743,12 +761,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.DishBusinessId); }
         }
 	 
-		public static string DishDailyDirectory  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.DishDailyDirectory); }
-        }
-	 
 		public static string DishDirectory  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -807,6 +819,18 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.ExcelFileExtension); }
+        }
+	 
+		public static int FrontierCommunicationsBusinessId  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.FrontierCommunicationsBusinessId); }
+        }
+	 
+		public static string FrontierCommunicationsDirectory  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.FrontierCommunicationsDirectory); }
         }
 	 
 		public static int HitsBusinessId  
@@ -959,12 +983,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.SuddenlinkDirectory); }
         }
 	 
-		public static string SuddenlinkWeeklyDirectory  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.SuddenlinkWeeklyDirectory); }
-        }
-	 
 		public static int ViaMediaBusinessId  
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
@@ -994,6 +1012,18 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.WeeklyReportFolderName); }
         }
+	 
+		public static int WorldLinkBusinessId  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.WorldLinkBusinessId); }
+        }
+	 
+		public static string WorldLinkDirectory  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.WorldLinkDirectory); }
+        }
 	}
 	 
 	public static class ProposalComposerSystemParameter 
@@ -1007,6 +1037,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class ProposalsServiceSystemParameter 
 	{ 
+		public static string AgenciesThatOnlyGenerateFiles  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.AgenciesThatOnlyGenerateFiles); }
+        }
+	 
 		public static string AutoDailyMODDays  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -1077,6 +1113,30 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.MediaOceanTECCServiceUserName); }
+        }
+	 
+		public static string ProposalWeeklyImpressionKickoffDays  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.ProposalWeeklyImpressionKickoffDays); }
+        }
+	 
+		public static int ProposalWeeklyImpressionNoOfDays  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.ProposalWeeklyImpressionNoOfDays); }
+        }
+	 
+		public static bool ProposalWeeklyImpressionProcessEnabled  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.ProposalWeeklyImpressionProcessEnabled); }
+        }
+	 
+		public static int ProposalWeeklyImpressionStartHour  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.ProposalWeeklyImpressionStartHour); }
         }
 	 
 		public static string rootOperationsDirectory  
@@ -1248,6 +1308,21 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
         }
 	}
 	 
+	public static class SalesApiSystemParameter 
+	{ 
+		public static string IdentityServerUri  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(SalesApiSystemParameterNames.ComponentID , SalesApiSystemParameterNames.IdentityServerUri); }
+        }
+	 
+		public static string InternalSalesWebApiUri  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(SalesApiSystemParameterNames.ComponentID , SalesApiSystemParameterNames.InternalSalesWebApiUri); }
+        }
+	}
+	 
 	public static class ScxFixComposerSystemParameter 
 	{ 
 		public static string ComcastMappingsFile  
@@ -1329,6 +1404,21 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
         }
 	}
 	 
+	public static class TrafficComposerWebSystemParameter 
+	{ 
+		public static string DeliveryInsightPrediction  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.DeliveryInsightPrediction); }
+        }
+	 
+		public static string DeliveryInsightUrl  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.DeliveryInsightUrl); }
+        }
+	}
+	 
 	public static class TrafficServiceSystemParameter 
 	{ 
 		public static bool EnableTrafficCapEmailAddresses  
@@ -1343,6 +1433,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(TrafficServiceSystemParameterNames.ComponentID , TrafficServiceSystemParameterNames.LockTimeoutInSeconds); }
         }
 	 
+		public static bool ShowIndexInDashboard  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(TrafficServiceSystemParameterNames.ComponentID , TrafficServiceSystemParameterNames.ShowIndexInDashboard); }
+        }
+	 
 		public static string TrafficCancellationNotificationEmailAddresses  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -1353,6 +1449,30 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(TrafficServiceSystemParameterNames.ComponentID , TrafficServiceSystemParameterNames.TrafficCapEmailAddresses); }
+        }
+	 
+		public static string TrafficWeeklyImpressionKickoffDays  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(TrafficServiceSystemParameterNames.ComponentID , TrafficServiceSystemParameterNames.TrafficWeeklyImpressionKickoffDays); }
+        }
+	 
+		public static int TrafficWeeklyImpressionNoOfDays  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(TrafficServiceSystemParameterNames.ComponentID , TrafficServiceSystemParameterNames.TrafficWeeklyImpressionNoOfDays); }
+        }
+	 
+		public static bool TrafficWeeklyImpressionProcessEnabled  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(TrafficServiceSystemParameterNames.ComponentID , TrafficServiceSystemParameterNames.TrafficWeeklyImpressionProcessEnabled); }
+        }
+	 
+		public static int TrafficWeeklyImpressionStartHour  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(TrafficServiceSystemParameterNames.ComponentID , TrafficServiceSystemParameterNames.TrafficWeeklyImpressionStartHour); }
         }
 	}
 	 
