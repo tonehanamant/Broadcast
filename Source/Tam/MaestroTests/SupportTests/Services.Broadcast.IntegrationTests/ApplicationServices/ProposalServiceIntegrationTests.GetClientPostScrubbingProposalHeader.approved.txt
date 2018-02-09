@@ -1,0 +1,110 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "Details": [
+    {
+      "Adu": false,
+      "Daypart": {
+        "endTime": 75600,
+        "fri": true,
+        "mon": true,
+        "sat": true,
+        "startTime": 0,
+        "sun": true,
+        "Text": "M-SU 12AM-9PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      },
+      "DaypartCode": "123",
+      "DefaultPostingBooks": null,
+      "FlightEdited": false,
+      "FlightEndDate": "2017-08-20T00:00:00",
+      "FlightStartDate": "2017-07-24T00:00:00",
+      "FlightWeeks": [],
+      "GenreCriteria": [],
+      "HutPostingBookId": 418,
+      "Id": 2290,
+      "PlaybackType": 4,
+      "ProgramCriteria": [],
+      "Quarters": [
+        {
+          "Cpm": 123.0000,
+          "DistributeGoals": false,
+          "Id": 2290,
+          "ImpressionGoal": 10000000.0,
+          "Quarter": 3,
+          "QuarterText": "2017 Q3",
+          "Weeks": [
+            {
+              "Cost": 307500.0000,
+              "EndDate": "2017-07-30T00:00:00",
+              "Id": 2311,
+              "Impressions": 2500000.0,
+              "Iscis": [],
+              "IsHiatus": false,
+              "MediaWeekId": 709,
+              "StartDate": "2017-07-24T00:00:00",
+              "Units": 1,
+              "Week": "7/24/2017"
+            },
+            {
+              "Cost": 307500.0000,
+              "EndDate": "2017-08-06T00:00:00",
+              "Id": 2312,
+              "Impressions": 2500000.0,
+              "Iscis": [],
+              "IsHiatus": false,
+              "MediaWeekId": 710,
+              "StartDate": "2017-07-31T00:00:00",
+              "Units": 1,
+              "Week": "7/31/2017"
+            },
+            {
+              "Cost": 307500.0000,
+              "EndDate": "2017-08-13T00:00:00",
+              "Id": 2313,
+              "Impressions": 2500000.0,
+              "Iscis": [],
+              "IsHiatus": false,
+              "MediaWeekId": 711,
+              "StartDate": "2017-08-07T00:00:00",
+              "Units": 1,
+              "Week": "8/7/2017"
+            },
+            {
+              "Cost": 307500.0000,
+              "EndDate": "2017-08-20T00:00:00",
+              "Id": 2314,
+              "Impressions": 2500000.0,
+              "Iscis": [],
+              "IsHiatus": false,
+              "MediaWeekId": 712,
+              "StartDate": "2017-08-14T00:00:00",
+              "Units": 1,
+              "Week": "8/14/2017"
+            }
+          ],
+          "Year": 2017
+        }
+      ],
+      "SharePostingBookId": 422,
+      "SinglePostingBookId": null,
+      "SpotLengthId": 1,
+      "TotalCost": 1230000.0000,
+      "TotalImpressions": 10000000.0,
+      "TotalUnits": 4
+    }
+  ],
+  "GuaranteedDemo": "House Holds",
+  "Id": 17616,
+  "Markets": [],
+  "Name": "Test",
+  "Notes": null,
+  "SecondaryDemos": [],
+  "SpotLengths": [
+    {
+      "Display": "30",
+      "Id": 1
+    }
+  ]
+}

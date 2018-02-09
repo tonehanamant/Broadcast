@@ -211,6 +211,9 @@
     <Compile Include="Entities\OpenMarketRefineProgramsRequest.cs" />
     <Compile Include="Entities\DefaultPostingBooksDto.cs" />
     <Compile Include="Entities\PostingBookResultDto.cs" />
+    <Compile Include="Entities\PostScrubbingProposalDetailDTO.cs" />
+    <Compile Include="Entities\PostScrubbingProposalHeaderDTO.cs" />
+    <Compile Include="Entities\ProposalDetailPostScrubbingDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleInventoryTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailTotalsDto.cs" />

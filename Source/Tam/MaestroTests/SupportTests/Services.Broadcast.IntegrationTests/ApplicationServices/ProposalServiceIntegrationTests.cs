@@ -1855,5 +1855,44 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetClientPostScrubbingProposalHeader()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _ProposalService.GetClientPostScrubbingProposalHeader(17616);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetClientPostScrubbingProposalDetail()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _ProposalService.GetClientPostScrubbingProposalDetail(17616);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
     }
 }

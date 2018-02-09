@@ -176,5 +176,25 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindGenres(genreSearchString));
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("ClientPostScrubbingProposalHeader/{proposalId}")]
+        public BaseResponse<PostScrubbingProposalHeaderDTO> GetClientPostScrubbingProposalHeader(int proposalId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetClientPostScrubbingProposalHeader(proposalId));
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("ClientPostScrubbingProposalDetail/{proposalId}/{detailId}")]
+        public BaseResponse<PostScrubbingProposalDetailDTO> GetClientPostScrubbingProposalDetail(int proposalId, int detailId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetClientPostScrubbingProposalDetail(proposalId, detailId));
+        }
     }
 }
