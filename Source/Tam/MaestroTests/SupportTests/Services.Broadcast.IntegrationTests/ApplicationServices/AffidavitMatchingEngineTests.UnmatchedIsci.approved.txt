@@ -1,3 +1,6 @@
 ﻿[
-  "Isci not found: ABC123"
+  {
+    "Description": "Isci not found: ABC123",
+    "Type": 1
+  }
 ]

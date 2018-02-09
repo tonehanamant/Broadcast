@@ -13,7 +13,7 @@ using Services.Broadcast.BusinessEngines;
 
 namespace Services.Broadcast.ReportGenerators
 {
-    public class PostExcelReportGenerator : IReportGenerator<PostFile>
+    public class PostExcelReportGenerator : IReportGenerator<PostPrePostingFile>
     {
         private static readonly HashSet<string> _ExcelFileHeaders = new HashSet<string>
         {
@@ -75,11 +75,11 @@ namespace Services.Broadcast.ReportGenerators
             _RatingForecastService = ratingForecastService;
         }
 
-        public ReportOutput Generate(PostFile file)
+        public ReportOutput Generate(PostPrePostingFile prePostingFile)
         {
-            var output = new ReportOutput(string.Format("PostReport_{0}.xlsx", file.Id));
+            var output = new ReportOutput(string.Format("PostReport_{0}.xlsx", prePostingFile.Id));
 
-            var package = GenerateExcelPackage(file);
+            var package = GenerateExcelPackage(prePostingFile);
 
             package.SaveAs(output.Stream);
             package.Dispose();
@@ -88,10 +88,10 @@ namespace Services.Broadcast.ReportGenerators
             return output;
         }
 
-        internal ExcelPackage GenerateExcelPackage(PostFile file)
+        internal ExcelPackage GenerateExcelPackage(PostPrePostingFile prePostingFile)
         {
             var package = new ExcelPackage(new MemoryStream());
-            var reportData = file.FileDetails;
+            var reportData = prePostingFile.FileDetails;
 
             var ws = package.Workbook.Worksheets.Add("Post Data");
             ws.View.ShowGridLines = false;
@@ -99,14 +99,14 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells.Style.Font.Name = "Tahoma";
 
             var columnOffset = 1;
-            _BuildCommonHeader(ws, 1, ref columnOffset, file);
+            _BuildCommonHeader(ws, 1, ref columnOffset, prePostingFile);
 
             // tables
             var rowOffset = 2;
             columnOffset = 1;
 
-            var postingBookMonthAndYear = _GetPostingBookMonthAndYear(file.PostingBookId);
-            var playbackTypeDescription = _GetPlaybackTypeDescription(file.PlaybackType);
+            var postingBookMonthAndYear = _GetPostingBookMonthAndYear(prePostingFile.PostingBookId);
+            var playbackTypeDescription = _GetPlaybackTypeDescription(prePostingFile.PlaybackType);
 
             foreach (var row in reportData)
             {
@@ -133,9 +133,9 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells[rowOffset, columnOffset++].Value = postingBookMonthAndYear;
                 ws.Cells[rowOffset, columnOffset++].Value = playbackTypeDescription;
                 var imp = row.Impressions.ToDictionary(i => i.Demo);
-                foreach (var demo in file.Demos)
+                foreach (var demo in prePostingFile.Demos)
                 {
-                    var value = imp.ContainsKey(demo) ? _ImpressionAdjustmentEngine.AdjustImpression(imp[demo].Impression, file.Equivalized, row.SpotLength)
+                    var value = imp.ContainsKey(demo) ? _ImpressionAdjustmentEngine.AdjustImpression(imp[demo].Impression, prePostingFile.Equivalized, row.SpotLength)
                                                       : 0;
                     ws.Cells[rowOffset, columnOffset].Style.Numberformat.Format = "#,#";
                     ws.Cells[rowOffset, columnOffset].Value = value;
@@ -155,7 +155,7 @@ namespace Services.Broadcast.ReportGenerators
             return package;
         }
 
-        private void _BuildCommonHeader(ExcelWorksheet ws, int rowOffset, ref int columnOffset, PostFile scheduleReportDto)
+        private void _BuildCommonHeader(ExcelWorksheet ws, int rowOffset, ref int columnOffset, PostPrePostingFile scheduleReportDto)
         {
             // header
             foreach (var header in _ExcelFileHeaders)

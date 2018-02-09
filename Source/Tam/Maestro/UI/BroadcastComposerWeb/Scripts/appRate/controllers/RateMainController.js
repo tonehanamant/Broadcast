@@ -111,22 +111,23 @@ var RateMainController = BaseController.extend({
                 ErrorMessage: 'Error Uploading Rate File',
                 TitleErrorMessage: 'Rate File Not Uploaded',
                 StatusMessage: 'Upload Rate File',
-                bypassErrorShow: true //test bypass
+                bypassErrorShow: true //bypass
             });
     },
-    //simpler third part - single files - no specific error handling
+    //simpler third party - single files - use revised bypasss for single errors
     apiUploadInventoryFile: function (rateFileRequest, callback) {
         var url = baseUrl + 'api/RatesManager/UploadInventoryFile';
         var jsonObj = JSON.stringify(rateFileRequest);
         httpService.post(url,
             callback ? callback.bind(this) : null,
-            null,
+            this.onApiUploadInventoryFileErrorProblems.bind(this, rateFileRequest.FileName),  //add the fileName
             jsonObj,
             {
                 $ViewElement: $('#rate_view'),
                 ErrorMessage: 'Error Uploading Rate File',
                 TitleErrorMessage: 'Rate File Not Uploaded',
-                StatusMessage: 'Upload Rate File'
+                StatusMessage: 'Upload Rate File',
+                bypassErrorShow: true //bypass
             });
     },
 
@@ -184,7 +185,20 @@ var RateMainController = BaseController.extend({
         this.importFileErrors.push(errorItem);
         var check = this.checkImportFileQueue();
         if (check) this.resolveFileImportsComplete();
-        //console.log('onApiUploadInventoryFileErrorProblems', check, fileName, response, xhr);
+        //console.log('onApiUploadQueueInventoryFileErrorProblems', check, fileName, response, xhr);
+    },
+
+    //version for single file custom problems
+    //response will either be a message (string) or full response with Problems
+    onApiUploadInventoryFileErrorProblems: function (fileName, xhr, response) {
+        var errorItem = { fileName: fileName, message: response, problems: null };
+        var hasProblems = response && response.Problems && response.Problems.length;
+        if (hasProblems) {
+            errorItem.message = null;
+            errorItem.problems = response.Problems;
+        }
+        this.view.showSingleUploadFileError(errorItem);
+        //console.log('onApiUploadInventoryFileErrorProblems', fileName, response, xhr);
     },
 
     //TBD - add this in when creating Station Specifics C/V/VM

@@ -11,9 +11,12 @@ namespace Services.Broadcast.Entities
         public AffidavitSaveRequestDetail AffidavitDetail { get; set; }
         public List<AffidavitMatchingProposalWeek> ProposalDetailWeeks { get; set; }
 
+        public List<AffidavitFileDetailProblem> AffidavitDetailProblems { get; set; }
+
         public AffidavitMatchingDetail()
         {
             ProposalDetailWeeks = new List<AffidavitMatchingProposalWeek>();
+            AffidavitDetailProblems = new List<AffidavitFileDetailProblem>();
         }
     }
 }
