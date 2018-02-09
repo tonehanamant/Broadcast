@@ -21,7 +21,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override InventorySource InventorySource { get; set; }
 
-        public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile, DateTime effecitveDate, List<InventoryFileProblem> fileProblems)
+        public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile, DateTime effecitveDate)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                 System.Diagnostics.Debug.WriteLine(message.Proposal.uniqueIdentifier + " parsed successfully !");
 
-                var resultFile = BuildRatesFile(message, inventoryFile, fileProblems);
+                var resultFile = BuildRatesFile(message, inventoryFile);
                 resultFile.StationContacts = ExtractContactData(message);
             }
             catch (Exception e)
@@ -38,19 +38,19 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private InventoryFile BuildRatesFile(AAAAMessage message, InventoryFile inventoryFile, List<InventoryFileProblem> fileProblems)
+        private InventoryFile BuildRatesFile(AAAAMessage message, InventoryFile inventoryFile)
         {
 
             inventoryFile.UniqueIdentifier = message.Proposal.uniqueIdentifier;
             inventoryFile.StartDate = message.Proposal.startDate;
             inventoryFile.EndDate = message.Proposal.endDate;
 
-            inventoryFile.InventoryManifests.AddRange(BuildStationProgramList(message.Proposal, fileProblems));
+            inventoryFile.InventoryManifests.AddRange(BuildStationProgramList(message.Proposal));
 
             return inventoryFile;
         }
 
-            private List<StationInventoryManifest> BuildStationProgramList(AAAAMessageProposal proposal, List<InventoryFileProblem> fileProblems)
+            private List<StationInventoryManifest> BuildStationProgramList(AAAAMessageProposal proposal)
             {
                 List<StationInventoryManifest> manifests = new List<StationInventoryManifest>();
 
@@ -60,12 +60,12 @@ namespace Services.Broadcast.Converters.RateImport
                 var validStations = _GetValidStations(proposal.Outlets.Select(o => o.callLetters).ToList(),invalidStations);
                 if (validStations == null || validStations.Count == 0)
                 {
-                    fileProblems.Add(new InventoryFileProblem("There are no known stations in the file"));
+                    FileProblems.Add(new InventoryFileProblem("There are no known stations in the file"));
                     return manifests;
                 }
                 if (invalidStations.Any())
                 {
-                    fileProblems.AddRange(invalidStations.Select(s => new InventoryFileProblem("Invalid station: " + s)));
+                    FileProblems.AddRange(invalidStations.Select(s => new InventoryFileProblem("Invalid station: " + s)));
                     return manifests;
                 }
 
@@ -76,12 +76,12 @@ namespace Services.Broadcast.Converters.RateImport
 
                 if (proposal.AvailList.AvailLineWithDetailedPeriods != null)
                 {
-                    BuildProgramsFromAvailLineWithDetailedPeriods(proposal, fileProblems, audienceMap, validStations, manifests);
+                    BuildProgramsFromAvailLineWithDetailedPeriods(proposal, FileProblems, audienceMap, validStations, manifests);
                 }
 
                 if (proposal.AvailList.AvailLineWithPeriods != null)
                 {
-                    BuildProgramsFromAvailLineWithPeriods(proposal, fileProblems, audienceMap, validStations, manifests);
+                    BuildProgramsFromAvailLineWithPeriods(proposal, FileProblems, audienceMap, validStations, manifests);
                 }
 
                 return manifests;
@@ -169,7 +169,7 @@ namespace Services.Broadcast.Converters.RateImport
                             //create a manifest for each period
                             foreach (var availLinePeriod in availLine.Periods)
                             {
-                                var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, availLinePeriod, programName, callLetters, fileProblems);
+                                var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, availLinePeriod.Rate, programName, callLetters, fileProblems);
 
                                 var manifestAudiences = _GetManifestAudienceListForAvailLine(
                                     proposal,
@@ -260,12 +260,12 @@ namespace Services.Broadcast.Converters.RateImport
         }
 
             private List<StationInventoryManifestRate> _GetManifestRatesforAvailLineWithDetailedPeriods(int spotLengthId,
-                AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriod detailedPeriod, string programName, string stationCallLetters, List<InventoryFileProblem> fileProblems)
+                string linePeriodRate, string programName, string stationCallLetters, List<InventoryFileProblem> fileProblems)
             {
                 var manifestRates = new List<StationInventoryManifestRate>();
                 var spotLength = SpotLengthsById[spotLengthId];
 
-                var availLineRate = string.IsNullOrEmpty(detailedPeriod.Rate) ? 0 : decimal.Parse(detailedPeriod.Rate);
+                var availLineRate = string.IsNullOrEmpty(linePeriodRate) ? 0 : decimal.Parse(linePeriodRate);
 
                 if (spotLength == 30)
                 {
@@ -333,6 +333,8 @@ namespace Services.Broadcast.Converters.RateImport
                             //create a manifest for each period
                             foreach (var availLinePeriod in availLine.Periods)
                             {
+                                var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, availLine.Rate, programName, callLetters, fileProblems);
+
                                 var periodManifest = new StationInventoryManifest()
                                 {
                                     Station = station,
@@ -341,6 +343,7 @@ namespace Services.Broadcast.Converters.RateImport
                                     SpotLengthId = spotLengthId,
                                     ManifestDayparts = _GetDaypartsListForAvailLineWithPeriods(availLine),
                                     ManifestAudiencesReferences = manifestAudiences,
+                                    ManifestRates = manifestRates,
                                     EffectiveDate = availLinePeriod.startDate,
                                     EndDate = availLinePeriod.endDate
                                 };

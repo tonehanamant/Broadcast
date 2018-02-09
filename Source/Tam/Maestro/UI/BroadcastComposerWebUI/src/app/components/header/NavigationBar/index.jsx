@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import { Link } from 'react-router-dom';
-import { Navbar, Nav, NavItem, Row, Col } from 'react-bootstrap';
+// import { Link } from 'react-router-dom';
+import { Navbar, Nav, Row, Col, MenuItem } from 'react-bootstrap';
 
 import UserEnvironment from 'Components/header/UserEnvironment';
 
@@ -40,11 +40,12 @@ export class NavigationBar extends Component {
           <Col>
             <Navbar.Collapse>
               <Nav>
-                <NavItem componentClass={Link} href="/broadcast/rates" to="/broadcast/rates">Rate Cards</NavItem>
-                <NavItem componentClass={Link} href="/broadcast/planning" to="/broadcast/planning">Planning</NavItem>
-                <NavItem componentClass={Link} href="/broadcast/traffic" to="/broadcast/traffic">Traffic</NavItem>
-                <NavItem componentClass={Link} href="/broadcast/Home/TrackerPrePosting" to="/broadcast/Home/TrackerPrePosting">Tracker Pre Posting</NavItem>
-                <NavItem componentClass={Link} href="/broadcastreact/post" to="/broadcastreact/post" active={this.props.routing.location.pathname === '/broadcastreact/post'}>Post</NavItem>
+                <MenuItem href="/broadcast/rates">Rate Cards</MenuItem>
+                <MenuItem href="/broadcast/planning">Planning</MenuItem>
+                <MenuItem href="/broadcast/traffic">Traffic</MenuItem>
+                <MenuItem href="/broadcast/Home/TrackerPrePosting">Tracker Pre Posting</MenuItem>
+                <MenuItem href="/broadcastreact/post-pre-posting" active={this.props.routing.location.pathname === '/broadcastreact/post-pre-posting'}>Post Pre Posting</MenuItem>
+                <MenuItem href="/broadcastreact/post" active={this.props.routing.location.pathname === '/broadcastreact/post'}>Post</MenuItem>
               </Nav>
             </Navbar.Collapse>
           </Col>

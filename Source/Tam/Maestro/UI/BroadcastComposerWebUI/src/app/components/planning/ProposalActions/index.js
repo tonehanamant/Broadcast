@@ -8,7 +8,9 @@ export default class ProposalActions extends Component {
   constructor(props) {
     super(props);
 		this.state = {};
-		this.save = this.save.bind(this);
+		this.checkValid = this.checkValid.bind(this);
+    this.save = this.save.bind(this);
+    this.cancel = this.cancel.bind(this);
 	}
 
 	componentDidUpdate() {
@@ -27,14 +29,44 @@ export default class ProposalActions extends Component {
 							this.props.updateProposalEditForm({ key: 'ValidationWarning', value: null });
 							this.props.saveProposal({ proposal: this.props.proposalEditForm, force: true });
 						},
+						dismiss: () => {},
 					},
 			});
 		}
 	}
 
-	save() {
-		this.props.saveProposal({ proposal: this.props.proposalEditForm });
+	checkValid() {
+		const formValid = this.props.isValidProposalForm();
+		const detailValid = this.props.isValidProposalDetails();
+		const detailGridsValid = this.props.isValidProposalDetailGrids();
+
+		this.props.setProposalValidationState({ type: 'FormInvalid', state: !formValid });
+		this.props.setProposalValidationState({ type: 'DetailInvalid', state: !detailValid });
+		this.props.setProposalValidationState({ type: 'DetailGridsInvalid', state: !detailGridsValid });
+
+		return formValid && detailValid && detailGridsValid;
 	}
+
+	save() {
+		if (this.checkValid()) {
+			this.props.saveProposal({ proposal: this.props.proposalEditForm });
+		} else {
+			this.props.createAlert({
+				type: 'danger',
+				headline: 'Proposal Cannot Be Saved',
+				message: 'Required Inputs Incomplete (in red)',
+			});
+		}
+  }
+  cancel() {
+    if (!this.props.isCreate) {
+      // console.log('cancel', this.props.isCreate, this.props.proposal.Id);
+      this.props.getProposalUnlock(this.props.proposal.Id);
+    }
+    setTimeout(() => {
+      window.location = '/broadcast/planning';
+    }, 500);
+  }
 
   render() {
     // const { proposalEditForm, updateProposalEditForm } = this.props;
@@ -44,7 +76,7 @@ export default class ProposalActions extends Component {
 					<Col md={12}>
 						<hr />
 						<ButtonToolbar style={{ float: 'right' }}>
-							<Button bsStyle="default" href="/broadcast/planning">Cancel</Button>
+							<Button bsStyle="default" onClick={this.cancel}>Cancel</Button>
 							<Button bsStyle="success" onClick={this.save}>Save</Button>
 						</ButtonToolbar>
 					</Col>
@@ -55,6 +87,7 @@ export default class ProposalActions extends Component {
 }
 
 ProposalActions.defaultProps = {
+  getProposalUnlock: () => {},
 };
 
 /* eslint-disable react/no-unused-prop-types */
@@ -62,6 +95,13 @@ ProposalActions.propTypes = {
 	proposal: PropTypes.object.isRequired,
 	proposalEditForm: PropTypes.object.isRequired,
 	updateProposalEditForm: PropTypes.func.isRequired,
-	saveProposal: PropTypes.func.isRequired,
+  saveProposal: PropTypes.func.isRequired,
+  getProposalUnlock: PropTypes.func,
+  isCreate: PropTypes.bool.isRequired,
 	toggleModal: PropTypes.func.isRequired,
+	createAlert: PropTypes.func.isRequired,
+	setProposalValidationState: PropTypes.func.isRequired,
+	isValidProposalForm: PropTypes.func.isRequired,
+	isValidProposalDetails: PropTypes.func.isRequired,
+	isValidProposalDetailGrids: PropTypes.func.isRequired,
 };

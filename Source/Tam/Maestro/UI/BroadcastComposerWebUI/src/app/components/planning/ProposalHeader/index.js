@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Collapse, Panel, Row, Col } from 'react-bootstrap';
+import { Button, Panel, Row, Col } from 'react-bootstrap';
 
 import ProposalForm from 'Components/planning/ProposalForm';
 import ProposalHeaderActions from 'Components/planning/ProposalHeaderActions';
@@ -14,8 +14,7 @@ export default class ProposalHeader extends Component {
   }
 
   render() {
-    console.log('HEADER PROPS>>>>>>>>>>>>>>>>>', this.props);
-    const { toggleModal, isEdit, initialdata, proposal, proposalEditForm, updateProposalEditForm, deleteProposal, saveProposalAsVersion } = this.props;
+    const { toggleModal, isEdit, initialdata, proposal, proposalEditForm, updateProposalEditForm, getProposalVersions, deleteProposal, saveProposalAsVersion, unorderProposal, proposalValidationStates } = this.props;
     return (
       <div id="proposal-header">
         {isEdit &&
@@ -36,10 +35,13 @@ export default class ProposalHeader extends Component {
               <ProposalHeaderActions
                 initialdata={initialdata}
                 proposalEditForm={proposalEditForm}
+                getProposalVersions={getProposalVersions}
                 updateProposalEditForm={updateProposalEditForm}
                 deleteProposal={deleteProposal}
                 saveProposalAsVersion={saveProposalAsVersion}
+                unorderProposal={unorderProposal}
                 toggleModal={toggleModal}
+                isReadOnly={this.props.isReadOnly}
               />
             </Col>
           </Row>
@@ -49,17 +51,21 @@ export default class ProposalHeader extends Component {
             <span className="glyphicon glyphicon-triangle-bottom" aria-hidden="true" />
           </Button>
         }
-				<Collapse in={this.state.open}>
-          <Panel style={{ marginTop: 10 }}>
-						<ProposalForm
-              initialdata={initialdata}
-              proposal={proposal}
-              proposalEditForm={proposalEditForm}
-              updateProposalEditForm={updateProposalEditForm}
-              toggleModal={toggleModal}
-						/>
-					</Panel>
-        </Collapse>
+        <Panel style={{ marginTop: 10 }} expanded={this.state.open}>
+          <Panel.Collapse>
+            <Panel.Body>
+              <ProposalForm
+                initialdata={initialdata}
+                proposal={proposal}
+                proposalEditForm={proposalEditForm}
+                updateProposalEditForm={updateProposalEditForm}
+                toggleModal={toggleModal}
+                isReadOnly={this.props.isReadOnly}
+                proposalValidationStates={proposalValidationStates}
+              />
+            </Panel.Body>
+          </Panel.Collapse>
+        </Panel>
 			</div>
     );
   }
@@ -67,6 +73,11 @@ export default class ProposalHeader extends Component {
 
 ProposalHeader.defaultProps = {
   isEdit: false,
+  getProposalVersions: () => {},
+  deleteProposal: () => {},
+  saveProposalAsVersion: () => {},
+  unorderProposal: () => {},
+  isReadOnly: false,
 };
 
 /* eslint-disable react/no-unused-prop-types */
@@ -76,7 +87,14 @@ ProposalHeader.propTypes = {
   initialdata: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
   updateProposalEditForm: PropTypes.func.isRequired,
-  deleteProposal: PropTypes.func.isRequired,
-  saveProposalAsVersion: PropTypes.func.isRequired,
+
+  proposalValidationStates: PropTypes.object.isRequired,
+
+  getProposalVersions: PropTypes.func,
+  deleteProposal: PropTypes.func,
+  saveProposalAsVersion: PropTypes.func,
+  unorderProposal: PropTypes.func,
+
   toggleModal: PropTypes.func.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
 };

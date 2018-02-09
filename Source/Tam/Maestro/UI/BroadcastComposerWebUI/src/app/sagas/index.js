@@ -1,5 +1,6 @@
 import * as appSaga from './app';
 import * as postSaga from './post';
+import * as postPrePostingSaga from './postPrePosting';
 import * as planningSaga from './planning';
 
 export default function* rootSaga() {
@@ -9,14 +10,18 @@ export default function* rootSaga() {
     appSaga.watchRequestEmployee(),
     appSaga.watchReadFileB64(),
 
-    postSaga.watchRequestPostInitialData(),
     postSaga.watchRequestPost(),
-    postSaga.watchRequestAssignPostDisplay(),
     postSaga.watchRequestPostFiltered(),
-    postSaga.watchDeletePostById(),
-    postSaga.watchRequestPostFileEdit(),
-    postSaga.watchSavePostFileEdit(),
-    postSaga.watchUploadPostFile(),
+    postSaga.watchRequestAssignPostDisplay(),
+
+    postPrePostingSaga.watchRequestPostPrePostingInitialData(),
+    postPrePostingSaga.watchRequestPostPrePosting(),
+    postPrePostingSaga.watchRequestAssignPostPrePostingDisplay(),
+    postPrePostingSaga.watchRequestPostPrePostingFiltered(),
+    postPrePostingSaga.watchDeletePostPrePostingById(),
+    postPrePostingSaga.watchRequestPostPrePostingFileEdit(),
+    postPrePostingSaga.watchSavePostPrePostingFileEdit(),
+    postPrePostingSaga.watchUploadPostPrePostingFile(),
 
     planningSaga.watchRequestProposalInitialData(),
     planningSaga.watchRequestProposals(),
@@ -29,6 +34,8 @@ export default function* rootSaga() {
     planningSaga.watchSaveProposalAsVersion(),
     planningSaga.watchDeleteProposalById(),
     planningSaga.watchUpdateProposal(),
+    planningSaga.watchModelNewProposalDetail(),
+    planningSaga.watchModelUnorderProposal(),
 
   ];
 }

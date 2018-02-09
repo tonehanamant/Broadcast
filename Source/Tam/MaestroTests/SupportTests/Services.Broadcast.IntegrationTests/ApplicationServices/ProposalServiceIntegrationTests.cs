@@ -64,6 +64,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 SharePostingBookId = 413,
                 HutPostingBookId = 410,
                 PlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
+                GenreCriteria = new List<GenreCriteria>()
+                {
+                    new GenreCriteria
+                    {
+                        Contain = ContainTypeEnum.Include,Genre = new LookupDto {Id=10}
+                    },
+                    new GenreCriteria
+                    {
+                        Contain = ContainTypeEnum.Include,Genre = new LookupDto {Id=12}
+                    }
+                },
+                ProgramCriteria = new List<ProgramCriteria>()
+                {
+                    new ProgramCriteria()
+                    {
+                        Contain = ContainTypeEnum.Include,
+                        ProgramName = "News"
+                    },
+                    new ProgramCriteria()
+                    {
+                        Contain = ContainTypeEnum.Include,
+                        ProgramName = "Tonight"
+                    }
+                },
                 Quarters = new List<ProposalQuarterDto>
                 {
                     new ProposalQuarterDto
@@ -81,7 +105,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                 Units = 3,
                                 MediaWeekId = 649,
                                 StartDate = new DateTime(2016, 05, 30),
-                                EndDate = new DateTime(2016, 06, 05)
+                                EndDate = new DateTime(2016, 06, 05),
+                                Iscis = new List<ProposalWeekIsciDto>
+                                {
+                                    new ProposalWeekIsciDto
+                                    {
+                                        ClientIsci = "AAAAAA",
+                                        HouseIsci = "AAAAAA",
+                                        Brand = "Testing",
+                                        MarriedHouseIsci = true
+                                    },
+                                    new ProposalWeekIsciDto
+                                    {
+                                        ClientIsci = "BBBBBBB",
+                                        HouseIsci = "BBBBBBB",
+                                        Brand = "Testing 2",
+                                        MarriedHouseIsci = false
+                                    }
+                                }
                             }
                         }
                     }
@@ -332,6 +373,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
 
 
                 var jsonSettings = new JsonSerializerSettings()
@@ -504,6 +547,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var proposalDto = _ProposalService.GetProposalById(250);
 
+            proposalDto.Details[0].GenreCriteria = new List<GenreCriteria>()
+            {
+                new GenreCriteria
+                    {
+                        Contain = ContainTypeEnum.Exclude,Genre = new LookupDto {Id=5}
+                    },
+                    new GenreCriteria
+                    {
+                        Contain = ContainTypeEnum.Exclude,Genre = new LookupDto {Id=10}
+                    }
+            };
+
+            proposalDto.Details[0].ProgramCriteria = new List<ProgramCriteria>()
+            {
+                new ProgramCriteria()
+                {
+                    Contain = ContainTypeEnum.Exclude,
+                    ProgramName = "Shopping"
+                },
+                new ProgramCriteria()
+                {
+                    Contain = ContainTypeEnum.Exclude,
+                    ProgramName = "Paid"
+                }
+            };
+
             var updatedProposalDto = _ProposalService.UpdateProposal(proposalDto.Details);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -511,6 +580,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
             jsonResolver.Ignore(typeof(ProposalDto), "Markets");
             jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+            jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+            jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -617,7 +688,119 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+                jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
                 
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot save proposal detail that contains both genre inclusion and genre exclusion criteria", MatchType = MessageMatch.Contains)]
+        public void CannotAddProposalWithDetailWithInvalidGenreCriteria()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposalDto = _setupProposalDto();
+
+                var proposalDetailDto = _setupProposalDetailDto();
+
+                proposalDetailDto.GenreCriteria.AddRange(new List<GenreCriteria>()
+                {
+                    new GenreCriteria
+                    {
+                        Contain = ContainTypeEnum.Include,Genre = new LookupDto {Id=10}
+                    },
+                    new GenreCriteria
+                    {
+                        Contain = ContainTypeEnum.Exclude,Genre = new LookupDto {Id=11}
+                    }
+                });
+
+                proposalDto.Details.Add(proposalDetailDto);
+
+                var result = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
+                jsonResolver.Ignore(typeof(ProposalDto), "ProgramDisplayFilter");
+                jsonResolver.Ignore(typeof(ProposalDto), "ProgramFilter");
+                jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
+                jsonResolver.Ignore(typeof(ProposalDto), "VersionId");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+                jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot save proposal detail that contains both program name inclusion and program name exclusion criteria", MatchType = MessageMatch.Contains)]
+        public void CannotAddProposalWithDetailWithInvalidProgramCriteria()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposalDto = _setupProposalDto();
+
+                var proposalDetailDto = _setupProposalDetailDto();
+
+                proposalDetailDto.ProgramCriteria.AddRange(new List<ProgramCriteria>()
+                {
+                    new ProgramCriteria()
+                    {
+                        ProgramName = "Sun",
+                        Contain = ContainTypeEnum.Include
+                    },
+                    new ProgramCriteria()
+                    {
+                        ProgramName = "Moon",
+                        Contain = ContainTypeEnum.Exclude
+                    }
+                });
+
+                proposalDto.Details.Add(proposalDetailDto);
+
+                var result = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
+                jsonResolver.Ignore(typeof(ProposalDto), "ProgramDisplayFilter");
+                jsonResolver.Ignore(typeof(ProposalDto), "ProgramFilter");
+                jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
+                jsonResolver.Ignore(typeof(ProposalDto), "VersionId");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+                jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -648,7 +831,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
-
+                jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -743,8 +926,50 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "Markets");
 
-
                 var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanEditProposalWeekIscis()
+        {
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = _ProposalService.GetProposalById(253);
+
+                var firstWeek = proposalDto.Details.First().Quarters.First().Weeks.First();
+
+                firstWeek.Iscis.Add(new ProposalWeekIsciDto
+                {
+                    Brand = "Testing 45",
+                    ClientIsci = "ZZZZZZ",
+                    HouseIsci = "ZZZZZZ",
+                    MarriedHouseIsci = true
+                });
+
+                var result = _ProposalService.UpdateProposal(proposalDto.Details);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Daypart");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Markets");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
@@ -819,7 +1044,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 proposal.Details.Add(detail);
 
-                detail.HutPostingBookId = ProposalConstants.UseShareBookOnlyId;
+                detail.HutPostingBookId = null;
                 detail.SharePostingBookId = shareBookMonthId;
 
                 var resultProposal = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
@@ -827,7 +1052,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.AreEqual(shareBookMonthId, resultProposalDetail.SinglePostingBookId);
                 Assert.AreEqual(shareBookMonthId, resultProposalDetail.SharePostingBookId);
-                Assert.AreEqual(-1, resultProposalDetail.HutPostingBookId);
+                Assert.Null(resultProposalDetail.HutPostingBookId);
             }
         }
 
@@ -841,7 +1066,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var firstDetail = proposal.Details.First();
 
                 Assert.AreEqual(413, firstDetail.SharePostingBookId);
-                Assert.AreEqual(-1, firstDetail.HutPostingBookId);
+                Assert.Null(firstDetail.HutPostingBookId);
             }
         }
 
@@ -1605,6 +1830,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.IsTrue(res.HasWarning);
                 Assert.IsTrue(res.Message.Contains("Can only delete proposals with status 'Proposed' or 'Agency on Hold'."));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void FindMatchingGenres()
+        {
+            using (new TransactionScopeWrapper())
+            {
+
+                var result = _ProposalService.FindGenres("ENT");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
 

@@ -392,13 +392,13 @@ namespace Services.Broadcast.BusinessEngines
             return _StationMaps.TryGetValue(bvsStation, out mappedStation) ? mappedStation : new List<string>();
         }
 
-        private List<string> _GetMappedProgram(string affadavitProgram)
+        private List<string> _GetMappedProgram(string affidavitProgram)
         {
             if (_ProgramMaps == null)
             {
                 _ProgramMaps = _GetMapDictionary((int)BvsMapTypes.Program);
             }
-            return _ProgramMaps.ContainsKey(affadavitProgram) ? _ProgramMaps[affadavitProgram].ToList() : new List<string>();
+            return _ProgramMaps.ContainsKey(affidavitProgram) ? _ProgramMaps[affidavitProgram].ToList() : new List<string>();
         }
 
         private Dictionary<string, List<string>> _GetMapDictionary(int mapType)

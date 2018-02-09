@@ -23,23 +23,29 @@ const app = {
 };
 
 const post = {
-  getPostInitialData: () => (
-    call(GET, `${apiBase}Post/InitialData`, {})
-  ),
   getPosts: () => (
     call(GET, `${apiBase}Post`, {})
   ),
+};
+
+const postPrePosting = {
+  getInitialData: () => (
+    call(GET, `${apiBase}PostPrePosting/InitialData`, {})
+  ),
+  getPosts: () => (
+    call(GET, `${apiBase}PostPrePosting`, {})
+  ),
   getPost: id => (
-    call(GET, `${apiBase}Post/${id}`, {})
+    call(GET, `${apiBase}PostPrePosting/${id}`, {})
   ),
   uploadPost: params => (
-    call(POST, `${apiBase}Post`, params)
+    call(POST, `${apiBase}PostPrePosting`, params)
   ),
   savePost: params => (
-    call(PUT, `${apiBase}Post`, params)
+    call(PUT, `${apiBase}PostPrePosting`, params)
   ),
   deletePost: id => (
-    call(DELETE, `${apiBase}Post/${id}`, {})
+    call(DELETE, `${apiBase}PostPrePosting/${id}`, {})
   ),
 };
 
@@ -54,7 +60,7 @@ const planning = {
     call(GET, `${apiBase}Proposals/Proposal/${id}/Lock`, {})
   ),
   getProposalUnlock: id => (
-    call(GET, `${apiBase}Proposals/Proposal/${id}/Lock`, {})
+    call(GET, `${apiBase}Proposals/Proposal/${id}/UnLock`, {})
   ),
   getProposal: id => (
     call(GET, `${apiBase}Proposals/Proposal/${id}`, {})
@@ -72,10 +78,10 @@ const planning = {
     call(DELETE, `${apiBase}Proposals/DeleteProposal/${id}`, {})
   ),
   unorderProposal: id => (
-    call(GET, `${apiBase}Proposals/UnorderProposal?proposalId=${id}`, {})
+    call(POST, `${apiBase}Proposals/UnorderProposal?proposalId=${id}`, {})
   ),
   getProposalDetail: params => (
-    call(GET, `${apiBase}Proposals/GetProposalDetail`, params)
+    call(POST, `${apiBase}Proposals/GetProposalDetail`, params)
   ),
   updateProposal: params => (
     call(POST, `${apiBase}Proposals/UpdateProposal`, params)
@@ -86,6 +92,7 @@ const planning = {
 const api = {
   app,
   post,
+  postPrePosting,
   planning,
 };
 

@@ -54,7 +54,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var defaultPostingBook = _postingBooksService.GetDefaultPostingBooks(dateTime);
 
             Assert.AreEqual(406, defaultPostingBook.DefaultShareBook.PostingBookId);
-            Assert.AreEqual(ProposalConstants.UseShareBookOnlyId, defaultPostingBook.DefaultHutBook.PostingBookId);
+            Assert.IsNull(defaultPostingBook.DefaultHutBook.PostingBookId);
             Assert.IsFalse(defaultPostingBook.DefaultShareBook.HasWarning);
             Assert.IsFalse(defaultPostingBook.DefaultHutBook.HasWarning);
         }
@@ -65,8 +65,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var dateTime = new DateTime(2014, 01, 01);
             var defaultPostingBook = _postingBooksService.GetDefaultPostingBooks(dateTime);
 
-            Assert.AreEqual(ProposalConstants.ShareBookNotFoundId, defaultPostingBook.DefaultShareBook.PostingBookId);
-            Assert.AreEqual(ProposalConstants.UseShareBookOnlyId, defaultPostingBook.DefaultHutBook.PostingBookId);
+            Assert.IsNull(defaultPostingBook.DefaultShareBook.PostingBookId);
+            Assert.IsNull(defaultPostingBook.DefaultHutBook.PostingBookId);
             Assert.IsTrue(defaultPostingBook.DefaultShareBook.HasWarning);
             Assert.IsTrue(defaultPostingBook.DefaultHutBook.HasWarning);
             Assert.AreEqual(PostingBooksService.ShareBookNotFound, defaultPostingBook.DefaultShareBook.WarningMessage);

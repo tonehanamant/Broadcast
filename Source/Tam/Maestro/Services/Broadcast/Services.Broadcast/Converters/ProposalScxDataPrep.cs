@@ -83,8 +83,6 @@ namespace Services.Broadcast.Converters
         private void _SetMarketSurveyData(ScxData data, ProposalDetailDto proposalDetailDto)
         {
             var bookingMediaMonthId = proposalDetailDto.HutPostingBookId ?? proposalDetailDto.SinglePostingBookId.Value;
-            if (bookingMediaMonthId == ProposalConstants.UseShareBookOnlyId)
-                bookingMediaMonthId = proposalDetailDto.SharePostingBookId.Value;
 
             var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
             var mediaMonth = _MediaMonthAndWeekCache.GetMediaMonthById(bookingMediaMonthId);
@@ -136,8 +134,7 @@ namespace Services.Broadcast.Converters
         private void _GetDemoUniverseData(ScxData data, ProposalDetailDto proposalDetailDto)
         {
             var postingBookMonthId = proposalDetailDto.HutPostingBookId ?? proposalDetailDto.SinglePostingBookId;
-            if (postingBookMonthId == ProposalConstants.UseShareBookOnlyId
-                || postingBookMonthId == null)
+            if (postingBookMonthId == null)
                 postingBookMonthId = proposalDetailDto.SharePostingBookId.Value;
 
             foreach (var demo in data.Demos)
@@ -190,7 +187,7 @@ namespace Services.Broadcast.Converters
                         {
                             Id = p.ProgramId,
                             LegacyCallLetters =s.LegacyCallLetters
-                            ,DisplayDaypart = _DaypartCache.GetDisplayDaypart(p.Daypart.Id)
+                            //,DisplayDaypart = _DaypartCache.GetDisplayDaypart(p.Daypart.Id) 
                         })).ToList();
 
             List<StationImpressions> stationImpressions;
@@ -315,7 +312,7 @@ namespace Services.Broadcast.Converters
     
                 var demoRating = new Ratingdata();
 
-                demoRating.DaypartId = program.Daypart.Id;
+                //demoRating.DaypartId = program.Daypart.Id;
                 demoRating.StationCode = program.StationCode;
                 var impressions = demo.Impressions
                     .Where(i => i.id == program.ProgramId)
@@ -333,8 +330,8 @@ namespace Services.Broadcast.Converters
         private List<ScxMarketStationProgramSpotWeek> _SetProgramWeeks(ScxData data,
             ProposalDetailOpenMarketInventoryDto detail)
         {
-            var startDate = detail.DetailFlightStartDate.Value;
-            var endDate = detail.DetailFlightEndDate.Value;
+            var startDate = detail.DetailFlightStartDate;
+            var endDate = detail.DetailFlightEndDate;
 
             var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksIntersecting(startDate, endDate);
 

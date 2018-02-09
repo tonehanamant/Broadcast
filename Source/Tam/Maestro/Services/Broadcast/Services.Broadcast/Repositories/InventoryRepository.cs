@@ -34,12 +34,14 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryManifest> GetStationManifestsBySourceStationCodeAndDates(
                                             InventorySource rateSource, int stationCode, DateTime startDate, DateTime endDate);
         StationInventoryManifest GetStationManifest(int manifestId);
-        void ExpireManifest(int manifestId, DateTime expireDate);
+        void RemoveManifest(int manifestId);
         List<StationInventoryManifest> GetManifestProgramsByStationCodeAndDates(string rateSource, int code,
             DateTime startDate, DateTime endDate);
         void SaveStationInventoryManifest(StationInventoryManifest stationInventoryManifest);
         void UpdateStationInventoryManifest(StationInventoryManifest stationInventoryManifest);
         bool CheckIfManifestByStationProgramFlightDaypartExists(int stationCode, string programName, DateTime startDate, DateTime endDate, int daypartId);
+        void ExpireManifest(int manifestId, DateTime endDate);
+        bool HasSpotsAllocated(int manifestId);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -497,6 +499,7 @@ namespace Services.Broadcast.Repositories
                                                  }).ToList(),
                                          ManifestRates = sp.station_inventory_manifest_rates.Select(mr => new StationInventoryManifestRate()
                                          {
+                                             Id = mr.id,
                                              Rate = mr.rate,
                                              SpotLengthId = mr.spot_length_id,
                                          }).ToList(),
@@ -574,6 +577,7 @@ namespace Services.Broadcast.Repositories
                                 }).ToList(),
                         ManifestRates = sp.station_inventory_manifest_rates.Select(mr => new StationInventoryManifestRate()
                         {
+                            Id = mr.id,
                             Rate = mr.rate,
                             SpotLengthId = mr.spot_length_id,
                         }).ToList(),
@@ -670,18 +674,16 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void ExpireManifest(int manifestId)
+        public void RemoveManifest(int manifestId)
         {
-            throw new NotImplementedException();
-        }
+            _InReadUncommitedTransaction(context =>
+            {
+                var manifest = context.station_inventory_manifest.Single(m => m.id == manifestId);
 
-        public void ExpireManifest(int manifestId, DateTime expireDate)
-        {
-            //return _InReadUncommitedTransaction(
-            //    context =>
-            //    {
-            //        var manifest = context.station_inventory_manifest.Single(m => m.id == manifestId);
-            //    }
+                context.station_inventory_manifest.Remove(manifest);
+
+                context.SaveChanges();
+            });
         }
 
         public List<StationInventoryManifest> GetManifestProgramsByStationCodeAndDates(string rateSource, int code, DateTime startDate, DateTime endDate)
@@ -892,5 +894,23 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        public void ExpireManifest(int manifestId, DateTime endDate)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var manifest = context.station_inventory_manifest.Single(m => m.id == manifestId);
+
+                    manifest.end_date = endDate;
+
+                    context.SaveChanges();
+                });
+        }
+
+        public bool HasSpotsAllocated(int manifestId)
+        {
+            return _InReadUncommitedTransaction(
+                context => context.station_inventory_spots.Any(s => s.station_inventory_manifest_id == manifestId));
+        }
     }
 }

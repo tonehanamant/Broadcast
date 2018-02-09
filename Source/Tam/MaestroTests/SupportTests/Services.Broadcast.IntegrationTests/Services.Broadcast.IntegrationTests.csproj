@@ -16,6 +16,8 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\..\Solutions\MaestroComplete\</SolutionDir>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -167,12 +169,14 @@
     <Compile Include="Aggregates\ScheduleAggregateIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BulkInventoryFileImportTester.cs" />
+    <Compile Include="ApplicationServices\AffidavitServiceTests.cs" />
     <Compile Include="ApplicationServices\CNNImportTest.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ImpressionAdjustmentEngineIntegrationTests.cs" />
     <Compile Include="ApplicationServices\NsiUniverseServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostingBookServiceTests.cs" />
-    <Compile Include="ApplicationServices\PostRepositoryIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\PostPrePostingRepositoryIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\PostPrePostingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProposalPostingBooksEngineTests.cs" />
@@ -181,7 +185,9 @@
     <Compile Include="ApplicationServices\ProposalWeeklyTotalCalculationEngineTests.cs" />
     <Compile Include="ApplicationServices\TrafficServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\TTNWFileImporterTests.cs" />
+    <Compile Include="ApplicationServices\WhosWatchingTvServiceTests.cs" />
     <Compile Include="AttributeIgnorer.cs" />
+    <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />
     <Compile Include="Repositories\ProposalInventoryRepositoryIntegrationTests.cs" />
     <Compile Include="Repositories\ScheduleRepositoryTests.cs" />
     <Compile Include="Repositories\DisplayDaypartRepositoryTests.cs" />
@@ -535,6 +541,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Files\1Chicago WLS Syn 4Q16.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\Open Market Duplicate Program File1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -598,6 +607,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\" />
+    <Folder Include="BusinessEngines\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

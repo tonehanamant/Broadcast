@@ -37,6 +37,8 @@ namespace Services.Broadcast.ApplicationServices
         ProposalDto UnorderProposal(int proposalId, string username);
         Tuple<string, Stream> GenerateScxFileArchive(int proposalIds);
         ValidationWarningDto DeleteProposal(int proposalId);
+        Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
+        List<LookupDto> FindGenres(string genreSearchString);
     }
 
     public class ProposalService : IProposalService
@@ -51,6 +53,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDaypartCache _DaypartCache;
         private readonly IProposalInventoryRepository _ProposalInventoryRepository;
         private readonly IStationRepository _StationRepository;
+        private readonly IGenreRepository _GenreRepository;
         private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine;
         private readonly IProposalScxConverter _ProposalScxConverter;
         private readonly IPostingBooksService _PostingBooksService;
@@ -84,6 +87,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalInventoryRepository =
                 _BroadcastDataRepositoryFactory.GetDataRepository<IProposalInventoryRepository>();
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
+            _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
             _ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
             _ProposalScxConverter = proposalScxConverter;
             _PostingBooksService = postingBooksService;
@@ -350,21 +354,20 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SetProposalDetailsRatingBooksId(ProposalDto saveRequest)
         {
-
             foreach (var proposalDetailDto in saveRequest.Details)
             {
-                if (proposalDetailDto.HutPostingBookId == ProposalConstants.UseShareBookOnlyId &&
+                if (proposalDetailDto.HutPostingBookId == null &&
                     proposalDetailDto.SharePostingBookId != null)
                 {
                     proposalDetailDto.SinglePostingBookId = proposalDetailDto.SharePostingBookId;
                     proposalDetailDto.HutPostingBookId = null;
                     proposalDetailDto.SharePostingBookId = null;
-            }
-            else
-            {
+                }
+                else
+                {
                     proposalDetailDto.SinglePostingBookId = null;
+                }
             }
-        }
         }
 
         private int _SaveProposal(ProposalDto proposalDto, string userName)
@@ -731,9 +734,6 @@ namespace Services.Broadcast.ApplicationServices
             if (proposalDetailDto.SharePostingBookId == null)
                 throw new Exception("Cannot save proposal without specifying a Share Book");
 
-            if (proposalDetailDto.HutPostingBookId == null)
-                throw new Exception("Cannot save proposal without specifying a Hut Book");
-
             if (proposalDetailDto.PlaybackType == null)
                 throw new Exception("Cannot save proposal without specifying a Playback Type");
 
@@ -763,6 +763,12 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (string.IsNullOrWhiteSpace(detail.DaypartCode))
                     throw new Exception(string.Format("Invalid daypart code for proposal detail with flight '{0}-{1}'.", detail.FlightStartDate.Date, detail.FlightEndDate.Date));
+
+                if (detail.GenreCriteria.Exists(g => g.Contain == ContainTypeEnum.Include) && detail.GenreCriteria.Exists(g => g.Contain == ContainTypeEnum.Exclude))
+                    throw new Exception("Cannot save proposal detail that contains both genre inclusion and genre exclusion criteria.");
+
+                if (detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Include) && detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Exclude))
+                    throw new Exception("Cannot save proposal detail that contains both program name inclusion and program name exclusion criteria.");
             }
         }
 
@@ -771,16 +777,33 @@ namespace Services.Broadcast.ApplicationServices
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 var proposal = _ProposalRepository.GetProposalById(proposalId);
-                _SetProposalDetailDaypart(proposal.Details);
-                _SetProposalSpotLengths(proposal);
-                _SetProposalDetailFlightWeeks(proposal);
-                _SetProposalFlightWeeksAndIds(proposal);
-                _SetProposalMarketGroups(proposal);
-                _SetProposalRatingBooks(proposal);
-                _SetProposalMargins(proposal);
-                _SetProposalCanBeDeleted(proposal);
+
+                SetupProposalDto(proposal);
                 return proposal;
             }
+        }
+
+        private void SetupProposalDto(ProposalDto proposal)
+        {
+            _SetProposalDetailDaypart(proposal.Details);
+            _SetProposalSpotLengths(proposal);
+            _SetProposalDetailFlightWeeks(proposal);
+            _SetProposalFlightWeeksAndIds(proposal);
+            _SetProposalMarketGroups(proposal);
+            _SetProposalRatingBooks(proposal);
+            _SetProposalMargins(proposal);
+            _SetProposalCanBeDeleted(proposal);
+        }
+
+        public Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds)
+        {
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                var proposals = _ProposalRepository.GetProposalsByQuarterWeeks(quarterWeekIds);
+                proposals.Values.ForEach(SetupProposalDto);
+                return proposals;
+            }
+
         }
 
         private void _SetProposalRatingBooks(ProposalDto proposal)
@@ -790,7 +813,6 @@ namespace Services.Broadcast.ApplicationServices
                 if (proposalDetailDto.SinglePostingBookId != null)
             {
                     proposalDetailDto.SharePostingBookId = proposalDetailDto.SinglePostingBookId;
-                    proposalDetailDto.HutPostingBookId = ProposalConstants.UseShareBookOnlyId;
                 }
             }
         }
@@ -1256,6 +1278,12 @@ namespace Services.Broadcast.ApplicationServices
         private string _FileDateFormat(DateTime date)
         {
             return date.ToString("MMddyyyyy");
+        }
+
+
+        public List<LookupDto> FindGenres(string genreSearchString)
+        {
+            return _GenreRepository.FindGenres(genreSearchString);
         }
     }
 }

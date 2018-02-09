@@ -2,6 +2,8 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 require ('babel-polyfill');
+require ('react');
+require ('react-dom');
 
 var { resolve } = require('path');
 var AutoPrefixer = require('autoprefixer');
@@ -12,8 +14,17 @@ var webpackConfig = {
   context: resolve(__dirname, '../src'),
 
   entry: {
-    app: ['babel-polyfill', './index.jsx'],
-    vendor: HELPERS.exclude,
+    app: [
+      'babel-polyfill',
+      'react',
+      'react-dom',
+      './index.jsx'
+    ],
+    vendor: [
+      'babel-polyfill',
+      'react',
+      'react-dom',
+    ].concat(HELPERS.exclude),
   },
 
   output: {
@@ -40,7 +51,7 @@ var webpackConfig = {
       name: 'vendor'
     }),
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
+      sourceMap: false,
       output: {
         comments: false
       },
@@ -53,7 +64,7 @@ var webpackConfig = {
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
-      __PRODUCTION__: false,
+      __PRODUCTION__: true,
       __API__: HELPERS.api.createApi('qa'),
     }),
     new ExtractTextPlugin({
@@ -72,8 +83,8 @@ var webpackConfig = {
       LOADERS.svg,
       LOADERS.url,
       LOADERS.file,
-      LOADERS.style(true),  // true for development, false for prod, default to true
-      LOADERS.css(true),
+      LOADERS.style(false),  // true for development, false for prod, default to true
+      LOADERS.css(false),
     ]
   },
 };

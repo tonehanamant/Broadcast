@@ -100,8 +100,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 request.EffectiveDate = DateTime.Parse("10/1/2017");
                 var results = _InventoryFileService.SaveInventoryFile(request);
-                if (results.Problems.Any())
-                    throw new Exception("Could not load base records");
 
                 request = new InventoryFileSaveRequest();
                 flightWeeks = new List<FlightWeekDto>();
@@ -666,8 +664,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = "unknown_station_rate_file_zyxw.xml";
                 request.RatingBook = 416;
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-                Assert.IsTrue(result.Problems.Any());
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
+                Assert.IsTrue(problems.Any());
             }
         }
 
@@ -687,7 +694,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = "known_and_unknown_station_rate_file_zyxw.xml";
                 request.RatingBook = 416;
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
@@ -696,7 +711,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
 
             }
         }
@@ -717,7 +732,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.FileName = "unknown_spot_length_rate_file_wvtm.xml";
                 request.RatingBook = 416;
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
@@ -726,7 +749,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -864,9 +887,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 _InventoryFileService.SaveInventoryFile(request1);
-                var result = _InventoryFileService.SaveInventoryFile(request2);
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems));
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    _InventoryFileService.SaveInventoryFile(request2);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems));
 
             }
         }
@@ -935,6 +967,42 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
 
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketInventoryFileWithAvailLineWithPeriods()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    RatesStream = new FileStream(
+                        @".\Files\1Chicago WLS Syn 4Q16.xml",
+                        FileMode.Open,
+                        FileAccess.Read),
+                    UserName = "IntegrationTestUser",
+                    RatingBook = 416
+                };
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(StationProgram), "Id");
+                jsonResolver.Ignore(typeof(FlightWeekDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                int stationCode = 5060; // for station WLS
+                _InventoryFileService.SaveInventoryFile(request);
+
+                var results = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, jsonSettings));
+
+            }
+
+        }
+
 
         [Ignore]
         [Test]
@@ -1098,8 +1166,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-                Assert.IsEmpty(result.Problems);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
+                Assert.IsEmpty(problems);
             }
         }
 
@@ -1122,7 +1199,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1130,7 +1216,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -1188,8 +1274,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-                
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 
@@ -1199,7 +1293,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -1222,7 +1316,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1230,7 +1332,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -1254,7 +1356,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
@@ -1265,7 +1375,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -1287,7 +1397,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings
@@ -1295,7 +1413,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -1318,7 +1436,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1326,7 +1452,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
         [Ignore]
@@ -1465,8 +1591,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-                Assert.IsEmpty(result.Problems);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+                Assert.IsEmpty(problems);
             }
 
         }
@@ -1489,7 +1623,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -1499,7 +1641,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -1522,7 +1664,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -1531,7 +1681,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -1553,7 +1703,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -1562,7 +1720,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -1584,8 +1742,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-                Assert.IsEmpty(result.Problems);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+                Assert.IsEmpty(problems);
             }
         }
 
@@ -1608,7 +1774,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
@@ -1618,7 +1792,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -1640,7 +1814,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1648,7 +1830,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -1670,7 +1852,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1678,7 +1868,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -1769,7 +1959,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1778,7 +1976,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -1801,7 +1999,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -1809,7 +2015,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -1832,7 +2038,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -1841,7 +2055,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -2050,7 +2264,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2058,7 +2280,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -2081,7 +2303,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -2091,7 +2321,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -2114,7 +2344,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2122,7 +2360,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -2145,7 +2383,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2153,7 +2399,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -2176,7 +2422,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2184,7 +2438,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -2207,7 +2461,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -2216,7 +2478,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -2239,7 +2501,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -2248,7 +2518,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
 
@@ -2307,7 +2577,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
@@ -2316,7 +2594,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
 
         }
@@ -2340,7 +2618,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2348,7 +2634,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
 
         }
@@ -2372,7 +2658,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
@@ -2380,7 +2674,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Problems, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }       
 
@@ -2402,8 +2696,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-                Assert.IsEmpty(result.Problems);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+                Assert.IsEmpty(problems);
             }
 
         }
@@ -2426,9 +2728,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-                
-                Assert.IsEmpty(result.Problems);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
+                Assert.IsEmpty(problems);
             }
 
         }
@@ -2450,8 +2760,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-                Assert.IsEmpty(result.Problems);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+                Assert.IsEmpty(problems);
             }
 
         }
@@ -2513,9 +2831,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
 
-                Assert.IsEmpty(result.Problems);
+                Assert.IsEmpty(problems);
             }
         }
 
@@ -2537,9 +2863,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
 
-                Assert.IsEmpty(result.Problems);
+                Assert.IsEmpty(problems);
             }
         }
 
@@ -2561,9 +2895,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-                
-                Assert.IsEmpty(result.Problems);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
+                Assert.IsEmpty(problems);
             }
         }
 
@@ -2586,9 +2928,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-
-                Assert.IsEmpty(result.Problems);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+                Assert.IsEmpty(problems);
             }
         }
 
@@ -2611,9 +2960,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-
-                Assert.IsEmpty(result.Problems);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+                Assert.IsEmpty(problems);
             }
         }
 
@@ -2636,9 +2992,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-
-                Assert.IsEmpty(result.Problems);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+                Assert.IsEmpty(problems);
             }
         }
 
@@ -2659,10 +3022,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
-                
-                var result = _InventoryFileService.SaveInventoryFile(request);
 
-                Assert.IsEmpty(result.Problems);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+                Assert.IsEmpty(problems);
             }
         }
 
@@ -2684,9 +3054,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
 
-                Assert.IsEmpty(result.Problems);
+                Assert.IsEmpty(problems);
             }
         }
 
@@ -2708,9 +3086,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-
-                Assert.IsEmpty(result.Problems);
+                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+                Assert.IsEmpty(problems);
             }
         }
 
@@ -2745,6 +3130,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+
         public void CanConvert30sRateTo15sRate()
         {
             var result = _InventoryFileService.ConvertRateForSpotLength(10, 15);
@@ -2770,12 +3156,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     },
                     HouseHoldImpressions = 1000,
+                    Rate15 = 15,
                     Rating = 50,
-                    ProgramName = "Testing Program",
+                    ProgramNames = new List<string>(){"Testing Program"},
                     StationCode = stationCode,
                     RateSource = "OpenMarket",
-                    Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
-                });
+                    Airtimes = new List<DaypartDto>() {DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))}
+                },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 
@@ -2813,17 +3200,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     },
                     HouseHoldImpressions = 1000,
+                    Rate30 = 20,
                     Rating = 50,
-                    ProgramName = "Edited Program Name 54",
+                    ProgramNames =  new List<string>() {"Edited Program Name 54"},
                     StationCode = stationCode,
                     RateSource = "OpenMarket",
-                    Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
-                });
+                    Airtimes = new List<DaypartDto>(){DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))}
+                },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof (StationProgram), "Id");
+                jsonResolver.Ignore(typeof(StationProgram), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -2855,26 +3243,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     },
                     HouseHoldImpressions = 1000,
+                    Rate15 = 15,
+                    Rate30 = 20,
                     Rating = 50,
-                    ProgramName = "Edited Program Name 54",
+                    ProgramNames = new List<string>(){"Edited Program Name 54"},
                     StationCode = stationCode,
                     RateSource = "OpenMarket",
                     Conflicts = new List<StationProgram.StationProgramConflictChangeDto>
                     {
                         new StationProgram.StationProgramConflictChangeDto
                         {
-                            FlightEndDate = new DateTime(2018, 01, 25),
-                            FlightStartDate = new DateTime(2018, 01, 02),
-                            Id = 24538
+                            Id = 24538,
+                            Flights = new List<FlightWeekDto>
+                            {
+                                new FlightWeekDto
+                                {
+                                    StartDate = new DateTime(2017, 01, 25),
+                                    EndDate = new DateTime(2018, 01, 02)
+                                }
+                            }
                         }
                     },
-                    Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
-                });
+                    Airtimes = new List<DaypartDto>(){DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))}
+                },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof (StationProgram), "Id");
+                jsonResolver.Ignore(typeof(StationProgram), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -2917,21 +3313,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     },
                     HouseHoldImpressions = 1000,
+                    Rate30 = 30,
                     Rating = 50,
-                    ProgramName = "Multiple Flight Weeks",
+                    ProgramNames = new List<string>(){"Multiple Flight Weeks"},
                     StationCode = stationCode,
                     RateSource = "OpenMarket",
                     Conflicts = new List<StationProgram.StationProgramConflictChangeDto>
                     {
                         new StationProgram.StationProgramConflictChangeDto
                         {
-                            FlightEndDate = new DateTime(2018, 01, 25),
-                            FlightStartDate = new DateTime(2018, 01, 02),
-                            Id = 24538
+                            Id = 24538,
+                            Flights = new List<FlightWeekDto>
+                            {
+                                new FlightWeekDto
+                                {
+                                    StartDate = new DateTime(2017, 01, 25),
+                                    EndDate = new DateTime(2018, 01, 02)
+                                }
+                            }
+                            
                         }
                     },
-                    Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))
-                });
+                    Airtimes = new List<DaypartDto>(){DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1))}
+                },"TestUser");
 
                 var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
 
@@ -2948,7 +3352,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof (DiffReporter))]
+        [UseReporter(typeof(DiffReporter))]
         public void StationConflictsTest()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -3003,7 +3407,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void StationConflictsUpdateConflictTest()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -3020,6 +3423,52 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }, 24538);
 
                 Assert.IsFalse(conflicted);
+            }
+        }
+
+        [Test]
+        public void DeleteProgramTest()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                const int manifestId = 26684;
+
+                _InventoryFileService.DeleteProgram(manifestId);
+
+                var allStationPrograms = _InventoryFileService.GetAllStationPrograms("OpenMarket", 123);
+
+                var deletedStationProgram = allStationPrograms.FirstOrDefault(p => p.Id == manifestId);
+
+                Assert.IsNull(deletedStationProgram);
+            }
+        }
+
+        [Test]
+        public void ExpireManifestTest()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                const int manifestId = 26684;
+                var expireDate = new DateTime(2017, 9, 17);
+
+                _InventoryFileService.ExpireManifest(manifestId, expireDate);
+
+                var allStationPrograms = _InventoryFileService.GetAllStationPrograms("OpenMarket", 5319);
+
+                var manifest = allStationPrograms.First(p => p.Id == manifestId);
+
+                Assert.AreEqual(expireDate, manifest.EndDate);
+            }
+        }
+
+        [Test]
+        public void HasSpotsAllocatedTest()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var hasSpotAllocated = _InventoryFileService.HasSpotsAllocated(26672);
+
+                Assert.IsTrue(hasSpotAllocated);
             }
         }
     }

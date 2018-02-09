@@ -35,8 +35,32 @@
           "StartDate": "2016-05-30T00:00:00"
         }
       ],
+      "GenreCriteria": [
+        {
+          "Contain": 1,
+          "Genre": {
+            "Display": "Competition"
+          }
+        },
+        {
+          "Contain": 1,
+          "Genre": {
+            "Display": "Documentary"
+          }
+        }
+      ],
       "HutPostingBookId": 410,
       "PlaybackType": 4,
+      "ProgramCriteria": [
+        {
+          "Contain": 1,
+          "ProgramName": "News"
+        },
+        {
+          "Contain": 1,
+          "ProgramName": "Tonight"
+        }
+      ],
       "Quarters": [
         {
           "Cpm": 21.1300,
@@ -49,6 +73,20 @@
               "Cost": 21.8900,
               "EndDate": "2016-06-05T00:00:00",
               "Impressions": 1000.123,
+              "Iscis": [
+                {
+                  "Brand": "Testing",
+                  "ClientIsci": "AAAAAA",
+                  "HouseIsci": "AAAAAA",
+                  "MarriedHouseIsci": true
+                },
+                {
+                  "Brand": "Testing 2",
+                  "ClientIsci": "BBBBBBB",
+                  "HouseIsci": "BBBBBBB",
+                  "MarriedHouseIsci": false
+                }
+              ],
               "IsHiatus": false,
               "MediaWeekId": 649,
               "StartDate": "2016-05-30T00:00:00",

@@ -34,7 +34,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override InventorySource InventorySource { get; set; }
 
-        public override void ExtractFileData(System.IO.Stream stream, Entities.InventoryFile inventoryFile, DateTime effecitveDate,List<Entities.InventoryFileProblem> fileProblems)
+        public override void ExtractFileData(System.IO.Stream stream, Entities.InventoryFile inventoryFile, DateTime effecitveDate)
         {
             //TODO: Fixme or remove.
             //try

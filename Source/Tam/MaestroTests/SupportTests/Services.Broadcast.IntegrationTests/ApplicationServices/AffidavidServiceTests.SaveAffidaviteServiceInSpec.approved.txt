@@ -1,0 +1,121 @@
+﻿{
+  "AffidavitFileDetails": [
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "AffidavitClientScrubs": [
+        {
+          "Comment": null,
+          "LeadIn": true,
+          "MatchGenre": false,
+          "MatchMarket": false,
+          "MatchProgram": false,
+          "MatchTime": true,
+          "ModifiedBy": "testuser",
+          "ProposalVersionDetailQuarterWeekId": 18,
+          "Status": 1
+        }
+      ],
+      "AffidavitFileDetailAudiences": [
+        {
+          "AudienceId": 4,
+          "Impressions": 537.2
+        },
+        {
+          "AudienceId": 5,
+          "Impressions": 1954.65
+        },
+        {
+          "AudienceId": 6,
+          "Impressions": 655.0
+        },
+        {
+          "AudienceId": 7,
+          "Impressions": 299.35
+        },
+        {
+          "AudienceId": 13,
+          "Impressions": 16312.6
+        },
+        {
+          "AudienceId": 14,
+          "Impressions": 35719.7
+        },
+        {
+          "AudienceId": 15,
+          "Impressions": 58468.25
+        },
+        {
+          "AudienceId": 19,
+          "Impressions": 294.1
+        },
+        {
+          "AudienceId": 20,
+          "Impressions": 618.3
+        },
+        {
+          "AudienceId": 21,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 22,
+          "Impressions": 2267.35
+        },
+        {
+          "AudienceId": 28,
+          "Impressions": 7300.15
+        },
+        {
+          "AudienceId": 29,
+          "Impressions": 16007.85
+        },
+        {
+          "AudienceId": 30,
+          "Impressions": 10674.8
+        },
+        {
+          "AudienceId": 31,
+          "Impressions": 176822.05
+        },
+        {
+          "AudienceId": 46,
+          "Impressions": 4127.8
+        },
+        {
+          "AudienceId": 284,
+          "Impressions": 3402.5
+        },
+        {
+          "AudienceId": 290,
+          "Impressions": 9714.65
+        },
+        {
+          "AudienceId": 339,
+          "Impressions": 3243.15
+        },
+        {
+          "AudienceId": 347,
+          "Impressions": 35171.45
+        },
+        {
+          "AudienceId": 348,
+          "Impressions": 5321.65
+        }
+      ],
+      "AirTime": 32280,
+      "Genre": null,
+      "Isci": "AAAAAAAA",
+      "LeadinGenre": null,
+      "LeadinProgramName": null,
+      "LeadoutGenre": null,
+      "LeadoutProgramName": null,
+      "OriginalAirDate": "2016-06-01T00:00:00",
+      "ProgramName": "Programs R Us",
+      "SpotLengthId": 1,
+      "Station": "WNBC"
+    }
+  ],
+  "FileHash": "abc123",
+  "FileName": "test.file",
+  "MediaMonthId": 0,
+  "SourceId": 1
+}

@@ -57,16 +57,20 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IMarketDmaMapRepository, MarketDmaMapRepository>();
             instance.RegisterType<IBroadcastAudienceRepository, BroadcastAudienceRepository>();
             instance.RegisterType<IRatingAdjustmentsRepository, RatingAdjustmentsRepository>();
-            instance.RegisterType<IPostRepository, PostRepository>();
+            instance.RegisterType<IPostPrePostingRepository, PostPrePostingRepository>();
             instance.RegisterType<ISpotLengthRepository, SpotLengthBroadcastRepository>();
             instance.RegisterType<IProposalProgramsCriteriaRepository, ProposalProgramsCriteriaRepository>();
             instance.RegisterType<ITrafficRepository, TrafficRepository>();
+            instance.RegisterType<IStationProgramRepository, StationProgramRepository>();
             
 
             instance.RegisterType<IMediaMonthAndWeekAggregateRepository, MediaMonthAndWeekAggregateAndWeekAggregateRepository>();
             instance.RegisterType<IMediaMonthAndWeekAggregateCache, MediaMonthAndWeekAggregateCache>();
             instance.RegisterType<IDisplayDaypartRepository, DisplayDaypartBroadcastRepository>();
             instance.RegisterType<IInventoryRepository, InventoryRepository>();
+            instance.RegisterType<IAffidavitRepository, AffidavitRepository>();
+            instance.RegisterType<INsiComponentAudienceRepository, NsiComponentAudienceRepository>();
+            instance.RegisterType<IPostRepository, PostRepository>();
 
             WasRegistered = true;
         }

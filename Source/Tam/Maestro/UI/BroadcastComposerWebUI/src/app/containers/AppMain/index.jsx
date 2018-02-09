@@ -6,6 +6,7 @@ import CSSModules from 'react-css-modules';
 import AppHeader from 'Components/header/AppHeader';
 import AppFooter from 'Components/footer/AppFooter';
 // import SectionHome from 'Containers/SectionHome';
+import SectionPostPrePosting from 'Containers/SectionPostPrePosting';
 import SectionPost from 'Containers/SectionPost';
 import SectionPlanning from 'Containers/SectionPlanning';
 // import SectionRates from 'Containers/SectionRates';
@@ -26,8 +27,9 @@ export const AppMain = ({ match: { path } }) => (
     <Overlay type="loading" />
     <Overlay type="processing" />
     <Switch>
-      <Route exact path={path} component={SectionPost} />
+      <Route exact path={path} component={SectionPostPrePosting} />
       <Route path={`${path}/post`} component={SectionPost} />
+      <Route path={`${path}/post-pre-posting`} component={SectionPostPrePosting} />
       <Route path={`${path}/planning`} component={SectionPlanning} />
     </Switch>
     <AppFooter />

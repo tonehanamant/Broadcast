@@ -12,6 +12,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     public static class ProposalTestHelper
     {
+        private static readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
+        private const string ProposalPickleTestName = "Pickle Rick Test";
+
         public static ProposalDto CreateProposal()
         {
             string json;
@@ -45,6 +48,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             return proposal;
         }
+
+
+
+        public static int GetPickleProposalDetailId(ref ProposalDto proposal)
+        {
+            var proposalId = _ProposalService.GetAllProposals().First(p => p.ProposalName == ProposalPickleTestName).Id;
+            proposal = _ProposalService.GetProposalById(proposalId);
+            var proposalDetailId = proposal.Details.First().Id.Value;
+            return proposalDetailId;
+        }
+
+
     }
 
 }

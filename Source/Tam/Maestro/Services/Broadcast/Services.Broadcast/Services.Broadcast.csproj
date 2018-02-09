@@ -158,12 +158,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="ApplicationServices\AffidavitService.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\CNNStationInventoryGroupService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryManifestService.cs" />
     <Compile Include="ApplicationServices\PostingBooksService.cs" />
+    <Compile Include="ApplicationServices\PostService.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryGroupService.cs" />
+    <Compile Include="ApplicationServices\WhosWatchingTvService.cs" />
+    <Compile Include="BusinessEngines\AffidavitMatchingEngine.cs" />
     <Compile Include="BusinessEngines\ImpressionAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailHeaderTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailWeekTotalsCalculationEngine.cs" />
@@ -181,10 +185,21 @@
     <Compile Include="Converters\Post\PostParsingException.cs" />
     <Compile Include="Converters\ProposalScxDataPrep.cs" />
     <Compile Include="Converters\ProposalScxConverter.cs" />
+    <Compile Include="Converters\TextFileLineReader.cs" />
     <Compile Include="DaypartCache.cs" />
+    <Compile Include="Entities\AffidavitClientScrub.cs" />
+    <Compile Include="Entities\AffidavitClientScrubStatus.cs" />
+    <Compile Include="Entities\AffidavitFileDetailProblem.cs" />
+    <Compile Include="Entities\AffidavitMatchingDetail.cs" />
+    <Compile Include="Entities\AffidavitFile.cs" />
+    <Compile Include="Entities\AffidavitFileDetail.cs" />
+    <Compile Include="Entities\AffidavitFileDetailAudience.cs" />
+    <Compile Include="Entities\AffidavitSaveRequest.cs" />
+    <Compile Include="Entities\AffidavitMatchingProposalWeek.cs" />
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\BvsTrackingAudience.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
+    <Compile Include="Entities\FlightWeekGroup.cs" />
     <Compile Include="Entities\IHavePostingBooks.cs" />
     <Compile Include="Entities\InventorySourceEnum.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
@@ -201,11 +216,12 @@
     <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailTotalsDto.cs" />
     <Compile Include="Entities\ProposalHeaderTotalsDto.cs" />
+    <Compile Include="Entities\ProposalWeekIsciDto.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationConflict.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationRequest.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposal.cs" />
-    <Compile Include="Entities\PostDto.cs" />
-    <Compile Include="ApplicationServices\PostService.cs" />
+    <Compile Include="Entities\PostPrePostingDto.cs" />
+    <Compile Include="ApplicationServices\PostPrePostingService.cs" />
     <Compile Include="ApplicationServices\ProposalProprietaryInventoryService.cs" />
     <Compile Include="BusinessEngines\ThirdPartySpotCostCalculationEngine.cs" />
     <Compile Include="Entities\BvsFileDetailKey.cs" />
@@ -231,6 +247,9 @@
     <Compile Include="Entities\StationProgramConflictRequest.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
     <Compile Include="Entities\ValidationWarningDto.cs" />
+    <Compile Include="Entities\WhosWatchingTvSearchResult.cs" />
+    <Compile Include="Exceptions\BroadcastAffidavitException.cs" />
+    <Compile Include="Exceptions\FileUploadException.cs" />
     <Compile Include="Extensions\Bvs.cs" />
     <Compile Include="ReportGenerators\IReportGenerator.cs" />
     <Compile Include="ReportGenerators\PostExcelReportGenerator.cs" />
@@ -238,7 +257,7 @@
     <Compile Include="Entities\InventoryDetailSlot.cs" />
     <Compile Include="Entities\InventoryDetailSlotComponents.cs" />
     <Compile Include="Entities\StationDetailPointInTime.cs" />
-    <Compile Include="Entities\PostFile.cs" />
+    <Compile Include="Entities\PostPrePostingFile.cs" />
     <Compile Include="BusinessEngines\PostEngine.cs" />
     <Compile Include="BusinessEngines\ProposalCalculationEngine.cs" />
     <Compile Include="Converters\AssemblyImportHelper.cs" />
@@ -306,7 +325,6 @@
     <Compile Include="BroadcastConstants.cs" />
     <Compile Include="BusinessEngines\BvsPostingEngine.cs" />
     <Compile Include="BusinessEngines\ProposalProgramsCalculationEngine.cs" />
-    <Compile Include="BusinessEngines\ProposalSpotDistributionEngine.cs" />
     <Compile Include="BusinessEngines\QuarterCalculationEngine.cs" />
     <Compile Include="BusinessEngines\TrackingEngine.cs" />
     <Compile Include="Converters\BvsConverter.cs" />
@@ -380,9 +398,11 @@
     <Compile Include="Entities\OpenMarketAllocationDto.cs" />
     <Compile Include="Repositories\ExternalRatingRepositoryBase.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposalDto.cs" />
+    <Compile Include="Repositories\AffidavitRepository.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
     <Compile Include="Repositories\MarketDmaMapRepository.cs" />
-    <Compile Include="Repositories\PostRepository.cs" />
+    <Compile Include="Repositories\NsiComponentAudienceRepository.cs" />
+    <Compile Include="Repositories\PostPrePostingRepository.cs" />
     <Compile Include="Repositories\MarketRepository.cs" />
     <Compile Include="Repositories\MediaMonthAndWeekAggregateRepository.cs" />
     <Compile Include="Repositories\NsiMarketRepository.cs" />
@@ -390,6 +410,7 @@
     <Compile Include="Repositories\PostingBookRepository.cs" />
     <Compile Include="Repositories\GenreRepository.cs" />
     <Compile Include="Entities\PostFileDetail.cs" />
+    <Compile Include="Repositories\PostRepository.cs" />
     <Compile Include="Repositories\ProposalInventoryRepository.cs" />
     <Compile Include="Repositories\ProposalOpenMarketInventoryRepository.cs" />
     <Compile Include="Repositories\ProposalProgramsFilterRepository.cs" />
@@ -407,6 +428,7 @@
     <Compile Include="Repositories\SpotLengthBroadcastRepository.cs" />
     <Compile Include="Repositories\SpotLengthMultiplierRepository.cs" />
     <Compile Include="Repositories\StationContactsRepository.cs" />
+    <Compile Include="Repositories\StationProgramRepository.cs" />
     <Compile Include="Repositories\StationRepository.cs" />
     <Compile Include="Repositories\TrackerMappingRepository.cs" />
     <Compile Include="Repositories\TrafficRepository.cs" />

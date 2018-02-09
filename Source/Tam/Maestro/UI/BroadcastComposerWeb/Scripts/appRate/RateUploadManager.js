@@ -6,7 +6,7 @@
 
 var RateUploadManager = UploadManager.extend({
 
-   // isUploadEnabled: true, //temporary - prevent uploads for certain types
+    // isUploadEnabled: true, //temporary - prevent uploads for certain types
 
 
     sourceTypes: {
@@ -72,23 +72,30 @@ var RateUploadManager = UploadManager.extend({
 
     //override version - process different types
     //TBD based on types - initially prevent
+    //REVISED - for some send as multiple files
     handleLoadedFiles: function (files) {
         var source = this.activeSourceType;
+        var validRequests = [];
         if (source && source.enabled) {
+            var canProceed = true;
             //if single then use first file only
             if (source.isSingleFile) {
                 files = [files[0]];
             }
             var me = this;
+            //determine last file and compare below to ensure last loded by reader
+            var lastFile = files[files.length - 1];
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 var reader = new FileReader();
+                /*
                 var allLoaded = false;//not used this context
                 if (i == files.length - 1) {
                     allLoaded = true;
                 }
+                */
 
-                reader.readAsDataURL(file);
+                //reader.readAsDataURL(file);
                 this.addEventHandler(reader,
                     'loadend',
                     function (e, file) {
@@ -104,12 +111,20 @@ var RateUploadManager = UploadManager.extend({
                                 FileName: file.name,
                                 RawData: b64
                             };
-                            me.view.processUploadFileRequest(rateRequest, source.name);
+
+                            //handle as multiple
+                            validRequests.push(rateRequest);
+                            // me.view.processUploadFileRequest(rateRequest, source.name);
 
                         } else {
+                            canProceed = false;
                             util.notify('Invalid file format. Please, provide a .' + source.fileType + ' File', 'danger');
                         }
+                        var done = (file == lastFile);
+                        //console.log('last', done);
+                        if (done && canProceed) me.view.processUploadFileRequest(validRequests, source.name);
                     }.bindToEventHandler(file));
+                reader.readAsDataURL(file);
             }
 
         } else {
@@ -122,7 +137,7 @@ var RateUploadManager = UploadManager.extend({
         if (isMultiple) {
             $('#uploadButton').attr('multiple', true);
         } else {
-            
+
             $('#uploadButton').removeAttr('multiple');
         }
 

@@ -1,0 +1,628 @@
+<AAAA-Message xmlns="http://www.AAAA.org/schemas/spotTVCableProposal" xmlns:tvb="http://www.AAAA.org/schemas/spotTV" xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.AAAA.org/schemas/spotTVCableProposal spotTVCableProposal-0.3.0.5.xsd">
+	<AAAA-Values>
+		<SchemaName>SpotTVCableProposal</SchemaName>
+		<SchemaVersion>0.3.0.5A</SchemaVersion>
+		<Media>SpotTV</Media>
+		<BusinessObject>Proposal</BusinessObject>
+		<Action>New</Action>
+		<UniqueMessageID>04C44A76-B6F3-4316-AA53-9CB47AA80535</UniqueMessageID>
+	</AAAA-Values>
+	<Proposal uniqueIdentifier="NTVS-66643-1" version="1" sendDateTime="2016-08-10T12:17:06.450" weekStartDay="Mo" startDate="2016-09-26" endDate="2016-12-25">
+		<Seller companyName="ABC NTVS Inc.">
+			<OfficeName>New York</OfficeName>
+			<Salesperson name="Hanington, Jack" >
+				<Phone type="voice" location="work">(212) 456-7871</Phone>
+				<Phone type="fax" location="work">(212) 456-6274</Phone>
+			</Salesperson>
+		</Seller>
+		<Buyer buyingCompanyName="Cadent Network">
+			<BuyerName>Aileen</BuyerName>
+		</Buyer>
+		<Advertiser name="Unwired Various" />
+		<Name>Proposal-66643-1</Name>
+		<Outlets>
+			<TelevisionStation callLetters="WLS" parentPlus="N" outletId="OUT0" />
+		</Outlets>
+		<AvailList identifier="AL-66643-1" startDate="2016-09-26" endDate="2016-12-25" isPackage="Y">
+			<Name>AVAIL NAME ****</Name>
+			<OutletReferences>
+				<OutletReference outletFromProposalRef="OUT0" outletForListId="OUL1" />
+			</OutletReferences>
+			<DemoCategories>
+				<DemoCategory DemoId="DM10">
+					<tvb:DemoType>Rating</tvb:DemoType>
+					<tvb:Group>Homes</tvb:Group>
+					<tvb:AgeFrom>0</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+				<DemoCategory DemoId="DM11">
+					<tvb:DemoType>Impression</tvb:DemoType>
+					<tvb:Group>Homes</tvb:Group>
+					<tvb:AgeFrom>0</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+			</DemoCategories>
+			<TargetDemo demoRef="DM10" />
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>15:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Day Time</DaypartName>
+				<AvailName>GENERAL HOSPITAL</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>1000</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">2.5</DemoValue>
+					<DemoValue demoRef="DM11">86</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>09:00</StartTime>
+						<EndTime>10:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Day Time</DaypartName>
+				<AvailName>LIVE WITH KELLY</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>900</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">3.0</DemoValue>
+					<DemoValue demoRef="DM11">103</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>12:00</StartTime>
+						<EndTime>13:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Day Time</DaypartName>
+				<AvailName>THE CHEW</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>800</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">2.6</DemoValue>
+					<DemoValue demoRef="DM11">91</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>10:00</StartTime>
+						<EndTime>11:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Day Time</DaypartName>
+				<AvailName>THE VIEW</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>1100</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">3.0</DemoValue>
+					<DemoValue demoRef="DM11">103</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>13:00</StartTime>
+						<EndTime>14:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Day Time</DaypartName>
+				<AvailName>WINDY CITY LIVE</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>800</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">1.7</DemoValue>
+					<DemoValue demoRef="DM11">60</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>15:00</StartTime>
+						<EndTime>15:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Early Fringe</DaypartName>
+				<AvailName>INSIDE EDITION</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>800</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">3.3</DemoValue>
+					<DemoValue demoRef="DM11">114</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>15:30</StartTime>
+						<EndTime>16:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Early Fringe</DaypartName>
+				<AvailName>JEOPARDY</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>900</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">4.9</DemoValue>
+					<DemoValue demoRef="DM11">169</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>25:00</StartTime>
+						<EndTime>26:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Late Fringe</DaypartName>
+				<AvailName>ABC7 LATE NEWS (R)</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>100</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">1.2</DemoValue>
+					<DemoValue demoRef="DM11">43</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-12-10" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>25:05</StartTime>
+						<EndTime>25:35</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Late Fringe</DaypartName>
+				<AvailName>ABC7 LATE NEWS (R)</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>150</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">1.4</DemoValue>
+					<DemoValue demoRef="DM11">48</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>23:30</StartTime>
+						<EndTime>24:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Late Fringe</DaypartName>
+				<AvailName>CASTLE</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>400</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">2.1</DemoValue>
+					<DemoValue demoRef="DM11">73</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-03" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>24:30</StartTime>
+						<EndTime>25:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Late Fringe</DaypartName>
+				<AvailName>CASTLE</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>300</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">1.4</DemoValue>
+					<DemoValue demoRef="DM11">50</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-03" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>23:00</StartTime>
+						<EndTime>24:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Late Fringe</DaypartName>
+				<AvailName>CASTLE</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>500</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">3.1</DemoValue>
+					<DemoValue demoRef="DM11">107</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-12-10" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>24:00</StartTime>
+						<EndTime>25:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Late Fringe</DaypartName>
+				<AvailName>CASTLE</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>400</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">1.7</DemoValue>
+					<DemoValue demoRef="DM11">59</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-12-10" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>23:00</StartTime>
+						<EndTime>23:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Late Fringe</DaypartName>
+				<AvailName>INSIDE EDITION W</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>1000</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">2.7</DemoValue>
+					<DemoValue demoRef="DM11">94</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>22:35</StartTime>
+						<EndTime>23:37</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Late Fringe</DaypartName>
+				<AvailName>JIMMY KIMMEL</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>1300</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">3.5</DemoValue>
+					<DemoValue demoRef="DM11">123</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>23:37</StartTime>
+						<EndTime>24:07</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Late Fringe</DaypartName>
+				<AvailName>NIGHTLINE</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>650</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">2.4</DemoValue>
+					<DemoValue demoRef="DM11">82</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>24:05</StartTime>
+						<EndTime>25:05</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Late Fringe</DaypartName>
+				<AvailName>SCANDAL</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>350</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">1.3</DemoValue>
+					<DemoValue demoRef="DM11">44</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>25:05</StartTime>
+						<EndTime>26:05</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Late Fringe</DaypartName>
+				<AvailName>SCANDAL</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>250</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">0.9</DemoValue>
+					<DemoValue demoRef="DM11">30</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>24:08</StartTime>
+						<EndTime>25:10</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Late Fringe</DaypartName>
+				<AvailName>WINDY CITY LIVE B</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>400</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">1.5</DemoValue>
+					<DemoValue demoRef="DM11">53</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+			<AvailLineWithPeriods>
+				<OutletReference outletFromListRef="OUL1" />
+				<DayTimes>
+					<DayTime>
+						<StartTime>23:30</StartTime>
+						<EndTime>24:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>Late Fringe</DaypartName>
+				<AvailName>WINDY CITY WKND</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Rate>600</Rate>
+				<DemoValues>
+					<DemoValue demoRef="DM10">1.9</DemoValue>
+					<DemoValue demoRef="DM11">66</DemoValue>
+				</DemoValues>
+				<Periods>
+					<Period startDate="2016-09-26" endDate="2016-12-25" />
+				</Periods>
+			</AvailLineWithPeriods>
+		</AvailList>
+	</Proposal>
+</AAAA-Message>

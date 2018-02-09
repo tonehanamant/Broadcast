@@ -31,8 +31,15 @@
           "StartDate": "2016-05-30T00:00:00"
         }
       ],
+      "GenreCriteria": [],
       "HutPostingBookId": 410,
       "PlaybackType": 4,
+      "ProgramCriteria": [
+        {
+          "Contain": 2,
+          "ProgramName": "Open Market Program"
+        }
+      ],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -45,6 +52,7 @@
               "Cost": 25.0000,
               "EndDate": "2016-06-06T00:00:00",
               "Impressions": 100000.0,
+              "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 649,
               "StartDate": "2016-05-30T00:00:00",
@@ -89,8 +97,10 @@
           "StartDate": "2016-05-30T00:00:00"
         }
       ],
+      "GenreCriteria": [],
       "HutPostingBookId": 410,
       "PlaybackType": 4,
+      "ProgramCriteria": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -103,6 +113,7 @@
               "Cost": 25.0000,
               "EndDate": "2016-06-06T00:00:00",
               "Impressions": 100000.0,
+              "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 649,
               "StartDate": "2016-05-30T00:00:00",

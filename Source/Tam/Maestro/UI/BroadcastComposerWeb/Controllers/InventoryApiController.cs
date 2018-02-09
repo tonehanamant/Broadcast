@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
+using Services.Broadcast.Exceptions;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
@@ -131,6 +132,7 @@ namespace BroadcastComposerWeb.Controllers
                         .DeleteStationContact(stationContactId, Identity.Name));
         }
 
+      
 
         [HttpPost]
         [Route("UploadInventoryFile")]
@@ -148,23 +150,21 @@ namespace BroadcastComposerWeb.Controllers
                 var result =
                     _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                         .SaveInventoryFile(ratesSaveRequest);
-                if (result.Problems == null || result.Problems.Count == 0)
+
+                return new BaseResponse<InventoryFileSaveResult>()
                 {
-                    return new BaseResponse<InventoryFileSaveResult>()
-                    {
-                        Data = result,
-                        Success = true
-                    };
-                }
-                else
+                    Data = result,
+                    Success = true
+                };
+            }
+            catch (FileUploadException<InventoryFileProblem> e)
+            {
+                return new BaseResponseWithProblems<InventoryFileSaveResult, InventoryFileProblem>()
                 {
-                    return new BaseResponse<InventoryFileSaveResult>()
-                    {
-                        Data = result,
-                        Message = "Errors found while processing file",
-                        Success = false
-                    };
-                }
+                    Problems = e.Problems,
+                    Message = "Problems found while processing file",
+                    Success = false
+                };
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("Programs")]
         public BaseResponse<bool> SaveProgram(StationProgram stationProgram)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveProgram(stationProgram));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveProgram(stationProgram,Identity.Name));
         }
 
         [HttpPost]
@@ -245,6 +245,38 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                 .GetStationProgramConflicted(conflict, programId));
+        }
+
+        [HttpDelete]
+        [Route("Programs/{programId}")]
+        public BaseResponse<bool> DeleteProgra(int programId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                        .DeleteProgram(programId));
+        }
+
+        [HttpPost]
+        [Route("Programs/{ProgramId}/Flight")]
+        public BaseResponse<bool> TrimProgramFlight(int programId, [FromUri] DateTime endDate)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () =>
+                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                            .ExpireManifest(programId, endDate));
+        }
+
+        [HttpGet]
+        [Route("Programs/{ProgramId}/HasSpotsAllocated")]
+        public BaseResponse<bool> HasSpotsAllocated(int programId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () =>
+                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                            .HasSpotsAllocated(programId));
         }
     }
 }

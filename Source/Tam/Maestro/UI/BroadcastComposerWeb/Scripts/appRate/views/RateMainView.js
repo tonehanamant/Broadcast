@@ -42,7 +42,7 @@ var RateMainView = BaseView.extend({
             me.clearStationsGridSearch(true);
             me.StationsTextSearch = null;
             me.controller.apiLoadStations(false, type);
-            
+
         });
     },
 
@@ -55,28 +55,62 @@ var RateMainView = BaseView.extend({
 
     //passed from upload manager
     //intercept via InventorySource if TVB/CNN (todo) send to VM for input - add source to request or handle in controller?
+    //REVISED = process as multiple files queue if applicable - rateRequest will be array
     processUploadFileRequest: function (rateRequest, rateSource) {
         if ((rateSource == 'TVB') || (rateSource == 'CNN') || (rateSource == 'TTNW')) {
-            this.controller.thirdPartyViewModel.setActiveImport(rateRequest, rateSource);
+            this.controller.thirdPartyViewModel.setActiveImport(rateRequest[0], rateSource);
         } else {
-            this.controller.apiUploadInventoryFile(rateRequest);
+            //this.controller.apiUploadInventoryFile(rateRequest);
+            this.controller.apiQueueInventoryFiles(rateRequest);  //will be array of files
         }
+    },
+
+    //REVISE to aggregated importFileErrors
+    //with grouping
+    showUploadFileIssues: function (errors, overallFileCount) {
+        var title = 'Import Errors';
+        var status = '<strong>' + errors.length + ' of ' + overallFileCount + '</strong> files failed.<br/>';
+        var ret = status + '<p>Encountered errors uploading the following files:</p>';
+        var $scope = this;
+        $.each(errors, function (index, errorItem) {
+            var msg = errorItem.message;
+            if (errorItem.problems) msg = $scope.getUploadFileProblems(errorItem.problems);
+            //var append = '<p><strong>' + errorItem.fileName + '</strong><br/>' + msg + '</p>';
+            var append = '<div><strong>' + errorItem.fileName + '</strong></div>';
+            var elId = 'error_' + (index + 1);
+            append += '<div class="error-item""><a data-toggle="collapse" class="collapsed" href="#' + elId + '" aria-expanded="false" aria-controls="' + elId + '">Expand to view errors</a></div>';
+            append += '<div class="collapse" id="' + elId + '">' + msg + '</div><p></p>';
+            ret += append;
+        });
+        //console.log('issues', ret);
+        httpService.showDefaultError(ret, title, false, true);
+    },
+
+    //single file version - error will contain message or problems and fileName
+    showSingleUploadFileError: function (errorItem) {
+        var title = 'Import Error';
+        
+        var ret = '<p>Encountered error uploading the following file: <strong>' + errorItem.fileName + '</strong></p>';
+        var msg = errorItem.message;
+        if (errorItem.problems) msg = this.getUploadFileProblems(errorItem.problems);
+        ret += ('<p>' + msg + '</p>');
+        httpService.showDefaultError(ret, title, false, true);
     },
 
     //show upload issues if success but response includes "Problems" array (see controller)
     //CHANGE - NO alert - will no longer be success. handle as success false and show httpService error modal - intercept as callback to api call
-    showUploadFileIssues: function (problems) {
-        var programProblems = problems.filter(function(problem) {
+    //REVISED per aggregated errors - Problems and errors
+    getUploadFileProblems: function (problems) {
+        var programProblems = problems.filter(function (problem) {
             return !problem.AffectedProposals;
         });
-
         var affectedProposalProblems = problems.filter(function (problem) {
             return problem.AffectedProposals && problem.AffectedProposals.length > 0;
         });
 
         var ret = '';
         if (programProblems.length > 0) {
-            ret = '<div><h5><strong>The Following Issues were Reported:</strong></h5><dl>';
+            ret = '<div><h5>The Following Issues were Reported:</h5><dl>';
 
             $.each(programProblems, function (index, val) {
                 var item;
@@ -87,7 +121,7 @@ var RateMainView = BaseView.extend({
                     item = '<dt>' + val.ProgramName + '</dt><dd>' + val.ProblemDescription + '</dd>';
                 else if (val.StationLetters)
                     item = '<dt>' + val.StationLetters + '</dt><dd>' + val.ProblemDescription + '</dd>';
-                else 
+                else
                     item = '<dt></dt><dd>' + val.ProblemDescription + '</dd>';
 
                 ret += item;
@@ -99,30 +133,16 @@ var RateMainView = BaseView.extend({
         $.each(affectedProposalProblems, function (index, val) {
             var item = '<dt>' + val.ProblemDescription + '</dt><ul>';
 
-            $.each(val.AffectedProposals, function(i, proposal) {
+            $.each(val.AffectedProposals, function (i, proposal) {
                 item += '<li>' + proposal + '</li>';
             });
 
             ret += item;
         });
         ret += '</ul></div>';
-
-        //var title = programProblems.length > 0 ? 'Rate File Has Issues' : 'Reserved Inventory Updated';
-        //util.alert(title, ret);
-        var subTitle = 'Error(s) encountered processing Rate File Upload';
-        httpService.showDefaultError(ret, subTitle);
+        return ret;
     },
 
-    // NOT USING - adjust after BE is done
-    showSuccessUploadFileWarnings: function (warningObj) {
-        var ret = '<div><h5><strong>' + warningObj.Title +  '</strong></h5><dl>';
-        $.each(warningObj.Proposals, function (index, val) {
-            var item = '<dt>' + val + '</dd>';
-            ret += item;
-        });
-        ret += '</dl></div>';
-        util.alert("Reserved Inventory Updated", ret);
-    },
 
     //VM calls modal shown/hidden to disable drag while modal
     setUploadDragEnabled: function (enable) {
@@ -277,7 +297,7 @@ var RateMainView = BaseView.extend({
             var selected = $(this).val();
             //me.StationsTextSearch = me.$StationsGrid.searchData;
             me.controller.apiLoadStations(selected);
-            
+
         });
     },
 

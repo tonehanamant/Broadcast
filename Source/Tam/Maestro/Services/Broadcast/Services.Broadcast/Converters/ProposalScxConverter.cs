@@ -174,7 +174,7 @@ namespace Services.Broadcast.Converters
                 if (!_ProgramHasSpots(market.MarketId,station, data.WeekData, program))
                     continue;
                 var detLine = new detailLine();
-                detLine.program = program.ProgramName;
+                //detLine.program = program.ProgramName;
                 _SetDaypartInfo(detLine, program, data.DaypartCode);
                 detLine.length = string.Format("PT{0}S", data.SpotLength);
                 detLine.comment = " ";
@@ -218,21 +218,21 @@ namespace Services.Broadcast.Converters
         private void _SetDaypartInfo(detailLine detLine,ProposalInventoryMarketDto.InventoryMarketStationProgram program,string daypartCode)
         {
             detLine.startDay = detailLineStartDay.M;
-            var daypart = _DaypartCache.GetDisplayDaypart(program.Daypart.Id);
+            //var daypart = _DaypartCache.GetDisplayDaypart(program.Daypart.Id);
             DateTime lStartTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0);
-            lStartTime = lStartTime.Add(new TimeSpan(0, 0, 0, daypart.StartTime, 0));
+            //lStartTime = lStartTime.Add(new TimeSpan(0, 0, 0, daypart.StartTime, 0));
             detLine.startTime = lStartTime;
             DateTime lEndTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0);
-            lEndTime = lEndTime.Add(new TimeSpan(0, 0, 0, daypart.EndTime+1, 0)); // add one second to bring the time up to full hour/half-hour/etc
+            //lEndTime = lEndTime.Add(new TimeSpan(0, 0, 0, daypart.EndTime+1, 0)); // add one second to bring the time up to full hour/half-hour/etc
             detLine.endTime = lEndTime;
             detLine.dayOfWeek = new dayOfWeek();
-            detLine.dayOfWeek.Monday    = daypart.Monday ? "Y" : "N";
-            detLine.dayOfWeek.Tuesday   = daypart.Tuesday ? "Y" : "N";
-            detLine.dayOfWeek.Wednesday = daypart.Wednesday ? "Y" : "N";
-            detLine.dayOfWeek.Thursday  = daypart.Thursday ? "Y" : "N";
-            detLine.dayOfWeek.Friday    = daypart.Friday ? "Y" : "N";
-            detLine.dayOfWeek.Saturday  = daypart.Saturday ? "Y" : "N";
-            detLine.dayOfWeek.Sunday    = daypart.Sunday ? "Y" : "N";
+//            detLine.dayOfWeek.Monday    = daypart.Monday ? "Y" : "N";
+//            detLine.dayOfWeek.Tuesday   = daypart.Tuesday ? "Y" : "N";
+//            detLine.dayOfWeek.Wednesday = daypart.Wednesday ? "Y" : "N";
+//            detLine.dayOfWeek.Thursday  = daypart.Thursday ? "Y" : "N";
+//            detLine.dayOfWeek.Friday    = daypart.Friday ? "Y" : "N";
+//            detLine.dayOfWeek.Saturday  = daypart.Saturday ? "Y" : "N";
+//            detLine.dayOfWeek.Sunday    = daypart.Sunday ? "Y" : "N";
 
             detLine.daypartCode = daypartCode;
         }
@@ -251,8 +251,8 @@ namespace Services.Broadcast.Converters
                 var ratingDisplay = string.Empty;
                 if (demo.Ratings.Any())
                 {
-                    ratingValue = demo.Ratings.Single(r => r.DaypartId == programInfo.Daypart.Id && r.StationCode == stationCode);
-                    ratingDisplay = string.Format("{0:#0.00}", ratingValue.Rating);
+                    //ratingValue = demo.Ratings.Single(r => r.DaypartId == programInfo.Daypart.Id && r.StationCode == stationCode);
+                    //ratingDisplay = string.Format("{0:#0.00}", ratingValue.Rating);
                 }
 
                 string imp = string.Empty;
