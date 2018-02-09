@@ -7,7 +7,11 @@ import { getPost } from 'Ducks/post';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
 import Sorter from 'Utils/react-redux-grid-sorter';
+<<<<<<< HEAD
 import CurrencyDollarWhole from 'Components/shared/TextFormatters/CurrencyDollarWhole';
+=======
+import NumberCommaWhole from 'Components/shared/TextFormatters/NumberCommaWhole';
+>>>>>>> feature/BCOP2475
 
 const { MenuActions, SelectionActions, GridActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
@@ -109,13 +113,31 @@ export class DataGridContainer extends Component {
           width: '15%',
       },
       {
-          name: 'Upload Date',
-          dataIndex: 'UploadDate',
-          defaultSortDirection: 'ASC',
-          width: '15%',
-          renderer: ({ row }) => (
-            <span>{row.DisplayUploadDate}</span>
-          ),
+        name: 'Upload Date',
+        dataIndex: 'UploadDate',
+        defaultSortDirection: 'ASC',
+        width: '15%',
+        renderer: ({ row }) => (
+          <span>{row.DisplayUploadDate}</span>
+        ),
+      },
+      {
+        name: 'Spot in Spec',
+        dataIndex: 'SpotsInSpec',
+        width: '15%',
+      },
+      {
+        name: 'Spots Out of Spec',
+        dataIndex: 'SpotsOutOfSpec',
+        width: '15%',
+      },
+      {
+        name: 'Primary Demo Imp',
+        dataIndex: 'PrimaryAudienceImpressions',
+        width: '20%',
+        renderer: ({ row }) => (
+          <NumberCommaWhole number={(row.PrimaryDemo !== undefined) ? row.PrimaryDemo : ''} dash={false} />
+        ),
       },
       {
         name: 'Spot in Spec',
