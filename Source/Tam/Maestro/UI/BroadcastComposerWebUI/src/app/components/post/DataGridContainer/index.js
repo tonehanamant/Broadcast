@@ -39,6 +39,7 @@ export class DataGridContainer extends Component {
   constructor(props, context) {
 		super(props, context);
     this.context = context;
+    this.showscrubbingModal = this.showscrubbingModal.bind(this);
   }
 
   componentWillMount() {
@@ -94,7 +95,16 @@ export class DataGridContainer extends Component {
   deselectAll(ref) {
     this.props.deselectAll(ref);
   }
-
+  showscrubbingModal() {
+    this.props.toggleModal({
+      modal: 'postScrubbingModal',
+      active: true,
+      properties: {
+        titleText: 'POST SCRUBBING MODAL',
+        bodyText: 'Post Scrubbing details will be shown here!',
+      },
+    });
+  }
   render() {
     const stateKey = 'gridPostMain';
     const columns = [
@@ -173,6 +183,9 @@ export class DataGridContainer extends Component {
       HANDLE_BEFORE_SORT: () => {
         this.deselectAll({ stateKey });
         this.hideContextMenu({ stateKey });
+      },
+      HANDLE_ROW_CLICK: () => {
+          this.showscrubbingModal();
       },
     };
 
