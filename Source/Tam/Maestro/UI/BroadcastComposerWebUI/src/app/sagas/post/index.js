@@ -87,11 +87,7 @@ export function* assignPostDisplay({ payload: request }) {
       const post = item;
 
       // UploadDate
-      if (post.UploadDate !== null) {
-      post.DisplayUploadDate = moment(post.UploadDate).format('M/D/YYYY');
-      } else {
-        post.DisplayUploadDate = '-';
-    }
+      post.DisplayUploadDate = post.UploadDate !== null ? moment(post.UploadDate).format('M/D/YYYY') : '-';
       return post;
     },
   );
