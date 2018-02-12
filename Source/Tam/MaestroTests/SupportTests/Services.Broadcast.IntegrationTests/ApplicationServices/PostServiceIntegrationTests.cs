@@ -1,8 +1,12 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities;
+using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -10,12 +14,60 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [UseReporter(typeof(DiffReporter))]
     public class PostServiceIntegrationTests
     {
+        private readonly IPostService _PostService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostService>();
+
         [Test]
         public void GetPostsTest()
         {
-            var postService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostService>();
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_PostService.GetPosts()));
+        }
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(postService.GetPosts()));
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetClientPostScrubbingProposalHeader()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PostService.GetClientPostScrubbingProposalHeader(253);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(PostScrubbingProposalHeaderDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetClientPostScrubbingProposalDetail()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PostService.GetClientPostScrubbingProposalDetail(253, 14);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(PostScrubbingProposalDetailDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
         }
     }
 }

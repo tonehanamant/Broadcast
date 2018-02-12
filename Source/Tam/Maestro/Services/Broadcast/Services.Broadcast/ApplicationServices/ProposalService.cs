@@ -38,20 +38,7 @@ namespace Services.Broadcast.ApplicationServices
         Tuple<string, Stream> GenerateScxFileArchive(int proposalIds);
         ValidationWarningDto DeleteProposal(int proposalId);
         Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
-        List<LookupDto> FindGenres(string genreSearchString);
-        /// <summary>
-        /// Gets a client post scrubbing proposal header
-        /// </summary>
-        /// <param name="proposalId">Proposal id to filter by</param>
-        /// <returns>ProposalDto object containing the post scrubbing header</returns>
-        PostScrubbingProposalHeaderDTO GetClientPostScrubbingProposalHeader(int proposalId);
-        /// <summary>
-        /// Gets a client post scrubbing proposal detail
-        /// </summary>
-        /// <param name="proposalId">Proposal id to filter by</param>
-        /// <param name="detailId">Detail Id of the proposal to filter by</param>
-        /// <returns></returns>
-        PostScrubbingProposalDetailDTO GetClientPostScrubbingProposalDetail(int proposalId, int detailId);
+        List<LookupDto> FindGenres(string genreSearchString);        
     }
 
     public class ProposalService : IProposalService
@@ -1297,67 +1284,6 @@ namespace Services.Broadcast.ApplicationServices
         public List<LookupDto> FindGenres(string genreSearchString)
         {
             return _GenreRepository.FindGenres(genreSearchString);
-        }
-
-        /// <summary>
-        /// Gets a client post scrubbing proposal header
-        /// </summary>
-        /// <param name="proposalId">Proposal id to filter by</param>
-        /// <returns>ProposalDto object containing the post scrubbing header</returns>
-        public PostScrubbingProposalHeaderDTO GetClientPostScrubbingProposalHeader(int proposalId)
-        {
-            PostScrubbingProposalHeaderDTO result = new PostScrubbingProposalHeaderDTO();
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                var proposal = _ProposalRepository.GetProposalById(proposalId);
-                _SetProposalMarketGroups(proposal);
-                _SetProposalSpotLengths(proposal);
-                _SetProposalDetailDaypart(proposal.Details);
-
-                result.Id = proposal.Id.Value;
-                result.Name = proposal.ProposalName;
-                result.Notes = proposal.Notes;
-                proposal.SecondaryDemos.ForEach(x => result.SecondaryDemos.Add(_AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString));
-                result.Details = proposal.Details;
-                result.Markets = proposal.Markets;
-                result.GuaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
-                result.SpotLengths = proposal.SpotLengths;
-
-                var advertiser = _SmsClient.FindAdvertiserById(proposal.AdvertiserId);
-                result.Advertiser = advertiser != null ? advertiser.Display : string.Empty;
-
-                return result;
-            }
-        }
-
-        /// <summary>
-        /// Gets a client post scrubbing proposal detail
-        /// </summary>
-        /// <param name="proposalId">Proposal id to filter by</param>
-        /// <returns></returns>
-        public PostScrubbingProposalDetailDTO GetClientPostScrubbingProposalDetail(int proposalId, int detailId)
-        {
-            
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                ProposalDto proposal = _ProposalRepository.GetProposalById(proposalId);
-                _SetProposalSpotLengths(proposal);
-                _SetProposalDetailDaypart(proposal.Details);
-
-                ProposalDetailDto proposalDetail = proposal.Details.First(x => x.Id == detailId);
-
-                return new PostScrubbingProposalDetailDTO
-                {
-                    Id = proposal.Id,
-                    FlightStartDate = proposal.FlightStartDate,
-                    FlightEndDate = proposal.FlightEndDate,
-                    SpotLength = proposal.SpotLengths.First(x => x.Id == proposalDetail.SpotLengthId).Display,
-                    DayPart = proposalDetail.Daypart.Text,
-                    Details = _ProposalRepository.GetProposalDetailPostScrubbing(detailId),
-                    Programs = proposalDetail.ProgramCriteria,
-                    Genres = proposalDetail.GenreCriteria
-                };
-            }
-        }
+        }        
     }
 }
