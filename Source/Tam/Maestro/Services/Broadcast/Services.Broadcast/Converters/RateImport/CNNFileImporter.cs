@@ -68,6 +68,7 @@ namespace Services.Broadcast.Converters.RateImport
         };
         private Dictionary<int, int> _SpothLengths = null;
 
+        List<InventoryFileProblem> _FileProblems = new List<InventoryFileProblem>();
         private OfficeOpenXml.ExcelWorksheet _Worksheet;
         private Dictionary<string, int> _Headers;
 
@@ -85,9 +86,11 @@ namespace Services.Broadcast.Converters.RateImport
             return HydrateInventoryFile(result);
         }
 
-        public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, DateTime effectiveDate)
+        public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, DateTime effectiveDate,List<InventoryFileProblem> fileProblems)
         {
             _EffectiveDate = effectiveDate;
+
+            _FileProblems = fileProblems;
             try
             {
                 _ValidateInputFileParams();
@@ -135,13 +138,13 @@ namespace Services.Broadcast.Converters.RateImport
                             Dayparts = dayparts
                         });
                     }
-                    if (!FileProblems.Any())
+                    if (!_FileProblems.Any())
                     {
                         var dupProblems = CheckDups(dtos);
-                        FileProblems.AddRange(dupProblems);
+                        _FileProblems.AddRange(dupProblems);
                     }
 
-                    if (!FileProblems.Any())
+                    if (!_FileProblems.Any())
                     {
                         dtos.ForEach(_AddNewInventory);
                     }
@@ -260,7 +263,7 @@ namespace Services.Broadcast.Converters.RateImport
         private void _AddProblem(string description, string stationLetters = null, string programName = null,
             List<string> affectedProposals = null)
         {
-            FileProblems.Add(new InventoryFileProblem()
+            _FileProblems.Add(new InventoryFileProblem()
             {
                 AffectedProposals = affectedProposals,
                 ProblemDescription = description,

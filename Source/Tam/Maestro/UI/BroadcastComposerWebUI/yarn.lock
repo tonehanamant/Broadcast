@@ -6213,9 +6213,9 @@ react-bootstrap-typeahead@^2.0.2:
     react-overlays "^0.8.1"
     warning "^3.0.0"
 
-react-bootstrap@0.32.0:
-  version "0.32.0"
-  resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-0.32.0.tgz#7f656be7b0f88e4bdda819135956bad10d3f167e"
+react-bootstrap@^0.31.3:
+  version "0.31.5"
+  resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-0.31.5.tgz#57040fa8b1274e1e074803c21a1b895fdabea05a"
   dependencies:
     babel-runtime "^6.11.6"
     classnames "^2.2.5"
@@ -6224,9 +6224,7 @@ react-bootstrap@0.32.0:
     keycode "^2.1.2"
     prop-types "^15.5.10"
     prop-types-extra "^1.0.1"
-    react-overlays "^0.8.0"
-    react-prop-types "^0.4.0"
-    react-transition-group "^2.0.0"
+    react-overlays "^0.7.4"
     uncontrollable "^4.1.0"
     warning "^3.0.0"
 
@@ -6427,7 +6425,17 @@ react-onclickoutside@^6.1.1:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.0.tgz#997a4d533114c9a0a104913638aa26afc084f75c"
 
-react-overlays@^0.8.0, react-overlays@^0.8.1:
+react-overlays@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-0.7.4.tgz#ef2ec652c3444ab8aa014262b18f662068e56d5c"
+  dependencies:
+    classnames "^2.2.5"
+    dom-helpers "^3.2.1"
+    prop-types "^15.5.10"
+    prop-types-extra "^1.0.1"
+    warning "^3.0.0"
+
+react-overlays@^0.8.1:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-0.8.3.tgz#fad65eea5b24301cca192a169f5dddb0b20d3ac5"
   dependencies:
@@ -6443,12 +6451,6 @@ react-portal@^3.1.0:
   resolved "https://registry.yarnpkg.com/react-portal/-/react-portal-3.2.0.tgz#4224e19b2b05d5cbe730a7ba0e34ec7585de0043"
   dependencies:
     prop-types "^15.5.8"
-
-react-prop-types@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/react-prop-types/-/react-prop-types-0.4.0.tgz#f99b0bfb4006929c9af2051e7c1414a5c75b93d0"
-  dependencies:
-    warning "^3.0.0"
 
 react-proxy@^3.0.0-alpha.0:
   version "3.0.0-alpha.1"
@@ -6603,7 +6605,7 @@ react-text-mask@^5.0.2:
   dependencies:
     prop-types "^15.5.6"
 
-react-transition-group@2.x, react-transition-group@^2.0.0, react-transition-group@^2.2.0:
+react-transition-group@2.x, react-transition-group@^2.2.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.2.1.tgz#e9fb677b79e6455fd391b03823afe84849df4a10"
   dependencies:

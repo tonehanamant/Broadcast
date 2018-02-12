@@ -34,12 +34,7 @@
       "GenreCriteria": [],
       "HutPostingBookId": 410,
       "PlaybackType": 4,
-      "ProgramCriteria": [
-        {
-          "Contain": 2,
-          "ProgramName": "Open Market Program"
-        }
-      ],
+      "ProgramCriteria": [],
       "Quarters": [
         {
           "Cpm": 20.0000,

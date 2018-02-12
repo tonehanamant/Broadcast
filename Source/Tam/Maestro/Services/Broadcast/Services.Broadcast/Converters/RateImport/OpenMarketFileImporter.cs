@@ -21,7 +21,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override InventorySource InventorySource { get; set; }
 
-        public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile, DateTime effecitveDate)
+        public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile, DateTime effecitveDate, List<InventoryFileProblem> fileProblems)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                 System.Diagnostics.Debug.WriteLine(message.Proposal.uniqueIdentifier + " parsed successfully !");
 
-                var resultFile = BuildRatesFile(message, inventoryFile);
+                var resultFile = BuildRatesFile(message, inventoryFile, fileProblems);
                 resultFile.StationContacts = ExtractContactData(message);
             }
             catch (Exception e)
@@ -38,19 +38,19 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private InventoryFile BuildRatesFile(AAAAMessage message, InventoryFile inventoryFile)
+        private InventoryFile BuildRatesFile(AAAAMessage message, InventoryFile inventoryFile, List<InventoryFileProblem> fileProblems)
         {
 
             inventoryFile.UniqueIdentifier = message.Proposal.uniqueIdentifier;
             inventoryFile.StartDate = message.Proposal.startDate;
             inventoryFile.EndDate = message.Proposal.endDate;
 
-            inventoryFile.InventoryManifests.AddRange(BuildStationProgramList(message.Proposal));
+            inventoryFile.InventoryManifests.AddRange(BuildStationProgramList(message.Proposal, fileProblems));
 
             return inventoryFile;
         }
 
-            private List<StationInventoryManifest> BuildStationProgramList(AAAAMessageProposal proposal)
+            private List<StationInventoryManifest> BuildStationProgramList(AAAAMessageProposal proposal, List<InventoryFileProblem> fileProblems)
             {
                 List<StationInventoryManifest> manifests = new List<StationInventoryManifest>();
 
@@ -60,12 +60,12 @@ namespace Services.Broadcast.Converters.RateImport
                 var validStations = _GetValidStations(proposal.Outlets.Select(o => o.callLetters).ToList(),invalidStations);
                 if (validStations == null || validStations.Count == 0)
                 {
-                    FileProblems.Add(new InventoryFileProblem("There are no known stations in the file"));
+                    fileProblems.Add(new InventoryFileProblem("There are no known stations in the file"));
                     return manifests;
                 }
                 if (invalidStations.Any())
                 {
-                    FileProblems.AddRange(invalidStations.Select(s => new InventoryFileProblem("Invalid station: " + s)));
+                    fileProblems.AddRange(invalidStations.Select(s => new InventoryFileProblem("Invalid station: " + s)));
                     return manifests;
                 }
 
@@ -76,12 +76,12 @@ namespace Services.Broadcast.Converters.RateImport
 
                 if (proposal.AvailList.AvailLineWithDetailedPeriods != null)
                 {
-                    BuildProgramsFromAvailLineWithDetailedPeriods(proposal, FileProblems, audienceMap, validStations, manifests);
+                    BuildProgramsFromAvailLineWithDetailedPeriods(proposal, fileProblems, audienceMap, validStations, manifests);
                 }
 
                 if (proposal.AvailList.AvailLineWithPeriods != null)
                 {
-                    BuildProgramsFromAvailLineWithPeriods(proposal, FileProblems, audienceMap, validStations, manifests);
+                    BuildProgramsFromAvailLineWithPeriods(proposal, fileProblems, audienceMap, validStations, manifests);
                 }
 
                 return manifests;

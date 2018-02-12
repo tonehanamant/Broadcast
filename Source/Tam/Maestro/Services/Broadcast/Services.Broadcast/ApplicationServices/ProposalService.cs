@@ -766,9 +766,6 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (detail.GenreCriteria.Exists(g => g.Contain == ContainTypeEnum.Include) && detail.GenreCriteria.Exists(g => g.Contain == ContainTypeEnum.Exclude))
                     throw new Exception("Cannot save proposal detail that contains both genre inclusion and genre exclusion criteria.");
-
-                if (detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Include) && detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Exclude))
-                    throw new Exception("Cannot save proposal detail that contains both program name inclusion and program name exclusion criteria.");
             }
         }
 
