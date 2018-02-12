@@ -96,43 +96,9 @@ namespace Services.Broadcast.Repositories
 
         public void DeleteInventoryAllocations(int proposalId)
         {
-            _InReadUncommitedTransaction(context =>
+            _InReadUncommitedTransaction(c =>
             {
-                /*
-                var proprietary = from pv in c.proposals.Find(proposalId).proposal_versions
-                                  from pvd in pv.proposal_version_details
-                                  from pdq in pvd.proposal_version_detail_quarters
-                                  from pdqw in pdq.proposal_version_detail_quarter_weeks
-                                  from idsp in pdqw.inventory_detail_slot_proposal
-                                  select idsp;
 
-                var inventoryDetailSlotProposals = proprietary.ToList();
-
-                foreach (var inventoryDetailSlotProposal in inventoryDetailSlotProposals)
-                {
-                    var proposal = inventoryDetailSlotProposal;
-                    c.inventory_detail_slot_component_proposal.RemoveRange(
-                        c.inventory_detail_slot_component_proposal.Where(
-                            p =>
-                                p.inventory_detail_slot_id == proposal.inventory_detail_slot_id &&
-                                p.proprosal_version_detail_quarter_week_id ==
-                                proposal.proprosal_version_detail_quarter_week_id &&
-                                p.order == proposal.order));
-                }
-
-                c.inventory_detail_slot_proposal.RemoveRange(inventoryDetailSlotProposals);
-                */
-
-                var openMarket = from pv in context.proposals.Find(proposalId).proposal_versions
-                                 from pvd in pv.proposal_version_details
-                                 from pdq in pvd.proposal_version_detail_quarters
-                                 from pdqw in pdq.proposal_version_detail_quarter_weeks
-                                 from sis in pdqw.station_inventory_spots
-                                 select sis;
-
-                context.station_inventory_spots.RemoveRange(openMarket);
-
-                context.SaveChanges();
             });
         }
 

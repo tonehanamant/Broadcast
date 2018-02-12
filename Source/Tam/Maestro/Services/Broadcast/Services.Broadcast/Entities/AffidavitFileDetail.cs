@@ -19,7 +19,6 @@ namespace Services.Broadcast.Entities
         public string LeadinProgramName { get; set; }
         public string LeadoutGenre { get; set; }
         public string LeadoutProgramName { get; set; }
-        public string Market { get; set; }
         public List<AffidavitClientScrub> AffidavitClientScrubs { get; set; }
         public List<AffidavitFileDetailAudience> AffidavitFileDetailAudiences { get; set; }
     }

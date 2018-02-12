@@ -10,12 +10,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [UseReporter(typeof(DiffReporter))]
     public class PostServiceIntegrationTests
     {
+        [Ignore]
         [Test]
-        public void GetPostsTest()
+        public void GetPosts()
         {
-            var postService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostService>();
+            var x = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostService>();
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(x.GetPosts()));
+        }
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(postService.GetPosts()));
+        [Ignore]
+        [Test]
+        public void GetPost()
+        {
+            var x = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostService>();
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(x.GetPost(158)));
         }
     }
 }

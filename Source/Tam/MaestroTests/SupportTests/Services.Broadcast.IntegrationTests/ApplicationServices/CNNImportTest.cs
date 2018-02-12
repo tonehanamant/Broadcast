@@ -57,8 +57,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
-            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate);
-            fileProblems = importer.FileProblems;
+            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate,fileProblems);
 
             if (fileProblems.Any())
             {
@@ -113,8 +112,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
-            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate);
-            fileProblems = importer.FileProblems;
+            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate, fileProblems);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
@@ -156,8 +154,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
-            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate);
-            fileProblems = importer.FileProblems;
+            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate,fileProblems);
 
             if (!fileProblems.Any())
             {
@@ -203,7 +200,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             importer.LoadFromSaveRequest(request);
 
-            Assert.Catch(() => importer.ExtractFileData(stream, ratesFile, request.EffectiveDate),
+            Assert.Catch(() => importer.ExtractFileData(stream, ratesFile, request.EffectiveDate, fileProblems),
                 CNNFileImporter.NoGoodDaypartsFound);
         }
 
@@ -226,8 +223,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             importer.LoadFromSaveRequest(request);
-            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate);
-            fileProblems = importer.FileProblems;
+            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate, fileProblems);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             var jsonSettings = new JsonSerializerSettings
@@ -271,8 +267,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     EffectiveDate = new DateTime(2016, 10, 31)
                 };
                 importer.LoadFromSaveRequest(request);
-                importer.ExtractFileData(stream, ratesFile, request.EffectiveDate);
-                fileProblems = importer.FileProblems;
+                importer.ExtractFileData(stream, ratesFile, request.EffectiveDate, fileProblems);
 
                 if (!fileProblems.Any())
                 {

@@ -1,6 +1,3 @@
 ﻿[
-  {
-    "Description": "Isci ABC123 exists as married and unmarried",
-    "Type": 2
-  }
+  "Isci ABC123 exists as married and unmarried"
 ]

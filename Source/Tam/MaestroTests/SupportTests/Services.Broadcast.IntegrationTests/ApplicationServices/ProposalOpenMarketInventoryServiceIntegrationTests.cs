@@ -1327,34 +1327,5 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(allocations, jsonSettings));
             }
         }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void Proposal_Remove_Allocations_On_Status_Changed()
-        {
-            //Confirms that all spot allocations are removed when proposal status is changed
-            //from Agency On Hold to Proposed
-            using (new TransactionScopeWrapper())
-            {
-                var proposal = _ProposalService.GetProposalById(24425);
-
-                proposal.Status = ProposalEnums.ProposalStatusType.Proposed;
-                proposal.ForceSave = true;
-                _ProposalService.SaveProposal(proposal, "Test user", DateTime.Now);
-
-                var allocations = _ProposalOpenMarketInventoryService.GetProposalInventoryAllocations(8123);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(OpenMarketInventoryAllocation), "ProposalVersionDetailQuarterWeekId");
-                jsonResolver.Ignore(typeof(OpenMarketInventoryAllocation), "ProposalVersionDetailId");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(allocations, jsonSettings));
-            }
-        }
     }
 }

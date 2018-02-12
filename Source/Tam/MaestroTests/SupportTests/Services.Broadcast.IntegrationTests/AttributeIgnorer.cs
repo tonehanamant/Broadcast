@@ -9,9 +9,9 @@ namespace Services.Broadcast.IntegrationTests
         {
             jsonResolver.Ignore(typeof(NewStationProgramDto), "Id");
 
-            jsonResolver.Ignore(typeof(PostPrePostingFile), "Id");
-            jsonResolver.Ignore(typeof(PostPrePostingFile), "UploadDate");
-            jsonResolver.Ignore(typeof(PostPrePostingFile), "ModifiedDate");
+            jsonResolver.Ignore(typeof(PostFile), "Id");
+            jsonResolver.Ignore(typeof(PostFile), "UploadDate");
+            jsonResolver.Ignore(typeof(PostFile), "ModifiedDate");
 
             jsonResolver.Ignore(typeof(PostFileDetail), "Id");
             jsonResolver.Ignore(typeof(PostFileDetail), "PostFileId");

@@ -51,16 +51,7 @@
       ],
       "HutPostingBookId": 410,
       "PlaybackType": 4,
-      "ProgramCriteria": [
-        {
-          "Contain": 1,
-          "ProgramName": "News"
-        },
-        {
-          "Contain": 1,
-          "ProgramName": "Tonight"
-        }
-      ],
+      "ProgramCriteria": [],
       "Quarters": [
         {
           "Cpm": 21.1300,

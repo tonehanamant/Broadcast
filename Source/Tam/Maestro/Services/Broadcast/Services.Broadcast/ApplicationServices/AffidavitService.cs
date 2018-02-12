@@ -8,13 +8,8 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Microsoft.VisualBasic.FileIO;
-using Newtonsoft.Json;
-using Services.Broadcast.Converters;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -31,7 +26,6 @@ namespace Services.Broadcast.ApplicationServices
         InSpec = 1
     }
 
-
     public interface IAffidavitService : IApplicationService
     {
         int SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime);
@@ -41,9 +35,8 @@ namespace Services.Broadcast.ApplicationServices
         ///
         void ScrubAffidavitFile(affidavit_files affidavit_file);
 
-        string JSONifyFile(Stream rawStream,string fileName);
     }
-
+        
     public class AffidavitService : IAffidavitService
     {
         private const ProposalEnums.ProposalPlaybackType DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3;
@@ -171,8 +164,6 @@ namespace Services.Broadcast.ApplicationServices
                             var marketGeoName = affidavitStation.OriginMarket;
                             if (markets.Any(m => m.Display == marketGeoName))
                             {
-                                affidavitFileDetail.market = marketGeoName;
-
                                 scrub.match_market = true;
                             }
                         }
@@ -188,14 +179,14 @@ namespace Services.Broadcast.ApplicationServices
                             scrub.match_program = progCriteria.Contain == ContainTypeEnum.Include;
                     }
 
-                    scrub.match_genre = true;
+                    scrub.match_program = true;
                     if (proposalDetail.GenreCriteria.Any())
                     {
                         var genreCriteria = proposalDetail.GenreCriteria.SingleOrDefault(pc =>
                             pc.Genre.Display == affidavitFileDetail.genre);
 
                         if (genreCriteria != null)
-                            scrub.match_genre = genreCriteria.Contain == ContainTypeEnum.Include;
+                            scrub.match_program = genreCriteria.Contain == ContainTypeEnum.Include;
                     }
 
                     EnsureScrubadubdubed(scrub);
@@ -228,6 +219,7 @@ namespace Services.Broadcast.ApplicationServices
         private List<AffidavitMatchingDetail> _LinkAndValidateContractIscis(AffidavitSaveRequest saveRequest)
         {
             var matchedAffidavitDetails = new List<AffidavitMatchingDetail>();
+            var matchingProblems = new List<String>();
 
             foreach (var requestDetail in saveRequest.Details)
             {
@@ -235,15 +227,18 @@ namespace Services.Broadcast.ApplicationServices
                     _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
                         .GetAffidavitMatchingProposalWeeksByHouseIsci(requestDetail.Isci);
 
-                var matchedProposalWeeks = _AffidavitMatchingEngine.Match(requestDetail, proposalWeeks);
-                var matchingProblems = _AffidavitMatchingEngine.MatchingProblems();
+                var matchedProposalWeeks = _AffidavitMatchingEngine.Match(requestDetail, proposalWeeks); //TODO: combine errors and matches in one results in order to avoid concurrency issues.
+                matchingProblems.AddRange(_AffidavitMatchingEngine.MatchingProblems());
                 matchedAffidavitDetails.Add(new AffidavitMatchingDetail()
                 {
                     AffidavitDetail = requestDetail,
-                    ProposalDetailWeeks = matchedProposalWeeks,
-                    AffidavitDetailProblems = matchingProblems
+                    ProposalDetailWeeks = matchedProposalWeeks
                 });
 
+            }
+            if (matchingProblems.Any())
+            {
+                throw new BroadcastAffidavitException("Found isci problems in the system", matchingProblems);
             }
 
             return matchedAffidavitDetails;
@@ -313,68 +308,5 @@ namespace Services.Broadcast.ApplicationServices
 
             return affidavitAudiences;
         }
-
-        #region JSONify
-
-        private static readonly List<string> FileHeaders = new List<string>()
-        {
-            "ISCI"
-            ,"Spot Length"
-            ,"Station"
-            ,"Spot Time"
-            ,"ProgramName"
-            ,"Genre"
-            ,"LeadInTitle"
-            ,"LeadInGenre"
-            ,"LeadOutTitle"
-            ,"LeadOutGenre"
-        };
-        
-        public string JSONifyFile(Stream rawStream,string fileName)
-        {
-            TextFileLineReader reader;
-            //if (fileName.EndsWith("xlsx"))
-            //    reader = new ExcelFileReader(FileHeaders);
-            if (fileName.EndsWith("csv"))
-            { 
-                reader = new CsvFileReader(FileHeaders);
-            }
-            else
-            {
-                throw new Exception("Unknown file");
-            }
-
-            AffidavitSaveRequest request = new AffidavitSaveRequest();
-            request.FileName = fileName;
-            request.FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(rawStream));
-            request.Source = (int)AffidaviteFileSource.Strata;
-
-            using (reader.Initialize(rawStream))
-            {
-                while (!reader.IsEOF())
-                {
-                    reader.NextRow();
-
-                    var detail = new AffidavitSaveRequestDetail();
-                    
-                    detail.AirTime = DateTime.Parse(reader.GetCellValue("Spot Time"));
-                    detail.Genre = reader.GetCellValue("Genre");
-                    detail.Isci = reader.GetCellValue("ISCI");
-                    detail.ProgramName = reader.GetCellValue("ProgramName");
-                    detail.Station = reader.GetCellValue("Station");
-                    detail.SpotLength = int.Parse(reader.GetCellValue("Spot Length"));
-                    detail.LeadInTitle = reader.GetCellValue("LeadInTitle");
-                    detail.LeadInGenre = reader.GetCellValue("LeadInGenre");
-                    detail.LeadOutTitle = reader.GetCellValue("LeadOutTitle");
-                    detail.LeadOutGenre = reader.GetCellValue("LeadOutGenre");
-
-                    request.Details.Add(detail);
-                    
-                }
-            }
-            var json = JsonConvert.SerializeObject(request);
-            return json;
-        }
-        #endregion
     }
 }

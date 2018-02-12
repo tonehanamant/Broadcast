@@ -23,12 +23,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class TTNWFileImporterTests
     {
+        private TTNWFileImporter _ttnwFileImporter = new TTNWFileImporter();
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanParseLNFile()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -44,8 +44,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate );
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate ,fileProblems);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
@@ -66,8 +65,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void CanParseEMFile()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -83,8 +80,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var  effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
 
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate, fileProblems);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
@@ -106,8 +102,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void CanParseENFile()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -123,8 +117,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
 
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate, fileProblems);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
@@ -145,8 +138,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void InvalidStation()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -158,8 +149,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate, fileProblems);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
@@ -179,8 +169,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void NoKnownStations()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -192,8 +180,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate, fileProblems);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
@@ -211,8 +198,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void InvalidDaypartSpots()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -224,8 +209,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate, fileProblems);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
@@ -243,8 +227,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void ValidDayparts()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -260,8 +242,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
 
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate, fileProblems);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
@@ -282,8 +263,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void InvalidDaypart()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -296,8 +275,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate, fileProblems);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource"); 
@@ -316,8 +294,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void ZeroInDaypartSpot()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -328,8 +304,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
 
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate, fileProblems);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 

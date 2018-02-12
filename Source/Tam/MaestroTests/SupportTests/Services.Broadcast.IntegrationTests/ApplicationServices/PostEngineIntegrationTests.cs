@@ -22,7 +22,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>();
+                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
                 var files = new post_files();
                 files.equivalized = false;
                 files.file_name = "abctest";
@@ -54,7 +54,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>();
+                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
                 var files = new post_files();
                 files.equivalized = false;
                 files.file_name = "abctest";
@@ -83,7 +83,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>();
+                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
                 var files = new post_files();
                 files.equivalized = false;
                 files.file_name = "abctest";
@@ -116,7 +116,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>();
+                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
                 var files = new post_files();
                 files.equivalized = false;
                 files.file_name = "abctest";
@@ -147,7 +147,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>();
+                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
                 var files = new post_files();
                 files.equivalized = false;
                 files.file_name = "abctest";

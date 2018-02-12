@@ -102,7 +102,7 @@
                   "Allocations": [
                     {
                       "MediaWeekId": 649,
-                      "Spots": 1
+                      "Spots": 0
                     }
                   ],
                   "EndDate": "2016-06-05T00:00:00",
