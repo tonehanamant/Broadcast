@@ -27,7 +27,7 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
-        [Route("ClientPostScrubbingProposalHeader/{proposalId}")]
+        [Route("GetClientPostScrubbingProposalHeader/{proposalId}")]
         public BaseResponse<PostScrubbingProposalHeaderDto> GetClientPostScrubbingProposalHeader(int proposalId)
         {
             return
@@ -36,7 +36,7 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
-        [Route("ClientPostScrubbingProposalDetail/{proposalId}/{detailId}")]
+        [Route("GetClientPostScrubbingProposalDetail/{proposalId}/{detailId}")]
         public BaseResponse<PostScrubbingProposalDetailDto> GetClientPostScrubbingProposalDetail(int proposalId, int detailId)
         {
             return
