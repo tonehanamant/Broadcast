@@ -1,9 +1,7 @@
-﻿{
-  "Problems": [
-    {
-      "ProblemDescription": "Invalid station: ZYXW",
-      "ProgramName": null,
-      "StationLetters": null
-    }
-  ]
-}
+﻿[
+  {
+    "ProblemDescription": "Invalid station: ZYXW",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

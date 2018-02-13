@@ -334,6 +334,11 @@ namespace Services.Broadcast.Repositories
                         genre_id = g.Genre.Id,
                         contain_type = (byte) g.Contain
                     }).ToList(),
+                    proposal_version_detail_criteria_programs = proposalDetail.ProgramCriteria.Select(p => new proposal_version_detail_criteria_programs()
+                    {
+                        program_name = p.ProgramName,
+                        contain_type = (byte)p.Contain
+                    }).ToList(),
                     proposal_version_detail_quarters =
                         proposalDetail.Quarters.Select(quarter => new proposal_version_detail_quarters
                         {
@@ -418,6 +423,7 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.share_posting_book_id = detail.SharePostingBookId;
                     updatedDetail.playback_type = (byte) detail.PlaybackType;
 
+                    //update proposal detail genre criteria
                     context.proposal_version_detail_criteria_genres.RemoveRange(
                         context.proposal_version_detail_criteria_genres.Where(g => g.proposal_version_detail_id == detail.Id));
                     if (detail.GenreCriteria != null && detail.GenreCriteria.Count > 0)
@@ -440,6 +446,18 @@ namespace Services.Broadcast.Repositories
                                     program_name = p.ProgramName,
                                     contain_type = (byte)p.Contain,
                                     proposal_version_detail_id = detail.Id.Value
+                                }));
+
+                    //update proposal detail program name criteria
+                    context.proposal_version_detail_criteria_programs.RemoveRange(
+                        context.proposal_version_detail_criteria_programs.Where(g => g.proposal_version_detail_id == detail.Id));
+                    if (detail.ProgramCriteria != null && detail.ProgramCriteria.Count > 0)
+                        context.proposal_version_detail_criteria_programs.AddRange(
+                            detail.ProgramCriteria.Select(
+                                g => new proposal_version_detail_criteria_programs()
+                                {
+                                    program_name = g.ProgramName,
+                                    contain_type = (byte)g.Contain
                                 }));
 
                     // deal with quarters that have been deleted 
@@ -787,6 +805,12 @@ namespace Services.Broadcast.Repositories
                     Contain = (ContainTypeEnum) c.contain_type,
                     Genre = new LookupDto { Id = c.genre.id ,Display = c.genre.name}
                 }).ToList(),
+                ProgramCriteria = version.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
+                {
+                    Id = p.id,
+                    ProgramName = p.program_name,
+                    Contain = (ContainTypeEnum) p.contain_type
+                }).ToList(),
                 Quarters = version.proposal_version_detail_quarters.Select(quarter => new ProposalQuarterDto
                 {
                     Cpm = quarter.cpm,
@@ -986,7 +1010,9 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var proposalDetail = context.proposal_version_details.Include(pvd => pvd.proposal_version_detail_criteria_genres)
+                var proposalDetail = context.proposal_version_details
+                .Include(pvd => pvd.proposal_version_detail_criteria_genres)
+                .Include(pvd => pvd.proposal_version_detail_criteria_programs)
                 .Single(pvd => pvd.id == proposalDetailId,
                     string.Format("The proposal detail information you have entered [{0}] does not exist.",
                         proposalDetailId));
@@ -1013,6 +1039,12 @@ namespace Services.Broadcast.Repositories
                         Id = c.id,
                         Contain = (ContainTypeEnum)c.contain_type,
                         Genre = new LookupDto { Id = c.genre_id}
+                    }).ToList(),
+                    ProgramCriteria = proposalDetail.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
+                    {
+                        Id = p.id,
+                        ProgramName = p.program_name,
+                        Contain = (ContainTypeEnum) p.contain_type
                     }).ToList()
                 };
 

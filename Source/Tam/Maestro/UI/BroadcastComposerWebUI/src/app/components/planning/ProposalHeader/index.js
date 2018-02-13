@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Collapse, Panel, Row, Col } from 'react-bootstrap';
+import { Button, Panel, Row, Col } from 'react-bootstrap';
 
 import ProposalForm from 'Components/planning/ProposalForm';
 import ProposalHeaderActions from 'Components/planning/ProposalHeaderActions';
@@ -51,19 +51,21 @@ export default class ProposalHeader extends Component {
             <span className="glyphicon glyphicon-triangle-bottom" aria-hidden="true" />
           </Button>
         }
-				<Collapse in={this.state.open}>
-          <Panel style={{ marginTop: 10 }}>
-						<ProposalForm
-              initialdata={initialdata}
-              proposal={proposal}
-              proposalEditForm={proposalEditForm}
-              updateProposalEditForm={updateProposalEditForm}
-              toggleModal={toggleModal}
-              isReadOnly={this.props.isReadOnly}
-              proposalValidationStates={proposalValidationStates}
-						/>
-					</Panel>
-        </Collapse>
+        <Panel style={{ marginTop: 10 }} expanded={this.state.open}>
+          <Panel.Collapse>
+            <Panel.Body>
+              <ProposalForm
+                initialdata={initialdata}
+                proposal={proposal}
+                proposalEditForm={proposalEditForm}
+                updateProposalEditForm={updateProposalEditForm}
+                toggleModal={toggleModal}
+                isReadOnly={this.props.isReadOnly}
+                proposalValidationStates={proposalValidationStates}
+              />
+            </Panel.Body>
+          </Panel.Collapse>
+        </Panel>
 			</div>
     );
   }
