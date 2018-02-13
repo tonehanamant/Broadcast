@@ -1,0 +1,20 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "Details": [
+    {
+      "DayPart": "M-F 9AM-10AM",
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "Id": 14,
+      "SpotLength": "30"
+    }
+  ],
+  "GuaranteedDemo": "House Holds",
+  "Markets": [],
+  "Name": "Proposal Test",
+  "Notes": null,
+  "SecondaryDemos": [
+    "House Holds",
+    "House Holds"
+  ]
+}

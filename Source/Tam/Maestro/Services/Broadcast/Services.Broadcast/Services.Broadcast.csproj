@@ -212,13 +212,14 @@
     <Compile Include="Entities\OpenMarketRefineProgramsRequest.cs" />
     <Compile Include="Entities\DefaultPostingBooksDto.cs" />
     <Compile Include="Entities\PostingBookResultDto.cs" />
-    <Compile Include="Entities\PostScrubbingProposalDetailDTO.cs" />
-    <Compile Include="Entities\PostScrubbingProposalHeaderDTO.cs" />
+    <Compile Include="Entities\PostScrubbingProposalDetailDto.cs" />
+    <Compile Include="Entities\PostScrubbingProposalHeaderDto.cs" />
     <Compile Include="Entities\ProposalDetailPostScrubbingDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleInventoryTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailTotalsDto.cs" />
     <Compile Include="Entities\ProposalHeaderTotalsDto.cs" />
+    <Compile Include="Entities\ProposalScrubbingDetailHeaderDto.cs" />
     <Compile Include="Entities\ProposalWeekIsciDto.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationConflict.cs" />
     <Compile Include="Entities\ProprietaryInventoryAllocationRequest.cs" />

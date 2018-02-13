@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
-    public class PostScrubbingProposalDetailDTO
+    public class PostScrubbingProposalDetailDto
     {
         public int? Id { get; set; }
         

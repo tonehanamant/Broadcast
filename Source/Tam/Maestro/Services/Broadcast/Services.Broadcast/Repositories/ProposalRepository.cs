@@ -66,15 +66,14 @@ namespace Services.Broadcast.Repositories
         void DeleteProposal(int proposalId);
         Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
         List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByHouseIsci(string isci);
-        List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalVersionId);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
     {
 
         public ProposalRepository(ISMSClient pSmsClient,
-            IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory
-            , ITransactionHelper pTransactionHelper)
+            IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper)
             : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
         {
         }
@@ -1468,40 +1467,6 @@ namespace Services.Broadcast.Repositories
                                 Brand = i.brand
                             }).ToList();
                     return weeks;
-                });
-        }
-
-        public List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalVersionId)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    var posts = new List<ProposalDetailPostScrubbingDto>();
-
-
-                    var affidavitFiles = (from proposalVersionDetail in context.proposal_version_details
-                                          from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                                          from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
-                                          from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
-                                          let affidavitFile = affidavitFileScrub.affidavit_file_details
-                                          where proposalVersionDetail.id == proposalVersionId
-                                          select affidavitFile).ToList();
-                    var spotLengths = (from sl in context.spot_lengths select sl).ToList();
-
-                    posts.AddRange(affidavitFiles.Select(x => new ProposalDetailPostScrubbingDto()
-                    {
-                        Station = x.station,
-                        ISCI = x.isci,
-                        ProgramName = x.program_name,
-                        Market = x.market,
-                        Affiliate = (from station in context.stations
-                                     where station.legacy_call_letters.Equals(x.station)
-                                     select station.affiliation).FirstOrDefault(),
-                        SpotLength = spotLengths.FirstOrDefault(y => y.id == x.spot_length_id).length,
-                        TimeAired = x.original_air_date.AddSeconds(x.air_time),
-                        GenreName = x.genre
-                    }).ToList());
-                    return posts;
                 });
         }
     }

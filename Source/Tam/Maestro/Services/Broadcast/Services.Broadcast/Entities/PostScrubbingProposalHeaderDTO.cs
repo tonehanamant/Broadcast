@@ -3,7 +3,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities
 {
-    public class PostScrubbingProposalHeaderDTO
+    public class PostScrubbingProposalHeaderDto
     {        
         public int Id { get; set; }
         
@@ -19,9 +19,6 @@ namespace Services.Broadcast.Entities
         
         public string GuaranteedDemo { get; set; }
 
-        public List<ProposalDetailDto> Details { get; set; }
-
-        public List<LookupDto> SpotLengths { get; set; }
-
+        public List<ProposalScrubbingDetailHeaderDto> Details { get; set; }
     }
 }
