@@ -11,6 +11,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class PostServiceIntegrationTests
     {
         [Test]
+        [Ignore]
         public void GetPostsTest()
         {
             var postService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostService>();
