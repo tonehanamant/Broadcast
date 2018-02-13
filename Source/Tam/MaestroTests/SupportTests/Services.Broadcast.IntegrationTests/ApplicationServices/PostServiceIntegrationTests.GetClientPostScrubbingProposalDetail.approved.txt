@@ -6,6 +6,7 @@
       "GenreName": "Do It Yourself",
       "ISCI": "AAAAAAAA",
       "Market": "New York",
+      "OutOfSpec": true,
       "ProgramName": "Program Names R us",
       "SpotLength": 30,
       "Station": "WNBC",
