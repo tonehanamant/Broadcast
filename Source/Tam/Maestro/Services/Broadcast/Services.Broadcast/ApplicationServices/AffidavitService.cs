@@ -41,7 +41,7 @@ namespace Services.Broadcast.ApplicationServices
         ///
         void ScrubAffidavitFile(affidavit_files affidavit_file);
 
-        string JSONifyFile(Stream rawStream,string fileName);
+        string JSONifyFile(Stream rawStream,string fileName,out AffidavitSaveRequest request);
     }
 
     public class AffidavitService : IAffidavitService
@@ -330,7 +330,7 @@ namespace Services.Broadcast.ApplicationServices
             ,"LeadOutGenre"
         };
         
-        public string JSONifyFile(Stream rawStream,string fileName)
+        public string JSONifyFile(Stream rawStream,string fileName,out AffidavitSaveRequest request)
         {
             TextFileLineReader reader;
             //if (fileName.EndsWith("xlsx"))
@@ -344,17 +344,16 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("Unknown file");
             }
 
-            AffidavitSaveRequest request = new AffidavitSaveRequest();
+            request = new AffidavitSaveRequest();
             request.FileName = fileName;
             request.FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(rawStream));
             request.Source = (int)AffidaviteFileSource.Strata;
 
             using (reader.Initialize(rawStream))
             {
-                while (!reader.IsEOF())
+                reader.NextRow();
+                while (!reader.IsEOFOrEmptyRow())
                 {
-                    reader.NextRow();
-
                     var detail = new AffidavitSaveRequestDetail();
                     
                     detail.AirTime = DateTime.Parse(reader.GetCellValue("Spot Time"));
@@ -369,7 +368,7 @@ namespace Services.Broadcast.ApplicationServices
                     detail.LeadOutGenre = reader.GetCellValue("LeadOutGenre");
 
                     request.Details.Add(detail);
-                    
+                    reader.NextRow();
                 }
             }
             var json = JsonConvert.SerializeObject(request);
