@@ -53,15 +53,13 @@
         {
           "Contain": 2,
           "Genre": {
-            "Display": null,
-            "Id": 5
+            "Display": null
           }
         },
         {
           "Contain": 2,
           "Genre": {
-            "Display": null,
-            "Id": 10
+            "Display": null
           }
         }
       ],
@@ -70,11 +68,15 @@
       "ProgramCriteria": [
         {
           "Contain": 2,
-          "ProgramName": "Shopping"
+          "Program": {
+            "Display": "Shopping"
+          }
         },
         {
           "Contain": 2,
-          "ProgramName": "Paid"
+          "Program": {
+            "Display": "Paid"
+          }
         }
       ],
       "Quarters": [
@@ -296,8 +298,7 @@
   "SecondaryDemos": [],
   "SpotLengths": [
     {
-      "Display": "30",
-      "Id": 1
+      "Display": "30"
     }
   ],
   "Status": 0,

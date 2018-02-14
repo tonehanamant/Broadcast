@@ -54,11 +54,15 @@
       "ProgramCriteria": [
         {
           "Contain": 1,
-          "ProgramName": "News"
+          "Program": {
+            "Display": "News"
+          }
         },
         {
           "Contain": 1,
-          "ProgramName": "Tonight"
+          "Program": {
+            "Display": "Tonight"
+          }
         }
       ],
       "Quarters": [

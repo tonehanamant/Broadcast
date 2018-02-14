@@ -6001,7 +6001,7 @@
       "EstimateId": 3417,
       "HasLeadInScheduleMatches": false,
       "Id": 10272,
-      "Impressions": 11188.054999999998,
+      "Impressions": 11188.054999999999,
       "Isci": "17LPLC0721H",
       "LinkedToBlock": false,
       "LinkedToLeadin": false,

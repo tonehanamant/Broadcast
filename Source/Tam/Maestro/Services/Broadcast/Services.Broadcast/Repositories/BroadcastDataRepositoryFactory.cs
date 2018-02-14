@@ -43,6 +43,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<ISpotLengthRepository, SpotLengthBroadcastRepository>();
             instance.RegisterType<IInventoryFileRepository, InventoryFileRepository>();
             instance.RegisterType<IGenreRepository, GenreRepository>();
+            instance.RegisterType<IProgramNameRepository, ProgramNameRepository>();
             instance.RegisterType<IScheduleAggregateRepository, ScheduleAggregateRepository>();
             instance.RegisterType<IStationContactsRepository, StationContactsRepository>();
             instance.RegisterType<IProposalRepository, ProposalRepository>();

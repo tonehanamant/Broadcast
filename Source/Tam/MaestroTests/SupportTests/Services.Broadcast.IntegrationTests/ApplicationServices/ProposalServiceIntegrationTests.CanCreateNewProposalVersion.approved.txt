@@ -37,7 +37,9 @@
       "ProgramCriteria": [
         {
           "Contain": 2,
-          "ProgramName": "Open Market Program"
+          "Program": {
+            "Display": "Open Market Program"
+          }
         }
       ],
       "Quarters": [
@@ -162,8 +164,7 @@
   ],
   "SpotLengths": [
     {
-      "Display": "30",
-      "Id": 1
+      "Display": "30"
     }
   ],
   "Status": 1,

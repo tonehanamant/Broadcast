@@ -182,7 +182,7 @@ namespace Services.Broadcast.ApplicationServices
                     if (proposalDetail.ProgramCriteria.Any())
                     {
                         var progCriteria = proposalDetail.ProgramCriteria.SingleOrDefault(pc =>
-                                                pc.ProgramName == affidavitFileDetail.program_name);
+                                                pc.Program.Display == affidavitFileDetail.program_name);
 
                         if (progCriteria != null)
                             scrub.match_program = progCriteria.Contain == ContainTypeEnum.Include;

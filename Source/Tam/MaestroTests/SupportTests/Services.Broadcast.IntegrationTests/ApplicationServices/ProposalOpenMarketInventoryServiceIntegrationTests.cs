@@ -63,6 +63,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
                 jsonResolver.Ignore(typeof (ProposalProgramDto), "ManifestId");
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
 
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -171,7 +172,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         ProgramNameSearchCriteria = new List<ProgramCriteria>
                         {
-                            new ProgramCriteria{Contain = ContainTypeEnum.Include, ProgramName = "Open Market Program"}
+                            new ProgramCriteria{Contain = ContainTypeEnum.Include, Program = new LookupDto{Display = "Open Market Program" } }
                         }
                     }
                 };
@@ -552,7 +553,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             new ProgramCriteria
                             {
                                 Contain = ContainTypeEnum.Exclude,
-                                ProgramName = "Open Market Program Too"
+                                Program = new LookupDto{Display = "Open Market Program Too" }
                             }
                         }
                     }
@@ -580,7 +581,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             new ProgramCriteria
                             {
                                 Contain = ContainTypeEnum.Exclude,
-                                ProgramName = "Open Market Program Too"
+                                Program = new LookupDto{Display = "Open Market Program Too" }
                             }
                         }
                     }
@@ -670,7 +671,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         ProgramNameSearchCriteria = new List<ProgramCriteria>
                         {
-                            new ProgramCriteria {Contain = ContainTypeEnum.Exclude, ProgramName = proposalInventory.RefineFilterPrograms.First()}
+                            new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto{Display = proposalInventory.RefineFilterPrograms.First() } }
                         }
                     }
                 };
@@ -897,8 +898,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var newCriteria = new List<ProgramCriteria>
             {
-                new ProgramCriteria {Contain = ContainTypeEnum.Include, ProgramName = "cde"},
-                new ProgramCriteria {Contain = ContainTypeEnum.Exclude, ProgramName = "abc"}
+                new ProgramCriteria {Contain = ContainTypeEnum.Include, Program = new LookupDto{ Display = "cde" } },
+                new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto { Display = "abc"} }
             };
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
@@ -941,8 +942,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProgramNameSearchCriteria = new List<ProgramCriteria>
                     {
-                        new ProgramCriteria {Contain = ContainTypeEnum.Include, ProgramName = "cde", Id = deleteCriteriaIds.First()},
-                        new ProgramCriteria {Contain = ContainTypeEnum.Exclude, ProgramName = "abc", Id = deleteCriteriaIds.Last()}
+                        new ProgramCriteria {Contain = ContainTypeEnum.Include, Program = new LookupDto{ Display = "cde" }, Id = deleteCriteriaIds.First()},
+                        new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto{ Display = "abc" }, Id = deleteCriteriaIds.Last()}
                     }
                 }
             };
@@ -958,7 +959,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void ClearExistingCriteria_Deletes_OldProgramCriteria_And_AddNewProgramCriteria()
         {
             var deleteCriteriaIds = new List<int> { 420 };
-            var newCriteria = new List<ProgramCriteria> { new ProgramCriteria { Contain = ContainTypeEnum.Include, ProgramName = "cde" } };
+            var newCriteria = new List<ProgramCriteria> { new ProgramCriteria { Contain = ContainTypeEnum.Include, Program = new LookupDto { Display = "cde" } } };
 
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
@@ -977,8 +978,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProgramNameSearchCriteria = new List<ProgramCriteria>
                     {
-                        new ProgramCriteria {Contain = ContainTypeEnum.Exclude, ProgramName = "cde", Id = 322},
-                        new ProgramCriteria {Contain = ContainTypeEnum.Exclude, ProgramName = "abc", Id = deleteCriteriaIds.First()}
+                        new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto{Display = "cde" }, Id = 322},
+                        new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto{Display = "abc" }, Id = deleteCriteriaIds.First()}
                     }
                 }
             };
@@ -1083,7 +1084,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.ProgramNameSearchCriteria = new List<ProgramCriteria>
             {
-                new ProgramCriteria {Contain = ContainTypeEnum.Include, ProgramName = "ABC"}
+                new ProgramCriteria {Contain = ContainTypeEnum.Include, Program = new LookupDto{ Display = "ABC" } }
             };
             //var program = new ProposalProgramDto { ProgramName = "ABC" };
             //Assert.False(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
@@ -1096,7 +1097,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.ProgramNameSearchCriteria = new List<ProgramCriteria>
             {
-                new ProgramCriteria {Contain = ContainTypeEnum.Include, ProgramName = "ABC"}
+                new ProgramCriteria {Contain = ContainTypeEnum.Include, Program = new LookupDto{Display = "ABC" } }
             };
             //var program = new ProposalProgramDto { ProgramName = "AB123C123" };
             //Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
@@ -1109,7 +1110,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.ProgramNameSearchCriteria = new List<ProgramCriteria>
             {
-                new ProgramCriteria {Contain = ContainTypeEnum.Exclude, ProgramName = "ABC"}
+                new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto{ Display = "ABC" } }
             };
             //var program = new ProposalProgramDto { ProgramName = "ABC" };
             //Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
@@ -1122,7 +1123,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.ProgramNameSearchCriteria = new List<ProgramCriteria>
             {
-                new ProgramCriteria {Contain = ContainTypeEnum.Exclude, ProgramName = "ABC"}
+                new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto{Display = "ABC" } }
             };
             //var program = new ProposalProgramDto { ProgramName = "AB123C123" };
             //Assert.False(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));

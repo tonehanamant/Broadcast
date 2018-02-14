@@ -21,6 +21,10 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Clients;
+using System.Net;
+using Newtonsoft.Json;
+using Tam.Maestro.Services.Cable.Entities;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -39,6 +43,8 @@ namespace Services.Broadcast.ApplicationServices
         ValidationWarningDto DeleteProposal(int proposalId);
         Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
         List<LookupDto> FindGenres(string genreSearchString);
+        List<LookupDto> FindPrograms(ProgramSearchRequest request, string requestUrl);
+        List<LookupDto> FindProgramsExternalApi(ProgramSearchRequest request);
     }
 
     public class ProposalService : IProposalService
@@ -54,6 +60,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalInventoryRepository _ProposalInventoryRepository;
         private readonly IStationRepository _StationRepository;
         private readonly IGenreRepository _GenreRepository;
+        private readonly IProgramNameRepository _ProgramNameRepository;
         private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine;
         private readonly IProposalScxConverter _ProposalScxConverter;
         private readonly IPostingBooksService _PostingBooksService;
@@ -88,6 +95,7 @@ namespace Services.Broadcast.ApplicationServices
                 _BroadcastDataRepositoryFactory.GetDataRepository<IProposalInventoryRepository>();
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
+            _ProgramNameRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramNameRepository>();
             _ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
             _ProposalScxConverter = proposalScxConverter;
             _PostingBooksService = postingBooksService;
@@ -1285,5 +1293,44 @@ namespace Services.Broadcast.ApplicationServices
         {
             return _GenreRepository.FindGenres(genreSearchString);
         }
+
+        public List<LookupDto> FindPrograms(ProgramSearchRequest request, string requestUrl)
+        {
+            if (request.Start < 1) request.Start = 1;
+            string searchUrl;
+            try
+            {
+                searchUrl = BroadcastServiceSystemParameter.ProgramSearchApiUrl;
+            }catch(System.Exception ex)
+            {
+                if(ex.Message.Contains("not found"))
+                {
+                    var url = new Uri(requestUrl);
+                    //Fallback for development
+                    searchUrl = url.GetLeftPart(UriPartial.Authority) + "/api/Proposals/FindProgramsExternalApi";
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            var jsonRequest = JsonConvert.SerializeObject(request);
+
+            using (var webClient = new WebClient())
+            {
+                webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                var jsonResult = webClient.UploadString(searchUrl, jsonRequest);
+                var result = JsonConvert.DeserializeObject<BaseResponse<List<LookupDto>>>(jsonResult);
+                return result.Data;
+            }
+        }
+
+        public List<LookupDto> FindProgramsExternalApi(ProgramSearchRequest request)
+        {
+            if (request.Start < 1) request.Start = 1;
+            return _ProgramNameRepository.FindPrograms(request.Name, request.Start, request.Limit);
+        }
+
     }
 }
