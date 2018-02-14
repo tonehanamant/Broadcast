@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
-import { delay } from 'redux-saga';
-import { call, takeEvery, put, select } from 'redux-saga/effects';
-import { push } from 'react-router-redux';
+// import { delay } from 'redux-saga';
+import { takeEvery, put, select } from 'redux-saga/effects';
+// import { push } from 'react-router-redux';
 import moment from 'moment';
 
 import * as appActions from 'Ducks/app/actionTypes';
@@ -817,8 +817,11 @@ export function* deleteProposalById({ payload: id }) {
         processing: true,
       },
     });
-    yield call(delay, 2000);
-    yield put(push('/broadcast/planning'));
+    //  yield call(delay, 2000);
+    // yield put(push('/broadcast/planning'));
+    setTimeout(() => {
+      window.location = '/broadcast/planning';
+    }, 1000);
   } catch (e) {
     if (e.response) {
       yield put({
