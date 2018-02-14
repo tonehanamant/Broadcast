@@ -129,12 +129,6 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var affidavitFileDetail in affidavit_file.affidavit_file_details)
             {
-                var inSpecScrubs =
-                    affidavitFileDetail.affidavit_client_scrubs.Where(s =>
-                        s.status == (int) AffidavitClientScrubStatus.InSpec);
-                if (!inSpecScrubs.Any())
-                    continue;
-
                 if (!stations.ContainsKey(affidavitFileDetail.station))
                 {
                     affidavitFileDetail.affidavit_client_scrubs.ForEach(s =>
@@ -152,7 +146,7 @@ namespace Services.Broadcast.ApplicationServices
                 var proposals = _ProposalService.GetProposalsByQuarterWeeks(quarterWeekIds);
 
                 var affidavitStation = stations[affidavitFileDetail.station];
-                foreach (var scrub in inSpecScrubs)
+                foreach (var scrub in affidavitFileDetail.affidavit_client_scrubs)
                 {
                     scrub.match_station = false;
                     scrub.match_market = false;
@@ -277,12 +271,8 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _CalculateAffidavitImpressions(affidavit_files affidavitFile, int postingBookId)
         {
-            var details = affidavitFile.affidavit_file_details.Where(d =>
-                d.affidavit_client_scrubs.Any(s => s.status == (int) AffidavitClientScrubStatus.InSpec));
-            
-            if (!details.Any())
-                return;
-
+            var details = affidavitFile.affidavit_file_details;
+           
             var audiencesRepository = _BroadcastDataRepositoryFactory.GetDataRepository<INsiComponentAudienceRepository>();
             var audiencesIds =
                 audiencesRepository.GetAllNsiComponentAudiences().
