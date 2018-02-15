@@ -25,6 +25,7 @@ using System.Net;
 using Newtonsoft.Json;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using System.Diagnostics;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -1298,21 +1299,13 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (request.Start < 1) request.Start = 1;
             string searchUrl;
-            try
+            if (Debugger.IsAttached) //only for development
             {
+                var url = new Uri(requestUrl);
+                searchUrl = url.GetLeftPart(UriPartial.Authority) + "/api/Proposals/FindProgramsExternalApi";
+            }
+            else{
                 searchUrl = BroadcastServiceSystemParameter.ProgramSearchApiUrl;
-            }catch(System.Exception ex)
-            {
-                if(ex.Message.Contains("not found"))
-                {
-                    var url = new Uri(requestUrl);
-                    //Fallback for development
-                    searchUrl = url.GetLeftPart(UriPartial.Authority) + "/api/Proposals/FindProgramsExternalApi";
-                }
-                else
-                {
-                    throw;
-                }
             }
 
             var jsonRequest = JsonConvert.SerializeObject(request);
