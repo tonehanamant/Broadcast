@@ -108,7 +108,7 @@ namespace Services.Broadcast.Converters
             }
             _Parser.SetDelimiters(new string[] { "," });
 
-            NextRow();  // point to first row
+            NextRow();  // point to header row
             _SetupHeadersValidateSheet();
 
             return _Parser;
@@ -137,8 +137,9 @@ namespace Services.Broadcast.Converters
 
         public override bool IsEmptyRow()
         {
-            return _CurrentRow == null || _CurrentRow.Length == 0 || _CurrentRow.All(i => string.IsNullOrWhiteSpace(i));
-
+            return _CurrentRow == null 
+                    || _CurrentRow.Length == 0 
+                    || _CurrentRow.All(i => string.IsNullOrWhiteSpace(i));
         }
         public override string GetCellValue(int col)
         {
