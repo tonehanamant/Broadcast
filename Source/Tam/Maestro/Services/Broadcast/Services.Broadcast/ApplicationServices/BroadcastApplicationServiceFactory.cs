@@ -107,7 +107,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAffidavitService, AffidavitService>();
             unityContainer.RegisterType<IAffidavitMatchingEngine, AffidavitMatchingEngine>();
             unityContainer.RegisterType<IWhosWatchingTvService, WhosWatchingTvService>();
-            unityContainer.RegisterType<IPostService, PostService>();
+            unityContainer.RegisterType<IAffidavitScrubbingService, AffidavitScrubbingService>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

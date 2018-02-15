@@ -163,7 +163,7 @@
     <Compile Include="ApplicationServices\Inventory\CNNStationInventoryGroupService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryManifestService.cs" />
     <Compile Include="ApplicationServices\PostingBooksService.cs" />
-    <Compile Include="ApplicationServices\PostService.cs" />
+    <Compile Include="ApplicationServices\AffidavitScrubbingService.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryGroupService.cs" />
     <Compile Include="ApplicationServices\WhosWatchingTvService.cs" />
@@ -212,8 +212,8 @@
     <Compile Include="Entities\OpenMarketRefineProgramsRequest.cs" />
     <Compile Include="Entities\DefaultPostingBooksDto.cs" />
     <Compile Include="Entities\PostingBookResultDto.cs" />
-    <Compile Include="Entities\PostScrubbingProposalDetailDto.cs" />
-    <Compile Include="Entities\PostScrubbingProposalHeaderDto.cs" />
+    <Compile Include="Entities\ClientPostScrubbingProposalDetailDto.cs" />
+    <Compile Include="Entities\ClientPostScrubbingProposalHeaderDto.cs" />
     <Compile Include="Entities\ProposalDetailPostScrubbingDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleInventoryTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />

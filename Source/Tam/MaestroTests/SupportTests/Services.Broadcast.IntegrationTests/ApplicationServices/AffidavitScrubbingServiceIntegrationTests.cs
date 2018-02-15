@@ -12,9 +12,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     [UseReporter(typeof(DiffReporter))]
-    public class PostServiceIntegrationTests
+    public class AffidavitScrubbingServiceIntegrationTests
     {
-        private readonly IPostService _PostService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostService>();
+        private readonly IAffidavitScrubbingService _PostService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>();
 
         [Test]
         public void GetPostsTest()
@@ -32,7 +32,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
-                jsonResolver.Ignore(typeof(PostScrubbingProposalHeaderDto), "Id");
+                jsonResolver.Ignore(typeof(ClientPostScrubbingProposalHeaderDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
@@ -58,7 +58,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
-                jsonResolver.Ignore(typeof(PostScrubbingProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ClientPostScrubbingProposalDetailDto), "Id");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {

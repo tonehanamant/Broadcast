@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
-    public class PostScrubbingProposalDetailDto
+    public class ClientPostScrubbingProposalDetailDto
     {
         public int? Id { get; set; }
         
@@ -14,6 +14,6 @@ namespace Services.Broadcast.Entities
         public List<ProgramCriteria> Programs { get; set; }
         public List<GenreCriteria> Genres { get; set; }
 
-        public List<ProposalDetailPostScrubbingDto> Details { get; set; } = new List<ProposalDetailPostScrubbingDto>();
+        public List<ProposalDetailPostScrubbingDto> ClientScrubs  { get; set; } = new List<ProposalDetailPostScrubbingDto>();
     }
 }

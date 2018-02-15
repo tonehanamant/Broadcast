@@ -1,18 +1,22 @@
 ﻿{
-  "DayPart": "M-F 9AM-10AM",
-  "Details": [
+  "ClientScrubs": [
     {
       "Affiliate": "NBC",
       "GenreName": "Do It Yourself",
       "ISCI": "AAAAAAAA",
       "Market": "New York",
-      "OutOfSpec": true,
+      "MatchGenre": true,
+      "MatchMarket": true,
+      "MatchProgram": true,
+      "MatchStation": true,
+      "MatchTime": true,
       "ProgramName": "Program Names R us",
       "SpotLength": 30,
       "Station": "WNBC",
       "TimeAired": "2016-06-03T09:00:00"
     }
   ],
+  "DayPart": "M-F 9AM-10AM",
   "FlightEndDate": "2016-06-06T00:00:00",
   "FlightStartDate": "2016-05-30T00:00:00",
   "Genres": [],

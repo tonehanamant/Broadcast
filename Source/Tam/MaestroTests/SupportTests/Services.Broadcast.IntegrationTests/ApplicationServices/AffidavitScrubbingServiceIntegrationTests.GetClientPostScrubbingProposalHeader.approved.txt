@@ -1,5 +1,7 @@
 ﻿{
   "Advertiser": "Test Advertiser 9",
+  "BlackoutMarketGroup": null,
+  "BlackoutMarketGroupId": null,
   "Details": [
     {
       "DayPart": "M-F 9AM-10AM",
@@ -10,6 +12,7 @@
     }
   ],
   "GuaranteedDemo": "House Holds",
+  "MarketGroupId": 100,
   "Markets": [],
   "Name": "Proposal Test",
   "Notes": null,

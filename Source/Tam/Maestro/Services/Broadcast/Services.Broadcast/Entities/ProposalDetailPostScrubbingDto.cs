@@ -12,6 +12,10 @@ namespace Services.Broadcast.Entities
         public string Affiliate { get; set; }
         public string Market { get; set; }
         public string Station { get; set; }
-        public bool OutOfSpec { get; set; }
+        public bool MatchProgram { get; set; }
+        public bool MatchGenre { get; set; }
+        public bool MatchMarket { get; set; }
+        public bool MatchStation { get; set; }
+        public bool MatchTime { get; set; }
     }
 }

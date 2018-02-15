@@ -3,7 +3,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities
 {
-    public class PostScrubbingProposalHeaderDto
+    public class ClientPostScrubbingProposalHeaderDto
     {        
         public int Id { get; set; }
         
@@ -12,6 +12,12 @@ namespace Services.Broadcast.Entities
         public string Advertiser { get; set; }
                 
         public List<ProposalMarketDto> Markets { get; set; } = new List<ProposalMarketDto>();
+
+        public MarketGroupDto BlackoutMarketGroup { get; set; }
+
+        public ProposalEnums.ProposalMarketGroups MarketGroupId { get; set; }
+
+        public ProposalEnums.ProposalMarketGroups? BlackoutMarketGroupId { get; set; }
 
         public List<string> SecondaryDemos { get; set; } = new List<string>();
         

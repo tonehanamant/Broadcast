@@ -12,7 +12,7 @@ using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public interface IPostService : IApplicationService
+    public interface IAffidavitScrubbingService : IApplicationService
     {
         List<PostDto> GetPosts();
         /// <summary>
@@ -20,14 +20,14 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns>ProposalDto object containing the post scrubbing header</returns>
-        PostScrubbingProposalHeaderDto GetClientPostScrubbingProposalHeader(int proposalId);
+        ClientPostScrubbingProposalHeaderDto GetClientPostScrubbingProposalHeader(int proposalId);
         /// <summary>
         /// Gets a client post scrubbing proposal detail
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <param name="detailId">Detail Id of the proposal to filter by</param>
         /// <returns></returns>
-        PostScrubbingProposalDetailDto GetClientPostScrubbingProposalDetail(int proposalId, int detailId);
+        ClientPostScrubbingProposalDetailDto GetClientPostScrubbingProposalDetail(int proposalId, int detailId);
     }
 
     public class PostDto
@@ -40,9 +40,10 @@ namespace Services.Broadcast.ApplicationServices
         public double? PrimaryAudienceImpressions { get; set; }
     }
 
-    public class PostService : IPostService
+    public class AffidavitScrubbingService : IAffidavitScrubbingService
     {
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
+        private readonly IAffidavitRepository _AffidavitRepositry;
         private readonly IPostRepository _PostRepository;
         private readonly ISpotLengthRepository _SpotLengthRepository;
         private readonly IDaypartCache _DaypartCache;
@@ -50,15 +51,16 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ISMSClient _SmsClient;
         protected readonly IProposalService _ProposalService;
 
-        public PostService(IDataRepositoryFactory broadcastDataRepositoryFactory,
+        public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IDaypartCache daypartCache,
             ISMSClient smsClient,
             IProposalService proposalService,
             IBroadcastAudiencesCache audiencesCache)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
-            _PostRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
+            _AffidavitRepositry = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
             _SpotLengthRepository = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
+            _PostRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
             _DaypartCache = daypartCache;
             _AudiencesCache = audiencesCache;
             _SmsClient = smsClient;
@@ -75,30 +77,36 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns>ProposalDto object containing the post scrubbing header</returns>
-        public PostScrubbingProposalHeaderDto GetClientPostScrubbingProposalHeader(int proposalId)
+        public ClientPostScrubbingProposalHeaderDto GetClientPostScrubbingProposalHeader(int proposalId)
         {
-            PostScrubbingProposalHeaderDto result = new PostScrubbingProposalHeaderDto();
+
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 var proposal = _ProposalService.GetProposalById(proposalId);
-                
-                result.Id = proposal.Id.Value;
-                result.Name = proposal.ProposalName;
-                result.Notes = proposal.Notes;
-                proposal.SecondaryDemos.ForEach(x => result.SecondaryDemos.Add(_AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString));
-                result.Details = proposal.Details.Select(x => new ProposalScrubbingDetailHeaderDto()
-                {
-                    DayPart = x.Daypart.Text,
-                    FlightEndDate = x.FlightEndDate,
-                    FlightStartDate = x.FlightStartDate,
-                    Id = x.Id.Value,
-                    SpotLength = proposal.SpotLengths.First(y => y.Id == x.SpotLengthId).Display
-                }).ToList();
-                result.Markets = proposal.Markets;
-                result.GuaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
-
                 var advertiser = _SmsClient.FindAdvertiserById(proposal.AdvertiserId);
-                result.Advertiser = advertiser != null ? advertiser.Display : string.Empty;
+
+                ClientPostScrubbingProposalHeaderDto result = new ClientPostScrubbingProposalHeaderDto
+                {
+                    Id = proposal.Id.Value,
+                    Name = proposal.ProposalName,
+                    Notes = proposal.Notes,
+                    Markets = proposal.Markets,
+                    MarketGroupId = proposal.MarketGroupId,
+                    BlackoutMarketGroup = proposal.BlackoutMarketGroup,
+                    BlackoutMarketGroupId = proposal.BlackoutMarketGroupId,
+                    Details = proposal.Details.Select(x => new ProposalScrubbingDetailHeaderDto()
+                    {
+                        DayPart = x.Daypart.Text,
+                        FlightEndDate = x.FlightEndDate,
+                        FlightStartDate = x.FlightStartDate,
+                        Id = x.Id.Value,
+                        SpotLength = proposal.SpotLengths.First(y => y.Id == x.SpotLengthId).Display
+                    }).ToList(),
+                    GuaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString,
+                    Advertiser = advertiser != null ? advertiser.Display : string.Empty
+                };
+
+                proposal.SecondaryDemos.ForEach(x => result.SecondaryDemos.Add(_AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString));
 
                 return result;
             }
@@ -109,7 +117,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns></returns>
-        public PostScrubbingProposalDetailDto GetClientPostScrubbingProposalDetail(int proposalId, int detailId)
+        public ClientPostScrubbingProposalDetailDto GetClientPostScrubbingProposalDetail(int proposalId, int detailId)
         {
 
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
@@ -118,18 +126,18 @@ namespace Services.Broadcast.ApplicationServices
 
                 ProposalDetailDto proposalDetail = proposal.Details.First(x => x.Id == detailId);
 
-                return new PostScrubbingProposalDetailDto
+                return new ClientPostScrubbingProposalDetailDto
                 {
-                    Id = proposal.Id,
+                    Id = proposalDetail.Id,
                     FlightStartDate = proposalDetail.FlightStartDate,
                     FlightEndDate = proposalDetail.FlightEndDate,
                     SpotLength = proposal.SpotLengths.First(x => x.Id == proposalDetail.SpotLengthId).Display,
                     DayPart = proposalDetail.Daypart.Text,
-                    Details = _PostRepository.GetProposalDetailPostScrubbing(detailId),
                     Programs = proposalDetail.ProgramCriteria,
-                    Genres = proposalDetail.GenreCriteria
+                    Genres = proposalDetail.GenreCriteria,
+                    ClientScrubs = _AffidavitRepositry.GetProposalDetailPostScrubbing(detailId)
                 };
             }
-        }        
+        }
     }
 }
