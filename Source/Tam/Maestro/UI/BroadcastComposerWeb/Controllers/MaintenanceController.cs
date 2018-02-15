@@ -1,12 +1,17 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities;
+using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
 {
+    [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class MaintenanceController : Controller
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
@@ -35,8 +40,13 @@ namespace BroadcastComposerWeb.Controllers
                 }
                 else
                 {
-                    var json = _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().JSONifyFile(file.InputStream, fileName);
+                    var service = _ApplicationServiceFactory.GetApplicationService<IAffidavitService>();
+                    AffidavitSaveRequest request = new AffidavitSaveRequest();
+                    var json = service.JSONifyFile(file.InputStream, fileName,out request);
+
+                    ViewBag.Id = service.SaveAffidavit(request, "uma", DateTime.Now);
                     ViewBag.Message = json;
+
                 }
             }
 

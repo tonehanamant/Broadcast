@@ -27,11 +27,19 @@
     <label for="file">Filename:</label>
     <input type="file" name="file" id="file" />
     <br/>
-    <input type="submit" />
+    <input type="submit" text="generate JSON" />
     <br/>
     <a href="javascript:copyToClip();">Copy to Clipboard</a>
 
     <br />
+    @{
+        var IdValue = "";
+        if (ViewBag.Id != null)
+        {
+            IdValue = "<div>Uploaded AffidavidID = " + ViewBag.Id + "</div>";
+        }
+    }
+    @IdValue
     <div><b>Results:</b></div>
     <textarea rows="20" style="width: 600px;" id="divJSON">@ViewBag.Message</textarea>
 </form>

@@ -232,14 +232,14 @@ class ProgramGenre extends Component {
 
   onProgramSearch(programQuery) {
     this.setState({ programQuery });
-    const params = { Name: programQuery, Start: 1, Limit: this.state.programResultsLimit + 1 };
+    const params = { Name: programQuery, Start: 1, Limit: this.state.programResultsLimit };
     this.props.getPrograms(params);
   }
 
   handleProgramPagination(e) {
     const currentLimit = this.state.programResultsLimit + this.state.programPageSize;
     this.setState({ programResultsLimit: currentLimit });
-    const params = { Name: this.state.programQuery, Start: 1, Limit: currentLimit + 1 };
+    const params = { Name: this.state.programQuery, Start: 1, Limit: currentLimit };
     // this.props.getPrograms(this.state.programQuery, 1, currentLimit + 1);
     this.props.getPrograms(params);
   }
