@@ -7,5 +7,6 @@
         public string HouseIsci { get; set; }
         public string Brand { get; set; }
         public bool MarriedHouseIsci { get; set; }
+        public string Days { get; set; }
     }
 }

@@ -52,6 +52,24 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-2512 *********************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'monday' OR name = 'tuesday' OR name = 'wednesday' OR name = 'thursday' OR name = 'friday' OR name = 'saturday' OR name = 'sunday'
+              AND OBJECT_ID = OBJECT_ID('[proposal_version_detail_quarter_week_iscis]'))
+BEGIN
+    ALTER TABLE [proposal_version_detail_quarter_week_iscis] 
+	ADD monday bit, 
+		tuesday bit, 
+		wednesday bit, 
+		thursday bit, 
+		friday bit, 
+		saturday bit,
+		sunday bit 
+END
+
+/*************************************** END BCOP-2450 ***********************************************************/
+
 /*************************************** START BCOP-2450 *********************************************************/
 
 IF NOT EXISTS(SELECT 1 FROM sys.columns 
