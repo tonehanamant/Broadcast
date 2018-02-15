@@ -56,6 +56,10 @@ const initialState = {
     DetailInvalid: false,
     DetailGridsInvalid: false,
   },
+  genres: [],
+  isGenresLoading: false,
+  programs: [],
+  isProgramsLoading: false,
 };
 
 initialState.proposalEditForm = { ...initialState.proposal };
@@ -219,45 +223,73 @@ export default function reducer(state = initialState, action) {
 
     // PROPOSAL
     case ACTIONS.RECEIVE_UPDATED_PROPOSAL:
-    return {
-      ...state,
-      // proposal: data.Data,
-      // proposalEditForm: data.Data,
-      proposalEditForm: {
-        ...state.proposalEditForm,
-        TotalCPM: data.Data.TotalCPM,
-        TargetCPM: data.Data.TargetCPM,
-        TotalCPMPercent: data.Data.TotalCPMPercent,
-        TotalCPMMarginAchieved: data.Data.TotalCPMMarginAchieved,
-        TotalCost: data.Data.TotalCost,
-        TargetBudget: data.Data.TargetBudget,
-        TotalCostPercent: data.Data.TotalCostPercent,
-        TotalCostMarginAchieved: data.Data.TotalCostMarginAchieved,
-        TotalImpressions: data.Data.TotalImpressions,
-        TargetImpressions: data.Data.TargetImpressions,
-        TotalImpressionsPercent: data.Data.TotalImpressionsPercent,
-        TotalImpressionsMarginAchieved: data.Data.TotalImpressionsMarginAchieved,
-        TargetUnits: data.Data.TargetUnits,
-        SpotLengths: data.Data.SpotLengths,
-        FlightStartDate: data.Data.FlightStartDate,
-        FlightEndDate: data.Data.FlightEndDate,
-        FlightWeeks: data.Data.FlightWeeks,
-        Details: data.Data.Details,
-      },
-    };
+      return {
+        ...state,
+        // proposal: data.Data,
+        // proposalEditForm: data.Data,
+        proposalEditForm: {
+          ...state.proposalEditForm,
+          TotalCPM: data.Data.TotalCPM,
+          TargetCPM: data.Data.TargetCPM,
+          TotalCPMPercent: data.Data.TotalCPMPercent,
+          TotalCPMMarginAchieved: data.Data.TotalCPMMarginAchieved,
+          TotalCost: data.Data.TotalCost,
+          TargetBudget: data.Data.TargetBudget,
+          TotalCostPercent: data.Data.TotalCostPercent,
+          TotalCostMarginAchieved: data.Data.TotalCostMarginAchieved,
+          TotalImpressions: data.Data.TotalImpressions,
+          TargetImpressions: data.Data.TargetImpressions,
+          TotalImpressionsPercent: data.Data.TotalImpressionsPercent,
+          TotalImpressionsMarginAchieved: data.Data.TotalImpressionsMarginAchieved,
+          TargetUnits: data.Data.TargetUnits,
+          SpotLengths: data.Data.SpotLengths,
+          FlightStartDate: data.Data.FlightStartDate,
+          FlightEndDate: data.Data.FlightEndDate,
+          FlightWeeks: data.Data.FlightWeeks,
+          Details: data.Data.Details,
+        },
+      };
 
     case ACTIONS.SET_PROPOSAL_VALIDATION_STATE:
-    return Object.assign({}, state, {
-      proposalValidationStates: {
-        ...state.proposalValidationStates,
-        [payload.type]: payload.state,
-      },
-    });
+      return Object.assign({}, state, {
+        proposalValidationStates: {
+          ...state.proposalValidationStates,
+          [payload.type]: payload.state,
+        },
+      });
 
     case ACTIONS.RESTORE_PLANNING_PROPOSAL: {
       return {
         ...state,
         planning: payload,
+      };
+    }
+
+    case ACTIONS.TOGGLE_GENRE_LOADING: {
+      return {
+        ...state,
+        isGenresLoading: !state.isGenresLoading,
+      };
+    }
+
+    case ACTIONS.RECEIVE_GENRES: {
+      return {
+        ...state,
+        genres: payload,
+      };
+    }
+
+    case ACTIONS.TOGGLE_PROGRAM_LOADING: {
+      return {
+        ...state,
+        isProgramsLoading: !state.isProgramsLoading,
+      };
+    }
+
+    case ACTIONS.RECEIVE_PROGRAMS: {
+      return {
+        ...state,
+        programs: payload,
       };
     }
 
@@ -360,4 +392,14 @@ export const setProposalValidationState = typeState => ({
 export const restorePlanningProposal = planningState => ({
   type: ACTIONS.RESTORE_PLANNING_PROPOSAL,
   payload: planningState,
+});
+
+export const getGenres = query => ({
+  type: ACTIONS.REQUEST_GENRES,
+  payload: query,
+});
+
+export const getPrograms = params => ({
+  type: ACTIONS.REQUEST_PROGRAMS,
+  payload: params,
 });

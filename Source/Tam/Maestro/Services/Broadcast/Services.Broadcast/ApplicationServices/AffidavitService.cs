@@ -41,7 +41,7 @@ namespace Services.Broadcast.ApplicationServices
         ///
         void ScrubAffidavitFile(affidavit_files affidavit_file);
 
-        string JSONifyFile(Stream rawStream,string fileName);
+        string JSONifyFile(Stream rawStream,string fileName,out AffidavitSaveRequest request);
     }
 
     public class AffidavitService : IAffidavitService
@@ -100,7 +100,7 @@ namespace Services.Broadcast.ApplicationServices
                         w => new affidavit_client_scrubs
                         {
                             proposal_version_detail_quarter_week_id = w.ProposalVersionDetailQuarterWeekId,
-                            match_time = w.AirtimeMatch,                      
+                            match_time = w.AirtimeMatch,
                             modified_by = username,
                             modified_date = currentDateTime,
                             lead_in = w.IsLeadInMatch,
@@ -138,7 +138,6 @@ namespace Services.Broadcast.ApplicationServices
                     });
                     continue;
                 }
-
                 var quarterWeekIds =
                     affidavitFileDetail.affidavit_client_scrubs.Select(s => s.proposal_version_detail_quarter_week_id).ToList();
                 var stationManifests = _BroadcastDataRepositoryFactory
@@ -182,7 +181,7 @@ namespace Services.Broadcast.ApplicationServices
                     if (proposalDetail.ProgramCriteria.Any())
                     {
                         var progCriteria = proposalDetail.ProgramCriteria.SingleOrDefault(pc =>
-                                                pc.ProgramName == affidavitFileDetail.program_name);
+                                                pc.Program.Display == affidavitFileDetail.program_name);
 
                         if (progCriteria != null)
                             scrub.match_program = progCriteria.Contain == ContainTypeEnum.Include;
@@ -272,15 +271,18 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _CalculateAffidavitImpressions(affidavit_files affidavitFile, int postingBookId)
         {
+            var details = affidavitFile.affidavit_file_details;
+           
             var audiencesRepository = _BroadcastDataRepositoryFactory.GetDataRepository<INsiComponentAudienceRepository>();
             var audiencesIds =
                 audiencesRepository.GetAllNsiComponentAudiences().
                 Select(a => a.Id).
                 ToList();
 
-            foreach (var affidavitFileDetail in affidavitFile.affidavit_file_details)
+            foreach (var affidavitFileDetail in details)
             {
-                affidavitFileDetail.affidavit_file_detail_audiences = _CalculdateImpressionsForNielsenAudiences(affidavitFileDetail, audiencesIds, postingBookId);
+                affidavitFileDetail.affidavit_file_detail_audiences =
+                    _CalculdateImpressionsForNielsenAudiences(affidavitFileDetail, audiencesIds, postingBookId);
             }
         }
 
@@ -330,7 +332,7 @@ namespace Services.Broadcast.ApplicationServices
             ,"LeadOutGenre"
         };
         
-        public string JSONifyFile(Stream rawStream,string fileName)
+        public string JSONifyFile(Stream rawStream,string fileName,out AffidavitSaveRequest request)
         {
             TextFileLineReader reader;
             //if (fileName.EndsWith("xlsx"))
@@ -344,17 +346,16 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("Unknown file");
             }
 
-            AffidavitSaveRequest request = new AffidavitSaveRequest();
+            request = new AffidavitSaveRequest();
             request.FileName = fileName;
             request.FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(rawStream));
             request.Source = (int)AffidaviteFileSource.Strata;
 
             using (reader.Initialize(rawStream))
             {
-                while (!reader.IsEOF())
+                reader.NextRow();
+                while (!reader.IsEOFOrEmptyRow())
                 {
-                    reader.NextRow();
-
                     var detail = new AffidavitSaveRequestDetail();
                     
                     detail.AirTime = DateTime.Parse(reader.GetCellValue("Spot Time"));
@@ -369,7 +370,7 @@ namespace Services.Broadcast.ApplicationServices
                     detail.LeadOutGenre = reader.GetCellValue("LeadOutGenre");
 
                     request.Details.Add(detail);
-                    
+                    reader.NextRow();
                 }
             }
             var json = JsonConvert.SerializeObject(request);

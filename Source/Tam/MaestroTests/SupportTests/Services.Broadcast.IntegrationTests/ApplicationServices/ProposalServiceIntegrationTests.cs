@@ -80,12 +80,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new ProgramCriteria()
                     {
                         Contain = ContainTypeEnum.Include,
-                        ProgramName = "News"
+                        Program = new LookupDto{ Display = "News" }
                     },
                     new ProgramCriteria()
                     {
                         Contain = ContainTypeEnum.Include,
-                        ProgramName = "Tonight"
+                        Program = new LookupDto{Display = "Tonight" }
                     }
                 },
                 Quarters = new List<ProposalQuarterDto>
@@ -375,6 +375,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(GenreCriteria), "Id");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
 
 
                 var jsonSettings = new JsonSerializerSettings()
@@ -564,12 +565,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new ProgramCriteria()
                 {
                     Contain = ContainTypeEnum.Exclude,
-                    ProgramName = "Shopping"
+                    Program = new LookupDto{ Display = "Shopping" }
                 },
                 new ProgramCriteria()
                 {
                     Contain = ContainTypeEnum.Exclude,
-                    ProgramName = "Paid"
+                    Program = new LookupDto{ Display = "Paid" }
                 }
             };
 
@@ -582,6 +583,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
             jsonResolver.Ignore(typeof(GenreCriteria), "Id");
             jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+            jsonResolver.Ignore(typeof(LookupDto), "Id");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -771,12 +773,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     new ProgramCriteria()
                     {
-                        ProgramName = "Sun",
+                        Program = new LookupDto{Display = "Sun" },
                         Contain = ContainTypeEnum.Include
                     },
                     new ProgramCriteria()
                     {
-                        ProgramName = "Moon",
+                        Program = new LookupDto{Display = "Moon" },
                         Contain = ContainTypeEnum.Exclude
                     }
                 });
@@ -831,6 +833,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
 
                 var jsonSettings = new JsonSerializerSettings()
@@ -1844,6 +1847,66 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanEditProposalDetailCriteria()
+        {
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = _ProposalService.GetProposalById(251);
+
+                // editing the first proposal detail
+                var editDetail = proposalDto.Details.First();
+                editDetail.ProgramCriteria = new List<ProgramCriteria>
+                {
+                    new ProgramCriteria
+                    {
+                         Contain = ContainTypeEnum.Include,
+                         Program = new LookupDto
+                         {
+                             Id = 1,
+                             Display = "Test Program 123"
+                         }
+                    }
+                };
+
+                editDetail.GenreCriteria = new List<GenreCriteria>
+                {
+                    new GenreCriteria
+                    {
+                         Contain = ContainTypeEnum.Include,
+                         Genre = new LookupDto
+                         {
+                             Id = 1,
+                             Display = "Action"
+                         }
+                    }
+                };
+
+                var result = _ProposalService.UpdateProposal(proposalDto.Details);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Daypart");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Markets");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {

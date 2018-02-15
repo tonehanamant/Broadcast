@@ -339,6 +339,13 @@
           <Property Name="modified_date" Type="datetime" Nullable="false" />
           <Property Name="playback_type" Type="tinyint" Nullable="false" />
         </EntityType>
+        <EntityType Name="program_names">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="program_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="proposal_version_audiences">
           <Key>
             <PropertyRef Name="id" />
@@ -374,6 +381,7 @@
           <Property Name="proposal_version_detail_id" Type="int" Nullable="false" />
           <Property Name="contain_type" Type="tinyint" Nullable="false" />
           <Property Name="program_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="program_name_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="proposal_version_detail_quarter_week_iscis">
           <Key>
@@ -1962,6 +1970,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="post_file_detail_impressions" EntityType="Self.post_file_detail_impressions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_details" EntityType="Self.post_file_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_files" EntityType="Self.post_files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="program_names" EntityType="Self.program_names" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proposal_version_audiences" EntityType="Self.proposal_version_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proposal_version_detail_criteria_cpm" EntityType="Self.proposal_version_detail_criteria_cpm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proposal_version_detail_criteria_genres" EntityType="Self.proposal_version_detail_criteria_genres" Schema="dbo" store:Type="Tables" />
@@ -2581,7 +2590,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="genres" EntityType="BroadcastModel.genre" />
           <EntitySet Name="proposal_version_detail_criteria_cpm" EntityType="BroadcastModel.proposal_version_detail_criteria_cpm" />
           <EntitySet Name="proposal_version_detail_criteria_genres" EntityType="BroadcastModel.proposal_version_detail_criteria_genres" />
-          <EntitySet Name="proposal_version_detail_criteria_programs" EntityType="BroadcastModel.proposal_version_detail_criteria_programs" />
           <AssociationSet Name="FK_proposal_version_detail_criteria_genres_genres" Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres">
             <End Role="genre" EntitySet="genres" />
             <End Role="proposal_version_detail_criteria_genres" EntitySet="proposal_version_detail_criteria_genres" />
@@ -2593,10 +2601,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_proposal_version_detail_criteria_genres_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details">
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
             <End Role="proposal_version_detail_criteria_genres" EntitySet="proposal_version_detail_criteria_genres" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_criteria_programs_proposal_version_criterias" Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias">
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-            <End Role="proposal_version_detail_criteria_programs" EntitySet="proposal_version_detail_criteria_programs" />
           </AssociationSet>
           <EntitySet Name="rep_firms" EntityType="BroadcastModel.rep_firms" />
           <EntitySet Name="bvs_map_types" EntityType="BroadcastModel.bvs_map_types" />
@@ -2775,6 +2779,12 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="affidavit_file_details" EntitySet="affidavit_file_details" />
             <End Role="affidavit_file_detail_problems" EntitySet="affidavit_file_detail_problems" />
           </AssociationSet>
+          <EntitySet Name="proposal_version_detail_criteria_programs" EntityType="BroadcastModel.proposal_version_detail_criteria_programs" />
+          <AssociationSet Name="FK_proposal_version_criteria_programs_proposal_version_criterias" Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias">
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+            <End Role="proposal_version_detail_criteria_programs" EntitySet="proposal_version_detail_criteria_programs" />
+          </AssociationSet>
+          <EntitySet Name="program_names" EntityType="BroadcastModel.program_names" />
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -3770,8 +3780,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_detail_quarters" Relationship="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_quarters" />
           <NavigationProperty Name="proposal_version_detail_criteria_cpm" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_cpm" />
           <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_genres" />
-          <NavigationProperty Name="proposal_version_detail_criteria_programs" Relationship="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_programs" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="proposal_version_details" ToRole="spot_lengths" />
+          <NavigationProperty Name="proposal_version_detail_criteria_programs" Relationship="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_programs" />
         </EntityType>
         <Association Name="FK_proposal_version_details_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -3944,16 +3954,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres" FromRole="proposal_version_detail_criteria_genres" ToRole="genre" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" FromRole="proposal_version_detail_criteria_genres" ToRole="proposal_version_details" />
         </EntityType>
-        <EntityType Name="proposal_version_detail_criteria_programs">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="proposal_version_detail_id" Type="Int32" Nullable="false" />
-          <Property Name="contain_type" Type="Byte" Nullable="false" />
-          <Property Name="program_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" FromRole="proposal_version_detail_criteria_programs" ToRole="proposal_version_details" />
-        </EntityType>
         <Association Name="FK_proposal_version_detail_criteria_genres_genres">
           <End Type="BroadcastModel.genre" Role="genre" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -3992,20 +3992,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="proposal_version_detail_criteria_genres">
-              <PropertyRef Name="proposal_version_detail_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_criteria_programs_proposal_version_criterias">
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.proposal_version_detail_criteria_programs" Role="proposal_version_detail_criteria_programs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_version_details">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_detail_criteria_programs">
               <PropertyRef Name="proposal_version_detail_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -4815,6 +4801,38 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="proposal_version_detail_criteria_programs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="proposal_version_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="contain_type" Type="Byte" Nullable="false" />
+          <Property Name="program_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="program_name_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" FromRole="proposal_version_detail_criteria_programs" ToRole="proposal_version_details" />
+        </EntityType>
+        <Association Name="FK_proposal_version_criteria_programs_proposal_version_criterias">
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.proposal_version_detail_criteria_programs" Role="proposal_version_detail_criteria_programs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_detail_criteria_programs">
+              <PropertyRef Name="proposal_version_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="program_names">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="program_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5393,16 +5411,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="proposal_version_detail_criteria_programs">
-            <EntityTypeMapping TypeName="BroadcastModel.proposal_version_detail_criteria_programs">
-              <MappingFragment StoreEntitySet="proposal_version_detail_criteria_programs">
-                <ScalarProperty Name="program_name" ColumnName="program_name" />
-                <ScalarProperty Name="contain_type" ColumnName="contain_type" />
-                <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="rep_firms">
             <EntityTypeMapping TypeName="BroadcastModel.rep_firms">
               <MappingFragment StoreEntitySet="rep_firms">
@@ -5659,6 +5667,25 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="problem_description" ColumnName="problem_description" />
                 <ScalarProperty Name="problem_type" ColumnName="problem_type" />
                 <ScalarProperty Name="affidavit_file_detail_id" ColumnName="affidavit_file_detail_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proposal_version_detail_criteria_programs">
+            <EntityTypeMapping TypeName="BroadcastModel.proposal_version_detail_criteria_programs">
+              <MappingFragment StoreEntitySet="proposal_version_detail_criteria_programs">
+                <ScalarProperty Name="program_name_id" ColumnName="program_name_id" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="contain_type" ColumnName="contain_type" />
+                <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="program_names">
+            <EntityTypeMapping TypeName="BroadcastModel.program_names">
+              <MappingFragment StoreEntitySet="program_names">
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

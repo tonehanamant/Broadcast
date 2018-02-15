@@ -37,7 +37,9 @@
       "ProgramCriteria": [
         {
           "Contain": 2,
-          "ProgramName": "Open Market Program"
+          "Program": {
+            "Display": "Open Market Program"
+          }
         }
       ],
       "Quarters": [
