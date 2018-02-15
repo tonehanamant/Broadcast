@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
-import { delay } from 'redux-saga';
-import { call, takeEvery, put, select } from 'redux-saga/effects';
-import { push } from 'react-router-redux';
+// import { delay } from 'redux-saga';
+import { takeEvery, put, select } from 'redux-saga/effects';
+// import { push } from 'react-router-redux';
 import moment from 'moment';
 
 import * as appActions from 'Ducks/app/actionTypes';
@@ -817,8 +817,11 @@ export function* deleteProposalById({ payload: id }) {
         processing: true,
       },
     });
-    yield call(delay, 2000);
-    yield put(push('/broadcast/planning'));
+    //  yield call(delay, 2000);
+    // yield put(push('/broadcast/planning'));
+    setTimeout(() => {
+      window.location = '/broadcast/planning';
+    }, 1000);
   } catch (e) {
     if (e.response) {
       yield put({
@@ -1153,6 +1156,91 @@ export function* updateProposal() { // { payload: params }
   }
 }
 
+export function* requestGenres({ payload: query }) {
+	const { getGenres } = api.planning;
+
+	try {
+    yield put({
+      type: ACTIONS.TOGGLE_GENRE_LOADING,
+      payload: {},
+		});
+
+		const response = yield getGenres(query);
+		const { data } = response;
+		yield put({
+      type: ACTIONS.RECEIVE_GENRES,
+      payload: data.Data,
+    });
+
+    yield put({
+      type: ACTIONS.TOGGLE_GENRE_LOADING,
+      payload: {},
+		});
+	} catch (e) {
+		if (e.response) {
+			yield put({
+				type: ACTIONS.DEPLOY_ERROR,
+				error: {
+					error: 'No genres data returned.',
+					message: 'The server encountered an error processing the request (genres). Please try again or contact your administrator to review error logs.',
+					exception: e.response.data.ExceptionMessage || '',
+				},
+			});
+		}
+
+		if (!e.response && e.message) {
+			yield put({
+					type: ACTIONS.DEPLOY_ERROR,
+					error: {
+					message: e.message,
+				},
+			});
+		}
+	}
+}
+
+export function* requestPrograms({ payload: params }) {
+	const { getPrograms } = api.planning;
+
+	try {
+    yield put({
+      type: ACTIONS.TOGGLE_PROGRAM_LOADING,
+      payload: {},
+		});
+
+		const response = yield getPrograms(params);
+		const { data } = response;
+		yield put({
+      type: ACTIONS.RECEIVE_PROGRAMS,
+      payload: data.Data,
+    });
+
+    yield put({
+      type: ACTIONS.TOGGLE_PROGRAM_LOADING,
+      payload: {},
+		});
+	} catch (e) {
+		if (e.response) {
+			yield put({
+				type: ACTIONS.DEPLOY_ERROR,
+				error: {
+					error: 'No programs returned.',
+					message: 'The server encountered an error processing the request (programs). Please try again or contact your administrator to review error logs.',
+					exception: e.response.data.ExceptionMessage || '',
+				},
+			});
+		}
+
+		if (!e.response && e.message) {
+			yield put({
+					type: ACTIONS.DEPLOY_ERROR,
+					error: {
+					message: e.message,
+				},
+			});
+		}
+	}
+}
 
 /* ////////////////////////////////// */
 /* WATCHERS */
@@ -1207,6 +1295,14 @@ export function* watchModelNewProposalDetail() {
 
 export function* watchModelUnorderProposal() {
   yield takeEvery(ACTIONS.UNORDER_PROPOSAL, unorderProposal);
+}
+
+export function* watchRequestGenres() {
+	yield takeEvery(ACTIONS.REQUEST_GENRES, requestGenres);
+}
+
+export function* watchRequestPrograms() {
+	yield takeEvery(ACTIONS.REQUEST_PROGRAMS, requestPrograms);
 }
 
 // if assign watcher > assign in sagas/index rootSaga also

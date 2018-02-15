@@ -336,7 +336,8 @@ namespace Services.Broadcast.Repositories
                     }).ToList(),
                     proposal_version_detail_criteria_programs = proposalDetail.ProgramCriteria.Select(p => new proposal_version_detail_criteria_programs()
                     {
-                        program_name = p.ProgramName,
+                        program_name = p.Program.Display,
+                        program_name_id = p.Program.Id,
                         contain_type = (byte)p.Contain
                     }).ToList(),
                     proposal_version_detail_quarters =
@@ -386,6 +387,8 @@ namespace Services.Broadcast.Repositories
         private static void _UpdateProposalVersionDetails(BroadcastContext context, int proposalVersionId,
             List<ProposalDetailDto> proposalDetails)
         {
+            //for debugging only:
+            //context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
             // remove only details that the user has deleted in the grid
             var proposalVersionDetails =
                 context.proposal_version_details.Where(a => a.proposal_version_id == proposalVersionId)
@@ -443,7 +446,8 @@ namespace Services.Broadcast.Repositories
                             detail.ProgramCriteria.Select(
                                 p => new proposal_version_detail_criteria_programs()
                                 {
-                                    program_name = p.ProgramName,
+                                    program_name = p.Program.Display,
+                                    program_name_id = p.Program.Id,
                                     contain_type = (byte)p.Contain,
                                     proposal_version_detail_id = detail.Id.Value
                                 }));
@@ -452,13 +456,20 @@ namespace Services.Broadcast.Repositories
                     context.proposal_version_detail_criteria_programs.RemoveRange(
                         context.proposal_version_detail_criteria_programs.Where(g => g.proposal_version_detail_id == detail.Id));
                     if (detail.ProgramCriteria != null && detail.ProgramCriteria.Count > 0)
-                        context.proposal_version_detail_criteria_programs.AddRange(
-                            detail.ProgramCriteria.Select(
+                    {
+                        var programCriteria = detail.ProgramCriteria.Select(
                                 g => new proposal_version_detail_criteria_programs()
                                 {
-                                    program_name = g.ProgramName,
-                                    contain_type = (byte)g.Contain
-                                }));
+                                    program_name = g.Program.Display,
+                                    program_name_id = g.Program.Id,
+                                    contain_type = (byte)g.Contain,
+                                    proposal_version_detail_id = detail.Id.Value
+                                });
+                        context.proposal_version_detail_criteria_programs.AddRange(programCriteria);
+
+                    }
+                        
+
 
                     // deal with quarters that have been deleted 
                     // scenario where user maintain the detail but change completely the flight generating new quarters for this particular detail
@@ -808,8 +819,12 @@ namespace Services.Broadcast.Repositories
                 ProgramCriteria = version.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
                 {
                     Id = p.id,
-                    ProgramName = p.program_name,
-                    Contain = (ContainTypeEnum) p.contain_type
+                    Contain = (ContainTypeEnum) p.contain_type,
+                    Program = new LookupDto
+                    {
+                        Id = p.program_name_id,
+                        Display = p.program_name
+                    }
                 }).ToList(),
                 Quarters = version.proposal_version_detail_quarters.Select(quarter => new ProposalQuarterDto
                 {
@@ -984,7 +999,11 @@ namespace Services.Broadcast.Repositories
                         {
                             Id = c.id,
                             Contain = (ContainTypeEnum) c.contain_type,
-                            ProgramName = c.program_name
+                            Program = new LookupDto
+                            {
+                                Id = c.program_name_id,
+                                Display = c.program_name
+                            }
                         }).ToList()
                 };
 
@@ -1043,8 +1062,12 @@ namespace Services.Broadcast.Repositories
                     ProgramCriteria = proposalDetail.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
                     {
                         Id = p.id,
-                        ProgramName = p.program_name,
-                        Contain = (ContainTypeEnum) p.contain_type
+                        Contain = (ContainTypeEnum) p.contain_type,
+                        Program = new LookupDto
+                        {
+                            Id = p.program_name_id,
+                            Display = p.program_name
+                        }
                     }).ToList()
                 };
 
