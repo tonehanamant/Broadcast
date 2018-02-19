@@ -364,7 +364,14 @@ namespace Services.Broadcast.Repositories
                                                 client_isci = isic.ClientIsci,
                                                 house_isci = isic.HouseIsci,
                                                 brand = isic.Brand,
-                                                married_house_iscii = isic.MarriedHouseIsci
+                                                married_house_iscii = isic.MarriedHouseIsci,
+                                                monday = isic.Monday,
+                                                tuesday = isic.Tuesday,
+                                                wednesday = isic.Wednesday,
+                                                thursday = isic.Thursday,
+                                                friday = isic.Thursday,
+                                                saturday = isic.Saturday,
+                                                sunday = isic.Sunday
                                             }).ToList()
                                     }).ToList()
                         }).ToList()

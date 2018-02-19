@@ -393,6 +393,13 @@
           <Property Name="house_isci" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="brand" Type="varchar" MaxLength="127" />
           <Property Name="married_house_iscii" Type="bit" Nullable="false" />
+          <Property Name="monday" Type="bit" />
+          <Property Name="tuesday" Type="bit" />
+          <Property Name="wednesday" Type="bit" />
+          <Property Name="thursday" Type="bit" />
+          <Property Name="friday" Type="bit" />
+          <Property Name="saturday" Type="bit" />
+          <Property Name="sunday" Type="bit" />
         </EntityType>
         <EntityType Name="proposal_version_detail_quarter_weeks">
           <Key>
@@ -4597,6 +4604,13 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="brand" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
           <Property Name="married_house_iscii" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_week_iscis_proposal_version_detail_quarter_weeks" FromRole="proposal_version_detail_quarter_week_iscis" ToRole="proposal_version_detail_quarter_weeks" />
+          <Property Name="monday" Type="Boolean" />
+          <Property Name="tuesday" Type="Boolean" />
+          <Property Name="wednesday" Type="Boolean" />
+          <Property Name="thursday" Type="Boolean" />
+          <Property Name="friday" Type="Boolean" />
+          <Property Name="saturday" Type="Boolean" />
+          <Property Name="sunday" Type="Boolean" />
         </EntityType>
         <Association Name="FK_proposal_version_detail_quarter_week_iscis_proposal_version_detail_quarter_weeks">
           <End Type="BroadcastModel.proposal_version_detail_quarter_weeks" Role="proposal_version_detail_quarter_weeks" Multiplicity="1">
@@ -4631,6 +4645,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" FromRole="affidavit_client_scrubs" ToRole="proposal_version_detail_quarter_weeks" />
           <Property Name="lead_in" Type="Boolean" Nullable="false" />
           <Property Name="match_station" Type="Boolean" Nullable="false" />
+          <Property Name="match_isci_days" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="affidavit_file_details">
           <Key>
@@ -5577,6 +5592,13 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="proposal_version_detail_quarter_week_iscis">
             <EntityTypeMapping TypeName="BroadcastModel.proposal_version_detail_quarter_week_iscis">
               <MappingFragment StoreEntitySet="proposal_version_detail_quarter_week_iscis">
+                <ScalarProperty Name="sunday" ColumnName="sunday" />
+                <ScalarProperty Name="saturday" ColumnName="saturday" />
+                <ScalarProperty Name="friday" ColumnName="friday" />
+                <ScalarProperty Name="thursday" ColumnName="thursday" />
+                <ScalarProperty Name="wednesday" ColumnName="wednesday" />
+                <ScalarProperty Name="tuesday" ColumnName="tuesday" />
+                <ScalarProperty Name="monday" ColumnName="monday" />
                 <ScalarProperty Name="married_house_iscii" ColumnName="married_house_iscii" />
                 <ScalarProperty Name="brand" ColumnName="brand" />
                 <ScalarProperty Name="house_isci" ColumnName="house_isci" />

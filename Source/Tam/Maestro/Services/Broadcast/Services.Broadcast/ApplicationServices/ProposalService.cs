@@ -384,6 +384,7 @@ namespace Services.Broadcast.ApplicationServices
             using (var transaction = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 _SetProposalDefaultValues(proposalDto);
+                _SetISCIWeekDays(proposalDto);
 
                 // check if an existing proposal is being saved
                 var isValidProposalIdAndVersion = proposalDto.Id.HasValue && proposalDto.Version.HasValue;
@@ -408,6 +409,22 @@ namespace Services.Broadcast.ApplicationServices
 
                 return proposalDto.Id.Value;
             }
+        }
+
+        private void _SetISCIWeekDays(ProposalDto proposalDto)
+        {
+            proposalDto.Details.ForEach(quarter => quarter.Quarters.ForEach(week => week.Weeks.ForEach(isci => isci.Iscis.ForEach(isciDay =>
+            {
+                List<string> splitDays = isciDay.Days.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                isciDay.Thursday = splitDays.Any(l => l.Equals("TH", StringComparison.CurrentCultureIgnoreCase));
+                splitDays.RemoveAll(l => l.Equals("TH", StringComparison.CurrentCultureIgnoreCase));
+                isciDay.Monday = splitDays.Any(l => l.Equals("M"));
+                isciDay.Tuesday = splitDays.Any(l => l.Equals("T"));
+                isciDay.Wednesday = splitDays.Any(l => l.Equals("W"));
+                isciDay.Friday = splitDays.Any(l => l.Equals("F"));
+                isciDay.Saturday = splitDays.Any(l => l.Equals("Sa"));
+                isciDay.Sunday = splitDays.Any(l => l.Equals("Su"));
+            }))));
         }
 
         private void _SetProposalDefaultValues(ProposalDto proposalDto)
