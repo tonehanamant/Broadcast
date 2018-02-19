@@ -26,6 +26,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void GetDisplaySchedules_DateRange_null_Start()
         {
@@ -46,6 +47,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
         }
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void GetDisplaySchedules_DateRange_null_Start_End()
         {
