@@ -577,6 +577,13 @@ namespace Services.Broadcast.Repositories
                     client_isci = isci.ClientIsci,
                     house_isci = isci.HouseIsci,
                     married_house_iscii = isci.MarriedHouseIsci,
+                    monday = isci.Monday,
+                    tuesday = isci.Tuesday,
+                    wednesday = isci.Wednesday,
+                    thursday = isci.Thursday,
+                    friday = isci.Thursday,
+                    saturday = isci.Saturday,
+                    sunday = isci.Sunday
                 }).ToList();
 
             weekIscis.AddRange(newWeekIscis);
@@ -816,17 +823,17 @@ namespace Services.Broadcast.Repositories
                 SinglePostingBookId = version.single_posting_book_id,
                 SharePostingBookId = version.share_posting_book_id,
                 HutPostingBookId = version.hut_posting_book_id,
-                PlaybackType = (ProposalEnums.ProposalPlaybackType) version.playback_type,
+                PlaybackType = (ProposalEnums.ProposalPlaybackType)version.playback_type,
                 GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                 {
                     Id = c.id,
-                    Contain = (ContainTypeEnum) c.contain_type,
-                    Genre = new LookupDto { Id = c.genre.id ,Display = c.genre.name}
+                    Contain = (ContainTypeEnum)c.contain_type,
+                    Genre = new LookupDto { Id = c.genre.id, Display = c.genre.name }
                 }).ToList(),
                 ProgramCriteria = version.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
                 {
                     Id = p.id,
-                    Contain = (ContainTypeEnum) p.contain_type,
+                    Contain = (ContainTypeEnum)p.contain_type,
                     Program = new LookupDto
                     {
                         Id = p.program_name_id,
@@ -858,7 +865,14 @@ namespace Services.Broadcast.Repositories
                             Brand = isci.brand,
                             ClientIsci = isci.client_isci,
                             HouseIsci = isci.house_isci,
-                            MarriedHouseIsci = isci.married_house_iscii
+                            MarriedHouseIsci = isci.married_house_iscii,
+                            Monday = isci.monday == null ? false : isci.monday.Value,
+                            Tuesday = isci.tuesday == null ? false : isci.tuesday.Value,
+                            Wednesday = isci.wednesday == null ? false : isci.wednesday.Value,
+                            Thursday = isci.thursday == null ? false : isci.thursday.Value,
+                            Friday = isci.friday == null ? false : isci.friday.Value,
+                            Saturday = isci.saturday == null ? false : isci.saturday.Value,
+                            Sunday = isci.sunday == null ? false : isci.sunday.Value
                         }).ToList()
                     }).ToList()
                 }).ToList()
