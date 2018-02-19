@@ -39,38 +39,86 @@
                 {
                   "Brand": null,
                   "ClientIsci": "AAAAAAAA",
+                  "Days": null,
+                  "Friday": false,
                   "HouseIsci": "AAAAAAAA",
-                  "MarriedHouseIsci": false
+                  "MarriedHouseIsci": false,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
                 },
                 {
                   "Brand": null,
                   "ClientIsci": "BBBBBBBB",
+                  "Days": null,
+                  "Friday": false,
                   "HouseIsci": "BBBBBBBBB",
-                  "MarriedHouseIsci": false
+                  "MarriedHouseIsci": false,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
                 },
                 {
                   "Brand": "Test 1",
                   "ClientIsci": "CCCCCCCCCC",
+                  "Days": null,
+                  "Friday": false,
                   "HouseIsci": "CCCCCCCCCC",
-                  "MarriedHouseIsci": true
+                  "MarriedHouseIsci": true,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
                 },
                 {
                   "Brand": "Test 2",
                   "ClientIsci": "DDDDDDDDD",
+                  "Days": null,
+                  "Friday": false,
                   "HouseIsci": "DDDDDDDD",
-                  "MarriedHouseIsci": false
+                  "MarriedHouseIsci": false,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
                 },
                 {
                   "Brand": null,
                   "ClientIsci": "EEEEEEEEEE",
+                  "Days": null,
+                  "Friday": false,
                   "HouseIsci": "EEEEEEEEEEE",
-                  "MarriedHouseIsci": true
+                  "MarriedHouseIsci": true,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
                 },
                 {
                   "Brand": "Testing 45",
                   "ClientIsci": "ZZZZZZ",
+                  "Days": "M|T|W|Th|F|Sa|Su",
+                  "Friday": false,
                   "HouseIsci": "ZZZZZZ",
-                  "MarriedHouseIsci": true
+                  "MarriedHouseIsci": true,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
                 }
               ],
               "IsHiatus": false,

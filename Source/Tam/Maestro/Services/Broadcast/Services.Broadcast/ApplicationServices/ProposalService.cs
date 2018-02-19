@@ -209,7 +209,7 @@ namespace Services.Broadcast.ApplicationServices
                 foreach (var proposalVersion in proposalVersions)
                 {
                     var proposal = GetProposalByIdWithVersion(proposalId, proposalVersion.Version);
-                    
+
                     _DeleteProposalDetailInventoryAllocations(proposal);
 
                     _DeleteAllInventoryAllocations(proposal);
@@ -220,7 +220,7 @@ namespace Services.Broadcast.ApplicationServices
                 transaction.Complete();
             }
 
-            return new ValidationWarningDto() {HasWarning = false};
+            return new ValidationWarningDto() { HasWarning = false };
         }
 
         private void _DeleteAllInventoryAllocations(ProposalDto proposalDto)
@@ -383,6 +383,7 @@ namespace Services.Broadcast.ApplicationServices
             using (var transaction = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 _SetProposalDefaultValues(proposalDto);
+                _SetISCIWeekDays(proposalDto);
 
                 // check if an existing proposal is being saved
                 var isValidProposalIdAndVersion = proposalDto.Id.HasValue && proposalDto.Version.HasValue;
@@ -407,6 +408,22 @@ namespace Services.Broadcast.ApplicationServices
 
                 return proposalDto.Id.Value;
             }
+        }
+
+        private void _SetISCIWeekDays(ProposalDto proposalDto)
+        {
+            proposalDto.Details.ForEach(quarter => quarter.Quarters.ForEach(week => week.Weeks.ForEach(isci => isci.Iscis.ForEach(isciDay =>
+            {
+                List<string> splitDays = isciDay.Days.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                isciDay.Thursday = splitDays.Any(l => l.Equals("TH", StringComparison.CurrentCultureIgnoreCase));
+                splitDays.RemoveAll(l => l.Equals("TH", StringComparison.CurrentCultureIgnoreCase));
+                isciDay.Monday = splitDays.Any(l => l.Equals("M"));
+                isciDay.Tuesday = splitDays.Any(l => l.Equals("T"));
+                isciDay.Wednesday = splitDays.Any(l => l.Equals("W"));
+                isciDay.Friday = splitDays.Any(l => l.Equals("F"));
+                isciDay.Saturday = splitDays.Any(l => l.Equals("Sa"));
+                isciDay.Sunday = splitDays.Any(l => l.Equals("Su"));
+            }))));
         }
 
         private void _SetProposalDefaultValues(ProposalDto proposalDto)
@@ -581,7 +598,7 @@ namespace Services.Broadcast.ApplicationServices
                         if (marketIds.Contains(broadcastStation.MarketCode))
                         {
                             isIncludedInMarkets = true;
-                        
+
                             break;
                         }
                     }
@@ -688,7 +705,7 @@ namespace Services.Broadcast.ApplicationServices
 
             if (string.IsNullOrWhiteSpace(userName))
                 throw new Exception("Cannot save proposal without specifying a valid username.");
-            
+
             _ValidatePreviouslyContractedStatus(proposalDto);
 
             //Will throw an exception if advertiser not found:
@@ -704,7 +721,7 @@ namespace Services.Broadcast.ApplicationServices
             if (proposalDto.Status == ProposalEnums.ProposalStatusType.PreviouslyContracted)
                 throw new Exception("Cannot edit a proposal in Previously Contracted status.");
 
-            if (!proposalDto.Id.HasValue || !proposalDto.Version.HasValue) 
+            if (!proposalDto.Id.HasValue || !proposalDto.Version.HasValue)
                 return;
 
             var previousProposalVersion = _ProposalRepository.GetProposalByIdAndVersion(proposalDto.Id.Value,
@@ -819,7 +836,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var proposalDetailDto in proposal.Details)
             {
                 if (proposalDetailDto.SinglePostingBookId != null)
-            {
+                {
                     proposalDetailDto.SharePostingBookId = proposalDetailDto.SinglePostingBookId;
                 }
             }
@@ -920,7 +937,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var proposalQuarterDto = _GetProposalQuarterDtos(proposalMediaWeeks);
 
-            var proposalDetail =  new ProposalDetailDto
+            var proposalDetail = new ProposalDetailDto
             {
                 FlightStartDate = proposalDetailRequestDto.StartDate,
                 FlightEndDate = proposalDetailRequestDto.EndDate,
@@ -1056,7 +1073,7 @@ namespace Services.Broadcast.ApplicationServices
                         })
                     .ToList()
             };
-            result.Statuses = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalStatusType>();            
+            result.Statuses = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalStatusType>();
             return result;
         }
 
@@ -1073,10 +1090,10 @@ namespace Services.Broadcast.ApplicationServices
                     }).ToList();
 
             var totalMarketsGroup =
-                marketGroups.Where(g => g.Id == (int) ProposalEnums.ProposalMarketGroups.All).Single();
+                marketGroups.Where(g => g.Id == (int)ProposalEnums.ProposalMarketGroups.All).Single();
             totalMarketsGroup.Count = totalMarkets;
 
-            var customGroup = marketGroups.Where(g => g.Id == (int) ProposalEnums.ProposalMarketGroups.Custom).Single();
+            var customGroup = marketGroups.Where(g => g.Id == (int)ProposalEnums.ProposalMarketGroups.Custom).Single();
             customGroup.Count = 0;
 
             return marketGroups;
@@ -1263,8 +1280,8 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
             archiveFile.Seek(0, SeekOrigin.Begin);
-            var archiveFileName = string.Format(fileArchiveTemplate, proposalName,proposal.Id);
-            return new Tuple<string, Stream>(archiveFileName,archiveFile);
+            var archiveFileName = string.Format(fileArchiveTemplate, proposalName, proposal.Id);
+            return new Tuple<string, Stream>(archiveFileName, archiveFile);
         }
 
         /// <summary>
@@ -1301,9 +1318,10 @@ namespace Services.Broadcast.ApplicationServices
             try
             {
                 searchUrl = BroadcastServiceSystemParameter.ProgramSearchApiUrl;
-            }catch(System.Exception ex)
+            }
+            catch (System.Exception ex)
             {
-                if(ex.Message.Contains("not found"))
+                if (ex.Message.Contains("not found"))
                 {
                     var url = new Uri(requestUrl);
                     //Fallback for development
