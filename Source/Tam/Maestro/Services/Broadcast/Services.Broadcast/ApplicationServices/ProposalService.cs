@@ -415,15 +415,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             proposalDto.Details.ForEach(quarter => quarter.Quarters.ForEach(week => week.Weeks.ForEach(isci => isci.Iscis.ForEach(isciDay =>
             {
-                List<string> splitDays = isciDay.Days.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                isciDay.Thursday = splitDays.Any(l => l.Equals("TH", StringComparison.CurrentCultureIgnoreCase));
-                splitDays.RemoveAll(l => l.Equals("TH", StringComparison.CurrentCultureIgnoreCase));
-                isciDay.Monday = splitDays.Any(l => l.Equals("M"));
-                isciDay.Tuesday = splitDays.Any(l => l.Equals("T"));
-                isciDay.Wednesday = splitDays.Any(l => l.Equals("W"));
-                isciDay.Friday = splitDays.Any(l => l.Equals("F"));
-                isciDay.Saturday = splitDays.Any(l => l.Equals("Sa"));
-                isciDay.Sunday = splitDays.Any(l => l.Equals("Su"));
+                List<string> splitDays = isciDay.Days?.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                if (splitDays != null && splitDays.Any())
+                {
+                    isciDay.Thursday = splitDays.Any(l => l.Equals("TH", StringComparison.CurrentCultureIgnoreCase));
+                    splitDays.RemoveAll(l => l.Equals("TH", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Monday = splitDays.Any(l => l.Equals("M", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Tuesday = splitDays.Any(l => l.Equals("T", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Wednesday = splitDays.Any(l => l.Equals("W", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Friday = splitDays.Any(l => l.Equals("F", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Saturday = splitDays.Any(l => l.Equals("Sa", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Sunday = splitDays.Any(l => l.Equals("Su", StringComparison.CurrentCultureIgnoreCase));
+                }                
             }))));
         }
 
