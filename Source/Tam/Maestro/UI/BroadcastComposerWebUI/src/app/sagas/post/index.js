@@ -123,7 +123,8 @@ export function* assignPostDisplay({ payload: request }) {
 
 export function* requestPostFiltered({ payload: query }) {
   const postUnfiltered = yield select(state => state.post.postUnfiltered);
-  const searcher = new FuzzySearch(postUnfiltered, ['FileName', 'Source', 'DisplayUploadDate', 'Status'], { caseSensitive: false });
+  const keys = ['DisplayUploadDate', 'ContractName'/* 'ContractId' *//* 'SpotsInSpec', 'SpotsOutOfSpec', 'PrimaryAudienceImpressions' */];
+  const searcher = new FuzzySearch(postUnfiltered, keys, { caseSensitive: false });
   const postFiltered = () => searcher.search(query);
 
   try {
@@ -134,6 +135,85 @@ export function* requestPostFiltered({ payload: query }) {
     });
   } catch (e) {
     if (e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
+/* ////////////////////////////////// */
+/* REQUEST POST PROPOSAL */
+/* ////////////////////////////////// */
+export function* requestPostScrubbingHeader({ payload: proposalID }) {
+  const { getPostScrubbingHeader } = api.post;
+  try {
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'PostScrubbingHeader',
+        loading: true },
+      });
+    const response = yield getPostScrubbingHeader(proposalID);
+    const { status, data } = response;
+
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'PostScrubbingHeader',
+        loading: false,
+      },
+    });
+    if (status !== 200) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No post proposal data returned.',
+          message: `The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Success) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No proposal data returned.',
+          message: data.Message || 'The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs.',
+        },
+      });
+      throw new Error();
+    }
+    yield put({
+      type: ACTIONS.RECEIVE_POST_SCRUBBING_HEADER,
+      data,
+    });
+    yield put({
+      type: ACTIONS.TOGGLE_MODAL,
+      modal: {
+        modal: 'postScrubbingModal',
+        active: true,
+        properties: {
+          titleText: 'POST SCRUBBING MODAL',
+          bodyText: 'Post Scrubbing details will be shown here!',
+        },
+      },
+    });
+  } catch (e) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No proposal data returned.',
+          message: 'The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs.',
+          exception: e.response.data.ExceptionMessage || '',
+        },
+      });
+    }
+    if (!e.response && e.message) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
@@ -158,4 +238,8 @@ export function* watchRequestAssignPostDisplay() {
 
 export function* watchRequestPostFiltered() {
   yield takeEvery(ACTIONS.REQUEST_FILTERED_POST, requestPostFiltered);
+}
+
+export function* watchRequestPostScrubbingHeader() {
+  yield takeEvery(ACTIONS.REQUEST_POST_SCRUBBING_HEADER, requestPostScrubbingHeader);
 }
