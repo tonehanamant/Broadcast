@@ -50,12 +50,14 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly ISMSClient _SmsClient;
         protected readonly IProposalService _ProposalService;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IDaypartCache daypartCache,
             ISMSClient smsClient,
             IProposalService proposalService,
-            IBroadcastAudiencesCache audiencesCache)
+            IBroadcastAudiencesCache audiencesCache,
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepositry = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -63,6 +65,7 @@ namespace Services.Broadcast.ApplicationServices
             _PostRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
             _DaypartCache = daypartCache;
             _AudiencesCache = audiencesCache;
+            _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
             _SmsClient = smsClient;
             _ProposalService = proposalService;
         }
@@ -126,7 +129,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 ProposalDetailDto proposalDetail = proposal.Details.First(x => x.Id == detailId);
 
-                return new ClientPostScrubbingProposalDetailDto
+                var result = new ClientPostScrubbingProposalDetailDto
                 {
                     Id = proposalDetail.Id,
                     FlightStartDate = proposalDetail.FlightStartDate,
@@ -137,6 +140,8 @@ namespace Services.Broadcast.ApplicationServices
                     Genres = proposalDetail.GenreCriteria,
                     ClientScrubs = _AffidavitRepositry.GetProposalDetailPostScrubbing(detailId)
                 };
+                result.ClientScrubs.ForEach(x => x.WeekStart = _MediaMonthAndWeekCache.GetMediaWeekContainingDate(x.TimeAired).StartDate);
+                return result;
             }
         }
     }
