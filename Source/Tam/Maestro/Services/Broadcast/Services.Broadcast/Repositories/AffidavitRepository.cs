@@ -16,6 +16,7 @@ namespace Services.Broadcast.Repositories
     {
         int SaveAffidavitFile(affidavit_files affidatite_file);
         AffidavitFile GetAffidavit(int affidavitId, bool includeScrubbingDetail = false);
+        List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalVersionId);
     }
 
     public class AffidavitRepository: BroadcastRepositoryBase, IAffidavitRepository
@@ -106,6 +107,43 @@ namespace Services.Broadcast.Repositories
                     }).ToList()
                 }).ToList()
             };
+        }
+
+        public List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalVersionId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {                    
+                    var affidavitFiles = (from proposalVersionDetail in context.proposal_version_details
+                                          from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                                          from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
+                                          from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
+                                          let affidavitFile = affidavitFileScrub.affidavit_file_details
+                                          where proposalVersionDetail.id == proposalVersionId
+                                          select new { affidavitFile, affidavitFileScrub }).ToList();
+                    var spotLengths = (from sl in context.spot_lengths select sl).ToList();
+
+                    var posts = new List<ProposalDetailPostScrubbingDto>();
+                    posts.AddRange(affidavitFiles.Select(x => new ProposalDetailPostScrubbingDto()
+                    {
+                        Station = x.affidavitFile.station,
+                        ISCI = x.affidavitFile.isci,
+                        ProgramName = x.affidavitFile.program_name,
+                        Market = x.affidavitFile.market,
+                        Affiliate = (from station in context.stations
+                                     where station.legacy_call_letters.Equals(x.affidavitFile.station)
+                                     select station.affiliation).Single(),
+                        SpotLength = spotLengths.Single(y => y.id == x.affidavitFile.spot_length_id).length,
+                        TimeAired = x.affidavitFile.original_air_date.AddSeconds(x.affidavitFile.air_time),
+                        GenreName = x.affidavitFile.genre,
+                        MatchGenre = x.affidavitFileScrub.match_genre,
+                        MatchMarket = x.affidavitFileScrub.match_market,
+                        MatchProgram = x.affidavitFileScrub.match_program,
+                        MatchStation = x.affidavitFileScrub.match_station,
+                        MatchTime = x.affidavitFileScrub.match_time
+                    }).ToList());
+                    return posts;
+                });
         }
     }
 }

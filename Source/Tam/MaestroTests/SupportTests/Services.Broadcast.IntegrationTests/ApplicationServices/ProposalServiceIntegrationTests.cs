@@ -1920,6 +1920,5 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
-
     }
 }
