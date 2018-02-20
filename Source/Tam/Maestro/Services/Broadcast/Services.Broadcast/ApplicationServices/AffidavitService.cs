@@ -95,6 +95,13 @@ namespace Services.Broadcast.ApplicationServices
                 det.genre = matchedAffidavitDetail.AffidavitDetail.Genre;
                 det.spot_length_id = _GetSpotlength(matchedAffidavitDetail.AffidavitDetail.SpotLength, ref spotLengthDict);
                 det.station = matchedAffidavitDetail.AffidavitDetail.Station;
+
+                det.leadin_genre = matchedAffidavitDetail.AffidavitDetail.LeadInGenre;
+                det.leadout_genre = matchedAffidavitDetail.AffidavitDetail.LeadOutGenre;
+
+                det.leadin_program_name  = matchedAffidavitDetail.AffidavitDetail.LeadInProgramName;
+                det.leadout_program_name = matchedAffidavitDetail.AffidavitDetail.LeadOutProgramName;
+
                 det.affidavit_client_scrubs =
                     matchedAffidavitDetail.ProposalDetailWeeks.Select(
                         w => new affidavit_client_scrubs
@@ -106,6 +113,14 @@ namespace Services.Broadcast.ApplicationServices
                             lead_in = w.IsLeadInMatch,
                             status = _GetScrubStatus(w)
                         }).ToList();
+                det.affidavit_file_detail_problems =
+                    matchedAffidavitDetail.AffidavitDetailProblems.Select(
+                        fp => new affidavit_file_detail_problems
+                        {
+                            problem_description = fp.Description,
+                            problem_type = (int)fp.Type
+                        }).ToList();
+
 
                 affidavit_file.affidavit_file_details.Add(det);
             }
@@ -353,9 +368,13 @@ namespace Services.Broadcast.ApplicationServices
 
             using (reader.Initialize(rawStream))
             {
-                reader.NextRow();
-                while (!reader.IsEOFOrEmptyRow())
+                while (!reader.IsEOF())
                 {
+                    reader.NextRow();
+
+                    if (reader.IsEmptyRow())
+                        break;
+
                     var detail = new AffidavitSaveRequestDetail();
                     
                     detail.AirTime = DateTime.Parse(reader.GetCellValue("Spot Time"));
@@ -364,13 +383,12 @@ namespace Services.Broadcast.ApplicationServices
                     detail.ProgramName = reader.GetCellValue("ProgramName");
                     detail.Station = reader.GetCellValue("Station");
                     detail.SpotLength = int.Parse(reader.GetCellValue("Spot Length"));
-                    detail.LeadInTitle = reader.GetCellValue("LeadInTitle");
+                    detail.LeadInProgramName = reader.GetCellValue("LeadInTitle");
                     detail.LeadInGenre = reader.GetCellValue("LeadInGenre");
-                    detail.LeadOutTitle = reader.GetCellValue("LeadOutTitle");
+                    detail.LeadOutProgramName = reader.GetCellValue("LeadOutTitle");
                     detail.LeadOutGenre = reader.GetCellValue("LeadOutGenre");
 
                     request.Details.Add(detail);
-                    reader.NextRow();
                 }
             }
             var json = JsonConvert.SerializeObject(request);

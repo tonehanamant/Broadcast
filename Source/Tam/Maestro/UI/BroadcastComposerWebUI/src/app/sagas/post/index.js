@@ -85,8 +85,9 @@ export function* requestPost() {
 export function* assignPostDisplay({ payload: request }) {
   const assignDisplay = () => request.data.map((item) => {
       const post = item;
+
       // UploadDate
-      post.DisplayUploadDate = moment(post.UploadDate).format('M/D/YYYY');
+      post.DisplayUploadDate = post.UploadDate !== null ? moment(post.UploadDate).format('M/D/YYYY') : '-';
       return post;
     },
   );

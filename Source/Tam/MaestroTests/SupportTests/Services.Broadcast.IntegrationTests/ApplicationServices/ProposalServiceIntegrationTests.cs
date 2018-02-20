@@ -113,14 +113,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                         ClientIsci = "AAAAAA",
                                         HouseIsci = "AAAAAA",
                                         Brand = "Testing",
-                                        MarriedHouseIsci = true
+                                        MarriedHouseIsci = true,
+                                        Days = "TH|F|Sa|Su"
                                     },
                                     new ProposalWeekIsciDto
                                     {
                                         ClientIsci = "BBBBBBB",
                                         HouseIsci = "BBBBBBB",
                                         Brand = "Testing 2",
-                                        MarriedHouseIsci = false
+                                        MarriedHouseIsci = false,
+                                        Days = "M|T|W|TH|"
                                     }
                                 }
                             }
@@ -954,7 +956,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Brand = "Testing 45",
                     ClientIsci = "ZZZZZZ",
                     HouseIsci = "ZZZZZZ",
-                    MarriedHouseIsci = true
+                    MarriedHouseIsci = true,
+                    Days = "M|T|W|Th|F|Sa|Su"
                 });
 
                 var result = _ProposalService.UpdateProposal(proposalDto.Details);

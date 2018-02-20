@@ -136,13 +136,10 @@
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_spots_proposal_version_detail_quarter_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_spots_station_inventory_manifest" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_audiences_station_inventory_spots" />
-        <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_quarter_week_iscis" Width="1.5" PointX="12" PointY="14.125" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_quarter_week_iscis" Width="1.5" PointX="11.125" PointY="14.25" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_week_iscis_proposal_version_detail_quarter_weeks" />
-        <EntityTypeShape EntityType="BroadcastModel.affidavit_client_scrubs" Width="1.5" PointX="24.875" PointY="15" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_file_details" Width="1.5" PointX="22.625" PointY="8" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_files" Width="1.5" PointX="20.375" PointY="8.875" />
-        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_files_affidavit_file_details" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_file_detail_audiences" Width="1.5" PointX="24.875" PointY="6.25" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_audiences_affidavit_file_details" />
@@ -154,6 +151,9 @@
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_criteria_programs" Width="1.5" PointX="7.375" PointY="22.125" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" />
         <EntityTypeShape EntityType="BroadcastModel.program_names" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="BroadcastModel.affidavit_client_scrubs" Width="1.5" PointX="24.875" PointY="14.75" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

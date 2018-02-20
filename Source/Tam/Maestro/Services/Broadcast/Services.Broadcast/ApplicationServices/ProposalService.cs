@@ -25,6 +25,7 @@ using System.Net;
 using Newtonsoft.Json;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using System.Diagnostics;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -383,6 +384,7 @@ namespace Services.Broadcast.ApplicationServices
             using (var transaction = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 _SetProposalDefaultValues(proposalDto);
+                _SetISCIWeekDays(proposalDto);
 
                 // check if an existing proposal is being saved
                 var isValidProposalIdAndVersion = proposalDto.Id.HasValue && proposalDto.Version.HasValue;
@@ -407,6 +409,25 @@ namespace Services.Broadcast.ApplicationServices
 
                 return proposalDto.Id.Value;
             }
+        }
+
+        private void _SetISCIWeekDays(ProposalDto proposalDto)
+        {
+            proposalDto.Details.ForEach(quarter => quarter.Quarters.ForEach(week => week.Weeks.ForEach(isci => isci.Iscis.ForEach(isciDay =>
+            {
+                List<string> splitDays = isciDay.Days?.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                if (splitDays != null && splitDays.Any())
+                {
+                    isciDay.Thursday = splitDays.Any(l => l.Equals("TH", StringComparison.CurrentCultureIgnoreCase));
+                    splitDays.RemoveAll(l => l.Equals("TH", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Monday = splitDays.Any(l => l.Equals("M", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Tuesday = splitDays.Any(l => l.Equals("T", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Wednesday = splitDays.Any(l => l.Equals("W", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Friday = splitDays.Any(l => l.Equals("F", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Saturday = splitDays.Any(l => l.Equals("Sa", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Sunday = splitDays.Any(l => l.Equals("Su", StringComparison.CurrentCultureIgnoreCase));
+                }                
+            }))));
         }
 
         private void _SetProposalDefaultValues(ProposalDto proposalDto)
@@ -1298,21 +1319,13 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (request.Start < 1) request.Start = 1;
             string searchUrl;
-            try
+            if (Debugger.IsAttached) //only for development
             {
+                var url = new Uri(requestUrl);
+                searchUrl = url.GetLeftPart(UriPartial.Authority) + "/api/Proposals/FindProgramsExternalApi";
+            }
+            else{
                 searchUrl = BroadcastServiceSystemParameter.ProgramSearchApiUrl;
-            }catch(System.Exception ex)
-            {
-                if(ex.Message.Contains("not found"))
-                {
-                    var url = new Uri(requestUrl);
-                    //Fallback for development
-                    searchUrl = url.GetLeftPart(UriPartial.Authority) + "/api/Proposals/FindProgramsExternalApi";
-                }
-                else
-                {
-                    throw;
-                }
             }
 
             var jsonRequest = JsonConvert.SerializeObject(request);
