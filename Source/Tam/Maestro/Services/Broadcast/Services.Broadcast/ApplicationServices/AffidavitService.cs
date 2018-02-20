@@ -170,6 +170,13 @@ namespace Services.Broadcast.ApplicationServices
                     var proposal = proposals[quarterWeekId];
                     var proposalDetail = proposal.Details.Single(d =>
                         d.Quarters.Any(q => q.Weeks.Any(w => w.Id == quarterWeekId)));
+                    var proposalWeek = proposal.Details.SelectMany(d =>
+                        d.Quarters.Select(q => q.Weeks.Single(w => w.Id == quarterWeekId))).First();
+                    var proposalWeekIsci = proposalWeek.Iscis.First(i =>
+                        i.HouseIsci.Equals(affidavitFileDetail.isci, StringComparison.InvariantCultureIgnoreCase));
+                    var dayOfWeek = affidavitFileDetail.original_air_date.DayOfWeek;
+
+                    scrub.match_isci_days = _IsIsciDaysMatch(proposalWeekIsci, dayOfWeek);
 
                     // match market/station
                     if (stationManifests.Any())
@@ -214,9 +221,35 @@ namespace Services.Broadcast.ApplicationServices
 
                     EnsureScrubadubdubed(scrub);
                 }
-
             }
+        }
 
+        private bool _IsIsciDaysMatch(ProposalWeekIsciDto proposalWeekIsci, DayOfWeek dayOfWeek)
+        {
+            var isMatch = false;
+
+            if (proposalWeekIsci.Sunday)
+                isMatch = dayOfWeek == DayOfWeek.Sunday;
+
+            if (proposalWeekIsci.Monday)
+                isMatch = isMatch || dayOfWeek == DayOfWeek.Monday;
+
+            if (proposalWeekIsci.Tuesday)
+                isMatch = isMatch || dayOfWeek == DayOfWeek.Tuesday;
+
+            if (proposalWeekIsci.Wednesday)
+                isMatch = isMatch || dayOfWeek == DayOfWeek.Wednesday;
+
+            if (proposalWeekIsci.Thursday)
+                isMatch = isMatch || dayOfWeek == DayOfWeek.Thursday;
+
+            if (proposalWeekIsci.Friday)
+                isMatch = isMatch || dayOfWeek == DayOfWeek.Friday;
+
+            if (proposalWeekIsci.Saturday)
+                isMatch = isMatch || dayOfWeek == DayOfWeek.Saturday;
+
+            return isMatch;
         }
 
         private void EnsureScrubadubdubed(affidavit_client_scrubs scrub)
@@ -226,7 +259,8 @@ namespace Services.Broadcast.ApplicationServices
                 && scrub.match_market
                 && scrub.match_genre
                 && scrub.match_program
-                && scrub.match_time)
+                && scrub.match_time
+                && scrub.match_isci_days)
             {
                 scrub.status = (int) ScrubbingStatus.InSpec;
             }

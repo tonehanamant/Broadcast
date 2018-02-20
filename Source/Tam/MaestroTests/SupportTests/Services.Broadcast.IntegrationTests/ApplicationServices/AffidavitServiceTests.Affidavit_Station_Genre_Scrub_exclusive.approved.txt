@@ -7,6 +7,7 @@
           "Comment": null,
           "LeadIn": false,
           "MatchGenre": false,
+          "MatchIsciDays": false,
           "MatchMarket": false,
           "MatchProgram": true,
           "MatchTime": true,
