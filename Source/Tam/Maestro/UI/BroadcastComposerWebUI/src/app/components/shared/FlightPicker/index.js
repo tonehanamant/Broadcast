@@ -210,6 +210,7 @@ export default class FlightPicker extends Component {
 				<FormGroup validationState={(this.state.validationStates.startDate || this.state.validationStates.endDate === 'warning' ? 'warning' : null)}>
 				<InputGroup onClick={this.toggle}>
 						<FormControl
+              bsClass={'flight-range-input form-control'}
 							type="text"
 							value={`${moment(this.state.startDate).format('M/D/YYYY')} - ${moment(this.state.endDate).format('M/D/YYYY')}`}
 							onChange={() => null}
