@@ -92,6 +92,7 @@ namespace Services.Broadcast.Repositories
                         MatchGenre = a.match_genre,
                         MatchMarket = a.match_market,
                         MatchTime = a.match_time,
+                        MatchIsciDays = a.match_isci_days,
                         Status = (AffidavitClientScrubStatus)a.status,
                         Comment = a.comment,
                         ModifiedBy = a.modified_by,

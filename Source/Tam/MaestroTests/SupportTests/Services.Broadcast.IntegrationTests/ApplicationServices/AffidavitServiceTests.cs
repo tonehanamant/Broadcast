@@ -106,7 +106,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416,413 );
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
-                proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() {new ProposalWeekIsciDto() { Brand = "WAWA",ClientIsci = "WAWA",HouseIsci = "WAWA"} };
+                proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() {new ProposalWeekIsciDto() { Brand = "WAWA",ClientIsci = "WAWA",HouseIsci = "WAWA", Days="M|T|W|TH|F|SA|SU"} };
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
                 _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
 
@@ -200,6 +200,62 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 proposal.Details.First().ProgramCriteria.Add(new ProgramCriteria() { Contain = ContainTypeEnum.Exclude, Program = new LookupDto {Display = ProgramName1, Id = 100 } });
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
                 _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+
+                var request = _SetupAdffidavit();
+                request.Details.First().Isci = "WAWA";
+                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                VerifyAffidavit(id);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Affidavit_Scrub_Isci_Days_No_Match()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = new ProposalDto();
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
+
+                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+                proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA", Days = "M" } };
+                proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
+                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+
+                var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
+
+                AllocationProgram(proposalDetailId, programId, proposal.FlightWeeks.First().MediaWeekId);
+
+                var request = _SetupAdffidavit();
+                request.Details.First().Isci = "WAWA";
+                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                VerifyAffidavit(id);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Affidavit_Scrub_Isci_Days_Match()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = new ProposalDto();
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
+
+                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+                proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA", Days = "TH" } };
+                proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
+                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+
+                var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
+
+                AllocationProgram(proposalDetailId, programId, proposal.FlightWeeks.First().MediaWeekId);
 
                 var request = _SetupAdffidavit();
                 request.Details.First().Isci = "WAWA";
