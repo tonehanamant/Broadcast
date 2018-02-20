@@ -2,9 +2,9 @@
   {
     "ContractId": 253,
     "ContractName": "Proposal Test",
-    "PrimaryAudienceImpressions": 0.0,
-    "SpotsInSpec": 0,
+    "PrimaryAudienceImpressions": 157433.40000000002,
+    "SpotsInSpec": 1,
     "SpotsOutOfSpec": 0,
-    "UploadDate": null
+    "UploadDate": "2018-02-08T12:57:39.693"
   }
 ]
