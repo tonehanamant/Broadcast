@@ -175,7 +175,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA" } };
-                proposal.Details.First().ProgramCriteria.Add(new ProgramCriteria() { Contain = ContainTypeEnum.Include, ProgramName = ProgramName1 });
+                proposal.Details.First().ProgramCriteria.Add(new ProgramCriteria() { Contain = ContainTypeEnum.Include, Program = new LookupDto {Display = ProgramName1, Id = 1 } });
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
                 _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
 
@@ -197,7 +197,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA" } };
-                proposal.Details.First().ProgramCriteria.Add(new ProgramCriteria() { Contain = ContainTypeEnum.Exclude, ProgramName = ProgramName1 });
+                proposal.Details.First().ProgramCriteria.Add(new ProgramCriteria() { Contain = ContainTypeEnum.Exclude, Program = new LookupDto {Display = ProgramName1, Id = 100 } });
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
                 _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
 

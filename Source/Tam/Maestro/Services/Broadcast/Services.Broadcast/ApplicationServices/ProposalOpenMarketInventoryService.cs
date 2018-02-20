@@ -459,7 +459,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
             foreach (var criteria in marketCriterion.ProgramNameSearchCriteria.GroupBy(c => c.Contain)
-                .Select(g => new { Type = g.Key, ProgramNames = g.Select(gb => gb.ProgramName) }))
+                .Select(g => new { Type = g.Key, ProgramNames = g.Select(gb => gb.Program.Display) }))
             {
                 var includeProgramName = criteria.ProgramNames.Any(c => program.ManifestDayparts.Select(md => md.ProgramName).Any(pn => string.Equals(pn, c, StringComparison.CurrentCultureIgnoreCase)));
                 if (criteria.Type == ContainTypeEnum.Include && !includeProgramName)

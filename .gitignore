@@ -313,3 +313,6 @@ OpenCover/
 
 #Backup approval files created by WinMerge
 *.approved.txt.bak
+
+## React files generated/copied from the React UI project
+Source/Tam/Maestro/UI/BroadcastComposerWeb/broadcastreact

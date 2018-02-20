@@ -60,7 +60,7 @@ namespace Services.Broadcast.Repositories
 
         private static ProgramCriteria Convert(proposal_version_detail_criteria_programs c)
         {
-            return new ProgramCriteria { Id = c.id, Contain = (ContainTypeEnum)c.contain_type, ProgramName = c.program_name };
+            return new ProgramCriteria { Id = c.id, Contain = (ContainTypeEnum)c.contain_type, Program = new LookupDto {Id = c.program_name_id, Display = c.program_name } };
         }
 
         private static GenreCriteria Convert(proposal_version_detail_criteria_genres c)
@@ -75,7 +75,7 @@ namespace Services.Broadcast.Repositories
 
         private static proposal_version_detail_criteria_programs Convert(ProgramCriteria filter, int proposalDetailId)
         {
-            return new proposal_version_detail_criteria_programs { contain_type = (byte)filter.Contain, proposal_version_detail_id = proposalDetailId, program_name = filter.ProgramName };
+            return new proposal_version_detail_criteria_programs { contain_type = (byte)filter.Contain, proposal_version_detail_id = proposalDetailId, program_name = filter.Program.Display, program_name_id = filter.Program.Id };
         }
 
         private static proposal_version_detail_criteria_genres Convert(GenreCriteria filter, int proposalDetailId)

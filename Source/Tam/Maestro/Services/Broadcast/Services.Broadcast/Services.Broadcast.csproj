@@ -213,6 +213,7 @@
     <Compile Include="Entities\DefaultPostingBooksDto.cs" />
     <Compile Include="Entities\PostingBookResultDto.cs" />
     <Compile Include="Entities\ClientPostScrubbingProposalDetailDto.cs" />
+    <Compile Include="Entities\ProgramSearchRequest.cs" />
     <Compile Include="Entities\ClientPostScrubbingProposalHeaderDto.cs" />
     <Compile Include="Entities\ProposalDetailPostScrubbingDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleInventoryTotalsDto.cs" />
@@ -414,6 +415,7 @@
     <Compile Include="Repositories\PostingBookRepository.cs" />
     <Compile Include="Repositories\GenreRepository.cs" />
     <Compile Include="Entities\PostFileDetail.cs" />
+    <Compile Include="Repositories\ProgramNameRepository.cs" />
     <Compile Include="Repositories\PostRepository.cs" />
     <Compile Include="Repositories\ProposalInventoryRepository.cs" />
     <Compile Include="Repositories\ProposalOpenMarketInventoryRepository.cs" />

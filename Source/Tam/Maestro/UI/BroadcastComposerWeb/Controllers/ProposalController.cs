@@ -176,5 +176,23 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindGenres(genreSearchString));
         }        
+
+        [HttpPost]
+        [Route("FindPrograms")]
+        public BaseResponse<List<LookupDto>> FindPrograms(ProgramSearchRequest request)
+        {
+
+            return _ConvertToBaseResponse(
+                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindPrograms(request, Request.RequestUri.ToString()));
+        }
+
+        [HttpPost]
+        [Route("FindProgramsExternalApi")]
+        public BaseResponse<List<LookupDto>> FindProgramsExternalApi(ProgramSearchRequest request)
+        {
+
+            return _ConvertToBaseResponse(
+                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindProgramsExternalApi(request));
+        }
     }
 }

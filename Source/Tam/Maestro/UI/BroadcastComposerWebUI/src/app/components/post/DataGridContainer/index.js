@@ -7,7 +7,7 @@ import { getPost } from 'Ducks/post';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
 import Sorter from 'Utils/react-redux-grid-sorter';
-import CurrencyDollarWhole from 'Components/shared/TextFormatters/CurrencyDollarWhole';
+import NumberCommaWhole from 'Components/shared/TextFormatters/NumberCommaWhole';
 
 const { MenuActions, SelectionActions, GridActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
@@ -119,13 +119,13 @@ export class DataGridContainer extends Component {
           width: '15%',
       },
       {
-          name: 'Upload Date',
-          dataIndex: 'UploadDate',
-          defaultSortDirection: 'ASC',
-          width: '15%',
-          renderer: ({ row }) => (
-            <span>{row.DisplayUploadDate}</span>
-          ),
+        name: 'Upload Date',
+        dataIndex: 'UploadDate',
+        defaultSortDirection: 'ASC',
+        width: '15%',
+        renderer: ({ row }) => (
+          <span>{row.DisplayUploadDate}</span>
+        ),
       },
       {
         name: 'Spot in Spec',
@@ -142,7 +142,7 @@ export class DataGridContainer extends Component {
         dataIndex: 'PrimaryAudienceImpressions',
         width: '20%',
         renderer: ({ row }) => (
-          <CurrencyDollarWhole amount={row.PrimaryDemo} dash={false} />
+          <NumberCommaWhole number={(row.PrimaryDemo !== undefined) ? row.PrimaryDemo : ''} dash={false} />
         ),
       },
     ];
