@@ -9,7 +9,10 @@
         <EntityTypeShape EntityType="broadcast_forecastModel.universe" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="broadcast_forecastModel.usage" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="broadcast_forecastModel.viewer_details" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="broadcast_forecastModel.viewer" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="broadcast_forecastModel.code" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="broadcast_forecastModel.market_headers" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="broadcast_forecastModel.post_months" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="broadcast_forecastModel.viewers" Width="1.5" PointX="3.375" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

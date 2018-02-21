@@ -30,23 +30,18 @@ namespace Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast
         public virtual DbSet<universe> universes { get; set; }
         public virtual DbSet<usage> usages { get; set; }
         public virtual DbSet<viewer_details> viewer_details { get; set; }
-        public virtual DbSet<viewer> viewers { get; set; }
+        public virtual DbSet<code> codes { get; set; }
+        public virtual DbSet<market_headers> market_headers { get; set; }
+        public virtual DbSet<post_months> post_months { get; set; }
+        public virtual DbSet<viewers> viewers { get; set; }
     
-        public virtual int usp_ForecastNsiRatingsMonth(Nullable<short> media_month_id, Nullable<System.DateTime> start_date, Nullable<System.DateTime> end_date)
+        public virtual int usp_ForecastNsiRatingsMonth(Nullable<short> media_month_id)
         {
             var media_month_idParameter = media_month_id.HasValue ?
                 new ObjectParameter("media_month_id", media_month_id) :
                 new ObjectParameter("media_month_id", typeof(short));
     
-            var start_dateParameter = start_date.HasValue ?
-                new ObjectParameter("start_date", start_date) :
-                new ObjectParameter("start_date", typeof(System.DateTime));
-    
-            var end_dateParameter = end_date.HasValue ?
-                new ObjectParameter("end_date", end_date) :
-                new ObjectParameter("end_date", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_ForecastNsiRatingsMonth", media_month_idParameter, start_dateParameter, end_dateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_ForecastNsiRatingsMonth", media_month_idParameter);
         }
     }
 }

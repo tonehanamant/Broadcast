@@ -21,8 +21,8 @@ namespace Services.Broadcast.Repositories
     public interface IRatingForecastRepository : IDataRepository
     {
         List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackType playbackType, IEnumerable<Program> programs, bool useDayByDayImpressions);
-        List<RatingsForecastStatus> GetForecastDetails(List<MediaMonth> sweepsMonths);
         void CrunchMonth(short mediaMonthId, DateTime startDate, DateTime endDate);
+        List<RatingsForecastStatus> GetForecastDetails(List<MediaMonth> sweepsMonths);
         List<StationImpressionsWithAudience> GetImpressionsPointInTime(int postingBookId, List<int> uniqueRatingsAudiences, List<StationDetailPointInTime> stationDetails, ProposalEnums.ProposalPlaybackType playbackType, bool useDayByDayImpressions);
         List<StationImpressionsWithAudience> GetImpressionsDaypart(int postingBookId, List<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions);
         List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, IEnumerable<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions);
@@ -90,11 +90,6 @@ namespace Services.Broadcast.Repositories
             }
         }
 
-        public void CrunchMonth(short mediaMonthId, DateTime startDate, DateTime endDate)
-        {
-            _InReadUncommitedTransaction(c => c.usp_ForecastNsiRatingsMonth(mediaMonthId, startDate, endDate));
-        }
-
         public List<StationImpressionsWithAudience> GetImpressionsPointInTime(int postingBookId, List<int> uniqueRatingsAudiences, List<StationDetailPointInTime> stationDetails, ProposalEnums.ProposalPlaybackType playbackType, bool useDayByDayImpressions)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
@@ -142,6 +137,10 @@ namespace Services.Broadcast.Repositories
             }
         }
 
+        public void CrunchMonth(short mediaMonthId, DateTime startDate, DateTime endDate)
+        {
+            // TODO: Trigger Forecast via MicroService in AWS/Databricks
+        }
 
         public List<StationImpressionsWithAudience> GetImpressionsDaypart(int postingBookId, List<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
         {
