@@ -49,12 +49,12 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetInitialProposalData(DateTime.Now));
-        } 
+        }
 
         [HttpPost]
         [Route("SaveProposal")]
         public BaseResponse<ProposalDto> SaveProposal(ProposalDto proposal)
-        {            
+        {
             return
                 _ConvertToBaseResponse(
                     () =>
@@ -175,7 +175,7 @@ namespace BroadcastComposerWeb.Controllers
 
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindGenres(genreSearchString));
-        }        
+        }
 
         [HttpPost]
         [Route("FindPrograms")]

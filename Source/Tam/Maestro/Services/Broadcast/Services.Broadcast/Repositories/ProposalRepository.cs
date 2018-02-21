@@ -475,7 +475,7 @@ namespace Services.Broadcast.Repositories
                         context.proposal_version_detail_criteria_programs.AddRange(programCriteria);
 
                     }
-                        
+
 
 
                     // deal with quarters that have been deleted 
@@ -1083,7 +1083,7 @@ namespace Services.Broadcast.Repositories
                     ProgramCriteria = proposalDetail.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
                     {
                         Id = p.id,
-                        Contain = (ContainTypeEnum) p.contain_type,
+                        Contain = (ContainTypeEnum)p.contain_type,
                         Program = new LookupDto
                         {
                             Id = p.program_name_id,

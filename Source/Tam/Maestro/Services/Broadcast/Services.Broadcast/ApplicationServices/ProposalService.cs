@@ -43,7 +43,7 @@ namespace Services.Broadcast.ApplicationServices
         Tuple<string, Stream> GenerateScxFileArchive(int proposalIds);
         ValidationWarningDto DeleteProposal(int proposalId);
         Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
-        List<LookupDto> FindGenres(string genreSearchString);        
+        List<LookupDto> FindGenres(string genreSearchString);
         List<LookupDto> FindPrograms(ProgramSearchRequest request, string requestUrl);
         List<LookupDto> FindProgramsExternalApi(ProgramSearchRequest request);
     }
@@ -426,7 +426,7 @@ namespace Services.Broadcast.ApplicationServices
                     isciDay.Friday = splitDays.Any(l => l.Equals("F", StringComparison.CurrentCultureIgnoreCase));
                     isciDay.Saturday = splitDays.Any(l => l.Equals("Sa", StringComparison.CurrentCultureIgnoreCase));
                     isciDay.Sunday = splitDays.Any(l => l.Equals("Su", StringComparison.CurrentCultureIgnoreCase));
-                }                
+                }
             }))));
         }
 
@@ -1313,7 +1313,7 @@ namespace Services.Broadcast.ApplicationServices
         public List<LookupDto> FindGenres(string genreSearchString)
         {
             return _GenreRepository.FindGenres(genreSearchString);
-        }        
+        }
 
         public List<LookupDto> FindPrograms(ProgramSearchRequest request, string requestUrl)
         {
@@ -1324,7 +1324,8 @@ namespace Services.Broadcast.ApplicationServices
                 var url = new Uri(requestUrl);
                 searchUrl = url.GetLeftPart(UriPartial.Authority) + "/api/Proposals/FindProgramsExternalApi";
             }
-            else{
+            else
+            {
                 searchUrl = BroadcastServiceSystemParameter.ProgramSearchApiUrl;
             }
 
