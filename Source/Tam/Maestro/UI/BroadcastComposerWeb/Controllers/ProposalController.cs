@@ -175,7 +175,7 @@ namespace BroadcastComposerWeb.Controllers
 
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindGenres(genreSearchString));
-        }
+        }        
 
         [HttpPost]
         [Route("FindPrograms")]

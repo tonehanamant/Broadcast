@@ -177,7 +177,7 @@
     <Compile Include="ApplicationServices\PostingBookServiceTests.cs" />
     <Compile Include="ApplicationServices\PostPrePostingRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostPrePostingServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\PostServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\AffidavitScrubbingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProposalPostingBooksEngineTests.cs" />
     <Compile Include="ApplicationServices\ProposalScxConverterTest.cs" />

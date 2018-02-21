@@ -13,7 +13,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IPostRepository : IDataRepository
     {
-        List<PostDto> GetAllPostFiles();
+        List<PostDto> GetAllPostFiles();       
     }
 
     public class PostRepository : BroadcastRepositoryBase, IPostRepository
@@ -28,7 +28,7 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var proposals = context.proposal_versions.Where(p =>
-                        (ProposalEnums.ProposalStatusType) p.status == ProposalEnums.ProposalStatusType.Contracted).ToList();
+                        (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted).ToList();
                     var posts = new List<PostDto>();
 
                     foreach (var proposal in proposals)
