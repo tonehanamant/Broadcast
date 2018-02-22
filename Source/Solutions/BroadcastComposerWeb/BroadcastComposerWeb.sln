@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BroadcastComposerWeb", "..\..\Tam\Maestro\UI\BroadcastComposerWeb\BroadcastComposerWeb.csproj", "{2A781CE5-8B2F-4E9A-ABA8-0417228A2A3C}"
 EndProject
@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkMapping.Broa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Broadcast.IntegrationTests", "..\..\Tam\MaestroTests\SupportTests\Services.Broadcast.IntegrationTests\Services.Broadcast.IntegrationTests.csproj", "{4DDD974F-7D23-4E36-A5EF-07889CBDEEE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WWTVData.Service", "WWTVData.Service\WWTVData.Service.csproj", "{7E826421-7DE6-403B-B8AF-F40A51BFB66E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WWTVData.Service", "..\WWTVData.Service\WWTVData.Service.csproj", "{7E826421-7DE6-403B-B8AF-F40A51BFB66E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -541,5 +541,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4BC15B7E-D396-4ACC-BE2F-1CC4402A6C07}
 	EndGlobalSection
 EndGlobal
