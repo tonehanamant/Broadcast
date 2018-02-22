@@ -144,6 +144,9 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var affidavitFileDetail in affidavit_file.affidavit_file_details)
             {
+                if (!affidavitFileDetail.affidavit_client_scrubs.Any())
+                    break;
+
                 if (!stations.ContainsKey(affidavitFileDetail.station))
                 {
                     affidavitFileDetail.affidavit_client_scrubs.ForEach(s =>
@@ -153,11 +156,9 @@ namespace Services.Broadcast.ApplicationServices
                     });
                     continue;
                 }
+
                 var quarterWeekIds =
                     affidavitFileDetail.affidavit_client_scrubs.Select(s => s.proposal_version_detail_quarter_week_id).ToList();
-                var stationManifests = _BroadcastDataRepositoryFactory
-                    .GetDataRepository<IProposalOpenMarketInventoryRepository>()
-                    .GetStationManifestFromQuarterWeeks(quarterWeekIds);
                 var proposals = _ProposalService.GetProposalsByQuarterWeeks(quarterWeekIds);
 
                 var affidavitStation = stations[affidavitFileDetail.station];
@@ -179,24 +180,15 @@ namespace Services.Broadcast.ApplicationServices
                     scrub.match_isci_days = _IsIsciDaysMatch(proposalWeekIsci, dayOfWeek);
 
                     // match market/station
-                    if (stationManifests.Any())
-                    {   
-                        var scrubManifests = stationManifests[quarterWeekId];
+                    scrub.match_station = false;
+                    var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, proposalDetail);
 
-                        if (scrubManifests.Any(m =>
-                            m.station.legacy_call_letters == affidavitStation.LegacyCallLetters))
-                        {
-                            scrub.match_station = true;
-                            var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, proposalDetail);
-
-                            var marketGeoName = affidavitStation.OriginMarket;
-                            if (markets.Any(m => m.Display == marketGeoName))
-                            {
-                                affidavitFileDetail.market = marketGeoName;
-
-                                scrub.match_market = true;
-                            }
-                        }
+                    var marketGeoName = affidavitStation.OriginMarket;
+                    if (markets.Any(m => m.Display == marketGeoName))
+                    {
+                        affidavitFileDetail.market = marketGeoName;
+                        scrub.match_station = true;
+                        scrub.match_market = true;
                     }
 
                     scrub.match_program = true;
