@@ -36,8 +36,21 @@
     <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\BroadcastComposerWeb\packages\Unity.5.6.0\lib\net45\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\BroadcastComposerWeb\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\BroadcastComposerWeb\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.0.0.480, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\BroadcastComposerWeb\packages\protobuf-net.2.0.0.480\lib\net40\protobuf-net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\BroadcastComposerWeb\packages\System.Management.Automation.dll.10.0.10586.0\lib\net40\System.Management.Automation.dll</HintPath>
+    </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,17 +58,17 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tam.Maestro.Common.Clients, Version=5.8.8.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\BroadcastComposerWeb\packages\Tam.Maestro.Common.Clients.5.8.8.2\lib\net45\Tam.Maestro.Common.Clients.dll</HintPath>
+    <Reference Include="Tam.Maestro.Common.Clients, Version=18.3.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\BroadcastComposerWeb\packages\Tam.Maestro.Common.Clients.18.3.1.4\lib\net45\Tam.Maestro.Common.Clients.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.Common.Logging, Version=5.8.8.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\BroadcastComposerWeb\packages\Tam.Maestro.Common.Logging.5.8.8.1\lib\net45\Tam.Maestro.Common.Logging.dll</HintPath>
+    <Reference Include="Tam.Maestro.Common.Logging, Version=18.2.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\BroadcastComposerWeb\packages\Tam.Maestro.Common.Logging.18.2.1.1\lib\net45\Tam.Maestro.Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Tam.Maestro.Common.Systems, Version=18.2.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.18.2.1.4\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
     </Reference>
     <Reference Include="Topshelf, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Topshelf.4.0.3\lib\net452\Topshelf.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\BroadcastComposerWeb\packages\Topshelf.4.0.3\lib\net452\Topshelf.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Abstractions, Version=3.2.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
       <HintPath>..\BroadcastComposerWeb\packages\Unity.5.6.0\lib\net45\Unity.Abstractions.dll</HintPath>
