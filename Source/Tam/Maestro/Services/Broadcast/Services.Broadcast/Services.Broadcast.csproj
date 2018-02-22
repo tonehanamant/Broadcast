@@ -126,6 +126,7 @@
     </Reference>
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -438,6 +439,7 @@
     <Compile Include="Repositories\StationRepository.cs" />
     <Compile Include="Repositories\TrackerMappingRepository.cs" />
     <Compile Include="Repositories\TrafficRepository.cs" />
+    <Compile Include="Service\ServiceBase.cs" />
     <Compile Include="SystemComponentParameters\SystemComponentParameter.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -483,6 +485,7 @@
     </None>
     <None Include="ServiceCommonAppSettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup />

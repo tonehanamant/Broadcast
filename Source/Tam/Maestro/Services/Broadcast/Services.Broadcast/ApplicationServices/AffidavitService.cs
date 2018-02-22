@@ -110,8 +110,7 @@ namespace Services.Broadcast.ApplicationServices
                             match_time = w.AirtimeMatch,
                             modified_by = username,
                             modified_date = currentDateTime,
-                            lead_in = w.IsLeadInMatch,
-                            status = _GetScrubStatus(w)
+                            lead_in = w.IsLeadInMatch
                         }).ToList();
                 det.affidavit_file_detail_problems =
                     matchedAffidavitDetail.AffidavitDetailProblems.Select(
@@ -256,13 +255,6 @@ namespace Services.Broadcast.ApplicationServices
             {
                 scrub.status = (int) ScrubbingStatus.InSpec;
             }
-        }
-        private int _GetScrubStatus(AffidavitMatchingProposalWeek affidavitMatchingProposalWeek)
-        {
-                if (!affidavitMatchingProposalWeek.AirtimeMatch)
-                    return (int) AffidavitClientScrubStatus.OutOfSpec;
-            
-                return (int) AffidavitClientScrubStatus.InSpec;
         }
 
         private List<AffidavitMatchingDetail> _LinkAndValidateContractIscis(AffidavitSaveRequest saveRequest)
