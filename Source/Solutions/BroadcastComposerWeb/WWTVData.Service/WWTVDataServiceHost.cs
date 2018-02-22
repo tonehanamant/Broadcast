@@ -13,10 +13,13 @@ namespace WWTVData.Service
     
     public class WWTVDataServiceHost
     {
-
         public const string _serviceName = "_WWTVData.Service";
+
         public static void Main(string[] args)
         {
+//            var _ApplicationServiceFactory = new BroadcastApplicationServiceFactory();
+//            _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetInitialProposalData(DateTime.Now);
+
             if (args.Length >= 1 && args[0] == "-console")
             {
                 (new WWTV(_serviceName)).CheckWWTVFiles(DateTime.Now);
@@ -37,7 +40,7 @@ namespace WWTVData.Service
                     x.SetDisplayName(_serviceName);
                     x.SetServiceName(_serviceName);
                 });
-                var exitCode = (int)Convert.ChangeType(rc, rc.GetTypeCode());  //11
+                var exitCode = (int)Convert.ChangeType(rc, rc.GetTypeCode()); 
                 Environment.ExitCode = exitCode;
             }
         }

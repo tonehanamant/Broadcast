@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Timers;
 using Services.Broadcast.Services;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace WWTVData.Service
 {
@@ -12,17 +13,22 @@ namespace WWTVData.Service
     public class WWTV : ServiceBase , IWWTV
     {
         public const int MILSEC_BETWEEN_CHECKS = 1000 * 5;
-        private DateTime _timeLastRun;
+        private DateTime? _timeLastRun;
 
-        public int SecondsBetweenRuns { get; set; }
+        public int SecondsBetweenRuns
+        {
+            get
+            {
+                return 86000;
+                //return BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
+            }
+        }
 
         readonly Timer _Timer;
         public WWTV(string serviceName) : base(serviceName)
         {
-            SecondsBetweenRuns = 10 ;
             _Timer = new Timer(MILSEC_BETWEEN_CHECKS) { AutoReset = true }; // once an hour
             _Timer.Elapsed += _Timer_check_for_WWT_files;
-            _timeLastRun = DateTime.Now;
         }
 
         protected override string GetServiceName()
@@ -32,15 +38,20 @@ namespace WWTVData.Service
 
         protected void _Timer_check_for_WWT_files(object sender, ElapsedEventArgs e)
         {
+            LogServiceEvent(GetServiceName(), "checking . . . .");
             _Timer.Stop();
 
             var signalTime = e.SignalTime;
-
+            if (_timeLastRun == null)
+            {
+                _timeLastRun = DateTime.Now;
+                CheckWWTVFiles(_timeLastRun.Value);
+            }
+            else
             if (signalTime.AddSeconds(-SecondsBetweenRuns) >= _timeLastRun)
             {
 
-                CheckWWTVFiles(_timeLastRun);
-
+                CheckWWTVFiles(_timeLastRun.Value);
                 _timeLastRun = signalTime;
             }
             _Timer.Start();
@@ -51,7 +62,7 @@ namespace WWTVData.Service
         public void CheckWWTVFiles(DateTime timeSignaled)
         {
             Console.WriteLine("Not Implemented at time " + timeSignaled.ToString("s"));
-            LogServiceError("abc","oopsie",new Exception());
+            LogServiceEvent("abc","oopsie");
         }
     }
 }
