@@ -14,6 +14,7 @@ export default class GridIsciCell extends Component {
       isEdit: false,
       isChanged: false,
       isValid: null,
+      isInitiallyValid: true,
       validationErrors: '',
     };
     this.onChangeIscis = this.onChangeIscis.bind(this);
@@ -34,7 +35,6 @@ export default class GridIsciCell extends Component {
     this.setState({ validationErrors: '' });
     this.setState({ isValid: null });
     // this.setState({ isChanged: false });
-    // this.readIscisFromData(this.props.Iscis);
     this.readIscisFromData(nextProps.Iscis);
   }
 
@@ -46,9 +46,11 @@ export default class GridIsciCell extends Component {
 
   // display/edit conversion - both for popover and edit house display/tips
   readIscisFromData(iscis) {
-    // console.log('readIscis', iscis);
+   // console.log('readIscis', iscis);
+
     if (iscis && iscis.length) {
       const houseDisplay = [];
+      let isInitiallyValid = true;
       const iscisFormatted = iscis.reduce((aggregated, iscisItem) => {
         const house = iscisItem.HouseIsci || '';
         const client = iscisItem.ClientIsci || '';
@@ -56,30 +58,36 @@ export default class GridIsciCell extends Component {
         const brand = iscisItem.Brand || '';
         const married = iscisItem.MarriedHouseIsci ? '(m)' : '';
         houseDisplay.push(house.trim() + married);
+        if (isInitiallyValid) {
+          isInitiallyValid = iscisItem.HouseIsci !== null && iscisItem.ClientIsci !== null && iscisItem.Days !== null;
+        }
         return `${aggregated + house.trim()}${married},${client.trim()},${days.trim()},${brand.trim()}\n`;
       }, '');
-      // console.log('house display >>>', houseDisplay);
-      // test
-      // this.checkDaysIncludeValid('s|T|SA');
-      this.setState({ iscisValue: iscisFormatted, iscisDisplay: houseDisplay, isEdit: true });
+      // console.log('read iscis >>>', isInitiallyValid);
+
+      this.setState({ iscisValue: iscisFormatted, iscisDisplay: houseDisplay, isInitiallyValid, isEdit: true });
     } else {
-      this.setState({ iscisValue: '', iscisDisplay: '', isEdit: false });
+      this.setState({ iscisValue: '', iscisDisplay: '', isInitiallyValid: true, isEdit: false });
     }
   }
 
   checkDaysIncludeValid(days) {
     const daysSplit = days.split('|');
-    const check = daysSplit.every((day) => {
+    let check = daysSplit.every((day) => {
       const dayval = day.toLowerCase();
-      return _.includes(['m', 't', 'w', 't', 'f', 'sa', 'su'], dayval);
+      return _.includes(['m', 't', 'w', 'th', 'f', 'sa', 'su'], dayval);
     });
+    if (check) {
+      check = _.uniq(daysSplit).length === daysSplit.length;
+    }
     console.log('checkDaysIncludeValid', check, days, this);
     return check;
   }
 
-  // write back into object; add errorLength here?
+  // write back into object; check initially valid for legacy
   writeIscisFromValues(iscisValue) {
-    if (this.state.isChanged) {
+    // console.log('write check', this.state.isChanged, this.state.isInitiallyValid);
+    if (this.state.isChanged || !this.state.isInitiallyValid) {
       // allow for removing all - no value but changed
       let valid = true;
       let iscisData = [];
@@ -97,7 +105,7 @@ export default class GridIsciCell extends Component {
         // check for valid days
         let dayCheck = true;
         if (splitted[2]) {
-          dayCheck = this.checkDaysIncludeValid(splitted[2]);
+          dayCheck = this.checkDaysIncludeValid(splitted[2].trim());
           if (!dayCheck) valid = false;
         }
         const ret = {
@@ -168,7 +176,7 @@ export default class GridIsciCell extends Component {
       }
       if (isci.dayError) {
         lineValid = false;
-        inner.push('Day Include has invalid days (M, T, W, T, F, Sa, Su); ');
+        inner.push('Day Include invalid days or not unique (M, T, W, Th, F, Sa, Su); ');
       }
       if (isci.errorLength) {
         lineValid = false;
