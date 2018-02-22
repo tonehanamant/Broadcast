@@ -208,7 +208,7 @@ export default class GridIsciCell extends Component {
     const popoverIsciEditor = (
       <Popover id="popover-positioned-scrolling-top" title={title}>
         <FormGroup controlId="isciEditor" validationState={this.state.isValid}>
-          <ControlLabel>House ISCI*,Client ISCI*, Day Include*, Brand <span style={{ fontWeight: 'normal', fontSize: '11px', color: '#999999' }}><br />Use (m) to denote a married house ISCI</span></ControlLabel>
+          <ControlLabel>House ISCI*,Client ISCI*, Day Include*, Brand <span style={{ fontWeight: 'normal', fontSize: '11px', color: '#999999' }}><br />Use (m) to denote a married house ISCI. Use | between days in Day Include (M|T|W).</span></ControlLabel>
           <FormControl componentClass="textarea" placeholder="Enter ISCIs" style={{ height: '100px' }} onChange={this.onChangeIscis} value={this.state.iscisValue} />
           {this.state.isValid != null &&
             <HelpBlock>
