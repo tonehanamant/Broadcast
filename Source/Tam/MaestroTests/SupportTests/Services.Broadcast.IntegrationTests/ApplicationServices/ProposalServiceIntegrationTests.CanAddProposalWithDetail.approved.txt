@@ -81,7 +81,7 @@
                 {
                   "Brand": "Testing",
                   "ClientIsci": "AAAAAA",
-                  "Days": "Su|Th|F",
+                  "Days": "Su|Th|F|Sa",
                   "Friday": true,
                   "HouseIsci": "AAAAAA",
                   "MarriedHouseIsci": true,
@@ -95,7 +95,7 @@
                 {
                   "Brand": "Testing 2",
                   "ClientIsci": "BBBBBBB",
-                  "Days": "M|T|W|Th|F|Sa",
+                  "Days": "M|T|W|Th|F",
                   "Friday": true,
                   "HouseIsci": "BBBBBBB",
                   "MarriedHouseIsci": false,
