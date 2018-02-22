@@ -1332,6 +1332,7 @@ namespace Services.Broadcast.ApplicationServices
 
             using (var webClient = new WebClient())
             {
+                webClient.UseDefaultCredentials = true;
                 webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
                 var jsonResult = webClient.UploadString(searchUrl, jsonRequest);
                 var result = JsonConvert.DeserializeObject<BaseResponse<List<LookupDto>>>(jsonResult);
