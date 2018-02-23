@@ -84,6 +84,7 @@ Global
 		{2A781CE5-8B2F-4E9A-ABA8-0417228A2A3C}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{2A781CE5-8B2F-4E9A-ABA8-0417228A2A3C}.Debug|x86.Build.0 = Debug|Any CPU
 		{2A781CE5-8B2F-4E9A-ABA8-0417228A2A3C}.IntegrationTests|Any CPU.ActiveCfg = IntegrationTests|Any CPU
+		{2A781CE5-8B2F-4E9A-ABA8-0417228A2A3C}.IntegrationTests|Any CPU.Build.0 = IntegrationTests|Any CPU
 		{2A781CE5-8B2F-4E9A-ABA8-0417228A2A3C}.IntegrationTests|Mixed Platforms.ActiveCfg = IntegrationTests|Any CPU
 		{2A781CE5-8B2F-4E9A-ABA8-0417228A2A3C}.IntegrationTests|Mixed Platforms.Build.0 = IntegrationTests|Any CPU
 		{2A781CE5-8B2F-4E9A-ABA8-0417228A2A3C}.IntegrationTests|x64.ActiveCfg = IntegrationTests|Any CPU
