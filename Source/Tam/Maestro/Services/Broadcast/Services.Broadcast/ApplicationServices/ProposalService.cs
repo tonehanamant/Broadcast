@@ -117,7 +117,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     var ad = advertisers.Find(q => q.Id == p.Advertiser.Id);
                     if (ad != null)
-                        p.Advertiser.Display = ad.Display;
+                        p.Advertiser.Display = ad.Display;                    
                 }
 
                 return proposals;
@@ -822,6 +822,49 @@ namespace Services.Broadcast.ApplicationServices
             _SetProposalRatingBooks(proposal);
             _SetProposalMargins(proposal);
             _SetProposalCanBeDeleted(proposal);
+            _SetProposalDetailIsciDay(proposal.Details);
+        }
+
+        private void _SetProposalDetailIsciDay(List<ProposalDetailDto> details)
+        {
+            details.ForEach(detail => detail.Quarters.ForEach(quarter => quarter.Weeks.ForEach(week => week.Iscis.ForEach(isci => _GenerateIsciDays(isci)))));
+        }
+
+        private void _GenerateIsciDays(ProposalWeekIsciDto isciDto)
+        {
+            isciDto.Days = string.Empty;
+            if (isciDto.Sunday)
+            {
+                isciDto.Days = "Su|";
+            }
+            if (isciDto.Monday)
+            {
+                isciDto.Days = $"{isciDto.Days}M|";
+            }
+            if (isciDto.Tuesday)
+            {
+                isciDto.Days = $"{isciDto.Days}T|";
+            }
+            if (isciDto.Wednesday)
+            {
+                isciDto.Days = $"{isciDto.Days}W|";
+            }
+            if (isciDto.Thursday)
+            {
+                isciDto.Days = $"{isciDto.Days}Th|";
+            }
+            if (isciDto.Friday)
+            {
+                isciDto.Days = $"{isciDto.Days}F|";
+            }
+            if (isciDto.Saturday)
+            {
+                isciDto.Days = $"{isciDto.Days}Sa";
+            }
+
+            isciDto.Days = isciDto.Days.EndsWith("|") ? isciDto.Days.Remove(isciDto.Days.Length - 1) : isciDto.Days;
+            if (string.IsNullOrWhiteSpace(isciDto.Days))
+                isciDto.Days = null;
         }
 
         public Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds)
@@ -857,14 +900,7 @@ namespace Services.Broadcast.ApplicationServices
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 var proposal = _ProposalRepository.GetProposalByIdAndVersion(proposalId, proposalVersion);
-                _SetProposalDetailDaypart(proposal.Details);
-                _SetProposalSpotLengths(proposal);
-                _SetProposalDetailFlightWeeks(proposal);
-                _SetProposalFlightWeeksAndIds(proposal);
-                _SetProposalMarketGroups(proposal);
-                _SetProposalRatingBooks(proposal);
-                _SetProposalMargins(proposal);
-                _SetProposalCanBeDeleted(proposal);
+                SetupProposalDto(proposal);
                 return proposal;
             }
         }

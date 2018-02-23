@@ -220,6 +220,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
             get { return SystemComponentHelper.GetPropertyValue<bool>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.UseMaestroDaypartRepo); }
         }
+	 
+		public static int WWTV_SecondsBetweenRuns  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_SecondsBetweenRuns); }
+        }
 	}
 	 
 	public static class CommonSystemParameter 
