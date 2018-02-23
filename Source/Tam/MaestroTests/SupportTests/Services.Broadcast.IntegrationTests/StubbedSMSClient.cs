@@ -7,7 +7,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using Tam.Maestro.Services.ServiceManager.Service;
+
 
 namespace Services.Broadcast.IntegrationTests
 {
@@ -33,7 +33,7 @@ namespace Services.Broadcast.IntegrationTests
 
         public string GetResource(TAMResource pTamResource)
         {
-            return EnvironmentSettings.Handler.GetResource(pTamResource, TAMEnvironment.LOCAL);
+            throw new NotImplementedException();//return EnvironmentSettings.Handler.GetResource(pTamResource, TAMEnvironment.LOCAL);
         }
 
         public string GetSystemComponentParameterValue(string pSystemComponentID, string pSystemParameterID)
