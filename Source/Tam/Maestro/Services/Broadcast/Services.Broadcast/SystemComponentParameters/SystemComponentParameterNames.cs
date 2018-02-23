@@ -210,6 +210,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		{
             get { return "UseMaestroDaypartRepo"; }
         }
+	 
+		public static string WWTV_SecondsBetweenRuns  
+		{
+            get { return "WWTV_SecondsBetweenRuns"; }
+        }
 	}
 	 
 	public static class CommonSystemParameterNames
