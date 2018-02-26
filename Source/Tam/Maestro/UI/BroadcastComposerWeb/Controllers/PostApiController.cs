@@ -25,23 +25,14 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() =>
                 _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetPosts());
         }
-
+        
         [HttpGet]
         [Route("ClientScrubbingProposal/{proposalId}")]
-        public BaseResponse<ClientPostScrubbingProposalHeaderDto> GetClientPostScrubbingProposalHeader(int proposalId)
+        public BaseResponse<ClientPostScrubbingProposalDto>  GetClientScrubbingForProposal(int proposalId)
         {
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetClientPostScrubbingProposalHeader(proposalId));
-        }
-
-        [HttpGet]
-        [Route("ClientScrubbingProposal/{proposalId}/Detail/{detailId}")]
-        public BaseResponse<ClientPostScrubbingProposalDetailDto> GetClientPostScrubbingProposalDetail(int proposalId, int detailId)
-        {
-            return
-                _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetClientPostScrubbingProposalDetail(proposalId, detailId));
+                    () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetClientScrubbingForProposal(proposalId));
         }
     }
 }
