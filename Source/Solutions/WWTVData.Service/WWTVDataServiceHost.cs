@@ -17,8 +17,8 @@ namespace WWTVData.Service
 
         public static void Main(string[] args)
         {
-//            var _ApplicationServiceFactory = new BroadcastApplicationServiceFactory();
-//            _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetInitialProposalData(DateTime.Now);
+            var _ApplicationServiceFactory = new BroadcastApplicationServiceFactory();
+            _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetInitialProposalData(DateTime.Now);
 
             if (args.Length >= 1 && args[0] == "-console")
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Timers;
 using Services.Broadcast.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -15,12 +16,20 @@ namespace WWTVData.Service
         public const int MILSEC_BETWEEN_CHECKS = 1000 * 5;
         private DateTime? _timeLastRun;
 
+        public string DropFileFolder
+        {
+            get
+            {
+                return "R:\\MBH_Stuff\\WWTVDropFolder";
+                //return BroadcastServiceSystemParameter.WWTV_DropFileFolder;
+            }
+        }
+
         public int SecondsBetweenRuns
         {
             get
             {
-                return 86000;
-                //return BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
+                return 15 ;// BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
             }
         }
 
@@ -38,7 +47,6 @@ namespace WWTVData.Service
 
         protected void _Timer_check_for_WWT_files(object sender, ElapsedEventArgs e)
         {
-            LogServiceEvent(GetServiceName(), "checking . . . .");
             _Timer.Stop();
 
             var signalTime = e.SignalTime;
@@ -61,8 +69,25 @@ namespace WWTVData.Service
 
         public void CheckWWTVFiles(DateTime timeSignaled)
         {
-            Console.WriteLine("Not Implemented at time " + timeSignaled.ToString("s"));
-            LogServiceEvent("abc","oopsie");
+            Console.WriteLine(timeSignaled.ToString("s") + "::Checking WWTV files Started");
+            string[] filesFound;
+
+            try
+            {
+                filesFound = Directory.GetFiles(DropFileFolder);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error reading from drop folder file list.", e);
+            }
+
+            int filesProcessed = 0;
+            int filesFailed = 0;
+
+            var message = string.Format("\r\nFound {0} file; Process {1}; Failed {2}",filesFound.Length,filesProcessed,filesFailed);
+            Console.WriteLine(DateTime.Now + "::Checking WWTV files Finished");
+            Console.WriteLine(message);
+            LogServiceEvent(GetServiceName(),message);
         }
     }
 }
