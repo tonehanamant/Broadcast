@@ -52,6 +52,45 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-2517 *********************************************************/
+IF OBJECT_ID('affidavit_outbound_files', 'U') IS NULL
+BEGIN
+    CREATE TABLE affidavit_outbound_files(
+		id INT IDENTITY(1,1) NOT NULL,
+		file_name VARCHAR(255) NOT NULL,
+		file_hash VARCHAR(63) NOT NULL,
+		source_id INT NOT NULL,
+		status INT NOT NULL,
+		created_date DATETIME NOT NULL,
+		created_by VARCHAR(63) NOT NULL,
+		CONSTRAINT [PK_affidavit_outbound_files] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	)
+END
+
+IF OBJECT_ID('affidavit_outbound_file_problems', 'U') IS NULL
+BEGIN
+	CREATE TABLE affidavit_outbound_file_problems(
+		id INT IDENTITY(1,1) NOT NULL,
+		affidavit_outbound_file_id  INT,
+		problem_description VARCHAR(255) NOT NULL,		
+		CONSTRAINT [PK_affidavit_outbound_file_problems] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]		
+	)
+	ALTER TABLE [dbo].[affidavit_outbound_file_problems] 
+	WITH CHECK ADD CONSTRAINT [FK_affidavit_outbound_file_problems_affidavit_outbound_files] 
+	FOREIGN KEY(affidavit_outbound_file_id)
+	REFERENCES [dbo].[affidavit_outbound_files] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[affidavit_outbound_file_problems] CHECK CONSTRAINT [FK_affidavit_outbound_file_problems_affidavit_outbound_files]
+END
+
+/*************************************** END BCOP-2517 ***********************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
