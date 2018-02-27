@@ -6,7 +6,9 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using Tam.Maestro.Common;
 
 namespace Services.Broadcast.ApplicationServices
@@ -27,9 +29,9 @@ namespace Services.Broadcast.ApplicationServices
         Valid = 1,
         Invalid = 2
     };
-    
+
     public class AffidavitPreprocessingService : IAffidavitPreprocessingService
-    {        
+    {
         internal List<string> AffidavitFileHeaders = new List<string>() { "ESTIMATE_ID", "STATION_NAME", "DATE_RANGE", "SPOT_TIME", "SPOT_DESCRIPTOR", "COST" };
 
         public readonly string _ValidStrataExtension = ".xlsx";
@@ -54,7 +56,36 @@ namespace Services.Broadcast.ApplicationServices
         {
             List<OutboundAffidavitFileValidationResultDto> validationList = ValidateFiles(filepathList, userName);
             _AffidavitPreprocessingRepository.SaveValidationObject(validationList);
+
+            string zipFileName = $@".\Files\Post_{DateTime.Now.ToString("yyyyMMddhhmmss")}.zip";
+            _CreateZipArchive(validationList.Where(x => x.Status == (int)AffidaviteFileProcessingStatus.Valid).ToList(), zipFileName);
+            if (File.Exists(zipFileName))
+            {
+                _UploadZipToWWTV(zipFileName);
+                File.Delete(zipFileName);
+            }
             return validationList;
+        }
+
+        private void _UploadZipToWWTV(string zipFilePath)
+        {
+            using (var ftpClient = new WebClient())
+            {
+                ftpClient.Credentials = new NetworkCredential("broadcast", "password");
+                ftpClient.UploadFile("ftp://localhost/" + Path.GetFileName(zipFilePath), zipFilePath);
+            }
+        }
+
+        private void _CreateZipArchive(List<OutboundAffidavitFileValidationResultDto> filelist, string zipName)
+        {
+            using (ZipArchive zip = ZipFile.Open(zipName, ZipArchiveMode.Create))
+            {
+                foreach (var file in filelist)
+                {
+                    // Add the entry for each file
+                    zip.CreateEntryFromFile(file.FilePath, Path.GetFileName(file.FilePath), System.IO.Compression.CompressionLevel.Optimal);
+                }
+            }
         }
 
         private List<OutboundAffidavitFileValidationResultDto> ValidateFiles(List<string> filepathList, string userName)
@@ -112,14 +143,14 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     continue;
                 }
-                foreach(string name in AffidavitFileHeaders)
+                foreach (string name in AffidavitFileHeaders)
                 {
                     if (string.IsNullOrWhiteSpace(tab.Cells[row, headers[name]].Value?.ToString()))
                     {
                         currentFile.ErrorMessages.Add($"Missing {name} on row {row}");
                         hasMissingData = true;
                     }
-                }                
+                }
             }
             if (hasMissingData)
             {

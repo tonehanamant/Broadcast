@@ -119,7 +119,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var fileNames = new List<string>() { @".\Files\StrataSBMSInvoicePostExportValid.xlsx" };
+                var fileNames = new List<string>() { @".\Files\StrataSBMSInvoicePostExportValid.xlsx", @".\Files\StrataSBMSInvoicePostExportValid.xlsx" };
                 var validations = _AffidavitPreprocessingService.ProcessFiles(fileNames, USERNAME);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
