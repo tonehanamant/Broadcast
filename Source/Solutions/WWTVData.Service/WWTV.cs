@@ -29,7 +29,7 @@ namespace WWTVData.Service
         {
             get
             {
-                return 15 ;// BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
+                return BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
             }
         }
 
@@ -78,7 +78,8 @@ namespace WWTVData.Service
             }
             catch (Exception e)
             {
-                throw new Exception("Error reading from drop folder file list.", e);
+                LogServiceError(GetServiceName(),"Error reading from Drop folder.",e);
+                return;
             }
 
             int filesProcessed = 0;
