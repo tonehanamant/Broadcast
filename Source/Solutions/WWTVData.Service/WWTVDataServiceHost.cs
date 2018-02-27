@@ -34,7 +34,7 @@ namespace WWTVData.Service
                         s.WhenStarted(tc => tc.Start());
                         s.WhenStopped(tc => tc.Stop());
                     });
-                    x.RunAsLocalSystem();
+                    //x.RunAsLocalSystem();
 
                     x.SetDescription("_WWTV Data Service");
                     x.SetDisplayName(_serviceName);
