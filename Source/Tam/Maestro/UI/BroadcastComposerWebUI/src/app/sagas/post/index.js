@@ -123,9 +123,20 @@ export function* assignPostDisplay({ payload: request }) {
 }
 
 export function* requestPostFiltered({ payload: query }) {
-  const postUnfiltered = yield select(state => state.post.postUnfiltered);
-  const keys = ['DisplayUploadDate', 'ContractName'/* 'ContractId' *//* 'SpotsInSpec', 'SpotsOutOfSpec', 'PrimaryAudienceImpressions' */];
-  const searcher = new FuzzySearch(postUnfiltered, keys, { caseSensitive: false });
+  const postListUnfiltered = yield select(state => state.post.postUnfiltered);
+
+  // for each post, convert all properties to string to enable use on FuzzySearch object
+  postListUnfiltered.map(post => (
+    Object.keys(post).map((key) => {
+      if (post[key] !== null && post[key] !== undefined) {
+        post[key] = post[key].toString(); // eslint-disable-line no-param-reassign
+      }
+      return post[key];
+    })
+  ));
+
+  const keys = ['ContractId', 'ContractName', 'DisplayUploadDate', 'PrimaryAudienceImpressions', 'SpotsInSpec', 'SpotsOutOfSpec', 'UploadDate'];
+  const searcher = new FuzzySearch(postListUnfiltered, keys, { caseSensitive: false });
   const postFiltered = () => searcher.search(query);
 
   try {
@@ -147,7 +158,7 @@ export function* requestPostFiltered({ payload: query }) {
 }
 
 /* ////////////////////////////////// */
-/* REQUEST POST PROPOSAL */
+/* REQUEST POST SCRUBBING HEADER */
 /* ////////////////////////////////// */
 export function* requestPostScrubbingHeader({ payload: proposalID }) {
   const { getPostScrubbingHeader } = api.post;
@@ -226,6 +237,74 @@ export function* requestPostScrubbingHeader({ payload: proposalID }) {
 }
 
 /* ////////////////////////////////// */
+/* REQUEST POST SCRUBBING DETAIL */
+/* ////////////////////////////////// */
+export function* requestPostScrubbingDetail({ payload: { proposalID, detailID } }) {
+  const { getPostScrubbingDetail } = api.post;
+  try {
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'PostScrubbingDetail',
+        loading: true },
+      });
+    const response = yield getPostScrubbingDetail(proposalID, detailID);
+    const { status, data } = response;
+
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'PostScrubbingDetail',
+        loading: false,
+      },
+    });
+    if (status !== 200) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No post proposal data returned.',
+          message: `The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Success) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No proposal data returned.',
+          message: data.Message || 'The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs.',
+        },
+      });
+      throw new Error();
+    }
+    yield put({
+      type: ACTIONS.RECEIVE_POST_SCRUBBING_DETAIL,
+      data,
+    });
+  } catch (e) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No proposal data returned.',
+          message: 'The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs.',
+          exception: e.response.data.ExceptionMessage || '',
+        },
+      });
+    }
+    if (!e.response && e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
+/* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
 
@@ -243,4 +322,8 @@ export function* watchRequestPostFiltered() {
 
 export function* watchRequestPostScrubbingHeader() {
   yield takeEvery(ACTIONS.REQUEST_POST_SCRUBBING_HEADER, requestPostScrubbingHeader);
+}
+
+export function* watchRequestPostScrubbingDetail() {
+  yield takeEvery(ACTIONS.REQUEST_POST_SCRUBBING_DETAIL, requestPostScrubbingDetail);
 }
