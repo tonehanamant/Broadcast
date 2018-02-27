@@ -29,6 +29,9 @@ const post = {
   getPostScrubbingHeader: proposalID => (
     call(GET, `${apiBase}/Post/ClientScrubbingProposal/${proposalID}`, {})
   ),
+  getPostScrubbingDetail: (proposalID, detailID) => (
+    call(GET, `${apiBase}/Post/ClientScrubbingProposal/${proposalID}/Detail/${detailID}`, {})
+  ),
 };
 
 const postPrePosting = {
