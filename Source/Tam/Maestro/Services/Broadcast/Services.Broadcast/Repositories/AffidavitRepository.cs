@@ -135,12 +135,14 @@ namespace Services.Broadcast.Repositories
                                      select station.affiliation).Single(),
                         SpotLength = spotLengths.Single(y => y.id == x.affidavitFile.spot_length_id).length,
                         TimeAired = x.affidavitFile.original_air_date.AddSeconds(x.affidavitFile.air_time),
+                        DayOfWeek = x.affidavitFile.original_air_date.DayOfWeek, 
                         GenreName = x.affidavitFile.genre,
                         MatchGenre = x.affidavitFileScrub.match_genre,
                         MatchMarket = x.affidavitFileScrub.match_market,
                         MatchProgram = x.affidavitFileScrub.match_program,
                         MatchStation = x.affidavitFileScrub.match_station,
-                        MatchTime = x.affidavitFileScrub.match_time
+                        MatchTime = x.affidavitFileScrub.match_time,
+                        MatchISCI = x.affidavitFileScrub.match_isci_days
                     }).ToList());
                     return posts;
                 });
