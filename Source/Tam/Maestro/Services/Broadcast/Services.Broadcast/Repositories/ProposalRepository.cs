@@ -369,7 +369,7 @@ namespace Services.Broadcast.Repositories
                                                 tuesday = isic.Tuesday,
                                                 wednesday = isic.Wednesday,
                                                 thursday = isic.Thursday,
-                                                friday = isic.Thursday,
+                                                friday = isic.Friday,
                                                 saturday = isic.Saturday,
                                                 sunday = isic.Sunday
                                             }).ToList()
@@ -446,6 +446,7 @@ namespace Services.Broadcast.Repositories
                                     proposal_version_detail_id = detail.Id.Value
                                 }));
 
+                    //update proposal detail program name criteria
                     context.proposal_version_detail_criteria_programs.RemoveRange(
                         context.proposal_version_detail_criteria_programs.Where(g => g.proposal_version_detail_id == detail.Id));
                     if (detail.ProgramCriteria != null && detail.ProgramCriteria.Count > 0)
@@ -458,25 +459,6 @@ namespace Services.Broadcast.Repositories
                                     contain_type = (byte)p.Contain,
                                     proposal_version_detail_id = detail.Id.Value
                                 }));
-
-                    //update proposal detail program name criteria
-                    context.proposal_version_detail_criteria_programs.RemoveRange(
-                        context.proposal_version_detail_criteria_programs.Where(g => g.proposal_version_detail_id == detail.Id));
-                    if (detail.ProgramCriteria != null && detail.ProgramCriteria.Count > 0)
-                    {
-                        var programCriteria = detail.ProgramCriteria.Select(
-                                g => new proposal_version_detail_criteria_programs()
-                                {
-                                    program_name = g.Program.Display,
-                                    program_name_id = g.Program.Id,
-                                    contain_type = (byte)g.Contain,
-                                    proposal_version_detail_id = detail.Id.Value
-                                });
-                        context.proposal_version_detail_criteria_programs.AddRange(programCriteria);
-
-                    }
-                        
-
 
                     // deal with quarters that have been deleted 
                     // scenario where user maintain the detail but change completely the flight generating new quarters for this particular detail

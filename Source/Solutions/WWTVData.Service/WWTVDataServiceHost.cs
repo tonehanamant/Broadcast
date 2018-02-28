@@ -1,12 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Reflection;
-using System.ServiceModel;
 using Services.Broadcast.ApplicationServices;
-using Tam.Maestro.Common.Logging;
-using Tam.Maestro.Services.Clients;
 using Topshelf;
-using Unity;
 
 namespace WWTVData.Service
 {
