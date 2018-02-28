@@ -170,8 +170,7 @@ namespace Services.Broadcast.ApplicationServices
                     var proposal = proposals[quarterWeekId];
                     var proposalDetail = proposal.Details.Single(d =>
                         d.Quarters.Any(q => q.Weeks.Any(w => w.Id == quarterWeekId)));
-                    var proposalWeek = proposal.Details.SelectMany(d =>
-                        d.Quarters.Select(q => q.Weeks.Single(w => w.Id == quarterWeekId))).First();
+                    var proposalWeek = proposalDetail.Quarters.SelectMany(d => d.Weeks.Where(w => w.Id == quarterWeekId)).First();
                     var proposalWeekIsci = proposalWeek.Iscis.First(i =>
                         i.HouseIsci.Equals(affidavitFileDetail.isci, StringComparison.InvariantCultureIgnoreCase));
                     var dayOfWeek = affidavitFileDetail.original_air_date.DayOfWeek;
