@@ -62,7 +62,7 @@ namespace Services.Broadcast.Repositories
                         });
                     }
 
-                    return posts;
+                    return posts.OrderByDescending(x => x.UploadDate).ToList();
                 });
         }
     }
