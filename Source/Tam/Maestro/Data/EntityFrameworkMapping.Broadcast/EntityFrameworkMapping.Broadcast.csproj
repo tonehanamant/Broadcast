@@ -349,6 +349,12 @@
     <Compile Include="affidavit_file_detail_problems.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="affidavit_outbound_files.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="affidavit_outbound_file_problems.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="audience.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

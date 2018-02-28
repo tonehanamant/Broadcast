@@ -1,0 +1,13 @@
+﻿[
+  {
+    "CreatedBy": "AffidavitPreprocessing_User",
+    "ErrorMessages": [
+      "Could not find the tab PostAnalRep_ExportDetail in file .\\Files\\StrataSBMSInvoicePostExportInvalidSheetName.xlsx"
+    ],
+    "FileHash": "1C-AF-82-EE-CC-D9-13-F2-98-4B-A5-C7-5E-C8-A6-08-5D-1A-70-7A",
+    "FileName": "StrataSBMSInvoicePostExportInvalidSheetName.xlsx",
+    "FilePath": ".\\Files\\StrataSBMSInvoicePostExportInvalidSheetName.xlsx",
+    "SourceId": 1,
+    "Status": 2
+  }
+]
