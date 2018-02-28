@@ -114,7 +114,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                         HouseIsci = "AAAAAA",
                                         Brand = "Testing",
                                         MarriedHouseIsci = true,
-                                        Days = "TH|F|Sa|Su"
+                                        Days = "|F"
                                     },
                                     new ProposalWeekIsciDto
                                     {
@@ -957,7 +957,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ClientIsci = "ZZZZZZ",
                     HouseIsci = "ZZZZZZ",
                     MarriedHouseIsci = true,
-                    Days = "M|T|W|Th|F|Sa|Su"
+                    Days = "|W|Th|F|Sa|"
                 });
 
                 var result = _ProposalService.UpdateProposal(proposalDto.Details);

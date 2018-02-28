@@ -369,7 +369,7 @@ namespace Services.Broadcast.Repositories
                                                 tuesday = isic.Tuesday,
                                                 wednesday = isic.Wednesday,
                                                 thursday = isic.Thursday,
-                                                friday = isic.Thursday,
+                                                friday = isic.Friday,
                                                 saturday = isic.Saturday,
                                                 sunday = isic.Sunday
                                             }).ToList()

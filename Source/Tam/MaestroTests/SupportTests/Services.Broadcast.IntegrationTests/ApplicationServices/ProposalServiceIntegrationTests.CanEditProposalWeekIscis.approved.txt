@@ -109,7 +109,7 @@
                 {
                   "Brand": "Testing 45",
                   "ClientIsci": "ZZZZZZ",
-                  "Days": "M|T|W|Th|F|Sa|Su",
+                  "Days": "|W|Th|F|Sa|",
                   "Friday": false,
                   "HouseIsci": "ZZZZZZ",
                   "MarriedHouseIsci": true,
