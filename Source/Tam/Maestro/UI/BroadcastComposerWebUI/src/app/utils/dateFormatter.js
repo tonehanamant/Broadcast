@@ -1,4 +1,4 @@
-export const getDateInFormat = (fullDate, withTime) => {
+export const getDateInFormat = (fullDate, withTime, timeOnly) => {
     const today = new Date(fullDate);
 
     let dd = today.getDate();
@@ -42,7 +42,9 @@ export const getDateInFormat = (fullDate, withTime) => {
         date = `${mm}/${dd}/${yyyy} ${hours}:${minutes}:${seconds} ${day}`;
     }
 
-    return date;
+    const result = timeOnly ? `${hours}:${minutes}:${seconds} ${day}` : date;
+
+    return result;
 };
 
 export const getDateForDisplay = (list) => {
@@ -53,4 +55,18 @@ export const getDateForDisplay = (list) => {
         return displayItem;
     });
     return newList;
+};
+
+export const getDay = (date) => {
+    const days = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+    ];
+
+    return days[date];
 };
