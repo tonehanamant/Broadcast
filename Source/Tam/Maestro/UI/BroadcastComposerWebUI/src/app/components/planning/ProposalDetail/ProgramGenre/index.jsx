@@ -400,7 +400,7 @@ class ProgramGenre extends Component {
                     </Panel.Heading>
                     <Panel.Body>
                       <Row>
-                      <Col sm={8} style={{ maxHeight: '48px' }}>
+                      <Col sm={8}>
                       <AsyncTypeahead
                         options={this.props.programs}
                         ref={(input) => { this.programTypeahed = input; }}
@@ -441,7 +441,7 @@ class ProgramGenre extends Component {
                     </Panel.Heading>
                     <Panel.Body>
                       <Row>
-                      <Col sm={8} style={{ maxHeight: '48px' }}>
+                      <Col sm={8}>
                       <AsyncTypeahead
                         options={this.props.genres}
                         ref={(input) => { this.genreTypeahed = input; }}
