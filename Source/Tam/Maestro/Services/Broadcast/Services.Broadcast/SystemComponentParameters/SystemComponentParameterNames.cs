@@ -78,6 +78,202 @@ namespace Tam.Maestro.Common.SystemComponentParameter
         }
 	}
 	 
+	public static class AppSettings_ResourceSystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "AppSettings_Resource" ; }
+        }
+	  
+		public static string Broadcast  
+		{
+            get { return "Broadcast"; }
+        }
+	 
+		public static string BroadcastForecast  
+		{
+            get { return "BroadcastForecast"; }
+        }
+	 
+		public static string CableTrack  
+		{
+            get { return "CableTrack"; }
+        }
+	 
+		public static string ExternalRating  
+		{
+            get { return "ExternalRating"; }
+        }
+	 
+		public static string Inventory  
+		{
+            get { return "Inventory"; }
+        }
+	 
+		public static string Maestro  
+		{
+            get { return "Maestro"; }
+        }
+	 
+		public static string MaestroAnalysis  
+		{
+            get { return "MaestroAnalysis"; }
+        }
+	 
+		public static string NielsenCable  
+		{
+            get { return "NielsenCable"; }
+        }
+	 
+		public static string PostLogAnalysis  
+		{
+            get { return "PostLogAnalysis"; }
+        }
+	 
+		public static string PostlogStaging  
+		{
+            get { return "PostlogStaging"; }
+        }
+	 
+		public static string Programs  
+		{
+            get { return "Programs"; }
+        }
+	 
+		public static string Rentrak  
+		{
+            get { return "Rentrak"; }
+        }
+	 
+		public static string SystemSettings  
+		{
+            get { return "SystemSettings"; }
+        }
+	}
+	 
+	public static class AppSettings_ServiceSystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "AppSettings_Service" ; }
+        }
+	  
+		public static string ACCT  
+		{
+            get { return "ACCT"; }
+        }
+	 
+		public static string ACS  
+		{
+            get { return "ACS"; }
+        }
+	 
+		public static string ARS  
+		{
+            get { return "ARS"; }
+        }
+	 
+		public static string ARSLoader  
+		{
+            get { return "ARSLoader"; }
+        }
+	 
+		public static string BOMS  
+		{
+            get { return "BOMS"; }
+        }
+	 
+		public static string BRS  
+		{
+            get { return "BRS"; }
+        }
+	 
+		public static string BS  
+		{
+            get { return "BS"; }
+        }
+	 
+		public static string CUS  
+		{
+            get { return "CUS"; }
+        }
+	 
+		public static string DES  
+		{
+            get { return "DES"; }
+        }
+	 
+		public static string FTP  
+		{
+            get { return "FTP"; }
+        }
+	 
+		public static string ICS  
+		{
+            get { return "ICS"; }
+        }
+	 
+		public static string MAS  
+		{
+            get { return "MAS"; }
+        }
+	 
+		public static string MCS  
+		{
+            get { return "MCS"; }
+        }
+	 
+		public static string PCS  
+		{
+            get { return "PCS"; }
+        }
+	 
+		public static string PLS  
+		{
+            get { return "PLS"; }
+        }
+	 
+		public static string PST  
+		{
+            get { return "PST"; }
+        }
+	 
+		public static string RCS  
+		{
+            get { return "RCS"; }
+        }
+	 
+		public static string REL  
+		{
+            get { return "REL"; }
+        }
+	 
+		public static string REL2  
+		{
+            get { return "REL2"; }
+        }
+	 
+		public static string RS  
+		{
+            get { return "RS"; }
+        }
+	 
+		public static string SingletonTestService  
+		{
+            get { return "SingletonTestService"; }
+        }
+	 
+		public static string STS2  
+		{
+            get { return "STS2"; }
+        }
+	 
+		public static string TCS  
+		{
+            get { return "TCS"; }
+        }
+	}
+	 
 	public static class AudienceAndRatingsServiceSystemParameterNames
 	{
 		public static string ComponentID
@@ -211,9 +407,34 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "UseMaestroDaypartRepo"; }
         }
 	 
+		public static string WWTV_FtpHost  
+		{
+            get { return "WWTV_FtpHost"; }
+        }
+	 
+		public static string WWTV_FtpOutboundFolder  
+		{
+            get { return "WWTV_FtpOutboundFolder"; }
+        }
+	 
+		public static string WWTV_FtpPassword  
+		{
+            get { return "WWTV_FtpPassword"; }
+        }
+	 
+		public static string WWTV_FtpUsername  
+		{
+            get { return "WWTV_FtpUsername"; }
+        }
+	 
 		public static string WWTV_SecondsBetweenRuns  
 		{
             get { return "WWTV_SecondsBetweenRuns"; }
+        }
+	 
+		public static string WWTV_SharedFolder  
+		{
+            get { return "WWTV_SharedFolder"; }
         }
 	}
 	 
