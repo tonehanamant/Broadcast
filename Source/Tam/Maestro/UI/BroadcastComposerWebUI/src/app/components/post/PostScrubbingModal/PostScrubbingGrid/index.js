@@ -7,7 +7,7 @@ import Sorter from 'Utils/react-redux-grid-sorter';
 
 import { setOverlayLoading } from 'Ducks/app';
 import CustomPager from 'Components/shared/CustomPager';
-import { getDateInFormat } from '../../../../utils/dateFormatter';
+import { getDateInFormat, getDay } from '../../../../utils/dateFormatter';
 
 const { MenuActions, SelectionActions, GridActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
@@ -100,17 +100,53 @@ export class PostScrubbingGrid extends Component {
         const stateKey = 'gridPostScrubbingGrid';
         const columns = [
             {
-                name: 'Time Aired',
+                name: 'Week Start',
+                dataIndex: 'WeekStart',
+                width: '8%',
+                renderer: ({ row }) => {
+                    const weekStart = <span>{getDateInFormat(row.WeekStart) || '-'}</span>
+                    return (
+                        weekStart
+                    )
+                },
+            },
+            {
+                name: 'Date',
                 dataIndex: 'TimeAired',
-                width: '20%',
-                renderer: ({ row }) => (
-                    <span>{getDateInFormat(row.TimeAired, true) || '-'}</span>
-                ),
+                width: '8%',
+                renderer: ({ row }) => {
+                    const date = <span>{getDateInFormat(row.TimeAired) || '-'}</span>
+                    return (
+                        date
+                    )
+                },
+            },
+            {
+                name: 'Time Aired',
+                dataIndex: 'MatchTime',
+                width: '10%',
+                renderer: ({ row }) => {
+                    const TimeAired = row.MatchTime ? <span>{getDateInFormat(row.TimeAired, false, true) || '-'}</span> : <span style={style}>{getDateInFormat(row.TimeAired, false, true) || '-'}</span>
+                    return (
+                        TimeAired
+                    )
+                },
+            },
+            {
+                name: 'Day',
+                dataIndex: 'DayOfWeek',
+                width: '8%',
+                renderer: ({ row }) => {
+                    const DayOfWeek = <span>{getDay(row.DayOfWeek) || '-'}</span>
+                    return (
+                        DayOfWeek
+                    )
+                },
             },
             {
                 name: 'Ad Length',
                 dataIndex: 'SpotLength',
-                width: '10%',
+                width: '4%',
                 renderer: ({ row }) => (
                     <span>{row.SpotLength || '-'}</span>
                 ),
@@ -119,7 +155,7 @@ export class PostScrubbingGrid extends Component {
                 name: 'ISCI',
                 dataIndex: 'ISCI',
                 defaultSortDirection: 'ASC',
-                width: '15%',
+                width: '10%',
                 renderer: ({ row }) => (
                     <span>{row.ISCI || '-'}</span>
                 ),
@@ -127,7 +163,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Program',
                 dataIndex: 'ProgramName',
-                width: '15%',
+                width: '12%',
                 renderer: ({ row }) => {
                     const programName = row.MatchProgram ? <span>{row.ProgramName || '-'}</span> : <span style={style}>{row.ProgramName || '-'}</span>
                     return (
