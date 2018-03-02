@@ -52,6 +52,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteServiceMultipleIscis()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAdffidavitMultipleIscis();
+
+                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+
+                VerifyAffidavit(id);
+            }
+        }
+
         private void VerifyAffidavit(int id)
         {
             var affidavite = _Repo.GetAffidavit(id,true);
@@ -75,11 +90,35 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(json);
         }
 
+        private AffidavitSaveRequest _SetupAdffidavitMultipleIscis()
+        {
+            AffidavitSaveRequest request = new AffidavitSaveRequest
+            {
+                FileHash = "abc123",
+                Source = (int) AffidaviteFileSource.Strata,
+                FileName = "test.file"
+            };
+
+            var detail = new AffidavitSaveRequestDetail
+            {
+                AirTime = DateTime.Parse("06/08/2017 8:04AM"),
+                Isci = "FFFFFF",
+                ProgramName = ProgramName1,
+                SpotLength = 30,
+                Genre = Genre1.Display,
+                Station = "WWSB"
+            };
+
+            request.Details.Add(detail);
+
+            return request;
+        }
+
         private AffidavitSaveRequest _SetupAdffidavit()
         {
             AffidavitSaveRequest request = new AffidavitSaveRequest();
             request.FileHash = "abc123";
-            request.Source = (int) AffidaviteFileSource.Strata;
+            request.Source = (int)AffidaviteFileSource.Strata;
             request.FileName = "test.file";
 
             var detail = new AffidavitSaveRequestDetail();
@@ -89,6 +128,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             detail.SpotLength = 30;
             detail.Genre = Genre1.Display;
             detail.Station = "WWSB";
+
             request.Details.Add(detail);
             return request;
         }

@@ -7,7 +7,8 @@ import { getPost, getProposalHeader } from 'Ducks/post';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
 import Sorter from 'Utils/react-redux-grid-sorter';
-import NumberCommaWhole from 'Components/shared/TextFormatters/NumberCommaWhole';
+// import NumberCommaWhole from 'Components/shared/TextFormatters/NumberCommaWhole';
+import numeral from 'numeral';
 
 const { MenuActions, SelectionActions, GridActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
@@ -136,7 +137,8 @@ export class DataGridContainer extends Component {
         dataIndex: 'PrimaryAudienceImpressions',
         width: '20%',
         renderer: ({ row }) => (
-          <NumberCommaWhole number={(row.PrimaryDemo !== undefined) ? row.PrimaryDemo : ''} dash={false} />
+          // <NumberCommaWhole number={row.PrimaryAudienceImpressions / 1000} dash />
+          row.PrimaryAudienceImpressions ? numeral(row.PrimaryAudienceImpressions / 1000).format('0,0.[000]') : '-'
         ),
       },
     ];

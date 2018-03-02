@@ -566,7 +566,7 @@ namespace Services.Broadcast.Repositories
                     tuesday = isci.Tuesday,
                     wednesday = isci.Wednesday,
                     thursday = isci.Thursday,
-                    friday = isci.Thursday,
+                    friday = isci.Friday,
                     saturday = isci.Saturday,
                     sunday = isci.Sunday
                 }).ToList();
