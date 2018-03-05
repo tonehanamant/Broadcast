@@ -39,20 +39,34 @@ namespace Services.Broadcast.IntegrationTests
 
         public string GetSystemComponentParameterValue(string pSystemComponentID, string pSystemParameterID)
         {
-            if (pSystemParameterID == "BroadcastMatchingBuffer")
+            string result = string.Empty;
+            switch (pSystemParameterID)
             {
-                return "120";
+                case "BroadcastMatchingBuffer":
+                    result = "120";
+                    break;
+                case "DaypartCacheSlidingExpirationSeconds":
+                    result = "1800";
+                    break;
+                case "UseDayByDayImpressions":
+                    result = "False";
+                    break;
+                case "WWTV_FtpUsername":
+                    result = "broadcast";
+                    break;
+                case "WWTV_FtpPassword":
+                    result = "password";
+                    break;
+                case "WWTV_FtpHost":
+                    result = "localhost";
+                    break;
+                case "WWTV_FtpOutboundFolder":
+                    result = "uploads";
+                    break;
+                default:
+                    throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }
-            else if (pSystemParameterID == "DaypartCacheSlidingExpirationSeconds")
-            {
-                return "1800";
-            }
-            else if (pSystemParameterID == "UseDayByDayImpressions")
-            {
-                return "False";
-            }
-
-            throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
+            return result;
         }
 
         public bool ClearSystemComponentParameterCache(string pSystemComponentID, string pSystemParameterID)
