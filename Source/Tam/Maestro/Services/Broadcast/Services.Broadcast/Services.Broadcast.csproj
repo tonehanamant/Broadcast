@@ -206,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="ApplicationServices\AffidavitPreprocessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitService.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\CNNStationInventoryGroupService.cs" />
@@ -299,6 +300,7 @@
     <Compile Include="Entities\StationProgram.cs" />
     <Compile Include="Entities\StationProgramConflictRequest.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
+    <Compile Include="Entities\OutboundAffidavitFileValidationResultDto.cs" />
     <Compile Include="Entities\ValidationWarningDto.cs" />
     <Compile Include="Entities\WhosWatchingTvSearchResult.cs" />
     <Compile Include="Exceptions\BroadcastAffidavitException.cs" />
@@ -438,6 +440,7 @@
     <Compile Include="MediaMonthAndWeekAggregateCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProposalCache.cs" />
+    <Compile Include="Repositories\AffidavitPreprocessingRepository.cs" />
     <Compile Include="Repositories\AudienceRepository.cs" />
     <Compile Include="Repositories\BroadcastAudienceRepository.cs" />
     <Compile Include="Repositories\BroadcastForecastRepositoryBase.cs" />

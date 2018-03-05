@@ -369,7 +369,7 @@ namespace Services.Broadcast.Repositories
                                                 tuesday = isic.Tuesday,
                                                 wednesday = isic.Wednesday,
                                                 thursday = isic.Thursday,
-                                                friday = isic.Thursday,
+                                                friday = isic.Friday,
                                                 saturday = isic.Saturday,
                                                 sunday = isic.Sunday
                                             }).ToList()
@@ -446,6 +446,7 @@ namespace Services.Broadcast.Repositories
                                     proposal_version_detail_id = detail.Id.Value
                                 }));
 
+                    //update proposal detail program name criteria
                     context.proposal_version_detail_criteria_programs.RemoveRange(
                         context.proposal_version_detail_criteria_programs.Where(g => g.proposal_version_detail_id == detail.Id));
                     if (detail.ProgramCriteria != null && detail.ProgramCriteria.Count > 0)
@@ -459,23 +460,7 @@ namespace Services.Broadcast.Repositories
                                     proposal_version_detail_id = detail.Id.Value
                                 }));
 
-                    //update proposal detail program name criteria
-                    context.proposal_version_detail_criteria_programs.RemoveRange(
-                        context.proposal_version_detail_criteria_programs.Where(g => g.proposal_version_detail_id == detail.Id));
-                    if (detail.ProgramCriteria != null && detail.ProgramCriteria.Count > 0)
-                    {
-                        var programCriteria = detail.ProgramCriteria.Select(
-                                g => new proposal_version_detail_criteria_programs()
-                                {
-                                    program_name = g.Program.Display,
-                                    program_name_id = g.Program.Id,
-                                    contain_type = (byte)g.Contain,
-                                    proposal_version_detail_id = detail.Id.Value
-                                });
-                        context.proposal_version_detail_criteria_programs.AddRange(programCriteria);
 
-                    }
-                        
 
 
                     // deal with quarters that have been deleted 
@@ -581,7 +566,7 @@ namespace Services.Broadcast.Repositories
                     tuesday = isci.Tuesday,
                     wednesday = isci.Wednesday,
                     thursday = isci.Thursday,
-                    friday = isci.Thursday,
+                    friday = isci.Friday,
                     saturday = isci.Saturday,
                     sunday = isci.Sunday
                 }).ToList();
@@ -1083,7 +1068,7 @@ namespace Services.Broadcast.Repositories
                     ProgramCriteria = proposalDetail.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
                     {
                         Id = p.id,
-                        Contain = (ContainTypeEnum) p.contain_type,
+                        Contain = (ContainTypeEnum)p.contain_type,
                         Program = new LookupDto
                         {
                             Id = p.program_name_id,

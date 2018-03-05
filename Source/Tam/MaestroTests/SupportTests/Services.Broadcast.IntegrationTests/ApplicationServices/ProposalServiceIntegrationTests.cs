@@ -114,7 +114,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                         HouseIsci = "AAAAAA",
                                         Brand = "Testing",
                                         MarriedHouseIsci = true,
-                                        Days = "TH|F|Sa|Su"
+                                        Days = "|F"
                                     },
                                     new ProposalWeekIsciDto
                                     {
@@ -597,6 +597,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UpdateProposal_ChangeISCIFridayDay()
+        {
+            var proposalDto = _ProposalService.GetProposalById(253);
+
+            proposalDto.Details[0].Quarters[0].Weeks[0].Iscis[0].Days = "M|W|F";
+            
+            var updatedProposalDto = _ProposalService.UpdateProposal(proposalDto.Details);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+            jsonResolver.Ignore(typeof(ProposalDto), "Markets");
+            jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+            jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+            jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+            jsonResolver.Ignore(typeof(LookupDto), "Id");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(updatedProposalDto, jsonSettings));
+        }
+
+        [Test]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot save proposal detail without specifying flight start/end date", MatchType = MessageMatch.Contains)]
         public void ThrowExceptionWhenProposalDetailFlightIsInvalid()
         {
@@ -957,7 +985,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ClientIsci = "ZZZZZZ",
                     HouseIsci = "ZZZZZZ",
                     MarriedHouseIsci = true,
-                    Days = "M|T|W|Th|F|Sa|Su"
+                    Days = "|W|Th|F|Sa|"
                 });
 
                 var result = _ProposalService.UpdateProposal(proposalDto.Details);
