@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Well, Form, FormGroup, ControlLabel, Row, Col, FormControl } from 'react-bootstrap';
-import { getDateInFormat } from '../../../../utils/dateFormatter';
+import { Well, Row, Col } from 'react-bootstrap';
+/* import { getDateInFormat } from '../../../../utils/dateFormatter'; */
 
 import PostScrubbingGrid from '../PostScrubbingGrid';
 
@@ -27,12 +27,13 @@ export class PostScrubbingDetail extends Component {
     }
 
     render() {
-        const { proposalDetail: { DayPart, FlightEndDate, FlightStartDate, SpotLength, Genres, ClientScrubs } } = this.state;
+        /* const { proposalDetail: { DayPart, FlightEndDate, FlightStartDate, SpotLength, Genres, ClientScrubs } } = this.state; */
         const { isReadOnly } = this.props;
         /* eslint-disable no-unused-vars */
         return (
             <Well bsSize="small">
-                <Row>
+                {/* Commenting out few details in grid */}
+                {/* <Row>
                     <Form inline>
                         <Col md={3}>
                             <FormGroup controlId="detailFlight">
@@ -75,8 +76,8 @@ export class PostScrubbingDetail extends Component {
                             </FormGroup>
                         </Col>
                     </Form>
-                </Row>
-                {ClientScrubs &&
+                </Row> */}
+                {
                     <Row style={{ marginTop: 10 }}>
                         <Col md={12}>
                             <PostScrubbingGrid />

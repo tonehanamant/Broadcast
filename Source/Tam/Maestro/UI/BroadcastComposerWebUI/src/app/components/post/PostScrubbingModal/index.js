@@ -66,7 +66,7 @@ export class PostScrubbingModal extends Component {
 						/>
 					</Modal.Header>
 					<Modal.Body>
-						{proposalDetail && <PostScrubbingDetail />}
+						{<PostScrubbingDetail />}
 					</Modal.Body>
 					<Modal.Footer>
 						<Button onClick={this.close} bsStyle={this.props.modal.properties.closeButtonBsStyle} >Cancel</Button>
