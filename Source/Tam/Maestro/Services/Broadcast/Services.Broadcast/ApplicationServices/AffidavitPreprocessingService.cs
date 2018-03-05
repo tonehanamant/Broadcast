@@ -58,13 +58,12 @@ namespace Services.Broadcast.ApplicationServices
             List<OutboundAffidavitFileValidationResultDto> validationList = ValidateFiles(filepathList, userName);
             _AffidavitPreprocessingRepository.SaveValidationObject(validationList);
 
-            string zipFileName = $@".\Files\Post_{DateTime.Now.ToString("yyyyMMddhhmmss")}.zip";
-            _CreateZipArchive(validationList.Where(x => x.Status == (int)AffidaviteFileProcessingStatus.Valid).ToList(), zipFileName);
-            if (File.Exists(zipFileName))
+            var validFiles = validationList.Where(x => x.Status == (int)AffidaviteFileProcessingStatus.Valid).ToList();
+            if (validFiles.Any())
             {
-                _UploadZipToWWTV(zipFileName);
-                File.Delete(zipFileName);
+                _CreateAndUploadZipArchive(validFiles);
             }
+            
             return validationList;
         }
 
@@ -79,15 +78,21 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private void _CreateZipArchive(List<OutboundAffidavitFileValidationResultDto> filelist, string zipName)
+        private void _CreateAndUploadZipArchive(List<OutboundAffidavitFileValidationResultDto> filelist)
         {
-            using (ZipArchive zip = ZipFile.Open(zipName, ZipArchiveMode.Create))
+            string zipFileName = $@"{Path.GetTempPath()}\Post_{DateTime.Now.ToString("yyyyMMddhhmmss")}.zip";
+            using (ZipArchive zip = ZipFile.Open(zipFileName, ZipArchiveMode.Create))
             {
                 foreach (var file in filelist)
                 {
                     // Add the entry for each file
-                    zip.CreateEntryFromFile(file.FilePath, Path.GetFileName(file.FilePath), System.IO.Compression.CompressionLevel.Optimal);
+                    zip.CreateEntryFromFile(file.FilePath, Path.GetFileName(file.FilePath), System.IO.Compression.CompressionLevel.NoCompression);
                 }
+            }
+            if (File.Exists(zipFileName))
+            {
+                _UploadZipToWWTV(zipFileName);
+                File.Delete(zipFileName);
             }
         }
 
