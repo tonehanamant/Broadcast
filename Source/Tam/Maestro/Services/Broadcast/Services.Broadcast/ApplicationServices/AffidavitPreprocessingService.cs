@@ -10,6 +10,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using Tam.Maestro.Common;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -71,8 +72,10 @@ namespace Services.Broadcast.ApplicationServices
         {
             using (var ftpClient = new WebClient())
             {
-                ftpClient.Credentials = new NetworkCredential("broadcast", "password");
-                ftpClient.UploadFile("ftp://localhost/" + Path.GetFileName(zipFilePath), zipFilePath);
+                ftpClient.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername, BroadcastServiceSystemParameter.WWTV_FtpPassword);
+                ftpClient.UploadFile(
+                    $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder}/{Path.GetFileName(zipFilePath)}", 
+                    zipFilePath);
             }
         }
 
