@@ -51,18 +51,6 @@ namespace Services.Broadcast.IntegrationTests
                 case "UseDayByDayImpressions":
                     result = "False";
                     break;
-                case "WWTV_FtpUsername":
-                    result = "broadcast";
-                    break;
-                case "WWTV_FtpPassword":
-                    result = "password";
-                    break;
-                case "WWTV_FtpHost":
-                    result = "localhost";
-                    break;
-                case "WWTV_FtpOutboundFolder":
-                    result = "uploads";
-                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }
