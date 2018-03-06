@@ -110,7 +110,5 @@ namespace Services.Broadcast.ApplicationServices
                 return result;
             }
         }
-                result.ClientScrubs.ForEach(x => x.WeekStart = _MediaMonthAndWeekCache.GetMediaWeekContainingDate(x.TimeAired).StartDate);
-                return result;
     }
 }
