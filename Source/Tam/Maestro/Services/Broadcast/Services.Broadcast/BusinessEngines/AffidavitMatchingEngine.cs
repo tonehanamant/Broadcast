@@ -22,7 +22,7 @@ namespace Services.Broadcast.BusinessEngines
     {
         public List<AffidavitMatchingProposalWeek> _MatchingProposalWeeks;
         public List<AffidavitFileDetailProblem> _MatchingProblems;
-        private readonly int _BroadcastMatchingBuffer = 300; //BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
+        private readonly int _BroadcastMatchingBuffer; 
         private readonly IDaypartCache _DaypartCache;
 
         public List<AffidavitFileDetailProblem> MatchingProblems()
@@ -33,6 +33,7 @@ namespace Services.Broadcast.BusinessEngines
         public AffidavitMatchingEngine(IDaypartCache daypartCache)
         {
             _DaypartCache = daypartCache;
+            _BroadcastMatchingBuffer = BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
         }
 
         public List<AffidavitMatchingProposalWeek> Match(
