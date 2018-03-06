@@ -150,7 +150,7 @@ export class PostScrubbingGrid extends Component {
                 dataIndex: 'DayOfWeek',
                 width: '8%',
                 renderer: ({ row }) => {
-                    const DayOfWeek = <span>{(row.DayOfWeek) || '-'}</span>
+                    const DayOfWeek = <span>{getDay(row.DayOfWeek) || '-'}</span>
                     return (
                         DayOfWeek
                     )
