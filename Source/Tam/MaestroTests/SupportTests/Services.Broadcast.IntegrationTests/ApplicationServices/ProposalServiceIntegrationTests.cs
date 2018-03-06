@@ -548,7 +548,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void UpdateProposal()
         {
-            var proposalDto = _ProposalService.GetProposalById(250);
+            var proposalId = 250;
+            var proposalDto = _ProposalService.GetProposalById(proposalId);
 
             proposalDto.Details[0].GenreCriteria = new List<GenreCriteria>()
             {
@@ -576,7 +577,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            var updatedProposalDto = _ProposalService.UpdateProposal(proposalDto.Details);
+            var changeRequest = new ProposalChangeRequest
+            {
+                Id = proposalId,
+                Details = proposalDto.Details
+            };
+
+            var updatedProposalDto = _ProposalService.CalculateProposalChanges(changeRequest);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
@@ -889,7 +896,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                var proposalDto = _ProposalService.GetProposalById(251);
+                var proposalId = 251;
+                var proposalDto = _ProposalService.GetProposalById(proposalId);
 
                 // editing the first proposal detail
                 var editDetail = proposalDto.Details.First();
@@ -917,7 +925,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 editDetail.FlightWeeks.AddRange(FlightWeeks);
 
-                var result = _ProposalService.UpdateProposal(proposalDto.Details);
+                var changeRequest = new ProposalChangeRequest
+                {
+                    Id = proposalId,
+                    Details = proposalDto.Details
+                };
+
+                var result = _ProposalService.CalculateProposalChanges(changeRequest);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
@@ -947,7 +961,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                var proposalDto = _ProposalService.GetProposalById(253);
+                var proposalId = 253;
+                var proposalDto = _ProposalService.GetProposalById(proposalId);
 
                 var firstWeek = proposalDto.Details.First().Quarters.First().Weeks.First();
 
@@ -960,7 +975,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Days = "|W|Th|F|Sa|"
                 });
 
-                var result = _ProposalService.UpdateProposal(proposalDto.Details);
+                var changeRequest = new ProposalChangeRequest
+                {
+                    Id = proposalId,
+                    Details = proposalDto.Details
+                };
+
+                var result = _ProposalService.CalculateProposalChanges(changeRequest);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
@@ -991,7 +1012,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                var proposalDto = _ProposalService.GetProposalById(251);
+                var proposalId = 251;
+                var proposalDto = _ProposalService.GetProposalById(proposalId);
                 // editing the first proposal detail
                 var editDetail = proposalDto.Details.First();
                 // flight will be the same, just changing the first week to hiatus
@@ -999,7 +1021,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var week = editDetail.FlightWeeks.First();
                 week.IsHiatus = true;
 
-                var result = _ProposalService.UpdateProposal(proposalDto.Details);
+                var changeRequest = new ProposalChangeRequest
+                {
+                    Id = proposalId,
+                    Details = proposalDto.Details
+                };
+
+                var result = _ProposalService.CalculateProposalChanges(changeRequest);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
@@ -1867,7 +1895,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                var proposalDto = _ProposalService.GetProposalById(251);
+                var proposalId = 251;
+                var proposalDto = _ProposalService.GetProposalById(proposalId);
 
                 // editing the first proposal detail
                 var editDetail = proposalDto.Details.First();
@@ -1897,7 +1926,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var result = _ProposalService.UpdateProposal(proposalDto.Details);
+                var changeRequest = new ProposalChangeRequest
+                {
+                    Id = proposalId,
+                    Details = proposalDto.Details
+
+                };
+
+                var result = _ProposalService.CalculateProposalChanges(changeRequest);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
