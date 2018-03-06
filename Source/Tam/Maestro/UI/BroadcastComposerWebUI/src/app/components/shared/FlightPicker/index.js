@@ -171,6 +171,7 @@ export default class FlightPicker extends Component {
 		});
 
 		this.toggle();
+		this.resetOrRestore();
 	}
 
 	resetOrRestore() {
@@ -315,7 +316,6 @@ export default class FlightPicker extends Component {
 										if (this.state.focusedInput === 'startDate') { this.setStartDate(startDate); }
 										if (this.state.focusedInput === 'endDate') { this.setEndDate(endDate || startDate); }
 									}}
-
 									focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
 									onFocusChange={focusedInput => this.setState({ focusedInput })}
 								/>
