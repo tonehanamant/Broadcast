@@ -185,7 +185,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var affidavitDetail = new AffidavitSaveRequestDetail
             {
                 Isci = "ABC123",
-                AirTime = DateTime.Parse("2018-01-05T08:57:00")
+                AirTime = DateTime.Parse("2018-01-05T08:58:00")
             };
 
             var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
