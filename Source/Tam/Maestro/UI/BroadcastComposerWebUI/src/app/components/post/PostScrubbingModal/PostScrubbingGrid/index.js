@@ -14,8 +14,8 @@ const { showMenu, hideMenu } = MenuActions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
 
-const mapStateToProps = ({ post: { proposalDetail: { ClientScrubs } }, grid, dataSource, menu }) => ({
-    ClientScrubs,
+const mapStateToProps = ({ post: { proposalHeader: { Details } }, grid, dataSource, menu }) => ({
+    Details,
     grid,
     dataSource,
     menu,
@@ -98,13 +98,26 @@ export class PostScrubbingGrid extends Component {
     render() {
         const style = { color: '#FF0000' };
         const stateKey = 'gridPostScrubbingGrid';
+        const { Details = [] } = this.props;
+        const { ClientScrubs = [] } = Details;
+
+        let clientScrubs = [];
+
+        Details.forEach(details => {
+            details.ClientScrubs.forEach((item) => {
+                clientScrubs.push(item);
+            });
+        });
+
+        console.log(clientScrubs);
+
         const columns = [
             {
                 name: 'Week Start',
                 dataIndex: 'WeekStart',
                 width: '8%',
                 renderer: ({ row }) => {
-                    const weekStart = <span>{getDateInFormat(row.WeekStart) || '-'}</span>
+                    const weekStart = <span>{(row.WeekStart && getDateInFormat(row.WeekStart)) || '-'}</span>
                     return (
                         weekStart
                     )
@@ -261,7 +274,7 @@ export class PostScrubbingGrid extends Component {
         };
 
         return (
-            <Grid {...grid} data={this.props.ClientScrubs} store={this.context.store} />
+            <Grid {...grid} data={clientScrubs} store={this.context.store} />
         );
     }
 }

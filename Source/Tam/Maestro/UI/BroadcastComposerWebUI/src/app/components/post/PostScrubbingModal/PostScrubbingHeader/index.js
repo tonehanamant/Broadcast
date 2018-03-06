@@ -162,7 +162,7 @@ export class PostScrubbingHeader extends Component {
             </Row>
           </Col>
         </Row>
-        <Row>
+        {/* <Row>
           <Col md={5}>
             <FormGroup controlId="proposalDates">
               <Select
@@ -177,7 +177,7 @@ export class PostScrubbingHeader extends Component {
               />
             </FormGroup>
           </Col>
-        </Row>
+        </Row> */}
       </div>
     );
   }

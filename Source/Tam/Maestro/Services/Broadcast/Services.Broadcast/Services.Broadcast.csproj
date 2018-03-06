@@ -248,6 +248,7 @@
     <Compile Include="Entities\AffidavitMatchingProposalWeek.cs" />
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\BvsTrackingAudience.cs" />
+    <Compile Include="Entities\ClientPostScrubbingProposalDto.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
     <Compile Include="Entities\FlightWeekGroup.cs" />
     <Compile Include="Entities\IHavePostingBooks.cs" />
@@ -264,7 +265,6 @@
     <Compile Include="Entities\PostingBookResultDto.cs" />
     <Compile Include="Entities\ClientPostScrubbingProposalDetailDto.cs" />
     <Compile Include="Entities\ProgramSearchRequest.cs" />
-    <Compile Include="Entities\ClientPostScrubbingProposalHeaderDto.cs" />
     <Compile Include="Entities\ProposalDetailPostScrubbingDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleInventoryTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />
