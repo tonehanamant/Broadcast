@@ -6,8 +6,11 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using Tam.Maestro.Common;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -20,6 +23,12 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="userName">User processing the files</param>
         /// <returns>List of OutboundAffidavitFileValidationResultDto objects</returns>
         List<OutboundAffidavitFileValidationResultDto> ProcessFiles(List<string> filepathList, string userName);
+
+        /// <summary>
+        /// Creates and uploads a zip archive to WWTV FTP server
+        /// </summary>
+        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
+        void CreateAndUploadZipArchiveToWWTV(List<OutboundAffidavitFileValidationResultDto> files);
     }
 
     public enum AffidaviteFileProcessingStatus
@@ -27,9 +36,9 @@ namespace Services.Broadcast.ApplicationServices
         Valid = 1,
         Invalid = 2
     };
-    
+
     public class AffidavitPreprocessingService : IAffidavitPreprocessingService
-    {        
+    {
         internal List<string> AffidavitFileHeaders = new List<string>() { "ESTIMATE_ID", "STATION_NAME", "DATE_RANGE", "SPOT_TIME", "SPOT_DESCRIPTOR", "COST" };
 
         public readonly string _ValidStrataExtension = ".xlsx";
@@ -54,7 +63,46 @@ namespace Services.Broadcast.ApplicationServices
         {
             List<OutboundAffidavitFileValidationResultDto> validationList = ValidateFiles(filepathList, userName);
             _AffidavitPreprocessingRepository.SaveValidationObject(validationList);
+                        
             return validationList;
+        }
+
+        /// <summary>
+        /// Creates and uploads a zip archive to WWTV FTP server
+        /// </summary>
+        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
+        public void CreateAndUploadZipArchiveToWWTV(List<OutboundAffidavitFileValidationResultDto> files)
+        {
+            string zipFileName = $@"{Path.GetTempPath()}\Post_{DateTime.Now.ToString("yyyyMMddhhmmss")}.zip";
+            _CreateZipArchive(files, zipFileName);
+            if (File.Exists(zipFileName))
+            {
+                _UploadZipToWWTV(zipFileName);
+                File.Delete(zipFileName);
+            }
+        }
+
+        private static void _CreateZipArchive(List<OutboundAffidavitFileValidationResultDto> files, string zipFileName)
+        {
+            using (ZipArchive zip = ZipFile.Open(zipFileName, ZipArchiveMode.Create))
+            {
+                foreach (var file in files)
+                {
+                    // Add the entry for each file
+                    zip.CreateEntryFromFile(file.FilePath, Path.GetFileName(file.FilePath), System.IO.Compression.CompressionLevel.NoCompression);
+                }
+            }
+        }
+
+        private void _UploadZipToWWTV(string zipFilePath)
+        {
+            using (var ftpClient = new WebClient())
+            {
+                ftpClient.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername, BroadcastServiceSystemParameter.WWTV_FtpPassword);
+                ftpClient.UploadFile(
+                    $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder}/{Path.GetFileName(zipFilePath)}", 
+                    zipFilePath);
+            }
         }
 
         private List<OutboundAffidavitFileValidationResultDto> ValidateFiles(List<string> filepathList, string userName)
@@ -112,14 +160,14 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     continue;
                 }
-                foreach(string name in AffidavitFileHeaders)
+                foreach (string name in AffidavitFileHeaders)
                 {
                     if (string.IsNullOrWhiteSpace(tab.Cells[row, headers[name]].Value?.ToString()))
                     {
                         currentFile.ErrorMessages.Add($"Missing {name} on row {row}");
                         hasMissingData = true;
                     }
-                }                
+                }
             }
             if (hasMissingData)
             {
