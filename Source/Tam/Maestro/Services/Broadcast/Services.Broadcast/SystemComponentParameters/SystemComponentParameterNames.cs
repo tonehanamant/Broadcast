@@ -387,6 +387,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "BroadcastService" ; }
         }
 	  
+		public static string AffidavitUploadUrl  
+		{
+            get { return "AffidavitUploadUrl"; }
+        }
+	 
 		public static string BroadcastDayStart  
 		{
             get { return "BroadcastDayStart"; }
@@ -407,9 +412,19 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "UseMaestroDaypartRepo"; }
         }
 	 
+		public static string WWTV_FailedFolder  
+		{
+            get { return "WWTV_FailedFolder"; }
+        }
+	 
 		public static string WWTV_FtpHost  
 		{
             get { return "WWTV_FtpHost"; }
+        }
+	 
+		public static string WWTV_FtpInboundFolder  
+		{
+            get { return "WWTV_FtpInboundFolder"; }
         }
 	 
 		public static string WWTV_FtpOutboundFolder  
@@ -427,6 +442,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "WWTV_FtpUsername"; }
         }
 	 
+		public static string WWTV_NotificationEmail  
+		{
+            get { return "WWTV_NotificationEmail"; }
+        }
+	 
 		public static string WWTV_SecondsBetweenRuns  
 		{
             get { return "WWTV_SecondsBetweenRuns"; }
@@ -435,6 +455,16 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string WWTV_SharedFolder  
 		{
             get { return "WWTV_SharedFolder"; }
+        }
+	 
+		public static string WWTV_WhenToCheckDataFiles  
+		{
+            get { return "WWTV_WhenToCheckDataFiles"; }
+        }
+	 
+		public static string WWTV_WhenToCheckErrorFiles  
+		{
+            get { return "WWTV_WhenToCheckErrorFiles"; }
         }
 	}
 	 

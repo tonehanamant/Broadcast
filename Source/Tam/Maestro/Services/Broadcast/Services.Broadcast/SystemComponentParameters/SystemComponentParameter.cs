@@ -419,6 +419,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class BroadcastServiceSystemParameter 
 	{ 
+		public static string AffidavitUploadUrl  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.AffidavitUploadUrl); }
+        }
+	 
 		public static string BroadcastDayStart  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -443,10 +449,22 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.UseMaestroDaypartRepo); }
         }
 	 
+		public static string WWTV_FailedFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FailedFolder); }
+        }
+	 
 		public static string WWTV_FtpHost  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FtpHost); }
+        }
+	 
+		public static string WWTV_FtpInboundFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FtpInboundFolder); }
         }
 	 
 		public static string WWTV_FtpOutboundFolder  
@@ -467,6 +485,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FtpUsername); }
         }
 	 
+		public static string WWTV_NotificationEmail  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_NotificationEmail); }
+        }
+	 
 		public static int WWTV_SecondsBetweenRuns  
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
@@ -477,6 +501,18 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_SharedFolder); }
+        }
+	 
+		public static string WWTV_WhenToCheckDataFiles  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_WhenToCheckDataFiles); }
+        }
+	 
+		public static string WWTV_WhenToCheckErrorFiles  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_WhenToCheckErrorFiles); }
         }
 	}
 	 
