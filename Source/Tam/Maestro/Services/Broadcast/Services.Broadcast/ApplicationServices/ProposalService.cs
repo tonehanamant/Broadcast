@@ -1067,6 +1067,7 @@ namespace Services.Broadcast.ApplicationServices
                         weekDto.Impressions = week.Impressions;
                         weekDto.Cost = week.Cost;
                         weekDto.Units = week.Units;
+                        weekDto.Iscis = week.Iscis;
                     }
                 }
 
