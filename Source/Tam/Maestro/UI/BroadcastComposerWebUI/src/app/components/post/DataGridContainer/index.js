@@ -123,7 +123,7 @@ export class DataGridContainer extends Component {
         ),
       },
       {
-        name: 'Spot in Spec',
+        name: 'Spots in Spec',
         dataIndex: 'SpotsInSpec',
         width: '15%',
       },
