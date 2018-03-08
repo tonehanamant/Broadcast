@@ -361,7 +361,7 @@ class ProgramGenre extends Component {
                     <Panel.Heading style={{ padding: '8px 12px' }}>
                       <Row>
                         <Col sm={8}>
-                          Programs
+                          Program
                         </Col>
                         <Col sm={4}>
                           Include/Exclude
