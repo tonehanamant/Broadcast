@@ -49,6 +49,13 @@ export class SectionPlanningProposal extends Component {
 
   componentDidMount() {
     window.addEventListener('beforeunload', this.onUnload);
+    this.props.createAlert(
+      {
+        type: 'success',
+        headline: 'Proposal Saved Successfully',
+        message: '',
+      },
+    );
   }
 
   componentWillUnmount() {

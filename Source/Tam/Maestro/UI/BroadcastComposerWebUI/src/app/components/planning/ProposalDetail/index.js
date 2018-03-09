@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Select from 'react-select';
-import { Well, Form, FormGroup, ControlLabel, Row, Col, FormControl, Button, Checkbox, Glyphicon, HelpBlock } from 'react-bootstrap';
+import { Well, Form, FormGroup, ControlLabel, Row, Col, FormControl, Button, DropdownButton, MenuItem, Checkbox, Glyphicon, HelpBlock } from 'react-bootstrap';
 import FlightPicker from 'Components/shared/FlightPicker';
 import DayPartPicker from 'Components/shared/DayPartPicker';
 import ProposalDetailGrid from 'Components/planning/ProposalDetailGrid';
 import Sweeps from './Sweeps';
+import ProgramGenre from './ProgramGenre';
 
 const mapStateToProps = ({ routing }) => ({
   routing,
@@ -24,6 +25,7 @@ export class ProposalDetail extends Component {
 
     this.flightPickerApply = this.flightPickerApply.bind(this);
     this.openSweepsModal = this.openSweepsModal.bind(this);
+    this.openProgramGenreModal = this.openProgramGenreModal.bind(this);
 
     this.setValidationState = this.setValidationState.bind(this);
     this.onSaveShowValidation = this.onSaveShowValidation.bind(this);
@@ -117,6 +119,14 @@ export class ProposalDetail extends Component {
   openSweepsModal() {
     this.props.toggleModal({
       modal: 'sweepsModal',
+      active: true,
+      properties: { detailId: this.props.detail.Id },
+    });
+  }
+
+  openProgramGenreModal() {
+    this.props.toggleModal({
+      modal: 'programGenreModal',
       active: true,
       properties: { detailId: this.props.detail.Id },
     });
@@ -269,7 +279,7 @@ export class ProposalDetail extends Component {
               {detail &&
               <FormGroup controlId="proposalDetailDaypartCode" validationState={this.state.validationStates.DaypartCode || this.state.validationStates.DaypartCode_Alphanumeric || this.state.validationStates.DaypartCode_MaxChar}>
                 <ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart Code</ControlLabel>
-                <FormControl type="text" style={{ width: '80px' }} value={detail.DaypartCode ? detail.DaypartCode : ''} onChange={this.onChangeDaypartCode} disabled={isReadOnly} />
+                <FormControl type="text" style={{ width: '100px' }} value={detail.DaypartCode ? detail.DaypartCode : ''} onChange={this.onChangeDaypartCode} disabled={isReadOnly} />
                 {this.state.validationStates.DaypartCode != null &&
                 <HelpBlock style={{ margin: '0 0 0 16px' }}>
                   <span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
@@ -288,30 +298,25 @@ export class ProposalDetail extends Component {
               </FormGroup>
               }
               {detail &&
-              <Button bsStyle="primary" bsSize="xsmall" style={{ margin: '0 10px 0 24px' }} onClick={() => this.openInventory('inventory')}>Inventory</Button>
-              }
-              {detail &&
-              <Button bsStyle="primary" bsSize="xsmall" style={{ margin: '0 16px 0 0' }} onClick={() => this.openInventory('openMarket')}>Open Market Inventory</Button>
-              }
-              {detail &&
-              <FormGroup controlId="proposalDetailADU">
+              <FormGroup style={{ margin: '0 0 0 12px' }} controlId="proposalDetailADU">
                 <Checkbox checked={detail.Adu} onChange={this.onChangeAdu} disabled={isReadOnly} />
                 <ControlLabel style={{ margin: '0 0 0 6px' }}>ADU</ControlLabel>
               </FormGroup>
               }
+              {detail &&
+              <div style={{ float: 'right', margin: '4px 0 0 8px' }}>
+                <DropdownButton bsSize="xsmall" bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="detail_actions">
+                    <MenuItem eventKey="1" onClick={() => this.openInventory('inventory')}>Proprietary Inventory</MenuItem>
+                    <MenuItem eventKey="2" onClick={() => this.openInventory('openMarket')}>Open Market Inventory</MenuItem>
+                    <MenuItem eventKey="3" onClick={this.openSweepsModal}>Sweeps</MenuItem>
+                    <MenuItem eventKey="4" onClick={this.openProgramGenreModal}>Program/Genre</MenuItem>
+                </DropdownButton>
+                </div>
+              }
               {(detail && !isReadOnly) &&
               <Button bsStyle="link" style={{ float: 'right' }} onClick={this.onDeleteProposalDetail}><Glyphicon style={{ color: '#c12e2a', fontSize: '16px' }} glyph="trash" /></Button>
               }
-              {detail &&
-              <Button
-                bsStyle="primary"
-                bsSize="xsmall"
-                style={{ float: 'right', margin: '6px 10px 0 4px' }}
-                onClick={this.openSweepsModal}
-              >
-                Sweeps
-              </Button>
-              }
+
             </Form>
           </Col>
         </Row>
@@ -334,9 +339,16 @@ export class ProposalDetail extends Component {
 
         <Sweeps
           toggleModal={this.props.toggleModal}
-          onClose={this.toggleSweepsModal}
           updateProposalEditFormDetail={updateProposalEditFormDetail}
           initialdata={initialdata}
+          detail={detail}
+          isReadOnly={isReadOnly}
+        />
+
+        <ProgramGenre
+          toggleModal={this.props.toggleModal}
+          updateProposalEditFormDetail={updateProposalEditFormDetail}
+          // initialdata={initialdata}
           detail={detail}
           isReadOnly={isReadOnly}
         />

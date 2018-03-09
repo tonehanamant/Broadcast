@@ -13,6 +13,7 @@ export default function* rootSaga() {
     postSaga.watchRequestPost(),
     postSaga.watchRequestPostFiltered(),
     postSaga.watchRequestAssignPostDisplay(),
+    postSaga.watchRequestPostScrubbingHeader(),
 
     postPrePostingSaga.watchRequestPostPrePostingInitialData(),
     postPrePostingSaga.watchRequestPostPrePosting(),
@@ -36,6 +37,7 @@ export default function* rootSaga() {
     planningSaga.watchUpdateProposal(),
     planningSaga.watchModelNewProposalDetail(),
     planningSaga.watchModelUnorderProposal(),
-
+    planningSaga.watchRequestGenres(),
+    planningSaga.watchRequestPrograms(),
   ];
 }

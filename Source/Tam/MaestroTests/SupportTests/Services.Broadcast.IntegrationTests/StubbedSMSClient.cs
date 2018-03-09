@@ -9,6 +9,7 @@ using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using Tam.Maestro.Services.ServiceManager.Service;
 
+
 namespace Services.Broadcast.IntegrationTests
 {
     public class StubbedSMSClient : ISMSClient

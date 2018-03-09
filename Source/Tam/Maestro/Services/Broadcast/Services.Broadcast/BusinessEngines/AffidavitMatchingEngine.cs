@@ -15,17 +15,17 @@ namespace Services.Broadcast.BusinessEngines
         List<AffidavitMatchingProposalWeek> Match(
             AffidavitSaveRequestDetail requestDetail,
             List<AffidavitMatchingProposalWeek> proposalWeeks);
-        List<string> MatchingProblems();
+        List<AffidavitFileDetailProblem> MatchingProblems();
     }
 
     public class AffidavitMatchingEngine : IAffidavitMatchingEngine
     {
         public List<AffidavitMatchingProposalWeek> _MatchingProposalWeeks;
-        public List<string> _MatchingProblems;
-        private readonly int _BroadcastMatchingBuffer = 300; //BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
+        public List<AffidavitFileDetailProblem> _MatchingProblems;
+        private readonly int _BroadcastMatchingBuffer; 
         private readonly IDaypartCache _DaypartCache;
 
-        public List<string> MatchingProblems()
+        public List<AffidavitFileDetailProblem> MatchingProblems()
         {
             return _MatchingProblems;
         }
@@ -33,6 +33,7 @@ namespace Services.Broadcast.BusinessEngines
         public AffidavitMatchingEngine(IDaypartCache daypartCache)
         {
             _DaypartCache = daypartCache;
+            _BroadcastMatchingBuffer = BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
         }
 
         public List<AffidavitMatchingProposalWeek> Match(
@@ -40,25 +41,35 @@ namespace Services.Broadcast.BusinessEngines
             List<AffidavitMatchingProposalWeek> proposalWeeks) 
         {
             _MatchingProposalWeeks = new List<AffidavitMatchingProposalWeek>();
-            _MatchingProblems = new List<string>();
+            _MatchingProblems = new List<AffidavitFileDetailProblem>();
 
             if (proposalWeeks == null || proposalWeeks.Count == 0)
             {
-                _MatchingProblems.Add(String.Format("Isci not found: {0}", requestDetail.Isci));
+                _MatchingProblems.Add(new AffidavitFileDetailProblem(){
+                    Type = AffidavitFileDetailProblemTypeEnum.UnlinkedIsci,
+                    Description = String.Format("Isci not found: {0}", requestDetail.Isci)
+                });
+            
                 return _MatchingProposalWeeks;
             }
 
             var unmarriedProposalIscisByProposal = proposalWeeks.Where(i => !i.MarriedHouseIsci).GroupBy(g => g.ProposalVersionId);
             if (unmarriedProposalIscisByProposal.Count() > 1)
             {
-                _MatchingProblems.Add(String.Format("Unmarried Isci {0} exists on multiple proposals", requestDetail.Isci));
+                _MatchingProblems.Add(new AffidavitFileDetailProblem() {
+                    Type = AffidavitFileDetailProblemTypeEnum.UnmarriedOnMultipleContracts,
+                    Description = String.Format("Unmarried Isci {0} exists on multiple proposals", requestDetail.Isci)
+                });
                 return _MatchingProposalWeeks;
             }
 
             var marriedProposalIscisByProposal = proposalWeeks.Where(i => i.MarriedHouseIsci).GroupBy(g => g.ProposalVersionId);
             if (unmarriedProposalIscisByProposal.Any() && marriedProposalIscisByProposal.Any())
             {
-                _MatchingProblems.Add(String.Format("Isci {0} exists as married and unmarried", requestDetail.Isci));
+                _MatchingProblems.Add(new AffidavitFileDetailProblem() {
+                    Type = AffidavitFileDetailProblemTypeEnum.UnmarriedOnMultipleContracts,
+                    Description = String.Format("Isci {0} exists as married and unmarried", requestDetail.Isci)
+                });
                 return _MatchingProposalWeeks;
             }
 

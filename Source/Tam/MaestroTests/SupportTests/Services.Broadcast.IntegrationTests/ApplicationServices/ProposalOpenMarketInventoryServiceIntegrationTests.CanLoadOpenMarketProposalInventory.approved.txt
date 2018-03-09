@@ -5,7 +5,9 @@
     "ProgramNameSearchCriteria": [
       {
         "Contain": 2,
-        "ProgramName": "Open Market Program"
+        "Program": {
+          "Display": "Open Market Program"
+        }
       }
     ]
   },
@@ -54,8 +56,7 @@
     "Genres": [],
     "Markets": [
       {
-        "Display": "New York",
-        "Id": 101
+        "Display": "New York"
       }
     ],
     "ProgramNames": [
@@ -89,12 +90,10 @@
             {
               "Dayparts": [
                 {
-                  "Display": "M-F 9AM-10AM",
-                  "Id": 6724
+                  "Display": "M-F 9AM-10AM"
                 },
                 {
-                  "Display": "M-F 6AM-8AM",
-                  "Id": 9491
+                  "Display": "M-F 6AM-8AM"
                 }
               ],
               "FlightWeeks": [

@@ -20,6 +20,13 @@ namespace EntityFrameworkMapping.Broadcast
         public string house_isci { get; set; }
         public string brand { get; set; }
         public bool married_house_iscii { get; set; }
+        public Nullable<bool> monday { get; set; }
+        public Nullable<bool> tuesday { get; set; }
+        public Nullable<bool> wednesday { get; set; }
+        public Nullable<bool> thursday { get; set; }
+        public Nullable<bool> friday { get; set; }
+        public Nullable<bool> saturday { get; set; }
+        public Nullable<bool> sunday { get; set; }
     
         public virtual proposal_version_detail_quarter_weeks proposal_version_detail_quarter_weeks { get; set; }
     }

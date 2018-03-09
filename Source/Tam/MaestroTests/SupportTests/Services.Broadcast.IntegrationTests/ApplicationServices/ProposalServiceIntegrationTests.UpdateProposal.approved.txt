@@ -53,21 +53,32 @@
         {
           "Contain": 2,
           "Genre": {
-            "Display": null,
-            "Id": 5
+            "Display": null
           }
         },
         {
           "Contain": 2,
           "Genre": {
-            "Display": null,
-            "Id": 10
+            "Display": null
           }
         }
       ],
       "HutPostingBookId": null,
       "PlaybackType": 3,
-      "ProgramCriteria": [],
+      "ProgramCriteria": [
+        {
+          "Contain": 2,
+          "Program": {
+            "Display": "Shopping"
+          }
+        },
+        {
+          "Contain": 2,
+          "Program": {
+            "Display": "Paid"
+          }
+        }
+      ],
       "Quarters": [
         {
           "Cpm": 12.5300,
@@ -287,8 +298,7 @@
   "SecondaryDemos": [],
   "SpotLengths": [
     {
-      "Display": "30",
-      "Id": 1
+      "Display": "30"
     }
   ],
   "Status": 0,

@@ -66,7 +66,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<genre> genres { get; set; }
         public virtual DbSet<proposal_version_detail_criteria_cpm> proposal_version_detail_criteria_cpm { get; set; }
         public virtual DbSet<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
-        public virtual DbSet<proposal_version_detail_criteria_programs> proposal_version_detail_criteria_programs { get; set; }
         public virtual DbSet<rep_firms> rep_firms { get; set; }
         public virtual DbSet<bvs_map_types> bvs_map_types { get; set; }
         public virtual DbSet<schedule_audiences> schedule_audiences { get; set; }
@@ -82,10 +81,13 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_spot_audiences> station_inventory_spot_audiences { get; set; }
         public virtual DbSet<station_inventory_spots> station_inventory_spots { get; set; }
         public virtual DbSet<proposal_version_detail_quarter_week_iscis> proposal_version_detail_quarter_week_iscis { get; set; }
-        public virtual DbSet<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual DbSet<affidavit_file_details> affidavit_file_details { get; set; }
         public virtual DbSet<affidavit_files> affidavit_files { get; set; }
         public virtual DbSet<affidavit_file_detail_audiences> affidavit_file_detail_audiences { get; set; }
         public virtual DbSet<nsi_component_audiences> nsi_component_audiences { get; set; }
+        public virtual DbSet<affidavit_file_detail_problems> affidavit_file_detail_problems { get; set; }
+        public virtual DbSet<proposal_version_detail_criteria_programs> proposal_version_detail_criteria_programs { get; set; }
+        public virtual DbSet<program_names> program_names { get; set; }
+        public virtual DbSet<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
     }
 }

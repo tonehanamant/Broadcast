@@ -1,0 +1,160 @@
+﻿{
+  "AdvertiserId": 0,
+  "BlackoutMarketGroup": null,
+  "BlackoutMarketGroupId": null,
+  "CanDelete": false,
+  "Details": [
+    {
+      "Adu": false,
+      "DaypartCode": "NAV",
+      "DefaultPostingBooks": null,
+      "FlightEdited": false,
+      "FlightEndDate": "2017-06-04T00:00:00",
+      "FlightStartDate": "2017-05-15T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2017-05-21T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 699,
+          "StartDate": "2017-05-15T00:00:00"
+        },
+        {
+          "EndDate": "2017-05-28T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 700,
+          "StartDate": "2017-05-22T00:00:00"
+        },
+        {
+          "EndDate": "2017-06-04T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 701,
+          "StartDate": "2017-05-29T00:00:00"
+        }
+      ],
+      "GenreCriteria": [
+        {
+          "Contain": 1,
+          "Genre": {
+            "Display": "Action"
+          },
+          "Id": null
+        }
+      ],
+      "HutPostingBookId": null,
+      "PlaybackType": 3,
+      "ProgramCriteria": [
+        {
+          "Contain": 1,
+          "Id": null,
+          "Program": {
+            "Display": "Test Program 123"
+          }
+        }
+      ],
+      "Quarters": [
+        {
+          "Cpm": 12.5300,
+          "DistributeGoals": false,
+          "ImpressionGoal": 18089000.0,
+          "Quarter": 1,
+          "QuarterText": "2017 Q1",
+          "Weeks": [
+            {
+              "Cost": 56385.00,
+              "EndDate": "2017-05-21T00:00:00",
+              "Impressions": 4500000.0,
+              "Iscis": [],
+              "IsHiatus": false,
+              "MediaWeekId": 699,
+              "StartDate": "2017-05-15T00:00:00",
+              "Units": 1,
+              "Week": "5/15/2017"
+            },
+            {
+              "Cost": 12530.00,
+              "EndDate": "2017-05-28T00:00:00",
+              "Impressions": 1000000.0,
+              "Iscis": [],
+              "IsHiatus": false,
+              "MediaWeekId": 700,
+              "StartDate": "2017-05-22T00:00:00",
+              "Units": 1,
+              "Week": "5/22/2017"
+            },
+            {
+              "Cost": 157740.17,
+              "EndDate": "2017-06-04T00:00:00",
+              "Impressions": 12589000.0,
+              "Iscis": [],
+              "IsHiatus": false,
+              "MediaWeekId": 701,
+              "StartDate": "2017-05-29T00:00:00",
+              "Units": 1,
+              "Week": "5/29/2017"
+            }
+          ],
+          "Year": 2017
+        }
+      ],
+      "SharePostingBookId": 413,
+      "SinglePostingBookId": 413,
+      "SpotLengthId": 1,
+      "TotalCost": 226655.17,
+      "TotalImpressions": 18089000.0,
+      "TotalUnits": 3
+    }
+  ],
+  "Equivalized": false,
+  "FlightEndDate": "2017-06-04T00:00:00",
+  "FlightStartDate": "2017-05-15T00:00:00",
+  "FlightWeeks": [
+    {
+      "EndDate": "2017-05-21T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 699,
+      "StartDate": "2017-05-15T00:00:00"
+    },
+    {
+      "EndDate": "2017-05-28T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 700,
+      "StartDate": "2017-05-22T00:00:00"
+    },
+    {
+      "EndDate": "2017-06-04T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 701,
+      "StartDate": "2017-05-29T00:00:00"
+    }
+  ],
+  "GuaranteedDemoId": 0,
+  "Margin": null,
+  "MarketGroup": null,
+  "MarketGroupId": 0,
+  "Notes": null,
+  "PostType": 0,
+  "ProposalName": null,
+  "SecondaryDemos": [],
+  "SpotLengths": [
+    {
+      "Display": "30"
+    }
+  ],
+  "Status": 0,
+  "TargetBudget": 226655.17,
+  "TargetCPM": 12.53,
+  "TargetImpressions": 18089000.0,
+  "TargetUnits": 3,
+  "TotalCost": 0.0,
+  "TotalCostMarginAchieved": false,
+  "TotalCostPercent": 0.0,
+  "TotalCPM": 0.0,
+  "TotalCPMMarginAchieved": false,
+  "TotalCPMPercent": 0.0,
+  "TotalImpressions": 0.0,
+  "TotalImpressionsMarginAchieved": false,
+  "TotalImpressionsPercent": 0.0,
+  "ValidationWarning": null,
+  "Version": null,
+  "VersionId": 0
+}

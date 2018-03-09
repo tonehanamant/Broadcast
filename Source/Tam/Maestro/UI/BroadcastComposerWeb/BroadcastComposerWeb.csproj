@@ -52,6 +52,12 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
       <Private>True</Private>
@@ -116,8 +122,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="protobuf-net, Version=2.0.0.480, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Libraries\protobuf-net.dll</HintPath>
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\protobuf-net.2.0.0.480\lib\net40\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -130,6 +135,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -185,21 +191,26 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="Tam.Maestro.Common.Clients, Version=5.8.8.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Clients.5.8.8.2\lib\net45\Tam.Maestro.Common.Clients.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Common.Clients, Version=18.1.1.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Clients.18.1.1.3\lib\net45\Tam.Maestro.Common.Clients.dll</HintPath>
+    </Reference>
+    <Reference Include="Tam.Maestro.Common.DataLayer, Version=5.8.8.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.DataLayer.5.8.8.1\lib\net45\Tam.Maestro.Common.DataLayer.dll</HintPath>
     </Reference>
     <Reference Include="Tam.Maestro.Common.Logging, Version=5.8.8.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Logging.5.8.8.1\lib\net45\Tam.Maestro.Common.Logging.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="Tam.Maestro.Common.Systems, Version=5.8.11.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.5.8.11.1\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Common.Systems, Version=18.2.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.18.2.1.1\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
+    </Reference>
+    <Reference Include="Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating, Version=5.8.8.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.5.8.8.1\lib\net45\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.dll</HintPath>
+    </Reference>
+    <Reference Include="Tam.Maestro.IntegrationTests.Common, Version=5.8.8.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.IntegrationTests.Common.5.8.8.1\lib\net45\Tam.Maestro.IntegrationTests.Common.dll</HintPath>
     </Reference>
     <Reference Include="Tam.Maestro.Web.Common, Version=5.8.8.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.5.8.8.1\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -217,10 +228,12 @@
     <Compile Include="Controllers\BroadcastControllerBase.cs" />
     <Compile Include="Controllers\EnvironmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MaintenanceController.cs" />
+    <Compile Include="Controllers\PostApiController.cs" />
     <Compile Include="Controllers\TrafficApiController.cs" />
     <Compile Include="Controllers\TrafficController.cs" />
-    <Compile Include="Controllers\PostController.cs" />
-    <Compile Include="Controllers\PostApiController.cs" />
+    <Compile Include="Controllers\PostPrePostingController.cs" />
+    <Compile Include="Controllers\PostPrePostingApiController.cs" />
     <Compile Include="Controllers\ProposalController.cs" />
     <Compile Include="Controllers\ProposalInventoryController.cs" />
     <Compile Include="Controllers\InventoryApiController.cs" />
@@ -470,10 +483,10 @@
     <Content Include="Views\Home\_ManageRatingsBooksModal.cshtml" />
     <Content Include="Views\Planning\_CustomMarketsModal.cshtml" />
     <Content Include="Views\Planning\_CustomMarketsSelector.cshtml" />
-    <Content Include="Views\LegacyPost\Index.cshtml" />
+    <Content Include="Views\PostPrePosting\Index.cshtml" />
     <Content Include="Views\Planning\_ProposalDetailInventoryModal.cshtml" />
-    <Content Include="Views\LegacyPost\PostingUploadModal.cshtml" />
-    <Content Include="Views\LegacyPost\PostingMainView.cshtml" />
+    <Content Include="Views\PostPrePosting\PostingUploadModal.cshtml" />
+    <Content Include="Views\PostPrePosting\PostingMainView.cshtml" />
     <Content Include="Views\Shared\SuccessModal.cshtml" />
     <Content Include="Views\Planning\_ProposalDetailOpenMarketModal.cshtml" />
     <Content Include="Views\Planning\_ProposalUpdateWarningModal.cshtml" />
@@ -509,6 +522,7 @@
     <Content Include="Styles\fonts\OpenSans-SemiBold-Latin-Ext.woff2" />
     <Content Include="Styles\fonts\OpenSans-SemiBold-Latin.woff2" />
     <Content Include="Styles\fonts\OpenSans-SemiBold-Vietnamese.woff2" />
+    <Content Include="Views\Maintenance\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Services\Broadcast\Services.Broadcast\Services.Broadcast.csproj">
@@ -568,6 +582,24 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'WWTVDataService|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'WWTVDataServiceConfig|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -583,7 +615,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61713/</IISUrl>
+          <IISUrl>http://localhost:61714/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

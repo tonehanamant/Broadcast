@@ -395,7 +395,7 @@
         "SpotLength": 60
       },
       {
-        "Impressions": 12345.900000000001,
+        "Impressions": 12345.900000000002,
         "SpotLength": 60
       },
       {

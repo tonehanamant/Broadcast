@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
-    [Serializable]
     public class AffidavitSaveRequest
     {
         public string FileName { get; set; }
@@ -26,5 +25,9 @@ namespace Services.Broadcast.Entities
         public string Genre { get; set; }
         public int SpotLength { get; set; }
         public string Isci { get; set; }
+        public string LeadInProgramName { get; set; }
+        public string LeadInGenre { get; set; }
+        public string LeadOutProgramName { get; set; }
+        public string LeadOutGenre { get; set; }
     }
 }
