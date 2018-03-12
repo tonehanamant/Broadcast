@@ -55,7 +55,7 @@ export class PostScrubbingModal extends Component {
 						<PostScrubbingHeader
 							advertiser={Advertiser}
 							date={Details}
-							gaurantedDemo={GuaranteedDemo}
+							guaranteedDemo={GuaranteedDemo}
 							Id={Id}
 							market={Markets}
 							marketId={MarketGroupId}
