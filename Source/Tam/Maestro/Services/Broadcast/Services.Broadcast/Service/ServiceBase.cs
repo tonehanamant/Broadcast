@@ -1,27 +1,21 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.Tracing;
 using System.Reflection;
 using System.ServiceModel;
-using Services.Broadcast.ApplicationServices;
 using Tam.Maestro.Common.Logging;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Services.ContractInterfaces;
-using Tam.Maestro.Services.ContractInterfaces.Helpers;
 
 namespace Services.Broadcast.Services
 {
     public abstract class ServiceBase
     {
-        private BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private static string _serviceName;
 
         protected ServiceBase(string serviceName)
         {
             _serviceName = serviceName;
-            _ApplicationServiceFactory = new BroadcastApplicationServiceFactory();
         }
 
         protected void TimeResultsNoReturn(String methodName, Action func)
@@ -56,48 +50,9 @@ namespace Services.Broadcast.Services
             return results;
         }
 
-        protected TAMResult2<byte[]> _WrapWithTAMResult2AsByteArray<T>(Func<T> codeToRun)
+        public void LogServiceError(string message, Exception exception)
         {
-            var lReturn = new TAMResult2<byte[]>();
-            try
-            {
-                lReturn.Result = codeToRun().ToByteArray();
-            }
-            catch (Exception e)
-            {
-                lReturn.Status = ResultStatus.Error;
-                lReturn.Message = e.Message;
-                if (e as TamValidationException != null)
-                {
-                    var validationException = e as TamValidationException;
-                    lReturn.ExceptionType = ExceptionType.ValidationException;
-                    lReturn.ExceptionData = validationException.ValidationErrors;
-                }
-                ServiceBase.LogServiceError(ServiceBase.GetServiceNameStaticPlaceholder(), lReturn.Message, e);
-            }
-            return lReturn;
-        }
-
-        protected TAMResult2<T> _WrapWithTAMResult2<T>(Func<T> codeToRun)
-        {
-            var lReturn = new TAMResult2<T>();
-            try
-            {
-                lReturn.Result = codeToRun();
-            }
-            catch (Exception e)
-            {
-                lReturn.Status = ResultStatus.Error;
-                lReturn.Message = e.Message;
-                if (e as TamValidationException != null)
-                {
-                    var validationException = e as TamValidationException;
-                    lReturn.ExceptionType = ExceptionType.ValidationException;
-                    lReturn.ExceptionData = validationException.ValidationErrors;
-                }
-                ServiceBase.LogServiceError(ServiceBase.GetServiceNameStaticPlaceholder(), lReturn.Message, e);
-            }
-            return lReturn;
+            LogServiceError(GetServiceName(),message,exception);
         }
 
         public static void LogServiceError(string serviceName, string message, Exception exception)
@@ -115,6 +70,11 @@ namespace Services.Broadcast.Services
             TamMaestroEventSource.Log.ServiceError(serviceName, exception.Message, exception.ToString(), userName, environment);
         }
 
+        public void LogServiceErrorNoCallStack(string message)
+        {
+            LogServiceErrorNoCallStack(GetServiceName(),message);
+        }
+
         public static void LogServiceErrorNoCallStack(string serviceName, string message)
         {
             var userName = String.Empty;
@@ -128,6 +88,11 @@ namespace Services.Broadcast.Services
             {
             }
             TamMaestroEventSource.Log.ServiceErrorNoCallStack(serviceName, message, userName, environment);
+        }
+
+        public void LogServiceEvent(string message)
+        {
+            LogServiceEvent(GetServiceName(),message);
         }
 
         public static void LogServiceEvent(string serviceName, string message)

@@ -1,0 +1,13 @@
+﻿[
+  {
+    "CreatedBy": "AffidavitPreprocessing_User",
+    "ErrorMessages": [
+      "Could not find header for column ESTIMATE_ID in file .\\Files\\StrataSBMSInvoicePostExportInvalidColumnName.xlsx"
+    ],
+    "FileHash": "8E-9B-0A-3E-6B-AC-DE-C9-A8-80-B1-E5-1C-DA-7E-97-64-EF-6B-92",
+    "FileName": "StrataSBMSInvoicePostExportInvalidColumnName.xlsx",
+    "FilePath": ".\\Files\\StrataSBMSInvoicePostExportInvalidColumnName.xlsx",
+    "SourceId": 1,
+    "Status": 2
+  }
+]

@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Services;
 using Topshelf;
 
 namespace WWTVData.Service
 {
-    
     public class WWTVDataServiceHost
     {
         public const string _serviceName = "_WWTVData.Service";
@@ -14,17 +15,22 @@ namespace WWTVData.Service
             var _ApplicationServiceFactory = new BroadcastApplicationServiceFactory();
             _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetInitialProposalData(DateTime.Now);
 
+            List<ScheduledServiceMethod> servicesToRun = new List<ScheduledServiceMethod>()
+            {
+                new WWTVDataFile()
+            }; 
+
             if (args.Length >= 1 && args[0] == "-console")
             {
-                (new WWTV(_serviceName)).CheckWWTVFiles(DateTime.Now);
+                servicesToRun.ForEach(s => s.RunService(DateTime.Now));
             }
             else
             {
                 var rc = HostFactory.Run(x =>
                 {
-                    x.Service<WWTV>(s =>
+                    x.Service<ScheduledServiceMethodRunner>(s =>
                     {
-                        s.ConstructUsing(name => new WWTV(_serviceName));
+                        s.ConstructUsing(name => new ScheduledServiceMethodRunner(_serviceName,servicesToRun));
                         s.WhenStarted(tc => tc.Start());
                         s.WhenStopped(tc => tc.Stop());
                     });

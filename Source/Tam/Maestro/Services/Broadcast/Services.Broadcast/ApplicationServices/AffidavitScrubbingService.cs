@@ -15,19 +15,13 @@ namespace Services.Broadcast.ApplicationServices
     public interface IAffidavitScrubbingService : IApplicationService
     {
         List<PostDto> GetPosts();
+        
         /// <summary>
-        /// Gets a client post scrubbing proposal header
+        /// Gets a client post scrubbing proposal with details
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
-        /// <returns>ProposalDto object containing the post scrubbing header</returns>
-        ClientPostScrubbingProposalHeaderDto GetClientPostScrubbingProposalHeader(int proposalId);
-        /// <summary>
-        /// Gets a client post scrubbing proposal detail
-        /// </summary>
-        /// <param name="proposalId">Proposal id to filter by</param>
-        /// <param name="detailId">Detail Id of the proposal to filter by</param>
-        /// <returns></returns>
-        ClientPostScrubbingProposalDetailDto GetClientPostScrubbingProposalDetail(int proposalId, int detailId);
+        /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
+        ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId);
     }
 
     public class PostDto
@@ -50,12 +44,14 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly ISMSClient _SmsClient;
         protected readonly IProposalService _ProposalService;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IDaypartCache daypartCache,
             ISMSClient smsClient,
             IProposalService proposalService,
-            IBroadcastAudiencesCache audiencesCache)
+            IBroadcastAudiencesCache audiencesCache,
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepositry = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -63,6 +59,7 @@ namespace Services.Broadcast.ApplicationServices
             _PostRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
             _DaypartCache = daypartCache;
             _AudiencesCache = audiencesCache;
+            _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
             _SmsClient = smsClient;
             _ProposalService = proposalService;
         }
@@ -71,21 +68,20 @@ namespace Services.Broadcast.ApplicationServices
         {
             return _PostRepository.GetAllPostFiles();
         }
-
+        
         /// <summary>
-        /// Gets a client post scrubbing proposal header
-        /// </summary>
-        /// <param name="proposalId">Proposal id to filter by</param>
-        /// <returns>ProposalDto object containing the post scrubbing header</returns>
-        public ClientPostScrubbingProposalHeaderDto GetClientPostScrubbingProposalHeader(int proposalId)
+         /// Gets a client post scrubbing proposal with details
+         /// </summary>
+         /// <param name="proposalId">Proposal id to filter by</param>
+         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
+        public ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId)
         {
-
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 var proposal = _ProposalService.GetProposalById(proposalId);
                 var advertiser = _SmsClient.FindAdvertiserById(proposal.AdvertiserId);
 
-                ClientPostScrubbingProposalHeaderDto result = new ClientPostScrubbingProposalHeaderDto
+                ClientPostScrubbingProposalDto result = new ClientPostScrubbingProposalDto
                 {
                     Id = proposal.Id.Value,
                     Name = proposal.ProposalName,
@@ -94,13 +90,16 @@ namespace Services.Broadcast.ApplicationServices
                     MarketGroupId = proposal.MarketGroupId,
                     BlackoutMarketGroup = proposal.BlackoutMarketGroup,
                     BlackoutMarketGroupId = proposal.BlackoutMarketGroupId,
-                    Details = proposal.Details.Select(x => new ProposalScrubbingDetailHeaderDto()
+                    Details = proposal.Details.Select(x=> new ClientPostScrubbingProposalDetailDto
                     {
-                        DayPart = x.Daypart.Text,
-                        FlightEndDate = x.FlightEndDate,
+                        Id = x.Id,
                         FlightStartDate = x.FlightStartDate,
-                        Id = x.Id.Value,
-                        SpotLength = proposal.SpotLengths.First(y => y.Id == x.SpotLengthId).Display
+                        FlightEndDate = x.FlightEndDate,
+                        SpotLength = proposal.SpotLengths.First(y => y.Id == x.SpotLengthId).Display,
+                        DayPart = x.Daypart.Text,
+                        Programs = x.ProgramCriteria,
+                        Genres = x.GenreCriteria,
+                        ClientScrubs = _AffidavitRepositry.GetProposalDetailPostScrubbing(x.Id.Value)
                     }).ToList(),
                     GuaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString,
                     Advertiser = advertiser != null ? advertiser.Display : string.Empty
@@ -109,34 +108,6 @@ namespace Services.Broadcast.ApplicationServices
                 proposal.SecondaryDemos.ForEach(x => result.SecondaryDemos.Add(_AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString));
 
                 return result;
-            }
-        }
-
-        /// <summary>
-        /// Gets a client post scrubbing proposal detail
-        /// </summary>
-        /// <param name="proposalId">Proposal id to filter by</param>
-        /// <returns></returns>
-        public ClientPostScrubbingProposalDetailDto GetClientPostScrubbingProposalDetail(int proposalId, int detailId)
-        {
-
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                ProposalDto proposal = _ProposalService.GetProposalById(proposalId);
-
-                ProposalDetailDto proposalDetail = proposal.Details.First(x => x.Id == detailId);
-
-                return new ClientPostScrubbingProposalDetailDto
-                {
-                    Id = proposalDetail.Id,
-                    FlightStartDate = proposalDetail.FlightStartDate,
-                    FlightEndDate = proposalDetail.FlightEndDate,
-                    SpotLength = proposal.SpotLengths.First(x => x.Id == proposalDetail.SpotLengthId).Display,
-                    DayPart = proposalDetail.Daypart.Text,
-                    Programs = proposalDetail.ProgramCriteria,
-                    Genres = proposalDetail.GenreCriteria,
-                    ClientScrubs = _AffidavitRepositry.GetProposalDetailPostScrubbing(detailId)
-                };
             }
         }
     }

@@ -1,0 +1,56 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "BlackoutMarketGroup": null,
+  "BlackoutMarketGroupId": null,
+  "Details": [
+    {
+      "ClientScrubs": [
+        {
+          "Affiliate": "NBC",
+          "DayOfWeek": 5,
+          "GenreName": "Do It Yourself",
+          "ISCI": "AAAAAAAA",
+          "Market": "New York",
+          "MatchGenre": true,
+          "MatchISCI": true,
+          "MatchMarket": true,
+          "MatchProgram": true,
+          "MatchStation": true,
+          "MatchTime": true,
+          "ProgramName": "Program Names R us",
+          "SpotLength": 30,
+          "Station": "WNBC",
+          "TimeAired": "2016-06-03T09:00:00",
+          "WeekStart": "0001-01-01T00:00:00"
+        }
+      ],
+      "DayPart": "M-F 9AM-10AM",
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "Genres": [],
+      "Id": 14,
+      "Programs": [],
+      "SpotLength": "30"
+    },
+    {
+      "ClientScrubs": [],
+      "DayPart": "M-F 9AM-10AM",
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "Genres": [],
+      "Id": 15,
+      "Programs": [],
+      "SpotLength": "30"
+    }
+  ],
+  "GuaranteedDemo": "House Holds",
+  "Id": 253,
+  "MarketGroupId": 100,
+  "Markets": [],
+  "Name": "Proposal Test",
+  "Notes": null,
+  "SecondaryDemos": [
+    "House Holds",
+    "House Holds"
+  ]
+}

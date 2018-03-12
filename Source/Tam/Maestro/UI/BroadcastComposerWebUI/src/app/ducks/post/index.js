@@ -31,6 +31,18 @@ export default function reducer(state = initialState, action) {
         proposalHeader: data.Data,
       };
 
+      case ACTIONS.RECEIVE_POST_SCRUBBING_DETAIL:
+      return {
+        ...state,
+        proposalDetail: data.Data,
+      };
+
+      case ACTIONS.CLEAR_POST_SCRUBBING_DETAIL:
+      return {
+        ...state,
+        proposalDetail: '',
+      };
+
     default:
       return state;
   }
@@ -50,4 +62,13 @@ export const getPostFiltered = query => ({
 export const getProposalHeader = proposalID => ({
   type: ACTIONS.REQUEST_POST_SCRUBBING_HEADER,
   payload: proposalID,
+});
+
+export const getPostScrubbingDetail = (proposalID, detailID) => ({
+  type: ACTIONS.REQUEST_POST_SCRUBBING_DETAIL,
+  payload: { proposalID, detailID },
+});
+
+export const clearPostScrubbingDetail = () => ({
+  type: ACTIONS.CLEAR_POST_SCRUBBING_DETAIL,
 });

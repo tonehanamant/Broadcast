@@ -5,16 +5,17 @@ import { bindActionCreators } from 'redux';
 
 import { Button, Modal } from 'react-bootstrap';
 import { toggleModal } from 'Ducks/app';
+import { getPostScrubbingDetail, clearPostScrubbingDetail } from 'Ducks/post';
 
 import PostScrubbingHeader from './PostScrubbingHeader';
 import PostScrubbingDetail from './PostScrubbingDetail';
 /* eslint-disable */
-const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post: { proposalHeader } }) => ({
-modal, proposalHeader
+const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post: { proposalHeader, proposalDetail } }) => ({
+modal, proposalHeader, proposalDetail
 });
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ toggleModal }, dispatch)
+	bindActionCreators({ clearPostScrubbingDetail, getPostScrubbingDetail, toggleModal }, dispatch)
 );
 
 
@@ -26,11 +27,13 @@ export class PostScrubbingModal extends Component {
 	}
 
 	close() {
-    this.props.toggleModal({
-      modal: 'postScrubbingModal',
-      active: false,
-      properties: this.props.modal.properties,
-    });
+		this.props.toggleModal({
+		modal: 'postScrubbingModal',
+		active: false,
+		properties: this.props.modal.properties,
+		});
+
+		this.props.clearPostScrubbingDetail();
 	}
 
 	dismiss() {
@@ -40,6 +43,9 @@ export class PostScrubbingModal extends Component {
 
 	render() {
 		const { proposalHeader: { Advertiser, Id, Name, Markets, GuaranteedDemo, SecondaryDemos, Notes, MarketGroupId, Details } } = this.props;
+		const { getPostScrubbingDetail } = this.props;
+		const { proposalDetail } = this.props;
+
 		return (
 			<Modal show={this.props.modal.active} onHide={this.close} dialogClassName="planning-versions-modal">
 					<Modal.Header>
@@ -56,10 +62,11 @@ export class PostScrubbingModal extends Component {
 							name={Name}
 							notes={Notes}
 							secondaryDemo={SecondaryDemos}
+							getPostScrubbingDetail={getPostScrubbingDetail}
 						/>
 					</Modal.Header>
 					<Modal.Body>
-						<PostScrubbingDetail />
+						{<PostScrubbingDetail />}
 					</Modal.Body>
 					<Modal.Footer>
 						<Button onClick={this.close} bsStyle={this.props.modal.properties.closeButtonBsStyle} >Cancel</Button>

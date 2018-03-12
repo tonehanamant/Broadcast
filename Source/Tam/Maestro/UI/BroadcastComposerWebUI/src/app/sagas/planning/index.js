@@ -1051,6 +1051,8 @@ export function* updateProposal() { // { payload: params }
   /* eslint-disable no-shadow */
   const { updateProposal } = api.planning;
   const details = yield select(state => state.planning.proposalEditForm.Details);
+  const proposalId = yield select(state => state.planning.proposalEditForm.Id);
+  const params = { Id: proposalId, Details: details };
   try {
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
@@ -1059,7 +1061,7 @@ export function* updateProposal() { // { payload: params }
         processing: true,
       },
     });
-    const response = yield updateProposal(details);
+    const response = yield updateProposal(params);
     const { status, data } = response;
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
