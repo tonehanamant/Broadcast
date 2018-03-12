@@ -402,6 +402,26 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "BroadcastMatchingBuffer"; }
         }
 	 
+		public static string EmailHost  
+		{
+            get { return "EmailHost"; }
+        }
+	 
+		public static string EmailNotificationsEnabled  
+		{
+            get { return "EmailNotificationsEnabled"; }
+        }
+	 
+		public static string EmailPassword  
+		{
+            get { return "EmailPassword"; }
+        }
+	 
+		public static string EmailUsername  
+		{
+            get { return "EmailUsername"; }
+        }
+	 
 		public static string ProgramSearchApiUrl  
 		{
             get { return "ProgramSearchApiUrl"; }
@@ -415,6 +435,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string WWTV_FailedFolder  
 		{
             get { return "WWTV_FailedFolder"; }
+        }
+	 
+		public static string WWTV_FtpErrorFolder  
+		{
+            get { return "WWTV_FtpErrorFolder"; }
         }
 	 
 		public static string WWTV_FtpHost  
@@ -440,6 +465,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string WWTV_FtpUsername  
 		{
             get { return "WWTV_FtpUsername"; }
+        }
+	 
+		public static string WWTV_LocalFtpErrorFolder  
+		{
+            get { return "WWTV_LocalFtpErrorFolder"; }
         }
 	 
 		public static string WWTV_NotificationEmail  

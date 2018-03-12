@@ -1,14 +1,18 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using OfficeOpenXml;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
+using System.Text;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -29,6 +33,13 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
         void CreateAndUploadZipArchiveToWWTV(List<OutboundAffidavitFileValidationResultDto> files);
+
+
+        /// <summary>
+        /// Move invalid files to invalid files folder. Notify users about failed files
+        /// </summary>
+        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
+        void ProcessInvalidFiles(List<OutboundAffidavitFileValidationResultDto> files);
     }
 
     public enum AffidaviteFileProcessingStatus
@@ -46,11 +57,13 @@ namespace Services.Broadcast.ApplicationServices
 
         private readonly IAffidavitPreprocessingRepository _AffidavitPreprocessingRepository;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
+        private readonly IAffidavitEmailSenderService _AffidavitEmailSenderService;
 
-        public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory)
+        public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory, IAffidavitEmailSenderService affidavitEmailSenderService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitPreprocessingRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitPreprocessingRepository>();
+            _AffidavitEmailSenderService = affidavitEmailSenderService;
         }
 
         /// <summary>
@@ -63,8 +76,28 @@ namespace Services.Broadcast.ApplicationServices
         {
             List<OutboundAffidavitFileValidationResultDto> validationList = ValidateFiles(filepathList, userName);
             _AffidavitPreprocessingRepository.SaveValidationObject(validationList);
-                        
             return validationList;
+        }
+
+        public void ProcessInvalidFiles(List<OutboundAffidavitFileValidationResultDto> validationList)
+        {
+            var invalidFiles = validationList.Where(v => v.Status == (int)AffidaviteFileProcessingStatus.Invalid);
+
+            foreach (var invalidFile in invalidFiles)
+            {
+                var invalidFilePath = _MoveInvalidFileToArchiveFolder(invalidFile);
+
+                _AffidavitEmailSenderService.Send(invalidFile, invalidFilePath);
+            }
+        }
+
+        private string _MoveInvalidFileToArchiveFolder(OutboundAffidavitFileValidationResultDto invalidFile)
+        {
+            var combinedFilePath = Path.Combine(BroadcastServiceSystemParameter.WWTV_FailedFolder, Path.GetFileName(invalidFile.FilePath));
+
+            File.Move(invalidFile.FilePath, combinedFilePath);
+
+            return combinedFilePath;
         }
 
         /// <summary>
@@ -100,7 +133,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 ftpClient.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername, BroadcastServiceSystemParameter.WWTV_FtpPassword);
                 ftpClient.UploadFile(
-                    $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder}/{Path.GetFileName(zipFilePath)}", 
+                    $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder}/{Path.GetFileName(zipFilePath)}",
                     zipFilePath);
             }
         }

@@ -437,6 +437,30 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastMatchingBuffer); }
         }
 	 
+		public static string EmailHost  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailHost); }
+        }
+	 
+		public static bool EmailNotificationsEnabled  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailNotificationsEnabled); }
+        }
+	 
+		public static string EmailPassword  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailPassword); }
+        }
+	 
+		public static string EmailUsername  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailUsername); }
+        }
+	 
 		public static string ProgramSearchApiUrl  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -453,6 +477,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FailedFolder); }
+        }
+	 
+		public static string WWTV_FtpErrorFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FtpErrorFolder); }
         }
 	 
 		public static string WWTV_FtpHost  
@@ -483,6 +513,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FtpUsername); }
+        }
+	 
+		public static string WWTV_LocalFtpErrorFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_LocalFtpErrorFolder); }
         }
 	 
 		public static string WWTV_NotificationEmail  
