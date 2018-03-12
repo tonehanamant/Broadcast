@@ -629,7 +629,7 @@ export function* saveProposal({ payload: params }) {
       });
     }
     if (isNew) {
-      window.location.assign(`/broadcastreact/planning/proposal/${data.Data.Id}`);
+      setTimeout(() => { window.location.assign(`/broadcastreact/planning/proposal/${data.Data.Id}`); }, 1000);
     } else {
     data.Data = yield flattenProposalDetails(data.Data);
     yield put({
