@@ -90,7 +90,7 @@ const planning = {
     call(POST, `${apiBase}Proposals/GetProposalDetail`, params)
   ),
   updateProposal: params => (
-    call(POST, `${apiBase}Proposals/UpdateProposal`, params)
+    call(POST, `${apiBase}Proposals/CalculateProposalChanges`, params)
   ),
   getGenres: query => (
     call(GET, `${apiBase}Proposals/FindGenres/${query}`, {})

@@ -265,6 +265,7 @@
     <Compile Include="Entities\PostingBookResultDto.cs" />
     <Compile Include="Entities\ClientPostScrubbingProposalDetailDto.cs" />
     <Compile Include="Entities\ProgramSearchRequest.cs" />
+    <Compile Include="Entities\ProposalChangeRequest.cs" />
     <Compile Include="Entities\ProposalDetailPostScrubbingDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleInventoryTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />
