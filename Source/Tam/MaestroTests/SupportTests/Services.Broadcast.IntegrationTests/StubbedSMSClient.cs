@@ -51,6 +51,36 @@ namespace Services.Broadcast.IntegrationTests
                 case "UseDayByDayImpressions":
                     result = "False";
                     break;
+                case "WWTV_FtpUsername":
+                    result = "broadcast";
+                    break;
+                case "WWTV_FtpPassword":
+                    result = "Password01";
+                    break;
+                case "WWTV_FtpHost":
+                    result = "localhost";
+                    break;
+                case "WWTV_FtpOutboundFolder":
+                    result = "uploads";
+                    break;
+                case "WWTV_FtpErrorFolder":
+                    result = "Errors";
+                    break;
+                case "EmailHost": 
+                    result = "smtp.office365.com";
+                    break;
+                case "EmailFrom":
+                    result = "broadcast@crossmw.com";
+                    break;
+                case "EmailUsername":
+                    result = "traffic@crossmw.com";
+                    break;
+                case "EmailPassword":
+                    result = "JMnxeJ1eBhqAsFnqv/lr4w==";
+                    break;
+                case "EmailWhiteList":
+                    result = "mhohenshilt@crossmw.com";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }

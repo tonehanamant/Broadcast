@@ -34,6 +34,8 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
         void CreateAndUploadZipArchiveToWWTV(List<OutboundAffidavitFileValidationResultDto> files);
 
+        void ProcessErrorFiles();
+
 
         /// <summary>
         /// Move invalid files to invalid files folder. Notify users about failed files
@@ -115,6 +117,87 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
+        public void ProcessErrorFiles()
+        {
+
+            var remoteFTPPath =
+                $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpErrorFolder}";
+
+            var files = GetFTPFileList(remoteFTPPath);
+            var completedFiles = DownloadFTPFiles(files,remoteFTPPath);
+            EmailFTPErrorFiles(completedFiles);
+        }
+
+        private void EmailFTPErrorFiles(List<string> filePaths)
+        {
+            if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
+                return;
+
+            filePaths.ForEach(filePath =>
+            {
+                var body = "Error file!";
+                var subject = "Error files from WWTV";
+                var from = BroadcastServiceSystemParameter.EmailFrom;
+                var Tos = new string[] { BroadcastServiceSystemParameter.WWTV_NotificationEmail };
+                Emailer.QuickSend(true, body, subject, MailPriority.Normal,from , Tos, new List<string>() { filePath} );
+            });
+            
+        }
+
+        private List<string> DownloadFTPFiles(List<string> files, string remoteFTPPath)
+        {
+            List<string> completedFiles = new List<string>();
+            using (var ftpClient = new WebClient())
+            {
+                ftpClient.Credentials = GetFtpClientCredentials();
+
+                files.ForEach(filePath =>
+                {
+                    try
+                    {
+                        var path = remoteFTPPath + "/" + filePath.Remove(0, filePath.IndexOf(@"/") + 1);
+                        var transferPath = BroadcastServiceSystemParameter.WWTV_LocalFtpErrorFolder + @"\" +
+                                           filePath.Replace(@"/", @"\");
+                        ftpClient.DownloadFile(path, transferPath);
+
+                        DeleteFTPFile(path);
+                        completedFiles.Add(path);
+                    }
+                    catch (Exception e)
+                    {
+                        throw;
+                    }
+                });
+            }
+
+            return completedFiles;
+        }
+
+        private static List<string> GetFTPFileList(string remoteFTPPath)
+        {
+            var request = (FtpWebRequest) WebRequest.Create(remoteFTPPath);
+
+            request.Method = WebRequestMethods.Ftp.ListDirectory;
+            request.Credentials = GetFtpClientCredentials();
+
+            FtpWebResponse response = (FtpWebResponse) request.GetResponse();
+            Stream responseStream = response.GetResponseStream();
+            List<string> files = new List<string>();
+
+            using (StreamReader reader = new StreamReader(responseStream))
+            {
+                var line = reader.ReadLine();
+
+                while (!string.IsNullOrEmpty(line))
+                {
+                    files.Add(line);
+                    line = reader.ReadLine();
+                }
+            }
+            return files;
+        }
+
+
         private static void _CreateZipArchive(List<OutboundAffidavitFileValidationResultDto> files, string zipFileName)
         {
             using (ZipArchive zip = ZipFile.Open(zipFileName, ZipArchiveMode.Create))
@@ -131,7 +214,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             using (var ftpClient = new WebClient())
             {
-                ftpClient.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername, BroadcastServiceSystemParameter.WWTV_FtpPassword);
+                ftpClient.Credentials = GetFtpClientCredentials();
                 ftpClient.UploadFile(
                     $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder}/{Path.GetFileName(zipFilePath)}",
                     zipFilePath);
@@ -272,5 +355,23 @@ namespace Services.Broadcast.ApplicationServices
 
             return true;
         }
+
+        private void DeleteFTPFile(string remoteFTPPath)
+        {
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(remoteFTPPath);
+
+            request.Method = WebRequestMethods.Ftp.DeleteFile;
+            request.Credentials = GetFtpClientCredentials();
+            request.Proxy = null;
+
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            response.Close();
+        }
+        private static NetworkCredential GetFtpClientCredentials()
+        {
+            return new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername,
+                BroadcastServiceSystemParameter.WWTV_FtpPassword);
+        }
+
     }
 }

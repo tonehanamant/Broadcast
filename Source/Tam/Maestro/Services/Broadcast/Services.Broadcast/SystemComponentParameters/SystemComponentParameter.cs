@@ -437,6 +437,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastMatchingBuffer); }
         }
 	 
+		public static string EmailFrom  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailFrom); }
+        }
+	 
 		public static string EmailHost  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -459,6 +465,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailUsername); }
+        }
+	 
+		public static string EmailWhiteList  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailWhiteList); }
         }
 	 
 		public static string ProgramSearchApiUrl  

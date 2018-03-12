@@ -36,14 +36,24 @@
         var IdValue = "";
         if (ViewBag.Id != null)
         {
-            IdValue = "<div>Uploaded AffidavidID = " + ViewBag.Id + "</div>";
+            IdValue = "Uploaded AffidavidID = " + ViewBag.Id + "";
         }
     }
     @IdValue
     <div><b>Results:</b></div>
     <textarea rows="20" style="width: 600px;" id="divJSON">@ViewBag.Message</textarea>
+    
+    
 </form>
+<br/>
+<br />
+<br />
+<br />
 
+@using (Html.BeginForm("TestEmail", "Maintenance", FormMethod.Post))
+{
+    <input type="submit" value="test email" id="test_email" />
+}
 <div>
 </div>
 </body>

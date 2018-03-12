@@ -160,6 +160,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WWTVErrorFiles.cs" />
     <Compile Include="WWTVDataFile.cs" />
     <Compile Include="WWTVDataServiceHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
