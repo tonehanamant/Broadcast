@@ -217,6 +217,7 @@
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryGroupService.cs" />
     <Compile Include="ApplicationServices\WhosWatchingTvService.cs" />
+    <Compile Include="ApplicationServices\AffidavitEmailSenderService.cs" />
     <Compile Include="BusinessEngines\AffidavitMatchingEngine.cs" />
     <Compile Include="BusinessEngines\ImpressionAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailHeaderTotalsCalculationEngine.cs" />
@@ -237,6 +238,7 @@
     <Compile Include="Converters\ProposalScxConverter.cs" />
     <Compile Include="Converters\TextFileLineReader.cs" />
     <Compile Include="DaypartCache.cs" />
+    <Compile Include="EmailService.cs" />
     <Compile Include="Entities\AffidavitClientScrub.cs" />
     <Compile Include="Entities\AffidavitClientScrubStatus.cs" />
     <Compile Include="Entities\AffidavitFileDetailProblem.cs" />

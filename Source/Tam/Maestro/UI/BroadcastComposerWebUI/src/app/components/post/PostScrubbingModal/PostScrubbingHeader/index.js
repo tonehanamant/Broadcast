@@ -90,7 +90,7 @@ export class PostScrubbingHeader extends Component {
   }
 
   render() {
-    const { advertiser, gaurantedDemo, Id, isReadOnly, marketId, name, notes, secondaryDemo } = this.props;
+    const { advertiser, guaranteedDemo, Id, isReadOnly, marketId, name, notes, secondaryDemo } = this.props;
     const isCustomMarket = this.props.marketId === 255;
 
     return (
@@ -134,9 +134,9 @@ export class PostScrubbingHeader extends Component {
           <Col md={6}>
             <Row>
               <Col md={4}>
-                <FormGroup controlId="gaurantedDemo">
-                  <ControlLabel><strong>Gauranted Demo</strong></ControlLabel>
-                  <FormControl.Static>{gaurantedDemo}</FormControl.Static>
+                <FormGroup controlId="guaranteedDemo">
+                  <ControlLabel><strong>Guaranteed Demo</strong></ControlLabel>
+                  <FormControl.Static>{guaranteedDemo}</FormControl.Static>
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -191,7 +191,7 @@ PostScrubbingHeader.defaultProps = {
 PostScrubbingHeader.PropTypes = {
   advertiser: PropTypes.string.isRequired,
   date: PropTypes.object.isRequired,
-  gaurantedDemo: PropTypes.string.isRequired,
+  guaranteedDemo: PropTypes.string.isRequired,
   Id: PropTypes.string.isRequired,
   isReadOnly: PropTypes.bool,
   market: PropTypes.object.isRequired,

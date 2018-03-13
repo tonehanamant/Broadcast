@@ -629,7 +629,7 @@ export function* saveProposal({ payload: params }) {
       });
     }
     if (isNew) {
-      window.location.assign(`/broadcastreact/planning/proposal/${data.Data.Id}`);
+      setTimeout(() => { window.location.assign(`/broadcastreact/planning/proposal/${data.Data.Id}`); }, 1000);
     } else {
     data.Data = yield flattenProposalDetails(data.Data);
     yield put({
@@ -1171,7 +1171,7 @@ export function* requestGenres({ payload: query }) {
 		const { data } = response;
 		yield put({
       type: ACTIONS.RECEIVE_GENRES,
-      payload: data.Data,
+      payload: data.Data || [],
     });
 
     yield put({
@@ -1180,6 +1180,11 @@ export function* requestGenres({ payload: query }) {
 		});
 	} catch (e) {
 		if (e.response) {
+      yield put({
+        type: ACTIONS.TOGGLE_GENRE_LOADING,
+        payload: {},
+      });
+
 			yield put({
 				type: ACTIONS.DEPLOY_ERROR,
 				error: {
@@ -1214,7 +1219,7 @@ export function* requestPrograms({ payload: params }) {
 		const { data } = response;
 		yield put({
       type: ACTIONS.RECEIVE_PROGRAMS,
-      payload: data.Data,
+      payload: data.Data || [],
     });
 
     yield put({
@@ -1223,6 +1228,11 @@ export function* requestPrograms({ payload: params }) {
 		});
 	} catch (e) {
 		if (e.response) {
+      yield put({
+        type: ACTIONS.TOGGLE_PROGRAM_LOADING,
+        payload: {},
+      });
+
 			yield put({
 				type: ACTIONS.DEPLOY_ERROR,
 				error: {

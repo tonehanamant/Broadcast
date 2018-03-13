@@ -134,5 +134,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(validations, jsonSettings));
             }
         }
+
+
+        [Ignore]
+        [Test]
+        // use for manual testing and not automated running 
+        public void Test_ProcessErrorFiles()
+        {
+            _AffidavitPreprocessingService.ProcessErrorFiles();
+        }
     }
 }
