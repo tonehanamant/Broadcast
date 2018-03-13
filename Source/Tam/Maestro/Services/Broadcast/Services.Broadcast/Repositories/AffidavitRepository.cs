@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using System.Data.Entity;
 using System.Linq;
@@ -130,10 +129,11 @@ namespace Services.Broadcast.Repositories
                     var affidavitFiles = (from proposalVersionDetail in context.proposal_version_details
                                           from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
                                           from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
+                                          from proposalVersionWeekIscis in proposalVersionWeeks.proposal_version_detail_quarter_week_iscis
                                           from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
                                           let affidavitFile = affidavitFileScrub.affidavit_file_details
                                           where proposalVersionDetail.id == proposalVersionId
-                                          select new { affidavitFile, affidavitFileScrub }).ToList();
+                                          select new { affidavitFile, affidavitFileScrub, proposalVersionWeekIscis }).ToList();
                     var spotLengths = (from sl in context.spot_lengths select sl).ToList();
 
                     var posts = new List<ProposalDetailPostScrubbingDto>();
@@ -155,7 +155,9 @@ namespace Services.Broadcast.Repositories
                         MatchProgram = x.affidavitFileScrub.match_program,
                         MatchStation = x.affidavitFileScrub.match_station,
                         MatchTime = x.affidavitFileScrub.match_time,
-                        MatchISCI = x.affidavitFileScrub.match_isci_days
+                        MatchISCI = x.affidavitFileScrub.match_isci_days,
+                        Comments = x.affidavitFileScrub.comment,
+                        ClientISCI = x.proposalVersionWeekIscis.client_isci
                     }).ToList());
                     return posts;
                 });
