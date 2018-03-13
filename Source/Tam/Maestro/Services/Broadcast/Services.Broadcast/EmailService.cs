@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
+using System.ServiceModel;
 using Common.Services.Extensions;
 using Services.Broadcast;
 using Services.Broadcast.Services;
 using Tam.Maestro.Common;
+using Tam.Maestro.Common.Logging;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -79,9 +81,18 @@ public static class Emailer
         }
         catch (System.Exception exc)
         {
-            ServiceBase.LogServiceError(ServiceBase.GetServiceNameStaticPlaceholder(), exc.Message, exc);
+            TamMaestroEventSource.Log.ServiceError("Broadcast Emailer", exc.Message, exc.ToString(), GetWindowsUserName(), SMSClient.Handler.TamEnvironment.ToString());
             return false;
         }
+    }
+    private static string GetWindowsUserName()
+    {
+        var userName = String.Empty;
+        if (ServiceSecurityContext.Current != null)
+        {
+            userName = ServiceSecurityContext.Current.WindowsIdentity.Name;
+        }
+        return userName;
     }
 
     private static NetworkCredential GetNetworkCredential()

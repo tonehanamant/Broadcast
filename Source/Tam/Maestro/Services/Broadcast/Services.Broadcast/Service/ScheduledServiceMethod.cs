@@ -8,12 +8,12 @@ namespace Services.Broadcast.Services
 {
     public abstract class ScheduledServiceMethod 
     {
-        public ServiceBase BaseService { get; set; }
+        public WindowsServiceBase BaseWindowsService { get; set; }
 
         
-        public ScheduledServiceMethod(ServiceBase serviceBase)
+        public ScheduledServiceMethod(WindowsServiceBase windowsServiceBase)
         {
-            BaseService = serviceBase;
+            BaseWindowsService = windowsServiceBase;
         }
 
         private bool _RunWhenChecked = false;
