@@ -992,7 +992,11 @@ namespace Services.Broadcast.ApplicationServices
 
         public ProposalDto CalculateProposalChanges(ProposalChangeRequest changeRequest)
         {
-            var proposalDto = _ProposalRepository.GetProposalById(changeRequest.Id);
+            var proposalDto = new ProposalDto();
+            if (changeRequest.Id.HasValue)
+            {
+                proposalDto = _ProposalRepository.GetProposalById(changeRequest.Id.Value);
+            }
 
             proposalDto.Details = changeRequest.Details;
 
