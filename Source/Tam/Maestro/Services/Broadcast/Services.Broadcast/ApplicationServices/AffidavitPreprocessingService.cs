@@ -1,5 +1,6 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Newtonsoft.Json;
 using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
@@ -60,7 +61,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IAffidavitPreprocessingRepository _AffidavitPreprocessingRepository;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IAffidavitEmailSenderService _AffidavitEmailSenderService;
-
+        
         public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory, IAffidavitEmailSenderService affidavitEmailSenderService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
@@ -116,7 +117,7 @@ namespace Services.Broadcast.ApplicationServices
                 File.Delete(zipFileName);
             }
         }
-
+        
         public void ProcessErrorFiles()
         {
 

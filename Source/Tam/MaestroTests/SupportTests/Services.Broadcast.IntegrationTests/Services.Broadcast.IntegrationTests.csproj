@@ -217,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\ScheduleAggregateIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\AffidavitPostProcessingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BulkInventoryFileImportTester.cs" />
     <Compile Include="ApplicationServices\AffidavitServiceTests.cs" />
@@ -616,6 +617,12 @@
     </Content>
     <Content Include="Files\rate-file-invalid-schema.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\WWTV_AffidavitInValidFileContent.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\WWTV_AffidavitValidFile.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Penny_test.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

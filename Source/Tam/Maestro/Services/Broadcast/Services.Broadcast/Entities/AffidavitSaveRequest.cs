@@ -29,5 +29,11 @@ namespace Services.Broadcast.Entities
         public string LeadInGenre { get; set; }
         public string LeadOutProgramName { get; set; }
         public string LeadOutGenre { get; set; }
+        public string Market { get; set; }
+        public int EstimateId { get; set; }
+        public int InventorySource { get; set; }
+        public double SpotCost { get; set; }
+        public string Affiliate { get; set; }
+        public List<Demographics> Demographics { get; set; } = new List<Demographics>();
     }
 }

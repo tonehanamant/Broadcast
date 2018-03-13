@@ -12,13 +12,15 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class affidavit_file_detail_audiences
+    public partial class affidavit_file_detail_demographics
     {
-        public long affidavit_file_detail_id { get; set; }
-        public int audience_id { get; set; }
-        public double impressions { get; set; }
+        public int id { get; set; }
+        public Nullable<int> audience_id { get; set; }
+        public Nullable<long> affidavit_file_detail_id { get; set; }
+        public Nullable<double> overnight_rating { get; set; }
+        public Nullable<int> overnight_impressions { get; set; }
     
-        public virtual audience audience { get; set; }
         public virtual affidavit_file_details affidavit_file_details { get; set; }
+        public virtual audience audience { get; set; }
     }
 }

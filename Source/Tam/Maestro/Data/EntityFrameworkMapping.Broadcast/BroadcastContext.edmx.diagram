@@ -5,16 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="84">
-        <EntityTypeShape EntityType="BroadcastModel.audience_audiences" Width="1.5" PointX="0.75" PointY="2.25" />
-        <EntityTypeShape EntityType="BroadcastModel.audience" Width="1.5" PointX="2.75" PointY="2.25" />
+        <EntityTypeShape EntityType="BroadcastModel.audience_audiences" Width="1.5" PointX="0.75" PointY="2.75" />
+        <EntityTypeShape EntityType="BroadcastModel.audience" Width="1.5" PointX="2.75" PointY="0.5" />
         <EntityTypeShape EntityType="BroadcastModel.bvs_file_details" Width="1.5" PointX="15" PointY="35" />
         <EntityTypeShape EntityType="BroadcastModel.bvs_files" Width="1.5" PointX="12.75" PointY="33" />
         <EntityTypeShape EntityType="BroadcastModel.bvs_maps" Width="1.5" PointX="18" PointY="6.625" />
         <EntityTypeShape EntityType="BroadcastModel.bvs_post_details" Width="1.5" PointX="17.25" PointY="37.375" />
         <EntityTypeShape EntityType="BroadcastModel.daypart" Width="1.5" PointX="13.75" PointY="2.5" />
         <EntityTypeShape EntityType="BroadcastModel.day" Width="1.5" PointX="16" PointY="2.5" />
-        <EntityTypeShape EntityType="BroadcastModel.market_dma_map" Width="1.5" PointX="8.25" PointY="4.625" />
-        <EntityTypeShape EntityType="BroadcastModel.market" Width="1.5" PointX="6" PointY="2.875" />
+        <EntityTypeShape EntityType="BroadcastModel.market_dma_map" Width="1.5" PointX="5.75" PointY="4.5" />
+        <EntityTypeShape EntityType="BroadcastModel.market" Width="1.5" PointX="7" PointY="1.625" />
         <EntityTypeShape EntityType="BroadcastModel.media_months" Width="1.5" PointX="0.5" PointY="10" />
         <EntityTypeShape EntityType="BroadcastModel.media_weeks" Width="1.5" PointX="12.75" PointY="17.25" />
         <EntityTypeShape EntityType="BroadcastModel.post_file_demos" Width="1.5" PointX="17" PointY="17.75" />
@@ -139,24 +139,27 @@
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_quarter_week_iscis" Width="1.5" PointX="12" PointY="14.125" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_week_iscis_proposal_version_detail_quarter_weeks" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_client_scrubs" Width="1.5" PointX="24.875" PointY="15" />
-        <EntityTypeShape EntityType="BroadcastModel.affidavit_file_details" Width="1.5" PointX="22.625" PointY="8" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_files" Width="1.5" PointX="20.375" PointY="8.875" />
-        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" />
-        <AssociationConnector Association="BroadcastModel.FK_affidavit_files_affidavit_file_details" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_file_detail_audiences" Width="1.5" PointX="24.875" PointY="6.25" />
-        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_audiences_affidavit_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_audiences_audiences" />
         <EntityTypeShape EntityType="BroadcastModel.nsi_component_audiences" Width="1.5" PointX="9.5" PointY="0.5" />
         <AssociationConnector Association="BroadcastModel.FK_nsi_component_audiences_audiences" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_file_detail_problems" Width="1.5" PointX="24.875" PointY="9.375" />
-        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_problems_affidavit_file_details" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_criteria_programs" Width="1.5" PointX="7.375" PointY="22.125" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" />
         <EntityTypeShape EntityType="BroadcastModel.program_names" Width="1.5" PointX="0.75" PointY="7.75" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_outbound_file_problems" Width="1.5" PointX="25.75" PointY="1.375" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_outbound_files" Width="1.5" PointX="23.5" PointY="1" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_outbound_file_problems_affidavit_outbound_files" />
+        <EntityTypeShape EntityType="BroadcastModel.affidavit_file_detail_demographics" Width="1.5" PointX="27.875" PointY="6" />
+        <EntityTypeShape EntityType="BroadcastModel.affidavit_file_details" Width="1.5" PointX="22.625" PointY="8.25" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_audiences_affidavit_file_details" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_demographics_affidavit_file_details" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_demographics_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_problems_affidavit_file_details" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_files_affidavit_file_details" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
