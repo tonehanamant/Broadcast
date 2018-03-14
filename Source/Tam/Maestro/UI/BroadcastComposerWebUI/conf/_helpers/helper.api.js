@@ -1,11 +1,11 @@
 module.exports = {
   local: {
-    host: 'http://localhost:8080/',
+    host: 'http://localhost:8081/',
     apiName: 'api',
     // version: 'v1',
     proxyToDev: {
       '/api/**': {
-        target: 'http://localhost:61713',
+        target: 'http://localhost:61718',
         secure: false,
         changeOrigin: true,
         // ws: true, // proxy websockets
