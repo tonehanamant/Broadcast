@@ -50,6 +50,10 @@ export default class FlightPicker extends Component {
 		}
 	}
 
+	componentWillReceiveProps() {
+		this.resetOrRestore();
+	}
+
 	toggle() {
     if (this.props.isReadOnly) return;
 		this.setState({ show: !this.state.show });
