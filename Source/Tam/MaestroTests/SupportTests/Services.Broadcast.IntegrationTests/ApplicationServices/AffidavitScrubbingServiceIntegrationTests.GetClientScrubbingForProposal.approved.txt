@@ -19,6 +19,7 @@
           "MatchProgram": true,
           "MatchStation": true,
           "MatchTime": true,
+          "Order": null,
           "ProgramName": "Program Names R us",
           "SpotLength": 30,
           "Station": "WNBC",
@@ -39,6 +40,7 @@
           "MatchProgram": true,
           "MatchStation": true,
           "MatchTime": true,
+          "Order": null,
           "ProgramName": "Program Names R us",
           "SpotLength": 30,
           "Station": "WNBC",
@@ -59,6 +61,7 @@
           "MatchProgram": true,
           "MatchStation": true,
           "MatchTime": true,
+          "Order": null,
           "ProgramName": "Program Names R us",
           "SpotLength": 30,
           "Station": "WNBC",
@@ -79,6 +82,7 @@
           "MatchProgram": true,
           "MatchStation": true,
           "MatchTime": true,
+          "Order": null,
           "ProgramName": "Program Names R us",
           "SpotLength": 30,
           "Station": "WNBC",
@@ -99,6 +103,7 @@
           "MatchProgram": true,
           "MatchStation": true,
           "MatchTime": true,
+          "Order": null,
           "ProgramName": "Program Names R us",
           "SpotLength": 30,
           "Station": "WNBC",
@@ -111,6 +116,7 @@
       "FlightStartDate": "2016-05-30T00:00:00",
       "Genres": [],
       "Id": 14,
+      "Order": null,
       "Programs": [],
       "SpotLength": "30"
     },
@@ -121,6 +127,7 @@
       "FlightStartDate": "2016-05-30T00:00:00",
       "Genres": [],
       "Id": 15,
+      "Order": null,
       "Programs": [],
       "SpotLength": "30"
     }
@@ -132,7 +139,7 @@
   "Name": "Proposal Test",
   "Notes": null,
   "SecondaryDemos": [
-    "House Holds",
-    "House Holds"
+    "Females 15-17",
+    "Females 18-20"
   ]
 }

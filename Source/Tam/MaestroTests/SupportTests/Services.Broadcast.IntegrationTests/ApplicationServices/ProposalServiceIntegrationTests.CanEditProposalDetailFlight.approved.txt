@@ -57,6 +57,7 @@
       ],
       "GenreCriteria": [],
       "HutPostingBookId": null,
+      "Order": null,
       "PlaybackType": 3,
       "ProgramCriteria": [],
       "Quarters": [

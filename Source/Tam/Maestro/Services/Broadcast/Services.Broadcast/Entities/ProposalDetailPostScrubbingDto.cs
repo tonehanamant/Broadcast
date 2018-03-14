@@ -22,5 +22,6 @@ namespace Services.Broadcast.Entities
         public bool MatchISCI { get; set; }
         public string ClientISCI { get; set; }
         public string Comments { get; set; }
+        public int? Order { get; set; }
     }
 }

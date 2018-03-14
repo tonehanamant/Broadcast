@@ -50,6 +50,7 @@
         }
       ],
       "HutPostingBookId": 410,
+      "Order": 0,
       "PlaybackType": 4,
       "ProgramCriteria": [
         {

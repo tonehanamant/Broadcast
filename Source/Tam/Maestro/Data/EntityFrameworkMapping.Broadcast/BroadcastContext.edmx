@@ -488,6 +488,7 @@
           <Property Name="open_market_cost_total" Type="money" Nullable="false" />
           <Property Name="proprietary_impressions_total" Type="float" Nullable="false" />
           <Property Name="proprietary_cost_total" Type="money" Nullable="false" />
+          <Property Name="order" Type="int" />
         </EntityType>
         <EntityType Name="proposal_version_flight_weeks">
           <Key>
@@ -3897,6 +3898,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_genres" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="proposal_version_details" ToRole="spot_lengths" />
           <NavigationProperty Name="proposal_version_detail_criteria_programs" Relationship="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_programs" />
+          <Property Name="order" Type="Int32" />
         </EntityType>
         <Association Name="FK_proposal_version_details_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -5530,6 +5532,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="proposal_version_details">
             <EntityTypeMapping TypeName="BroadcastModel.proposal_version_details">
               <MappingFragment StoreEntitySet="proposal_version_details">
+                <ScalarProperty Name="order" ColumnName="order" />
                 <ScalarProperty Name="proprietary_cost_total" ColumnName="proprietary_cost_total" />
                 <ScalarProperty Name="proprietary_impressions_total" ColumnName="proprietary_impressions_total" />
                 <ScalarProperty Name="open_market_cost_total" ColumnName="open_market_cost_total" />

@@ -52,6 +52,15 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-2665 *********************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'order' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+    ALTER TABLE [proposal_version_details] 
+	ADD [order] INT
+END
+/*************************************** END BCOP-2665 ***********************************************************/
+
 /*************************************** START BCOP-2449 *********************************************************/
 IF OBJECT_ID('affidavit_file_detail_demographics', 'U') IS NULL
 BEGIN
