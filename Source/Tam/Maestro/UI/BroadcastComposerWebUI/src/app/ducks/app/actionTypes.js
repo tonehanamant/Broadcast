@@ -18,3 +18,5 @@ export const STORE_FILE = 'STORE_FILE';
 export const READ_FILE_B64 = 'READ_FILE_B64';
 export const STORE_FILE_B64 = 'STORE_FILE_B64';
 export const CLEAR_FILE = 'CLEAR_FILE';
+
+export const TOGGLE_DISABLED_DROPZONES = 'TOGGLE_DISABLED_DROPZONES';

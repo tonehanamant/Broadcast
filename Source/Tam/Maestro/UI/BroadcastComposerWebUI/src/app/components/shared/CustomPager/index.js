@@ -24,8 +24,9 @@ export class CustomPager extends Component {
       if (rowKey) {
         const data = this.props.dataSource.get(this.props.stateKey).get('data').toJS();
         const row = data.find(obj => obj._key === rowKey);
-        const id = row.Id;
-        return `Record Id: ${id}`;
+        const id = row[this.props.idProperty]; // row.Id;
+        // console.log('Custom Pager', data, row, id, this.props);
+        return id ? `Record Id: ${id}` : '';
       }
       return '';
     };
@@ -41,11 +42,14 @@ export class CustomPager extends Component {
 	}
 }
 
+CustomPager.defaultProps = {
+  idProperty: 'Id',
+};
 
 CustomPager.propTypes = {
   // Component Accepts
   stateKey: PropTypes.string.isRequired,
-  // idProperty: PropTypes.string.isRequired,
+  idProperty: PropTypes.isRequired,
   // Grid
   dataSource: PropTypes.object.isRequired,
   selection: PropTypes.object.isRequired,
