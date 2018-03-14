@@ -160,7 +160,7 @@ export class DataGridContainer extends Component {
         enabled: false,
         pagingType: 'local',
         pagerComponent: (
-            <CustomPager stateKey={stateKey} idProperty="Id" />
+            <CustomPager stateKey={stateKey} idProperty="ContractId" />
         ),
       },
       LOADER: {
