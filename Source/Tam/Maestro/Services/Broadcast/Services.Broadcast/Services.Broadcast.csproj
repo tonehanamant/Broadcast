@@ -207,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="ApplicationServices\AffidavitPostProcessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitService.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryService.cs" />
@@ -307,6 +308,7 @@
     <Compile Include="Entities\OutboundAffidavitFileValidationResultDto.cs" />
     <Compile Include="Entities\ValidationWarningDto.cs" />
     <Compile Include="Entities\WhosWatchingTvSearchResult.cs" />
+    <Compile Include="Entities\WhosWatchingTVPostProcessingFile.cs" />
     <Compile Include="Exceptions\BroadcastAffidavitException.cs" />
     <Compile Include="Exceptions\FileUploadException.cs" />
     <Compile Include="Extensions\Bvs.cs" />

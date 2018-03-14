@@ -33,6 +33,7 @@
       ],
       "GenreCriteria": [],
       "HutPostingBookId": null,
+      "Order": null,
       "PlaybackType": 4,
       "ProgramCriteria": [],
       "Quarters": [
@@ -171,6 +172,7 @@
       ],
       "GenreCriteria": [],
       "HutPostingBookId": null,
+      "Order": null,
       "PlaybackType": 4,
       "ProgramCriteria": [],
       "Quarters": [

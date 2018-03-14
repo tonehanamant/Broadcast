@@ -13,7 +13,7 @@ namespace Services.Broadcast.Entities
         public string SpotLength { get; set; }
         public List<ProgramCriteria> Programs { get; set; }
         public List<GenreCriteria> Genres { get; set; }
-
+        public int? Order { get; set; }
         public List<ProposalDetailPostScrubbingDto> ClientScrubs  { get; set; } = new List<ProposalDetailPostScrubbingDto>();
     }
 }

@@ -1,0 +1,128 @@
+﻿{
+  "AffidavitFileDetails": [
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "AffidavitClientScrubs": [],
+      "AffidavitFileDetailAudiences": [
+        {
+          "AudienceId": 4,
+          "Impressions": 582.8
+        },
+        {
+          "AudienceId": 5,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 6,
+          "Impressions": 0.1
+        },
+        {
+          "AudienceId": 7,
+          "Impressions": 509.25
+        },
+        {
+          "AudienceId": 13,
+          "Impressions": 14194.7
+        },
+        {
+          "AudienceId": 14,
+          "Impressions": 36040.95
+        },
+        {
+          "AudienceId": 15,
+          "Impressions": 76419.55
+        },
+        {
+          "AudienceId": 19,
+          "Impressions": 281.9
+        },
+        {
+          "AudienceId": 20,
+          "Impressions": 233.55
+        },
+        {
+          "AudienceId": 21,
+          "Impressions": 0.7
+        },
+        {
+          "AudienceId": 22,
+          "Impressions": 3497.0
+        },
+        {
+          "AudienceId": 28,
+          "Impressions": 15424.3
+        },
+        {
+          "AudienceId": 29,
+          "Impressions": 26251.3
+        },
+        {
+          "AudienceId": 30,
+          "Impressions": 36147.75
+        },
+        {
+          "AudienceId": 31,
+          "Impressions": 216085.75
+        },
+        {
+          "AudienceId": 46,
+          "Impressions": 3079.85
+        },
+        {
+          "AudienceId": 284,
+          "Impressions": 5974.0
+        },
+        {
+          "AudienceId": 290,
+          "Impressions": 7263.35
+        },
+        {
+          "AudienceId": 339,
+          "Impressions": 1565.55
+        },
+        {
+          "AudienceId": 347,
+          "Impressions": 17748.4
+        },
+        {
+          "AudienceId": 348,
+          "Impressions": 1102.65
+        }
+      ],
+      "Affiliate": "CBS",
+      "AirTime": 65530,
+      "Demographics": [
+        {
+          "AudienceId": 36,
+          "Demographic": null,
+          "OvernightImpressions": 1000,
+          "OvernightRating": 2.5
+        },
+        {
+          "AudienceId": 36,
+          "Demographic": null,
+          "OvernightImpressions": 2000,
+          "OvernightRating": 1.4
+        }
+      ],
+      "EstimateId": 456,
+      "Genre": "Talk",
+      "InventorySource": 1,
+      "Isci": "ABC123",
+      "LeadinGenre": "Comedy",
+      "LeadinProgramName": "Seinfeld",
+      "LeadoutGenre": "News",
+      "LeadoutProgramName": "11 o'clock news",
+      "Market": "Philadelphia",
+      "OriginalAirDate": "2018-03-08T00:00:00",
+      "ProgramName": "Everybody Loves Raymond",
+      "SpotCost": 315.25,
+      "SpotLengthId": 1,
+      "Station": "WCBS"
+    }
+  ],
+  "FileHash": "abc123",
+  "FileName": "test.file",
+  "MediaMonthId": 0,
+  "SourceId": 1
+}

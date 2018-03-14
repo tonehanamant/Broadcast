@@ -128,7 +128,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             }
                         }
                     }
-                }
+                },
+                Order = 0
             };
         }
 

@@ -52,6 +52,59 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-2665 *********************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'order' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+    ALTER TABLE [proposal_version_details] 
+	ADD [order] INT
+END
+/*************************************** END BCOP-2665 ***********************************************************/
+
+/*************************************** START BCOP-2449 *********************************************************/
+IF OBJECT_ID('affidavit_file_detail_demographics', 'U') IS NULL
+BEGIN
+	CREATE TABLE [affidavit_file_detail_demographics](
+		id INT IDENTITY(1,1) NOT NULL,
+		audience_id INT,
+		affidavit_file_detail_id BIGINT,
+		overnight_rating FLOAT,
+		overnight_impressions INT		
+		CONSTRAINT [PK_affidavit_file_detail_demographics] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]		
+	)
+	ALTER TABLE [dbo].[affidavit_file_detail_demographics] 
+	WITH CHECK ADD CONSTRAINT [FK_affidavit_file_detail_demographics_audiences] 
+	FOREIGN KEY(audience_id)
+	REFERENCES [dbo].[audiences] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[affidavit_file_detail_demographics] CHECK CONSTRAINT [FK_affidavit_file_detail_demographics_audiences]
+
+	ALTER TABLE [dbo].[affidavit_file_detail_demographics] 
+	WITH CHECK ADD CONSTRAINT [FK_affidavit_file_detail_demographics_affidavit_file_details] 
+	FOREIGN KEY([affidavit_file_detail_id])
+	REFERENCES [dbo].[affidavit_file_details] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[affidavit_file_detail_demographics] CHECK CONSTRAINT [FK_affidavit_file_detail_demographics_affidavit_file_details]
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE (name = 'estimate_id' OR name = 'inventory_source' OR name = 'spot_cost' OR name = 'affiliate')
+              AND OBJECT_ID = OBJECT_ID('[dbo].[affidavit_file_details]'))
+BEGIN
+    ALTER TABLE [affidavit_file_details] 
+	ADD estimate_id INT, 
+		inventory_source INT, 
+		spot_cost FLOAT, 
+		affiliate VARCHAR(15)
+END
+
+/*************************************** END BCOP-2517 ***********************************************************/
+
 /*************************************** START BCOP-2517 *********************************************************/
 IF OBJECT_ID('affidavit_outbound_files', 'U') IS NULL
 BEGIN

@@ -102,8 +102,12 @@
           "Impressions": 0.0
         }
       ],
+      "Affiliate": null,
       "AirTime": 29040,
+      "Demographics": [],
+      "EstimateId": 0,
       "Genre": "Do It Yourself",
+      "InventorySource": 0,
       "Isci": "WAWA",
       "LeadinGenre": null,
       "LeadinProgramName": null,
@@ -112,6 +116,7 @@
       "Market": "Tampa-St. Pete (Sarasota)",
       "OriginalAirDate": "2017-06-29T00:00:00",
       "ProgramName": "Program Names R us",
+      "SpotCost": 0.0,
       "SpotLengthId": 1,
       "Station": "WWSB"
     }

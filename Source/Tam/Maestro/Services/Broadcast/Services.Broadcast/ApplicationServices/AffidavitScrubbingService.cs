@@ -83,7 +83,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 ClientPostScrubbingProposalDto result = new ClientPostScrubbingProposalDto
                 {
-                    Id = proposal.Id.Value,
+                    Id = proposal.Id.Value,                    
                     Name = proposal.ProposalName,
                     Notes = proposal.Notes,
                     Markets = proposal.Markets,
@@ -99,14 +99,15 @@ namespace Services.Broadcast.ApplicationServices
                         DayPart = x.Daypart.Text,
                         Programs = x.ProgramCriteria,
                         Genres = x.GenreCriteria,
+                        Order = x.Order,
                         ClientScrubs = _AffidavitRepositry.GetProposalDetailPostScrubbing(x.Id.Value)
-                    }).ToList(),
+                    }).OrderBy(x=>x.Order).ToList(),
                     GuaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString,
-                    Advertiser = advertiser != null ? advertiser.Display : string.Empty
+                    Advertiser = advertiser != null ? advertiser.Display : string.Empty,
+                    SecondaryDemos = proposal.SecondaryDemos.Select(x => _AudiencesCache.GetDisplayAudienceById(x).AudienceString).ToList()
                 };
-
-                proposal.SecondaryDemos.ForEach(x => result.SecondaryDemos.Add(_AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString));
-
+                
+                result.Details.ForEach(x => x.ClientScrubs.ForEach(y => y.Order = x.Order));
                 return result;
             }
         }
