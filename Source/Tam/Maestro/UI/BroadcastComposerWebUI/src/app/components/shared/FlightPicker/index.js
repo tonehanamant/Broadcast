@@ -171,6 +171,7 @@ export default class FlightPicker extends Component {
 		});
 
 		this.toggle();
+		this.resetOrRestore();
 	}
 
 	resetOrRestore() {
@@ -210,6 +211,7 @@ export default class FlightPicker extends Component {
 				<FormGroup validationState={(this.state.validationStates.startDate || this.state.validationStates.endDate === 'warning' ? 'warning' : null)}>
 				<InputGroup onClick={this.toggle}>
 						<FormControl
+              bsClass={'flight-range-input form-control'}
 							type="text"
 							value={`${moment(this.state.startDate).format('M/D/YYYY')} - ${moment(this.state.endDate).format('M/D/YYYY')}`}
 							onChange={() => null}
@@ -314,7 +316,6 @@ export default class FlightPicker extends Component {
 										if (this.state.focusedInput === 'startDate') { this.setStartDate(startDate); }
 										if (this.state.focusedInput === 'endDate') { this.setEndDate(endDate || startDate); }
 									}}
-
 									focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
 									onFocusChange={focusedInput => this.setState({ focusedInput })}
 								/>

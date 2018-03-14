@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleModal, createAlert, setOverlayLoading } from 'Ducks/app';
-import { getPost } from 'Ducks/post';
+import { getPost, getProposalHeader } from 'Ducks/post';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
 import Sorter from 'Utils/react-redux-grid-sorter';
-import CurrencyDollarWhole from 'Components/shared/TextFormatters/CurrencyDollarWhole';
+// import NumberCommaWhole from 'Components/shared/TextFormatters/NumberCommaWhole';
+import numeral from 'numeral';
 
 const { MenuActions, SelectionActions, GridActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
@@ -32,6 +33,7 @@ const mapDispatchToProps = dispatch => (bindActionCreators(
     selectRow,
     deselectAll,
     doLocalSort,
+    getProposalHeader,
   }, dispatch)
 );
 
@@ -39,6 +41,7 @@ export class DataGridContainer extends Component {
   constructor(props, context) {
 		super(props, context);
     this.context = context;
+    this.showscrubbingModal = this.showscrubbingModal.bind(this);
   }
 
   componentWillMount() {
@@ -94,7 +97,9 @@ export class DataGridContainer extends Component {
   deselectAll(ref) {
     this.props.deselectAll(ref);
   }
-
+  showscrubbingModal(ID) {
+    this.props.getProposalHeader(ID);
+  }
   render() {
     const stateKey = 'gridPostMain';
     const columns = [
@@ -109,16 +114,16 @@ export class DataGridContainer extends Component {
           width: '15%',
       },
       {
-          name: 'Upload Date',
-          dataIndex: 'UploadDate',
-          defaultSortDirection: 'ASC',
-          width: '15%',
-          renderer: ({ row }) => (
-            <span>{row.DisplayUploadDate}</span>
-          ),
+        name: 'Upload Date',
+        dataIndex: 'UploadDate',
+        defaultSortDirection: 'ASC',
+        width: '15%',
+        renderer: ({ row }) => (
+          <span>{row.DisplayUploadDate}</span>
+        ),
       },
       {
-        name: 'Spot in Spec',
+        name: 'Spots in Spec',
         dataIndex: 'SpotsInSpec',
         width: '15%',
       },
@@ -132,7 +137,8 @@ export class DataGridContainer extends Component {
         dataIndex: 'PrimaryAudienceImpressions',
         width: '20%',
         renderer: ({ row }) => (
-          <CurrencyDollarWhole amount={row.PrimaryDemo} dash={false} />
+          // <NumberCommaWhole number={row.PrimaryAudienceImpressions / 1000} dash />
+          row.PrimaryAudienceImpressions ? numeral(row.PrimaryAudienceImpressions / 1000).format('0,0.[000]') : '-'
         ),
       },
     ];
@@ -174,6 +180,10 @@ export class DataGridContainer extends Component {
         this.deselectAll({ stateKey });
         this.hideContextMenu({ stateKey });
       },
+      HANDLE_ROW_CLICK: (row) => {
+          const ID = row.row.ContractId;
+          this.showscrubbingModal(ID);
+      },
     };
 
     const grid = {
@@ -195,6 +205,7 @@ DataGridContainer.propTypes = {
   post: PropTypes.array.isRequired,
 
   getPost: PropTypes.func.isRequired,
+  getProposalHeader: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   createAlert: PropTypes.func.isRequired,
   setOverlayLoading: PropTypes.func.isRequired,

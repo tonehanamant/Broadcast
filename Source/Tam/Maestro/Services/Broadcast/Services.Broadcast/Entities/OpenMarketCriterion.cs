@@ -21,8 +21,8 @@ namespace Services.Broadcast.Entities
     public class ProgramCriteria
     {
         public ContainTypeEnum Contain { get; set; }
-        public string ProgramName { get; set; }
         public int? Id { get; set; }
+        public LookupDto Program { get; set; }
     }
 
     public class GenreCriteria

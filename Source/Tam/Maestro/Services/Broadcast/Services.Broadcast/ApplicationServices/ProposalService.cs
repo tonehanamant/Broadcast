@@ -21,6 +21,11 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Clients;
+using System.Net;
+using Newtonsoft.Json;
+using Tam.Maestro.Services.Cable.Entities;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using System.Diagnostics;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -38,7 +43,9 @@ namespace Services.Broadcast.ApplicationServices
         Tuple<string, Stream> GenerateScxFileArchive(int proposalIds);
         ValidationWarningDto DeleteProposal(int proposalId);
         Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
-        List<LookupDto> FindGenres(string genreSearchString);
+        List<LookupDto> FindGenres(string genreSearchString);        
+        List<LookupDto> FindPrograms(ProgramSearchRequest request, string requestUrl);
+        List<LookupDto> FindProgramsExternalApi(ProgramSearchRequest request);
     }
 
     public class ProposalService : IProposalService
@@ -54,6 +61,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalInventoryRepository _ProposalInventoryRepository;
         private readonly IStationRepository _StationRepository;
         private readonly IGenreRepository _GenreRepository;
+        private readonly IProgramNameRepository _ProgramNameRepository;
         private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine;
         private readonly IProposalScxConverter _ProposalScxConverter;
         private readonly IPostingBooksService _PostingBooksService;
@@ -88,6 +96,7 @@ namespace Services.Broadcast.ApplicationServices
                 _BroadcastDataRepositoryFactory.GetDataRepository<IProposalInventoryRepository>();
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
+            _ProgramNameRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramNameRepository>();
             _ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
             _ProposalScxConverter = proposalScxConverter;
             _PostingBooksService = postingBooksService;
@@ -108,7 +117,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     var ad = advertisers.Find(q => q.Id == p.Advertiser.Id);
                     if (ad != null)
-                        p.Advertiser.Display = ad.Display;
+                        p.Advertiser.Display = ad.Display;                    
                 }
 
                 return proposals;
@@ -201,7 +210,7 @@ namespace Services.Broadcast.ApplicationServices
                 foreach (var proposalVersion in proposalVersions)
                 {
                     var proposal = GetProposalByIdWithVersion(proposalId, proposalVersion.Version);
-                    
+
                     _DeleteProposalDetailInventoryAllocations(proposal);
 
                     _DeleteAllInventoryAllocations(proposal);
@@ -212,7 +221,7 @@ namespace Services.Broadcast.ApplicationServices
                 transaction.Complete();
             }
 
-            return new ValidationWarningDto() {HasWarning = false};
+            return new ValidationWarningDto() { HasWarning = false };
         }
 
         private void _DeleteAllInventoryAllocations(ProposalDto proposalDto)
@@ -375,6 +384,7 @@ namespace Services.Broadcast.ApplicationServices
             using (var transaction = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 _SetProposalDefaultValues(proposalDto);
+                _SetISCIWeekDays(proposalDto);
 
                 // check if an existing proposal is being saved
                 var isValidProposalIdAndVersion = proposalDto.Id.HasValue && proposalDto.Version.HasValue;
@@ -399,6 +409,25 @@ namespace Services.Broadcast.ApplicationServices
 
                 return proposalDto.Id.Value;
             }
+        }
+
+        private void _SetISCIWeekDays(ProposalDto proposalDto)
+        {
+            proposalDto.Details.ForEach(quarter => quarter.Quarters.ForEach(week => week.Weeks.ForEach(isci => isci.Iscis.ForEach(isciDay =>
+            {
+                List<string> splitDays = isciDay.Days?.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                if (splitDays != null && splitDays.Any())
+                {
+                    isciDay.Thursday = splitDays.Any(l => l.Equals("TH", StringComparison.CurrentCultureIgnoreCase));
+                    splitDays.RemoveAll(l => l.Equals("TH", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Monday = splitDays.Any(l => l.Equals("M", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Tuesday = splitDays.Any(l => l.Equals("T", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Wednesday = splitDays.Any(l => l.Equals("W", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Friday = splitDays.Any(l => l.Equals("F", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Saturday = splitDays.Any(l => l.Equals("Sa", StringComparison.CurrentCultureIgnoreCase));
+                    isciDay.Sunday = splitDays.Any(l => l.Equals("Su", StringComparison.CurrentCultureIgnoreCase));
+                }                
+            }))));
         }
 
         private void _SetProposalDefaultValues(ProposalDto proposalDto)
@@ -573,7 +602,7 @@ namespace Services.Broadcast.ApplicationServices
                         if (marketIds.Contains(broadcastStation.MarketCode))
                         {
                             isIncludedInMarkets = true;
-                        
+
                             break;
                         }
                     }
@@ -680,7 +709,7 @@ namespace Services.Broadcast.ApplicationServices
 
             if (string.IsNullOrWhiteSpace(userName))
                 throw new Exception("Cannot save proposal without specifying a valid username.");
-            
+
             _ValidatePreviouslyContractedStatus(proposalDto);
 
             //Will throw an exception if advertiser not found:
@@ -696,7 +725,7 @@ namespace Services.Broadcast.ApplicationServices
             if (proposalDto.Status == ProposalEnums.ProposalStatusType.PreviouslyContracted)
                 throw new Exception("Cannot edit a proposal in Previously Contracted status.");
 
-            if (!proposalDto.Id.HasValue || !proposalDto.Version.HasValue) 
+            if (!proposalDto.Id.HasValue || !proposalDto.Version.HasValue)
                 return;
 
             var previousProposalVersion = _ProposalRepository.GetProposalByIdAndVersion(proposalDto.Id.Value,
@@ -793,6 +822,49 @@ namespace Services.Broadcast.ApplicationServices
             _SetProposalRatingBooks(proposal);
             _SetProposalMargins(proposal);
             _SetProposalCanBeDeleted(proposal);
+            _SetProposalDetailIsciDay(proposal.Details);
+        }
+
+        private void _SetProposalDetailIsciDay(List<ProposalDetailDto> details)
+        {
+            details.ForEach(detail => detail.Quarters.ForEach(quarter => quarter.Weeks.ForEach(week => week.Iscis.ForEach(isci => _GenerateIsciDays(isci)))));
+        }
+
+        private void _GenerateIsciDays(ProposalWeekIsciDto isciDto)
+        {
+            isciDto.Days = string.Empty;
+            if (isciDto.Sunday)
+            {
+                isciDto.Days = "Su|";
+            }
+            if (isciDto.Monday)
+            {
+                isciDto.Days = $"{isciDto.Days}M|";
+            }
+            if (isciDto.Tuesday)
+            {
+                isciDto.Days = $"{isciDto.Days}T|";
+            }
+            if (isciDto.Wednesday)
+            {
+                isciDto.Days = $"{isciDto.Days}W|";
+            }
+            if (isciDto.Thursday)
+            {
+                isciDto.Days = $"{isciDto.Days}Th|";
+            }
+            if (isciDto.Friday)
+            {
+                isciDto.Days = $"{isciDto.Days}F|";
+            }
+            if (isciDto.Saturday)
+            {
+                isciDto.Days = $"{isciDto.Days}Sa";
+            }
+
+            isciDto.Days = isciDto.Days.EndsWith("|") ? isciDto.Days.Remove(isciDto.Days.Length - 1) : isciDto.Days;
+            if (string.IsNullOrWhiteSpace(isciDto.Days))
+                isciDto.Days = null;
         }
 
         public Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds)
@@ -811,7 +883,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var proposalDetailDto in proposal.Details)
             {
                 if (proposalDetailDto.SinglePostingBookId != null)
-            {
+                {
                     proposalDetailDto.SharePostingBookId = proposalDetailDto.SinglePostingBookId;
                 }
             }
@@ -828,14 +900,7 @@ namespace Services.Broadcast.ApplicationServices
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 var proposal = _ProposalRepository.GetProposalByIdAndVersion(proposalId, proposalVersion);
-                _SetProposalDetailDaypart(proposal.Details);
-                _SetProposalSpotLengths(proposal);
-                _SetProposalDetailFlightWeeks(proposal);
-                _SetProposalFlightWeeksAndIds(proposal);
-                _SetProposalMarketGroups(proposal);
-                _SetProposalRatingBooks(proposal);
-                _SetProposalMargins(proposal);
-                _SetProposalCanBeDeleted(proposal);
+                SetupProposalDto(proposal);
                 return proposal;
             }
         }
@@ -912,7 +977,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var proposalQuarterDto = _GetProposalQuarterDtos(proposalMediaWeeks);
 
-            var proposalDetail =  new ProposalDetailDto
+            var proposalDetail = new ProposalDetailDto
             {
                 FlightStartDate = proposalDetailRequestDto.StartDate,
                 FlightEndDate = proposalDetailRequestDto.EndDate,
@@ -1002,6 +1067,7 @@ namespace Services.Broadcast.ApplicationServices
                         weekDto.Impressions = week.Impressions;
                         weekDto.Cost = week.Cost;
                         weekDto.Units = week.Units;
+                        weekDto.Iscis = week.Iscis;
                     }
                 }
 
@@ -1048,7 +1114,7 @@ namespace Services.Broadcast.ApplicationServices
                         })
                     .ToList()
             };
-            result.Statuses = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalStatusType>();            
+            result.Statuses = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalStatusType>();
             return result;
         }
 
@@ -1065,10 +1131,10 @@ namespace Services.Broadcast.ApplicationServices
                     }).ToList();
 
             var totalMarketsGroup =
-                marketGroups.Where(g => g.Id == (int) ProposalEnums.ProposalMarketGroups.All).Single();
+                marketGroups.Where(g => g.Id == (int)ProposalEnums.ProposalMarketGroups.All).Single();
             totalMarketsGroup.Count = totalMarkets;
 
-            var customGroup = marketGroups.Where(g => g.Id == (int) ProposalEnums.ProposalMarketGroups.Custom).Single();
+            var customGroup = marketGroups.Where(g => g.Id == (int)ProposalEnums.ProposalMarketGroups.Custom).Single();
             customGroup.Count = 0;
 
             return marketGroups;
@@ -1255,8 +1321,8 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
             archiveFile.Seek(0, SeekOrigin.Begin);
-            var archiveFileName = string.Format(fileArchiveTemplate, proposalName,proposal.Id);
-            return new Tuple<string, Stream>(archiveFileName,archiveFile);
+            var archiveFileName = string.Format(fileArchiveTemplate, proposalName, proposal.Id);
+            return new Tuple<string, Stream>(archiveFileName, archiveFile);
         }
 
         /// <summary>
@@ -1284,6 +1350,38 @@ namespace Services.Broadcast.ApplicationServices
         public List<LookupDto> FindGenres(string genreSearchString)
         {
             return _GenreRepository.FindGenres(genreSearchString);
+        }        
+
+        public List<LookupDto> FindPrograms(ProgramSearchRequest request, string requestUrl)
+        {
+            if (request.Start < 1) request.Start = 1;
+            string searchUrl;
+            if (Debugger.IsAttached) //only for development
+            {
+                var url = new Uri(requestUrl);
+                searchUrl = url.GetLeftPart(UriPartial.Authority) + "/api/Proposals/FindProgramsExternalApi";
+            }
+            else{
+                searchUrl = BroadcastServiceSystemParameter.ProgramSearchApiUrl;
+            }
+
+            var jsonRequest = JsonConvert.SerializeObject(request);
+
+            using (var webClient = new WebClient())
+            {
+                webClient.UseDefaultCredentials = true;
+                webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                var jsonResult = webClient.UploadString(searchUrl, jsonRequest);
+                var result = JsonConvert.DeserializeObject<BaseResponse<List<LookupDto>>>(jsonResult);
+                return result.Data;
+            }
         }
+
+        public List<LookupDto> FindProgramsExternalApi(ProgramSearchRequest request)
+        {
+            if (request.Start < 1) request.Start = 1;
+            return _ProgramNameRepository.FindPrograms(request.Name, request.Start, request.Limit);
+        }
+
     }
 }

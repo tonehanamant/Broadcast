@@ -209,6 +209,8 @@ export default class ProposalDetailGrid extends Component {
             if (row.Type === 'quarter') {
               // const imp = numeral(value).format('0,0.[000]');
               // return <div><span style={{ color: '#808080' }}>Imp. Goal (000)  </span><span>{imp}</span></div>;
+              const toConfirm = (value !== 0); // only confirm if not 0
+              // console.log('impression goal>>>>>>>>>>>>>>', toConfirm, value);
               return (
                 <GridCellInput
                   name="ImpressionGoal"
@@ -217,10 +219,10 @@ export default class ProposalDetailGrid extends Component {
                   valueKey="ImpressionGoal"
                   isEditable={isEditable}
                   emptyZeroDefault
-                  confirmInput
+                  confirmInput={toConfirm}
                   confirmModalProperties={{
                     titleText: 'Warning',
-                    bodyText: 'You will loose one or more existing weekly goals for this quarter.', // string
+                    bodyText: 'You will lose one or more existing weekly goals for this quarter.', // string
                     bodyList: null, // array
                     closeButtonText: 'Cancel',
                     closeButtonBsStyle: 'default',

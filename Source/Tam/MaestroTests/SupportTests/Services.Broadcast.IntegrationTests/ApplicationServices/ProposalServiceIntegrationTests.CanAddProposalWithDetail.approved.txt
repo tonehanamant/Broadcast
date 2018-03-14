@@ -54,11 +54,15 @@
       "ProgramCriteria": [
         {
           "Contain": 1,
-          "ProgramName": "News"
+          "Program": {
+            "Display": "News"
+          }
         },
         {
           "Contain": 1,
-          "ProgramName": "Tonight"
+          "Program": {
+            "Display": "Tonight"
+          }
         }
       ],
       "Quarters": [
@@ -77,14 +81,30 @@
                 {
                   "Brand": "Testing",
                   "ClientIsci": "AAAAAA",
+                  "Days": "F",
+                  "Friday": true,
                   "HouseIsci": "AAAAAA",
-                  "MarriedHouseIsci": true
+                  "MarriedHouseIsci": true,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
                 },
                 {
                   "Brand": "Testing 2",
                   "ClientIsci": "BBBBBBB",
+                  "Days": "M|T|W|Th",
+                  "Friday": false,
                   "HouseIsci": "BBBBBBB",
-                  "MarriedHouseIsci": false
+                  "MarriedHouseIsci": false,
+                  "Monday": true,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": true,
+                  "Tuesday": true,
+                  "Wednesday": true
                 }
               ],
               "IsHiatus": false,

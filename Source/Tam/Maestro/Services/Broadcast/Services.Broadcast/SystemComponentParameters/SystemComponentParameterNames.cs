@@ -201,9 +201,19 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "BroadcastMatchingBuffer"; }
         }
 	 
+		public static string ProgramSearchApiUrl  
+		{
+            get { return "ProgramSearchApiUrl"; }
+        }
+	 
 		public static string UseMaestroDaypartRepo  
 		{
             get { return "UseMaestroDaypartRepo"; }
+        }
+	 
+		public static string WWTV_SecondsBetweenRuns  
+		{
+            get { return "WWTV_SecondsBetweenRuns"; }
         }
 	}
 	 

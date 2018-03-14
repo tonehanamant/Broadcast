@@ -25,9 +25,9 @@ namespace Services.Broadcast.Entities
         public string Genre { get; set; }
         public int SpotLength { get; set; }
         public string Isci { get; set; }
-        public string LeadInTitle { get; set; }
+        public string LeadInProgramName { get; set; }
         public string LeadInGenre { get; set; }
-        public string LeadOutTitle { get; set; }
+        public string LeadOutProgramName { get; set; }
         public string LeadOutGenre { get; set; }
     }
 }

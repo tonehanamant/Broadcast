@@ -209,10 +209,22 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastMatchingBuffer); }
         }
 	 
+		public static string ProgramSearchApiUrl  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramSearchApiUrl); }
+        }
+	 
 		public static bool UseMaestroDaypartRepo  
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.UseMaestroDaypartRepo); }
+        }
+	 
+		public static int WWTV_SecondsBetweenRuns  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_SecondsBetweenRuns); }
         }
 	}
 	 

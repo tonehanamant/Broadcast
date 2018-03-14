@@ -11,6 +11,7 @@ namespace Services.Broadcast.Entities
         public bool MatchGenre { get; set; }
         public bool MatchMarket { get; set; }
         public bool MatchTime { get; set; }
+        public bool MatchIsciDays { get; set; }
         public AffidavitClientScrubStatus Status { get; set; }
         public string Comment { get; set; }
         public string ModifiedBy { get; set; }

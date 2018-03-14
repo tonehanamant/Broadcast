@@ -40,6 +40,8 @@ namespace Services.Broadcast.Converters
 
         public abstract IDisposable Initialize(Stream rawStream);
         public abstract bool IsEOF();
+        public abstract bool IsEOFOrEmptyRow();
+
         public abstract bool IsEndOfRow(int column);
         public abstract bool IsEmptyRow();
         public virtual void NextRow()
@@ -106,7 +108,7 @@ namespace Services.Broadcast.Converters
             }
             _Parser.SetDelimiters(new string[] { "," });
 
-            NextRow();  // point to first row
+            NextRow();  // point to header row
             _SetupHeadersValidateSheet();
 
             return _Parser;
@@ -115,6 +117,10 @@ namespace Services.Broadcast.Converters
         public override bool IsEOF()
         {
             return _Parser.EndOfData;
+        }
+        public override bool IsEOFOrEmptyRow()
+        {
+            return _Parser.EndOfData || IsEmptyRow(); 
         }
         public override bool IsEndOfRow(int column)
         {
@@ -131,8 +137,9 @@ namespace Services.Broadcast.Converters
 
         public override bool IsEmptyRow()
         {
-            return _CurrentRow == null || _CurrentRow.Length == 0;
-
+            return _CurrentRow == null 
+                    || _CurrentRow.Length == 0 
+                    || _CurrentRow.All(i => string.IsNullOrWhiteSpace(i));
         }
         public override string GetCellValue(int col)
         {

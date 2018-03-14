@@ -26,6 +26,9 @@ const post = {
   getPosts: () => (
     call(GET, `${apiBase}Post`, {})
   ),
+  getPostScrubbingHeader: proposalID => (
+    call(GET, `${apiBase}/Post/ClientScrubbingProposal/${proposalID}`, {})
+  ),
 };
 
 const postPrePosting = {
@@ -85,6 +88,12 @@ const planning = {
   ),
   updateProposal: params => (
     call(POST, `${apiBase}Proposals/UpdateProposal`, params)
+  ),
+  getGenres: query => (
+    call(GET, `${apiBase}Proposals/FindGenres/${query}`, {})
+  ),
+  getPrograms: params => (
+    call(POST, `${apiBase}Proposals/FindPrograms`, params)
   ),
 };
 
