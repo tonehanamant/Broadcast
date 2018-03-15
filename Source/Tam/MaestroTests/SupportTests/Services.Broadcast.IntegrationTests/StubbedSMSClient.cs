@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Principal;
 using Common.Systems.DataTransferObjects;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -33,7 +34,34 @@ namespace Services.Broadcast.IntegrationTests
 
         public string GetResource(string pTamResource)
         {
-            return TAMEnvironment.LOCAL.ToString();
+            //@todo, Temporary switch to check if the CI server is running the tests.
+            if (WindowsIdentity.GetCurrent().Owner.Value == "S-1-5-32-544")
+            {
+                if (pTamResource == "BroadcastConnectionString")
+                {
+                    return
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                }
+                else if (pTamResource == "BroadcastForecastConnectionString")
+                {
+                    return
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_forecast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                }
+            }
+            else
+            {
+                if (pTamResource == "BroadcastConnectionString")
+                {
+                    return
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_integration_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                }
+                else if (pTamResource == "BroadcastForecastConnectionString")
+                {
+                    return
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_forecast_integration_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                }
+            }
+            throw new Exception("Un-coded resource: " + pTamResource);
         }
 
         public string GetSystemComponentParameterValue(string pSystemComponentID, string pSystemParameterID)
