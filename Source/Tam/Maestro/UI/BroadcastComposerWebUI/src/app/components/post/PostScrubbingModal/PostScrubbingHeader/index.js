@@ -103,7 +103,7 @@ export class PostScrubbingHeader extends Component {
             <Row>
               <Col md={4}>
                 <FormGroup controlId="proposalName">
-                  <ControlLabel><strong>ProposalName</strong></ControlLabel>
+                  <ControlLabel><strong>Proposal Name</strong></ControlLabel>
                   <FormControl.Static>{name}</FormControl.Static>
                 </FormGroup>
               </Col>

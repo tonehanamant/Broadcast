@@ -42,7 +42,7 @@ namespace Services.Broadcast.BusinessEngines
                 smtpClient.Host = BroadcastServiceSystemParameter.EmailHost;
                 smtpClient.EnableSsl = true;
                 smtpClient.Port = _SmtpPort;
-                smtpClient.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.EmailUsername, BroadcastServiceSystemParameter.EmailPassword);
+                smtpClient.Credentials = Emailer.GetSMTPNetworkCredential();
                 smtpClient.Send(mailMessage);
             }
         }

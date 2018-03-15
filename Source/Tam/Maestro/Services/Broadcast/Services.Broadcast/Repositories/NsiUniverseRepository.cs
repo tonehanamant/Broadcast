@@ -4,7 +4,7 @@ using System.Linq;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating;
+using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
@@ -20,9 +20,9 @@ namespace Services.Broadcast.Repositories
         Dictionary<short, double> GetUniverseDataByAudience(int sweepMediaMonth, List<int> audienceIds);
     }
 
-    public class NsiUniverseRepository : ExternalRatingRepositoryBase, INsiUniverseRepository
+    public class NsiUniverseRepository : BroadcastForecastRepositoryBase, INsiUniverseRepository
     {
-        public NsiUniverseRepository(ISMSClient pSmsClient, IContextFactory<QueryHintExternalRatingContext> pContextFactory, ITransactionHelper pTransactionHelper)
+        public NsiUniverseRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pContextFactory, ITransactionHelper pTransactionHelper)
             : base(pSmsClient, pContextFactory, pTransactionHelper)
         {
         }
@@ -33,7 +33,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="sweepMediaMonth"></param>
         /// <param name="audienceIds"></param>
         /// <returns></returns>
-        public Dictionary<short, double> GetUniverseDataByAudience(int sweepMediaMonth, List<int> audienceIds)
+        public Dictionary<short, double> GetUniverseDataByAudience(int sweepMediaMonth, List<int> audienceIds) 
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -41,20 +41,18 @@ namespace Services.Broadcast.Repositories
                     context =>
                     {
                         var marketUniverses =
-                            (from pu in context.post_universes
-                                join mh in context.market_headers on pu.market_header_id equals mh.id
+                            (from pu in context.universes
                                 where
                                     pu.media_month_id == sweepMediaMonth &&
-                                    pu.sample_type == 1 &&
                                     audienceIds.Contains(pu.audience_id)
                                 select new
                                 {
-                                    mh.market_code,
-                                    pu.universe
+                                    pu.market_code,
+                                    pu.universe1
                                 });
 
                         var universeData = marketUniverses.GroupBy(g => g.market_code);
-                        return universeData.ToDictionary(k => k.Key, v => v.Sum(el => el.universe));
+                        return universeData.ToDictionary(k => k.Key, v => v.Sum(el => el.universe1));
                     });
             }
         }

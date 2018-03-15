@@ -466,7 +466,6 @@
     <Compile Include="Repositories\BvsTestDataGeneratorRepository.cs" />
     <Compile Include="Repositories\DisplayDaypartBroadcastRepository.cs" />
     <Compile Include="Entities\OpenMarketAllocationDto.cs" />
-    <Compile Include="Repositories\ExternalRatingRepositoryBase.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposalDto.cs" />
     <Compile Include="Repositories\AffidavitRepository.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
@@ -504,8 +503,8 @@
     <Compile Include="Repositories\TrackerMappingRepository.cs" />
     <Compile Include="Repositories\TrafficRepository.cs" />
     <Compile Include="Service\ScheduledServiceMethod.cs" />
-    <Compile Include="Service\ScheduledServiceMethodRunner.cs" />
-    <Compile Include="Service\ServiceBase.cs" />
+    <Compile Include="Service\ScheduledWindowsServiceMethodRunner.cs" />
+    <Compile Include="Service\WindowsServiceBase.cs" />
     <Compile Include="SystemComponentParameters\SystemComponentParameter.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

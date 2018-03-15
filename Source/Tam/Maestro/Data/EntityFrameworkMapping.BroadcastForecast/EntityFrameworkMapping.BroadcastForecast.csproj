@@ -376,6 +376,15 @@
     </Compile>
     <Compile Include="BroadcastForecastContextFactory.cs" />
     <Compile Include="BroadcastForecastContext_Extended.cs" />
+    <Compile Include="code.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="market_headers.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="post_months.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryHintBroadcastForecastContext.cs" />
     <Compile Include="universe.cs">
@@ -384,7 +393,7 @@
     <Compile Include="usage.cs">
       <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="viewer.cs">
+    <Compile Include="viewers.cs">
       <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="viewer_details.cs">

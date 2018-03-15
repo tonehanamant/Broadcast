@@ -9,11 +9,11 @@ using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Services
 {
-    public abstract class ServiceBase
+    public abstract class WindowsServiceBase
     {
-        private static string _serviceName;
+        protected string _serviceName;
 
-        protected ServiceBase(string serviceName)
+        protected WindowsServiceBase(string serviceName)
         {
             _serviceName = serviceName;
         }
@@ -128,9 +128,7 @@ namespace Services.Broadcast.Services
         public abstract void Start();
         public abstract void Stop();
 
-        protected abstract string GetServiceName();
-
-        public static string GetServiceNameStaticPlaceholder()
+        protected string GetServiceName()
         {
             return _serviceName;
         }

@@ -14,6 +14,7 @@ const initialState = {
     },
     base64: '',
   },
+  disabledDropzones: false,
 };
 
 // Reducer
@@ -119,6 +120,9 @@ export default function reducer(state = initialState, action) {
         },
       });
 
+    case ACTIONS.TOGGLE_DISABLED_DROPZONES:
+      return { ...state, disabledDropzones: !state.disabledDropzones };
+
     default:
       return state;
   }
@@ -176,4 +180,8 @@ export const readFileB64 = file => ({
 
 export const clearFile = () => ({
   type: ACTIONS.CLEAR_FILE,
+});
+
+export const toggleDisabledDropzones = () => ({
+  type: ACTIONS.TOGGLE_DISABLED_DROPZONES,
 });
