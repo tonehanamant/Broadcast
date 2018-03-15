@@ -5,7 +5,7 @@ using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating;
+using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
@@ -15,9 +15,9 @@ namespace Services.Broadcast.Repositories
         List<Tuple<MediaMonth, int>> GetNielsonMarkets(List<MediaMonth> mediaMonths);
     }
 
-    public class RatingsRepository : ExternalRatingRepositoryBase, IRatingsRepository
+    public class RatingsRepository : BroadcastForecastRepositoryBase, IRatingsRepository
     {
-        public RatingsRepository(ISMSClient pSmsClient, IContextFactory<QueryHintExternalRatingContext> pContextFactory, ITransactionHelper pTransactionHelper)
+        public RatingsRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pContextFactory, ITransactionHelper pTransactionHelper)
             : base(pSmsClient, pContextFactory, pTransactionHelper) { }
 
         public List<Tuple<MediaMonth, int>> GetNielsonMarkets(List<MediaMonth> mediaMonths)

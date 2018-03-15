@@ -157,7 +157,8 @@ namespace Services.Broadcast.Repositories
                         MatchTime = x.affidavitFileScrub.match_time,
                         MatchISCI = x.affidavitFileScrub.match_isci_days,
                         Comments = x.affidavitFileScrub.comment,
-                        ClientISCI = x.proposalVersionWeekIscis.client_isci
+                        ClientISCI = x.proposalVersionWeekIscis.client_isci,
+                        WeekStart = x.proposalVersionWeekIscis.proposal_version_detail_quarter_weeks.start_date                        
                     }).ToList());
                     return posts;
                 });

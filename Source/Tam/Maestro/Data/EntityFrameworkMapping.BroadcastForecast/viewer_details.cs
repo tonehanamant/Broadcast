@@ -25,5 +25,7 @@ namespace Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast
         public double fri_viewers { get; set; }
         public double sat_viewers { get; set; }
         public double sun_viewers { get; set; }
+        public double weekday_viewers { get; set; }
+        public double weekend_viewers { get; set; }
     }
 }

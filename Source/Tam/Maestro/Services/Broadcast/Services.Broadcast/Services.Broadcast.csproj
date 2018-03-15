@@ -458,7 +458,6 @@
     <Compile Include="Repositories\BvsTestDataGeneratorRepository.cs" />
     <Compile Include="Repositories\DisplayDaypartBroadcastRepository.cs" />
     <Compile Include="Entities\OpenMarketAllocationDto.cs" />
-    <Compile Include="Repositories\ExternalRatingRepositoryBase.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposalDto.cs" />
     <Compile Include="Repositories\AffidavitRepository.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
