@@ -262,9 +262,9 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[nsi].[usp_Fo
 	DROP PROCEDURE [nsi].[usp_ForecastNsiRatingsMonth];
 GO
 
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[nsi].[udf_GetNSICodesForCodeSet]') AND type in (N'P', N'PC'))
+IF OBJECT_ID('udf_GetNSICodesForCodeSet', 'FN') IS NULL
 BEGIN
-	/****** Object:  UserDefinedFunction [dbo].[udf_GetNSICodesForCodeSet]    Script Date: 1/19/2018 3:00:17 PM ******/
+  EXEC('/****** Object:  UserDefinedFunction [dbo].[udf_GetNSICodesForCodeSet]    Script Date: 1/19/2018 3:00:17 PM ******/
 	-- =============================================
 	-- Author:		David Sisson
 	-- Create date: 08/31/2011
@@ -287,82 +287,84 @@ BEGIN
 			nsi.codes with(nolock)
 		where
 			rtrim(ltrim(code_set)) = rtrim(ltrim(@code_set))
-	)
+	)');
+END;
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_getDmaBookForDmaCode]') AND type in (N'P', N'PC'))
+BEGIN
+	EXEC sp_executesql @statement = N'CREATE PROCEDURE [dbo].[usp_getDmaBookForDmaCode] AS'
+END
+GO
+/****** Object:  StoredProcedure [dbo].[usp_getDmaBookForDmaCode]    Script Date: 1/19/2018 12:46:25 PM ******/
+-- usp_getDmaBookForDmaCode 2011,11,563
+ALTER PROCEDURE [dbo].[usp_getDmaBookForDmaCode]
+	@reportyear as int,
+	@reportperiod as int,
+	@dma_code as int
+AS
+BEGIN
+		SELECT      
+			TOP 1 mh.report_period,
+			mh.report_year,
+			CASE
+					CASE mh.playback_type
+						WHEN 'O' THEN 0
+						WHEN 'S' THEN 1
+						WHEN '1' THEN 2
+						WHEN '3' THEN 3
+						WHEN '7' THEN 4
+					END
+                  
+					WHEN 0 THEN 'Live Only'
+					WHEN 1 THEN 'Live+SD'
+					WHEN 2 THEN 'Live+1'
+					WHEN 3 THEN 'Live+3'
+					WHEN 4 THEN 'Live+7'
+			END playback_type,
+			CASE mh.playback_type
+					WHEN 'O' THEN 0
+					WHEN 'S' THEN 1
+					WHEN '1' THEN 2
+					WHEN '3' THEN 3
+					WHEN '7' THEN 4
+			END pbnum
+		FROM
+			nsi.market_headers mh (NOLOCK)
+			JOIN udf_GetNSICodesForCodeSet('Reporting Service') c_rs ON
+					mh.reporting_service = c_rs.code
+		WHERE
+			report_year <= @reportyear
+			AND CAST(report_period AS INT) <= @reportperiod
+			AND dma_code = @dma_code
+			AND 'NSI - Nielsen Station Index' = c_rs.name
+		ORDER BY 
+			mh.report_year DESC, 
+			mh.report_period DESC,
+			pbnum DESC
 END
 GO
 
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_getDmaBookForDmaCode]') AND type in (N'P', N'PC'))
 BEGIN
-	/****** Object:  StoredProcedure [dbo].[usp_getDmaBookForDmaCode]    Script Date: 1/19/2018 12:46:25 PM ******/
-	-- usp_getDmaBookForDmaCode 2011,11,563
-	CREATE PROCEDURE [dbo].[usp_getDmaBookForDmaCode]
-	(
-		  @reportyear as int,
-		  @reportperiod as int,
-		  @dma_code as int
-	)
-	AS
-	BEGIN
-		  SELECT      
-				TOP 1 mh.report_period,
-				mh.report_year,
-				CASE
-					  CASE mh.playback_type
-							WHEN 'O' THEN 0
-							WHEN 'S' THEN 1
-							WHEN '1' THEN 2
-							WHEN '3' THEN 3
-							WHEN '7' THEN 4
-					  END
-                  
-					  WHEN 0 THEN 'Live Only'
-					  WHEN 1 THEN 'Live+SD'
-					  WHEN 2 THEN 'Live+1'
-					  WHEN 3 THEN 'Live+3'
-					  WHEN 4 THEN 'Live+7'
-				END playback_type,
-				CASE mh.playback_type
-					  WHEN 'O' THEN 0
-					  WHEN 'S' THEN 1
-					  WHEN '1' THEN 2
-					  WHEN '3' THEN 3
-					  WHEN '7' THEN 4
-				END pbnum
-		  FROM
-				nsi.market_headers mh (NOLOCK)
-				JOIN udf_GetNSICodesForCodeSet('Reporting Service') c_rs ON
-					  mh.reporting_service = c_rs.code
-		  WHERE
-				report_year <= @reportyear
-				AND CAST(report_period AS INT) <= @reportperiod
-				AND dma_code = @dma_code
-				AND 'NSI - Nielsen Station Index' = c_rs.name
-		  ORDER BY 
-				mh.report_year DESC, 
-				mh.report_period DESC,
-				pbnum DESC
-	END
+	EXEC sp_executesql @statement = N'CREATE PROCEDURE [dbo].[usp_getDmaBookForDmaCode] AS'
 END
-GO
-
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_ARS_GetDMABooks]') AND type in (N'P', N'PC'))
+GO	
+/****** Object:  StoredProcedure [dbo].[usp_ARS_GetDMABooks]    Script Date: 1/19/2018 12:46:25 PM ******/
+CREATE PROCEDURE [dbo].[usp_ARS_GetDMABooks]
+	@reportyear as int,
+	@reportperiod as int,
+	@dma_code as int
+AS
 BEGIN
-	/****** Object:  StoredProcedure [dbo].[usp_ARS_GetDMABooks]    Script Date: 1/19/2018 12:46:25 PM ******/
-	CREATE PROCEDURE [dbo].[usp_ARS_GetDMABooks]
-		@reportyear as int,
-		@reportperiod as int,
-		@dma_code as int
-	AS
-	BEGIN
-		  SELECT DISTINCT 
-			report_period, 
-			report_year
-		 FROM
-			nsi.market_headers WITH (NOLOCK) 
-		 ORDER BY
-			report_year desc, 
-			report_period desc
-	END
+		SELECT DISTINCT 
+		report_period, 
+		report_year
+		FROM
+		nsi.market_headers WITH (NOLOCK) 
+		ORDER BY
+		report_year desc, 
+		report_period desc
 END
 GO
 
