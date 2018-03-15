@@ -262,7 +262,7 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[nsi].[usp_Fo
 	DROP PROCEDURE [nsi].[usp_ForecastNsiRatingsMonth];
 GO
 
-IF OBJECT_ID('udf_GetNSICodesForCodeSet', 'FN') IS NULL
+IF OBJECT_ID('udf_GetNSICodesForCodeSet') IS NULL
 BEGIN
   EXEC('/****** Object:  UserDefinedFunction [dbo].[udf_GetNSICodesForCodeSet]    Script Date: 1/19/2018 3:00:17 PM ******/
 	-- =============================================
