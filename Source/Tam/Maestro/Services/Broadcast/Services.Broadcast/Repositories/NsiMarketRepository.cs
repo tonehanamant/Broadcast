@@ -6,7 +6,7 @@ using System.Transactions;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating;
+using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
@@ -16,11 +16,11 @@ namespace Services.Broadcast.Repositories
         Dictionary<int, int> GetMarketRankingsByMediaMonth(int mediaMonthId);
     }
 
-    public class NsiMarketRepository : ExternalRatingRepositoryBase, INsiMarketRepository
+    public class NsiMarketRepository : BroadcastForecastRepositoryBase, INsiMarketRepository
     {
         public NsiMarketRepository(
             ISMSClient pSmsClient,
-            IContextFactory<QueryHintExternalRatingContext> pContextFactory,
+            IContextFactory<QueryHintBroadcastForecastContext> pContextFactory,
             ITransactionHelper pTransactionHelper)
             : base(pSmsClient, pContextFactory, pTransactionHelper)
         {

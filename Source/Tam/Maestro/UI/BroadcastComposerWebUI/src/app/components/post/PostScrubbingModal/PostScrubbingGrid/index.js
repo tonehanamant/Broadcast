@@ -169,9 +169,12 @@ export class PostScrubbingGrid extends Component {
                 dataIndex: 'ISCI',
                 defaultSortDirection: 'ASC',
                 width: '10%',
-                renderer: ({ row }) => (
-                    <span>{row.ISCI || '-'}</span>
-                ),
+                renderer: ({ row }) => {
+                    const ISCI = row.MatchISCI ? <span>{row.ISCI || '-'}</span> : <span style={style}>{row.ISCI || '-'}</span>
+                    return (
+                        ISCI
+                    )
+                }
             },
             {
                 name: 'Program',
@@ -208,7 +211,7 @@ export class PostScrubbingGrid extends Component {
                 dataIndex: 'Market',
                 width: '10%',
                 renderer: ({ row }) => {
-                    const Market = row.MatchMarket ? <span>{Market || '-'}</span> : <span style={style}>{Market || '-'}</span>
+                    const Market = row.MatchMarket ? <span>{row.Market || '-'}</span> : <span style={style}>{row.Market || '-'}</span>
                     return (
                         Market
                     )

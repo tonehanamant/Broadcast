@@ -315,6 +315,7 @@ namespace Services.Broadcast.Repositories
             context.proposal_version_details.AddRange(
                 proposalDetails.Select(proposalDetail => new proposal_version_details
                 {
+                    order = proposalDetail.Order,
                     cost_total = proposalDetail.TotalCost,
                     daypart_code = proposalDetail.DaypartCode,
                     proposal_version_id = proposalVersionId,
@@ -746,38 +747,38 @@ namespace Services.Broadcast.Repositories
 
         private static ProposalDto _MapToProposalDto(proposal proposal, proposal_versions proposalVersion)
         {
-            var proposalDto = new ProposalDto();
-
-            proposalDto.Id = proposalVersion.proposal.id;
-            proposalDto.ProposalName = proposalVersion.proposal.name;
-            proposalDto.AdvertiserId = proposalVersion.proposal.advertiser_id;
-            proposalDto.FlightEndDate = proposalVersion.end_date;
-            proposalDto.FlightStartDate = proposalVersion.start_date;
-            proposalDto.GuaranteedDemoId = proposalVersion.guaranteed_audience_id;
-            proposalDto.MarketGroupId = (ProposalEnums.ProposalMarketGroups)proposalVersion.markets;
-            proposalDto.BlackoutMarketGroupId = (ProposalEnums.ProposalMarketGroups?)proposalVersion.blackout_markets;
-            proposalDto.Markets = proposalVersion.proposal_version_markets
+            var proposalDto = new ProposalDto
+            {
+                Id = proposalVersion.proposal.id,
+                ProposalName = proposalVersion.proposal.name,
+                AdvertiserId = proposalVersion.proposal.advertiser_id,
+                FlightEndDate = proposalVersion.end_date,
+                FlightStartDate = proposalVersion.start_date,
+                GuaranteedDemoId = proposalVersion.guaranteed_audience_id,
+                MarketGroupId = (ProposalEnums.ProposalMarketGroups)proposalVersion.markets,
+                BlackoutMarketGroupId = (ProposalEnums.ProposalMarketGroups?)proposalVersion.blackout_markets,
+                Markets = proposalVersion.proposal_version_markets
                 .Where(q => q.proposal_version_id == proposalVersion.id).Select(f => new ProposalMarketDto
                 {
                     Id = f.market_code,
                     Display = f.market.geography_name,
                     IsBlackout = f.is_blackout
-                }).ToList();
-            proposalDto.Status = (ProposalEnums.ProposalStatusType)proposalVersion.status;
-            proposalDto.TargetUnits = proposalVersion.target_units;
-            proposalDto.TargetBudget = proposalVersion.target_budget;
-            proposalDto.TargetImpressions = proposalVersion.target_impressions;
-            proposalDto.TargetCPM = proposalVersion.target_cpm;
-            proposalDto.TotalCost = proposalVersion.cost_total;
-            proposalDto.TotalImpressions = proposalVersion.impressions_total;
-            proposalDto.TotalCPM =
-                ProposalMath.CalculateCpm(proposalVersion.cost_total, proposalVersion.impressions_total);
-            proposalDto.Margin = proposalVersion.margin;
-            proposalDto.Notes = proposalVersion.notes;
-            proposalDto.Version = proposalVersion.proposal_version;
-            proposalDto.VersionId = proposalVersion.id;
-            proposalDto.PrimaryVersionId = proposal.primary_version_id;
-            proposalDto.FlightWeeks =
+                }).ToList(),
+                Status = (ProposalEnums.ProposalStatusType)proposalVersion.status,
+                TargetUnits = proposalVersion.target_units,
+                TargetBudget = proposalVersion.target_budget,
+                TargetImpressions = proposalVersion.target_impressions,
+                TargetCPM = proposalVersion.target_cpm,
+                TotalCost = proposalVersion.cost_total,
+                TotalImpressions = proposalVersion.impressions_total,
+                TotalCPM =
+                ProposalMath.CalculateCpm(proposalVersion.cost_total, proposalVersion.impressions_total),
+                Margin = proposalVersion.margin,
+                Notes = proposalVersion.notes,
+                Version = proposalVersion.proposal_version,
+                VersionId = proposalVersion.id,
+                PrimaryVersionId = proposal.primary_version_id,
+                FlightWeeks =
                 proposalVersion.proposal_version_flight_weeks.Where(q => q.proposal_version_id == proposalVersion.id)
                     .Select(f => new ProposalFlightWeek
                     {
@@ -785,83 +786,85 @@ namespace Services.Broadcast.Repositories
                         IsHiatus = !f.active,
                         StartDate = f.start_date,
                         MediaWeekId = f.media_week_id
-                    }).ToList();
-            proposalDto.Equivalized = proposalVersion.equivalized;
-            proposalDto.SecondaryDemos =
-                proposalVersion.proposal_version_audiences.OrderBy(r => r.rank).Select(a => a.audience_id).ToList();
-            proposalDto.PostType = (SchedulePostType)proposalVersion.post_type;
-            proposalDto.SpotLengths =
+                    }).ToList(),
+                Equivalized = proposalVersion.equivalized,
+                SecondaryDemos =
+                proposalVersion.proposal_version_audiences.OrderBy(r => r.rank).Select(a => a.audience_id).ToList(),
+                PostType = (SchedulePostType)proposalVersion.post_type,
+                SpotLengths =
                 proposalVersion.proposal_version_spot_length.Select(a => new LookupDto { Id = a.spot_length_id })
-                    .ToList();
-            proposalDto.Details = proposalVersion.proposal_version_details.Select(version => new ProposalDetailDto
-            {
-                Id = version.id,
-                DaypartCode = version.daypart_code,
-                SpotLengthId = version.spot_length_id,
-                TotalCost = version.cost_total.GetValueOrDefault(),
-                TotalImpressions = version.impressions_total,
-                TotalUnits = version.units_total.GetValueOrDefault(),
-                FlightEndDate = version.end_date,
-                FlightStartDate = version.start_date,
-                DaypartId = version.daypart_id,
-                Adu = version.adu,
-                SinglePostingBookId = version.single_posting_book_id,
-                SharePostingBookId = version.share_posting_book_id,
-                HutPostingBookId = version.hut_posting_book_id,
-                PlaybackType = (ProposalEnums.ProposalPlaybackType)version.playback_type,
-                GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
+                    .ToList(),
+                Details = proposalVersion.proposal_version_details.Select(version => new ProposalDetailDto
                 {
-                    Id = c.id,
-                    Contain = (ContainTypeEnum)c.contain_type,
-                    Genre = new LookupDto { Id = c.genre.id, Display = c.genre.name }
-                }).ToList(),
-                ProgramCriteria = version.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
-                {
-                    Id = p.id,
-                    Contain = (ContainTypeEnum)p.contain_type,
-                    Program = new LookupDto
+                    Id = version.id,
+                    Order = version.order,
+                    DaypartCode = version.daypart_code,
+                    SpotLengthId = version.spot_length_id,
+                    TotalCost = version.cost_total.GetValueOrDefault(),
+                    TotalImpressions = version.impressions_total,
+                    TotalUnits = version.units_total.GetValueOrDefault(),
+                    FlightEndDate = version.end_date,
+                    FlightStartDate = version.start_date,
+                    DaypartId = version.daypart_id,
+                    Adu = version.adu,
+                    SinglePostingBookId = version.single_posting_book_id,
+                    SharePostingBookId = version.share_posting_book_id,
+                    HutPostingBookId = version.hut_posting_book_id,
+                    PlaybackType = (ProposalEnums.ProposalPlaybackType)version.playback_type,
+                    GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
-                        Id = p.program_name_id,
-                        Display = p.program_name
-                    }
-                }).ToList(),
-                Quarters = version.proposal_version_detail_quarters.Select(quarter => new ProposalQuarterDto
-                {
-                    Cpm = quarter.cpm,
-                    ImpressionGoal = quarter.impressions_goal,
-                    Id = quarter.id,
-                    Year = quarter.year,
-                    Quarter = quarter.quarter,
-                    QuarterText = string.Format("{0} Q{1}", quarter.year, quarter.quarter),
-                    Weeks = quarter.proposal_version_detail_quarter_weeks.Select(week => new ProposalWeekDto
+                        Id = c.id,
+                        Contain = (ContainTypeEnum)c.contain_type,
+                        Genre = new LookupDto { Id = c.genre.id, Display = c.genre.name }
+                    }).ToList(),
+                    ProgramCriteria = version.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
                     {
-                        Id = week.id,
-                        Cost = week.cost,
-                        EndDate = week.end_date,
-                        StartDate = week.start_date,
-                        Impressions = week.impressions_goal,
-                        IsHiatus = week.is_hiatus,
-                        Units = week.units,
-                        MediaWeekId = week.media_week_id,
-                        Week = week.start_date.ToShortDateString(),
-                        Iscis = week.proposal_version_detail_quarter_week_iscis.Select(isci => new ProposalWeekIsciDto
+                        Id = p.id,
+                        Contain = (ContainTypeEnum)p.contain_type,
+                        Program = new LookupDto
                         {
-                            Id = isci.id,
-                            Brand = isci.brand,
-                            ClientIsci = isci.client_isci,
-                            HouseIsci = isci.house_isci,
-                            MarriedHouseIsci = isci.married_house_iscii,
-                            Monday = isci.monday == null ? false : isci.monday.Value,
-                            Tuesday = isci.tuesday == null ? false : isci.tuesday.Value,
-                            Wednesday = isci.wednesday == null ? false : isci.wednesday.Value,
-                            Thursday = isci.thursday == null ? false : isci.thursday.Value,
-                            Friday = isci.friday == null ? false : isci.friday.Value,
-                            Saturday = isci.saturday == null ? false : isci.saturday.Value,
-                            Sunday = isci.sunday == null ? false : isci.sunday.Value
+                            Id = p.program_name_id,
+                            Display = p.program_name
+                        }
+                    }).ToList(),
+                    Quarters = version.proposal_version_detail_quarters.Select(quarter => new ProposalQuarterDto
+                    {
+                        Cpm = quarter.cpm,
+                        ImpressionGoal = quarter.impressions_goal,
+                        Id = quarter.id,
+                        Year = quarter.year,
+                        Quarter = quarter.quarter,
+                        QuarterText = string.Format("{0} Q{1}", quarter.year, quarter.quarter),
+                        Weeks = quarter.proposal_version_detail_quarter_weeks.Select(week => new ProposalWeekDto
+                        {
+                            Id = week.id,
+                            Cost = week.cost,
+                            EndDate = week.end_date,
+                            StartDate = week.start_date,
+                            Impressions = week.impressions_goal,
+                            IsHiatus = week.is_hiatus,
+                            Units = week.units,
+                            MediaWeekId = week.media_week_id,
+                            Week = week.start_date.ToShortDateString(),
+                            Iscis = week.proposal_version_detail_quarter_week_iscis.Select(isci => new ProposalWeekIsciDto
+                            {
+                                Id = isci.id,
+                                Brand = isci.brand,
+                                ClientIsci = isci.client_isci,
+                                HouseIsci = isci.house_isci,
+                                MarriedHouseIsci = isci.married_house_iscii,
+                                Monday = isci.monday == null ? false : isci.monday.Value,
+                                Tuesday = isci.tuesday == null ? false : isci.tuesday.Value,
+                                Wednesday = isci.wednesday == null ? false : isci.wednesday.Value,
+                                Thursday = isci.thursday == null ? false : isci.thursday.Value,
+                                Friday = isci.friday == null ? false : isci.friday.Value,
+                                Saturday = isci.saturday == null ? false : isci.saturday.Value,
+                                Sunday = isci.sunday == null ? false : isci.sunday.Value
+                            }).ToList()
                         }).ToList()
                     }).ToList()
                 }).ToList()
-            }).ToList();
+            };
 
             return proposalDto;
         }

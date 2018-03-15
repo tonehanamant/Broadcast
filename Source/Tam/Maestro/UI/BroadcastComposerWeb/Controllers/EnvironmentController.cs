@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using Common.Services.WebComponents;
 using System.Web.Http;
+using Tam.Maestro.Common.Systems.DataTransferObjects;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
@@ -20,7 +21,7 @@ namespace BroadcastComposerWeb.Controllers
 
         // GET api/employee/
         [Route("employee")]
-        public BaseResponse<Employee> GetEmployee()
+        public BaseResponse<EmployeeDto> GetEmployee()
         {
             var ssid = HttpContext.Current.Request.LogonUserIdentity.User.Value;
             var employee = SMSClient.Handler.GetEmployee(ssid, false);

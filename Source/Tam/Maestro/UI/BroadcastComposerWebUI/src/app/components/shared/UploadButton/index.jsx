@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import ReactDropzone from 'react-dropzone';
 
-import { toggleModal, deployError, storeFile, readFileB64 } from 'Ducks/app';
+import { toggleModal, deployError, storeFile, readFileB64, toggleDisabledDropzones } from 'Ducks/app';
 
 import styles from './index.scss';
 
@@ -16,6 +16,7 @@ const mapDispatchToProps = dispatch => (
     deployError,
     storeFile,
     readFileB64,
+    toggleDisabledDropzones,
   }, dispatch)
 );
 
@@ -25,12 +26,17 @@ export class UploadButton extends Component {
 
     this.input = null;
     this.openFileDialog = this.openFileDialog.bind(this);
+    this.closeFileDialog = this.closeFileDialog.bind(this);
     this.processFiles = this.processFiles.bind(this);
   }
 
   openFileDialog() {
-    // this.input.fileInputEl.click();
+    this.props.toggleDisabledDropzones();
     this.input.open();
+  }
+
+  closeFileDialog() {
+    this.props.toggleDisabledDropzones();
   }
 
   processFiles(acceptedFiles, rejectedFiles) {
@@ -65,6 +71,7 @@ export class UploadButton extends Component {
           onDrop={onFilesSelected || this.processFiles}
           accept={acceptedMimeTypes}
           className={styles.dropzone}
+          onFileDialogCancel={this.closeFileDialog}
           ref={(ref) => { this.input = ref; }}
         />
       </div>
@@ -77,7 +84,6 @@ UploadButton.defaultProps = {
   bsStyle: 'default',
   bsSize: 'small',
   onFilesSelected: null,
-  // fileType: 'Excel',
   fileTypeExtension: '.xlsx',
   postProcessFiles: {
     toggleModal: null,
@@ -95,11 +101,11 @@ UploadButton.propTypes = {
   postProcessFiles: PropTypes.object,
   toggleModal: PropTypes.func.isRequired,
   deployError: PropTypes.func.isRequired,
-  // fileType: PropTypes.string,
   fileTypeExtension: PropTypes.string,
   acceptedMimeTypes: PropTypes.string,
   storeFile: PropTypes.func.isRequired,
   readFileB64: PropTypes.func.isRequired,
+  toggleDisabledDropzones: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(CSSModules(UploadButton, styles));

@@ -7,7 +7,6 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using Tam.Maestro.Services.ServiceManager.Service;
 
 
 namespace Services.Broadcast.IntegrationTests
@@ -16,7 +15,7 @@ namespace Services.Broadcast.IntegrationTests
     {
         public event GenericEvent<TAMService, string> UriChanged;
         public event GenericEvent<TAMResource, string> ResourceChanged;
-        public TAMEnvironment TamEnvironment { get; private set; }
+        public string TamEnvironment { get; private set; }
         public ServiceStatus GetStatus()
         {
             throw new System.NotImplementedException();
@@ -27,14 +26,14 @@ namespace Services.Broadcast.IntegrationTests
             throw new System.NotImplementedException();
         }
 
-        public SmsDbConnectionInfo GetSmsDbConnectionInfo(TAMResource pTamResource)
+        public SmsDbConnectionInfo GetSmsDbConnectionInfo(string pTamResource)
         {
             throw new System.NotImplementedException();
         }
 
-        public string GetResource(TAMResource pTamResource)
+        public string GetResource(string pTamResource)
         {
-            return EnvironmentSettings.Handler.GetResource(pTamResource, TAMEnvironment.LOCAL);
+            return TAMEnvironment.LOCAL.ToString();
         }
 
         public string GetSystemComponentParameterValue(string pSystemComponentID, string pSystemParameterID)
@@ -88,16 +87,6 @@ namespace Services.Broadcast.IntegrationTests
         }
 
         public bool ClearSystemComponentParameterCache(string pSystemComponentID, string pSystemParameterID)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnUriChanged(ServiceManagerServiceEventArgs pArgs)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnResourceChanged(ServiceManagerResourceEventArgs pArgs)
         {
             throw new System.NotImplementedException();
         }

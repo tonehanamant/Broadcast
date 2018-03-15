@@ -19,11 +19,12 @@
           "MatchProgram": true,
           "MatchStation": true,
           "MatchTime": true,
+          "Order": null,
           "ProgramName": "Program Names R us",
           "SpotLength": 30,
           "Station": "WNBC",
           "TimeAired": "2016-06-03T09:00:00",
-          "WeekStart": "0001-01-01T00:00:00"
+          "WeekStart": "2016-05-30T00:00:00"
         },
         {
           "Affiliate": "NBC",
@@ -39,11 +40,12 @@
           "MatchProgram": true,
           "MatchStation": true,
           "MatchTime": true,
+          "Order": null,
           "ProgramName": "Program Names R us",
           "SpotLength": 30,
           "Station": "WNBC",
           "TimeAired": "2016-06-03T09:00:00",
-          "WeekStart": "0001-01-01T00:00:00"
+          "WeekStart": "2016-05-30T00:00:00"
         },
         {
           "Affiliate": "NBC",
@@ -59,11 +61,12 @@
           "MatchProgram": true,
           "MatchStation": true,
           "MatchTime": true,
+          "Order": null,
           "ProgramName": "Program Names R us",
           "SpotLength": 30,
           "Station": "WNBC",
           "TimeAired": "2016-06-03T09:00:00",
-          "WeekStart": "0001-01-01T00:00:00"
+          "WeekStart": "2016-05-30T00:00:00"
         },
         {
           "Affiliate": "NBC",
@@ -79,11 +82,12 @@
           "MatchProgram": true,
           "MatchStation": true,
           "MatchTime": true,
+          "Order": null,
           "ProgramName": "Program Names R us",
           "SpotLength": 30,
           "Station": "WNBC",
           "TimeAired": "2016-06-03T09:00:00",
-          "WeekStart": "0001-01-01T00:00:00"
+          "WeekStart": "2016-05-30T00:00:00"
         },
         {
           "Affiliate": "NBC",
@@ -99,11 +103,12 @@
           "MatchProgram": true,
           "MatchStation": true,
           "MatchTime": true,
+          "Order": null,
           "ProgramName": "Program Names R us",
           "SpotLength": 30,
           "Station": "WNBC",
           "TimeAired": "2016-06-03T09:00:00",
-          "WeekStart": "0001-01-01T00:00:00"
+          "WeekStart": "2016-05-30T00:00:00"
         }
       ],
       "DayPart": "M-F 9AM-10AM",
@@ -111,6 +116,7 @@
       "FlightStartDate": "2016-05-30T00:00:00",
       "Genres": [],
       "Id": 14,
+      "Order": null,
       "Programs": [],
       "SpotLength": "30"
     },
@@ -121,6 +127,7 @@
       "FlightStartDate": "2016-05-30T00:00:00",
       "Genres": [],
       "Id": 15,
+      "Order": null,
       "Programs": [],
       "SpotLength": "30"
     }
@@ -132,7 +139,7 @@
   "Name": "Proposal Test",
   "Notes": null,
   "SecondaryDemos": [
-    "House Holds",
-    "House Holds"
+    "Females 15-17",
+    "Females 18-20"
   ]
 }

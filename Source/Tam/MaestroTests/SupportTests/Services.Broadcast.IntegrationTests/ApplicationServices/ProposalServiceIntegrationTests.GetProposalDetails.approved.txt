@@ -21,6 +21,7 @@
   "FlightWeeks": [],
   "GenreCriteria": [],
   "HutPostingBookId": null,
+  "Order": null,
   "PlaybackType": 0,
   "ProgramCriteria": [],
   "Quarters": [

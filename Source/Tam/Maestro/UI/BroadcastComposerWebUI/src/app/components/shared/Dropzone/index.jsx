@@ -10,13 +10,13 @@ import { toggleModal, deployError, storeFile, readFileB64 } from 'Ducks/app';
 
 import styles from './index.scss';
 
-const mapStateToProps = ({ routing }) => ({
+const mapStateToProps = ({ routing, app }) => ({
   routing,
+  disabledDropzones: app.disabledDropzones,
 });
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
-    // APP
     toggleModal,
     deployError,
     storeFile,
@@ -75,6 +75,7 @@ export class Dropzone extends Component {
           activeClassName={styles.active}
           acceptClassName={styles.accept}
           rejectClassName={styles.reject}
+          disabled={this.props.disabledDropzones}
         >
           <div className="drop-overlay">
             <h4>Drop your files here or click to select</h4>
@@ -91,6 +92,7 @@ export class Dropzone extends Component {
           className={styles.dropzoneAsWrapper}
           disableClick
           disablePreview
+          disabled={this.props.disabledDropzones}
         >
           {this.props.children}
         </ReactDropzone>
@@ -108,6 +110,7 @@ export class Dropzone extends Component {
         acceptClassName={styles.accept}
         rejectClassName={styles.reject}
         disableClick
+        disabled={this.props.disabledDropzones}
       >
         <div>
           <div className="drop-overlay">
@@ -152,6 +155,7 @@ Dropzone.propTypes = {
   deployError: PropTypes.func.isRequired,
   storeFile: PropTypes.func.isRequired,
   readFileB64: PropTypes.func.isRequired,
+  disabledDropzones: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(Dropzone, styles));

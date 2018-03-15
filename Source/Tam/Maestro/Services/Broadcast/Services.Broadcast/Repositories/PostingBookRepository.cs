@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating;
+using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
@@ -13,9 +13,9 @@ namespace Services.Broadcast.Repositories
         List<int> GetPostableMediaMonths(int marketThreshold);
     }
 
-    public class PostingBookRepository : ExternalRatingRepositoryBase, IPostingBookRepository
+    public class PostingBookRepository : BroadcastForecastRepositoryBase, IPostingBookRepository
     {
-        public PostingBookRepository(ISMSClient pSmsClient, IContextFactory<QueryHintExternalRatingContext> pContextFactory, ITransactionHelper pTransactionHelper)
+        public PostingBookRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pContextFactory, ITransactionHelper pTransactionHelper)
             : base(pSmsClient, pContextFactory, pTransactionHelper)
         {
         }

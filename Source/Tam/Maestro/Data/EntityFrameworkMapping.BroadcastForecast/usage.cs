@@ -27,5 +27,7 @@ namespace Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast
         public double fri_usage { get; set; }
         public double sat_usage { get; set; }
         public double sun_usage { get; set; }
+        public double weekday_usage { get; set; }
+        public double weekend_usage { get; set; }
     }
 }
