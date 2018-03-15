@@ -51,7 +51,7 @@ namespace WWTVData.Service
                     else
                     {
                         DateTime d;
-                        if (DateTime.TryParse(BroadcastServiceSystemParameter.WWTV_WhenToCheckDataFiles, out d))
+                        if (DateTime.TryParse(BroadcastServiceSystemParameter.WWTV_WhenToCheckErrorFiles, out d))
                             _RunWhen = d;
                     }
                     _RunWhenChecked = true;
@@ -123,7 +123,7 @@ namespace WWTVData.Service
             }
             catch (Exception e)
             {
-                BaseService.LogServiceError("Error reading from Drop folder.", e);
+                BaseWindowsService.LogServiceError("Error reading from Drop folder.", e);
                 return false;
             }
 
@@ -133,7 +133,7 @@ namespace WWTVData.Service
             var message = string.Format("\r\nFound {0} file; Process {1}; Failed {2}", filesFound.Length, filesProcessed, filesFailed);
             Console.WriteLine(DateTime.Now + "::Checking WWTV files Finished");
             Console.WriteLine(message);
-            BaseService.LogServiceEvent(message);
+            BaseWindowsService.LogServiceEvent(message);
             return true;
         }
     }

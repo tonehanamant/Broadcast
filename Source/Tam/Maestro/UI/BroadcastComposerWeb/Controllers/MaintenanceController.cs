@@ -36,7 +36,7 @@ namespace BroadcastComposerWeb.Controllers
             Emailer.QuickSend(true, "<b>test</b><br/> This is only a test", "Test Email from Broadcast",
                 MailPriority.Normal, "test@test.com", new string[] {"test_email@test.com"});
             ViewBag.Message = "Test email sent.";
-            return View("Index");
+           return View("Index");
         }
 
         [HttpPost]

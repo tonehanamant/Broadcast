@@ -28,9 +28,9 @@ namespace WWTVData.Service
             {
                 var rc = HostFactory.Run(x =>
                 {
-                    x.Service<ScheduledServiceMethodRunner>(s =>
+                    x.Service<ScheduledWindowsServiceMethodRunner>(s =>
                     {
-                        s.ConstructUsing(name => new ScheduledServiceMethodRunner(_serviceName,servicesToRun));
+                        s.ConstructUsing(name => new ScheduledWindowsServiceMethodRunner(_serviceName,servicesToRun));
                         s.WhenStarted(tc => tc.Start());
                         s.WhenStopped(tc => tc.Stop());
                     });

@@ -5,7 +5,7 @@ using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.Services
 {
-    public class ScheduledServiceMethodRunner : ServiceBase
+    public class ScheduledWindowsServiceMethodRunner : WindowsServiceBase
     {
         protected List<ScheduledServiceMethod> _ServicesToRun;
 
@@ -13,18 +13,14 @@ namespace Services.Broadcast.Services
         private DateTime? _timeLastRun;
 
         readonly Timer _Timer;
-        public ScheduledServiceMethodRunner(string serviceName, List<ScheduledServiceMethod> servicesToRun) : base(serviceName)
+        public ScheduledWindowsServiceMethodRunner(string serviceName, List<ScheduledServiceMethod> servicesToRun) : base(serviceName)
         {
             _Timer = new Timer(MILSEC_BETWEEN_CHECKS) { AutoReset = true }; // once an hour
             _Timer.Elapsed += _Timer_check_for_WWT_files;
             _ServicesToRun = servicesToRun;
-            _ServicesToRun.ForEach(s => s.BaseService = this);
+            _ServicesToRun.ForEach(s => s.BaseWindowsService = this);
         }
 
-        protected override string GetServiceName()
-        {
-            return GetServiceNameStaticPlaceholder();
-        }
 
         protected void _Timer_check_for_WWT_files(object sender, ElapsedEventArgs args)
         {
