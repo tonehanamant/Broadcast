@@ -62,7 +62,7 @@ public static class Emailer
             foreach (MailAddress lMailAddress in pTos)
                 lMessage.To.Add(lMailAddress);
 
-            if (SMSClient.Handler.TamEnvironment == TAMEnvironment.PROD)
+            if (SMSClient.Handler.TamEnvironment == TAMEnvironment.PROD.ToString())
             {
                 lSmtpClient.Send(lMessage);
             }
