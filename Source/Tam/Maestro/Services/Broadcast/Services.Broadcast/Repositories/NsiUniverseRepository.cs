@@ -52,7 +52,7 @@ namespace Services.Broadcast.Repositories
                                 });
 
                         var universeData = marketUniverses.GroupBy(g => g.market_code);
-                        return universeData.ToDictionary(k => k.Key, v => v.Sum(el => el.universe1));
+                        return universeData.ToDictionary(k => k.Key, v => v.Average(el => el.universe1));
                     });
             }
         }
