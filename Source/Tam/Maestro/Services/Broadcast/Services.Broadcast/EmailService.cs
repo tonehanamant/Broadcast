@@ -29,6 +29,11 @@ public static class Emailer
     public static bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject,
         MailPriority pPriority, MailAddress from, List<MailAddress> pTos,List<string> attachFileNames = null)
     {
+        if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
+            return false;
+
+        TamMaestroEventSource.Log.ServiceEvent("Broadcast Emailer", ",sg test", "user test", SMSClient.Handler.TamEnvironment.ToString());
+
         try
         {
             if (pTos == null || pTos.Count == 0)
@@ -38,7 +43,7 @@ public static class Emailer
             lSmtpClient.Host = BroadcastServiceSystemParameter.EmailHost;
             lSmtpClient.EnableSsl = true;
             lSmtpClient.Port = 587;
-            lSmtpClient.Credentials = GetNetworkCredential();
+            lSmtpClient.Credentials = GetSMTPNetworkCredential();
 
             MailMessage lMessage = new MailMessage();
             lMessage.IsBodyHtml = pIsHtmlBody;
@@ -95,7 +100,7 @@ public static class Emailer
         return userName;
     }
 
-    private static NetworkCredential GetNetworkCredential()
+    public static NetworkCredential GetSMTPNetworkCredential()
     {
         var pwd = BroadcastServiceSystemParameter.EmailPassword;
         var usr = BroadcastServiceSystemParameter.EmailUsername;

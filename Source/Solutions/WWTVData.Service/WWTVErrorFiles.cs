@@ -51,7 +51,7 @@ namespace WWTVData.Service
                     else
                     {
                         DateTime d;
-                        if (DateTime.TryParse(BroadcastServiceSystemParameter.WWTV_WhenToCheckDataFiles, out d))
+                        if (DateTime.TryParse(BroadcastServiceSystemParameter.WWTV_WhenToCheckErrorFiles, out d))
                             _RunWhen = d;
                     }
                     _RunWhenChecked = true;
