@@ -351,7 +351,7 @@ BEGIN
 END
 GO	
 /****** Object:  StoredProcedure [dbo].[usp_ARS_GetDMABooks]    Script Date: 1/19/2018 12:46:25 PM ******/
-CREATE PROCEDURE [dbo].[usp_ARS_GetDMABooks]
+ALTER PROCEDURE [dbo].[usp_ARS_GetDMABooks]
 	@reportyear as int,
 	@reportperiod as int,
 	@dma_code as int
