@@ -14,6 +14,17 @@
           <Property Name="name" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="code_set" Type="varchar" MaxLength="31" Nullable="false" />
         </EntityType>
+        <EntityType Name="hwc_universes">
+          <Key>
+            <PropertyRef Name="media_month_id" />
+            <PropertyRef Name="market_code" />
+            <PropertyRef Name="audience_id" />
+          </Key>
+          <Property Name="media_month_id" Type="smallint" Nullable="false" />
+          <Property Name="market_code" Type="smallint" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="universe" Type="float" Nullable="false" />
+        </EntityType>
         <EntityType Name="market_headers">
           <Key>
             <PropertyRef Name="media_month_id" />
@@ -22,23 +33,17 @@
           <Property Name="media_month_id" Type="int" Nullable="false" />
           <Property Name="file_name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="dma_id" Type="int" />
-          <Property Name="file_size" Type="int" Nullable="false" />
-          <Property Name="hash" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="zip_hash" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="duration" Type="float" Nullable="false" />
           <Property Name="format_version" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="market_code" Type="smallint" Nullable="false" />
           <Property Name="dma_code" Type="smallint" Nullable="false" />
           <Property Name="market_rank" Type="smallint" />
           <Property Name="geography_indicator" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="geography_name" Type="varchar" MaxLength="31" Nullable="false" />
-          <Property Name="start_date_of_survey" Type="datetime" Nullable="false" />
-          <Property Name="start_time_of_survey" Type="int" Nullable="false" />
-          <Property Name="end_date_of_survey" Type="datetime" Nullable="false" />
-          <Property Name="end_time_of_survey" Type="int" Nullable="false" />
+          <Property Name="start_datetime_of_survey" Type="datetime" Nullable="false" />
+          <Property Name="end_datetime_of_survey" Type="datetime" Nullable="false" />
           <Property Name="number_of_days_in_survey" Type="smallint" Nullable="false" />
           <Property Name="number_of_weeks_in_survey" Type="smallint" Nullable="false" />
-          <Property Name="reporting_day_start_time" Type="int" Nullable="false" />
+          <Property Name="reporting_day_start_time" Type="time" Precision="7" Nullable="false" />
           <Property Name="reporting_service" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="special_report_exclusion_indicator" Type="varchar" MaxLength="7" Nullable="false" />
           <Property Name="subsample_indicator" Type="varchar" MaxLength="7" Nullable="false" />
@@ -141,11 +146,9 @@
           <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="legacy_call_letters" Type="varchar" MaxLength="15" Nullable="false" />
         </EntityType>
-        <Function Name="usp_ForecastNsiRatingsMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="nsi">
-          <Parameter Name="media_month_id" Type="smallint" Mode="In" />
-        </Function>
         <EntityContainer Name="broadcast_forecastModelStoreContainer">
           <EntitySet Name="codes" EntityType="Self.codes" Schema="nsi" store:Type="Tables" />
+          <EntitySet Name="hwc_universes" EntityType="Self.hwc_universes" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="market_headers" EntityType="Self.market_headers" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="post_months" EntityType="Self.post_months" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="universes" EntityType="Self.universes" Schema="nsi" store:Type="Tables" />
@@ -165,9 +168,10 @@
           <Parameter Name="media_month_id" Mode="In" Type="Int16" />
           </FunctionImport>
           <EntitySet Name="codes" EntityType="broadcast_forecastModel.code" />
-          <EntitySet Name="market_headers" EntityType="broadcast_forecastModel.market_headers" />
           <EntitySet Name="post_months" EntityType="broadcast_forecastModel.post_months" />
           <EntitySet Name="viewers" EntityType="broadcast_forecastModel.viewers" />
+          <EntitySet Name="market_headers" EntityType="broadcast_forecastModel.market_headers" />
+          <EntitySet Name="hwc_universes" EntityType="broadcast_forecastModel.hwc_universes" />
         </EntityContainer>
         <EntityType Name="universe">
           <Key>
@@ -237,48 +241,6 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="code_set" Type="String" Nullable="false" MaxLength="31" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="market_headers">
-          <Key>
-            <PropertyRef Name="media_month_id" />
-            <PropertyRef Name="file_name" />
-          </Key>
-          <Property Name="media_month_id" Type="Int32" Nullable="false" />
-          <Property Name="file_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="dma_id" Type="Int32" />
-          <Property Name="file_size" Type="Int32" Nullable="false" />
-          <Property Name="hash" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="zip_hash" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="duration" Type="Double" Nullable="false" />
-          <Property Name="format_version" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="market_code" Type="Int16" Nullable="false" />
-          <Property Name="dma_code" Type="Int16" Nullable="false" />
-          <Property Name="market_rank" Type="Int16" />
-          <Property Name="geography_indicator" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="geography_name" Type="String" Nullable="false" MaxLength="31" FixedLength="false" Unicode="false" />
-          <Property Name="start_date_of_survey" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="start_time_of_survey" Type="Int32" Nullable="false" />
-          <Property Name="end_date_of_survey" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="end_time_of_survey" Type="Int32" Nullable="false" />
-          <Property Name="number_of_days_in_survey" Type="Int16" Nullable="false" />
-          <Property Name="number_of_weeks_in_survey" Type="Int16" Nullable="false" />
-          <Property Name="reporting_day_start_time" Type="Int32" Nullable="false" />
-          <Property Name="reporting_service" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="special_report_exclusion_indicator" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="subsample_indicator" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="header_sample_type" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="reissued" Type="Boolean" Nullable="false" />
-          <Property Name="data_accredited" Type="Boolean" Nullable="false" />
-          <Property Name="playback_type" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="time_interval" Type="Int32" Nullable="false" />
-          <Property Name="collection_method" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="contest_indicator" Type="Boolean" Nullable="false" />
-          <Property Name="report_period" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="report_year" Type="Int16" Nullable="false" />
-          <Property Name="market_time_zone" Type="Int16" Nullable="false" />
-          <Property Name="market_class_code" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="distributor_or_market_exclusion_indicator" Type="Boolean" Nullable="false" />
-          <Property Name="daylight_savings_time_indicator" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="post_months">
           <Key>
             <PropertyRef Name="media_month_id" />
@@ -304,6 +266,53 @@
           <Property Name="market_code" Type="Int16" Nullable="false" />
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="legacy_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="market_headers">
+          <Key>
+            <PropertyRef Name="media_month_id" />
+            <PropertyRef Name="file_name" />
+          </Key>
+          <Property Name="media_month_id" Type="Int32" Nullable="false" />
+          <Property Name="file_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="dma_id" Type="Int32" />
+          <Property Name="format_version" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="market_code" Type="Int16" Nullable="false" />
+          <Property Name="dma_code" Type="Int16" Nullable="false" />
+          <Property Name="market_rank" Type="Int16" />
+          <Property Name="geography_indicator" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="geography_name" Type="String" Nullable="false" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Name="start_datetime_of_survey" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="end_datetime_of_survey" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="number_of_days_in_survey" Type="Int16" Nullable="false" />
+          <Property Name="number_of_weeks_in_survey" Type="Int16" Nullable="false" />
+          <Property Name="reporting_day_start_time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="reporting_service" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="special_report_exclusion_indicator" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="subsample_indicator" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="header_sample_type" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="reissued" Type="Boolean" Nullable="false" />
+          <Property Name="data_accredited" Type="Boolean" Nullable="false" />
+          <Property Name="playback_type" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="time_interval" Type="Int32" Nullable="false" />
+          <Property Name="collection_method" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="contest_indicator" Type="Boolean" Nullable="false" />
+          <Property Name="report_period" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="report_year" Type="Int16" Nullable="false" />
+          <Property Name="market_time_zone" Type="Int16" Nullable="false" />
+          <Property Name="market_class_code" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="distributor_or_market_exclusion_indicator" Type="Boolean" Nullable="false" />
+          <Property Name="daylight_savings_time_indicator" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hwc_universes">
+          <Key>
+            <PropertyRef Name="media_month_id" />
+            <PropertyRef Name="market_code" />
+            <PropertyRef Name="audience_id" />
+          </Key>
+          <Property Name="media_month_id" Type="Int16" Nullable="false" />
+          <Property Name="market_code" Type="Int16" Nullable="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="universe" Type="Double" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -362,7 +371,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="usp_ForecastNsiRatingsMonth" FunctionName="broadcast_forecastModel.Store.usp_ForecastNsiRatingsMonth" />
           <EntitySetMapping Name="codes">
             <EntityTypeMapping TypeName="broadcast_forecastModel.code">
               <MappingFragment StoreEntitySet="codes">
@@ -370,6 +378,30 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="code1" ColumnName="code" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="post_months">
+            <EntityTypeMapping TypeName="broadcast_forecastModel.post_months">
+              <MappingFragment StoreEntitySet="post_months">
+                <ScalarProperty Name="date_crunched" ColumnName="date_crunched" />
+                <ScalarProperty Name="viewers" ColumnName="viewers" />
+                <ScalarProperty Name="usages" ColumnName="usages" />
+                <ScalarProperty Name="universes" ColumnName="universes" />
+                <ScalarProperty Name="num_markets" ColumnName="num_markets" />
+                <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="viewers">
+            <EntityTypeMapping TypeName="broadcast_forecastModel.viewers">
+              <MappingFragment StoreEntitySet="viewers">
+                <ScalarProperty Name="legacy_call_letters" ColumnName="legacy_call_letters" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -395,46 +427,26 @@
                 <ScalarProperty Name="reporting_day_start_time" ColumnName="reporting_day_start_time" />
                 <ScalarProperty Name="number_of_weeks_in_survey" ColumnName="number_of_weeks_in_survey" />
                 <ScalarProperty Name="number_of_days_in_survey" ColumnName="number_of_days_in_survey" />
-                <ScalarProperty Name="end_time_of_survey" ColumnName="end_time_of_survey" />
-                <ScalarProperty Name="end_date_of_survey" ColumnName="end_date_of_survey" />
-                <ScalarProperty Name="start_time_of_survey" ColumnName="start_time_of_survey" />
-                <ScalarProperty Name="start_date_of_survey" ColumnName="start_date_of_survey" />
+                <ScalarProperty Name="end_datetime_of_survey" ColumnName="end_datetime_of_survey" />
+                <ScalarProperty Name="start_datetime_of_survey" ColumnName="start_datetime_of_survey" />
                 <ScalarProperty Name="geography_name" ColumnName="geography_name" />
                 <ScalarProperty Name="geography_indicator" ColumnName="geography_indicator" />
                 <ScalarProperty Name="market_rank" ColumnName="market_rank" />
                 <ScalarProperty Name="dma_code" ColumnName="dma_code" />
                 <ScalarProperty Name="market_code" ColumnName="market_code" />
                 <ScalarProperty Name="format_version" ColumnName="format_version" />
-                <ScalarProperty Name="duration" ColumnName="duration" />
-                <ScalarProperty Name="zip_hash" ColumnName="zip_hash" />
-                <ScalarProperty Name="hash" ColumnName="hash" />
-                <ScalarProperty Name="file_size" ColumnName="file_size" />
                 <ScalarProperty Name="dma_id" ColumnName="dma_id" />
                 <ScalarProperty Name="file_name" ColumnName="file_name" />
                 <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="post_months">
-            <EntityTypeMapping TypeName="broadcast_forecastModel.post_months">
-              <MappingFragment StoreEntitySet="post_months">
-                <ScalarProperty Name="date_crunched" ColumnName="date_crunched" />
-                <ScalarProperty Name="viewers" ColumnName="viewers" />
-                <ScalarProperty Name="usages" ColumnName="usages" />
-                <ScalarProperty Name="universes" ColumnName="universes" />
-                <ScalarProperty Name="num_markets" ColumnName="num_markets" />
-                <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="viewers">
-            <EntityTypeMapping TypeName="broadcast_forecastModel.viewers">
-              <MappingFragment StoreEntitySet="viewers">
-                <ScalarProperty Name="legacy_call_letters" ColumnName="legacy_call_letters" />
-                <ScalarProperty Name="id" ColumnName="id" />
+          <EntitySetMapping Name="hwc_universes">
+            <EntityTypeMapping TypeName="broadcast_forecastModel.hwc_universes">
+              <MappingFragment StoreEntitySet="hwc_universes">
+                <ScalarProperty Name="universe" ColumnName="universe" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="market_code" ColumnName="market_code" />
-                <ScalarProperty Name="end_time" ColumnName="end_time" />
-                <ScalarProperty Name="start_time" ColumnName="start_time" />
                 <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
               </MappingFragment>
             </EntityTypeMapping>
