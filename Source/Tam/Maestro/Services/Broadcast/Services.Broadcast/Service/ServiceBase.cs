@@ -21,7 +21,7 @@ namespace Services.Broadcast.Services
         protected void TimeResultsNoReturn(String methodName, Action func)
         {
             var userName = _GetWindowsUserName();
-            var environment = GetDescription(SMSClient.Handler.TamEnvironment);
+            var environment = SMSClient.Handler.TamEnvironment;
 
             TamMaestroEventSource.Log.ServiceCallStart(GetServiceName(), methodName, userName, environment);
 
@@ -36,7 +36,7 @@ namespace Services.Broadcast.Services
         protected T TimeResults<T>(String methodName, Func<T> func)
         {
             var userName = _GetWindowsUserName();
-            var environment = GetDescription(SMSClient.Handler.TamEnvironment);
+            var environment = SMSClient.Handler.TamEnvironment;
 
             TamMaestroEventSource.Log.ServiceCallStart(GetServiceName(), methodName, userName, environment);
 
@@ -62,7 +62,7 @@ namespace Services.Broadcast.Services
             try
             {
                 userName = _GetWindowsUserName();
-                environment = GetDescription(SMSClient.Handler.TamEnvironment);
+                environment = SMSClient.Handler.TamEnvironment;
             }
             catch
             {
@@ -82,7 +82,7 @@ namespace Services.Broadcast.Services
             try
             {
                 userName = _GetWindowsUserName();
-                environment = GetDescription(SMSClient.Handler.TamEnvironment);
+                environment = SMSClient.Handler.TamEnvironment;
             }
             catch
             {
@@ -102,7 +102,7 @@ namespace Services.Broadcast.Services
             try
             {
                 userName = _GetWindowsUserName();
-                environment = GetDescription(SMSClient.Handler.TamEnvironment);
+                environment = SMSClient.Handler.TamEnvironment;
             }
             catch
             {

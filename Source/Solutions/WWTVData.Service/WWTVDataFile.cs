@@ -46,7 +46,7 @@ namespace WWTVData.Service
             {
                 if (!_RunWhenChecked)
                 {
-                    if (SMSClient.Handler.TamEnvironment != TAMEnvironment.PROD)
+                    if (SMSClient.Handler.TamEnvironment != TAMEnvironment.PROD.ToString())
                         _RunWhen = null;
                     else
                     {
