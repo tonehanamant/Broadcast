@@ -18,6 +18,7 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.affidavit_client_scrubs = new HashSet<affidavit_client_scrubs>();
             this.affidavit_file_detail_audiences = new HashSet<affidavit_file_detail_audiences>();
+            this.affidavit_file_detail_demographics = new HashSet<affidavit_file_detail_demographics>();
             this.affidavit_file_detail_problems = new HashSet<affidavit_file_detail_problems>();
         }
     
@@ -36,10 +37,15 @@ namespace EntityFrameworkMapping.Broadcast
         public string leadout_genre { get; set; }
         public string leadout_program_name { get; set; }
         public string market { get; set; }
+        public Nullable<int> estimate_id { get; set; }
+        public Nullable<int> inventory_source { get; set; }
+        public Nullable<double> spot_cost { get; set; }
+        public string affiliate { get; set; }
     
         public virtual ICollection<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
-        public virtual affidavit_files affidavit_files { get; set; }
         public virtual ICollection<affidavit_file_detail_audiences> affidavit_file_detail_audiences { get; set; }
+        public virtual ICollection<affidavit_file_detail_demographics> affidavit_file_detail_demographics { get; set; }
         public virtual ICollection<affidavit_file_detail_problems> affidavit_file_detail_problems { get; set; }
+        public virtual affidavit_files affidavit_files { get; set; }
     }
 }

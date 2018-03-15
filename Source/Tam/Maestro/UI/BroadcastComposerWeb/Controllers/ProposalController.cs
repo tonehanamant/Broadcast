@@ -18,7 +18,6 @@ using Tam.Maestro.Web.Common;
 namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/Proposals")]
-    [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class ProposalController : BroadcastControllerBase
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
@@ -35,6 +34,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("GetProposals")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<List<DisplayProposal>> GetAllProposals()
         {
             return
@@ -44,17 +44,19 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("InitialData")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ProposalLoadDto> GetInitialProposalData()
         {
             return
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetInitialProposalData(DateTime.Now));
-        } 
+        }
 
         [HttpPost]
         [Route("SaveProposal")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ProposalDto> SaveProposal(ProposalDto proposal)
-        {            
+        {
             return
                 _ConvertToBaseResponse(
                     () =>
@@ -64,6 +66,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpDelete]
         [Route("DeleteProposal/{proposalId}")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ValidationWarningDto> DeleteProposal(int proposalId)
         {
             return
@@ -86,6 +89,7 @@ namespace BroadcastComposerWeb.Controllers
         }
         [HttpGet]
         [Route("generate_scx_archive/{proposalId}")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public HttpResponseMessage GenerateScxArchive(int proposalId)
         {
             var archive = _ApplicationServiceFactory.GetApplicationService<IProposalService>().GenerateScxFileArchive(proposalId);
@@ -103,6 +107,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("GetProposalDetail")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ProposalDetailDto> GetProposalDetail(ProposalDetailRequestDto proposalDetailRequestDto)
         {
             return
@@ -113,18 +118,20 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        [Route("UpdateProposal")]
-        public BaseResponse<ProposalDto> UpdateProposal(List<ProposalDetailDto> proposalDetailDtos)
+        [Route("CalculateProposalChanges")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
+        public BaseResponse<ProposalDto> CalculateProposalChanges(ProposalChangeRequest changeRequest)
         {
             return
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IProposalService>()
-                            .UpdateProposal(proposalDetailDtos));
+                            .CalculateProposalChanges(changeRequest));
         }
 
         [HttpGet]
         [Route("Proposal/{proposalId}")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ProposalDto> GetProposal(int proposalId)
         {
             return
@@ -134,6 +141,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("Proposal/{proposalId}/Versions/{version}")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ProposalDto> GetProposal(int proposalId, int version)
         {
             return
@@ -143,6 +151,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("Proposal/{proposalId}/Versions")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<List<DisplayProposalVersion>> GetProposalVersions(int proposalId)
         {
             return
@@ -152,6 +161,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("Proposal/{proposalId}/Lock")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<LockResponse> LockProposal(int proposalId)
         {
             var key = string.Format("broadcast_proposal : {0}", proposalId);
@@ -161,6 +171,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("Proposal/{proposalId}/UnLock")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ReleaseLockResponse> UnlockProposal(int proposalId)
         {
             var key = string.Format("broadcast_proposal : {0}", proposalId);
@@ -170,6 +181,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("FindGenres/{genreSearchString}")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<List<LookupDto>> FindGenres(string genreSearchString)
         {
 
@@ -179,6 +191,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("FindPrograms")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<List<LookupDto>> FindPrograms(ProgramSearchRequest request)
         {
 

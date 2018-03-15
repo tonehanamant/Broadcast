@@ -13,6 +13,8 @@ export default function* rootSaga() {
     postSaga.watchRequestPost(),
     postSaga.watchRequestPostFiltered(),
     postSaga.watchRequestAssignPostDisplay(),
+    postSaga.watchRequestPostScrubbingHeader(),
+    postSaga.watchRequestPostScrubbingDetail(),
 
     postPrePostingSaga.watchRequestPostPrePostingInitialData(),
     postPrePostingSaga.watchRequestPostPrePosting(),

@@ -1,5 +1,5 @@
 ﻿{
-  "AdvertiserId": 0,
+  "AdvertiserId": 37444,
   "BlackoutMarketGroup": null,
   "BlackoutMarketGroupId": null,
   "CanDelete": false,
@@ -45,6 +45,7 @@
       ],
       "GenreCriteria": [],
       "HutPostingBookId": null,
+      "Order": null,
       "PlaybackType": 3,
       "ProgramCriteria": [],
       "Quarters": [
@@ -123,25 +124,25 @@
       "StartDate": "2017-05-29T00:00:00"
     }
   ],
-  "GuaranteedDemoId": 0,
-  "Margin": null,
+  "GuaranteedDemoId": 31,
+  "Margin": 20.0,
   "MarketGroup": null,
-  "MarketGroupId": 0,
+  "MarketGroupId": 100,
   "Notes": null,
-  "PostType": 0,
-  "ProposalName": null,
+  "PostType": 1,
+  "ProposalName": "Proposal Calculation Test 2",
   "SecondaryDemos": [],
   "SpotLengths": [
     {
       "Display": "30"
     }
   ],
-  "Status": 0,
+  "Status": 1,
   "TargetBudget": 0.0,
   "TargetCPM": 0.0,
   "TargetImpressions": 13589000.0,
   "TargetUnits": 2,
-  "TotalCost": 0.0,
+  "TotalCost": 0.0000,
   "TotalCostMarginAchieved": false,
   "TotalCostPercent": 0.0,
   "TotalCPM": 0.0,
@@ -151,6 +152,6 @@
   "TotalImpressionsMarginAchieved": false,
   "TotalImpressionsPercent": 0.0,
   "ValidationWarning": null,
-  "Version": null,
-  "VersionId": 0
+  "Version": 1,
+  "VersionId": 51
 }

@@ -116,24 +116,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Post
         }
 
         [Test]
-        public void Parse_Throws_When_Station_Does_Not_Exist()
+        public void File_Is_Accepted_When_Station_Does_Not_Exists()
         {
             _ValidRow.Station = "afasdf";
 
             _Worksheet.Cells.LoadFromCollection(new List<BvsPostFileRow> { _ValidRow }, true);
 
-            var repository = new Mock<IStationRepository>();
-            repository.Setup(r => r.GetStationCode(_ValidRow.Station)).Returns((short?)null);
-
             try
             {
-                using (new RepositoryMock<IStationRepository>(repository))
-                    _BvsPostFileParser.Parse(_Package);
-                Assert.Fail();
+                _BvsPostFileParser.Parse(_Package);
             }
-            catch (PostParsingException e)
+            catch
             {
-                Assert.True(e.ParsingErrors.All(x => x.Contains(string.Format("\t'{0}' {1} does not exist\n", BvsPostFileParser.STATION, _ValidRow.Station))));
+                Assert.Fail();
             }
         }
 

@@ -81,6 +81,228 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
         }
 	}
 	 
+	public static class AppSettings_ResourceSystemParameter 
+	{ 
+		public static string Broadcast  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.Broadcast); }
+        }
+	 
+		public static string BroadcastForecast  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.BroadcastForecast); }
+        }
+	 
+		public static string CableTrack  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.CableTrack); }
+        }
+	 
+		public static string ExternalRating  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.ExternalRating); }
+        }
+	 
+		public static string Inventory  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.Inventory); }
+        }
+	 
+		public static string Maestro  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.Maestro); }
+        }
+	 
+		public static string MaestroAnalysis  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.MaestroAnalysis); }
+        }
+	 
+		public static string NielsenCable  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.NielsenCable); }
+        }
+	 
+		public static string PostLogAnalysis  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.PostLogAnalysis); }
+        }
+	 
+		public static string PostlogStaging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.PostlogStaging); }
+        }
+	 
+		public static string Programs  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.Programs); }
+        }
+	 
+		public static string Rentrak  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.Rentrak); }
+        }
+	 
+		public static string SystemSettings  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.SystemSettings); }
+        }
+	}
+	 
+	public static class AppSettings_ServiceSystemParameter 
+	{ 
+		public static string ACCT  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.ACCT); }
+        }
+	 
+		public static string ACS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.ACS); }
+        }
+	 
+		public static string ARS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.ARS); }
+        }
+	 
+		public static string ARSLoader  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.ARSLoader); }
+        }
+	 
+		public static string BOMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.BOMS); }
+        }
+	 
+		public static string BRS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.BRS); }
+        }
+	 
+		public static string BS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.BS); }
+        }
+	 
+		public static string CUS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.CUS); }
+        }
+	 
+		public static string DES  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.DES); }
+        }
+	 
+		public static string FTP  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.FTP); }
+        }
+	 
+		public static string ICS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.ICS); }
+        }
+	 
+		public static string MAS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.MAS); }
+        }
+	 
+		public static string MCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.MCS); }
+        }
+	 
+		public static string PCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.PCS); }
+        }
+	 
+		public static string PLS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.PLS); }
+        }
+	 
+		public static string PST  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.PST); }
+        }
+	 
+		public static string RCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.RCS); }
+        }
+	 
+		public static string REL  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.REL); }
+        }
+	 
+		public static string REL2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.REL2); }
+        }
+	 
+		public static string RS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.RS); }
+        }
+	 
+		public static string SingletonTestService  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.SingletonTestService); }
+        }
+	 
+		public static string STS2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.STS2); }
+        }
+	 
+		public static string TCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.TCS); }
+        }
+	}
+	 
 	public static class AudienceAndRatingsServiceSystemParameter 
 	{ 
 		public static bool EnableAutomaticForecasting  
@@ -197,6 +419,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class BroadcastServiceSystemParameter 
 	{ 
+		public static string AffidavitUploadUrl  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.AffidavitUploadUrl); }
+        }
+	 
 		public static string BroadcastDayStart  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -209,6 +437,42 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastMatchingBuffer); }
         }
 	 
+		public static string EmailFrom  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailFrom); }
+        }
+	 
+		public static string EmailHost  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailHost); }
+        }
+	 
+		public static bool EmailNotificationsEnabled  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailNotificationsEnabled); }
+        }
+	 
+		public static string EmailPassword  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailPassword); }
+        }
+	 
+		public static string EmailUsername  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailUsername); }
+        }
+	 
+		public static string EmailWhiteList  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailWhiteList); }
+        }
+	 
 		public static string ProgramSearchApiUrl  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -219,6 +483,84 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.UseMaestroDaypartRepo); }
+        }
+	 
+		public static string WWTV_FailedFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FailedFolder); }
+        }
+	 
+		public static string WWTV_FtpErrorFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FtpErrorFolder); }
+        }
+	 
+		public static string WWTV_FtpHost  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FtpHost); }
+        }
+	 
+		public static string WWTV_FtpInboundFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FtpInboundFolder); }
+        }
+	 
+		public static string WWTV_FtpOutboundFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FtpOutboundFolder); }
+        }
+	 
+		public static string WWTV_FtpPassword  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FtpPassword); }
+        }
+	 
+		public static string WWTV_FtpUsername  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FtpUsername); }
+        }
+	 
+		public static string WWTV_LocalFtpErrorFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_LocalFtpErrorFolder); }
+        }
+	 
+		public static string WWTV_NotificationEmail  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_NotificationEmail); }
+        }
+	 
+		public static int WWTV_SecondsBetweenRuns  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_SecondsBetweenRuns); }
+        }
+	 
+		public static string WWTV_SharedFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_SharedFolder); }
+        }
+	 
+		public static string WWTV_WhenToCheckDataFiles  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_WhenToCheckDataFiles); }
+        }
+	 
+		public static string WWTV_WhenToCheckErrorFiles  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_WhenToCheckErrorFiles); }
         }
 	}
 	 

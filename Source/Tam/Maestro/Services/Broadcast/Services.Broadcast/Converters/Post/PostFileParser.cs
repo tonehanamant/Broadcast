@@ -87,7 +87,6 @@ namespace Services.Broadcast.Converters.Post
                 throw new PostParsingException(allParsingExceptions);
 
             var spotLengthDict = DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
-            var stationRepository = DataRepositoryFactory.GetDataRepository<IStationRepository>();
             var fileDetails = new List<post_file_details>();
 
             for (var row = 2; row <= worksheet.Dimension.End.Row; row++)
@@ -116,8 +115,6 @@ namespace Services.Broadcast.Converters.Post
                 
                 if (string.IsNullOrEmpty(bvsDetail.station))
                     errorMessage += string.Format(ColumnRequiredErrorMessage, STATION);
-                else if (!stationRepository.GetStationCode(bvsDetail.station).HasValue)
-                    errorMessage += string.Format("\t'{0}' {1} does not exist\n", STATION, bvsDetail.station);
 
                 bvsDetail.affiliate = GetCellValue(row, headers[AFFILIATE], worksheet);
                 

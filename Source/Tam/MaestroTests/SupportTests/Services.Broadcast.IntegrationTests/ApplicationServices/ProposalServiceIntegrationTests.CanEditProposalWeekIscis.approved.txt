@@ -1,5 +1,5 @@
 ﻿{
-  "AdvertiserId": 0,
+  "AdvertiserId": 37444,
   "BlackoutMarketGroup": null,
   "BlackoutMarketGroupId": null,
   "CanDelete": false,
@@ -21,6 +21,7 @@
       ],
       "GenreCriteria": [],
       "HutPostingBookId": null,
+      "Order": null,
       "PlaybackType": 4,
       "ProgramCriteria": [],
       "Quarters": [
@@ -39,38 +40,86 @@
                 {
                   "Brand": null,
                   "ClientIsci": "AAAAAAAA",
+                  "Days": null,
+                  "Friday": false,
                   "HouseIsci": "AAAAAAAA",
-                  "MarriedHouseIsci": false
+                  "MarriedHouseIsci": false,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
                 },
                 {
                   "Brand": null,
                   "ClientIsci": "BBBBBBBB",
+                  "Days": null,
+                  "Friday": false,
                   "HouseIsci": "BBBBBBBBB",
-                  "MarriedHouseIsci": false
+                  "MarriedHouseIsci": false,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
                 },
                 {
                   "Brand": "Test 1",
                   "ClientIsci": "CCCCCCCCCC",
+                  "Days": null,
+                  "Friday": false,
                   "HouseIsci": "CCCCCCCCCC",
-                  "MarriedHouseIsci": true
+                  "MarriedHouseIsci": true,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
                 },
                 {
                   "Brand": "Test 2",
                   "ClientIsci": "DDDDDDDDD",
+                  "Days": null,
+                  "Friday": false,
                   "HouseIsci": "DDDDDDDD",
-                  "MarriedHouseIsci": false
+                  "MarriedHouseIsci": false,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
                 },
                 {
                   "Brand": null,
                   "ClientIsci": "EEEEEEEEEE",
+                  "Days": null,
+                  "Friday": false,
                   "HouseIsci": "EEEEEEEEEEE",
-                  "MarriedHouseIsci": true
+                  "MarriedHouseIsci": true,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
                 },
                 {
                   "Brand": "Testing 45",
                   "ClientIsci": "ZZZZZZ",
+                  "Days": "|W|Th|F|Sa|",
+                  "Friday": false,
                   "HouseIsci": "ZZZZZZ",
-                  "MarriedHouseIsci": true
+                  "MarriedHouseIsci": true,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
                 }
               ],
               "IsHiatus": false,
@@ -89,6 +138,71 @@
       "TotalCost": 2000.00,
       "TotalImpressions": 100000.0,
       "TotalUnits": 10
+    },
+    {
+      "Adu": false,
+      "DaypartCode": "NAV",
+      "DefaultPostingBooks": null,
+      "FlightEdited": false,
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
+        }
+      ],
+      "GenreCriteria": [],
+      "HutPostingBookId": null,
+      "Order": null,
+      "PlaybackType": 4,
+      "ProgramCriteria": [],
+      "Quarters": [
+        {
+          "Cpm": 20.0000,
+          "DistributeGoals": false,
+          "ImpressionGoal": 1000.0,
+          "Quarter": 2,
+          "QuarterText": "2016 Q2",
+          "Weeks": [
+            {
+              "Cost": 20.00,
+              "EndDate": "2016-06-14T00:00:00",
+              "Impressions": 1000.0,
+              "Iscis": [
+                {
+                  "Brand": null,
+                  "ClientIsci": "FFFFFF",
+                  "Days": "Su|M|T|W|Th|F|Sa",
+                  "Friday": true,
+                  "HouseIsci": "FFFFFF",
+                  "MarriedHouseIsci": false,
+                  "Monday": true,
+                  "Saturday": true,
+                  "Sunday": true,
+                  "Thursday": true,
+                  "Tuesday": true,
+                  "Wednesday": true
+                }
+              ],
+              "IsHiatus": false,
+              "MediaWeekId": 650,
+              "StartDate": "2016-06-07T00:00:00",
+              "Units": 10,
+              "Week": "6/7/2016"
+            }
+          ],
+          "Year": 2016
+        }
+      ],
+      "SharePostingBookId": 410,
+      "SinglePostingBookId": 410,
+      "SpotLengthId": 1,
+      "TotalCost": 20.00,
+      "TotalImpressions": 1000.0,
+      "TotalUnits": 10
     }
   ],
   "Equivalized": false,
@@ -100,27 +214,36 @@
       "IsHiatus": false,
       "MediaWeekId": 649,
       "StartDate": "2016-05-30T00:00:00"
+    },
+    {
+      "EndDate": "2016-06-14T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 650,
+      "StartDate": "2016-06-07T00:00:00"
     }
   ],
-  "GuaranteedDemoId": 0,
-  "Margin": null,
+  "GuaranteedDemoId": 31,
+  "Margin": 20.0,
   "MarketGroup": null,
-  "MarketGroupId": 0,
+  "MarketGroupId": 100,
   "Notes": null,
-  "PostType": 0,
-  "ProposalName": null,
-  "SecondaryDemos": [],
+  "PostType": 1,
+  "ProposalName": "Proposal Test",
+  "SecondaryDemos": [
+    5,
+    6
+  ],
   "SpotLengths": [
     {
       "Display": "30"
     }
   ],
-  "Status": 0,
-  "TargetBudget": 2000.00,
+  "Status": 3,
+  "TargetBudget": 2020.00,
   "TargetCPM": 20.00,
-  "TargetImpressions": 100000.0,
-  "TargetUnits": 10,
-  "TotalCost": 0.0,
+  "TargetImpressions": 101000.0,
+  "TargetUnits": 20,
+  "TotalCost": 0.0000,
   "TotalCostMarginAchieved": false,
   "TotalCostPercent": 0.0,
   "TotalCPM": 0.0,
@@ -130,6 +253,6 @@
   "TotalImpressionsMarginAchieved": false,
   "TotalImpressionsPercent": 0.0,
   "ValidationWarning": null,
-  "Version": null,
-  "VersionId": 0
+  "Version": 1,
+  "VersionId": 53
 }

@@ -1,5 +1,6 @@
 ﻿using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Web.Http;
 using Tam.Maestro.Services.Cable.Entities;
@@ -22,7 +23,16 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<List<PostDto>> GetPostList()
         {
             return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IPostService>().GetPosts());
+                _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetPosts());
+        }
+        
+        [HttpGet]
+        [Route("ClientScrubbingProposal/{proposalId}")]
+        public BaseResponse<ClientPostScrubbingProposalDto>  GetClientScrubbingForProposal(int proposalId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetClientScrubbingForProposal(proposalId));
         }
     }
 }

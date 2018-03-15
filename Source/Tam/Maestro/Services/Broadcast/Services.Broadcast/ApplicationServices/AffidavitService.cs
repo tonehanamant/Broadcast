@@ -76,26 +76,38 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("No affidavit data received.");
             }
 
-            affidavit_file = new affidavit_files();
-
-            affidavit_file.created_date = DateTime.Now;
-            affidavit_file.file_hash = saveRequest.FileHash;
-            affidavit_file.file_name = saveRequest.FileName;
-            affidavit_file.source_id = saveRequest.Source;
+            affidavit_file = new affidavit_files
+            {
+                created_date = currentDateTime,
+                file_hash = saveRequest.FileHash,
+                file_name = saveRequest.FileName,
+                source_id = saveRequest.Source
+            };
 
             var matchedAffidavitDetails = _LinkAndValidateContractIscis(saveRequest);
 
             foreach (var matchedAffidavitDetail in matchedAffidavitDetails)
             {
-                var det = new affidavit_file_details();
-                det.air_time = Convert.ToInt32(matchedAffidavitDetail.AffidavitDetail.AirTime.TimeOfDay.TotalSeconds);
-                det.original_air_date = matchedAffidavitDetail.AffidavitDetail.AirTime;
-                det.isci = matchedAffidavitDetail.AffidavitDetail.Isci;
-                det.program_name = matchedAffidavitDetail.AffidavitDetail.ProgramName;
-                det.genre = matchedAffidavitDetail.AffidavitDetail.Genre;
-                det.spot_length_id = _GetSpotlength(matchedAffidavitDetail.AffidavitDetail.SpotLength, ref spotLengthDict);
-                det.station = matchedAffidavitDetail.AffidavitDetail.Station;
-                det.affidavit_client_scrubs =
+                var det = new affidavit_file_details
+                {
+                    air_time = Convert.ToInt32(matchedAffidavitDetail.AffidavitDetail.AirTime.TimeOfDay.TotalSeconds),
+                    original_air_date = matchedAffidavitDetail.AffidavitDetail.AirTime,
+                    isci = matchedAffidavitDetail.AffidavitDetail.Isci,
+                    program_name = matchedAffidavitDetail.AffidavitDetail.ProgramName,
+                    genre = matchedAffidavitDetail.AffidavitDetail.Genre,
+                    spot_length_id = _GetSpotlength(matchedAffidavitDetail.AffidavitDetail.SpotLength, ref spotLengthDict),
+                    station = matchedAffidavitDetail.AffidavitDetail.Station,
+                    market = matchedAffidavitDetail.AffidavitDetail.Market,
+                    affiliate = matchedAffidavitDetail.AffidavitDetail.Affiliate,
+                    estimate_id = matchedAffidavitDetail.AffidavitDetail.EstimateId,
+                    inventory_source = matchedAffidavitDetail.AffidavitDetail.InventorySource,
+                    spot_cost = matchedAffidavitDetail.AffidavitDetail.SpotCost,
+                    leadin_genre = matchedAffidavitDetail.AffidavitDetail.LeadInGenre,
+                    leadout_genre = matchedAffidavitDetail.AffidavitDetail.LeadOutGenre,
+                    leadin_program_name = matchedAffidavitDetail.AffidavitDetail.LeadInProgramName,
+                    leadout_program_name = matchedAffidavitDetail.AffidavitDetail.LeadOutProgramName,
+
+                    affidavit_client_scrubs =
                     matchedAffidavitDetail.ProposalDetailWeeks.Select(
                         w => new affidavit_client_scrubs
                         {
@@ -103,9 +115,23 @@ namespace Services.Broadcast.ApplicationServices
                             match_time = w.AirtimeMatch,
                             modified_by = username,
                             modified_date = currentDateTime,
-                            lead_in = w.IsLeadInMatch,
-                            status = _GetScrubStatus(w)
-                        }).ToList();
+                            lead_in = w.IsLeadInMatch
+                        }).ToList(),
+                    affidavit_file_detail_problems =
+                    matchedAffidavitDetail.AffidavitDetailProblems.Select(
+                        fp => new affidavit_file_detail_problems
+                        {
+                            problem_description = fp.Description,
+                            problem_type = (int)fp.Type
+                        }).ToList(),
+                    affidavit_file_detail_demographics = matchedAffidavitDetail.AffidavitDetail.Demographics.Select(
+                        x=>new affidavit_file_detail_demographics()
+                        {
+                            audience_id = x.AudienceId,
+                            overnight_impressions = x.OvernightImpressions,
+                            overnight_rating = x.OvernightRating
+                        }).ToList()
+                };
 
                 affidavit_file.affidavit_file_details.Add(det);
             }
@@ -129,6 +155,9 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var affidavitFileDetail in affidavit_file.affidavit_file_details)
             {
+                if (!affidavitFileDetail.affidavit_client_scrubs.Any())
+                    break;
+
                 if (!stations.ContainsKey(affidavitFileDetail.station))
                 {
                     affidavitFileDetail.affidavit_client_scrubs.ForEach(s =>
@@ -138,11 +167,9 @@ namespace Services.Broadcast.ApplicationServices
                     });
                     continue;
                 }
+
                 var quarterWeekIds =
                     affidavitFileDetail.affidavit_client_scrubs.Select(s => s.proposal_version_detail_quarter_week_id).ToList();
-                var stationManifests = _BroadcastDataRepositoryFactory
-                    .GetDataRepository<IProposalOpenMarketInventoryRepository>()
-                    .GetStationManifestFromQuarterWeeks(quarterWeekIds);
                 var proposals = _ProposalService.GetProposalsByQuarterWeeks(quarterWeekIds);
 
                 var affidavitStation = stations[affidavitFileDetail.station];
@@ -155,26 +182,23 @@ namespace Services.Broadcast.ApplicationServices
                     var proposal = proposals[quarterWeekId];
                     var proposalDetail = proposal.Details.Single(d =>
                         d.Quarters.Any(q => q.Weeks.Any(w => w.Id == quarterWeekId)));
+                    var proposalWeek = proposalDetail.Quarters.SelectMany(d => d.Weeks.Where(w => w.Id == quarterWeekId)).First();
+                    var proposalWeekIsci = proposalWeek.Iscis.First(i =>
+                        i.HouseIsci.Equals(affidavitFileDetail.isci, StringComparison.InvariantCultureIgnoreCase));
+                    var dayOfWeek = affidavitFileDetail.original_air_date.DayOfWeek;
+
+                    scrub.match_isci_days = _IsIsciDaysMatch(proposalWeekIsci, dayOfWeek);
 
                     // match market/station
-                    if (stationManifests.Any())
-                    {   
-                        var scrubManifests = stationManifests[quarterWeekId];
+                    scrub.match_station = false;
+                    var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, proposalDetail);
 
-                        if (scrubManifests.Any(m =>
-                            m.station.legacy_call_letters == affidavitStation.LegacyCallLetters))
-                        {
-                            scrub.match_station = true;
-                            var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, proposalDetail);
-
-                            var marketGeoName = affidavitStation.OriginMarket;
-                            if (markets.Any(m => m.Display == marketGeoName))
-                            {
-                                affidavitFileDetail.market = marketGeoName;
-
-                                scrub.match_market = true;
-                            }
-                        }
+                    var marketGeoName = affidavitStation.OriginMarket;
+                    if (markets.Any(m => m.Display == marketGeoName))
+                    {
+                        affidavitFileDetail.market = marketGeoName;
+                        scrub.match_station = true;
+                        scrub.match_market = true;
                     }
 
                     scrub.match_program = true;
@@ -197,33 +221,41 @@ namespace Services.Broadcast.ApplicationServices
                             scrub.match_genre = genreCriteria.Contain == ContainTypeEnum.Include;
                     }
 
-                    EnsureScrubadubdubed(scrub);
+                    scrub.status = (scrub.match_station && scrub.match_market && scrub.match_genre && scrub.match_program && scrub.match_time && scrub.match_isci_days) 
+                        ? (int)ScrubbingStatus.InSpec 
+                        : (int)ScrubbingStatus.OutOfSpec;
                 }
-
-            }
-
-        }
-
-        private void EnsureScrubadubdubed(affidavit_client_scrubs scrub)
-        {
-            scrub.status = (int)ScrubbingStatus.OutOfSpec;
-            if (scrub.match_station
-                && scrub.match_market
-                && scrub.match_genre
-                && scrub.match_program
-                && scrub.match_time)
-            {
-                scrub.status = (int) ScrubbingStatus.InSpec;
             }
         }
-        private int _GetScrubStatus(AffidavitMatchingProposalWeek affidavitMatchingProposalWeek)
-        {
-                if (!affidavitMatchingProposalWeek.AirtimeMatch)
-                    return (int) AffidavitClientScrubStatus.OutOfSpec;
-            
-                return (int) AffidavitClientScrubStatus.InSpec;
-        }
 
+        private bool _IsIsciDaysMatch(ProposalWeekIsciDto proposalWeekIsci, DayOfWeek dayOfWeek)
+        {
+            var isMatch = false;
+
+            if (proposalWeekIsci.Sunday)
+                isMatch = dayOfWeek == DayOfWeek.Sunday;
+
+            if (proposalWeekIsci.Monday)
+                isMatch = isMatch || dayOfWeek == DayOfWeek.Monday;
+
+            if (proposalWeekIsci.Tuesday)
+                isMatch = isMatch || dayOfWeek == DayOfWeek.Tuesday;
+
+            if (proposalWeekIsci.Wednesday)
+                isMatch = isMatch || dayOfWeek == DayOfWeek.Wednesday;
+
+            if (proposalWeekIsci.Thursday)
+                isMatch = isMatch || dayOfWeek == DayOfWeek.Thursday;
+
+            if (proposalWeekIsci.Friday)
+                isMatch = isMatch || dayOfWeek == DayOfWeek.Friday;
+
+            if (proposalWeekIsci.Saturday)
+                isMatch = isMatch || dayOfWeek == DayOfWeek.Saturday;
+
+            return isMatch;
+        }
+        
         private List<AffidavitMatchingDetail> _LinkAndValidateContractIscis(AffidavitSaveRequest saveRequest)
         {
             var matchedAffidavitDetails = new List<AffidavitMatchingDetail>();
@@ -353,9 +385,13 @@ namespace Services.Broadcast.ApplicationServices
 
             using (reader.Initialize(rawStream))
             {
-                reader.NextRow();
-                while (!reader.IsEOFOrEmptyRow())
+                while (!reader.IsEOF())
                 {
+                    reader.NextRow();
+
+                    if (reader.IsEmptyRow())
+                        break;
+
                     var detail = new AffidavitSaveRequestDetail();
                     
                     detail.AirTime = DateTime.Parse(reader.GetCellValue("Spot Time"));
@@ -364,13 +400,12 @@ namespace Services.Broadcast.ApplicationServices
                     detail.ProgramName = reader.GetCellValue("ProgramName");
                     detail.Station = reader.GetCellValue("Station");
                     detail.SpotLength = int.Parse(reader.GetCellValue("Spot Length"));
-                    detail.LeadInTitle = reader.GetCellValue("LeadInTitle");
+                    detail.LeadInProgramName = reader.GetCellValue("LeadInTitle");
                     detail.LeadInGenre = reader.GetCellValue("LeadInGenre");
-                    detail.LeadOutTitle = reader.GetCellValue("LeadOutTitle");
+                    detail.LeadOutProgramName = reader.GetCellValue("LeadOutTitle");
                     detail.LeadOutGenre = reader.GetCellValue("LeadOutGenre");
 
                     request.Details.Add(detail);
-                    reader.NextRow();
                 }
             }
             var json = JsonConvert.SerializeObject(request);

@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -69,31 +69,6 @@ class ProgramGenre extends Component {
       programResultsLimit: 10,
     };
   }
-
-  // set/reset initial state when modal active
-  // todo check detail for existing GenreCriteria, ProgramCriteria
-  /* componentWillReceiveProps(nextProps) {
-    if (nextProps.modal && nextProps.modal.active && nextProps.detail) {
-      this.setState(
-        {
-          selectedProgram: [],
-          selectedGenre: [],
-          includeCriteria: [],
-          excludeCriteria: [],
-          disabledButtons: {
-            programInclude: false,
-            programExclude: false,
-            programAll: true,
-            genreInclude: false,
-            genreExclude: false,
-            genreAll: true,
-          },
-        },
-      );
-      this.readCriteriaFromDetail(nextProps.detail);
-      console.log('program genre receive props', nextProps, this);
-    }
-  } */
 
   resetProgramGenre() {
     this.setState({
@@ -202,23 +177,9 @@ class ProgramGenre extends Component {
     });
   }
 
-  onProgramSearchSelect(value) {
-    // console.log('selected program', value);
-    // const val = value ? value.Id : null;
-    this.setState({ selectedProgram: value });
-    // if value then enable button state all;  else disable
-    if (value && value.length) {
-      this.setButtonDisabled('programAll', false);
-    } else {
-      this.setButtonDisabled('programAll', true);
-    }
-  }
-
   onGenreSearchSelect(value) {
-    // console.log('selected genre', value);
-    // const val = value ? value.Id : null;
     this.setState({ selectedGenre: value });
-    // if value then enable button state all; else disable
+
     if (value && value.length) {
       this.setButtonDisabled('genreAll', false);
     } else {
@@ -230,16 +191,25 @@ class ProgramGenre extends Component {
     this.props.getGenres(query);
   }
 
+  onProgramSearchSelect(value) {
+    this.setState({ selectedProgram: value });
+
+    if (value && value.length) {
+      this.setButtonDisabled('programAll', false);
+    } else {
+      this.setButtonDisabled('programAll', true);
+    }
+  }
+
   onProgramSearch(programQuery) {
-    this.setState({ programQuery });
-    const params = { Name: programQuery, Start: 1, Limit: this.state.programResultsLimit };
+    const params = { Name: programQuery, Start: 1, Limit: this.state.programResultsLimit + 1 };
     this.props.getPrograms(params);
   }
 
   handleProgramPagination(e) {
     const currentLimit = this.state.programResultsLimit + this.state.programPageSize;
     this.setState({ programResultsLimit: currentLimit });
-    const params = { Name: this.state.programQuery, Start: 1, Limit: currentLimit };
+    const params = { Name: this.programTypeahed.state.query, Start: 1, Limit: currentLimit + 1 };
     // this.props.getPrograms(this.state.programQuery, 1, currentLimit + 1);
     this.props.getPrograms(params);
   }
@@ -367,7 +337,7 @@ class ProgramGenre extends Component {
   }
 
   render() {
-    const { modal, detail, isReadOnly } = this.props;
+    const { modal, detail, isReadOnly, programs, isProgramsLoading } = this.props;
     const { selectedProgram, selectedGenre, disabledButtons, includeCriteria, excludeCriteria } = this.state;
     const show = (detail && modal && modal.properties.detailId === detail.Id) ? modal.active : false;
 
@@ -400,34 +370,34 @@ class ProgramGenre extends Component {
                     </Panel.Heading>
                     <Panel.Body>
                       <Row>
-                      <Col sm={8} style={{ maxHeight: '48px' }}>
-                      <AsyncTypeahead
-                        options={this.props.programs}
-                        ref={(input) => { this.programTypeahed = input; }}
-                        isLoading={this.props.isProgramsLoading}
-                        allowNew={false}
-                        multiple
-                        // cache
-                        labelKey="Display"
-                        minLength={2}
-                        onSearch={this.onProgramSearch}
-                        onChange={this.onProgramSearchSelect}
-                        placeholder="Search Programs..."
-                        disabled={isReadOnly}
-                        maxResults={this.state.programPageSize}
-                        paginate
-                        onPaginate={this.handleProgramPagination}
-                      />
-                    </Col>
+                        <Col sm={8}>
+                          <AsyncTypeahead
+                            options={programs}
+                            ref={(input) => { this.programTypeahed = input; }}
+                            isLoading={isProgramsLoading}
+                            allowNew={false}
+                            multiple
+                            labelKey="Display"
+                            minLength={2}
+                            disabled={isReadOnly}
+                            onChange={this.onProgramSearchSelect}
+                            onSearch={this.onProgramSearch}
+                            placeholder="Search Programs..."
+                            paginate
+                            maxResults={this.state.programPageSize}
+                            onPaginate={this.handleProgramPagination}
+                          />
+                        </Col>
                         <Col sm={4} style={{ maxHeight: '34px' }}>
                           <ButtonGroup justified>
-                            <Button disabled={isReadOnly || disabledButtons.programInclude || disabledButtons.programAll} style={{ width: '50%', maxHeight: '34px', paddingTop: '4px' }} onClick={this.onProgramIncludeClick}><Glyphicon className="text-success" style={{ color: '#666', fontSize: '22px' }} glyph="plus-sign" /></Button>
-                            <Button disabled={isReadOnly || disabledButtons.programExclude || disabledButtons.programAll} style={{ width: '50%', maxHeight: '34px', paddingTop: '4px' }} onClick={this.onProgramExcludeClick}><Glyphicon className="text-warning" style={{ color: '#666', fontSize: '22px' }} glyph="minus-sign" /></Button>
+                            <Button disabled={isReadOnly || disabledButtons.programInclude  || disabledButtons.programAll} style={{ width: '50%', maxHeight: '34px', paddingTop: '4px' }} onClick={this.onProgramIncludeClick}><Glyphicon style={{ color: '#666', fontSize: '22px' }} glyph="plus-sign" /></Button>
+                            <Button disabled={isReadOnly || disabledButtons.programExclude  || disabledButtons.programAll} style={{ width: '50%', maxHeight: '34px', paddingTop: '4px' }} onClick={this.onProgramExcludeClick}><Glyphicon style={{ color: '#666', fontSize: '22px' }} glyph="minus-sign" /></Button>
                           </ButtonGroup>
                         </Col>
                       </Row>
                     </Panel.Body>
                   </Panel>
+
                   <Panel>
                     <Panel.Heading style={{ padding: '8px 12px' }}>
                       <Row>
@@ -441,7 +411,7 @@ class ProgramGenre extends Component {
                     </Panel.Heading>
                     <Panel.Body>
                       <Row>
-                      <Col sm={8} style={{ maxHeight: '48px' }}>
+                      <Col sm={8}>
                       <AsyncTypeahead
                         options={this.props.genres}
                         ref={(input) => { this.genreTypeahed = input; }}

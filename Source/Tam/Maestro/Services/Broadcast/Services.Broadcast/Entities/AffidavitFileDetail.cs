@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
@@ -17,9 +18,14 @@ namespace Services.Broadcast.Entities
         public string Genre { get; set; }
         public string LeadinGenre { get; set; }
         public string LeadinProgramName { get; set; }
-        public string LeadoutGenre { get; set; }
+        public string LeadoutGenre { get; set; }        
         public string LeadoutProgramName { get; set; }
         public string Market { get; set; }
+        public int EstimateId { get; set; }
+        public int InventorySource { get; set; }
+        public double SpotCost { get; set; }
+        public string Affiliate { get; set; }
+        public List<Demographics> Demographics { get; set; }
         public List<AffidavitClientScrub> AffidavitClientScrubs { get; set; }
         public List<AffidavitFileDetailAudience> AffidavitFileDetailAudiences { get; set; }
     }

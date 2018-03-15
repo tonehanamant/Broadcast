@@ -9,6 +9,7 @@ using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using Tam.Maestro.Services.ServiceManager.Service;
 
+
 namespace Services.Broadcast.IntegrationTests
 {
     public class StubbedSMSClient : ISMSClient
@@ -38,20 +39,52 @@ namespace Services.Broadcast.IntegrationTests
 
         public string GetSystemComponentParameterValue(string pSystemComponentID, string pSystemParameterID)
         {
-            if (pSystemParameterID == "BroadcastMatchingBuffer")
+            string result = string.Empty;
+            switch (pSystemParameterID)
             {
-                return "120";
+                case "BroadcastMatchingBuffer":
+                    result = "120";
+                    break;
+                case "DaypartCacheSlidingExpirationSeconds":
+                    result = "1800";
+                    break;
+                case "UseDayByDayImpressions":
+                    result = "False";
+                    break;
+                case "WWTV_FtpUsername":
+                    result = "broadcast";
+                    break;
+                case "WWTV_FtpPassword":
+                    result = "Password01";
+                    break;
+                case "WWTV_FtpHost":
+                    result = "localhost";
+                    break;
+                case "WWTV_FtpOutboundFolder":
+                    result = "uploads";
+                    break;
+                case "WWTV_FtpErrorFolder":
+                    result = "Errors";
+                    break;
+                case "EmailHost": 
+                    result = "smtp.office365.com";
+                    break;
+                case "EmailFrom":
+                    result = "broadcast@crossmw.com";
+                    break;
+                case "EmailUsername":
+                    result = "traffic@crossmw.com";
+                    break;
+                case "EmailPassword":
+                    result = "JMnxeJ1eBhqAsFnqv/lr4w==";
+                    break;
+                case "EmailWhiteList":
+                    result = "mhohenshilt@crossmw.com";
+                    break;
+                default:
+                    throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }
-            else if (pSystemParameterID == "DaypartCacheSlidingExpirationSeconds")
-            {
-                return "1800";
-            }
-            else if (pSystemParameterID == "UseDayByDayImpressions")
-            {
-                return "False";
-            }
-
-            throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
+            return result;
         }
 
         public bool ClearSystemComponentParameterCache(string pSystemComponentID, string pSystemParameterID)

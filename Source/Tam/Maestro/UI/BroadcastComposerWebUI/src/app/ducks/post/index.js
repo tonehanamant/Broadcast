@@ -3,6 +3,8 @@ import * as ACTIONS from './actionTypes.js';
 
 const initialState = {
   post: [],
+  proposalHeader: [],
+  modals: {},
 };
 
 // Reducer
@@ -23,6 +25,24 @@ export default function reducer(state = initialState, action) {
         post: data,
       };
 
+      case ACTIONS.RECEIVE_POST_SCRUBBING_HEADER:
+      return {
+        ...state,
+        proposalHeader: data.Data,
+      };
+
+      case ACTIONS.RECEIVE_POST_SCRUBBING_DETAIL:
+      return {
+        ...state,
+        proposalDetail: data.Data,
+      };
+
+      case ACTIONS.CLEAR_POST_SCRUBBING_DETAIL:
+      return {
+        ...state,
+        proposalDetail: '',
+      };
+
     default:
       return state;
   }
@@ -37,4 +57,18 @@ export const getPost = () => ({
 export const getPostFiltered = query => ({
   type: ACTIONS.REQUEST_FILTERED_POST,
   payload: query,
+});
+
+export const getProposalHeader = proposalID => ({
+  type: ACTIONS.REQUEST_POST_SCRUBBING_HEADER,
+  payload: proposalID,
+});
+
+export const getPostScrubbingDetail = (proposalID, detailID) => ({
+  type: ACTIONS.REQUEST_POST_SCRUBBING_DETAIL,
+  payload: { proposalID, detailID },
+});
+
+export const clearPostScrubbingDetail = () => ({
+  type: ACTIONS.CLEAR_POST_SCRUBBING_DETAIL,
 });

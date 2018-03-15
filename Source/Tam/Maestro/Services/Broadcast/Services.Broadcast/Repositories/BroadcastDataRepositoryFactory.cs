@@ -64,7 +64,6 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<ITrafficRepository, TrafficRepository>();
             instance.RegisterType<IStationProgramRepository, StationProgramRepository>();
             
-
             instance.RegisterType<IMediaMonthAndWeekAggregateRepository, MediaMonthAndWeekAggregateAndWeekAggregateRepository>();
             instance.RegisterType<IMediaMonthAndWeekAggregateCache, MediaMonthAndWeekAggregateCache>();
             instance.RegisterType<IDisplayDaypartRepository, DisplayDaypartBroadcastRepository>();
@@ -72,6 +71,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IAffidavitRepository, AffidavitRepository>();
             instance.RegisterType<INsiComponentAudienceRepository, NsiComponentAudienceRepository>();
             instance.RegisterType<IPostRepository, PostRepository>();
+            instance.RegisterType<IAffidavitPreprocessingRepository, AffidavitPreprocessingRepository>();
 
             WasRegistered = true;
         }

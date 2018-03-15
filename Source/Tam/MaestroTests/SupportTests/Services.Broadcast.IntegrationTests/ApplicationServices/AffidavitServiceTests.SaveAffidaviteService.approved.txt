@@ -7,7 +7,8 @@
           "Comment": null,
           "LeadIn": false,
           "MatchGenre": true,
-          "MatchMarket": false,
+          "MatchIsciDays": false,
+          "MatchMarket": true,
           "MatchProgram": true,
           "MatchTime": false,
           "ModifiedBy": "test user",
@@ -101,16 +102,21 @@
           "Impressions": 0.0
         }
       ],
+      "Affiliate": null,
       "AirTime": 29040,
+      "Demographics": [],
+      "EstimateId": 0,
       "Genre": "Do It Yourself",
+      "InventorySource": 0,
       "Isci": "DDDDDDDD",
       "LeadinGenre": null,
       "LeadinProgramName": null,
       "LeadoutGenre": null,
       "LeadoutProgramName": null,
-      "Market": null,
+      "Market": "Tampa-St. Pete (Sarasota)",
       "OriginalAirDate": "2017-06-29T00:00:00",
       "ProgramName": "Program Names R us",
+      "SpotCost": 0.0,
       "SpotLengthId": 1,
       "Station": "WWSB"
     }

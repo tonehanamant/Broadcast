@@ -64,7 +64,7 @@ namespace Services.Broadcast.Repositories
         void SaveProposalTotals(int proposalVersionId, ProposalHeaderTotalsDto proposalTotals);
         void ResetAllTotals(int proposalId, int proposalVersion);
         void DeleteProposal(int proposalId);
-        Dictionary<int,ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
+        Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
         List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByHouseIsci(string isci);
     }
 
@@ -72,8 +72,8 @@ namespace Services.Broadcast.Repositories
     {
 
         public ProposalRepository(ISMSClient pSmsClient,
-            IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory
-            , ITransactionHelper pTransactionHelper)
+            IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper)
             : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
         {
         }
@@ -148,8 +148,8 @@ namespace Services.Broadcast.Repositories
                 start_date = proposalDto.FlightStartDate,
                 end_date = proposalDto.FlightEndDate,
                 guaranteed_audience_id = proposalDto.GuaranteedDemoId,
-                markets = (byte) proposalDto.MarketGroupId,
-                blackout_markets = (byte?) proposalDto.BlackoutMarketGroupId,
+                markets = (byte)proposalDto.MarketGroupId,
+                blackout_markets = (byte?)proposalDto.BlackoutMarketGroupId,
                 created_by = userName,
                 created_date = timestamp,
                 modified_by = userName,
@@ -160,9 +160,9 @@ namespace Services.Broadcast.Repositories
                 margin = proposalDto.Margin.Value,
                 target_units = proposalDto.TargetUnits,
                 notes = proposalDto.Notes,
-                post_type = (byte) proposalDto.PostType,
+                post_type = (byte)proposalDto.PostType,
                 equivalized = proposalDto.Equivalized,
-                status = (byte) proposalDto.Status
+                status = (byte)proposalDto.Status
             };
 
             context.proposal_versions.Add(dbProposalVersion);
@@ -248,8 +248,8 @@ namespace Services.Broadcast.Repositories
             dbProposalVersion.start_date = proposalDto.FlightStartDate;
             dbProposalVersion.end_date = proposalDto.FlightEndDate;
             dbProposalVersion.guaranteed_audience_id = proposalDto.GuaranteedDemoId;
-            dbProposalVersion.markets = (byte) proposalDto.MarketGroupId;
-            dbProposalVersion.blackout_markets = (byte?) proposalDto.BlackoutMarketGroupId;
+            dbProposalVersion.markets = (byte)proposalDto.MarketGroupId;
+            dbProposalVersion.blackout_markets = (byte?)proposalDto.BlackoutMarketGroupId;
             dbProposalVersion.modified_by = userName;
             dbProposalVersion.modified_date = timestamp;
             dbProposalVersion.target_budget = proposalDto.TargetBudget;
@@ -258,9 +258,9 @@ namespace Services.Broadcast.Repositories
             dbProposalVersion.margin = proposalDto.Margin.Value;
             dbProposalVersion.target_units = proposalDto.TargetUnits;
             dbProposalVersion.notes = proposalDto.Notes;
-            dbProposalVersion.post_type = (byte) proposalDto.PostType;
+            dbProposalVersion.post_type = (byte)proposalDto.PostType;
             dbProposalVersion.equivalized = proposalDto.Equivalized;
-            dbProposalVersion.status = (byte) proposalDto.Status;
+            dbProposalVersion.status = (byte)proposalDto.Status;
 
             context.SaveChanges();
 
@@ -301,7 +301,7 @@ namespace Services.Broadcast.Repositories
                             {
                                 audience_id = f,
                                 proposal_version_id = proposalVersionId,
-                                rank = (byte) index
+                                rank = (byte)index
                             }).ToList());
 
             context.SaveChanges();
@@ -315,6 +315,7 @@ namespace Services.Broadcast.Repositories
             context.proposal_version_details.AddRange(
                 proposalDetails.Select(proposalDetail => new proposal_version_details
                 {
+                    order = proposalDetail.Order,
                     cost_total = proposalDetail.TotalCost,
                     daypart_code = proposalDetail.DaypartCode,
                     proposal_version_id = proposalVersionId,
@@ -328,11 +329,11 @@ namespace Services.Broadcast.Repositories
                     single_posting_book_id = proposalDetail.SinglePostingBookId,
                     hut_posting_book_id = proposalDetail.HutPostingBookId,
                     share_posting_book_id = proposalDetail.SharePostingBookId,
-                    playback_type = (byte) proposalDetail.PlaybackType,
+                    playback_type = (byte)proposalDetail.PlaybackType,
                     proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
                     {
                         genre_id = g.Genre.Id,
-                        contain_type = (byte) g.Contain
+                        contain_type = (byte)g.Contain
                     }).ToList(),
                     proposal_version_detail_criteria_programs = proposalDetail.ProgramCriteria.Select(p => new proposal_version_detail_criteria_programs()
                     {
@@ -364,7 +365,14 @@ namespace Services.Broadcast.Repositories
                                                 client_isci = isic.ClientIsci,
                                                 house_isci = isic.HouseIsci,
                                                 brand = isic.Brand,
-                                                married_house_iscii = isic.MarriedHouseIsci
+                                                married_house_iscii = isic.MarriedHouseIsci,
+                                                monday = isic.Monday,
+                                                tuesday = isic.Tuesday,
+                                                wednesday = isic.Wednesday,
+                                                thursday = isic.Thursday,
+                                                friday = isic.Friday,
+                                                saturday = isic.Saturday,
+                                                sunday = isic.Sunday
                                             }).ToList()
                                     }).ToList()
                         }).ToList()
@@ -377,11 +385,11 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context => (from p in context.proposal_version_details
-                    join q in context.proposal_version_detail_quarters on p.id equals q.proposal_version_detail_id
-                    join w in context.proposal_version_detail_quarter_weeks on q.id equals
-                        w.proposal_version_quarter_id
-                    where p.proposal_version_id == proposalVersionId
-                    select w.id).ToList());
+                            join q in context.proposal_version_detail_quarters on p.id equals q.proposal_version_detail_id
+                            join w in context.proposal_version_detail_quarter_weeks on q.id equals
+                                w.proposal_version_quarter_id
+                            where p.proposal_version_id == proposalVersionId
+                            select w.id).ToList());
         }
 
         private static void _UpdateProposalVersionDetails(BroadcastContext context, int proposalVersionId,
@@ -424,7 +432,7 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.single_posting_book_id = detail.SinglePostingBookId;
                     updatedDetail.hut_posting_book_id = detail.HutPostingBookId;
                     updatedDetail.share_posting_book_id = detail.SharePostingBookId;
-                    updatedDetail.playback_type = (byte) detail.PlaybackType;
+                    updatedDetail.playback_type = (byte)detail.PlaybackType;
 
                     //update proposal detail genre criteria
                     context.proposal_version_detail_criteria_genres.RemoveRange(
@@ -435,10 +443,11 @@ namespace Services.Broadcast.Repositories
                                 g => new proposal_version_detail_criteria_genres()
                                 {
                                     genre_id = g.Genre.Id,
-                                    contain_type = (byte) g.Contain,
+                                    contain_type = (byte)g.Contain,
                                     proposal_version_detail_id = detail.Id.Value
                                 }));
 
+                    //update proposal detail program name criteria
                     context.proposal_version_detail_criteria_programs.RemoveRange(
                         context.proposal_version_detail_criteria_programs.Where(g => g.proposal_version_detail_id == detail.Id));
                     if (detail.ProgramCriteria != null && detail.ProgramCriteria.Count > 0)
@@ -452,23 +461,7 @@ namespace Services.Broadcast.Repositories
                                     proposal_version_detail_id = detail.Id.Value
                                 }));
 
-                    //update proposal detail program name criteria
-                    context.proposal_version_detail_criteria_programs.RemoveRange(
-                        context.proposal_version_detail_criteria_programs.Where(g => g.proposal_version_detail_id == detail.Id));
-                    if (detail.ProgramCriteria != null && detail.ProgramCriteria.Count > 0)
-                    {
-                        var programCriteria = detail.ProgramCriteria.Select(
-                                g => new proposal_version_detail_criteria_programs()
-                                {
-                                    program_name = g.Program.Display,
-                                    program_name_id = g.Program.Id,
-                                    contain_type = (byte)g.Contain,
-                                    proposal_version_detail_id = detail.Id.Value
-                                });
-                        context.proposal_version_detail_criteria_programs.AddRange(programCriteria);
 
-                    }
-                        
 
 
                     // deal with quarters that have been deleted 
@@ -570,6 +563,13 @@ namespace Services.Broadcast.Repositories
                     client_isci = isci.ClientIsci,
                     house_isci = isci.HouseIsci,
                     married_house_iscii = isci.MarriedHouseIsci,
+                    monday = isci.Monday,
+                    tuesday = isci.Tuesday,
+                    wednesday = isci.Wednesday,
+                    thursday = isci.Thursday,
+                    friday = isci.Friday,
+                    saturday = isci.Saturday,
+                    sunday = isci.Sunday
                 }).ToList();
 
             weekIscis.AddRange(newWeekIscis);
@@ -658,8 +658,8 @@ namespace Services.Broadcast.Repositories
                 string.Format("Cannot find proposal {0}.", proposalId));
 
             var proposalVersions = proposalToUpdate.proposal_versions.Where(pv =>
-                pv.status == (int) ProposalEnums.ProposalStatusType.AgencyOnHold ||
-                pv.status == (int) ProposalEnums.ProposalStatusType.Contracted).ToList();
+                pv.status == (int)ProposalEnums.ProposalStatusType.AgencyOnHold ||
+                pv.status == (int)ProposalEnums.ProposalStatusType.Contracted).ToList();
             proposalToUpdate.primary_version_id =
                 proposalVersions.Any() ? proposalVersions.First().id : primaryVersionId;
 
@@ -674,27 +674,27 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context => (from p in context.proposals
-                    join v in context.proposal_versions on p.id equals v.proposal_id
-                    where p.primary_version_id == v.id
-                    select new DisplayProposal
-                    {
-                        Id = p.id,
-                        ProposalName = p.name,
-                        Advertiser = new LookupDto {Id = p.advertiser_id},
-                        FlightEndDate = v.end_date,
-                        FlightStartDate = v.start_date,
-                        LastModified = v.modified_date,
-                        Owner = v.created_by,
-                        Status = (ProposalEnums.ProposalStatusType) v.status,
-                        Flights = context.proposal_version_flight_weeks.Where(q => q.proposal_version_id == v.id)
-                            .Select(f => new FlightWeekDto
+                            join v in context.proposal_versions on p.id equals v.proposal_id
+                            where p.primary_version_id == v.id
+                            select new DisplayProposal
                             {
-                                Id = f.id,
-                                StartDate = f.start_date,
-                                EndDate = f.end_date,
-                                IsHiatus = !f.active
-                            }).ToList()
-                    }).ToList());
+                                Id = p.id,
+                                ProposalName = p.name,
+                                Advertiser = new LookupDto { Id = p.advertiser_id },
+                                FlightEndDate = v.end_date,
+                                FlightStartDate = v.start_date,
+                                LastModified = v.modified_date,
+                                Owner = v.created_by,
+                                Status = (ProposalEnums.ProposalStatusType)v.status,
+                                Flights = context.proposal_version_flight_weeks.Where(q => q.proposal_version_id == v.id)
+                                    .Select(f => new FlightWeekDto
+                                    {
+                                        Id = f.id,
+                                        StartDate = f.start_date,
+                                        EndDate = f.end_date,
+                                        IsHiatus = !f.active
+                                    }).ToList()
+                            }).ToList());
         }
 
         public int GetProposalVersionId(int proposalId, short versionId)
@@ -715,7 +715,7 @@ namespace Services.Broadcast.Repositories
                             join v in context.proposal_versions on p.id equals v.proposal_id
                             where p.primary_version_id == v.id
                                   && p.id == proposalId
-                            select new {p, v})
+                            select new { p, v })
                         .ToList().Select(pv => _MapToProposalDto(pv.p, pv.v))
                         .Single(string.Format(
                             "The Proposal information you have entered [{0}] does not exist. Please try again.",
@@ -727,10 +727,10 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context => (from p in context.proposals
-                        join v in context.proposal_versions on p.id equals v.proposal_id
-                        where p.primary_version_id == v.id
-                              && p.id == proposalId
-                        select v.proposal_version)
+                            join v in context.proposal_versions on p.id equals v.proposal_id
+                            where p.primary_version_id == v.id
+                                  && p.id == proposalId
+                            select v.proposal_version)
                     .Single(string.Format("Cannot find primary version number for proposal {0}.", proposalId)));
         }
 
@@ -738,47 +738,47 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context => (from p in context.proposals
-                        join v in context.proposal_versions on p.id equals v.proposal_id
-                        where p.id == proposalId && v.proposal_version == version
-                        select new {p, v})
+                            join v in context.proposal_versions on p.id equals v.proposal_id
+                            where p.id == proposalId && v.proposal_version == version
+                            select new { p, v })
                     .ToList().Select(pv => _MapToProposalDto(pv.p, pv.v))
                     .Single(string.Format("Cannot find version {0} for proposal {1}.", version, proposalId)));
         }
 
         private static ProposalDto _MapToProposalDto(proposal proposal, proposal_versions proposalVersion)
         {
-            var proposalDto = new ProposalDto();
-
-            proposalDto.Id = proposalVersion.proposal.id;
-            proposalDto.ProposalName = proposalVersion.proposal.name;
-            proposalDto.AdvertiserId = proposalVersion.proposal.advertiser_id;
-            proposalDto.FlightEndDate = proposalVersion.end_date;
-            proposalDto.FlightStartDate = proposalVersion.start_date;
-            proposalDto.GuaranteedDemoId = proposalVersion.guaranteed_audience_id;
-            proposalDto.MarketGroupId = (ProposalEnums.ProposalMarketGroups) proposalVersion.markets;
-            proposalDto.BlackoutMarketGroupId = (ProposalEnums.ProposalMarketGroups?) proposalVersion.blackout_markets;
-            proposalDto.Markets = proposalVersion.proposal_version_markets
+            var proposalDto = new ProposalDto
+            {
+                Id = proposalVersion.proposal.id,
+                ProposalName = proposalVersion.proposal.name,
+                AdvertiserId = proposalVersion.proposal.advertiser_id,
+                FlightEndDate = proposalVersion.end_date,
+                FlightStartDate = proposalVersion.start_date,
+                GuaranteedDemoId = proposalVersion.guaranteed_audience_id,
+                MarketGroupId = (ProposalEnums.ProposalMarketGroups)proposalVersion.markets,
+                BlackoutMarketGroupId = (ProposalEnums.ProposalMarketGroups?)proposalVersion.blackout_markets,
+                Markets = proposalVersion.proposal_version_markets
                 .Where(q => q.proposal_version_id == proposalVersion.id).Select(f => new ProposalMarketDto
                 {
                     Id = f.market_code,
                     Display = f.market.geography_name,
                     IsBlackout = f.is_blackout
-                }).ToList();
-            proposalDto.Status = (ProposalEnums.ProposalStatusType) proposalVersion.status;
-            proposalDto.TargetUnits = proposalVersion.target_units;
-            proposalDto.TargetBudget = proposalVersion.target_budget;
-            proposalDto.TargetImpressions = proposalVersion.target_impressions;
-            proposalDto.TargetCPM = proposalVersion.target_cpm;
-            proposalDto.TotalCost = proposalVersion.cost_total;
-            proposalDto.TotalImpressions = proposalVersion.impressions_total;
-            proposalDto.TotalCPM =
-                ProposalMath.CalculateCpm(proposalVersion.cost_total, proposalVersion.impressions_total);
-            proposalDto.Margin = proposalVersion.margin;
-            proposalDto.Notes = proposalVersion.notes;
-            proposalDto.Version = proposalVersion.proposal_version;
-            proposalDto.VersionId = proposalVersion.id;
-            proposalDto.PrimaryVersionId = proposal.primary_version_id;
-            proposalDto.FlightWeeks =
+                }).ToList(),
+                Status = (ProposalEnums.ProposalStatusType)proposalVersion.status,
+                TargetUnits = proposalVersion.target_units,
+                TargetBudget = proposalVersion.target_budget,
+                TargetImpressions = proposalVersion.target_impressions,
+                TargetCPM = proposalVersion.target_cpm,
+                TotalCost = proposalVersion.cost_total,
+                TotalImpressions = proposalVersion.impressions_total,
+                TotalCPM =
+                ProposalMath.CalculateCpm(proposalVersion.cost_total, proposalVersion.impressions_total),
+                Margin = proposalVersion.margin,
+                Notes = proposalVersion.notes,
+                Version = proposalVersion.proposal_version,
+                VersionId = proposalVersion.id,
+                PrimaryVersionId = proposal.primary_version_id,
+                FlightWeeks =
                 proposalVersion.proposal_version_flight_weeks.Where(q => q.proposal_version_id == proposalVersion.id)
                     .Select(f => new ProposalFlightWeek
                     {
@@ -786,76 +786,85 @@ namespace Services.Broadcast.Repositories
                         IsHiatus = !f.active,
                         StartDate = f.start_date,
                         MediaWeekId = f.media_week_id
-                    }).ToList();
-            proposalDto.Equivalized = proposalVersion.equivalized;
-            proposalDto.SecondaryDemos =
-                proposalVersion.proposal_version_audiences.OrderBy(r => r.rank).Select(a => a.audience_id).ToList();
-            proposalDto.PostType = (SchedulePostType) proposalVersion.post_type;
-            proposalDto.SpotLengths =
-                proposalVersion.proposal_version_spot_length.Select(a => new LookupDto {Id = a.spot_length_id})
-                    .ToList();
-            proposalDto.Details = proposalVersion.proposal_version_details.Select(version => new ProposalDetailDto
-            {
-                Id = version.id,
-                DaypartCode = version.daypart_code,
-                SpotLengthId = version.spot_length_id,
-                TotalCost = version.cost_total.GetValueOrDefault(),
-                TotalImpressions = version.impressions_total,
-                TotalUnits = version.units_total.GetValueOrDefault(),
-                FlightEndDate = version.end_date,
-                FlightStartDate = version.start_date,
-                DaypartId = version.daypart_id,
-                Adu = version.adu,
-                SinglePostingBookId = version.single_posting_book_id,
-                SharePostingBookId = version.share_posting_book_id,
-                HutPostingBookId = version.hut_posting_book_id,
-                PlaybackType = (ProposalEnums.ProposalPlaybackType) version.playback_type,
-                GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
+                    }).ToList(),
+                Equivalized = proposalVersion.equivalized,
+                SecondaryDemos =
+                proposalVersion.proposal_version_audiences.OrderBy(r => r.rank).Select(a => a.audience_id).ToList(),
+                PostType = (SchedulePostType)proposalVersion.post_type,
+                SpotLengths =
+                proposalVersion.proposal_version_spot_length.Select(a => new LookupDto { Id = a.spot_length_id })
+                    .ToList(),
+                Details = proposalVersion.proposal_version_details.Select(version => new ProposalDetailDto
                 {
-                    Id = c.id,
-                    Contain = (ContainTypeEnum) c.contain_type,
-                    Genre = new LookupDto { Id = c.genre.id ,Display = c.genre.name}
-                }).ToList(),
-                ProgramCriteria = version.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
-                {
-                    Id = p.id,
-                    Contain = (ContainTypeEnum) p.contain_type,
-                    Program = new LookupDto
+                    Id = version.id,
+                    Order = version.order,
+                    DaypartCode = version.daypart_code,
+                    SpotLengthId = version.spot_length_id,
+                    TotalCost = version.cost_total.GetValueOrDefault(),
+                    TotalImpressions = version.impressions_total,
+                    TotalUnits = version.units_total.GetValueOrDefault(),
+                    FlightEndDate = version.end_date,
+                    FlightStartDate = version.start_date,
+                    DaypartId = version.daypart_id,
+                    Adu = version.adu,
+                    SinglePostingBookId = version.single_posting_book_id,
+                    SharePostingBookId = version.share_posting_book_id,
+                    HutPostingBookId = version.hut_posting_book_id,
+                    PlaybackType = (ProposalEnums.ProposalPlaybackType)version.playback_type,
+                    GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
-                        Id = p.program_name_id,
-                        Display = p.program_name
-                    }
-                }).ToList(),
-                Quarters = version.proposal_version_detail_quarters.Select(quarter => new ProposalQuarterDto
-                {
-                    Cpm = quarter.cpm,
-                    ImpressionGoal = quarter.impressions_goal,
-                    Id = quarter.id,
-                    Year = quarter.year,
-                    Quarter = quarter.quarter,
-                    QuarterText = string.Format("{0} Q{1}", quarter.year, quarter.quarter),
-                    Weeks = quarter.proposal_version_detail_quarter_weeks.Select(week => new ProposalWeekDto
+                        Id = c.id,
+                        Contain = (ContainTypeEnum)c.contain_type,
+                        Genre = new LookupDto { Id = c.genre.id, Display = c.genre.name }
+                    }).ToList(),
+                    ProgramCriteria = version.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
                     {
-                        Id = week.id,
-                        Cost = week.cost,
-                        EndDate = week.end_date,
-                        StartDate = week.start_date,
-                        Impressions = week.impressions_goal,
-                        IsHiatus = week.is_hiatus,
-                        Units = week.units,
-                        MediaWeekId = week.media_week_id,
-                        Week = week.start_date.ToShortDateString(),
-                        Iscis = week.proposal_version_detail_quarter_week_iscis.Select(isci => new ProposalWeekIsciDto
+                        Id = p.id,
+                        Contain = (ContainTypeEnum)p.contain_type,
+                        Program = new LookupDto
                         {
-                            Id = isci.id,
-                            Brand = isci.brand,
-                            ClientIsci = isci.client_isci,
-                            HouseIsci = isci.house_isci,
-                            MarriedHouseIsci = isci.married_house_iscii
+                            Id = p.program_name_id,
+                            Display = p.program_name
+                        }
+                    }).ToList(),
+                    Quarters = version.proposal_version_detail_quarters.Select(quarter => new ProposalQuarterDto
+                    {
+                        Cpm = quarter.cpm,
+                        ImpressionGoal = quarter.impressions_goal,
+                        Id = quarter.id,
+                        Year = quarter.year,
+                        Quarter = quarter.quarter,
+                        QuarterText = string.Format("{0} Q{1}", quarter.year, quarter.quarter),
+                        Weeks = quarter.proposal_version_detail_quarter_weeks.Select(week => new ProposalWeekDto
+                        {
+                            Id = week.id,
+                            Cost = week.cost,
+                            EndDate = week.end_date,
+                            StartDate = week.start_date,
+                            Impressions = week.impressions_goal,
+                            IsHiatus = week.is_hiatus,
+                            Units = week.units,
+                            MediaWeekId = week.media_week_id,
+                            Week = week.start_date.ToShortDateString(),
+                            Iscis = week.proposal_version_detail_quarter_week_iscis.Select(isci => new ProposalWeekIsciDto
+                            {
+                                Id = isci.id,
+                                Brand = isci.brand,
+                                ClientIsci = isci.client_isci,
+                                HouseIsci = isci.house_isci,
+                                MarriedHouseIsci = isci.married_house_iscii,
+                                Monday = isci.monday == null ? false : isci.monday.Value,
+                                Tuesday = isci.tuesday == null ? false : isci.tuesday.Value,
+                                Wednesday = isci.wednesday == null ? false : isci.wednesday.Value,
+                                Thursday = isci.thursday == null ? false : isci.thursday.Value,
+                                Friday = isci.friday == null ? false : isci.friday.Value,
+                                Saturday = isci.saturday == null ? false : isci.saturday.Value,
+                                Sunday = isci.sunday == null ? false : isci.sunday.Value
+                            }).ToList()
                         }).ToList()
                     }).ToList()
                 }).ToList()
-            }).ToList();
+            };
 
             return proposalDto;
         }
@@ -864,8 +873,8 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context => (from x in context.proposal_versions
-                    where x.proposal_id == proposalId
-                    select x).Max(q => q.proposal_version));
+                            where x.proposal_id == proposalId
+                            select x).Max(q => q.proposal_version));
         }
 
         private static ProposalVersion _MapToProposalVersion(proposal_versions x)
@@ -882,12 +891,12 @@ namespace Services.Broadcast.Repositories
             proposalVersion.GuaranteedAudienceId = x.guaranteed_audience_id;
             proposalVersion.LastModifiedBy = x.modified_by;
             proposalVersion.LastModifiedDate = x.modified_date;
-            proposalVersion.Markets = (ProposalEnums.ProposalMarketGroups) x.markets;
+            proposalVersion.Markets = (ProposalEnums.ProposalMarketGroups)x.markets;
             proposalVersion.TargetUnits = x.target_units;
             proposalVersion.TargetImpressions = x.target_impressions;
             proposalVersion.Notes = x.notes;
             proposalVersion.Primary = x.id == x.proposal.primary_version_id;
-            proposalVersion.Status = (ProposalEnums.ProposalStatusType) x.status;
+            proposalVersion.Status = (ProposalEnums.ProposalStatusType)x.status;
 
             return proposalVersion;
         }
@@ -898,14 +907,14 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     return (from pf in context.proposal_version_flight_weeks
-                        where pf.proposal_version_id == proposalVersionId
-                        select new FlightWeekDto
-                        {
-                            Id = pf.media_week_id,
-                            IsHiatus = !pf.active,
-                            StartDate = pf.start_date,
-                            EndDate = pf.end_date
-                        }).ToList();
+                            where pf.proposal_version_id == proposalVersionId
+                            select new FlightWeekDto
+                            {
+                                Id = pf.media_week_id,
+                                IsHiatus = !pf.active,
+                                StartDate = pf.start_date,
+                                EndDate = pf.end_date
+                            }).ToList();
                 });
         }
 
@@ -915,8 +924,8 @@ namespace Services.Broadcast.Repositories
             {
                 return _InReadUncommitedTransaction(
                     context => (from x in context.proposal_versions
-                        where x.proposal_id == proposalId
-                        select x).ToList().Select(_MapToProposalVersion).ToList());
+                                where x.proposal_id == proposalId
+                                select x).ToList().Select(_MapToProposalVersion).ToList());
             }
         }
 
@@ -985,20 +994,20 @@ namespace Services.Broadcast.Repositories
                 dto.Criteria = new OpenMarketCriterion
                 {
                     CpmCriteria = pv.proposal_version_detail_criteria_cpm.Select(c =>
-                        new CpmCriteria {Id = c.id, MinMax = (MinMaxEnum) c.min_max, Value = c.value}).ToList(),
+                        new CpmCriteria { Id = c.id, MinMax = (MinMaxEnum)c.min_max, Value = c.value }).ToList(),
                     GenreSearchCriteria = pv.proposal_version_detail_criteria_genres.Select(c =>
                             new GenreCriteria()
                             {
                                 Id = c.id,
-                                Contain = (ContainTypeEnum) c.contain_type,
-                                Genre = new LookupDto(c.genre_id,"")
+                                Contain = (ContainTypeEnum)c.contain_type,
+                                Genre = new LookupDto(c.genre_id, "")
                             })
                         .ToList(),
                     ProgramNameSearchCriteria = pv.proposal_version_detail_criteria_programs.Select(c =>
                         new ProgramCriteria
                         {
                             Id = c.id,
-                            Contain = (ContainTypeEnum) c.contain_type,
+                            Contain = (ContainTypeEnum)c.contain_type,
                             Program = new LookupDto
                             {
                                 Id = c.program_name_id,
@@ -1008,18 +1017,18 @@ namespace Services.Broadcast.Repositories
                 };
 
                 dto.Weeks = (from quarter in pv.proposal_version_detail_quarters
-                    from week in quarter.proposal_version_detail_quarter_weeks
-                    orderby week.start_date
-                    select new ProposalOpenMarketInventoryWeekDto
-                    {
-                        ProposalVersionDetailQuarterWeekId = week.id,
-                        ImpressionsGoal = week.impressions_goal,
-                        Budget = week.cost,
-                        QuarterText = string.Format("Q{0}", quarter.quarter),
-                        Week = week.start_date.ToShortDateString(),
-                        IsHiatus = week.is_hiatus,
-                        MediaWeekId = week.media_week_id
-                    }).ToList();
+                             from week in quarter.proposal_version_detail_quarter_weeks
+                             orderby week.start_date
+                             select new ProposalOpenMarketInventoryWeekDto
+                             {
+                                 ProposalVersionDetailQuarterWeekId = week.id,
+                                 ImpressionsGoal = week.impressions_goal,
+                                 Budget = week.cost,
+                                 QuarterText = string.Format("Q{0}", quarter.quarter),
+                                 Week = week.start_date.ToShortDateString(),
+                                 IsHiatus = week.is_hiatus,
+                                 MediaWeekId = week.media_week_id
+                             }).ToList();
 
                 return dto;
             });
@@ -1057,12 +1066,12 @@ namespace Services.Broadcast.Repositories
                     {
                         Id = c.id,
                         Contain = (ContainTypeEnum)c.contain_type,
-                        Genre = new LookupDto { Id = c.genre_id}
+                        Genre = new LookupDto { Id = c.genre_id }
                     }).ToList(),
                     ProgramCriteria = proposalDetail.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
                     {
                         Id = p.id,
-                        Contain = (ContainTypeEnum) p.contain_type,
+                        Contain = (ContainTypeEnum)p.contain_type,
                         Program = new LookupDto
                         {
                             Id = p.program_name_id,
@@ -1363,18 +1372,18 @@ namespace Services.Broadcast.Repositories
 
                 SetBaseFields(pv, dto);
                 dto.Weeks = (from quarter in pv.proposal_version_detail_quarters
-                    from week in quarter.proposal_version_detail_quarter_weeks
-                    orderby week.start_date
-                    select new ProposalProprietaryInventoryWeekDto
-                    {
-                        QuarterText = string.Format("Q{0}", quarter.quarter),
-                        ImpressionsGoal = week.impressions_goal,
-                        Budget = week.cost,
-                        Week = week.start_date.ToShortDateString(),
-                        IsHiatus = week.is_hiatus,
-                        MediaWeekId = week.media_week_id,
-                        ProposalVersionDetailQuarterWeekId = week.id
-                    }).ToList();
+                             from week in quarter.proposal_version_detail_quarter_weeks
+                             orderby week.start_date
+                             select new ProposalProprietaryInventoryWeekDto
+                             {
+                                 QuarterText = string.Format("Q{0}", quarter.quarter),
+                                 ImpressionsGoal = week.impressions_goal,
+                                 Budget = week.cost,
+                                 Week = week.start_date.ToShortDateString(),
+                                 IsHiatus = week.is_hiatus,
+                                 MediaWeekId = week.media_week_id,
+                                 ProposalVersionDetailQuarterWeekId = week.id
+                             }).ToList();
                 return dto;
             });
         }
@@ -1384,7 +1393,7 @@ namespace Services.Broadcast.Repositories
             var pv = pvd.proposal_versions;
             baseDto.ProposalVersionId = pv.id;
             baseDto.DetailId = pvd.id;
-            baseDto.PostType = (SchedulePostType?) pv.post_type;
+            baseDto.PostType = (SchedulePostType?)pv.post_type;
             baseDto.GuaranteedAudience = pv.guaranteed_audience_id;
             baseDto.Equivalized = pv.equivalized;
             baseDto.ProposalId = pv.proposal.id;
@@ -1420,7 +1429,7 @@ namespace Services.Broadcast.Repositories
             baseDto.SinglePostingBookId = pvd.single_posting_book_id;
             baseDto.SharePostingBookId = pvd.share_posting_book_id;
             baseDto.HutPostingBookId = pvd.hut_posting_book_id;
-            baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?) pvd.playback_type;
+            baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.playback_type;
         }
 
         public void DeleteProposal(int proposalId)
@@ -1442,13 +1451,13 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var proposals = (from p in context.proposals
-                        join v in context.proposal_versions on p.id equals v.proposal_id
-                        join d in context.proposal_version_details on v.id equals d.proposal_version_id
-                        join q in context.proposal_version_detail_quarters on d.id equals q.proposal_version_detail_id
-                        join qw in context.proposal_version_detail_quarter_weeks on q.id equals qw
-                            .proposal_version_quarter_id
-                        where quarterWeekIds.Contains(qw.id)
-                        select new {p, v,pd = d, quarterWeekId = qw.id})
+                                 join v in context.proposal_versions on p.id equals v.proposal_id
+                                 join d in context.proposal_version_details on v.id equals d.proposal_version_id
+                                 join q in context.proposal_version_detail_quarters on d.id equals q.proposal_version_detail_id
+                                 join qw in context.proposal_version_detail_quarter_weeks on q.id equals qw
+                                     .proposal_version_quarter_id
+                                 where quarterWeekIds.Contains(qw.id)
+                                 select new { p, v, pd = d, quarterWeekId = qw.id })
                     .GroupBy(g => g.quarterWeekId).ToList()
                     .ToDictionary(k => k.Key, val => val.Select(v => _MapToProposalDto(v.p, v.v)).Single());
 
@@ -1492,6 +1501,5 @@ namespace Services.Broadcast.Repositories
                     return weeks;
                 });
         }
-
     }
 }

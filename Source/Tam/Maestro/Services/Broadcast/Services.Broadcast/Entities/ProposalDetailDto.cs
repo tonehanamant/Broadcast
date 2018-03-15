@@ -45,6 +45,7 @@ namespace Services.Broadcast.Entities
         {
             get { return _ProgramCriteria ?? (_ProgramCriteria = new List<ProgramCriteria>()); }
             set { _ProgramCriteria = value; }
-        } 
+        }
+        public int? Order { get; set; }
     }
 }

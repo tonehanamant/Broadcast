@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using Common.Services.WebComponents;
@@ -28,6 +29,16 @@ namespace BroadcastComposerWeb.Controllers
             ViewBag.Message = "Choose File from above and hit submit";
             return View("Index");
         }
+
+        [HttpPost]
+        public ActionResult TestEmail(string test_email)
+        {
+            Emailer.QuickSend(true, "<b>test</b><br/> This is only a test", "Test Email from Broadcast",
+                MailPriority.Normal, "test@test.com", new string[] {"test_email@test.com"});
+            ViewBag.Message = "Test email sent.";
+            return View("Index");
+        }
+
         [HttpPost]
         public ActionResult Index(HttpPostedFileBase file)
         {

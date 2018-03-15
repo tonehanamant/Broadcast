@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { Button, ButtonToolbar, Glyphicon, Popover, Tooltip, OverlayTrigger, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -13,11 +14,13 @@ export default class GridIsciCell extends Component {
       isEdit: false,
       isChanged: false,
       isValid: null,
+      isInitiallyValid: true,
       validationErrors: '',
     };
     this.onChangeIscis = this.onChangeIscis.bind(this);
     this.readIscisFromData = this.readIscisFromData.bind(this);
     this.writeIscisFromValues = this.writeIscisFromValues.bind(this);
+    this.checkDaysIncludeValid = this.checkDaysIncludeValid.bind(this);
     this.onSaveIscis = this.onSaveIscis.bind(this);
     this.onSaveIscisNext = this.onSaveIscisNext.bind(this);
     this.saveIscis = this.saveIscis.bind(this);
@@ -32,7 +35,6 @@ export default class GridIsciCell extends Component {
     this.setState({ validationErrors: '' });
     this.setState({ isValid: null });
     // this.setState({ isChanged: false });
-    // this.readIscisFromData(this.props.Iscis);
     this.readIscisFromData(nextProps.Iscis);
   }
 
@@ -44,34 +46,55 @@ export default class GridIsciCell extends Component {
 
   // display/edit conversion - both for popover and edit house display/tips
   readIscisFromData(iscis) {
-    // console.log('readIscis', iscis);
+   // console.log('readIscis', iscis);
+
     if (iscis && iscis.length) {
       const houseDisplay = [];
+      let isInitiallyValid = true;
       const iscisFormatted = iscis.reduce((aggregated, iscisItem) => {
         const house = iscisItem.HouseIsci || '';
         const client = iscisItem.ClientIsci || '';
+        const days = iscisItem.Days || '';
         const brand = iscisItem.Brand || '';
         const married = iscisItem.MarriedHouseIsci ? '(m)' : '';
         houseDisplay.push(house.trim() + married);
-        return `${aggregated + house.trim()}${married},${client.trim()},${brand.trim()}\n`;
+        if (isInitiallyValid) {
+          isInitiallyValid = iscisItem.HouseIsci !== null && iscisItem.ClientIsci !== null && iscisItem.Days !== null;
+        }
+        return `${aggregated + house.trim()}${married},${client.trim()},${days.trim()},${brand.trim()}\n`;
       }, '');
-      // console.log('house display >>>', houseDisplay);
-      this.setState({ iscisValue: iscisFormatted, iscisDisplay: houseDisplay, isEdit: true });
+      // console.log('read iscis >>>', isInitiallyValid);
+
+      this.setState({ iscisValue: iscisFormatted, iscisDisplay: houseDisplay, isInitiallyValid, isEdit: true });
     } else {
-      this.setState({ iscisValue: '', iscisDisplay: '', isEdit: false });
+      this.setState({ iscisValue: '', iscisDisplay: '', isInitiallyValid: true, isEdit: false });
     }
   }
 
-  // write back into object; add errorLength here?
+  checkDaysIncludeValid(days) {
+    const daysSplit = days.split('|');
+    let check = daysSplit.every((day) => {
+      const dayval = day.toLowerCase();
+      return _.includes(['m', 't', 'w', 'th', 'f', 'sa', 'su'], dayval);
+    });
+    if (check) {
+      check = _.uniq(daysSplit).length === daysSplit.length;
+    }
+    console.log('checkDaysIncludeValid', check, days, this);
+    return check;
+  }
+
+  // write back into object; check initially valid for legacy
   writeIscisFromValues(iscisValue) {
-    if (this.state.isChanged) {
+    // console.log('write check', this.state.isChanged, this.state.isInitiallyValid);
+    if (this.state.isChanged || !this.state.isInitiallyValid) {
       // allow for removing all - no value but changed
       let valid = true;
       let iscisData = [];
      if (iscisValue && iscisValue.match(/([^\r\n]+)/g)) {
       iscisData = iscisValue.match(/([^\r\n]+)/g).map((entry) => {
         const splitted = entry.split(',');
-        valid = valid ? splitted[0] && splitted[1] && !splitted[3] : false;
+        valid = valid ? splitted[0] && splitted[1] && splitted[2] && !splitted[4] : false;
         // console.log('isci check', splitted, valid);
         let house = splitted[0] ? splitted[0].trim() : null;
         let married = false;
@@ -79,13 +102,20 @@ export default class GridIsciCell extends Component {
           married = house.indexOf('(m)') !== -1;
           if (married) house = house.replace('(m)', '');
         }
-
+        // check for valid days
+        let dayCheck = true;
+        if (splitted[2]) {
+          dayCheck = this.checkDaysIncludeValid(splitted[2].trim());
+          if (!dayCheck) valid = false;
+        }
         const ret = {
           HouseIsci: house,
           ClientIsci: splitted[1] ? splitted[1].trim() : null,
-          Brand: splitted[2] ? splitted[2].trim() : null,
+          Days: splitted[2] ? splitted[2].trim() : null,
+          Brand: splitted[3] ? splitted[3].trim() : null,
           MarriedHouseIsci: married,
-          errorLength: splitted[3] !== undefined,
+          dayError: !dayCheck,
+          errorLength: splitted[4] !== undefined,
           // isValid: valid,
         };
         return ret;
@@ -140,9 +170,17 @@ export default class GridIsciCell extends Component {
         lineValid = false;
         inner.push('Client ISCI cannot be empty; ');
       }
+      if (isci.Days === null) {
+        lineValid = false;
+        inner.push('Day Include cannot be empty; ');
+      }
+      if (isci.dayError) {
+        lineValid = false;
+        inner.push('Day Include invalid days or not unique (M, T, W, Th, F, Sa, Su); ');
+      }
       if (isci.errorLength) {
         lineValid = false;
-        inner.push('Too many values entered (limit 3);');
+        inner.push('Too many values entered (limit 4);');
       }
       if (!lineValid) {
         const joinedInner = inner.join(' ');
@@ -155,12 +193,12 @@ export default class GridIsciCell extends Component {
   }
 
   closePopover() {
-    console.log('closePopover', this, this.popover);
+    // console.log('closePopover', this, this.popover);
     this.popover.hide();
   }
 
   showPopover() {
-    console.log('showPopover', this, this.popover);
+    // console.log('showPopover', this, this.popover);
     this.popover.show();
   }
 
@@ -170,7 +208,7 @@ export default class GridIsciCell extends Component {
     const popoverIsciEditor = (
       <Popover id="popover-positioned-scrolling-top" title={title}>
         <FormGroup controlId="isciEditor" validationState={this.state.isValid}>
-          <ControlLabel>House ISCI*,Client ISCI*,Brand <span style={{ fontWeight: 'normal', color: '#999999' }}> Use (m) to denote a married house ISCI</span></ControlLabel>
+          <ControlLabel>House ISCI*,Client ISCI*, Day Include*, Brand <span style={{ fontWeight: 'normal', fontSize: '11px', color: '#999999' }}><br />Use (m) to denote a married house ISCI. Use | between days in Day Include (M|T|W).</span></ControlLabel>
           <FormControl componentClass="textarea" placeholder="Enter ISCIs" style={{ height: '100px' }} onChange={this.onChangeIscis} value={this.state.iscisValue} />
           {this.state.isValid != null &&
             <HelpBlock>

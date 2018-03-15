@@ -18,7 +18,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int audience_id { get; set; }
         public double impressions { get; set; }
     
-        public virtual affidavit_file_details affidavit_file_details { get; set; }
         public virtual audience audience { get; set; }
+        public virtual affidavit_file_details affidavit_file_details { get; set; }
     }
 }
