@@ -336,8 +336,8 @@
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.IntegrationTests.Common.18.3.1.1\lib\net45\Tam.Maestro.IntegrationTests.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.1\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
+    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.2\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
