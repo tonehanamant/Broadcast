@@ -786,7 +786,7 @@ namespace Services.Broadcast.Repositories
                         IsHiatus = !f.active,
                         StartDate = f.start_date,
                         MediaWeekId = f.media_week_id
-                    }).ToList(),
+                    }).OrderBy(w => w.StartDate).ToList(),
                 Equivalized = proposalVersion.equivalized,
                 SecondaryDemos =
                 proposalVersion.proposal_version_audiences.OrderBy(r => r.rank).Select(a => a.audience_id).ToList(),
@@ -861,7 +861,7 @@ namespace Services.Broadcast.Repositories
                                 Saturday = isci.saturday == null ? false : isci.saturday.Value,
                                 Sunday = isci.sunday == null ? false : isci.sunday.Value
                             }).ToList()
-                        }).ToList()
+                        }).OrderBy(w => w.StartDate).ToList()
                     }).ToList()
                 }).ToList()
             };
@@ -914,7 +914,7 @@ namespace Services.Broadcast.Repositories
                                 IsHiatus = !pf.active,
                                 StartDate = pf.start_date,
                                 EndDate = pf.end_date
-                            }).ToList();
+                            }).OrderBy(w => w.StartDate).ToList();
                 });
         }
 
@@ -1408,7 +1408,7 @@ namespace Services.Broadcast.Repositories
                     IsHiatus = !f.active,
                     StartDate = f.start_date,
                     MediaWeekId = f.media_week_id
-                }).ToList();
+                }).OrderBy(w => w.StartDate).ToList();
 
             baseDto.DetailDaypartId = pvd.daypart_id;
             baseDto.DetailSpotLengthId = pvd.spot_length_id;
@@ -1425,7 +1425,7 @@ namespace Services.Broadcast.Repositories
                         StartDate = week.start_date,
                         IsHiatus = week.is_hiatus,
                         MediaWeekId = week.media_week_id
-                    }).ToList()).ToList();
+                    })).OrderBy(w => w.StartDate).ToList();
             baseDto.SinglePostingBookId = pvd.single_posting_book_id;
             baseDto.SharePostingBookId = pvd.share_posting_book_id;
             baseDto.HutPostingBookId = pvd.hut_posting_book_id;
