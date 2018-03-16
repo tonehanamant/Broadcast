@@ -57,7 +57,6 @@
       ],
       "GenreCriteria": [],
       "HutPostingBookId": null,
-      "Order": null,
       "PlaybackType": 3,
       "ProgramCriteria": [],
       "Quarters": [
@@ -127,6 +126,7 @@
           "Year": 2017
         }
       ],
+      "Sequence": null,
       "SharePostingBookId": 413,
       "SinglePostingBookId": 413,
       "SpotLengthId": 1,

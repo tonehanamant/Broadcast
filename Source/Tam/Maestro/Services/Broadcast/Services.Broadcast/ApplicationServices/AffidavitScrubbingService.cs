@@ -99,15 +99,15 @@ namespace Services.Broadcast.ApplicationServices
                         DayPart = x.Daypart.Text,
                         Programs = x.ProgramCriteria,
                         Genres = x.GenreCriteria,
-                        Order = x.Order,
+                        Sequence = x.Sequence,
                         ClientScrubs = _AffidavitRepositry.GetProposalDetailPostScrubbing(x.Id.Value)
-                    }).OrderBy(x=>x.Order).ToList(),
+                    }).OrderBy(x=>x.Sequence).ToList(),
                     GuaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString,
                     Advertiser = advertiser != null ? advertiser.Display : string.Empty,
                     SecondaryDemos = proposal.SecondaryDemos.Select(x => _AudiencesCache.GetDisplayAudienceById(x).AudienceString).ToList()
                 };
                 
-                result.Details.ForEach(x => x.ClientScrubs.ForEach(y => y.Order = x.Order));
+                result.Details.ForEach(x => x.ClientScrubs.ForEach(y => y.Sequence = x.Sequence));
                 return result;
             }
         }

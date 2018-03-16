@@ -53,11 +53,16 @@ INSERT INTO #previous_version
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
 /*************************************** START BCOP-2665 *********************************************************/
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
+IF EXISTS(SELECT 1 FROM sys.columns 
               WHERE name = 'order' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
 BEGIN
-    ALTER TABLE [proposal_version_details] 
-	ADD [order] INT
+    EXEC sp_rename 'proposal_version_details.order', 'sequence', 'COLUMN';
+END
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'sequence' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [proposal_version_details] 
+	ADD [sequence] INT
 END
 /*************************************** END BCOP-2665 ***********************************************************/
 

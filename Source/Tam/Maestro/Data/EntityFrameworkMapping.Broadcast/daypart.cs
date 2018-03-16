@@ -18,8 +18,8 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.days = new HashSet<day>();
             this.schedule_details = new HashSet<schedule_details>();
-            this.proposal_version_details = new HashSet<proposal_version_details>();
             this.station_inventory_manifest_dayparts = new HashSet<station_inventory_manifest_dayparts>();
+            this.proposal_version_details = new HashSet<proposal_version_details>();
         }
     
         public int id { get; set; }
@@ -32,7 +32,7 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<day> days { get; set; }
         public virtual ICollection<schedule_details> schedule_details { get; set; }
-        public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
         public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
+        public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
     }
 }
