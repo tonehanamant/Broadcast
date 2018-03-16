@@ -142,15 +142,7 @@ export class PostScrubbingHeader extends Component {
               <Col md={4}>
                 <FormGroup controlId="proposalSecondaryDemo">
                   <ControlLabel><strong>Secondary Demo</strong></ControlLabel>
-                  <Select
-                    name="proposalSecondaryDemo"
-                    value={secondaryDemo}
-                    multi
-                    options={this.props.Audiences}
-                    labelKey="Display"
-                    valueKey="Id"
-                    disabled={isReadOnly}
-                  />
+                  <FormControl.Static>{secondaryDemo.join(', ') || '--'}</FormControl.Static>
                 </FormGroup>
               </Col>
               <Col md={4}>
