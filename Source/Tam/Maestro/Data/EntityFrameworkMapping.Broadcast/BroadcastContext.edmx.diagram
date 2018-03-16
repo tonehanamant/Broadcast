@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="84">
+      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="78">
         <EntityTypeShape EntityType="BroadcastModel.audience_audiences" Width="1.5" PointX="0.75" PointY="2.75" />
         <EntityTypeShape EntityType="BroadcastModel.audience" Width="1.5" PointX="2.75" PointY="0.5" />
         <EntityTypeShape EntityType="BroadcastModel.bvs_file_details" Width="1.5" PointX="15" PointY="35" />
@@ -99,7 +99,7 @@
         <AssociationConnector Association="BroadcastModel.FK_inventory_files_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_station_contacts_inventory_files_created" />
         <AssociationConnector Association="BroadcastModel.FK_station_contacts_inventory_files_modified" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_lengths" Width="1.5" PointX="0.75" PointY="22.625" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_lengths" Width="1.5" PointX="0.5" PointY="23.875" />
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_audiences" Width="1.5" PointX="17" PointY="13.75" />
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_dayparts" Width="1.5" PointX="19.25" PointY="14.125" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" />
@@ -149,7 +149,7 @@
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_demographics_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_problems_affidavit_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_files_affidavit_file_details" />
-        <EntityTypeShape EntityType="BroadcastModel.proposal_version_details" Width="1.5" PointX="24" PointY="19.875" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_version_details" Width="1.5" PointX="24" PointY="20.5" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_hut_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_share_media_months" />

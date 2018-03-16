@@ -42,7 +42,6 @@ namespace EntityFrameworkMapping.Broadcast
         public double proprietary_impressions_total { get; set; }
         public decimal proprietary_cost_total { get; set; }
         public Nullable<int> sequence { get; set; }
-        public Nullable<int> order { get; set; }
     
         public virtual daypart daypart { get; set; }
         public virtual media_months media_months { get; set; }
