@@ -92,6 +92,12 @@ export class PostScrubbingHeader extends Component {
   render() {
     const { advertiser, guaranteedDemo, Id, isReadOnly, marketId, name, notes, secondaryDemo } = this.props;
     const isCustomMarket = this.props.marketId === 255;
+    let marketLabel;
+    if (isCustomMarket) {
+      marketLabel = 'Custom';
+    } else {
+      marketLabel = marketId === 0 ? 'All' : `Top ${marketId}`
+    }
 
     return (
       <div>
@@ -118,7 +124,7 @@ export class PostScrubbingHeader extends Component {
                   <ControlLabel><strong>Market</strong></ControlLabel>
                   <div style={{ overflow: 'hidden' }} href="">
                     <span className="pull-left "style={{ width: '100%' }} >
-                      <FormControl.Static>{isCustomMarket ? 'Custom' : `Top ${marketId}`}</FormControl.Static>
+                      <FormControl.Static>{marketLabel}</FormControl.Static>
                       <Badge style={{
                         display: isCustomMarket ? 'block' : 'none',
                         position: 'absolute',

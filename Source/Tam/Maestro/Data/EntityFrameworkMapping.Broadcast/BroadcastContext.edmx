@@ -488,7 +488,7 @@
           <Property Name="open_market_cost_total" Type="money" Nullable="false" />
           <Property Name="proprietary_impressions_total" Type="float" Nullable="false" />
           <Property Name="proprietary_cost_total" Type="money" Nullable="false" />
-          <Property Name="order" Type="int" />
+          <Property Name="sequence" Type="int" />
         </EntityType>
         <EntityType Name="proposal_version_flight_weeks">
           <Key>
@@ -2652,32 +2652,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="proposal_versions" EntitySet="proposal_versions" />
             <End Role="proposal_version_audiences" EntitySet="proposal_version_audiences" />
           </AssociationSet>
-          <EntitySet Name="proposal_version_details" EntityType="BroadcastModel.proposal_version_details" />
-          <AssociationSet Name="FK_proposal_version_details_dayparts" Association="BroadcastModel.FK_proposal_version_details_dayparts">
-            <End Role="daypart" EntitySet="dayparts" />
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_details_hut_media_months" Association="BroadcastModel.FK_proposal_version_details_hut_media_months">
-            <End Role="media_months" EntitySet="media_months" />
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_details_share_media_months" Association="BroadcastModel.FK_proposal_version_details_share_media_months">
-            <End Role="media_months" EntitySet="media_months" />
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_details_single_media_months" Association="BroadcastModel.FK_proposal_version_details_single_media_months">
-            <End Role="media_months" EntitySet="media_months" />
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_details_proposal_versions" Association="BroadcastModel.FK_proposal_version_details_proposal_versions">
-            <End Role="proposal_versions" EntitySet="proposal_versions" />
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-          </AssociationSet>
           <EntitySet Name="proposal_version_detail_quarters" EntityType="BroadcastModel.proposal_version_detail_quarters" />
-          <AssociationSet Name="FK_proposal_version_detail_quarters_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details">
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-            <End Role="proposal_version_detail_quarters" EntitySet="proposal_version_detail_quarters" />
-          </AssociationSet>
           <EntitySet Name="proposal_version_detail_quarter_weeks" EntityType="BroadcastModel.proposal_version_detail_quarter_weeks" />
           <AssociationSet Name="FK_proposal_version_detail_quarter_weeks_media_weeks" Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_media_weeks">
             <End Role="media_weeks" EntitySet="media_weeks" />
@@ -2692,14 +2667,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="proposal_version_detail_criteria_genres" EntityType="BroadcastModel.proposal_version_detail_criteria_genres" />
           <AssociationSet Name="FK_proposal_version_detail_criteria_genres_genres" Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres">
             <End Role="genre" EntitySet="genres" />
-            <End Role="proposal_version_detail_criteria_genres" EntitySet="proposal_version_detail_criteria_genres" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_detail_criteria_cpm_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details">
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-            <End Role="proposal_version_detail_criteria_cpm" EntitySet="proposal_version_detail_criteria_cpm" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_detail_criteria_genres_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details">
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
             <End Role="proposal_version_detail_criteria_genres" EntitySet="proposal_version_detail_criteria_genres" />
           </AssociationSet>
           <EntitySet Name="rep_firms" EntityType="BroadcastModel.rep_firms" />
@@ -2764,10 +2731,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_post_file_details_spot_lengths" Association="BroadcastModel.FK_post_file_details_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="post_file_details" EntitySet="post_file_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_version_details_spot_lengths" Association="BroadcastModel.FK_proposal_version_details_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
           </AssociationSet>
           <AssociationSet Name="FK_proposal_version_spot_length_spot_lengths" Association="BroadcastModel.FK_proposal_version_spot_length_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
@@ -2863,10 +2826,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </AssociationSet>
           <EntitySet Name="affidavit_file_detail_problems" EntityType="BroadcastModel.affidavit_file_detail_problems" />
           <EntitySet Name="proposal_version_detail_criteria_programs" EntityType="BroadcastModel.proposal_version_detail_criteria_programs" />
-          <AssociationSet Name="FK_proposal_version_criteria_programs_proposal_version_criterias" Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias">
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-            <End Role="proposal_version_detail_criteria_programs" EntitySet="proposal_version_detail_criteria_programs" />
-          </AssociationSet>
           <EntitySet Name="program_names" EntityType="BroadcastModel.program_names" />
           <EntitySet Name="affidavit_outbound_file_problems" EntityType="BroadcastModel.affidavit_outbound_file_problems" />
           <EntitySet Name="affidavit_outbound_files" EntityType="BroadcastModel.affidavit_outbound_files" />
@@ -2899,6 +2858,47 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_affidavit_files_affidavit_file_details" Association="BroadcastModel.FK_affidavit_files_affidavit_file_details">
             <End Role="affidavit_files" EntitySet="affidavit_files" />
             <End Role="affidavit_file_details" EntitySet="affidavit_file_details" />
+          </AssociationSet>
+          <EntitySet Name="proposal_version_details" EntityType="BroadcastModel.proposal_version_details" />
+          <AssociationSet Name="FK_proposal_version_details_dayparts" Association="BroadcastModel.FK_proposal_version_details_dayparts">
+            <End Role="daypart" EntitySet="dayparts" />
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_details_hut_media_months" Association="BroadcastModel.FK_proposal_version_details_hut_media_months">
+            <End Role="media_months" EntitySet="media_months" />
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_details_share_media_months" Association="BroadcastModel.FK_proposal_version_details_share_media_months">
+            <End Role="media_months" EntitySet="media_months" />
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_details_single_media_months" Association="BroadcastModel.FK_proposal_version_details_single_media_months">
+            <End Role="media_months" EntitySet="media_months" />
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_detail_criteria_cpm_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details">
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+            <End Role="proposal_version_detail_criteria_cpm" EntitySet="proposal_version_detail_criteria_cpm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_detail_criteria_genres_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details">
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+            <End Role="proposal_version_detail_criteria_genres" EntitySet="proposal_version_detail_criteria_genres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_criteria_programs_proposal_version_criterias" Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias">
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+            <End Role="proposal_version_detail_criteria_programs" EntitySet="proposal_version_detail_criteria_programs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_detail_quarters_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details">
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+            <End Role="proposal_version_detail_quarters" EntitySet="proposal_version_detail_quarters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_details_proposal_versions" Association="BroadcastModel.FK_proposal_version_details_proposal_versions">
+            <End Role="proposal_versions" EntitySet="proposal_versions" />
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_details_spot_lengths" Association="BroadcastModel.FK_proposal_version_details_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -3020,8 +3020,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="total_hours" Type="Double" Nullable="false" />
           <NavigationProperty Name="days" Relationship="BroadcastModel.daypart_days" FromRole="daypart" ToRole="day" />
           <NavigationProperty Name="schedule_details" Relationship="BroadcastModel.FK_schedule_details_dayparts" FromRole="daypart" ToRole="schedule_details" />
-          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_dayparts" FromRole="daypart" ToRole="proposal_version_details" />
           <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_dayparts" FromRole="daypart" ToRole="station_inventory_manifest_dayparts" />
+          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_dayparts" FromRole="daypart" ToRole="proposal_version_details" />
         </EntityType>
         <EntityType Name="day">
           <Key>
@@ -3068,10 +3068,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="post_files" Relationship="BroadcastModel.FK_post_files_media_months" FromRole="media_months" ToRole="post_files" />
           <NavigationProperty Name="rating_adjustments" Relationship="BroadcastModel.FK_rating_adjustments_media_months" FromRole="media_months" ToRole="rating_adjustments" />
           <NavigationProperty Name="schedules" Relationship="BroadcastModel.FK_schedules_media_months" FromRole="media_months" ToRole="schedule" />
+          <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_files_media_months" FromRole="media_months" ToRole="inventory_files" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_hut_media_months" FromRole="media_months" ToRole="proposal_version_details" />
           <NavigationProperty Name="proposal_version_details1" Relationship="BroadcastModel.FK_proposal_version_details_share_media_months" FromRole="media_months" ToRole="proposal_version_details" />
           <NavigationProperty Name="proposal_version_details2" Relationship="BroadcastModel.FK_proposal_version_details_single_media_months" FromRole="media_months" ToRole="proposal_version_details" />
-          <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_files_media_months" FromRole="media_months" ToRole="inventory_files" />
         </EntityType>
         <EntityType Name="media_weeks">
           <Key>
@@ -3865,103 +3865,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="proposal_version_details">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="proposal_version_id" Type="Int32" Nullable="false" />
-          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
-          <Property Name="daypart_id" Type="Int32" Nullable="false" />
-          <Property Name="daypart_code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="units_total" Type="Int32" />
-          <Property Name="impressions_total" Type="Double" Nullable="false" />
-          <Property Name="cost_total" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="adu" Type="Boolean" Nullable="false" />
-          <Property Name="single_posting_book_id" Type="Int32" />
-          <Property Name="hut_posting_book_id" Type="Int32" />
-          <Property Name="share_posting_book_id" Type="Int32" />
-          <Property Name="playback_type" Type="Byte" Nullable="false" />
-          <Property Name="open_market_impressions_total" Type="Double" Nullable="false" />
-          <Property Name="open_market_cost_total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="proprietary_impressions_total" Type="Double" Nullable="false" />
-          <Property Name="proprietary_cost_total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_proposal_version_details_dayparts" FromRole="proposal_version_details" ToRole="daypart" />
-          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_proposal_version_details_hut_media_months" FromRole="proposal_version_details" ToRole="media_months" />
-          <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_proposal_version_details_share_media_months" FromRole="proposal_version_details" ToRole="media_months" />
-          <NavigationProperty Name="media_months2" Relationship="BroadcastModel.FK_proposal_version_details_single_media_months" FromRole="proposal_version_details" ToRole="media_months" />
-          <NavigationProperty Name="proposal_versions" Relationship="BroadcastModel.FK_proposal_version_details_proposal_versions" FromRole="proposal_version_details" ToRole="proposal_versions" />
-          <NavigationProperty Name="proposal_version_detail_quarters" Relationship="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_quarters" />
-          <NavigationProperty Name="proposal_version_detail_criteria_cpm" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_cpm" />
-          <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_genres" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="proposal_version_details" ToRole="spot_lengths" />
-          <NavigationProperty Name="proposal_version_detail_criteria_programs" Relationship="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_programs" />
-          <Property Name="order" Type="Int32" />
-        </EntityType>
-        <Association Name="FK_proposal_version_details_dayparts">
-          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="daypart">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_details">
-              <PropertyRef Name="daypart_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_details_hut_media_months">
-          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_months">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_details">
-              <PropertyRef Name="hut_posting_book_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_details_share_media_months">
-          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_months">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_details">
-              <PropertyRef Name="share_posting_book_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_details_single_media_months">
-          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_months">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_details">
-              <PropertyRef Name="single_posting_book_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_details_proposal_versions">
-          <End Type="BroadcastModel.proposal_versions" Role="proposal_versions" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_versions">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_details">
-              <PropertyRef Name="proposal_version_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="proposal_version_detail_quarters">
           <Key>
             <PropertyRef Name="id" />
@@ -3972,23 +3875,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="year" Type="Int32" Nullable="false" />
           <Property Name="cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="impressions_goal" Type="Double" Nullable="false" />
-          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" FromRole="proposal_version_detail_quarters" ToRole="proposal_version_details" />
           <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_proposal_version_detail_quarters" FromRole="proposal_version_detail_quarters" ToRole="proposal_version_detail_quarter_weeks" />
+          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" FromRole="proposal_version_detail_quarters" ToRole="proposal_version_details" />
         </EntityType>
-        <Association Name="FK_proposal_version_detail_quarters_proposal_version_details">
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.proposal_version_detail_quarters" Role="proposal_version_detail_quarters" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_version_details">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_detail_quarters">
-              <PropertyRef Name="proposal_version_detail_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="proposal_version_detail_quarter_weeks">
           <Key>
             <PropertyRef Name="id" />
@@ -4082,34 +3971,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="proposal_version_detail_criteria_genres">
               <PropertyRef Name="genre_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_detail_criteria_cpm_proposal_version_details">
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.proposal_version_detail_criteria_cpm" Role="proposal_version_detail_criteria_cpm" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_version_details">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_detail_criteria_cpm">
-              <PropertyRef Name="proposal_version_detail_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_detail_criteria_genres_proposal_version_details">
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.proposal_version_detail_criteria_genres" Role="proposal_version_detail_criteria_genres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_version_details">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_detail_criteria_genres">
-              <PropertyRef Name="proposal_version_detail_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4336,12 +4197,12 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="is_default" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="bvs_file_details" Relationship="BroadcastModel.FK_bvs_file_details_spot_lengths" FromRole="spot_lengths" ToRole="bvs_file_details" />
           <NavigationProperty Name="post_file_details" Relationship="BroadcastModel.FK_post_file_details_spot_lengths" FromRole="spot_lengths" ToRole="post_file_details" />
-          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="spot_lengths" ToRole="proposal_version_details" />
           <NavigationProperty Name="proposal_version_spot_length" Relationship="BroadcastModel.FK_proposal_version_spot_length_spot_lengths" FromRole="spot_lengths" ToRole="proposal_version_spot_length" />
           <NavigationProperty Name="schedule_details" Relationship="BroadcastModel.FK_schedule_details_spot_lengths" FromRole="spot_lengths" ToRole="schedule_details" />
           <NavigationProperty Name="spot_length_cost_multipliers" Relationship="BroadcastModel.FK_spot_length_cost_multipliers_spot_lengths" FromRole="spot_lengths" ToRole="spot_length_cost_multipliers" />
           <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_manifest_rates" />
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_manifest" />
+          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="spot_lengths" ToRole="proposal_version_details" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_audiences">
           <Key>
@@ -4412,18 +4273,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="post_file_details">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_version_details_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_details">
               <PropertyRef Name="spot_length_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -4857,20 +4706,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="program_name_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" FromRole="proposal_version_detail_criteria_programs" ToRole="proposal_version_details" />
         </EntityType>
-        <Association Name="FK_proposal_version_criteria_programs_proposal_version_criterias">
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.proposal_version_detail_criteria_programs" Role="proposal_version_detail_criteria_programs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_version_details">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_version_detail_criteria_programs">
-              <PropertyRef Name="proposal_version_detail_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="program_names">
           <Key>
             <PropertyRef Name="id" />
@@ -5036,6 +4871,171 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="affidavit_file_details">
               <PropertyRef Name="affidavit_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="proposal_version_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="proposal_version_id" Type="Int32" Nullable="false" />
+          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
+          <Property Name="daypart_id" Type="Int32" Nullable="false" />
+          <Property Name="daypart_code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="units_total" Type="Int32" />
+          <Property Name="impressions_total" Type="Double" Nullable="false" />
+          <Property Name="cost_total" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="adu" Type="Boolean" Nullable="false" />
+          <Property Name="single_posting_book_id" Type="Int32" />
+          <Property Name="hut_posting_book_id" Type="Int32" />
+          <Property Name="share_posting_book_id" Type="Int32" />
+          <Property Name="playback_type" Type="Byte" Nullable="false" />
+          <Property Name="open_market_impressions_total" Type="Double" Nullable="false" />
+          <Property Name="open_market_cost_total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="proprietary_impressions_total" Type="Double" Nullable="false" />
+          <Property Name="proprietary_cost_total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="sequence" Type="Int32" />
+          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_proposal_version_details_dayparts" FromRole="proposal_version_details" ToRole="daypart" />
+          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_proposal_version_details_hut_media_months" FromRole="proposal_version_details" ToRole="media_months" />
+          <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_proposal_version_details_share_media_months" FromRole="proposal_version_details" ToRole="media_months" />
+          <NavigationProperty Name="media_months2" Relationship="BroadcastModel.FK_proposal_version_details_single_media_months" FromRole="proposal_version_details" ToRole="media_months" />
+          <NavigationProperty Name="proposal_version_detail_criteria_cpm" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_cpm" />
+          <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_genres" />
+          <NavigationProperty Name="proposal_version_detail_criteria_programs" Relationship="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_programs" />
+          <NavigationProperty Name="proposal_version_detail_quarters" Relationship="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_quarters" />
+          <NavigationProperty Name="proposal_versions" Relationship="BroadcastModel.FK_proposal_version_details_proposal_versions" FromRole="proposal_version_details" ToRole="proposal_versions" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="proposal_version_details" ToRole="spot_lengths" />
+        </EntityType>
+        <Association Name="FK_proposal_version_details_dayparts">
+          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_details">
+              <PropertyRef Name="daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_details_hut_media_months">
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_details">
+              <PropertyRef Name="hut_posting_book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_details_share_media_months">
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_details">
+              <PropertyRef Name="share_posting_book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_details_single_media_months">
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_details">
+              <PropertyRef Name="single_posting_book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_detail_criteria_cpm_proposal_version_details">
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.proposal_version_detail_criteria_cpm" Role="proposal_version_detail_criteria_cpm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_detail_criteria_cpm">
+              <PropertyRef Name="proposal_version_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_detail_criteria_genres_proposal_version_details">
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.proposal_version_detail_criteria_genres" Role="proposal_version_detail_criteria_genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_detail_criteria_genres">
+              <PropertyRef Name="proposal_version_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_criteria_programs_proposal_version_criterias">
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.proposal_version_detail_criteria_programs" Role="proposal_version_detail_criteria_programs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_detail_criteria_programs">
+              <PropertyRef Name="proposal_version_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_detail_quarters_proposal_version_details">
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.proposal_version_detail_quarters" Role="proposal_version_detail_quarters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_detail_quarters">
+              <PropertyRef Name="proposal_version_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_details_proposal_versions">
+          <End Type="BroadcastModel.proposal_versions" Role="proposal_versions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_versions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_details">
+              <PropertyRef Name="proposal_version_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_version_details_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_details">
+              <PropertyRef Name="spot_length_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5529,32 +5529,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="proposal_version_details">
-            <EntityTypeMapping TypeName="BroadcastModel.proposal_version_details">
-              <MappingFragment StoreEntitySet="proposal_version_details">
-                <ScalarProperty Name="order" ColumnName="order" />
-                <ScalarProperty Name="proprietary_cost_total" ColumnName="proprietary_cost_total" />
-                <ScalarProperty Name="proprietary_impressions_total" ColumnName="proprietary_impressions_total" />
-                <ScalarProperty Name="open_market_cost_total" ColumnName="open_market_cost_total" />
-                <ScalarProperty Name="open_market_impressions_total" ColumnName="open_market_impressions_total" />
-                <ScalarProperty Name="playback_type" ColumnName="playback_type" />
-                <ScalarProperty Name="share_posting_book_id" ColumnName="share_posting_book_id" />
-                <ScalarProperty Name="hut_posting_book_id" ColumnName="hut_posting_book_id" />
-                <ScalarProperty Name="single_posting_book_id" ColumnName="single_posting_book_id" />
-                <ScalarProperty Name="adu" ColumnName="adu" />
-                <ScalarProperty Name="cost_total" ColumnName="cost_total" />
-                <ScalarProperty Name="impressions_total" ColumnName="impressions_total" />
-                <ScalarProperty Name="units_total" ColumnName="units_total" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
-                <ScalarProperty Name="start_date" ColumnName="start_date" />
-                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
-                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
-                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
-                <ScalarProperty Name="proposal_version_id" ColumnName="proposal_version_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="proposal_version_detail_quarters">
             <EntityTypeMapping TypeName="BroadcastModel.proposal_version_detail_quarters">
               <MappingFragment StoreEntitySet="proposal_version_detail_quarters">
@@ -5938,6 +5912,32 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="original_air_date" ColumnName="original_air_date" />
                 <ScalarProperty Name="station" ColumnName="station" />
                 <ScalarProperty Name="affidavit_file_id" ColumnName="affidavit_file_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proposal_version_details">
+            <EntityTypeMapping TypeName="BroadcastModel.proposal_version_details">
+              <MappingFragment StoreEntitySet="proposal_version_details">
+                <ScalarProperty Name="sequence" ColumnName="sequence" />
+                <ScalarProperty Name="proprietary_cost_total" ColumnName="proprietary_cost_total" />
+                <ScalarProperty Name="proprietary_impressions_total" ColumnName="proprietary_impressions_total" />
+                <ScalarProperty Name="open_market_cost_total" ColumnName="open_market_cost_total" />
+                <ScalarProperty Name="open_market_impressions_total" ColumnName="open_market_impressions_total" />
+                <ScalarProperty Name="playback_type" ColumnName="playback_type" />
+                <ScalarProperty Name="share_posting_book_id" ColumnName="share_posting_book_id" />
+                <ScalarProperty Name="hut_posting_book_id" ColumnName="hut_posting_book_id" />
+                <ScalarProperty Name="single_posting_book_id" ColumnName="single_posting_book_id" />
+                <ScalarProperty Name="adu" ColumnName="adu" />
+                <ScalarProperty Name="cost_total" ColumnName="cost_total" />
+                <ScalarProperty Name="impressions_total" ColumnName="impressions_total" />
+                <ScalarProperty Name="units_total" ColumnName="units_total" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
+                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
+                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+                <ScalarProperty Name="proposal_version_id" ColumnName="proposal_version_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

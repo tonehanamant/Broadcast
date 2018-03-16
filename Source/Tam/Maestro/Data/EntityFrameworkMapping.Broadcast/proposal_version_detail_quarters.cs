@@ -26,7 +26,7 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal cpm { get; set; }
         public double impressions_goal { get; set; }
     
-        public virtual proposal_version_details proposal_version_details { get; set; }
         public virtual ICollection<proposal_version_detail_quarter_weeks> proposal_version_detail_quarter_weeks { get; set; }
+        public virtual proposal_version_details proposal_version_details { get; set; }
     }
 }

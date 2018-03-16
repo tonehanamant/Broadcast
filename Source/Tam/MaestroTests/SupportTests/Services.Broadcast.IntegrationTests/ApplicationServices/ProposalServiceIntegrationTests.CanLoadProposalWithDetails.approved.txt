@@ -33,7 +33,6 @@
       ],
       "GenreCriteria": [],
       "HutPostingBookId": 410,
-      "Order": null,
       "PlaybackType": 4,
       "ProgramCriteria": [
         {
@@ -66,6 +65,7 @@
           "Year": 2016
         }
       ],
+      "Sequence": null,
       "SharePostingBookId": 413,
       "SinglePostingBookId": null,
       "SpotLengthId": 1,
@@ -102,7 +102,6 @@
       ],
       "GenreCriteria": [],
       "HutPostingBookId": 410,
-      "Order": null,
       "PlaybackType": 4,
       "ProgramCriteria": [],
       "Quarters": [
@@ -128,6 +127,7 @@
           "Year": 2016
         }
       ],
+      "Sequence": null,
       "SharePostingBookId": 413,
       "SinglePostingBookId": null,
       "SpotLengthId": 1,
