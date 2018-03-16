@@ -137,8 +137,8 @@
       <HintPath>..\BroadcastComposerWeb\packages\Tam.Maestro.IntegrationTests.Common.18.3.1.1\lib\net45\Tam.Maestro.IntegrationTests.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.1\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
+    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.2\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Topshelf, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
@@ -176,7 +176,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="ServiceCommonAppSettings.config" />
+    <None Include="ServiceCommonAppSettings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Tam\Maestro\Services\Broadcast\Services.Broadcast\Services.Broadcast.csproj">

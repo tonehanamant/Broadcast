@@ -17,23 +17,17 @@ namespace Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast
         public int media_month_id { get; set; }
         public string file_name { get; set; }
         public Nullable<int> dma_id { get; set; }
-        public int file_size { get; set; }
-        public string hash { get; set; }
-        public string zip_hash { get; set; }
-        public double duration { get; set; }
         public string format_version { get; set; }
         public short market_code { get; set; }
         public short dma_code { get; set; }
         public Nullable<short> market_rank { get; set; }
         public string geography_indicator { get; set; }
         public string geography_name { get; set; }
-        public System.DateTime start_date_of_survey { get; set; }
-        public int start_time_of_survey { get; set; }
-        public System.DateTime end_date_of_survey { get; set; }
-        public int end_time_of_survey { get; set; }
+        public System.DateTime start_datetime_of_survey { get; set; }
+        public System.DateTime end_datetime_of_survey { get; set; }
         public short number_of_days_in_survey { get; set; }
         public short number_of_weeks_in_survey { get; set; }
-        public int reporting_day_start_time { get; set; }
+        public System.TimeSpan reporting_day_start_time { get; set; }
         public string reporting_service { get; set; }
         public string special_report_exclusion_indicator { get; set; }
         public string subsample_indicator { get; set; }

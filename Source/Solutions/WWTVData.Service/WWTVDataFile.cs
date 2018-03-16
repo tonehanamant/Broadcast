@@ -24,14 +24,14 @@ namespace WWTVData.Service
             get { return "WWTV File Retriever";  }
         }
 
-        private string _DropFileFolder;
-        public string DropFileFolder
+        private string _SharedFolder;
+        public string SharedFolder
         {
             get
             {
-                if (_DropFileFolder == null)
-                    _DropFileFolder = BroadcastServiceSystemParameter.WWTV_SharedFolder;
-                return _DropFileFolder;
+                if (_SharedFolder == null)
+                    _SharedFolder = BroadcastServiceSystemParameter.WWTV_SharedFolder;
+                return _SharedFolder;
             }
         }
 
@@ -105,7 +105,7 @@ namespace WWTVData.Service
             {
                 try
                 {
-                    filesFound = Directory.GetFiles(DropFileFolder);
+                    filesFound = Directory.GetFiles(SharedFolder);
                 }
                 catch (Exception e)
                 {
