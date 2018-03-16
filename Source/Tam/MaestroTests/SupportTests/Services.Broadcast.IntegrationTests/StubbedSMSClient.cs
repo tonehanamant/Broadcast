@@ -100,13 +100,16 @@ namespace Services.Broadcast.IntegrationTests
                     result = "broadcast@crossmw.com";
                     break;
                 case "EmailUsername":
-                    result = "traffic@crossmw.com";
+                    result = "broadcastsmtp@crossmw.com";
                     break;
                 case "EmailPassword":
-                    result = "JMnxeJ1eBhqAsFnqv/lr4w==";
+                    result = "7TUCE+HAp3LDexQ6JIvaEA==";
                     break;
                 case "EmailWhiteList":
                     result = "mhohenshilt@crossmw.com";
+                    break;
+                case "EmailNotificationsEnabled":
+                    result = "True";
                     break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);

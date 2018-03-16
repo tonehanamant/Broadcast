@@ -117,7 +117,7 @@ namespace WWTVData.Service
                 response.ForEach(r =>
                 {
                     if (r.Status == (int)AffidaviteFileProcessingStatus.Valid)
-                        Directory.Delete(r.FilePath);
+                        File.Delete(r.FilePath);
                 });
                 _LastRun = DateTime.Now;
             }

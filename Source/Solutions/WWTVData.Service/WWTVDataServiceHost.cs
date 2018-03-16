@@ -12,9 +12,6 @@ namespace WWTVData.Service
 
         public static void Main(string[] args)
         {
-            var _ApplicationServiceFactory = new BroadcastApplicationServiceFactory();
-            _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetInitialProposalData(DateTime.Now);
-
             List<ScheduledServiceMethod> servicesToRun = new List<ScheduledServiceMethod>()
             {
                 new WWTVDataFile()
