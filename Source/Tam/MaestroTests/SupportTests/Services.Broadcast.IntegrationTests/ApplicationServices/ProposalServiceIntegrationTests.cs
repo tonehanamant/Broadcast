@@ -129,7 +129,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     }
                 },
-                Order = 0
+                Sequence = 0
             };
         }
 

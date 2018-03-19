@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Security.Principal;
 using Common.Systems.DataTransferObjects;
@@ -35,7 +36,7 @@ namespace Services.Broadcast.IntegrationTests
         public string GetResource(string pTamResource)
         {
             //@todo, Temporary switch to check if the CI server is running the tests.
-            if (WindowsIdentity.GetCurrent().Owner.Value == "S-1-5-32-544")
+            if (System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Development")
             {
                 if (pTamResource == "BroadcastConnectionString")
                 {
@@ -48,7 +49,7 @@ namespace Services.Broadcast.IntegrationTests
                         @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_forecast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
             }
-            else
+            else if(System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Staging")
             {
                 if (pTamResource == "BroadcastConnectionString")
                 {
@@ -61,6 +62,20 @@ namespace Services.Broadcast.IntegrationTests
                         @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_forecast_integration_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
             }
+            else if (System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Release")
+            {
+                if (pTamResource == "BroadcastConnectionString")
+                {
+                    return
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_integration_codefreeze;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                }
+                else if (pTamResource == "BroadcastForecastConnectionString")
+                {
+                    return
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_forecast_integration_codefreeze;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                }
+            }
+
             throw new Exception("Un-coded resource: " + pTamResource);
         }
 
@@ -100,13 +115,16 @@ namespace Services.Broadcast.IntegrationTests
                     result = "broadcast@crossmw.com";
                     break;
                 case "EmailUsername":
-                    result = "traffic@crossmw.com";
+                    result = "broadcastsmtp@crossmw.com";
                     break;
                 case "EmailPassword":
-                    result = "JMnxeJ1eBhqAsFnqv/lr4w==";
+                    result = "7TUCE+HAp3LDexQ6JIvaEA==";
                     break;
                 case "EmailWhiteList":
                     result = "mhohenshilt@crossmw.com";
+                    break;
+                case "EmailNotificationsEnabled":
+                    result = "True";
                     break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);

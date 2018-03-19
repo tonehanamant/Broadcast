@@ -176,7 +176,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="ServiceCommonAppSettings.config" />
+    <None Include="ServiceCommonAppSettings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Tam\Maestro\Services\Broadcast\Services.Broadcast\Services.Broadcast.csproj">

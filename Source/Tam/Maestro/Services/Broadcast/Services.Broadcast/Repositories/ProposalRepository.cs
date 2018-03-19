@@ -315,7 +315,7 @@ namespace Services.Broadcast.Repositories
             context.proposal_version_details.AddRange(
                 proposalDetails.Select(proposalDetail => new proposal_version_details
                 {
-                    order = proposalDetail.Order,
+                    sequence = proposalDetail.Sequence,
                     cost_total = proposalDetail.TotalCost,
                     daypart_code = proposalDetail.DaypartCode,
                     proposal_version_id = proposalVersionId,
@@ -797,7 +797,7 @@ namespace Services.Broadcast.Repositories
                 Details = proposalVersion.proposal_version_details.Select(version => new ProposalDetailDto
                 {
                     Id = version.id,
-                    Order = version.order,
+                    Sequence = version.sequence,
                     DaypartCode = version.daypart_code,
                     SpotLengthId = version.spot_length_id,
                     TotalCost = version.cost_total.GetValueOrDefault(),
@@ -862,9 +862,9 @@ namespace Services.Broadcast.Repositories
                                 Sunday = isci.sunday == null ? false : isci.sunday.Value
                             }).ToList()
                         }).OrderBy(w => w.StartDate).ToList()
+                        }).ToList()
                     }).ToList()
-                }).ToList()
-            };
+                };
 
             return proposalDto;
         }
