@@ -15,7 +15,6 @@ export class PostScrubbingHeader extends Component {
 
     this.datesSelectorOptionRenderer = this.datesSelectorOptionRenderer.bind(this);
     this.datesSelectorValueRenderer = this.datesSelectorValueRenderer.bind(this);
-    this.handleDatesOnChange = this.handleDatesOnChange.bind(this);
   }
 
   componentDidMount() {
@@ -80,13 +79,6 @@ export class PostScrubbingHeader extends Component {
         <span className="pull-left ">{this.state.activeDate}</span>
       </div>
     );
-  }
-
-  handleDatesOnChange(option) {
-    const { getPostScrubbingDetail, Id } = this.props;
-    const selectedDate = this.state.dates.filter(item => option.Id === item.Id);
-    this.setState({ activeDate: selectedDate[0].Display });
-    getPostScrubbingDetail(Id, selectedDate[0].Id);
   }
 
   render() {
@@ -183,21 +175,21 @@ export class PostScrubbingHeader extends Component {
 
 PostScrubbingHeader.defaultProps = {
   isReadOnly: true,
-  getProposalDetail: () => { },
+  // getProposalDetail: () => { },
 };
 
-PostScrubbingHeader.PropTypes = {
+PostScrubbingHeader.propTypes = {
   advertiser: PropTypes.string.isRequired,
   date: PropTypes.object.isRequired,
   guaranteedDemo: PropTypes.string.isRequired,
   Id: PropTypes.string.isRequired,
   isReadOnly: PropTypes.bool,
-  market: PropTypes.object.isRequired,
-  marketId: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  notes: PropTypes.string.isRequired,
-  secondaryDemo: PropTypes.object.isRequired,
-    getProposalDetail: PropTypes.func.isRequired,
+  market: PropTypes.object,
+  marketId: PropTypes.number,
+  name: PropTypes.string,
+  notes: PropTypes.string,
+  secondaryDemo: PropTypes.object,
+  // getProposalDetail: PropTypes.func.isRequired,
 };
 
 export default PostScrubbingHeader;

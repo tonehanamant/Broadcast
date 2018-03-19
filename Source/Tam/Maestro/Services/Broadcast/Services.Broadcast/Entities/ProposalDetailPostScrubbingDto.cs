@@ -4,6 +4,7 @@ namespace Services.Broadcast.Entities
 {
     public class ProposalDetailPostScrubbingDto
     {
+        public int? ProposalDetailId { get; set; }
         public DateTime TimeAired { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
         public DateTime WeekStart { get; set; }
