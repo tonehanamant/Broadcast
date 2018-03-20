@@ -172,11 +172,8 @@ namespace Services.Broadcast.BusinessEngines
                     affidavitDetail.AirTime.Date <= timeMatchedDetail.ProposalVersionDetailWeekEnd &&
                     timeMatchedDetail.Spots != 0)
                 {
-                    if (displayDaypart.Days.Contains(affidavitDetail.AirTime.DayOfWeek))
-                    {
-                        timeMatchedDetail.AirtimeMatch = true;
-                        result.Add(timeMatchedDetail);
-                    }
+                    timeMatchedDetail.AirtimeMatch = true;
+                    result.Add(timeMatchedDetail);
                 }
             }
 
