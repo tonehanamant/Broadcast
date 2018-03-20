@@ -2,20 +2,37 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Actions } from 'react-redux-grid';
 
 import { Button, Modal } from 'react-bootstrap';
-import { toggleModal } from 'Ducks/app';
-import { getPostScrubbingDetail, clearPostScrubbingDetail } from 'Ducks/post';
+import { toggleModal, setOverlayLoading } from 'Ducks/app';
+// import { getPostScrubbingDetail, clearPostScrubbingDetail } from 'Ducks/post'; //  ?
 
 import PostScrubbingHeader from './PostScrubbingHeader';
 import PostScrubbingDetail from './PostScrubbingDetail';
+
+const { SelectionActions, GridActions } = Actions;
+const { selectRow, deselectAll } = SelectionActions;
+const { doLocalSort } = GridActions;
+
 /* eslint-disable */
-const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post: { proposalHeader, proposalDetail } }) => ({
-modal, proposalHeader, proposalDetail
+const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post: { proposalHeader = { } }, grid, dataSource }) => ({
+	modal,
+	proposalHeader,
+	grid,
+    dataSource,
 });
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ clearPostScrubbingDetail, getPostScrubbingDetail, toggleModal }, dispatch)
+	bindActionCreators({
+		// clearPostScrubbingDetail,
+		// getPostScrubbingDetail,
+		toggleModal,
+		selectRow,
+		deselectAll,
+		doLocalSort,
+		setOverlayLoading,
+	}, dispatch)
 );
 
 
@@ -33,7 +50,7 @@ export class PostScrubbingModal extends Component {
 		properties: this.props.modal.properties,
 		});
 
-		this.props.clearPostScrubbingDetail();
+		// this.props.clearPostScrubbingDetail();  //??
 	}
 
 	dismiss() {
@@ -42,12 +59,15 @@ export class PostScrubbingModal extends Component {
 	}
 
 	render() {
-		const { proposalHeader: { Advertiser, Id, Name, Markets, GuaranteedDemo, SecondaryDemos, Notes, MarketGroupId, Details } } = this.props;
-		const { getPostScrubbingDetail } = this.props;
-		const { proposalDetail } = this.props;
+	// const { getPostScrubbingDetail } = this.props;
+		const { proposalHeader } = this.props;
+		const { scrubbingData = {}, activeScrubbingData = {} } = proposalHeader;
+		const { Advertiser, Id, Name, Markets, GuaranteedDemo, SecondaryDemos, Notes, MarketGroupId, Details } = scrubbingData;
+		const { grid, dataSource } = this.props;
+		const { selectRow, deselectAll, doLocalSort, setOverlayLoading } = this.props;
 
 		return (
-			<Modal show={this.props.modal.active} onHide={this.close} dialogClassName="planning-versions-modal">
+			<Modal ref={this.setWrapperRef} show={this.props.modal.active} dialogClassName="post-scrubbing-modal">
 					<Modal.Header>
 						<Button className="close" bsStyle="link" onClick={this.close} style={{ display: 'inline-block', float: 'right' }}>
 							<span>&times;</span>
@@ -62,11 +82,19 @@ export class PostScrubbingModal extends Component {
 							name={Name}
 							notes={Notes}
 							secondaryDemo={SecondaryDemos}
-							getPostScrubbingDetail={getPostScrubbingDetail}
+							// getPostScrubbingDetail={getPostScrubbingDetail}
 						/>
 					</Modal.Header>
 					<Modal.Body>
-						{<PostScrubbingDetail />}
+						<PostScrubbingDetail
+							activeScrubbingData={activeScrubbingData}
+							grid={grid}
+							dataSource={dataSource}
+							selectRow={selectRow}
+							deselectAll={deselectAll}
+							doLocalSort={doLocalSort}
+							setOverlayLoading={setOverlayLoading}
+						/>
 					</Modal.Body>
 					<Modal.Footer>
 						<Button onClick={this.close} bsStyle={this.props.modal.properties.closeButtonBsStyle} >Cancel</Button>
@@ -95,6 +123,14 @@ PostScrubbingModal.defaultProps = {
 PostScrubbingModal.propTypes = {
 	modal: PropTypes.object.isRequired,
 	toggleModal: PropTypes.func.isRequired,
+	grid: PropTypes.object.isRequired,
+	dataSource: PropTypes.object.isRequired,
+	proposalHeader: PropTypes.object.isRequired,
+
+    setOverlayLoading: PropTypes.func.isRequired,
+    selectRow: PropTypes.func.isRequired,
+    deselectAll: PropTypes.func.isRequired,
+    doLocalSort: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostScrubbingModal);

@@ -60,6 +60,8 @@ const initialState = {
   isGenresLoading: false,
   programs: [],
   isProgramsLoading: false,
+  isISCIEdited: false,
+  isGridCellEdited: false,
 };
 
 initialState.proposalEditForm = { ...initialState.proposal };
@@ -293,6 +295,20 @@ export default function reducer(state = initialState, action) {
       };
     }
 
+    case ACTIONS.TOGGLE_EDIT_ISCI_CLASS: {
+      return {
+        ...state,
+        isISCIEdited: data,
+      };
+    }
+
+    case ACTIONS.TOGGLE_EDIT_GRID_CELL_CLASS: {
+      return {
+        ...state,
+        isGridCellEdited: data,
+      };
+    }
+
     default:
       return state;
   }
@@ -402,4 +418,14 @@ export const getGenres = query => ({
 export const getPrograms = params => ({
   type: ACTIONS.REQUEST_PROGRAMS,
   payload: params,
+});
+
+export const toggleEditIsciClass = bool => ({
+  type: ACTIONS.TOGGLE_EDIT_ISCI_CLASS,
+  data: bool,
+});
+
+export const toggleEditGridCellClass = bool => ({
+  type: ACTIONS.TOGGLE_EDIT_GRID_CELL_CLASS,
+  data: bool,
 });

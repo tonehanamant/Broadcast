@@ -147,6 +147,8 @@ export default class ProposalDetailGrid extends Component {
                   maskPrefix="CPM $ "
                   maskAllowDecimal
                   maskDecimalLimit={2}
+                  isGridCellEdited={this.props.isGridCellEdited}
+                  toggleEditGridCellClass={this.props.toggleEditGridCellClass}
                 />
               );
             }
@@ -162,6 +164,8 @@ export default class ProposalDetailGrid extends Component {
                 blurAction={inputUnits}
                 enterKeyPressAction={inputUnits}
                 maskType="default"
+                isGridCellEdited={this.props.isGridCellEdited}
+                toggleEditGridCellClass={this.props.toggleEditGridCellClass}
               />
             );
           },
@@ -237,6 +241,8 @@ export default class ProposalDetailGrid extends Component {
                   maskPrefix="Imp Goal (000) "
                   maskAllowDecimal
                   maskDecimalLimit={3}
+                  isGridCellEdited={this.props.isGridCellEdited}
+                  toggleEditGridCellClass={this.props.toggleEditGridCellClass}
                 />
               );
             }
@@ -254,6 +260,8 @@ export default class ProposalDetailGrid extends Component {
                 maskType="createNumber"
                 maskAllowDecimal
                 maskDecimalLimit={3}
+                isGridCellEdited={this.props.isGridCellEdited}
+                toggleEditGridCellClass={this.props.toggleEditGridCellClass}
               />
             );
           },
@@ -302,6 +310,8 @@ export default class ProposalDetailGrid extends Component {
               hasNext={!row.IsLast}
               weekCnt={row.WeekCnt}
               ref={(ref) => { this.isciCellItems[cellKey] = ref; }}
+              isISCIEdited={this.props.isISCIEdited}
+              toggleEditIsciClass={this.props.toggleEditIsciClass}
             />
           );
         }
@@ -393,4 +403,8 @@ ProposalDetailGrid.propTypes = {
   onUpdateProposal: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   proposalValidationStates: PropTypes.object.isRequired,
+  isISCIEdited: PropTypes.bool.isRequired,
+  toggleEditIsciClass: PropTypes.func.isRequired,
+  isGridCellEdited: PropTypes.bool.isRequired,
+  toggleEditGridCellClass: PropTypes.func.isRequired,
 };

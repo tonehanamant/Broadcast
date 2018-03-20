@@ -1,36 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Grid, Actions } from 'react-redux-grid';
+import { Grid } from 'react-redux-grid';
 import Sorter from 'Utils/react-redux-grid-sorter';
 
-import { setOverlayLoading } from 'Ducks/app';
-import CustomPager from 'Components/shared/CustomPager';
+// import CustomPager from 'Components/shared/CustomPager';
 import { getDateInFormat, getDay } from '../../../../utils/dateFormatter';
-
-const { MenuActions, SelectionActions, GridActions } = Actions;
-const { showMenu, hideMenu } = MenuActions;
-const { selectRow, deselectAll } = SelectionActions;
-const { doLocalSort } = GridActions;
-
-const mapStateToProps = ({ post: { proposalHeader: { Details } }, grid, dataSource, menu }) => ({
-    Details,
-    grid,
-    dataSource,
-    menu,
-});
-
-const mapDispatchToProps = dispatch => (bindActionCreators(
-    {
-      showMenu,
-      hideMenu,
-      selectRow,
-      deselectAll,
-      doLocalSort,
-      setOverlayLoading,
-    }, dispatch)
-);
 
 /* eslint-disable */
 export class PostScrubbingGrid extends Component {
@@ -39,16 +13,16 @@ export class PostScrubbingGrid extends Component {
         this.context = context;
     }
 
-    shouldComponentUpdate(nextProps) {
-        return nextProps.ClientScrubs !== this.props.ClientScrubs;
-    }
+   /*  shouldComponentUpdate(nextProps) {
+        // return nextProps.ClientScrubs !== this.props.ClientScrubs;
+    } */
 
     componentDidUpdate(prevProps) {
-        if (prevProps.ClientScrubs !== this.props.ClientScrubs) {
-            this.props.setOverlayLoading({
+       if (prevProps.ClientScrubs !== this.props.ClientScrubs) {
+           /*  this.props.setOverlayLoading({
                 id: 'gridPostScrubbingGrid',
                 loading: true,
-            });
+            }); */
           // evaluate column sort direction
         setTimeout(() => {
             const cols = this.props.grid.get('gridPostScrubbingGrid').get('columns');
@@ -65,27 +39,17 @@ export class PostScrubbingGrid extends Component {
                 });
             }
 
-            this.props.setOverlayLoading({
+          /*   this.props.setOverlayLoading({
                 id: 'gridPostScrubbingGrid',
                 loading: false,
-            });
+            }); */
         }, 0);
-
-        // Hide Context Menu (assumes visible)
-          this.props.hideMenu({ stateKey: 'gridPostScrubbingGrid' });
         }
     }
 
     /* ////////////////////////////////// */
     /* // GRID ACTION METHOD BINDINGS
     /* ////////////////////////////////// */
-    hideContextMenu(ref) {
-        this.props.hideMenu(ref);
-    }
-
-    showContextMenu(ref) {
-        this.props.showMenu(ref);
-    }
 
     selectRow(ref) {
         this.props.selectRow(ref);
@@ -98,18 +62,17 @@ export class PostScrubbingGrid extends Component {
     render() {
         const style = { color: '#FF0000' };
         const stateKey = 'gridPostScrubbingGrid';
-        const { Details = [] } = this.props;
-        const { ClientScrubs = [] } = Details;
+        const { activeScrubbingData } = this.props;
+        //const { Details = [] } = activeScrubbingData;
+        const { ClientScrubs = [] } = activeScrubbingData;
 
-        let clientScrubs = [];
+        // let clientScrubs = [];
 
-        Details.forEach(details => {
+       /*  Details.forEach(details => {
             details.ClientScrubs.forEach((item) => {
                 clientScrubs.push(item);
             });
-        });
-
-        console.log(clientScrubs);
+        }); */
 
         const columns = [
             {
@@ -232,23 +195,12 @@ export class PostScrubbingGrid extends Component {
 
         const plugins = {
             COLUMN_MANAGER: {
-                resizable: true,
+                resizable: false,
                 moveable: false,
                 sortable: {
                     enabled: true,
                     method: 'local',
                 },
-            },
-            EDITOR: {
-                type: 'inline',
-                enabled: false,
-            },
-            PAGER: {
-                enabled: false,
-                pagingType: 'local',
-                pagerComponent: (
-                    <CustomPager stateKey={stateKey} idProperty="Id" />
-                ),
             },
             LOADER: {
                 enabled: false,
@@ -265,7 +217,6 @@ export class PostScrubbingGrid extends Component {
         const events = {
             HANDLE_BEFORE_SORT: () => {
               this.deselectAll({ stateKey });
-              this.hideContextMenu({ stateKey });
             },
         };
 
@@ -277,7 +228,7 @@ export class PostScrubbingGrid extends Component {
         };
 
         return (
-            <Grid {...grid} data={clientScrubs} store={this.context.store} />
+            <Grid {...grid} data={ClientScrubs} store={this.context.store} height={380}/>
         );
     }
 }
@@ -285,16 +236,12 @@ export class PostScrubbingGrid extends Component {
 PostScrubbingGrid.PropTypes = {
     grid: PropTypes.object.isRequired,
     dataSource: PropTypes.object.isRequired,
-    menu: PropTypes.object.isRequired,
-    ClientScrubs: PropTypes.object.isRequired,
-
-    setOverlayLoading: PropTypes.func.isRequired,
-
-    showMenu: PropTypes.func.isRequired,
-    hideMenu: PropTypes.func.isRequired,
+    // ClientScrubs: PropTypes.object.isRequired,
+    activeScrubbingData: PropTypes.object.isRequired,
+    // setOverlayLoading: PropTypes.func.isRequired,
     selectRow: PropTypes.func.isRequired,
     deselectAll: PropTypes.func.isRequired,
     doLocalSort: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostScrubbingGrid);
+export default PostScrubbingGrid;

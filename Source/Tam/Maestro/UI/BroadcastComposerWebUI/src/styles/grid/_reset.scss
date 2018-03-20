@@ -22,7 +22,7 @@
     border-bottom: none !important;
     box-sizing: border-box !important;
     cursor: pointer !important;
-  
+
     tr {
       border: none !important;
     }
@@ -47,7 +47,7 @@
       height: 21px !important;
       font-weight: normal !important;
     }
-  
+
     .react-grid-sort-handle {
       float: right !important;
     }
@@ -60,7 +60,7 @@
         width: 3px !important;
       }
     }
-  
+
     .react-grid-action-container {
       width: 0px !important;
       // border-left: 1px solid #c5c5c5 !important;
@@ -75,7 +75,7 @@
         }
       }
     }
-  
+
     .react-grid-sort-handle {
       cursor: pointer;
       width: 16px;
@@ -103,7 +103,7 @@
         margin-left: 2px;
       }
     }
-  
+
   }
 
   .react-grid-table-container {
@@ -115,7 +115,7 @@
         background-color: #f3f6fa;
       }
     }
-  
+
     td {
       font-size: 11px;
 
@@ -123,7 +123,7 @@
         border-left: 1px solid #d6d5d7;
       }
     }
-  
+
     .react-grid-row {
       &:hover {
         background-color: #d6e7ff !important;
@@ -139,7 +139,7 @@
       }
 
     }
-      
+
     .react-grid-cell {
       padding: 0 3px !important;
       border-bottom: 0 !important;
@@ -154,12 +154,12 @@
     }
 
   }
-  
+
   .react-grid-action-container {
     // border-left: 1px solid #c5c5c5 !important;
     border-bottom: none !important;
-    
-    .react-grid-action-icon {  
+
+    .react-grid-action-icon {
       // display: none;
       padding-left: 0 !important;
 
@@ -203,22 +203,22 @@
       // right: -6px !important;
     }
   }
-  
+
   .react-grid-pager-toolbar {
     box-shadow: 0px -1px 4px #dddddd;
     border-top: 1px solid #d6d5d7 !important;
     font-size: 11px !important;
-  
+
     span {
       &:first-child {
         font-size: 11px !important;
       }
     }
-    
+
     button {
       display: none;
     }
-  
+
   }
 
 }
