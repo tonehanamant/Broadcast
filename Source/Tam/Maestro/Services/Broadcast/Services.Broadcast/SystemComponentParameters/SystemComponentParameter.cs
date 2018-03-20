@@ -155,6 +155,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.Rentrak); }
         }
 	 
+		public static string SalesApi  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.SalesApi); }
+        }
+	 
 		public static string SystemSettings  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -288,6 +294,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.SingletonTestService); }
+        }
+	 
+		public static string SMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.SMS); }
         }
 	 
 		public static string STS2  
@@ -561,6 +573,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_WhenToCheckErrorFiles); }
+        }
+	 
+		public static string WWTV_WhenToCheckWWTV  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_WhenToCheckWWTV); }
         }
 	}
 	 

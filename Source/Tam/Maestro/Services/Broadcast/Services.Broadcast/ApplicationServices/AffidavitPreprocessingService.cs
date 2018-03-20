@@ -154,20 +154,13 @@ namespace Services.Broadcast.ApplicationServices
 
                 files.ForEach(filePath =>
                 {
-                    try
-                    {
-                        var path = remoteFTPPath + "/" + filePath.Remove(0, filePath.IndexOf(@"/") + 1);
-                        var transferPath = BroadcastServiceSystemParameter.WWTV_LocalFtpErrorFolder + @"\" +
-                                           filePath.Replace(@"/", @"\");
-                        ftpClient.DownloadFile(path, transferPath);
+                    var path = remoteFTPPath + "/" + filePath.Remove(0, filePath.IndexOf(@"/") + 1);
+                    var transferPath = BroadcastServiceSystemParameter.WWTV_LocalFtpErrorFolder + @"\" +
+                                        filePath.Replace(@"/", @"\");
+                    ftpClient.DownloadFile(path, transferPath);
 
-                        DeleteFTPFile(path);
-                        completedFiles.Add(path);
-                    }
-                    catch (Exception e)
-                    {
-                        throw;
-                    }
+                    DeleteFTPFile(path);
+                    completedFiles.Add(path);
                 });
             }
 

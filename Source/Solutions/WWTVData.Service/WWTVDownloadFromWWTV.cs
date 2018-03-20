@@ -10,18 +10,16 @@ using Tam.Maestro.Services.ContractInterfaces;
 namespace WWTVData.Service
 {
 
-    public class WWTVErrorFiles :  ScheduledServiceMethod
+    public class WWTVDownloadFromWWTV :  ScheduledServiceMethod
     {
-        protected DateTime? _LastRun;
-
-        public WWTVErrorFiles() : base(null)
+        public WWTVDownloadFromWWTV () : base(null)
         {
         }
 
 
         public override string ServiceName
         {
-            get { return "WWTV Error File Retiever";  }
+            get { return "WWTV Download from WWTV";  }
         }
 
         private bool _RunWhenChecked = false;
@@ -40,7 +38,7 @@ namespace WWTVData.Service
                     else
                     {
                         DateTime d;
-                        if (DateTime.TryParse(BroadcastServiceSystemParameter.WWTV_WhenToCheckErrorFiles, out d))
+                        if (DateTime.TryParse(BroadcastServiceSystemParameter.WWTV_WhenToCheckWWTV, out d))
                             _RunWhen = d;
                     }
                     _RunWhenChecked = true;
@@ -89,13 +87,13 @@ namespace WWTVData.Service
         {
             try
             {
-                var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPreprocessingService>();
-                service.ProcessErrorFiles();
+                var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
+                service.DownloadAndProcessWWTVFiles();
                 _LastRun = DateTime.Now;
             }
             catch (Exception e)
             {
-                BaseWindowsService.LogServiceError("Error reading FTP Error files", e);
+                BaseWindowsService.LogServiceError("Error reading from WWTV FTP.", e);
                 return false;
             }
             return true;
