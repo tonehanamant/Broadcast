@@ -228,6 +228,8 @@
     <Compile Include="ApplicationServices\WhosWatchingTvService.cs" />
     <Compile Include="ApplicationServices\AffidavitEmailSenderService.cs" />
     <Compile Include="BusinessEngines\AffidavitMatchingEngine.cs" />
+    <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
+    <Compile Include="BusinessEngines\AffidavitValidationResult.cs" />
     <Compile Include="BusinessEngines\ImpressionAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailHeaderTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailWeekTotalsCalculationEngine.cs" />

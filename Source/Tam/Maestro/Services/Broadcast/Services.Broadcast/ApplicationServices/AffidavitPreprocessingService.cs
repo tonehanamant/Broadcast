@@ -82,6 +82,10 @@ namespace Services.Broadcast.ApplicationServices
             return validationList;
         }
 
+        /// <summary>
+        /// Move invalid files to invalid files folder. Notify users about failed files
+        /// </summary>
+        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
         public void ProcessInvalidFiles(List<OutboundAffidavitFileValidationResultDto> validationList)
         {
             var invalidFiles = validationList.Where(v => v.Status == (int)AffidaviteFileProcessingStatus.Invalid);
@@ -90,17 +94,10 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var invalidFilePath = _MoveInvalidFileToArchiveFolder(invalidFile);
 
-                _AffidavitEmailSenderService.Send(invalidFile, invalidFilePath);
+                var emailBody = _CreateInvalidFileEmailBody(invalidFile, invalidFilePath);
+
+                _AffidavitEmailSenderService.Send(emailBody);
             }
-        }
-
-        private string _MoveInvalidFileToArchiveFolder(OutboundAffidavitFileValidationResultDto invalidFile)
-        {
-            var combinedFilePath = Path.Combine(BroadcastServiceSystemParameter.WWTV_FailedFolder, Path.GetFileName(invalidFile.FilePath));
-
-            File.Move(invalidFile.FilePath, combinedFilePath);
-
-            return combinedFilePath;
         }
 
         /// <summary>
@@ -117,10 +114,34 @@ namespace Services.Broadcast.ApplicationServices
                 File.Delete(zipFileName);
             }
         }
-        
+
+        private string _CreateInvalidFileEmailBody(OutboundAffidavitFileValidationResultDto invalidFile, string invalidFilePath)
+        {
+            var mailBody = new StringBuilder();
+
+            mailBody.AppendFormat("File {0} failed validation for WWTV upload", invalidFile.FileName);
+
+            foreach (var errorMessage in invalidFile.ErrorMessages)
+            {
+                mailBody.Append(errorMessage);
+            }
+
+            mailBody.AppendFormat("File located in {0}", invalidFilePath);
+
+            return mailBody.ToString();
+        }
+
+        private string _MoveInvalidFileToArchiveFolder(OutboundAffidavitFileValidationResultDto invalidFile)
+        {
+            var combinedFilePath = Path.Combine(BroadcastServiceSystemParameter.WWTV_FailedFolder, Path.GetFileName(invalidFile.FilePath));
+
+            File.Move(invalidFile.FilePath, combinedFilePath);
+
+            return combinedFilePath;
+        }
+
         public void ProcessErrorFiles()
         {
-
             var remoteFTPPath =
                 $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpErrorFolder}";
 
@@ -154,20 +175,13 @@ namespace Services.Broadcast.ApplicationServices
 
                 files.ForEach(filePath =>
                 {
-                    try
-                    {
-                        var path = remoteFTPPath + "/" + filePath.Remove(0, filePath.IndexOf(@"/") + 1);
-                        var transferPath = BroadcastServiceSystemParameter.WWTV_LocalFtpErrorFolder + @"\" +
-                                           filePath.Replace(@"/", @"\");
-                        ftpClient.DownloadFile(path, transferPath);
+                    var path = remoteFTPPath + "/" + filePath.Remove(0, filePath.IndexOf(@"/") + 1);
+                    var transferPath = BroadcastServiceSystemParameter.WWTV_LocalFtpErrorFolder + @"\" +
+                                        filePath.Replace(@"/", @"\");
+                    ftpClient.DownloadFile(path, transferPath);
 
-                        DeleteFTPFile(path);
-                        completedFiles.Add(path);
-                    }
-                    catch (Exception e)
-                    {
-                        throw;
-                    }
+                    DeleteFTPFile(path);
+                    completedFiles.Add(path);
                 });
             }
 
