@@ -4,6 +4,7 @@ namespace Services.Broadcast.Entities
 {
     public class ProposalDetailPostScrubbingDto
     {
+        public int? ProposalDetailId { get; set; }
         public DateTime TimeAired { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
         public DateTime WeekStart { get; set; }
@@ -22,6 +23,6 @@ namespace Services.Broadcast.Entities
         public bool MatchISCI { get; set; }
         public string ClientISCI { get; set; }
         public string Comments { get; set; }
-        public int? Order { get; set; }
+        public int? Sequence { get; set; }
     }
 }

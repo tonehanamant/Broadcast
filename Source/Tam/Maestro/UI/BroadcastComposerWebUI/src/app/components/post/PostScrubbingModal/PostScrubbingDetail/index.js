@@ -1,34 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Well, Row, Col } from 'react-bootstrap';
 /* import { getDateInFormat } from '../../../../utils/dateFormatter'; */
 
 import PostScrubbingGrid from '../PostScrubbingGrid';
-
-const mapStateToProps = ({ post: { proposalDetail } }) => ({
-    proposalDetail,
-});
+import PostScrubbingFilters from '../PostScrubbingFilters';
 
 /* eslint-disable */
 export class PostScrubbingDetail extends Component {
-    componentWillMount() {
-        this.setState({ proposalDetail: this.props.proposalDetail });
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.proposalDetail !== this.props.proposalDetail) {
-            this.setState({ proposalDetail: nextProps.proposalDetail });
-        }
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.proposalDetail !== this.props.proposalDetail;
-    }
 
     render() {
         /* const { proposalDetail: { DayPart, FlightEndDate, FlightStartDate, SpotLength, Genres, ClientScrubs } } = this.state; */
         const { isReadOnly } = this.props;
+        const { activeScrubbingData, grid, dataSource } = this.props;
+		const { selectRow, deselectAll, doLocalSort, setOverlayLoading } = this.props;
         /* eslint-disable no-unused-vars */
         return (
             <Well bsSize="small">
@@ -80,7 +65,16 @@ export class PostScrubbingDetail extends Component {
                 {
                     <Row style={{ marginTop: 10 }}>
                         <Col md={12}>
-                            <PostScrubbingGrid />
+                            <PostScrubbingFilters />
+                            <PostScrubbingGrid 
+                                activeScrubbingData={activeScrubbingData}
+                                grid={grid}
+                                dataSource={dataSource}
+                                selectRow={selectRow}
+                                deselectAll={deselectAll}
+                                doLocalSort={doLocalSort}
+                                setOverlayLoading={setOverlayLoading}
+                            />
                         </Col>
                     </Row>
                 }
@@ -94,8 +88,15 @@ PostScrubbingDetail.defaultProps = {
 };
 
 PostScrubbingDetail.propTypes = {
-    proposalDetail: PropTypes.object.isRequired,
     isReadOnly: PropTypes.bool.isRequired,
+    grid: PropTypes.object.isRequired,
+	dataSource: PropTypes.object.isRequired,
+    activeScrubbingData: PropTypes.object.isRequired,
+
+    setOverlayLoading: PropTypes.func.isRequired,
+    selectRow: PropTypes.func.isRequired,
+    deselectAll: PropTypes.func.isRequired,
+    doLocalSort: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(PostScrubbingDetail);
+export default PostScrubbingDetail;

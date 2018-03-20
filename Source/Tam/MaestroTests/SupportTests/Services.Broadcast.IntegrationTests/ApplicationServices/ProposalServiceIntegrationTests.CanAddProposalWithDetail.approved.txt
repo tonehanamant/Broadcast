@@ -50,7 +50,6 @@
         }
       ],
       "HutPostingBookId": 410,
-      "Order": 0,
       "PlaybackType": 4,
       "ProgramCriteria": [
         {
@@ -118,6 +117,7 @@
           "Year": 2016
         }
       ],
+      "Sequence": 0,
       "SharePostingBookId": 413,
       "SinglePostingBookId": null,
       "SpotLengthId": 1,

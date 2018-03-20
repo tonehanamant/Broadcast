@@ -284,6 +284,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="EnvironmentSpecificSettings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="EnvironmentSpecificSettings.config.development">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="EnvironmentSpecificSettings.config.release">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\CNNAMPMBarterObligations_AllBadDayparts.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -604,16 +613,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="appsettings_integration.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="appsettings_int.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="appsettings.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Files\1Chicago WLS Syn 4Q16.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
