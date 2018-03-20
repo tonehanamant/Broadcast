@@ -170,9 +170,8 @@ export class PostScrubbingGrid extends Component {
                 defaultSortDirection: 'ASC',
                 width: '10%',
                 renderer: ({ row }) => {
-                    const ISCI = row.MatchISCI ? <span>{row.ISCI || '-'}</span> : <span style={style}>{row.ISCI || '-'}</span>
                     return (
-                        ISCI
+                        <span>{row.ISCI || '-'}</span>
                     )
                 }
             },

@@ -186,18 +186,18 @@ PostScrubbingHeader.defaultProps = {
   getProposalDetail: () => { },
 };
 
-PostScrubbingHeader.PropTypes = {
-  advertiser: PropTypes.string.isRequired,
-  date: PropTypes.object.isRequired,
-  guaranteedDemo: PropTypes.string.isRequired,
-  Id: PropTypes.string.isRequired,
+PostScrubbingHeader.propTypes = {
+  advertiser: PropTypes.string,
+  date: PropTypes.object,
+  guaranteedDemo: PropTypes.string,
+  Id: PropTypes.string,
   isReadOnly: PropTypes.bool,
-  market: PropTypes.object.isRequired,
-  marketId: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  notes: PropTypes.string.isRequired,
-  secondaryDemo: PropTypes.object.isRequired,
-    getProposalDetail: PropTypes.func.isRequired,
+  market: PropTypes.object,
+  marketId: PropTypes.number,
+  name: PropTypes.string,
+  notes: PropTypes.string,
+  secondaryDemo: PropTypes.object,
+  getProposalDetail: PropTypes.func.isRequired,
 };
 
 export default PostScrubbingHeader;
