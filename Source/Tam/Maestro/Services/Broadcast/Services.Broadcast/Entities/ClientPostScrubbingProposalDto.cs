@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
@@ -24,6 +25,18 @@ namespace Services.Broadcast.Entities
 
         public string GuaranteedDemo { get; set; }
 
-        public List<ClientPostScrubbingProposalDetailDto> Details { get; set; }        
+        public List<ClientPostScrubbingProposalDetailDto> Details { get; set; } = new List<ClientPostScrubbingProposalDetailDto>();
+
+        public List<ProposalDetailPostScrubbingDto> ClientScrubs { get; set; } = new List<ProposalDetailPostScrubbingDto>();
+
+        public FilterOptions Filters { get; set; }
+    }
+
+    public class FilterOptions
+    {
+        public List<DayOfWeek> DistinctDayOfWeek { get; set; }
+        public List<GenreCriteria> DistinctGenres { get; set; }
+        public DateTime? WeekStart { get; set; }
+        public DateTime? WeekEnd { get; set; }
     }
 }
