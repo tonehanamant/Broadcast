@@ -2,7 +2,7 @@
 {
     public class AffidavitValidationResult
     {
-        public bool Valid { get; set; }
+        public bool IsValid { get; set; }
         public string InvalidField { get; set; }
         public int InvalidLine { get; set; }
         public string ErrorMessage { get; set; }
