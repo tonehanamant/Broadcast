@@ -1,14 +1,12 @@
-﻿using Services.Broadcast.Entities;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
-using System.Text;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.BusinessEngines
 {
     public interface IAffidavitEmailSenderService
     {
-        void Send(OutboundAffidavitFileValidationResultDto invalidFile, string invalidFilePath);
+        void Send(string emailBody);
     }
 
     public class AffidavitEmailSenderService : IAffidavitEmailSenderService
@@ -16,17 +14,15 @@ namespace Services.Broadcast.BusinessEngines
         private const string _EmailSubject = "WWTV File Failed Validation";
         private const int _SmtpPort = 587;
 
-        public void Send(OutboundAffidavitFileValidationResultDto invalidFile, string invalidFilePath)
+        public void Send(string emailBody)
         {
             if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
                 return;
 
-            var mailBody = _CreateInvalidFileEmailBody(invalidFile, invalidFilePath);
-
-            _SenInvalidFileEmail(invalidFile, mailBody);
+            _SendInvalidFileEmail(emailBody);
         }
 
-        private void _SenInvalidFileEmail(OutboundAffidavitFileValidationResultDto invalidFile, string mailBody)
+        private void _SendInvalidFileEmail(string mailBody)
         {
             var mailMessage = new MailMessage
             {
@@ -45,22 +41,6 @@ namespace Services.Broadcast.BusinessEngines
                 smtpClient.Credentials = Emailer.GetSMTPNetworkCredential();
                 smtpClient.Send(mailMessage);
             }
-        }
-
-        private string _CreateInvalidFileEmailBody(OutboundAffidavitFileValidationResultDto invalidFile, string invalidFilePath)
-        {
-            var mailBody = new StringBuilder();
-
-            mailBody.AppendFormat("File {0} failed validation for WWTV upload", invalidFile.FileName);
-
-            foreach (var errorMessage in invalidFile.ErrorMessages)
-            {
-                mailBody.Append(errorMessage);
-            }
-
-            mailBody.AppendFormat("File located in {0}", invalidFilePath);
-
-            return mailBody.ToString();
         }
     }
 }

@@ -6,7 +6,6 @@ namespace Services.Broadcast.Entities
     public class AffidavitSaveRequest
     {
         public string FileName { get; set; }
-
         public string FileHash { get; set; }
         public int Source { get; set; }
         public List<AffidavitSaveRequestDetail> Details { get; set; }

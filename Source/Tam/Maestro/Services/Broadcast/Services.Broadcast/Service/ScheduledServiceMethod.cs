@@ -8,6 +8,8 @@ namespace Services.Broadcast.Services
 {
     public abstract class ScheduledServiceMethod 
     {
+        protected DateTime? _LastRun;
+
         public WindowsServiceBase BaseWindowsService { get; set; }
 
         

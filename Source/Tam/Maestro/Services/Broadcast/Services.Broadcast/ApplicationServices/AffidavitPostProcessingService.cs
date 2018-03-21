@@ -1,6 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Newtonsoft.Json;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -35,14 +37,20 @@ namespace Services.Broadcast.ApplicationServices
     {
         private static readonly HttpClient client = new HttpClient();
         private readonly IBroadcastAudiencesCache _AudienceCache;
+        private readonly IAffidavitValidationEngine _AffidavitValidationEngine;
+        private readonly IAffidavitEmailSenderService _AffidavitEmailSenderService;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
         private const string HTTP_ACCEPT_HEADER = "application/json";
         private const string FTP_SCHEME = "ftp://";
 
-        public AffidavitPostProcessingService(IBroadcastAudiencesCache audienceCache, IDataRepositoryFactory broadcastDataRepositoryFactory)
+        private List<AffidavitValidationResult> _AffidavitValidationResult = new List<AffidavitValidationResult>();
+
+        public AffidavitPostProcessingService(IBroadcastAudiencesCache audienceCache, IDataRepositoryFactory broadcastDataRepositoryFactory, IAffidavitValidationEngine affidavitValidationEngine, IAffidavitEmailSenderService affidavitEmailSenderService)
         {
             _AudienceCache = audienceCache;
+            _AffidavitValidationEngine = affidavitValidationEngine;
+            _AffidavitEmailSenderService = affidavitEmailSenderService;
         }
 
         /// <summary>
@@ -61,6 +69,15 @@ namespace Services.Broadcast.ApplicationServices
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HTTP_ACCEPT_HEADER));
                 var postResponse = client.PostAsJsonAsync(BroadcastServiceSystemParameter.AffidavitUploadUrl, affidavitFile).GetAwaiter().GetResult();
                 var response = JsonConvert.DeserializeObject<BaseResponse<int>>(postResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+
+                if (_AffidavitValidationResult.Count > 0)
+                {
+                    var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
+
+                    var emailBody = _CreateInvalidFileEmailBody(_AffidavitValidationResult, filePath);
+
+                    _AffidavitEmailSenderService.Send(emailBody);
+                }
 
                 if (response.Success)
                 {
@@ -97,6 +114,32 @@ namespace Services.Broadcast.ApplicationServices
             return affidavitFile;
         }
 
+        private string _CreateInvalidFileEmailBody(List<AffidavitValidationResult> affidavitValidationResults, string filePath)
+        {
+            var emailBody = new StringBuilder();
+
+            emailBody.AppendFormat("File {0} failed validation for WWTV upload", Path.GetFileName(filePath));
+
+            foreach (var affidavitValidationResult in affidavitValidationResults)
+            {
+                emailBody.AppendFormat("Failed validation at line {0} on field {1}", affidavitValidationResult.InvalidLine, affidavitValidationResult.InvalidField);
+                emailBody.Append(affidavitValidationResult.ErrorMessage);
+            }
+
+            emailBody.AppendFormat("File located in {0}", filePath);
+
+            return emailBody.ToString();
+        }
+
+        private string _MoveFileToInvalidFilesFolder(string fileName)
+        {
+            var combinedFilePath = Path.Combine(BroadcastServiceSystemParameter.WWTV_FailedFolder, Path.GetFileName(fileName));
+
+            File.Move(fileName, combinedFilePath);
+
+            return combinedFilePath;
+        }
+
         private void _DeleteWWTVFTPFile(string fileName)
         {
             string uri = $"{FTP_SCHEME}{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpInboundFolder}/{fileName}";
@@ -111,34 +154,56 @@ namespace Services.Broadcast.ApplicationServices
         private AffidavitSaveRequest _MapWWTVFileToAffidavitFile(string filePath)
         {
             var jsonFile = JsonConvert.DeserializeObject<WhosWatchingTVPostProcessingFile>(File.ReadAllText(filePath));
+
             AffidavitSaveRequest file = new AffidavitSaveRequest
             {
                 Source = (int)AffidaviteFileSource.Strata,
-                Details = jsonFile.Details.Select(x => new AffidavitSaveRequestDetail()
+                Details = new List<AffidavitSaveRequestDetail>()
+            };
+
+            for(var lineNumber = 0; lineNumber < jsonFile.Details.Count; lineNumber++)
+            {
+                var jsonDetail = jsonFile.Details[lineNumber];
+
+                var affidavitSaveRequestDetail = new AffidavitSaveRequestDetail()
                 {
-                    Genre = x.Genre,
-                    AirTime = x.Date.Add(DateTime.Parse(x.Time).TimeOfDay),
-                    Isci = x.ISCI,
-                    LeadInGenre = x.LeadInGenre,
-                    LeadInProgramName = x.LeadInProgram,
-                    LeadOutGenre = x.LeadOutGenre,
-                    LeadOutProgramName = x.LeadOutProgram,
-                    Market = x.Market,
-                    ProgramName = x.Program,
-                    SpotLength = x.SpotLength,
-                    Station = x.Station,
-                    Affiliate = x.Affiliate,
-                    EstimateId = x.EstimateId,
-                    InventorySource = (int)(InventorySourceEnum)Enum.Parse(typeof(InventorySourceEnum), x.InventorySource),
-                    SpotCost = x.SpotCost,
-                    Demographics = x.Demographics.Select(y => new Demographics()
+                    Genre = jsonDetail.Genre,
+                    AirTime = jsonDetail.Date.Add(DateTime.Parse(jsonDetail.Time).TimeOfDay),
+                    Isci = jsonDetail.ISCI,
+                    LeadInGenre = jsonDetail.LeadInGenre,
+                    LeadInProgramName = jsonDetail.LeadInProgram,
+                    LeadOutGenre = jsonDetail.LeadOutGenre,
+                    LeadOutProgramName = jsonDetail.LeadOutProgram,
+                    Market = jsonDetail.Market,
+                    ProgramName = jsonDetail.Program,
+                    SpotLength = jsonDetail.SpotLength,
+                    Station = jsonDetail.Station,
+                    Affiliate = jsonDetail.Affiliate,
+                    EstimateId = jsonDetail.EstimateId,
+                    InventorySource = (int)(InventorySourceEnum)Enum.Parse(typeof(InventorySourceEnum), jsonDetail.InventorySource),
+                    SpotCost = jsonDetail.SpotCost,
+                    Demographics = jsonDetail.Demographics.Select(y => new Demographics()
                     {
                         AudienceId = _AudienceCache.GetDisplayAudienceByCode(y.Demographic).Id,
                         OvernightImpressions = y.OvernightImpressions,
                         OvernightRating = y.OvernightRating
                     }).ToList()
-                }).ToList()
-            };
+                };
+
+                var validationResult = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+
+                if (!validationResult.Valid)
+                {
+                    validationResult.InvalidLine = lineNumber;
+
+                    _AffidavitValidationResult.Add(validationResult);
+
+                    continue;
+                }
+
+                file.Details.Add(affidavitSaveRequestDetail);
+            }
+
             return file;
         }
 
