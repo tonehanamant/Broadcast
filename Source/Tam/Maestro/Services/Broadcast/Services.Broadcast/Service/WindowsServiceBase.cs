@@ -11,48 +11,55 @@ namespace Services.Broadcast.Services
 {
     public abstract class WindowsServiceBase
     {
-        protected string _serviceName;
 
-        protected WindowsServiceBase(string serviceName)
+        protected WindowsServiceBase()
         {
-            _serviceName = serviceName;
         }
+        public abstract string ServiceName { get; }
+        public bool IsConsole { get; set; }
 
         protected void TimeResultsNoReturn(String methodName, Action func)
         {
             var userName = _GetWindowsUserName();
             var environment = SMSClient.Handler.TamEnvironment;
 
-            TamMaestroEventSource.Log.ServiceCallStart(GetServiceName(), methodName, userName, environment);
+            TamMaestroEventSource.Log.ServiceCallStart(ServiceName, methodName, userName, environment);
 
             var stopWatch = Stopwatch.StartNew();
             func();
             stopWatch.Stop();
 
-            TamMaestroEventSource.Log.ServiceCallStop(GetServiceName(), methodName, userName, environment);
-            TamMaestroEventSource.Log.ServiceCallTotalTime(GetServiceName(), methodName, stopWatch.Elapsed.TotalSeconds, userName, environment);
+            TamMaestroEventSource.Log.ServiceCallStop(ServiceName, methodName, userName, environment);
+            TamMaestroEventSource.Log.ServiceCallTotalTime(ServiceName, methodName, stopWatch.Elapsed.TotalSeconds, userName, environment);
         }
+
 
         protected T TimeResults<T>(String methodName, Func<T> func)
         {
             var userName = _GetWindowsUserName();
             var environment = SMSClient.Handler.TamEnvironment;
 
-            TamMaestroEventSource.Log.ServiceCallStart(GetServiceName(), methodName, userName, environment);
+            TamMaestroEventSource.Log.ServiceCallStart(ServiceName, methodName, userName, environment);
 
             var stopWatch = Stopwatch.StartNew();
             var results = func();
             stopWatch.Stop();
 
-            TamMaestroEventSource.Log.ServiceCallStop(GetServiceName(), methodName, userName, environment);
-            TamMaestroEventSource.Log.ServiceCallTotalTime(GetServiceName(), methodName, stopWatch.Elapsed.TotalSeconds, userName, environment);
+            TamMaestroEventSource.Log.ServiceCallStop(ServiceName, methodName, userName, environment);
+            TamMaestroEventSource.Log.ServiceCallTotalTime(ServiceName, methodName, stopWatch.Elapsed.TotalSeconds, userName, environment);
 
             return results;
         }
 
         public void LogServiceError(string message, Exception exception)
         {
-            LogServiceError(GetServiceName(),message,exception);
+            if (IsConsole)
+            {
+                message = string.Format("Service Error {0} :: {1}\\n{2}", ServiceName, message,exception);
+                Console.WriteLine(message);
+            }
+            else
+                LogServiceError(ServiceName,message,exception);
         }
 
         public static void LogServiceError(string serviceName, string message, Exception exception)
@@ -72,7 +79,13 @@ namespace Services.Broadcast.Services
 
         public void LogServiceErrorNoCallStack(string message)
         {
-            LogServiceErrorNoCallStack(GetServiceName(),message);
+            if (IsConsole)
+            {
+                message = string.Format("Service NoCallStack {0} :: {1}\\n{2}", ServiceName, message);
+                Console.WriteLine(message);
+            }
+            else
+                LogServiceErrorNoCallStack(ServiceName,message);
         }
 
         public static void LogServiceErrorNoCallStack(string serviceName, string message)
@@ -92,7 +105,13 @@ namespace Services.Broadcast.Services
 
         public void LogServiceEvent(string message)
         {
-            LogServiceEvent(GetServiceName(),message);
+            if (IsConsole)
+            {
+                message = string.Format("Service Event {0} :: {1}", ServiceName, message);
+                Console.WriteLine(message);
+            }
+            else
+                LogServiceEvent(ServiceName,message);
         }
 
         public static void LogServiceEvent(string serviceName, string message)
@@ -107,6 +126,7 @@ namespace Services.Broadcast.Services
             catch
             {
             }
+
             TamMaestroEventSource.Log.ServiceEvent(serviceName, message, userName, environment);
         }
 
@@ -127,11 +147,6 @@ namespace Services.Broadcast.Services
 
         public abstract void Start();
         public abstract void Stop();
-
-        protected string GetServiceName()
-        {
-            return _serviceName;
-        }
 
         public static string GetDescription(Enum en)
         {

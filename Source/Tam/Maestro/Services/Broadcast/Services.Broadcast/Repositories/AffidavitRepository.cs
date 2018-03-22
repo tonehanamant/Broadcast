@@ -137,29 +137,35 @@ namespace Services.Broadcast.Repositories
                     var spotLengths = (from sl in context.spot_lengths select sl).ToList();
 
                     var posts = new List<ProposalDetailPostScrubbingDto>();
-                    posts.AddRange(affidavitFiles.Select(x => new ProposalDetailPostScrubbingDto()
+                    posts.AddRange(affidavitFiles.Select(x =>
                     {
-                        Station = x.affidavitFile.station,
-                        ISCI = x.affidavitFile.isci,
-                        ProgramName = x.affidavitFile.program_name,
-                        Market = x.affidavitFile.market,
-                        Affiliate = (from station in context.stations
-                                     where station.legacy_call_letters.Equals(x.affidavitFile.station)
-                                     select station.affiliation).Single(),
-                        SpotLength = spotLengths.Single(y => y.id == x.affidavitFile.spot_length_id).length,
-                        TimeAired = x.affidavitFile.original_air_date.AddSeconds(x.affidavitFile.air_time),
-                        DayOfWeek = x.affidavitFile.original_air_date.DayOfWeek,
-                        GenreName = x.affidavitFile.genre,
-                        MatchGenre = x.affidavitFileScrub.match_genre,
-                        MatchMarket = x.affidavitFileScrub.match_market,
-                        MatchProgram = x.affidavitFileScrub.match_program,
-                        MatchStation = x.affidavitFileScrub.match_station,
-                        MatchTime = x.affidavitFileScrub.match_time,
-                        MatchISCI = x.affidavitFileScrub.match_isci_days,
-                        Comments = x.affidavitFileScrub.comment,
-                        ClientISCI = x.proposalVersionWeekIscis.client_isci,
-                        WeekStart = x.proposalVersionWeekIscis.proposal_version_detail_quarter_weeks.start_date                        
-                    }).ToList());
+                        var marketStation = (from stations in context.stations
+                                             let markets = stations.market
+                                             where stations.legacy_call_letters.Equals(x.affidavitFile.station)
+                                             select new { markets, stations }).Single();
+                        return new ProposalDetailPostScrubbingDto()
+                        {
+                            Station = x.affidavitFile.station,
+                            ISCI = x.affidavitFile.isci,
+                            ProgramName = x.affidavitFile.program_name,
+                            Market = marketStation.markets.geography_name,
+                            Affiliate = marketStation.stations.affiliation,
+                            SpotLength = spotLengths.Single(y => y.id == x.affidavitFile.spot_length_id).length,
+                            TimeAired = x.affidavitFile.original_air_date.AddSeconds(x.affidavitFile.air_time),
+                            DayOfWeek = x.affidavitFile.original_air_date.DayOfWeek,
+                            GenreName = x.affidavitFile.genre,
+                            MatchGenre = x.affidavitFileScrub.match_genre,
+                            MatchMarket = x.affidavitFileScrub.match_market,
+                            MatchProgram = x.affidavitFileScrub.match_program,
+                            MatchStation = x.affidavitFileScrub.match_station,
+                            MatchTime = x.affidavitFileScrub.match_time,
+                            MatchISCI = x.affidavitFileScrub.match_isci_days,
+                            Comments = x.affidavitFileScrub.comment,
+                            ClientISCI = x.proposalVersionWeekIscis.client_isci,
+                            WeekStart = x.proposalVersionWeekIscis.proposal_version_detail_quarter_weeks.start_date
+                        };
+                    }
+                    ).ToList());
                     return posts;
                 });
         }

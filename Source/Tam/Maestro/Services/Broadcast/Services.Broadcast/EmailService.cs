@@ -87,7 +87,7 @@ public static class Emailer
         catch (System.Exception exc)
         {
             TamMaestroEventSource.Log.ServiceError("Broadcast Emailer", exc.Message, exc.ToString(), GetWindowsUserName(), SMSClient.Handler.TamEnvironment.ToString());
-            return false;
+            throw;
         }
     }
     private static string GetWindowsUserName()

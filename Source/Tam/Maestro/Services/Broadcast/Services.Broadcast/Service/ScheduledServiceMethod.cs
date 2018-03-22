@@ -46,11 +46,15 @@ namespace Services.Broadcast.Services
                 return _ApplicationServiceFactory;
             }
         }
+
+        
         public abstract string ServiceName { get; }
 
         public abstract bool RunWhenReady(DateTime timeSignaled);
 
         public abstract bool RunService(DateTime timeSignaled);
+
+
     }
 
 }

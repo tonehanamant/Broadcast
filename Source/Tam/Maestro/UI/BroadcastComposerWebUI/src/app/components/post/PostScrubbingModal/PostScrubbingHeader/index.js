@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, ControlLabel, FormGroup, FormControl, Badge } from 'react-bootstrap';
 import Select from 'react-select';
+import styles from './index.scss';
+import CSSModules from 'react-css-modules';
 
 import { getDateForDisplay } from '../../../../utils/dateFormatter';
 
@@ -84,12 +86,20 @@ export class PostScrubbingHeader extends Component {
   render() {
     const { advertiser, guaranteedDemo, Id, isReadOnly, marketId, name, notes, secondaryDemo } = this.props;
     const isCustomMarket = this.props.marketId === 255;
+    let secondaryDemoOptions = [];
     let marketLabel;
     if (isCustomMarket) {
       marketLabel = 'Custom';
     } else {
       marketLabel = marketId === 0 ? 'All' : `Top ${marketId}`
     }
+
+    secondaryDemo.map((item) => {
+      const option = {};
+      option.Display = item;
+      option.Id = item;
+      secondaryDemoOptions.push(option);
+    });
 
     return (
       <div>
@@ -140,7 +150,17 @@ export class PostScrubbingHeader extends Component {
               <Col md={4}>
                 <FormGroup controlId="proposalSecondaryDemo">
                   <ControlLabel><strong>Secondary Demo</strong></ControlLabel>
-                  <FormControl.Static>{secondaryDemo.join(', ') || '--'}</FormControl.Static>
+                  { 
+                    secondaryDemoOptions.length > 0 ?
+                    <Select
+                      placeholder="secondary demos"
+                      name="proposalSecondaryDemo"
+                      multi
+                      options={secondaryDemoOptions}
+                      labelKey="Display"
+                      valueKey="Id"
+                    /> : <FormControl.Static>{'--'}</FormControl.Static>
+                  }
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -179,17 +199,17 @@ PostScrubbingHeader.defaultProps = {
 };
 
 PostScrubbingHeader.propTypes = {
-  advertiser: PropTypes.string.isRequired,
-  date: PropTypes.object.isRequired,
-  guaranteedDemo: PropTypes.string.isRequired,
-  Id: PropTypes.string.isRequired,
+  advertiser: PropTypes.string,
+  date: PropTypes.array,
+  guaranteedDemo: PropTypes.string,
+  Id: PropTypes.number,
   isReadOnly: PropTypes.bool,
-  market: PropTypes.object,
+  market: PropTypes.array,
   marketId: PropTypes.number,
   name: PropTypes.string,
   notes: PropTypes.string,
-  secondaryDemo: PropTypes.object,
+  secondaryDemo: PropTypes.array,
   // getProposalDetail: PropTypes.func.isRequired,
 };
 
-export default PostScrubbingHeader;
+export default CSSModules(PostScrubbingHeader, styles);

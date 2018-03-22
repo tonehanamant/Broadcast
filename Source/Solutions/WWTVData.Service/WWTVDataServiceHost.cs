@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Services;
 using Topshelf;
+using Topshelf.Hosts;
 
 namespace WWTVData.Service
 {
@@ -22,29 +23,26 @@ namespace WWTVData.Service
                 new WWTVDownloadFromWWTV()
             }; 
 
-            if (args.Length >= 1 && args[0] == "-console")
+            var rc = HostFactory.Run(x =>
             {
-                servicesToRun.ForEach(s => s.RunService(DateTime.Now));
-            }
-            else
-            {
-                var rc = HostFactory.Run(x =>
+                x.Service<ScheduledWindowsServiceMethodRunner>(s =>
                 {
-                    x.Service<ScheduledWindowsServiceMethodRunner>(s =>
+                    s.ConstructUsing(name => new ScheduledWindowsServiceMethodRunner(servicesToRun));
+                    s.WhenStarted((runner, control)  =>
                     {
-                        s.ConstructUsing(name => new ScheduledWindowsServiceMethodRunner(_serviceName,servicesToRun));
-                        s.WhenStarted(tc => tc.Start());
-                        s.WhenStopped(tc => tc.Stop());
+                        runner.IsConsole = control is ConsoleRunHost;
+                        runner.Start();
+                        return true;
                     });
-                    //x.RunAsLocalSystem();
-
-                    x.SetDescription("_WWTV Data Service");
-                    x.SetDisplayName(_serviceName);
-                    x.SetServiceName(_serviceName);
+                    s.WhenStopped(tc => tc.Stop());
                 });
-                var exitCode = (int)Convert.ChangeType(rc, rc.GetTypeCode()); 
-                Environment.ExitCode = exitCode;
-            }
+
+                x.SetDescription("_WWTV Data Service");
+                x.SetDisplayName(_serviceName);
+                x.SetServiceName(_serviceName);
+            });
+            var exitCode = (int)Convert.ChangeType(rc, rc.GetTypeCode()); 
+            Environment.ExitCode = exitCode;
         }
     }
 }

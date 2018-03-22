@@ -192,7 +192,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 var validationResult = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
 
-                if (!validationResult.Valid)
+                if (!validationResult.IsValid)
                 {
                     validationResult.InvalidLine = lineNumber;
 

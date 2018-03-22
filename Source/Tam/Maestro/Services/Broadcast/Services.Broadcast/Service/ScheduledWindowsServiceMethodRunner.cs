@@ -7,13 +7,18 @@ namespace Services.Broadcast.Services
 {
     public class ScheduledWindowsServiceMethodRunner : WindowsServiceBase
     {
+        public override string ServiceName
+        {
+            get { return "_WWTVData.Service"; }
+        }
+
         protected List<ScheduledServiceMethod> _ServicesToRun;
 
         public const int MILSEC_BETWEEN_CHECKS = 1000 * 5;
         private DateTime? _timeLastRun;
 
         readonly Timer _Timer;
-        public ScheduledWindowsServiceMethodRunner(string serviceName, List<ScheduledServiceMethod> servicesToRun) : base(serviceName)
+        public ScheduledWindowsServiceMethodRunner(List<ScheduledServiceMethod> servicesToRun) 
         {
             _Timer = new Timer(MILSEC_BETWEEN_CHECKS) { AutoReset = true }; // once an hour
             _Timer.Elapsed += _Timer_check_for_WWT_files;

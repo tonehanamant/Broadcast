@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.ApplicationServices;
+using Common.Services.Repositories;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.BusinessEngines
 {
-    public interface IAffidavitValidationEngine
+    public interface IAffidavitValidationEngine : IApplicationService
     {
         AffidavitValidationResult ValidateAffidavitRecord(AffidavitSaveRequestDetail affidavitDetail);
     }
@@ -26,7 +27,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var affidavitValidationResult = new AffidavitValidationResult
             {
-                Valid = true
+                IsValid = true
             };
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.ProgramName))
@@ -71,7 +72,7 @@ namespace Services.Broadcast.BusinessEngines
                 affidavitValidationResult.ErrorMessage = "AirTime must be a valid date";
             }
 
-            if (affidavitDetail.InventorySource == 0)
+            if (affidavitDetail.InventorySource == (int)(InventorySourceEnum.Blank))
             {
                 affidavitValidationResult.InvalidField = "InventorySource";
                 affidavitValidationResult.ErrorMessage = "InventorySource must be valid";
@@ -102,7 +103,7 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             if (affidavitValidationResult.InvalidField != null)
-                affidavitValidationResult.Valid = false;
+                affidavitValidationResult.IsValid = false;
 
             return affidavitValidationResult;
         }
