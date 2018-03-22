@@ -27,7 +27,7 @@ namespace WWTVData.Service
             {
                 x.Service<ScheduledWindowsServiceMethodRunner>(s =>
                 {
-                    s.ConstructUsing(name => new ScheduledWindowsServiceMethodRunner(_serviceName,servicesToRun));
+                    s.ConstructUsing(name => new ScheduledWindowsServiceMethodRunner(servicesToRun));
                     s.WhenStarted((runner, control)  =>
                     {
                         runner.IsConsole = control is ConsoleRunHost;
