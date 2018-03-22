@@ -287,11 +287,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
-
                 var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+
                 proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA", Days = "TH" } };
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
                 _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
@@ -301,8 +302,85 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 AllocationProgram(proposalDetailId, programId, proposal.FlightWeeks.First().MediaWeekId);
 
                 var request = _SetupAffidavit();
+
                 request.Details.First().Isci = "WAWA";
+
                 int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+
+                VerifyAffidavit(id);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Affidavit_Match_Proposal_Week_Isci_Day_Without_Matching_Daypart_day()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = new ProposalDto();
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+
+                proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
+
+                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+
+                proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA", Days = "TH" } };
+
+                proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
+
+                // Daypart that does not include thurday (the airtime for the affidavit).
+                proposal.Details.First().DaypartId = 88;
+
+                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+
+                var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
+
+                AllocationProgram(proposalDetailId, programId, proposal.FlightWeeks.First().MediaWeekId);
+
+                var request = _SetupAffidavit();
+
+                request.Details.First().Isci = "WAWA";
+
+                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+
+                VerifyAffidavit(id);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Affidavit_Match_Time_When_Daypart_Day_Does_Not_Match()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = new ProposalDto();
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+
+                proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
+
+                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+
+                proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA", Days = "M" } };
+
+                proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
+
+                // Daypart that does not include thurday (the airtime for the affidavit).
+                proposal.Details.First().DaypartId = 88;
+
+                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+
+                var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
+
+                AllocationProgram(proposalDetailId, programId, proposal.FlightWeeks.First().MediaWeekId);
+
+                var request = _SetupAffidavit();
+
+                request.Details.First().Isci = "WAWA";
+
+                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+
                 VerifyAffidavit(id);
             }
         }

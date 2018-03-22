@@ -29,9 +29,7 @@ namespace WWTVData.Service
         {
             get
             {
-                if (_SharedFolder == null)
-                    _SharedFolder = BroadcastServiceSystemParameter.WWTV_SharedFolder;
-                return _SharedFolder;
+                return BroadcastServiceSystemParameter.WWTV_SharedFolder;
             }
         }
 
@@ -61,15 +59,11 @@ namespace WWTVData.Service
             }
         }
 
-        private int? _SecondsBetweenRuns;
         public override int SecondsBetweenRuns
         {
             get
             {
-                if (_SecondsBetweenRuns == null)
-                    _SecondsBetweenRuns = BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
-                return _SecondsBetweenRuns.Value;
-
+                return BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
             }
         }
 
@@ -98,9 +92,13 @@ namespace WWTVData.Service
 
         public override bool RunService(DateTime timeSignaled)
         {
-            Console.WriteLine(timeSignaled.ToString("s") + "::Checking WWTV files Started");
-            string[] filesFound;
+            var message = timeSignaled.ToString("s") + "::Checking WWTV files Started";
+            BaseWindowsService.LogServiceEvent(message);
 
+            string[] filesFound;
+            int filesProcessed = 0;
+            int filesFailed = 0;
+            
             try
             {
                 try
@@ -116,8 +114,12 @@ namespace WWTVData.Service
                 var response = service.ProcessFiles(filesFound.ToList(), ServiceName);
                 response.ForEach(r =>
                 {
-                    if (r.Status == (int)AffidaviteFileProcessingStatus.Valid)
+                    if (r.Status == (int) AffidaviteFileProcessingStatus.Valid)
+                    {
                         File.Delete(r.FilePath);
+                        filesProcessed++;
+                    } else if (r.Status == (int) AffidaviteFileProcessingStatus.Valid)
+                        filesFailed++;
                 });
                 _LastRun = DateTime.Now;
             }
@@ -127,12 +129,8 @@ namespace WWTVData.Service
                 return false;
             }
 
-            int filesProcessed = 0;
-            int filesFailed = 0;
 
-            var message = string.Format("\r\nFound {0} file; Process {1}; Failed {2}", filesFound.Length, filesProcessed, filesFailed);
-            Console.WriteLine(DateTime.Now + "::Checking WWTV files Finished");
-            Console.WriteLine(message);
+            message = string.Format("\r\nFound {0} file; Process {1}; Failed {2}", filesFound.Length, filesProcessed, filesFailed);
             BaseWindowsService.LogServiceEvent(message);
             return true;
         }
