@@ -232,7 +232,7 @@ export class PostScrubbingGrid extends Component {
     }
 }
 
-PostScrubbingGrid.PropTypes = {
+PostScrubbingGrid.propTypes = {
     grid: PropTypes.object.isRequired,
     dataSource: PropTypes.object.isRequired,
     // ClientScrubs: PropTypes.object.isRequired,
