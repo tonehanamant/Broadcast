@@ -17,6 +17,7 @@ namespace Services.Broadcast.Services
         {
             _serviceName = serviceName;
         }
+        public bool IsConsole { get; set; }
 
         protected void TimeResultsNoReturn(String methodName, Action func)
         {
@@ -52,7 +53,13 @@ namespace Services.Broadcast.Services
 
         public void LogServiceError(string message, Exception exception)
         {
-            LogServiceError(GetServiceName(),message,exception);
+            if (IsConsole)
+            {
+                message = string.Format("Service Error {0} :: {1}\\n{2}", GetServiceName(), message,exception);
+                Console.WriteLine(message);
+            }
+            else
+                LogServiceError(GetServiceName(),message,exception);
         }
 
         public static void LogServiceError(string serviceName, string message, Exception exception)
@@ -72,7 +79,13 @@ namespace Services.Broadcast.Services
 
         public void LogServiceErrorNoCallStack(string message)
         {
-            LogServiceErrorNoCallStack(GetServiceName(),message);
+            if (IsConsole)
+            {
+                message = string.Format("Service NoCallStack {0} :: {1}\\n{2}", GetServiceName(), message);
+                Console.WriteLine(message);
+            }
+            else
+                LogServiceErrorNoCallStack(GetServiceName(),message);
         }
 
         public static void LogServiceErrorNoCallStack(string serviceName, string message)
@@ -92,7 +105,13 @@ namespace Services.Broadcast.Services
 
         public void LogServiceEvent(string message)
         {
-            LogServiceEvent(GetServiceName(),message);
+            if (IsConsole)
+            {
+                message = string.Format("Service Event {0} :: {1}", GetServiceName(), message);
+                Console.WriteLine(message);
+            }
+            else
+                LogServiceEvent(GetServiceName(),message);
         }
 
         public static void LogServiceEvent(string serviceName, string message)
@@ -107,6 +126,7 @@ namespace Services.Broadcast.Services
             catch
             {
             }
+
             TamMaestroEventSource.Log.ServiceEvent(serviceName, message, userName, environment);
         }
 

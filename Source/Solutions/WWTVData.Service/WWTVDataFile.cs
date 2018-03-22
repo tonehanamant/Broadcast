@@ -29,9 +29,7 @@ namespace WWTVData.Service
         {
             get
             {
-                if (_SharedFolder == null)
-                    _SharedFolder = BroadcastServiceSystemParameter.WWTV_SharedFolder;
-                return _SharedFolder;
+                return BroadcastServiceSystemParameter.WWTV_SharedFolder;
             }
         }
 
@@ -61,15 +59,11 @@ namespace WWTVData.Service
             }
         }
 
-        private int? _SecondsBetweenRuns;
         public override int SecondsBetweenRuns
         {
             get
             {
-                if (_SecondsBetweenRuns == null)
-                    _SecondsBetweenRuns = BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
-                return _SecondsBetweenRuns.Value;
-
+                return BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
             }
         }
 
@@ -99,7 +93,6 @@ namespace WWTVData.Service
         public override bool RunService(DateTime timeSignaled)
         {
             var message = timeSignaled.ToString("s") + "::Checking WWTV files Started";
-            Console.WriteLine(message);
             BaseWindowsService.LogServiceEvent(message);
 
             string[] filesFound;
@@ -138,8 +131,6 @@ namespace WWTVData.Service
 
 
             message = string.Format("\r\nFound {0} file; Process {1}; Failed {2}", filesFound.Length, filesProcessed, filesFailed);
-            Console.WriteLine(DateTime.Now + "::Checking WWTV files Finished");
-            Console.WriteLine(message);
             BaseWindowsService.LogServiceEvent(message);
             return true;
         }

@@ -50,15 +50,11 @@ namespace WWTVData.Service
             }
         }
 
-        private int? _SecondsBetweenRuns;
         public override int SecondsBetweenRuns
         {
             get
             {
-                if (_SecondsBetweenRuns == null)
-                    _SecondsBetweenRuns = BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
-                return _SecondsBetweenRuns.Value;
-
+                return BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
             }
         }
 
@@ -87,6 +83,7 @@ namespace WWTVData.Service
 
         public override bool RunService(DateTime timeSignaled)
         {
+            BaseWindowsService.LogServiceEvent("Checking Error Files . . .");
             try
             {
                 var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPreprocessingService>();
@@ -98,6 +95,7 @@ namespace WWTVData.Service
                 BaseWindowsService.LogServiceError("Error reading FTP Error files", e);
                 return false;
             }
+            BaseWindowsService.LogServiceEvent(". . . Done Checking Error Files\n");
             return true;
         }
     }
