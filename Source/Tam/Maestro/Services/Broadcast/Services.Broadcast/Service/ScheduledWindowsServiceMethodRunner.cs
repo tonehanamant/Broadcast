@@ -12,6 +12,7 @@ namespace Services.Broadcast.Services
             get { return "_WWTVData.Service"; }
         }
 
+        Microsoft.Practices.EnterpriseLibrary.SemanticLogging.ObservableEventListener _ErrorLog = null;
         protected List<ScheduledServiceMethod> _ServicesToRun;
 
         public const int MILSEC_BETWEEN_CHECKS = 1000 * 5;
@@ -47,8 +48,30 @@ namespace Services.Broadcast.Services
 
             _Timer.Start();
         }
-        public override void Start() { _Timer.Start(); }
-        public override void Stop() { _Timer.Stop(); }
+
+        public override void Start()
+        {
+            _ErrorLog = GetNewErrorListener();
+            _Timer.Start();
+        }
+
+        public override void Stop()
+        {
+            _Timer.Stop();
+            try
+            {
+                if (_ErrorLog != null)
+                {
+                    _ErrorLog.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(string.Format("Error stopping {0}. Error : {1}  .", this.ServiceName != null ? this.ServiceName : string.Empty, ex.ToString()));
+                LogServiceError(this.ServiceName, ex.Message, ex);
+            }
+
+        }
 
     }
 
