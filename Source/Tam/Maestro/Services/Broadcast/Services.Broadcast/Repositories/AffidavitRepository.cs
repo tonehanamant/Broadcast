@@ -132,7 +132,7 @@ namespace Services.Broadcast.Repositories
                                           from proposalVersionWeekIscis in proposalVersionWeeks.proposal_version_detail_quarter_week_iscis
                                           from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
                                           let affidavitFile = affidavitFileScrub.affidavit_file_details
-                                          where proposalVersionDetail.id == proposalVersionId
+                                          where proposalVersionWeekIscis.house_isci == affidavitFile.isci && proposalVersionDetail.id == proposalVersionId
                                           select new { affidavitFile, affidavitFileScrub, proposalVersionWeekIscis }).ToList();
                     var spotLengths = (from sl in context.spot_lengths select sl).ToList();
 
