@@ -41,7 +41,7 @@ namespace Services.Broadcast.Services
                 }
                 catch (Exception ex)
                 {
-                    LogServiceError("Error Running Service: ", s.ServiceName, ex);
+                    LogServiceError("Error Running Service: ", ex);
                 }
             });
 

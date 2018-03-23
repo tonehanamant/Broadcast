@@ -12,7 +12,6 @@ namespace WWTVData.Service
 
     public class WWTVErrorFiles :  ScheduledServiceMethod
     {
-        protected DateTime? _LastRun;
 
         public WWTVErrorFiles() : base(null)
         {

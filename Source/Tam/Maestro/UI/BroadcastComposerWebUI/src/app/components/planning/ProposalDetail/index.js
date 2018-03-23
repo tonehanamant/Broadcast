@@ -118,6 +118,10 @@ export class ProposalDetail extends Component {
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightEndDate', value: flight.EndDate });
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightWeeks', value: flight.FlightWeeks });
       this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'FlightEdited', value: true });
+      // Need a hard clearing of the data or the rendered cells in swetail grid get mixed up (state is not properly re-rendered)
+      // clear the grid data - GridQuarterWeeks - while maintainig the overall state changes in the edited values (detail)
+      this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'GridQuarterWeeks', value: [] });
+      // reset the data from the edited details processed by the BE
       this.props.onUpdateProposal();
     } else {
       this.props.modelNewProposalDetail(flight);

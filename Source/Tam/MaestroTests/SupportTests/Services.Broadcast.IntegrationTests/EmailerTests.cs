@@ -13,7 +13,6 @@ namespace Services.Broadcast.IntegrationTests
     [TestFixture]
     public class EmailerTests
     {
-        private IAffidavitPreprocessingService _AffidavitPreprocessingService;
 
         public EmailerTests()
         {

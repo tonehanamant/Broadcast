@@ -81,7 +81,7 @@ namespace Services.Broadcast.Services
         {
             if (IsConsole)
             {
-                message = string.Format("Service NoCallStack {0} :: {1}\\n{2}", ServiceName, message);
+                message = string.Format("Service NoCallStack {0} :: {1}", ServiceName, message);
                 Console.WriteLine(message);
             }
             else

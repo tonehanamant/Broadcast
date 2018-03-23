@@ -12,7 +12,6 @@ namespace WWTVData.Service
 
     public class WWTVDataFile :  ScheduledServiceMethod
     {
-        protected DateTime? _LastRun;
 
         public WWTVDataFile() : base(null)
         {
@@ -24,7 +23,6 @@ namespace WWTVData.Service
             get { return "WWTV File Retriever";  }
         }
 
-        private string _SharedFolder;
         public string SharedFolder
         {
             get
