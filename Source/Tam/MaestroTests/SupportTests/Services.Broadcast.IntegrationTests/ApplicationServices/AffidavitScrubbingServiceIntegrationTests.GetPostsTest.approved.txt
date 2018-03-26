@@ -6,5 +6,13 @@
     "SpotsInSpec": 2,
     "SpotsOutOfSpec": 0,
     "UploadDate": "2018-02-08T12:57:39.693"
+  },
+  {
+    "ContractId": 255,
+    "ContractName": "Proposal Test",
+    "PrimaryAudienceImpressions": 0.0,
+    "SpotsInSpec": 0,
+    "SpotsOutOfSpec": 0,
+    "UploadDate": null
   }
 ]
