@@ -1,7 +1,14 @@
-.Select-arrow-zone {
-    display: none;
-}
 
-.Select--multi.is-disabled .Select-value {
-    border: 1px solid rgba(0,126,255,.24) !important;
+#proposal_secondary_demo {
+  .Select-arrow-zone {
+      display: none !important;
+  }
+
+  .Select.is-disabled>.Select-control {
+    background-color: unset !important;
+  }
+
+  .Select-control {
+    border: none !important;
+  }
 }

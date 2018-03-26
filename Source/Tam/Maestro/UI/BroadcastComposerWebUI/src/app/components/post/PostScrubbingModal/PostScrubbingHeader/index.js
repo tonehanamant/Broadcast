@@ -148,19 +148,17 @@ export class PostScrubbingHeader extends Component {
                 </FormGroup>
               </Col>
               <Col md={4}>
-                <FormGroup controlId="proposalSecondaryDemo">
+                <FormGroup id="proposal_secondary_demo" controlId="proposalSecondaryDemo">
                   <ControlLabel><strong>Secondary Demo</strong></ControlLabel>
-                  { 
-                    secondaryDemoOptions.length > 0 ?
-                    <Select
-                      placeholder="secondary demos"
-                      name="proposalSecondaryDemo"
-                      multi
-                      options={secondaryDemoOptions}
-                      labelKey="Display"
-                      valueKey="Id"
-                    /> : <FormControl.Static>{'--'}</FormControl.Static>
-                  }
+                  <Select
+                    placeholder="--"
+                    name="proposalSecondaryDemo"
+                    multi
+                    disabled
+                    value={secondaryDemoOptions}
+                    labelKey="Display"
+                    valueKey="Id"
+                  />
                 </FormGroup>
               </Col>
               <Col md={4}>
