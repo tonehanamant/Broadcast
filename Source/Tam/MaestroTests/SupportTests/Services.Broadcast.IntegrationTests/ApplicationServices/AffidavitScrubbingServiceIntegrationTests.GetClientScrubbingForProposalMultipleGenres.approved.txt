@@ -1,0 +1,81 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "BlackoutMarketGroup": null,
+  "BlackoutMarketGroupId": null,
+  "ClientScrubs": [],
+  "Details": [
+    {
+      "ClientScrubs": [],
+      "DayPart": "M-F 9AM-10AM",
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "Genres": [
+        {
+          "Contain": 2,
+          "Genre": {
+            "Display": "Action"
+          }
+        },
+        {
+          "Contain": 2,
+          "Genre": {
+            "Display": "Adult"
+          }
+        },
+        {
+          "Contain": 2,
+          "Genre": {
+            "Display": "Adventure"
+          }
+        }
+      ],
+      "Id": 25,
+      "Programs": [],
+      "Sequence": null,
+      "SpotLength": "30"
+    },
+    {
+      "ClientScrubs": [],
+      "DayPart": "M-F 9AM-10AM",
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "Genres": [],
+      "Id": 26,
+      "Programs": [],
+      "Sequence": null,
+      "SpotLength": "30"
+    }
+  ],
+  "Filters": {
+    "DistinctDayOfWeek": [],
+    "DistinctGenres": [
+      {
+        "Contain": 2,
+        "Genre": {
+          "Display": "Action"
+        }
+      },
+      {
+        "Contain": 2,
+        "Genre": {
+          "Display": "Adult"
+        }
+      },
+      {
+        "Contain": 2,
+        "Genre": {
+          "Display": "Adventure"
+        }
+      }
+    ],
+    "WeekEnd": null,
+    "WeekStart": null
+  },
+  "GuaranteedDemo": "House Holds",
+  "Id": 255,
+  "MarketGroupId": 100,
+  "Markets": [],
+  "Name": "Proposal Test",
+  "Notes": null,
+  "SecondaryDemos": []
+}
