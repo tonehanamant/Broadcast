@@ -35,7 +35,6 @@ namespace Services.Broadcast.ApplicationServices
 
     public class AffidavitPostProcessingService : IAffidavitPostProcessingService
     {
-        private static readonly HttpClient client = new HttpClient();
         private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly IAffidavitValidationEngine _AffidavitValidationEngine;
         private readonly IAffidavitEmailSenderService _AffidavitEmailSenderService;
@@ -66,9 +65,15 @@ namespace Services.Broadcast.ApplicationServices
 
                 AffidavitSaveRequest affidavitFile = ParseWWTVFile(filePath);
 
+                var handler = new HttpClientHandler();
+                handler.UseDefaultCredentials = true;
+                var client = new HttpClient(handler);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HTTP_ACCEPT_HEADER));
-                var postResponse = client.PostAsJsonAsync(BroadcastServiceSystemParameter.AffidavitUploadUrl, affidavitFile).GetAwaiter().GetResult();
-                var response = JsonConvert.DeserializeObject<BaseResponse<int>>(postResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+
+                var url = BroadcastServiceSystemParameter.AffidavitUploadUrl;
+                var postResponse = client.PostAsJsonAsync(url, affidavitFile).GetAwaiter().GetResult();
+                var responseText = postResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                var response = JsonConvert.DeserializeObject<BaseResponse<int>>(responseText);
 
                 if (_AffidavitValidationResult.Count > 0)
                 {
