@@ -981,7 +981,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 FlightStartDate = proposalDetailRequestDto.StartDate,
                 FlightEndDate = proposalDetailRequestDto.EndDate,
-                Quarters = proposalQuarterDto.ToList(),
+                Quarters = proposalQuarterDto.OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList(),
                 DefaultPostingBooks = _PostingBooksService.GetDefaultPostingBooks(proposalDetailRequestDto.StartDate)
             };
 

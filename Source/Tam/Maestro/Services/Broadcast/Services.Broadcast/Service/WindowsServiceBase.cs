@@ -1,8 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Reflection;
 using System.ServiceModel;
+using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
+using Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks;
 using Tam.Maestro.Common.Logging;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Clients;
@@ -58,8 +61,7 @@ namespace Services.Broadcast.Services
                 message = string.Format("Service Error {0} :: {1}\\n{2}", ServiceName, message,exception);
                 Console.WriteLine(message);
             }
-            else
-                LogServiceError(ServiceName,message,exception);
+            LogServiceError(ServiceName,message,exception);
         }
 
         public static void LogServiceError(string serviceName, string message, Exception exception)
@@ -84,8 +86,7 @@ namespace Services.Broadcast.Services
                 message = string.Format("Service NoCallStack {0} :: {1}", ServiceName, message);
                 Console.WriteLine(message);
             }
-            else
-                LogServiceErrorNoCallStack(ServiceName,message);
+            LogServiceErrorNoCallStack(ServiceName,message);
         }
 
         public static void LogServiceErrorNoCallStack(string serviceName, string message)
@@ -110,8 +111,7 @@ namespace Services.Broadcast.Services
                 message = string.Format("Service Event {0} :: {1}", ServiceName, message);
                 Console.WriteLine(message);
             }
-            else
-                LogServiceEvent(ServiceName,message);
+            LogServiceEvent(ServiceName,message);
         }
 
         public static void LogServiceEvent(string serviceName, string message)
@@ -159,6 +159,14 @@ namespace Services.Broadcast.Services
                     return ((DescriptionAttribute)attrs[0]).Description;
             }
             return en.ToString();
+        }
+
+        public static ObservableEventListener GetNewErrorListener()
+        {
+            var listener = new ObservableEventListener();
+            listener.LogToRollingFlatFile("error_log.txt", 42342343, "yyyy-MM-dd", RollFileExistsBehavior.Increment, RollInterval.Day);
+            listener.EnableEvents(TamMaestroEventSource.Log, EventLevel.Informational,Keywords.All);
+            return listener;
         }
 
     }

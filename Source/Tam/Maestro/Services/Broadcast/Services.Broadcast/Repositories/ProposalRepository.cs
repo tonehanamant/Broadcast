@@ -862,7 +862,7 @@ namespace Services.Broadcast.Repositories
                                 Sunday = isci.sunday == null ? false : isci.sunday.Value
                             }).ToList()
                         }).OrderBy(w => w.StartDate).ToList()
-                        }).ToList()
+                        }).OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList()
                     }).ToList()
                 };
 
