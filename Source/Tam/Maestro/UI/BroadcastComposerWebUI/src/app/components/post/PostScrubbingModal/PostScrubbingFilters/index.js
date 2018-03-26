@@ -88,7 +88,7 @@ export class PostScrubbingFilters extends Component {
         {
           name: 'Week Start',
           dataIndex: 'WeekStart',
-          width: '8%',
+          width: '6%',
           renderer: ({ row }) => {
             return (
               <div style={ inactiveFilterStyle }></div>
@@ -98,7 +98,7 @@ export class PostScrubbingFilters extends Component {
         {
           name: 'Date',
           dataIndex: 'TimeAired',
-          width: '8%',
+          width: '6%',
           renderer: ({ row }) => {
             return (
               <div style={ inactiveFilterStyle }></div>
@@ -108,7 +108,7 @@ export class PostScrubbingFilters extends Component {
         {
           name: 'Time Aired',
           dataIndex: 'MatchTime',
-          width: '10%',
+          width: '6%',
           renderer: ({ row }) => {
             return (
               <div style={ inactiveFilterStyle }></div>
@@ -118,7 +118,7 @@ export class PostScrubbingFilters extends Component {
         {
           name: 'Day',
           dataIndex: 'DayOfWeek',
-          width: '8%',
+          width: '6%',
           renderer: ({ value, row }) => {
             return (
               <TestFilterGridCell />
@@ -137,8 +137,18 @@ export class PostScrubbingFilters extends Component {
           },
         },
         {
-          name: 'ISCI',
+          name: 'House ISCI',
           dataIndex: 'ISCI',
+          width: '10%',
+          renderer: ({ row }) => {
+            return (
+              <div style={ inactiveFilterStyle }></div>
+            )
+          },
+        },
+        {
+          name: 'Client ISCI',
+          dataIndex: 'ClientISCI',
           width: '10%',
           renderer: ({ row }) => {
             return (
@@ -159,7 +169,7 @@ export class PostScrubbingFilters extends Component {
         {
           name: 'Genre',
           dataIndex: 'GenreName',
-          width: '10%',
+          width: '6%',
           renderer: ({ row }) => {
             return (
               <div style={ inactiveFilterStyle }></div>
@@ -169,7 +179,7 @@ export class PostScrubbingFilters extends Component {
         {
           name: 'Affiliate',
           dataIndex: 'Affiliate',
-          width: '10%',
+          width: '6%',
           renderer: ({ row }) => {
             return (
               <div style={ inactiveFilterStyle }></div>
@@ -179,7 +189,7 @@ export class PostScrubbingFilters extends Component {
         {
           name: 'Market',
           dataIndex: 'Market',
-          width: '10%',
+          width: '12%',
           renderer: ({ row }) => {
             return (
               <div style={ inactiveFilterStyle }></div>
@@ -189,6 +199,16 @@ export class PostScrubbingFilters extends Component {
         {
           name: 'Station',
           dataIndex: 'Station',
+          width: '6%',
+          renderer: ({ row }) => {
+            return (
+              <div style={ inactiveFilterStyle }></div>
+            )
+          },
+        },
+        {
+          name: 'Comments',
+          dataIndex: 'Comments',
           width: '10%',
           renderer: ({ row }) => {
             return (
