@@ -11,8 +11,15 @@ namespace WWTVData.Service
     {
         public const string _serviceName = "_WWTVData.Service";
 
+        private static void Warmup()
+        {
+            // this is lame, but will hydrate the SMS Client otherwise an error will be thrown
+            (new BroadcastApplicationServiceFactory()).GetApplicationService<IProposalService>().GetInitialProposalData(DateTime.Now);
+        }
+
         public static void Main(string[] args)
         {
+            Warmup();
 
             List<ScheduledServiceMethod> servicesToRun = new List<ScheduledServiceMethod>()
             {
