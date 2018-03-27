@@ -127,7 +127,7 @@ export default class ProposalDetailGrid extends Component {
                   maskAllowDecimal
                   maskDecimalLimit={2}
                   isGridCellEdited={this.props.isGridCellEdited}
-                  toggleEditGridCellClass={this.props.toggleEditGridCellClass}
+                  // toggleEditGridCellClass={this.props.toggleEditGridCellClass}
                 />
               );
             }
@@ -144,7 +144,7 @@ export default class ProposalDetailGrid extends Component {
                 enterKeyPressAction={inputUnits}
                 maskType="default"
                 isGridCellEdited={this.props.isGridCellEdited}
-                toggleEditGridCellClass={this.props.toggleEditGridCellClass}
+               //  toggleEditGridCellClass={this.props.toggleEditGridCellClass}
               />
             );
           },
@@ -221,7 +221,7 @@ export default class ProposalDetailGrid extends Component {
                   maskAllowDecimal
                   maskDecimalLimit={3}
                   isGridCellEdited={this.props.isGridCellEdited}
-                  toggleEditGridCellClass={this.props.toggleEditGridCellClass}
+                  // toggleEditGridCellClass={this.props.toggleEditGridCellClass}
                 />
               );
             }
@@ -240,7 +240,7 @@ export default class ProposalDetailGrid extends Component {
                 maskAllowDecimal
                 maskDecimalLimit={3}
                 isGridCellEdited={this.props.isGridCellEdited}
-                toggleEditGridCellClass={this.props.toggleEditGridCellClass}
+                // toggleEditGridCellClass={this.props.toggleEditGridCellClass}
               />
             );
           },
@@ -290,7 +290,7 @@ export default class ProposalDetailGrid extends Component {
               weekCnt={row.WeekCnt}
               ref={(ref) => { this.isciCellItems[cellKey] = ref; }}
               isISCIEdited={this.props.isISCIEdited}
-              toggleEditIsciClass={this.props.toggleEditIsciClass}
+              // toggleEditIsciClass={this.props.toggleEditIsciClass}
             />
           );
         }
@@ -383,7 +383,7 @@ ProposalDetailGrid.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   proposalValidationStates: PropTypes.object.isRequired,
   isISCIEdited: PropTypes.bool.isRequired,
-  toggleEditIsciClass: PropTypes.func.isRequired,
+  // toggleEditIsciClass: PropTypes.func.isRequired,
   isGridCellEdited: PropTypes.bool.isRequired,
-  toggleEditGridCellClass: PropTypes.func.isRequired,
+  // toggleEditGridCellClass: PropTypes.func.isRequired,
 };

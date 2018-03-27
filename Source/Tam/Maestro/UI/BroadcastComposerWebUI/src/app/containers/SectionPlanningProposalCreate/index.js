@@ -12,7 +12,7 @@ import { getProposalInitialData, getProposal, updateProposalEditForm, updateProp
 import ProposalHeader from 'Components/planning/ProposalHeader';
 import ProposalActions from 'Components/planning/ProposalActions';
 import ProposalDetails from 'Components/planning/ProposalDetails';
-import { toggleEditIsciClass, toggleEditGridCellClass } from '../../ducks/planning';
+// import { toggleEditIsciClass, toggleEditGridCellClass } from '../../ducks/planning';
 
 
 const mapStateToProps = ({ planning: { initialdata, proposal, proposalEditForm, proposalValidationStates } }) => ({
@@ -23,7 +23,7 @@ const mapStateToProps = ({ planning: { initialdata, proposal, proposalEditForm, 
 });
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleEditIsciClass, toggleEditGridCellClass, toggleModal, createAlert, getProposalInitialData, getProposal, updateProposalEditForm, updateProposal, updateProposalEditFormDetail, updateProposalEditFormDetailGrid, deleteProposalDetail, saveProposal, modelNewProposalDetail, setProposalValidationState }, dispatch)
+  bindActionCreators({ toggleModal, createAlert, getProposalInitialData, getProposal, updateProposalEditForm, updateProposal, updateProposalEditFormDetail, updateProposalEditFormDetailGrid, deleteProposalDetail, saveProposal, modelNewProposalDetail, setProposalValidationState }, dispatch)
 );
 
 /* eslint-disable react/prefer-stateless-function */
@@ -181,8 +181,8 @@ export class SectionPlanningProposalCreate extends Component {
               isValidProposalDetails={this.isValidProposalDetails}
               isValidProposalDetailGrids={this.isValidProposalDetailGrids}
               isDirty={this.isDirty}
-              toggleEditIsciClass={this.props.toggleEditIsciClass}
-              toggleEditGridCellClass={this.props.toggleEditGridCellClass}
+              // toggleEditIsciClass={this.props.toggleEditIsciClass}
+              // toggleEditGridCellClass={this.props.toggleEditGridCellClass}
             />
           </div>
         }
@@ -221,8 +221,8 @@ SectionPlanningProposalCreate.propTypes = {
 
   toggleModal: PropTypes.func.isRequired,
   createAlert: PropTypes.func.isRequired,
-  toggleEditIsciClass: PropTypes.func.isRequired,
-  toggleEditGridCellClass: PropTypes.func.isRequired,
+  // toggleEditIsciClass: PropTypes.func.isRequired,
+  // toggleEditGridCellClass: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SectionPlanningProposalCreate);
