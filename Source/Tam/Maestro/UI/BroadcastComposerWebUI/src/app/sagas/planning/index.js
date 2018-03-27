@@ -1254,6 +1254,18 @@ export function* requestPrograms({ payload: params }) {
 	}
 }
 
+export function* deleteProposalDetail({ payload: params }) {
+  yield put({
+    type: ACTIONS.PROPOSAL_DETAIL_DELETED,
+    payload: params,
+  });
+
+  yield put({
+    type: ACTIONS.UPDATE_PROPOSAL,
+    payload: params,
+  });
+}
+
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
@@ -1315,6 +1327,10 @@ export function* watchRequestGenres() {
 
 export function* watchRequestPrograms() {
 	yield takeEvery(ACTIONS.REQUEST_PROGRAMS, requestPrograms);
+}
+
+export function* watchDeleteProposalDetail() {
+	yield takeEvery(ACTIONS.DELETE_PROPOSAL_DETAIL, deleteProposalDetail);
 }
 
 // if assign watcher > assign in sagas/index rootSaga also

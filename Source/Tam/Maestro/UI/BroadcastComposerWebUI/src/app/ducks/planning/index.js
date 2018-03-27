@@ -210,7 +210,7 @@ export default function reducer(state = initialState, action) {
       };
     }
 
-    case ACTIONS.DELETE_PROPOSAL_DETAIL: {
+    case ACTIONS.PROPOSAL_DETAIL_DELETED: {
       const details = [...state.proposalEditForm.Details];
       const detailIndex = details.findIndex(detail => detail.Id === payload.id);
       return Object.assign({}, state, {
@@ -420,7 +420,7 @@ export const getPrograms = params => ({
   payload: params,
 });
 
-export const toggleEditIsciClass = bool => ({
+/* export const toggleEditIsciClass = bool => ({
   type: ACTIONS.TOGGLE_EDIT_ISCI_CLASS,
   data: bool,
 });
@@ -428,4 +428,4 @@ export const toggleEditIsciClass = bool => ({
 export const toggleEditGridCellClass = bool => ({
   type: ACTIONS.TOGGLE_EDIT_GRID_CELL_CLASS,
   data: bool,
-});
+}); */

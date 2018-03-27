@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
 import { Grid } from 'react-redux-grid';
-// import NumberCommaWhole from 'Components/shared/TextFormatters/NumberCommaWhole';
 import numeral from 'numeral';
-
 import GridCellInput from 'Components/shared/GridCellInput';
 import GridIsciCell from './GridIsciCell';
 
@@ -15,15 +11,14 @@ import GridIsciCell from './GridIsciCell';
 export default class ProposalDetailGrid extends Component {
   constructor(props, context) {
     super(props, context);
+
     this.context = context;
+    this.isciCellItems = {};
+    this.checkEditable = this.checkEditable.bind(this);
 
     this.state = {
       DetailGridsInvalid: this.props.proposalValidationStates.DetailGridsInvalid,
     };
-
-    this.isciCellItems = {};
-
-    this.checkEditable = this.checkEditable.bind(this);
   }
 
   checkEditable(values, isUnits) {
@@ -53,20 +48,8 @@ export default class ProposalDetailGrid extends Component {
     }
   }
 
-   /* ////////////////////////////////// */
-  /* // COMPONENT RENDER FUNC
-  /* ////////////////////////////////// */
   render() {
-    /* ////////////////////////////////// */
-    /* // REACT-REDUX-GRID CONFIGURATION
-    /* ////////////////////////////////// */
-    // TODO will need to be unique to each grid
     const stateKey = `detailGrid_${this.props.detailId}`;
-    // console.log('DETAIL GRID PROPS', stateKey, this.props);
-
-    /* GRID COLUMNS */
-    // See saga FlattenDetail for data structure
-    // NORMALIZE editing values for grid display/editing: EditUnits(quarter Cpm, week Units) EditImpressions (quarter ImpressionGoal, week Impressions)
     const columns = [
       {
         name: 'Type',
@@ -83,10 +66,8 @@ export default class ProposalDetailGrid extends Component {
           dataIndex: 'Week',
           width: '20%',
           renderer: ({ value, row }) => {
-            // console.log('CELL >>>>>>>>>', row);
             if (row.Type === 'total') return 'Totals';
             if (row.Type === 'quarter') return <strong>{row.QuarterText}</strong>;
-            // grey id week and IsHiatus
             return (row.IsHiatus) ? <span style={{ color: '#8f8f8f' }}>{value}</span> : <span>{value}</span>;
           },
       },
@@ -96,8 +77,6 @@ export default class ProposalDetailGrid extends Component {
           width: '20%',
           renderer: ({ value, row }) => {
             const isEditable = this.checkEditable(row, true);
-            // console.log('units is editable', isEditable);
-
             const inputCpm = (event) => {
               let unmaskedValue = event.target.value.replace(/CPM \$ /, '');
                   unmaskedValue = unmaskedValue.replace(/,/g, '');
@@ -148,7 +127,7 @@ export default class ProposalDetailGrid extends Component {
                   maskAllowDecimal
                   maskDecimalLimit={2}
                   isGridCellEdited={this.props.isGridCellEdited}
-                  toggleEditGridCellClass={this.props.toggleEditGridCellClass}
+                  // toggleEditGridCellClass={this.props.toggleEditGridCellClass}
                 />
               );
             }
@@ -165,7 +144,7 @@ export default class ProposalDetailGrid extends Component {
                 enterKeyPressAction={inputUnits}
                 maskType="default"
                 isGridCellEdited={this.props.isGridCellEdited}
-                toggleEditGridCellClass={this.props.toggleEditGridCellClass}
+               //  toggleEditGridCellClass={this.props.toggleEditGridCellClass}
               />
             );
           },
@@ -242,7 +221,7 @@ export default class ProposalDetailGrid extends Component {
                   maskAllowDecimal
                   maskDecimalLimit={3}
                   isGridCellEdited={this.props.isGridCellEdited}
-                  toggleEditGridCellClass={this.props.toggleEditGridCellClass}
+                  // toggleEditGridCellClass={this.props.toggleEditGridCellClass}
                 />
               );
             }
@@ -261,7 +240,7 @@ export default class ProposalDetailGrid extends Component {
                 maskAllowDecimal
                 maskDecimalLimit={3}
                 isGridCellEdited={this.props.isGridCellEdited}
-                toggleEditGridCellClass={this.props.toggleEditGridCellClass}
+                // toggleEditGridCellClass={this.props.toggleEditGridCellClass}
               />
             );
           },
@@ -311,7 +290,7 @@ export default class ProposalDetailGrid extends Component {
               weekCnt={row.WeekCnt}
               ref={(ref) => { this.isciCellItems[cellKey] = ref; }}
               isISCIEdited={this.props.isISCIEdited}
-              toggleEditIsciClass={this.props.toggleEditIsciClass}
+              // toggleEditIsciClass={this.props.toggleEditIsciClass}
             />
           );
         }
@@ -404,7 +383,7 @@ ProposalDetailGrid.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   proposalValidationStates: PropTypes.object.isRequired,
   isISCIEdited: PropTypes.bool.isRequired,
-  toggleEditIsciClass: PropTypes.func.isRequired,
+  // toggleEditIsciClass: PropTypes.func.isRequired,
   isGridCellEdited: PropTypes.bool.isRequired,
-  toggleEditGridCellClass: PropTypes.func.isRequired,
+  // toggleEditGridCellClass: PropTypes.func.isRequired,
 };

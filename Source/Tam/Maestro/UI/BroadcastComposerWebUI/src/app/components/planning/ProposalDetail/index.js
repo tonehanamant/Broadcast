@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+// import { bindActionCreators } from 'redux';
 import Select from 'react-select';
 import { Well, Form, FormGroup, ControlLabel, Row, Col, FormControl, Button, DropdownButton, MenuItem, Checkbox, Glyphicon, HelpBlock } from 'react-bootstrap';
 import FlightPicker from 'Components/shared/FlightPicker';
@@ -9,7 +9,7 @@ import DayPartPicker from 'Components/shared/DayPartPicker';
 import ProposalDetailGrid from 'Components/planning/ProposalDetailGrid';
 import Sweeps from './Sweeps';
 import ProgramGenre from './ProgramGenre';
-import { toggleEditIsciClass, toggleEditGridCellClass } from '../../../ducks/planning';
+// import { toggleEditIsciClass, toggleEditGridCellClass } from '../../../ducks/planning';
 
 const mapStateToProps = ({ routing, planning: { isISCIEdited, isGridCellEdited } }) => ({
   routing,
@@ -17,9 +17,9 @@ const mapStateToProps = ({ routing, planning: { isISCIEdited, isGridCellEdited }
   isGridCellEdited,
 });
 
-const mapDispatchToProps = dispatch => (
+/* const mapDispatchToProps = dispatch => (
 	bindActionCreators({ toggleEditIsciClass, toggleEditGridCellClass }, dispatch)
-);
+); */
 
 export class ProposalDetail extends Component {
   constructor(props) {
@@ -188,7 +188,8 @@ export class ProposalDetail extends Component {
         message: 'To access Inventory Planner you must save proposal first.',
       });
       return;
-  }
+    }
+
     const detailId = this.props.detail.Id;
     const version = this.props.proposalEditForm.Version;
     const proposalId = this.props.proposalEditForm.Id;
@@ -235,7 +236,7 @@ export class ProposalDetail extends Component {
   render() {
 		/* eslint-disable no-unused-vars */
     const { detail, proposalEditForm, initialdata, updateProposalEditFormDetail, updateProposalEditFormDetailGrid, onUpdateProposal, isReadOnly, toggleModal, proposalValidationStates } = this.props;
-    const { isISCIEdited, isGridCellEdited, toggleEditIsciClass, toggleEditGridCellClass } = this.props;
+    const { isISCIEdited, isGridCellEdited } = this.props;
 
     return (
 			<Well bsSize="small">
@@ -275,62 +276,53 @@ export class ProposalDetail extends Component {
               </FormGroup>
               }
               {detail &&
-              // <FormGroup controlId="proposalDetailDaypart" validationState={this.state.validationStates.Daypart}>
-              //   <ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart</ControlLabel>
                 <DayPartPicker
                   dayPart={detail.Daypart || undefined}
                   onApply={daypart => this.onDayPartPickerApply(daypart)}
                   isReadOnly={isReadOnly}
                   validationState={this.state.validationStates.Daypart}
                 />
-              //   {this.state.validationStates.Daypart != null &&
-              //   <HelpBlock style={{ margin: '0 0 0 16px' }}>
-              //     <span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
-              //   </HelpBlock>
-              //   }
-              // </FormGroup>
               }
               {detail &&
-              <FormGroup controlId="proposalDetailDaypartCode" validationState={this.state.validationStates.DaypartCode || this.state.validationStates.DaypartCode_Alphanumeric || this.state.validationStates.DaypartCode_MaxChar}>
-                <ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart Code</ControlLabel>
-                <FormControl type="text" style={{ width: '100px' }} value={detail.DaypartCode ? detail.DaypartCode : ''} onChange={this.onChangeDaypartCode} disabled={isReadOnly} />
-                {this.state.validationStates.DaypartCode != null &&
-                <HelpBlock style={{ margin: '0 0 0 16px' }}>
-                  <span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
-                </HelpBlock>
-                }
-                {this.state.validationStates.DaypartCode_Alphanumeric != null &&
-                <HelpBlock style={{ margin: '0 0 0 16px' }}>
-                  <span className="text-danger" style={{ fontSize: 11 }}>Please enter only alphanumeric characters.</span>
-                </HelpBlock>
-                }
-                {this.state.validationStates.DaypartCode_MaxChar != null &&
-                <HelpBlock style={{ margin: '0 0 0 16px' }}>
-                  <span className="text-danger" style={{ fontSize: 11 }}>Please enter no more than 10 characters.</span>
-                </HelpBlock>
-                }
-              </FormGroup>
+                <FormGroup controlId="proposalDetailDaypartCode" validationState={this.state.validationStates.DaypartCode || this.state.validationStates.DaypartCode_Alphanumeric || this.state.validationStates.DaypartCode_MaxChar}>
+                  <ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart Code</ControlLabel>
+                  <FormControl type="text" style={{ width: '100px' }} value={detail.DaypartCode ? detail.DaypartCode : ''} onChange={this.onChangeDaypartCode} disabled={isReadOnly} />
+                  {this.state.validationStates.DaypartCode != null &&
+                  <HelpBlock style={{ margin: '0 0 0 16px' }}>
+                    <span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
+                  </HelpBlock>
+                  }
+                  {this.state.validationStates.DaypartCode_Alphanumeric != null &&
+                  <HelpBlock style={{ margin: '0 0 0 16px' }}>
+                    <span className="text-danger" style={{ fontSize: 11 }}>Please enter only alphanumeric characters.</span>
+                  </HelpBlock>
+                  }
+                  {this.state.validationStates.DaypartCode_MaxChar != null &&
+                  <HelpBlock style={{ margin: '0 0 0 16px' }}>
+                    <span className="text-danger" style={{ fontSize: 11 }}>Please enter no more than 10 characters.</span>
+                  </HelpBlock>
+                  }
+                </FormGroup>
               }
               {detail &&
-              <FormGroup style={{ margin: '0 0 0 12px' }} controlId="proposalDetailADU">
-                <Checkbox checked={detail.Adu} onChange={this.onChangeAdu} disabled={isReadOnly} />
-                <ControlLabel style={{ margin: '0 0 0 6px' }}>ADU</ControlLabel>
-              </FormGroup>
+                <FormGroup style={{ margin: '0 0 0 12px' }} controlId="proposalDetailADU">
+                  <Checkbox checked={detail.Adu} onChange={this.onChangeAdu} disabled={isReadOnly} />
+                  <ControlLabel style={{ margin: '0 0 0 6px' }}>ADU</ControlLabel>
+                </FormGroup>
               }
               {detail &&
-              <div style={{ float: 'right', margin: '4px 0 0 8px' }}>
-                <DropdownButton bsSize="xsmall" bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="detail_actions">
-                    <MenuItem eventKey="1" onClick={() => this.openInventory('inventory')}>Proprietary Inventory</MenuItem>
-                    <MenuItem eventKey="2" onClick={() => this.openInventory('openMarket')}>Open Market Inventory</MenuItem>
-                    <MenuItem eventKey="3" onClick={this.openSweepsModal}>Sweeps</MenuItem>
-                    <MenuItem eventKey="4" onClick={this.openProgramGenreModal}>Program/Genre</MenuItem>
-                </DropdownButton>
+                <div style={{ float: 'right', margin: '4px 0 0 8px' }}>
+                  <DropdownButton bsSize="xsmall" bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="detail_actions">
+                      <MenuItem eventKey="1" onClick={() => this.openInventory('inventory')}>Proprietary Inventory</MenuItem>
+                      <MenuItem eventKey="2" onClick={() => this.openInventory('openMarket')}>Open Market Inventory</MenuItem>
+                      <MenuItem eventKey="3" onClick={this.openSweepsModal}>Sweeps</MenuItem>
+                      <MenuItem eventKey="4" onClick={this.openProgramGenreModal}>Program/Genre</MenuItem>
+                  </DropdownButton>
                 </div>
               }
               {(detail && !isReadOnly) &&
-              <Button bsStyle="link" style={{ float: 'right' }} onClick={this.onDeleteProposalDetail}><Glyphicon style={{ color: '#c12e2a', fontSize: '16px' }} glyph="trash" /></Button>
+                <Button bsStyle="link" style={{ float: 'right' }} onClick={this.onDeleteProposalDetail}><Glyphicon style={{ color: '#c12e2a', fontSize: '16px' }} glyph="trash" /></Button>
               }
-
             </Form>
           </Col>
         </Row>
@@ -347,9 +339,9 @@ export class ProposalDetail extends Component {
               toggleModal={toggleModal}
               proposalValidationStates={proposalValidationStates}
               isISCIEdited={isISCIEdited}
-              toggleEditIsciClass={toggleEditIsciClass}
+              // toggleEditIsciClass={toggleEditIsciClass}
               isGridCellEdited={isGridCellEdited}
-              toggleEditGridCellClass={toggleEditGridCellClass}
+              // toggleEditGridCellClass={toggleEditGridCellClass}
             />
           </Col>
         </Row>
@@ -404,9 +396,9 @@ ProposalDetail.propTypes = {
   routing: PropTypes.object.isRequired,
   proposalValidationStates: PropTypes.object,
   isISCIEdited: PropTypes.bool.isRequired,
-  toggleEditIsciClass: PropTypes.func.isRequired,
+  // toggleEditIsciClass: PropTypes.func.isRequired,
   isGridCellEdited: PropTypes.bool.isRequired,
-  toggleEditGridCellClass: PropTypes.func.isRequired,
+  // toggleEditGridCellClass: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProposalDetail);
+export default connect(mapStateToProps)(ProposalDetail);
