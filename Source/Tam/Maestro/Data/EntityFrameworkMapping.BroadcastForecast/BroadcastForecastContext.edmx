@@ -14,17 +14,6 @@
           <Property Name="name" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="code_set" Type="varchar" MaxLength="31" Nullable="false" />
         </EntityType>
-        <EntityType Name="hwc_universes">
-          <Key>
-            <PropertyRef Name="media_month_id" />
-            <PropertyRef Name="market_code" />
-            <PropertyRef Name="audience_id" />
-          </Key>
-          <Property Name="media_month_id" Type="smallint" Nullable="false" />
-          <Property Name="market_code" Type="smallint" Nullable="false" />
-          <Property Name="audience_id" Type="int" Nullable="false" />
-          <Property Name="universe" Type="float" Nullable="false" />
-        </EntityType>
         <EntityType Name="market_headers">
           <Key>
             <PropertyRef Name="media_month_id" />
@@ -148,7 +137,6 @@
         </EntityType>
         <EntityContainer Name="broadcast_forecastModelStoreContainer">
           <EntitySet Name="codes" EntityType="Self.codes" Schema="nsi" store:Type="Tables" />
-          <EntitySet Name="hwc_universes" EntityType="Self.hwc_universes" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="market_headers" EntityType="Self.market_headers" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="post_months" EntityType="Self.post_months" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="universes" EntityType="Self.universes" Schema="nsi" store:Type="Tables" />
@@ -171,7 +159,6 @@
           <EntitySet Name="post_months" EntityType="broadcast_forecastModel.post_months" />
           <EntitySet Name="viewers" EntityType="broadcast_forecastModel.viewers" />
           <EntitySet Name="market_headers" EntityType="broadcast_forecastModel.market_headers" />
-          <EntitySet Name="hwc_universes" EntityType="broadcast_forecastModel.hwc_universes" />
         </EntityContainer>
         <EntityType Name="universe">
           <Key>
@@ -303,17 +290,6 @@
           <Property Name="distributor_or_market_exclusion_indicator" Type="Boolean" Nullable="false" />
           <Property Name="daylight_savings_time_indicator" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="hwc_universes">
-          <Key>
-            <PropertyRef Name="media_month_id" />
-            <PropertyRef Name="market_code" />
-            <PropertyRef Name="audience_id" />
-          </Key>
-          <Property Name="media_month_id" Type="Int16" Nullable="false" />
-          <Property Name="market_code" Type="Int16" Nullable="false" />
-          <Property Name="audience_id" Type="Int32" Nullable="false" />
-          <Property Name="universe" Type="Double" Nullable="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -437,16 +413,6 @@
                 <ScalarProperty Name="format_version" ColumnName="format_version" />
                 <ScalarProperty Name="dma_id" ColumnName="dma_id" />
                 <ScalarProperty Name="file_name" ColumnName="file_name" />
-                <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="hwc_universes">
-            <EntityTypeMapping TypeName="broadcast_forecastModel.hwc_universes">
-              <MappingFragment StoreEntitySet="hwc_universes">
-                <ScalarProperty Name="universe" ColumnName="universe" />
-                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
-                <ScalarProperty Name="market_code" ColumnName="market_code" />
                 <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
               </MappingFragment>
             </EntityTypeMapping>
