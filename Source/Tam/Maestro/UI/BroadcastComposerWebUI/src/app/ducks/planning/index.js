@@ -210,7 +210,7 @@ export default function reducer(state = initialState, action) {
       };
     }
 
-    case ACTIONS.DELETE_PROPOSAL_DETAIL: {
+    case ACTIONS.PROPOSAL_DETAIL_DELETED: {
       const details = [...state.proposalEditForm.Details];
       const detailIndex = details.findIndex(detail => detail.Id === payload.id);
       return Object.assign({}, state, {
