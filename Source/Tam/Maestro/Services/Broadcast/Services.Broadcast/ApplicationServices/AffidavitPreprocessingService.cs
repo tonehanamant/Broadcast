@@ -79,6 +79,9 @@ namespace Services.Broadcast.ApplicationServices
         {
             List<OutboundAffidavitFileValidationResultDto> validationList = ValidateFiles(filepathList, userName);
             _AffidavitPreprocessingRepository.SaveValidationObject(validationList);
+            var validFileList = validationList.Where(v => v.Status == (int)AffidaviteFileProcessingStatus.Valid)
+                                                .ToList();
+            //this.CreateAndUploadZipArchiveToWWTV(validFileList);
             return validationList;
         }
 

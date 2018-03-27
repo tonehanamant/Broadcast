@@ -39,5 +39,6 @@ export default function* rootSaga() {
     planningSaga.watchModelUnorderProposal(),
     planningSaga.watchRequestGenres(),
     planningSaga.watchRequestPrograms(),
+    planningSaga.watchDeleteProposalDetail(),
   ];
 }
