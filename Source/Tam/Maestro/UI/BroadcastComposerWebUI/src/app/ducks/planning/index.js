@@ -420,7 +420,7 @@ export const getPrograms = params => ({
   payload: params,
 });
 
-export const toggleEditIsciClass = bool => ({
+/* export const toggleEditIsciClass = bool => ({
   type: ACTIONS.TOGGLE_EDIT_ISCI_CLASS,
   data: bool,
 });
@@ -428,4 +428,4 @@ export const toggleEditIsciClass = bool => ({
 export const toggleEditGridCellClass = bool => ({
   type: ACTIONS.TOGGLE_EDIT_GRID_CELL_CLASS,
   data: bool,
-});
+}); */

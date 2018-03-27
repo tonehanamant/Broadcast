@@ -42,7 +42,7 @@ export default class GridIsciCell extends Component {
   onChangeIscis(event) {
     const val = event.target.value;
     this.setState({ iscisValue: val, isChanged: true });
-    this.props.toggleEditIsciClass(true);
+    // this.props.toggleEditIsciClass(true);
   }
 
   // display/edit conversion - both for popover and edit house display/tips
@@ -205,7 +205,7 @@ export default class GridIsciCell extends Component {
 
   render() {
     const isEdit = this.state.isEdit;
-    const { isISCIEdited } = this.props;
+    // const { isISCIEdited } = this.props;
     const title = isEdit ? 'Edit ISCIs' : 'Add ISCIs';
     const popoverIsciEditor = (
       <Popover id="popover-positioned-scrolling-top" title={title}>
@@ -245,7 +245,8 @@ export default class GridIsciCell extends Component {
     const button = isEdit ? <Button bsStyle="link" style={{ padding: '2px', fontSize: '11px' }}><div className="truncate-iscis">{this.state.iscisDisplay.join(' | ')}</div></Button> :
       <Button bsStyle="link" style={{ padding: '2px', fontSize: '11px' }}><Glyphicon style={{ marginRight: '6px' }} glyph="plus" />Add Isci</Button>;
       const tooltip = <Tooltip id="Iscistooltip"><span style={{ fontSize: '9px' }}>ISCIs <br />{this.state.iscisValue}</span></Tooltip>;
-      const touchedClass = (this.state.isChanged && isISCIEdited) ? 'editable-cell-changed' : '';
+      // const touchedClass = (this.state.isChanged && isISCIEdited) ? 'editable-cell-changed' : '';
+      const touchedClass = '';
     return (
         <div className={`${touchedClass} isci-cell`}>
           { isEdit &&
@@ -272,6 +273,6 @@ GridIsciCell.propTypes = {
   hasNext: PropTypes.bool.isRequired,
   weekCnt: PropTypes.number.isRequired,
 
-  isISCIEdited: PropTypes.bool.isRequired,
-  toggleEditIsciClass: PropTypes.func.isRequired,
+  // isISCIEdited: PropTypes.bool.isRequired,
+  // toggleEditIsciClass: PropTypes.func.isRequired,
 };

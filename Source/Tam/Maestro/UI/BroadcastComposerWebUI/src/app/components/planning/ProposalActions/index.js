@@ -51,7 +51,7 @@ export default class ProposalActions extends Component {
 		if (this.checkValid()) {
 			this.props.saveProposal({ proposal: this.props.proposalEditForm });
 			this.props.toggleEditIsciClass(false);
-			this.props.toggleEditGridCellClass(false);
+			// this.props.toggleEditGridCellClass(false);
 		} else {
 			this.props.createAlert({
 				type: 'danger',
@@ -107,5 +107,5 @@ ProposalActions.propTypes = {
 	isValidProposalDetails: PropTypes.func.isRequired,
 	isValidProposalDetailGrids: PropTypes.func.isRequired,
 	toggleEditIsciClass: PropTypes.func.isRequired,
-	toggleEditGridCellClass: PropTypes.func.isRequired,
+	// toggleEditGridCellClass: PropTypes.func.isRequired,
 };

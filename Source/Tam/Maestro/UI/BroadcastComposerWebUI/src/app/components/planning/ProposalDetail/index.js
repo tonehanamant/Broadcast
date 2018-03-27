@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+// import { bindActionCreators } from 'redux';
 import Select from 'react-select';
 import { Well, Form, FormGroup, ControlLabel, Row, Col, FormControl, Button, DropdownButton, MenuItem, Checkbox, Glyphicon, HelpBlock } from 'react-bootstrap';
 import FlightPicker from 'Components/shared/FlightPicker';
@@ -9,7 +9,7 @@ import DayPartPicker from 'Components/shared/DayPartPicker';
 import ProposalDetailGrid from 'Components/planning/ProposalDetailGrid';
 import Sweeps from './Sweeps';
 import ProgramGenre from './ProgramGenre';
-import { toggleEditIsciClass, toggleEditGridCellClass } from '../../../ducks/planning';
+// import { toggleEditIsciClass, toggleEditGridCellClass } from '../../../ducks/planning';
 
 const mapStateToProps = ({ routing, planning: { isISCIEdited, isGridCellEdited } }) => ({
   routing,
@@ -17,9 +17,9 @@ const mapStateToProps = ({ routing, planning: { isISCIEdited, isGridCellEdited }
   isGridCellEdited,
 });
 
-const mapDispatchToProps = dispatch => (
+/* const mapDispatchToProps = dispatch => (
 	bindActionCreators({ toggleEditIsciClass, toggleEditGridCellClass }, dispatch)
-);
+); */
 
 export class ProposalDetail extends Component {
   constructor(props) {
@@ -235,7 +235,7 @@ export class ProposalDetail extends Component {
   render() {
 		/* eslint-disable no-unused-vars */
     const { detail, proposalEditForm, initialdata, updateProposalEditFormDetail, updateProposalEditFormDetailGrid, onUpdateProposal, isReadOnly, toggleModal, proposalValidationStates } = this.props;
-    const { isISCIEdited, isGridCellEdited, toggleEditIsciClass, toggleEditGridCellClass } = this.props;
+    const { isISCIEdited, isGridCellEdited } = this.props;
 
     return (
 			<Well bsSize="small">
@@ -347,9 +347,9 @@ export class ProposalDetail extends Component {
               toggleModal={toggleModal}
               proposalValidationStates={proposalValidationStates}
               isISCIEdited={isISCIEdited}
-              toggleEditIsciClass={toggleEditIsciClass}
+              // toggleEditIsciClass={toggleEditIsciClass}
               isGridCellEdited={isGridCellEdited}
-              toggleEditGridCellClass={toggleEditGridCellClass}
+              // toggleEditGridCellClass={toggleEditGridCellClass}
             />
           </Col>
         </Row>
@@ -404,9 +404,9 @@ ProposalDetail.propTypes = {
   routing: PropTypes.object.isRequired,
   proposalValidationStates: PropTypes.object,
   isISCIEdited: PropTypes.bool.isRequired,
-  toggleEditIsciClass: PropTypes.func.isRequired,
+  // toggleEditIsciClass: PropTypes.func.isRequired,
   isGridCellEdited: PropTypes.bool.isRequired,
-  toggleEditGridCellClass: PropTypes.func.isRequired,
+  // toggleEditGridCellClass: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProposalDetail);
+export default connect(mapStateToProps)(ProposalDetail);

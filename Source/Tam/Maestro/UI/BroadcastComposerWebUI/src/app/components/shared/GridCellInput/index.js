@@ -20,19 +20,19 @@ export default class GridCellInput extends Component {
 	onInputFocus() {
 		if (this.state.inputValue === 0 || this.state.inputValue === '0') {
 			this.setState({
-				touched: true,
+				// touched: true,
 				inputValue: '',
 			});
-			this.props.toggleEditGridCellClass(true);
+			// this.props.toggleEditGridCellClass(true);
 		}
 	}
 
 	onInputChange(event) {
 		this.setState({
-			touched: true,
+			// touched: true,
 			inputValue: event.target.value,
 		});
-		this.props.toggleEditGridCellClass(true);
+		// this.props.toggleEditGridCellClass(true);
 	}
 
 	onInput(event) {
@@ -60,10 +60,10 @@ export default class GridCellInput extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.value !== this.props.value) {
 			this.setState({
-				touched: true,
+				// touched: true,
 				inputValue: nextProps.value,
 			});
-			this.props.toggleEditGridCellClass(true);
+		//	this.props.toggleEditGridCellClass(true);
 		}
 	}
 
@@ -188,5 +188,5 @@ GridCellInput.propTypes = {
 	maskAllowLeadingZeros: PropTypes.bool,
 
 	isGridCellEdited: PropTypes.bool.isRequired,
-	toggleEditGridCellClass: PropTypes.func.isRequired,
+	// toggleEditGridCellClass: PropTypes.func.isRequired,
 };
