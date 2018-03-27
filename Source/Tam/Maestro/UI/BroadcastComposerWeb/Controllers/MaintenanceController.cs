@@ -8,6 +8,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
+using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
@@ -63,5 +64,19 @@ namespace BroadcastComposerWeb.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public ActionResult ClearCache()
+        {
+            ClearSystemParameterCache();
+            ViewBag.Message = "Cache cleared, good luck with that!";
+            return View("Index");
+        }
+
+        public void ClearSystemParameterCache()
+        {
+            SMSClient.Handler.ClearSystemComponentParameterCache(null, null);
+        }
+
     }
 }
