@@ -81,7 +81,10 @@ namespace Services.Broadcast.ApplicationServices
             _AffidavitPreprocessingRepository.SaveValidationObject(validationList);
             var validFileList = validationList.Where(v => v.Status == (int)AffidaviteFileProcessingStatus.Valid)
                                                 .ToList();
-            //this.CreateAndUploadZipArchiveToWWTV(validFileList);
+
+            if (validFileList.Any())
+                this.CreateAndUploadZipArchiveToWWTV(validFileList);
+
             return validationList;
         }
 
@@ -109,7 +112,10 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
         public void CreateAndUploadZipArchiveToWWTV(List<OutboundAffidavitFileValidationResultDto> files)
         {
-            string zipFileName = $@"{Path.GetTempPath()}\Post_{DateTime.Now.ToString("yyyyMMddhhmmss")}.zip";
+            string zipFileName = Path.GetTempPath();
+            if (!zipFileName.EndsWith("\\"))
+                zipFileName += "\\";
+            zipFileName += "Post_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
             _CreateZipArchive(files, zipFileName);
             if (File.Exists(zipFileName))
             {
@@ -233,9 +239,8 @@ namespace Services.Broadcast.ApplicationServices
             using (var ftpClient = new WebClient())
             {
                 ftpClient.Credentials = GetFtpClientCredentials();
-                ftpClient.UploadFile(
-                    $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder}/{Path.GetFileName(zipFilePath)}",
-                    zipFilePath);
+                var uploadUrl = $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder}/{Path.GetFileName(zipFilePath)}";
+                ftpClient.UploadFile(uploadUrl,zipFilePath);
             }
         }
 
