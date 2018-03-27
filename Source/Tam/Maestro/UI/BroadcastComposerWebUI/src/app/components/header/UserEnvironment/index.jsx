@@ -17,7 +17,7 @@ export class UserEnvironment extends Component {
                 cadent broadcast
           <span id="app_environment_name" className="label label-primary">{this.props.environment}</span>
         </div>
-        <div id="user_info" styleName="username" className="user-green">{this.props.employee._Username}</div>
+        <div id="user_info" styleName="username" className="user-green">{this.props.employee.Username}</div>
       </div>
     );
   }

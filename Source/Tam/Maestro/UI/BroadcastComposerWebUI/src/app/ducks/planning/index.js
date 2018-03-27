@@ -295,7 +295,7 @@ export default function reducer(state = initialState, action) {
       };
     }
 
-    case ACTIONS.TOGGLE_EDIT_ISCI_CLASS: {
+   /*  case ACTIONS.TOGGLE_EDIT_ISCI_CLASS: {
       return {
         ...state,
         isISCIEdited: data,
@@ -307,7 +307,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         isGridCellEdited: data,
       };
-    }
+    } */
 
     default:
       return state;
