@@ -51,7 +51,7 @@ var AppController = BaseController.extend({
         if (!user) {
             $("#user_info").html('');
         } else {
-            var name = user._Username;
+            var name = user.Username;
             $("#user_info").html(name);
         }
     },
