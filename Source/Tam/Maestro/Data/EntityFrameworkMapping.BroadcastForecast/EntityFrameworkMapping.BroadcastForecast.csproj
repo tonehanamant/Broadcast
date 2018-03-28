@@ -379,9 +379,6 @@
     <Compile Include="code.cs">
       <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="hwc_universes.cs">
-      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="market_headers.cs">
       <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
     </Compile>

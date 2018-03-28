@@ -54,6 +54,13 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/* START: BCOP-2757, BCOP-2764, BCOP-2765 */
+IF EXISTS (SELECT * FROM sys.objects where object_id = OBJECT_ID(N'[nsi].[hwc_universes]') AND type in (N'U'))
+BEGIN
+	DROP TABLE [nsi].[hwc_universes];
+END
+GO
+/* END: BCOP-2757, BCOP-2764, BCOP-2765 */
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
