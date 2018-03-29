@@ -41,7 +41,7 @@ namespace Services.Broadcast.Repositories
                         file_hash = item.FileHash,
                         file_name = item.FileName,
                         source_id = item.SourceId,
-                        status = item.Status,
+                        status = (int)item.Status,
                         created_by = item.CreatedBy,
                         affidavit_outbound_file_problems = item.ErrorMessages.Select(y => new affidavit_outbound_file_problems()
                         {
