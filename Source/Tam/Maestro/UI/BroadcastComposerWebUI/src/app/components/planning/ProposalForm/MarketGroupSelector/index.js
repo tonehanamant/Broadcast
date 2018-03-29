@@ -88,9 +88,9 @@ class MarketGroupSelector extends Component {
     // updates values for BE
     updateProposalEditForm({ key: 'Markets', value: simpleMarkets });
     updateProposalEditForm({ key: 'MarketGroup', value: null });
-    updateProposalEditForm({ key: 'MarketGroupId', value: marketGroup || -1 });
+    updateProposalEditForm({ key: 'MarketGroupId', value: marketGroup });
     updateProposalEditForm({ key: 'BlackoutMarketGroup', value: null });
-    updateProposalEditForm({ key: 'BlackoutMarketGroupId', value: blackoutMarketGroup || -1 });
+    updateProposalEditForm({ key: 'BlackoutMarketGroupId', value: blackoutMarketGroup });
 
     updateMarketCount(customMarketCount);
 
