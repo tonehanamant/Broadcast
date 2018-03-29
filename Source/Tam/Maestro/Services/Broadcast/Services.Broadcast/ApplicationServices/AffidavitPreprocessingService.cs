@@ -28,6 +28,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="userName">User processing the files</param>
         /// <returns>List of OutboundAffidavitFileValidationResultDto objects</returns>
         List<OutboundAffidavitFileValidationResultDto> ProcessFiles(List<string> filepathList, string userName);
+        List<OutboundAffidavitFileValidationResultDto> ValidateFiles(List<string> filepathList, string userName);
 
         /// <summary>
         /// Creates and uploads a zip archive to WWTV FTP server
@@ -244,7 +245,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private List<OutboundAffidavitFileValidationResultDto> ValidateFiles(List<string> filepathList, string userName)
+        public List<OutboundAffidavitFileValidationResultDto> ValidateFiles(List<string> filepathList, string userName)
         {
             List<OutboundAffidavitFileValidationResultDto> result = new List<OutboundAffidavitFileValidationResultDto>();
 
