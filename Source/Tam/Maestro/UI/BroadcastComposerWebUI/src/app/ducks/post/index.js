@@ -2,7 +2,8 @@
 import * as ACTIONS from './actionTypes.js';
 
 const initialState = {
-  post: [],
+  post: {},
+  postGridData: [],
   proposalHeader: {},
   modals: {},
 };
@@ -16,13 +17,14 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         post: data.Data,
-        postUnfiltered: data.Data,
+        postGridData: data.Data.Posts,
+        postUnfilteredGridData: data.Data.Posts,
       };
 
     case ACTIONS.RECEIVE_FILTERED_POST:
       return {
         ...state,
-        post: data,
+        postGridData: data,
       };
 
     case ACTIONS.RECEIVE_POST_SCRUBBING_HEADER:

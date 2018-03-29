@@ -20,7 +20,7 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [Route("")]
-        public BaseResponse<List<PostDto>> GetPostList()
+        public BaseResponse<PostedContractedProposalsDto> GetPostList()
         {
             return _ConvertToBaseResponse(() =>
                 _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetPosts());

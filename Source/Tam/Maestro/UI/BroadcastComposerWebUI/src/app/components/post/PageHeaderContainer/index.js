@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import SearchInputButton from 'Components/shared/SearchInputButton';
 
 import { createAlert } from 'Ducks/app';
 import { getPostFiltered } from 'Ducks/post';
 
-const mapStateToProps = ({ routing }) => ({
+/* const mapStateToProps = ({ routing }) => ({
   routing,
+}); */
+const mapStateToProps = ({ post: { post } }) => ({
+  post,
 });
 
 const mapDispatchToProps = dispatch => (
@@ -33,9 +36,17 @@ export class PageHeaderContainer extends Component {
   }
 
   render() {
+    const unlinkedNumber = this.props.post.UnlinkedIscis;
+    const showUnlinked = (unlinkedNumber !== 0);
+    const unlinkedText = `Unlinked ISCIs (${unlinkedNumber})`;
     return (
 			<Row>
-				<Col xs={6} />
+				<Col xs={6}>
+        {
+          showUnlinked &&
+          <Button bsStyle="success" bsSize="small">{unlinkedText}</Button>
+        }
+				</Col>
         <Col xs={6}>
 					<SearchInputButton
             inputAction={this.SearchInputAction}
@@ -50,6 +61,7 @@ export class PageHeaderContainer extends Component {
 
 PageHeaderContainer.propTypes = {
   getPostFiltered: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageHeaderContainer);

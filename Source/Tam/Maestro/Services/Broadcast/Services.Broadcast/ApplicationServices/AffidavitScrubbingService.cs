@@ -14,7 +14,11 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface IAffidavitScrubbingService : IApplicationService
     {
-        List<PostDto> GetPosts();
+        /// <summary>
+        /// Returns a list of the posts and the number of unlinked iscis
+        /// </summary>
+        /// <returns>List of PostDto objects and the number of unlinked iscis</returns>
+        PostedContractedProposalsDto GetPosts();
 
         /// <summary>
         /// Gets a client post scrubbing proposal with details
@@ -22,16 +26,6 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
         ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId);
-    }
-
-    public class PostDto
-    {
-        public int ContractId { get; set; }
-        public string ContractName { get; set; }
-        public DateTime? UploadDate { get; set; }
-        public int SpotsInSpec { get; set; }
-        public int SpotsOutOfSpec { get; set; }
-        public double? PrimaryAudienceImpressions { get; set; }
     }
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
@@ -64,9 +58,17 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalService = proposalService;
         }
 
-        public List<PostDto> GetPosts()
+        /// <summary>
+        /// Returns a list of the posts nad unlinked iscis in the system
+        /// </summary>
+        /// <returns>List of PostDto objects</returns>
+        public PostedContractedProposalsDto GetPosts()
         {
-            return _PostRepository.GetAllPostFiles();
+            return new PostedContractedProposalsDto()
+            {
+                Posts = _PostRepository.GetAllPostFiles(),
+                UnlinkedIscis = _PostRepository.CountUnlinkedIscis()
+            };
         }
 
         /// <summary>
@@ -100,7 +102,7 @@ namespace Services.Broadcast.ApplicationServices
                         Programs = x.ProgramCriteria,
                         Genres = x.GenreCriteria,
                         Sequence = x.Sequence,
-                    }).OrderBy(x=>x.Sequence).ToList(),
+                    }).OrderBy(x => x.Sequence).ToList(),
                     GuaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString,
                     Advertiser = advertiser != null ? advertiser.Display : string.Empty,
                     SecondaryDemos = proposal.SecondaryDemos.Select(x => _AudiencesCache.GetDisplayAudienceById(x).AudienceString).ToList()

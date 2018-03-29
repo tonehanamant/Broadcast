@@ -19,7 +19,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void GetPostsTest()
         {
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitScrubbingService.GetPosts()));
+            var result = _AffidavitScrubbingService.GetPosts();
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PostDto), "Id");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
         }
                 
         [Test]
