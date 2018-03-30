@@ -108,6 +108,9 @@ namespace Services.Broadcast.IntegrationTests
                 case "WWTV_FtpErrorFolder":
                     result = "Errors";
                     break;
+                case "WWTV_FailedFolder":
+                    result = @"E:\temp";
+                    break;
                 case "EmailHost": 
                     result = "smtp.office365.com";
                     break;
@@ -121,6 +124,9 @@ namespace Services.Broadcast.IntegrationTests
                     result = "7TUCE+HAp3LDexQ6JIvaEA==";
                     break;
                 case "EmailWhiteList":
+                    result = "mhohenshilt@crossmw.com";
+                    break;
+                case "WWTV_NotificationEmail":
                     result = "mhohenshilt@crossmw.com";
                     break;
                 case "EmailNotificationsEnabled":

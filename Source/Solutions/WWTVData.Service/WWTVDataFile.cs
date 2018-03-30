@@ -112,11 +112,11 @@ namespace WWTVData.Service
                 var response = service.ProcessFiles(filesFound.ToList(), ServiceName);
                 response.ForEach(r =>
                 {
-                    if (r.Status == (int) AffidaviteFileProcessingStatus.Valid)
+                    if (r.Status == AffidaviteFileProcessingStatus.Valid)
                     {
                         File.Delete(r.FilePath);
                         filesProcessed++;
-                    } else if (r.Status == (int) AffidaviteFileProcessingStatus.Valid)
+                    } else if (r.Status == AffidaviteFileProcessingStatus.Valid)
                         filesFailed++;
                 });
                 _LastRun = DateTime.Now;

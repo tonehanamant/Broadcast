@@ -139,9 +139,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Ignore]
         [Test]
         // use for manual testing and not automated running 
-        public void Test_ProcessErrorFiles()
+        public void Test_ProcessErrorFiles() //Errors returned from WWTV
         {
             _AffidavitPreprocessingService.ProcessErrorFiles();
+        }
+
+        [Ignore]
+        [Test]
+        // use for manual testing and not automated running 
+        public void Test_ProcessInvalidFiles() //Validation errors for files going to WWTV
+        {
+            var fileList = new List<OutboundAffidavitFileValidationResultDto>()
+            {
+                new OutboundAffidavitFileValidationResultDto()
+                {
+                     Status = AffidaviteFileProcessingStatus.Invalid,
+                     FilePath = @"E:\Users\broadcast-ftp\eula.1028.txt",
+                     FileName = "eula.1028.txt"
+                }
+            };
+
+            _AffidavitPreprocessingService.ProcessInvalidFiles(fileList);
         }
     }
 }
