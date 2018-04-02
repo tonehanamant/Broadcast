@@ -28,6 +28,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="userName">User processing the files</param>
         /// <returns>List of OutboundAffidavitFileValidationResultDto objects</returns>
         List<OutboundAffidavitFileValidationResultDto> ProcessFiles(List<string> filepathList, string userName);
+        List<OutboundAffidavitFileValidationResultDto> ValidateFiles(List<string> filepathList, string userName);
 
         /// <summary>
         /// Creates and uploads a zip archive to WWTV FTP server
@@ -79,12 +80,13 @@ namespace Services.Broadcast.ApplicationServices
         {
             List<OutboundAffidavitFileValidationResultDto> validationList = ValidateFiles(filepathList, userName);
             _AffidavitPreprocessingRepository.SaveValidationObject(validationList);
-            var validFileList = validationList.Where(v => v.Status == (int)AffidaviteFileProcessingStatus.Valid)
+            var validFileList = validationList.Where(v => v.Status == AffidaviteFileProcessingStatus.Valid)
                                                 .ToList();
-
             if (validFileList.Any())
+            {
                 this.CreateAndUploadZipArchiveToWWTV(validFileList);
-
+            }
+            ProcessInvalidFiles(validationList);
             return validationList;
         }
 
@@ -94,7 +96,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
         public void ProcessInvalidFiles(List<OutboundAffidavitFileValidationResultDto> validationList)
         {
-            var invalidFiles = validationList.Where(v => v.Status == (int)AffidaviteFileProcessingStatus.Invalid);
+            var invalidFiles = validationList.Where(v => v.Status == AffidaviteFileProcessingStatus.Invalid);
 
             foreach (var invalidFile in invalidFiles)
             {
@@ -244,7 +246,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private List<OutboundAffidavitFileValidationResultDto> ValidateFiles(List<string> filepathList, string userName)
+        public List<OutboundAffidavitFileValidationResultDto> ValidateFiles(List<string> filepathList, string userName)
         {
             List<OutboundAffidavitFileValidationResultDto> result = new List<OutboundAffidavitFileValidationResultDto>();
 
@@ -284,7 +286,7 @@ namespace Services.Broadcast.ApplicationServices
                     continue;
 
                 if (!currentFile.ErrorMessages.Any())
-                    currentFile.Status = (int)AffidaviteFileProcessingStatus.Valid;
+                    currentFile.Status = AffidaviteFileProcessingStatus.Valid;
             }
 
             return result;
@@ -310,7 +312,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             if (hasMissingData)
             {
-                currentFile.Status = (int)AffidaviteFileProcessingStatus.Invalid;
+                currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
             }
         }
 
@@ -337,7 +339,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             if (headers.Count != AffidavitFileHeaders.Count)
             {
-                currentFile.Status = (int)AffidaviteFileProcessingStatus.Invalid;
+                currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
             }
             return headers;
         }
@@ -356,7 +358,7 @@ namespace Services.Broadcast.ApplicationServices
             if (tab == null)
             {
                 currentFile.ErrorMessages.Add(string.Format("Could not find the tab {0} in file {1}", _ValidStrataTabName, currentFile.FilePath));
-                currentFile.Status = (int)AffidaviteFileProcessingStatus.Invalid;
+                currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
             }
             return tab;
         }
@@ -366,7 +368,7 @@ namespace Services.Broadcast.ApplicationServices
             if (!Path.GetExtension(currentFile.FilePath).Equals(_ValidStrataExtension, StringComparison.InvariantCultureIgnoreCase))
             {
                 currentFile.ErrorMessages.Add($"Invalid extension for file {currentFile.FilePath}");
-                currentFile.Status = (int)AffidaviteFileProcessingStatus.Invalid;
+                currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
             }
         }
 

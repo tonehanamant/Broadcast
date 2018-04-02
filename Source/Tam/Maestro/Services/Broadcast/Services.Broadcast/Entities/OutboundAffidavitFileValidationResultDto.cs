@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Broadcast.ApplicationServices;
+using System;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
@@ -7,7 +8,7 @@ namespace Services.Broadcast.Entities
     {
         public string FilePath { get; set; }
         public string FileName { get; set; }
-        public int Status { get; set; }
+        public AffidaviteFileProcessingStatus Status { get; set; }
         public List<string> ErrorMessages { get; set; } = new List<string>();
         public string FileHash { get; set; }
         public int SourceId { get; set; }
