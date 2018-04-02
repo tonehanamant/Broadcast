@@ -165,7 +165,7 @@ namespace Services.Broadcast.Services
         {
             var listener = new ObservableEventListener();
             listener.LogToRollingFlatFile("error_log.txt", 42342343, "yyyy-MM-dd", RollFileExistsBehavior.Increment, RollInterval.Day);
-            listener.EnableEvents(TamMaestroEventSource.Log, EventLevel.Informational,Keywords.All);
+            listener.EnableEvents(TamMaestroEventSource.Log, EventLevel.Error,Keywords.All);
             return listener;
         }
 
