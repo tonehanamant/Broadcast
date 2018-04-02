@@ -48,7 +48,7 @@ class MarketGroupSelector extends Component {
   }
 
   save() {
-    const { updateProposalEditForm, updateMarketCount } = this.props;
+    const { updateProposalEditForm, updateMarketCount, initialdata } = this.props;
     let { currentSelectedMarkets, currentBlackoutMarkets } = this.state;
 
     let marketGroup;
@@ -86,11 +86,12 @@ class MarketGroupSelector extends Component {
     const customMarketCount = currentSelectedMarkets.concat(currentBlackoutMarkets).reduce((sum, market) => sum + (market.Count || 1), 0);
 
     // updates values for BE
+    const customGroup = initialdata.MarketGroups.find(m => m.Display === 'Custom');
     updateProposalEditForm({ key: 'Markets', value: simpleMarkets });
     updateProposalEditForm({ key: 'MarketGroup', value: null });
-    updateProposalEditForm({ key: 'MarketGroupId', value: (marketGroup === undefined) || (marketGroup === null) ? -1 : marketGroup });
+    updateProposalEditForm({ key: 'MarketGroupId', value: (marketGroup === undefined) || (marketGroup === null) ? customGroup.Id : marketGroup });
     updateProposalEditForm({ key: 'BlackoutMarketGroup', value: null });
-    updateProposalEditForm({ key: 'BlackoutMarketGroupId', value: (blackoutMarketGroup === undefined) || (blackoutMarketGroup === null) ? -1 : blackoutMarketGroup });
+    updateProposalEditForm({ key: 'BlackoutMarketGroupId', value: (blackoutMarketGroup === undefined) || (blackoutMarketGroup === null) ? customGroup.Id : blackoutMarketGroup });
 
     updateMarketCount(customMarketCount);
 
