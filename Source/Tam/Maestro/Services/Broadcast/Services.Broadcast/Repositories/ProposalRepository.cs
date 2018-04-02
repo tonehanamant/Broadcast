@@ -66,6 +66,7 @@ namespace Services.Broadcast.Repositories
         void DeleteProposal(int proposalId);
         Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
         List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByHouseIsci(string isci);
+        ProposalDto MapToProposalDto(proposal proposal, proposal_versions proposalVersion);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -716,7 +717,7 @@ namespace Services.Broadcast.Repositories
                             where p.primary_version_id == v.id
                                   && p.id == proposalId
                             select new { p, v })
-                        .ToList().Select(pv => _MapToProposalDto(pv.p, pv.v))
+                        .ToList().Select(pv => MapToProposalDto(pv.p, pv.v))
                         .Single(string.Format(
                             "The Proposal information you have entered [{0}] does not exist. Please try again.",
                             proposalId));
@@ -741,11 +742,11 @@ namespace Services.Broadcast.Repositories
                             join v in context.proposal_versions on p.id equals v.proposal_id
                             where p.id == proposalId && v.proposal_version == version
                             select new { p, v })
-                    .ToList().Select(pv => _MapToProposalDto(pv.p, pv.v))
+                    .ToList().Select(pv => MapToProposalDto(pv.p, pv.v))
                     .Single(string.Format("Cannot find version {0} for proposal {1}.", version, proposalId)));
         }
 
-        private static ProposalDto _MapToProposalDto(proposal proposal, proposal_versions proposalVersion)
+        public ProposalDto MapToProposalDto(proposal proposal, proposal_versions proposalVersion)
         {
             var proposalDto = new ProposalDto
             {
@@ -1459,7 +1460,7 @@ namespace Services.Broadcast.Repositories
                                  where quarterWeekIds.Contains(qw.id)
                                  select new { p, v, pd = d, quarterWeekId = qw.id })
                     .GroupBy(g => g.quarterWeekId).ToList()
-                    .ToDictionary(k => k.Key, val => val.Select(v => _MapToProposalDto(v.p, v.v)).Single());
+                    .ToDictionary(k => k.Key, val => val.Select(v => MapToProposalDto(v.p, v.v)).Single());
 
                 return proposals;
             });
