@@ -300,5 +300,35 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(matchedWeeks));
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitMatchingEngine_IncludeDatepartEndtime()
+        {
+            var affidavitDetail = new AffidavitSaveRequestDetail
+            {
+                Isci = "ABC123",
+                AirTime = DateTime.Parse("2018-01-07T09:00:00")
+            };
+
+            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
+            {
+                new AffidavitMatchingProposalWeek()
+                {
+                    ProposalVersionId = 1,
+                    ProposalVersionDetailId = 5,
+                    ProposalVersionDetailQuarterWeekId = 1,
+                    ProposalVersionDetailDaypartId = 5,
+                    ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                    ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                    HouseIsci = "ABC123",
+                    MarriedHouseIsci = false,
+                    Spots = 1
+                }
+            };
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(matchedWeeks));
+        }
     }
 }
