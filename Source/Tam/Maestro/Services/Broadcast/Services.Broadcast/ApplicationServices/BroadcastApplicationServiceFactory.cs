@@ -12,6 +12,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
+using System.Collections.Generic;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -92,6 +93,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostFileParser, PostFileParser>();
             unityContainer.RegisterType<IPostFileParserFactory, PostFileParserFactory>();
             unityContainer.RegisterType<IReportGenerator<PostPrePostingFile>, PostExcelReportGenerator>();
+            unityContainer.RegisterType<IReportGenerator<NsiPostReport>, NSIPostReportGenerator>();
             unityContainer.RegisterType<IPostPrePostingService, PostPrePostingService>();
             unityContainer.RegisterType<IProprietarySpotCostCalculationEngine, ProprietarySpotCostCalculationEngine>();
             unityContainer.RegisterType<IImpressionAdjustmentEngine, ImpressionAdjustmentEngine>();

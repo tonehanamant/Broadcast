@@ -10,6 +10,9 @@ import Sorter from 'Utils/react-redux-grid-sorter';
 // import NumberCommaWhole from 'Components/shared/TextFormatters/NumberCommaWhole';
 import numeral from 'numeral';
 
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-shadow */
+
 const { MenuActions, SelectionActions, GridActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
 const { selectRow, deselectAll } = SelectionActions;
@@ -172,6 +175,58 @@ export class DataGridContainer extends Component {
         allowDeselect: true,
         activeCls: 'active',
         selectionEvent: 'singleclick',
+      },
+      GRID_ACTIONS: {
+        iconCls: 'action-icon',
+        menu: [
+          {
+            text: 'NSI Post Report',
+            key: 'menu-post-nsi-report',
+            EVENT_HANDLER: ({ metaData }) => {
+              const inSpec = metaData.rowData.SpotsInSpec !== 0;
+              // console.log('nsi menu', metaData, inSpec);
+              if (inSpec) {
+                window.open(`${window.location.origin}/broadcast/api/Post/DownloadNSIPostReport/${metaData.rowData.ContractId}`, '_blank');
+              } else {
+                this.props.createAlert({
+                  type: 'warning',
+                  headline: 'NSI Report Unavailable',
+                  message: 'There are no in-spec spots for this proposal.',
+                });
+              }
+            },
+          },
+        ],
+      },
+      ROW: {
+        enabled: true,
+        renderer: ({ rowProps, cells, row }) => {
+          const stateKey = cells[0].props.stateKey;
+          const rowId = cells[0].props.rowId;
+          // const inSpec = cells[0].props.row.SpotsInSpec !== 0;
+          // console.log('row props', cells[0], inSpec);
+          const updatedRowProps = { ...rowProps,
+            onClick: (e) => {
+              rowProps.onClick(e);
+              this.hideContextMenu({ stateKey });
+            },
+            onContextMenu: (e) => {
+              e.preventDefault();
+              // if (inSpec) {
+              const rowElement = e.target.closest('.react-grid-row');
+              const contextMenuContainer = rowElement.querySelector('.react-grid-action-icon');
+              contextMenuContainer.setAttribute('style', `right: ${(rowElement.clientWidth - e.clientX) - 102}px`); // 102 contextMenu width
+
+              this.deselectAll({ stateKey });
+              this.selectRow({ rowId, stateKey });
+              this.showContextMenu({ id: rowId, stateKey });
+              // }
+            },
+          };
+          return (
+            <tr {...updatedRowProps}>{ cells }</tr>
+          );
+        },
       },
     };
 

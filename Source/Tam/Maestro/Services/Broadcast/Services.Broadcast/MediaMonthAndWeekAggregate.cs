@@ -29,6 +29,8 @@ namespace Services.Broadcast
         List<MediaMonth> GetMediaMonthsBetweenDates(DateTime startDate, DateTime endDate);
         List<MediaMonth> GetMediaMonthsBetweenDatesInclusive(DateTime startDate, DateTime endDate);
         List<MediaWeek> GetMediaWeeksIntersecting(DateTime startDate, DateTime endDate);
+        Dictionary<DateTime, MediaWeek> GetMediaWeeksByContainingDate(List<DateTime> dates);
+
     }
 
     public class MediaMonthAndWeekAggregate : IMediaMonthAndWeekAggregate
@@ -174,6 +176,16 @@ namespace Services.Broadcast
             }
             _ContainingCache[date] = mediaWeek;
             return mediaWeek;
+        }
+
+        public Dictionary<DateTime, MediaWeek> GetMediaWeeksByContainingDate(List<DateTime> dates)
+        {
+            var mediaWeeks = new Dictionary<DateTime, MediaWeek>(); 
+            foreach(var date in dates)
+            {
+                mediaWeeks[date] = GetMediaWeekContainingDate(date);
+            }
+            return mediaWeeks;
         }
 
         public List<MediaWeek> GetMediaWeeksByIdList(List<int> idList)

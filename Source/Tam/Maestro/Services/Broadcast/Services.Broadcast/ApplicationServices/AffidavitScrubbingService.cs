@@ -2,12 +2,16 @@
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.Entities;
+using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.ApplicationServices
@@ -26,36 +30,53 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
         ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId);
+
+        /// <summary>
+        /// Generates the excep NSI Post Report for a specific proposal
+        /// </summary>
+        /// <param name="proposalId">Proposal id to generate the report for</param>
+        /// <returns>ReportOutput object containing the report and the filename</returns>
+        ReportOutput GenerateNSIPostReport(int proposalId);
+        NsiPostReport GetNsiPostReportData(int proposalId);
     }
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
     {
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IAffidavitRepository _AffidavitRepositry;
+        private readonly INsiMarketRepository _NsiMarketRepository;
         private readonly IPostRepository _PostRepository;
         private readonly ISpotLengthRepository _SpotLengthRepository;
         private readonly IDaypartCache _DaypartCache;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly ISMSClient _SmsClient;
-        protected readonly IProposalService _ProposalService;
+        private readonly IProposalService _ProposalService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
+        private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
+        private readonly Lazy<Image> _LogoImage;
+        private readonly IPostingBooksService _PostingBooksService;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IDaypartCache daypartCache,
             ISMSClient smsClient,
             IProposalService proposalService,
             IBroadcastAudiencesCache audiencesCache,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+            IPostingBooksService postingBooksService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepositry = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
             _SpotLengthRepository = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _PostRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
+            _NsiMarketRepository = _BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>();
+            _BroadcastAudienceRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _DaypartCache = daypartCache;
             _AudiencesCache = audiencesCache;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
             _SmsClient = smsClient;
             _ProposalService = proposalService;
+            _PostingBooksService = postingBooksService;
+            _LogoImage = new Lazy<Image>(() => Image.FromStream(new MemoryStream(_SmsClient.GetLogoImage(CMWImageEnums.CMW_CADENT_LOGO).ImageData)));
         }
 
         /// <summary>
@@ -130,6 +151,48 @@ namespace Services.Broadcast.ApplicationServices
                 };
                 return result;
             }
+        }
+
+        /// <summary>
+        /// Generates the excep NSI Post Report for a specific proposal
+        /// </summary>
+        /// <param name="proposalId">Proposal id to generate the report for</param>
+        /// <returns>ReportOutput object containing the report and the filename</returns>
+        public ReportOutput GenerateNSIPostReport(int proposalId)
+        {
+            var nsiPostReport = GetNsiPostReportData(proposalId);
+            var reportGenerator = new NSIPostReportGenerator(_BroadcastDataRepositoryFactory, _LogoImage.Value);
+            var reportOutput = reportGenerator.Generate(nsiPostReport);
+            return reportOutput; //new ReportOutput("test.xlsx") { Filename = "test.xlsx", Stream = null };
+        }
+
+        /// <summary>
+        /// Gets the NSI Post Report data
+        /// </summary>
+        /// <param name="proposalId">Proposal Id to get the data for</param>
+        /// <returns>List of NSIPostReportDto objects</returns>
+        public NsiPostReport GetNsiPostReportData(int proposalId)
+        {
+            var proposal = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProposalById(proposalId);
+            var inspecSpots = _AffidavitRepositry.GetInSpecSpotsForProposal(proposalId);
+            var proposalAdvertiser = _SmsClient.FindAdvertiserById(proposal.AdvertiserId);
+            var proposalAudienceIds = new List<int>() { proposal.GuaranteedDemoId };
+            proposalAudienceIds.AddRange(proposal.SecondaryDemos);
+            var proposalAudiences = _BroadcastAudienceRepository.GetAudienceDtosById(proposalAudienceIds)
+                .OrderBy(a => proposalAudienceIds.IndexOf(a.Id)).ToList(); //This ordering by the original audience id order. Primary audience first.
+            var audiencesMappings = _BroadcastAudienceRepository.GetRatingAudiencesGroupedByMaestroAudience(proposalAudiences.Select(a => a.Id).ToList());
+            var spotLengthMappings = _SpotLengthRepository.GetSpotLengthsById();
+            var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksByContainingDate(inspecSpots.Select(s => s.AirDate).Distinct().ToList());
+            var stationMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
+                .GetBroadcastStationListByLegacyCallLetters(inspecSpots.Select(s => s.Station).Distinct().ToList())
+                .ToDictionary(k => k.LegacyCallLetters, v => v);
+            var latestPostingBooks = _PostingBooksService.GetDefaultPostingBooks();
+            var nsiMarketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(latestPostingBooks.DefaultShareBook.PostingBookId.Value);
+            var nsiPostReport = new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences,
+                                                audiencesMappings, spotLengthMappings, 
+                                                mediaWeeks, stationMappings, nsiMarketRankings);
+            return nsiPostReport;
+
         }
     }
 }

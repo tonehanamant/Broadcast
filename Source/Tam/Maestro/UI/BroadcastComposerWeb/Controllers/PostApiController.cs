@@ -2,6 +2,9 @@
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
@@ -33,6 +36,23 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetClientScrubbingForProposal(proposalId));
+        }
+
+        [HttpGet]
+        [Route("DownloadNSIPostReport/{proposalId}")]
+        public HttpResponseMessage DownloadNSIPostReport(int proposalId)
+        {
+            var report = _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GenerateNSIPostReport(proposalId);
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+
+            result.Content = new StreamContent(report.Stream);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = report.Filename
+            };
+
+            return result;
         }
     }
 }
