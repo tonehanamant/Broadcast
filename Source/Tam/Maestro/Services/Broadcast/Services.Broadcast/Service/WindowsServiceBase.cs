@@ -76,7 +76,7 @@ namespace Services.Broadcast.Services
             catch
             {
             }
-            TamMaestroEventSource.Log.ServiceError(serviceName, exception.Message, exception.ToString(), userName, environment);
+            TamMaestroEventSource.Log.ServiceError(serviceName, message, exception.ToString(), userName, environment);
         }
 
         public void LogServiceErrorNoCallStack(string message)
