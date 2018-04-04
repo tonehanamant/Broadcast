@@ -90,6 +90,7 @@ namespace WWTVData.Service
 
         public override bool RunService(DateTime timeSignaled)
         {
+            _LastRun = DateTime.Now;
             var message = timeSignaled.ToString("s") + "::Checking WWTV files Started";
             BaseWindowsService.LogServiceEvent(message);
 
@@ -119,7 +120,6 @@ namespace WWTVData.Service
                     } else if (r.Status == AffidaviteFileProcessingStatus.Valid)
                         filesFailed++;
                 });
-                _LastRun = DateTime.Now;
             }
             catch (Exception e)
             {

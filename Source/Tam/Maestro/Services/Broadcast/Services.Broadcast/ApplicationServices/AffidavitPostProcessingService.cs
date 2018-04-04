@@ -19,6 +19,8 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface IAffidavitPostProcessingService : IApplicationService
     {
+        List<AffidavitValidationResult> AffidavitValidationResult { get;  }
+
         /// <summary>
         /// Downloads the WWTV processed files and calls the affidavit processing service
         /// </summary>
@@ -43,14 +45,17 @@ namespace Services.Broadcast.ApplicationServices
         private const string HTTP_ACCEPT_HEADER = "application/json";
         private const string FTP_SCHEME = "ftp://";
 
-        private List<AffidavitValidationResult> _AffidavitValidationResult = new List<AffidavitValidationResult>();
 
         public AffidavitPostProcessingService(IBroadcastAudiencesCache audienceCache, IDataRepositoryFactory broadcastDataRepositoryFactory, IAffidavitValidationEngine affidavitValidationEngine, IAffidavitEmailSenderService affidavitEmailSenderService)
         {
             _AudienceCache = audienceCache;
             _AffidavitValidationEngine = affidavitValidationEngine;
             _AffidavitEmailSenderService = affidavitEmailSenderService;
+            AffidavitValidationResult = new List<AffidavitValidationResult>();
         }
+
+        public List<AffidavitValidationResult> AffidavitValidationResult { get; set; }
+
 
         /// <summary>
         /// Downloads the WWTV processed files and calls the affidavit processing service
@@ -64,6 +69,15 @@ namespace Services.Broadcast.ApplicationServices
                 _DownloadFileFromWWTVFtp(file, filePath);
 
                 AffidavitSaveRequest affidavitFile = ParseWWTVFile(filePath);
+                if (AffidavitValidationResult.Count > 0)
+                {
+                    var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
+
+                    var emailBody = _CreateInvalidFileEmailBody(AffidavitValidationResult, invalidFilePath);
+
+                    _AffidavitEmailSenderService.Send(emailBody);
+                    return;
+                }
 
                 var handler = new HttpClientHandler();
                 handler.UseDefaultCredentials = true;
@@ -75,11 +89,11 @@ namespace Services.Broadcast.ApplicationServices
                 var responseText = postResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 var response = JsonConvert.DeserializeObject<BaseResponse<int>>(responseText);
 
-                if (_AffidavitValidationResult.Count > 0)
+                if (AffidavitValidationResult.Count > 0)
                 {
                     var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
 
-                    var emailBody = _CreateInvalidFileEmailBody(_AffidavitValidationResult, filePath);
+                    var emailBody = _CreateInvalidFileEmailBody(AffidavitValidationResult, invalidFilePath);
 
                     _AffidavitEmailSenderService.Send(emailBody);
                 }
@@ -110,7 +124,7 @@ namespace Services.Broadcast.ApplicationServices
             AffidavitSaveRequest affidavitFile = _MapWWTVFileToAffidavitFile(filePath);
             if(affidavitFile.Details.Count == 0)
             {
-                throw new Exception("Invalid file content.");
+                return null;
             }
 
             affidavitFile.FileHash = HashGenerator.ComputeHash(File.ReadAllBytes(filePath));
@@ -201,7 +215,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     validationResult.InvalidLine = lineNumber;
 
-                    _AffidavitValidationResult.Add(validationResult);
+                    AffidavitValidationResult.Add(validationResult);
 
                     continue;
                 }

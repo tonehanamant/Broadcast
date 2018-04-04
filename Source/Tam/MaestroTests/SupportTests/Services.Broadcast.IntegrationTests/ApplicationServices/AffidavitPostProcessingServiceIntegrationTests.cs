@@ -7,6 +7,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using System;
 using System.IO;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.Entities;
 
@@ -83,6 +84,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = File.ReadAllText(filePath);
 
                 AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath);
+                if (_AffidavitPostProcessingService.AffidavitValidationResult.Any() 
+                        || response == null)
+                    throw new Exception("Invalid file content.");
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(BaseResponse), "Data");

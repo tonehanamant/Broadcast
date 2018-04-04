@@ -23,7 +23,7 @@ namespace Services.Broadcast.IntegrationTests
         [Test]
         public void Email_Hello_Test()
         {
-            var from = new MailAddress(BroadcastServiceSystemParameter.EmailFrom);
+            var from = new MailAddress("broadcastsmtp@crossmw.com");
             Emailer.QuickSend(true, "<b>Hello, world.</b>", "Test Hello", MailPriority.Normal, from, new List<MailAddress>() {new MailAddress("test@crossmw.com")});
         }
     }
