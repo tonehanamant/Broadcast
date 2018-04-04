@@ -37,7 +37,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="proposalId">Proposal id to generate the report for</param>
         /// <returns>ReportOutput object containing the report and the filename</returns>
         ReportOutput GenerateNSIPostReport(int proposalId);
-        NsiPostReport GetNsiPostReportData(int proposalId);
+        NsiPostReport GetNsiPostReportData(int proposalId);        
     }
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
@@ -47,7 +47,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly INsiMarketRepository _NsiMarketRepository;
         private readonly IPostRepository _PostRepository;
         private readonly ISpotLengthRepository _SpotLengthRepository;
-        private readonly IDaypartCache _DaypartCache;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly ISMSClient _SmsClient;
         private readonly IProposalService _ProposalService;
@@ -57,7 +56,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IPostingBooksService _PostingBooksService;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
-            IDaypartCache daypartCache,
             ISMSClient smsClient,
             IProposalService proposalService,
             IBroadcastAudiencesCache audiencesCache,
@@ -70,7 +68,6 @@ namespace Services.Broadcast.ApplicationServices
             _PostRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
             _NsiMarketRepository = _BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>();
             _BroadcastAudienceRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
-            _DaypartCache = daypartCache;
             _AudiencesCache = audiencesCache;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
             _SmsClient = smsClient;
@@ -174,6 +171,8 @@ namespace Services.Broadcast.ApplicationServices
         public NsiPostReport GetNsiPostReportData(int proposalId)
         {
             var proposal = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProposalById(proposalId);
+
+            var flights = _GetFlightDays(proposal.Details);
             var inspecSpots = _AffidavitRepositry.GetInSpecSpotsForProposal(proposalId);
             var proposalAdvertiser = _SmsClient.FindAdvertiserById(proposal.AdvertiserId);
             var proposalAudienceIds = new List<int>() { proposal.GuaranteedDemoId };
@@ -188,11 +187,52 @@ namespace Services.Broadcast.ApplicationServices
                 .ToDictionary(k => k.LegacyCallLetters, v => v);
             var latestPostingBooks = _PostingBooksService.GetDefaultPostingBooks();
             var nsiMarketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(latestPostingBooks.DefaultShareBook.PostingBookId.Value);
+            var guaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
             var nsiPostReport = new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences,
-                                                audiencesMappings, spotLengthMappings, 
-                                                mediaWeeks, stationMappings, nsiMarketRankings);
+                                                audiencesMappings, spotLengthMappings,
+                                                mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, flights);
+
             return nsiPostReport;
 
+        }
+
+        private List<Tuple<DateTime?, DateTime?>> _GetFlightDays(List<ProposalDetailDto> details)
+        {
+            List<Tuple<DateTime?, DateTime?>> result = new List<Tuple<DateTime?, DateTime?>>();
+            details.ForEach(x =>
+            {
+                result.Add(new Tuple<DateTime?, DateTime?>(x.FlightStartDate, x.FlightEndDate));
+            });
+            if (result.Count <= 1) return result;
+
+            result = result.OrderBy(x => x.Item1).ToList();
+            int i = 0;
+            do
+            {
+                bool overlap = result[i].Item1 <= result[i + 1].Item2 && result[i + 1].Item1 <= result[i].Item2;
+                if (overlap)
+                {
+                    result[i] = new Tuple<DateTime?, DateTime?>(_MinDate(result[i].Item1, result[i + 1].Item1), _MaxDate(result[i].Item2, result[i + 1].Item2));
+                    result.RemoveAt(i + 1);
+                }
+                else
+                {
+                    i++;
+                }
+
+            } while (i < result.Count - 1);
+
+            return result;
+        }
+
+        private DateTime? _MinDate(DateTime? first, DateTime? second)
+        {
+            return first < second ? first : second;
+        }
+
+        private DateTime? _MaxDate(DateTime? first, DateTime? second)
+        {
+            return first > second ? first : second;
         }
     }
 }

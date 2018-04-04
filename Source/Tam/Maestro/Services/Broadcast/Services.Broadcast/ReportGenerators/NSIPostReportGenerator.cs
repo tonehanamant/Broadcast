@@ -42,7 +42,7 @@ namespace Services.Broadcast.ReportGenerators
         private const string ISCI = "ISCI";
         private const string ADVERTISER = "Advertiser";
         private const string DAYPART = "Daypart";
-        
+
         private readonly IDataRepositoryFactory _Factory;
         private readonly Image _Logo;
 
@@ -70,7 +70,10 @@ namespace Services.Broadcast.ReportGenerators
         {
             var package = new ExcelPackage(new MemoryStream());
 
-            foreach(var quarterTab in reportData.QuarterTabs)
+            ExcelWorksheet wsSummary = package.Workbook.Worksheets.Add($"{reportData.Advertiser} Post");
+            _AddSummaryTab(ref wsSummary, reportData);
+
+            foreach (var quarterTab in reportData.QuarterTabs)
             {
                 var ws = package.Workbook.Worksheets.Add(quarterTab.TabName);
 
@@ -93,7 +96,7 @@ namespace Services.Broadcast.ReportGenerators
                 var columnOffset = firstDataColumn;
                 var headerRow = 9;
                 _BuildCommonHeader(ws, headerRow, ref columnOffset, reportData);
-                ws.View.FreezePanes(headerRow+1,1);
+                ws.View.FreezePanes(headerRow + 1, 1);
 
                 // tables
                 var rowOffset = 10;
@@ -123,7 +126,7 @@ namespace Services.Broadcast.ReportGenerators
                     }
 
                     //Apply formatting to the whole row
-                    for(int i = firstDataColumn; i < columnOffset; i++)
+                    for (int i = firstDataColumn; i < columnOffset; i++)
                     {
                         ws.Cells[rowOffset, i].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                         ws.Cells[rowOffset, i].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -134,15 +137,63 @@ namespace Services.Broadcast.ReportGenerators
                 }
 
                 ws.Cells.AutoFitColumns();
-            }  
+            }
 
             return package;
+        }
+
+        private void _AddSummaryTab(ref ExcelWorksheet wsSummary, NsiPostReport reportData)
+        {
+            wsSummary.View.ShowGridLines = false;
+            wsSummary.Cells.Style.Font.Size = 12;
+            wsSummary.Cells.Style.Font.Name = "Calibri";
+
+            var excelPicture1 = wsSummary.Drawings.AddPicture("logo", _Logo);
+            excelPicture1.SetPosition(1, 0, 1, 0);
+            excelPicture1.SetSize(75);
+            Dictionary<string, string> values = new Dictionary<string, string>() {
+                { "B9", "Client:"},
+                { "B10", "Contact:"},
+                { "B11", "Agency:"},
+                { "B12", "Salesperson:"},
+                { "B16", "Daypart:"},
+                { "B17", "Flight:" },
+                { "C9", reportData.Advertiser},
+                { "C17", string.Join(" & ", reportData.FlightDates.Select(x=> $"{x.Item1.Value.ToString(@"M\/d\/yyyy")}-{x.Item2.Value.ToString(@"M\/d\/yyyy")}").ToList())},
+                { "I9", "Guaranteed Demo:"},
+                { "I10", "Post Type:"},
+                { "I11", "Unit Length:" },
+                { "I12", "Date:"},
+                { "I13", "Report:"},
+                { "J9", reportData.GuaranteedDemo },
+                { "J10", "NSI"},
+                { "J11", string.Join(",", reportData.QuarterTabs.SelectMany(x => x.TabRows.Select(y => $":{y.SpotLength}")).Distinct().OrderBy(x=>x).ToList())},
+                { "J12", DateTime.Now.ToShortDateString()},
+            };
+
+            foreach (var item in values)
+            {
+                wsSummary.Cells[item.Key].Value = item.Value;
+                if (item.Key.Equals("C17"))
+                {
+                    wsSummary.Cells[item.Key].Style.Font.Bold = true;
+                    wsSummary.Cells[item.Key].Style.Font.Size = 16;
+                }
+            }
+
+            wsSummary.Cells["B9:B17"].Style.Font.Bold = true;
+            wsSummary.Cells["B9:B17"].Style.Font.Size = 10;
+            wsSummary.Cells["B9:B17"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+            wsSummary.Cells["I9:I13"].Style.Font.Bold = true;
+            wsSummary.Cells["I9:I13"].Style.Font.Size = 10;
+            wsSummary.Cells["I9:I13"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;            
         }
 
         private void _BuildCommonHeader(ExcelWorksheet ws, int rowOffset, ref int columnOffset, NsiPostReport reportData)
         {
             // header
-            var backgroundColor = System.Drawing.ColorTranslator.FromHtml("#A1E5FD");
+            var backgroundColor = ColorTranslator.FromHtml("#A1E5FD");
             foreach (var header in _ExcelFileHeaders)
             {
                 ws.Cells[rowOffset, columnOffset++].Value = header;
@@ -160,7 +211,6 @@ namespace Services.Broadcast.ReportGenerators
                 ws.Cells[rowOffset, i].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 ws.Cells[rowOffset, i].Style.Fill.BackgroundColor.SetColor(backgroundColor);
                 ws.Cells[rowOffset, i].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
             }
         }
     }

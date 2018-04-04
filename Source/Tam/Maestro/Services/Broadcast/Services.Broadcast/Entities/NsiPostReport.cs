@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -13,7 +11,11 @@ namespace Services.Broadcast.Entities
         public List<NsiPostReportQuarterTab> QuarterTabs { get; set; }
         public List<LookupDto> ProposalAudiences { get; set; }
         public int ProposalId { get; set; }
-   
+        public string Advertiser { get; set; }
+        public string GuaranteedDemo { get; set; }
+        public string Daypart { get; set; }
+        public List<Tuple<DateTime?, DateTime?>> FlightDates { get; set; }
+
         public class NsiPostReportQuarterTab
         {
             public string TabName { get; set; }
@@ -43,24 +45,29 @@ namespace Services.Broadcast.Entities
             public string DaypartName { get; set; }
             public Dictionary<int, double> AudienceImpressions { get; set; }
         }
+
         public NsiPostReport(int proposalId, List<InSpecAffidavitFileDetail> inSpecAffidavitFileDetails, 
                             LookupDto advertiser, List<LookupDto> proposalAudiences,
                             Dictionary<int, List<int>> audienceMappings, 
                             Dictionary<int, int> spotLengthMappings,
                             Dictionary<DateTime, MediaWeek> mediaWeekMappings,
                             Dictionary<string, DisplayBroadcastStation> stationMappings,
-                            Dictionary<int, int> nsiMarketRankings)
+                            Dictionary<int, int> nsiMarketRankings, string guaranteedDemo,
+                            List<Tuple<DateTime?, DateTime?>> flightDates)
         {
             ProposalId = proposalId;
             ProposalAudiences = proposalAudiences;
             QuarterTabs = new List<NsiPostReportQuarterTab>();
-            DisplayBroadcastStation currentStation;
+            Advertiser = advertiser.Display;
+            GuaranteedDemo = guaranteedDemo;
+            FlightDates = flightDates;
+
             var quarters = inSpecAffidavitFileDetails.GroupBy(d => new { d.Year, d.Quarter })
                 .Select(d => new NsiPostReportQuarterTab()
                 {
                     TabName = String.Format("Spot Detail {0}Q{1}", d.Key.Quarter, d.Key.Year.ToString().Substring(2)),
                     Title = String.Format("{0} {1}Q{2} Post Spot Detail", advertiser, d.Key.Quarter, d.Key.Year.ToString().Substring(2)),
-                    TabRows = d.Select(r => 
+                    TabRows = d.Select(r =>
                     {
 
                         var audienceImpressions = proposalAudiences
@@ -69,7 +76,7 @@ namespace Services.Broadcast.Entities
                             .Select(i => i.Value).Sum());
                         return new NsiPostReportQuarterTabRow()
                         {
-                            Rank = stationMappings.TryGetValue(r.Station, out currentStation) ? nsiMarketRankings[currentStation.MarketCode] : 0,
+                            Rank = stationMappings.TryGetValue(r.Station, out DisplayBroadcastStation currentStation) ? nsiMarketRankings[currentStation.MarketCode] : 0,
                             Market = stationMappings.TryGetValue(r.Station, out currentStation) ? currentStation.OriginMarket : "",
                             Station = r.Station,
                             NetworkAffiliate = stationMappings.TryGetValue(r.Station, out currentStation) ? currentStation.Affiliation : "",
