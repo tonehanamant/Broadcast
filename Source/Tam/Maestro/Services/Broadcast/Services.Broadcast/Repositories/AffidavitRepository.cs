@@ -196,7 +196,7 @@ namespace Services.Broadcast.Repositories
                                          from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
                                          let affidavitFileDetails = affidavitClientScrub.affidavit_file_details
                                          where proposal.id == proposalId && affidavitClientScrub.status == (int)ScrubbingStatus.InSpec
-                                         select new { affidavitFileDetails, proposalVersionQuarters, proposalVersionDetail, proposalVersion, proposal })
+                                         select new { affidavitFileDetails, proposalVersionQuarters, proposalVersionDetail, proposalVersion, proposal, proposalVersionWeeks })
                                          .ToList();
 
 
@@ -213,7 +213,9 @@ namespace Services.Broadcast.Repositories
                                                 .ToDictionary( i => i.audience_id, j => j.impressions),
                         Quarter = x.proposalVersionQuarters.quarter,
                         Year = x.proposalVersionQuarters.year,
-                        AdvertiserId = x.proposal.advertiser_id
+                        AdvertiserId = x.proposal.advertiser_id,
+                        ProposalWeekCost = x.proposalVersionWeeks.cost,
+                        ProposalWeekImpressionsGoal = x.proposalVersionWeeks.impressions_goal
                     }).ToList();
 
                     return inSpecAffidavitFileDetails;

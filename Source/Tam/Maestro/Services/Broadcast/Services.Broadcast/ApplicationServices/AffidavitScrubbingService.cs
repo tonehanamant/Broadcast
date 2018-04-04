@@ -37,7 +37,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="proposalId">Proposal id to generate the report for</param>
         /// <returns>ReportOutput object containing the report and the filename</returns>
         ReportOutput GenerateNSIPostReport(int proposalId);
-        NsiPostReport GetNsiPostReportData(int proposalId);        
+        NsiPostReport GetNsiPostReportData(int proposalId);      
     }
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
@@ -158,9 +158,8 @@ namespace Services.Broadcast.ApplicationServices
         public ReportOutput GenerateNSIPostReport(int proposalId)
         {
             var nsiPostReport = GetNsiPostReportData(proposalId);
-            var reportGenerator = new NSIPostReportGenerator(_BroadcastDataRepositoryFactory, _LogoImage.Value);
-            var reportOutput = reportGenerator.Generate(nsiPostReport);
-            return reportOutput; //new ReportOutput("test.xlsx") { Filename = "test.xlsx", Stream = null };
+            var reportGenerator = new NSIPostReportGenerator(_LogoImage.Value);
+            return reportGenerator.Generate(nsiPostReport);
         }
 
         /// <summary>
@@ -190,7 +189,7 @@ namespace Services.Broadcast.ApplicationServices
             var guaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
             var nsiPostReport = new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences,
                                                 audiencesMappings, spotLengthMappings,
-                                                mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, flights);
+                                                mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, proposal.GuaranteedDemoId, flights);
 
             return nsiPostReport;
 
@@ -232,6 +231,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private DateTime? _MaxDate(DateTime? first, DateTime? second)
         {
+            return first > second ? first : second;
             return first > second ? first : second;
         }
     }

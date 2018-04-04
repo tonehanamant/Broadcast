@@ -22,6 +22,23 @@
       "Id": 6
     }
   ],
+  "QuarterTables": [
+    {
+      "TableName": "2Q'16",
+      "TableRows": [
+        {
+          "ActualImpressions": 157433.4,
+          "Contract": "NAV",
+          "HHRating": 0,
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 200000.0,
+          "SpotLength": 30,
+          "Spots": 2,
+          "WeekStartDate": "2016-05-30T00:00:00"
+        }
+      ]
+    }
+  ],
   "QuarterTabs": [
     {
       "TabName": "Spot Detail 2Q16",
@@ -39,6 +56,8 @@
           "Market": "New York",
           "NetworkAffiliate": "NBC",
           "ProgramName": "Program Names R us",
+          "ProposalWeekCost": 25.0000,
+          "ProposalWeekImpressionsGoal": 100000.0,
           "Rank": 1,
           "SpotLength": 30,
           "Station": "WNBC",
@@ -58,6 +77,8 @@
           "Market": "New York",
           "NetworkAffiliate": "NBC",
           "ProgramName": "Program Names R us",
+          "ProposalWeekCost": 25.0000,
+          "ProposalWeekImpressionsGoal": 100000.0,
           "Rank": 1,
           "SpotLength": 30,
           "Station": "WNBC",

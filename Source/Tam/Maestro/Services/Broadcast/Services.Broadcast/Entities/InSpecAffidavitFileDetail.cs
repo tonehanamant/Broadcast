@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.Entities
 {
-
     public class InSpecAffidavitFileDetail
     {
         public string Station { get; set; }
@@ -20,5 +16,7 @@ namespace Services.Broadcast.Entities
         public int Quarter { get; set; }
         public int Year { get; set; }
         public int AdvertiserId { get; set; }
+        public decimal ProposalWeekCost { get; set; }
+        public double ProposalWeekImpressionsGoal { get; set; }
     }
 }
