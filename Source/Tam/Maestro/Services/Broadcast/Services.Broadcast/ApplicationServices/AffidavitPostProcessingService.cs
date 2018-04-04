@@ -201,6 +201,11 @@ namespace Services.Broadcast.ApplicationServices
                     EstimateId = jsonDetail.EstimateId,
                     InventorySource = (int)(InventorySourceEnum)Enum.Parse(typeof(InventorySourceEnum), jsonDetail.InventorySource),
                     SpotCost = jsonDetail.SpotCost,
+                    LeadInEndTime = jsonDetail.Date.Add(DateTime.Parse(jsonDetail.LeadInEndTime).TimeOfDay),
+                    LeadOutStartTime = jsonDetail.Date.Add(DateTime.Parse(jsonDetail.LeadOutStartTime).TimeOfDay),
+                    ProgramShowType = jsonDetail.ProgramShowType,
+                    LeadInShowType = jsonDetail.LeadInShowType,
+                    LeadOutShowType = jsonDetail.LeadOutShowType,
                     Demographics = jsonDetail.Demographics.Select(y => new Demographics()
                     {
                         AudienceId = _AudienceCache.GetDisplayAudienceByCode(y.Demographic).Id,

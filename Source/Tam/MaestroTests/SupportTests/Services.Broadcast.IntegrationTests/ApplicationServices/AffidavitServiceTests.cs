@@ -52,6 +52,71 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteServiceWithShowType()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAffidavit();
+
+                request.Details.First().ProgramShowType = "Drama1";
+                request.Details.First().LeadInShowType = "Drama2";
+                request.Details.First().LeadOutShowType = "Drama3";
+
+                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+
+                VerifyAffidavit(id);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteServiceWithLeadInEndTime()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAffidavit();
+
+                request.Details.First().LeadInEndTime = DateTime.Parse("06/29/2017 10:00 AM");
+
+                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+
+                VerifyAffidavit(id);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteServiceWithLeadOutStartTime()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAffidavit();
+
+                request.Details.First().LeadOutStartTime = DateTime.Parse("06/29/2017 12:12 AM");
+
+                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+
+                VerifyAffidavit(id);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteServiceWithProgramShowType()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAffidavit();
+
+                request.Details.First().ProgramShowType = "Drama";
+
+                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+
+                VerifyAffidavit(id);
+            }
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -106,7 +171,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ProgramName = ProgramName1,
                 SpotLength = 30,
                 Genre = Genre1.Display,
-                Station = "WWSB"
+                Station = "WWSB",
+                LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                ProgramShowType = "News",
+                LeadInShowType = "Comedy",
+                LeadOutShowType = "Documentary"
             };
 
             request.Details.Add(detail);
@@ -128,7 +198,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         ProgramName = ProgramName1,
                         SpotLength = 30,
                         Genre = Genre1.Display,
-                        Station = "WWSB"
+                        Station = "WWSB",
+                        LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                        LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                        ProgramShowType = "News",
+                        LeadInShowType = "Comedy",
+                        LeadOutShowType = "Documentary"
                     }
                 }
             };

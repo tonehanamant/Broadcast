@@ -27,6 +27,11 @@ namespace Services.Broadcast.Entities
         public string LeadOutProgram { get; set; }
         public string LeadOutGenre { get; set; }
         public List<Demographics> Demographics { get; set; } = new List<Demographics>();
+        public string LeadInEndTime { get; set; }
+        public string LeadOutStartTime { get; set; }
+        public string ProgramShowType { get; set; }
+        public string LeadInShowType { get; set; }
+        public string LeadOutShowType { get; set; }
     }
 
     public class Demographics

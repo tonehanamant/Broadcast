@@ -28,5 +28,10 @@ namespace Services.Broadcast.Entities
         public List<Demographics> Demographics { get; set; }
         public List<AffidavitClientScrub> AffidavitClientScrubs { get; set; }
         public List<AffidavitFileDetailAudience> AffidavitFileDetailAudiences { get; set; }
+        public string ProgramShowType { get; set; }
+        public string LeadInShowType { get; set; }
+        public string LeadOutShowType { get; set; }
+        public int LeadOutStartTime { get; set; }
+        public int LeadInEndTime { get; set; }
     }
 }
