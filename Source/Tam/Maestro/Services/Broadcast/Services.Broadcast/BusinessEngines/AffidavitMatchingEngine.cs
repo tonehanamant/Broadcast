@@ -22,7 +22,7 @@ namespace Services.Broadcast.BusinessEngines
     {
         public List<AffidavitMatchingProposalWeek> _MatchingProposalWeeks;
         public List<AffidavitFileDetailProblem> _MatchingProblems;
-        private readonly int _BroadcastMatchingBuffer; 
+        private readonly int _BroadcastMatchingBuffer;
         private readonly IDaypartCache _DaypartCache;
 
         public List<AffidavitFileDetailProblem> MatchingProblems()
@@ -38,25 +38,27 @@ namespace Services.Broadcast.BusinessEngines
 
         public List<AffidavitMatchingProposalWeek> Match(
             AffidavitSaveRequestDetail requestDetail,
-            List<AffidavitMatchingProposalWeek> proposalWeeks) 
+            List<AffidavitMatchingProposalWeek> proposalWeeks)
         {
             _MatchingProposalWeeks = new List<AffidavitMatchingProposalWeek>();
             _MatchingProblems = new List<AffidavitFileDetailProblem>();
 
             if (proposalWeeks == null || proposalWeeks.Count == 0)
             {
-                _MatchingProblems.Add(new AffidavitFileDetailProblem(){
+                _MatchingProblems.Add(new AffidavitFileDetailProblem()
+                {
                     Type = AffidavitFileDetailProblemTypeEnum.UnlinkedIsci,
                     Description = String.Format("Isci not found: {0}", requestDetail.Isci)
                 });
-            
+
                 return _MatchingProposalWeeks;
             }
 
             var unmarriedProposalIscisByProposal = proposalWeeks.Where(i => !i.MarriedHouseIsci).GroupBy(g => g.ProposalVersionId);
             if (unmarriedProposalIscisByProposal.Count() > 1)
             {
-                _MatchingProblems.Add(new AffidavitFileDetailProblem() {
+                _MatchingProblems.Add(new AffidavitFileDetailProblem()
+                {
                     Type = AffidavitFileDetailProblemTypeEnum.UnmarriedOnMultipleContracts,
                     Description = String.Format("Unmarried Isci {0} exists on multiple proposals", requestDetail.Isci)
                 });
@@ -66,7 +68,8 @@ namespace Services.Broadcast.BusinessEngines
             var marriedProposalIscisByProposal = proposalWeeks.Where(i => i.MarriedHouseIsci).GroupBy(g => g.ProposalVersionId);
             if (unmarriedProposalIscisByProposal.Any() && marriedProposalIscisByProposal.Any())
             {
-                _MatchingProblems.Add(new AffidavitFileDetailProblem() {
+                _MatchingProblems.Add(new AffidavitFileDetailProblem()
+                {
                     Type = AffidavitFileDetailProblemTypeEnum.UnmarriedOnMultipleContracts,
                     Description = String.Format("Isci {0} exists as married and unmarried", requestDetail.Isci)
                 });
@@ -111,7 +114,8 @@ namespace Services.Broadcast.BusinessEngines
 
                 var displayDaypart = dayparts[proposalDetail.First().ProposalVersionDetailDaypartId];
                 var actualStartTime = displayDaypart.StartTime < 0 ? 86400 - Math.Abs(displayDaypart.StartTime) : displayDaypart.StartTime;
-                var actualEndTime = displayDaypart.EndTime < 0 ? Math.Abs(86400 - displayDaypart.EndTime) : displayDaypart.EndTime;
+                //add 1 second to include the daypart endTime as valid time
+                var actualEndTime = displayDaypart.EndTime < 0 ? Math.Abs(86400 - displayDaypart.EndTime + 1) : displayDaypart.EndTime + 1;
                 var adjustedStartTime = displayDaypart.StartTime - bufferInSeconds < 0 ? 86400 - Math.Abs(displayDaypart.StartTime - bufferInSeconds) : displayDaypart.StartTime - bufferInSeconds;
 
                 var isOvernight = (actualEndTime < actualStartTime && actualEndTime < adjustedStartTime);
