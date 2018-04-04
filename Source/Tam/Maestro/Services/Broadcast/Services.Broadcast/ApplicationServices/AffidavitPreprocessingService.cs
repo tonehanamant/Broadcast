@@ -157,8 +157,9 @@ namespace Services.Broadcast.ApplicationServices
                 $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpErrorFolder}";
 
             var files = GetFTPFileList(remoteFTPPath);
-            var completedFiles = DownloadFTPFiles(files,remoteFTPPath);
-            EmailFTPErrorFiles(completedFiles);
+            var localPaths = new List<string>();
+            var completedFiles = DownloadFTPFiles(files,remoteFTPPath,ref localPaths);
+            EmailFTPErrorFiles(localPaths);
         }
 
         private void EmailFTPErrorFiles(List<string> filePaths)
@@ -172,13 +173,14 @@ namespace Services.Broadcast.ApplicationServices
                 var subject = "Error files from WWTV";
                 var from = BroadcastServiceSystemParameter.EmailFrom;
                 var Tos = new string[] { BroadcastServiceSystemParameter.WWTV_NotificationEmail };
-                Emailer.QuickSend(true, body, subject, MailPriority.Normal,from , Tos, new List<string>() { filePath} );
+                Emailer.QuickSend(true, body, subject, MailPriority.Normal,from , Tos, new List<string>() {filePath });
             });
             
         }
 
-        private List<string> DownloadFTPFiles(List<string> files, string remoteFTPPath)
+        private List<string> DownloadFTPFiles(List<string> files, string remoteFTPPath,ref List<string> localFilePaths)
         {
+            var local = new List<string>();
             List<string> completedFiles = new List<string>();
             using (var ftpClient = new WebClient())
             {
@@ -190,12 +192,13 @@ namespace Services.Broadcast.ApplicationServices
                     var transferPath = BroadcastServiceSystemParameter.WWTV_LocalFtpErrorFolder + @"\" +
                                         filePath.Replace(@"/", @"\");
                     ftpClient.DownloadFile(path, transferPath);
-
+                    local.Add(transferPath);
                     DeleteFTPFile(path);
                     completedFiles.Add(path);
                 });
             }
 
+            localFilePaths = local;
             return completedFiles;
         }
 

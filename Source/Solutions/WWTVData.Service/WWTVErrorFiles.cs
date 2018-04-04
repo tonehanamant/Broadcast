@@ -68,7 +68,8 @@ namespace WWTVData.Service
             bool ret = false;
             if (RunWhen == null)
             {
-                if (_LastRun.Value.AddSeconds(SecondsBetweenRuns) < timeSignaled)
+                var secs = SecondsBetweenRuns;
+                if (_LastRun.Value.AddSeconds(secs) < timeSignaled)
                     ret = RunService(timeSignaled);
             }
             else
@@ -82,12 +83,12 @@ namespace WWTVData.Service
 
         public override bool RunService(DateTime timeSignaled)
         {
+            _LastRun = DateTime.Now;
             BaseWindowsService.LogServiceEvent("Checking Error Files . . .");
             try
             {
                 var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPreprocessingService>();
                 service.ProcessErrorFiles();
-                _LastRun = DateTime.Now;
             }
             catch (Exception e)
             {
