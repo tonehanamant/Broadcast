@@ -121,18 +121,19 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        public List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalVersionId)
+        public List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalDetailId)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
+                    context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
                     var affidavitFiles = (from proposalVersionDetail in context.proposal_version_details
                                           from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
                                           from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
                                           from proposalVersionWeekIscis in proposalVersionWeeks.proposal_version_detail_quarter_week_iscis
                                           from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
                                           let affidavitFile = affidavitFileScrub.affidavit_file_details
-                                          where proposalVersionWeekIscis.house_isci == affidavitFile.isci && proposalVersionDetail.id == proposalVersionId
+                                          where proposalVersionWeekIscis.house_isci == affidavitFile.isci && proposalVersionDetail.id == proposalDetailId
                                           select new { affidavitFile, affidavitFileScrub, proposalVersionWeekIscis }).ToList();
                     var spotLengths = (from sl in context.spot_lengths select sl).ToList();
 
@@ -140,16 +141,15 @@ namespace Services.Broadcast.Repositories
                     posts.AddRange(affidavitFiles.Select(x =>
                     {
                         var marketStation = (from stations in context.stations
-                                             let markets = stations.market
                                              where stations.legacy_call_letters.Equals(x.affidavitFile.station)
-                                             select new { markets, stations }).Single();
+                                             select new { markets = stations.market, stations }).SingleOrDefault();
                         return new ProposalDetailPostScrubbingDto()
                         {
                             Station = x.affidavitFile.station,
                             ISCI = x.affidavitFile.isci,
                             ProgramName = x.affidavitFile.program_name,
-                            Market = marketStation.markets.geography_name,
-                            Affiliate = marketStation.stations.affiliation,
+                            Market = marketStation?.markets.geography_name,
+                            Affiliate = marketStation?.stations.affiliation,
                             SpotLength = spotLengths.Single(y => y.id == x.affidavitFile.spot_length_id).length,
                             TimeAired = x.affidavitFile.original_air_date.AddSeconds(x.affidavitFile.air_time),
                             DayOfWeek = x.affidavitFile.original_air_date.DayOfWeek,
