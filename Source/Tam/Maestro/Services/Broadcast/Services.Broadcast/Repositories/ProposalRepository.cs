@@ -864,7 +864,7 @@ namespace Services.Broadcast.Repositories
                             }).ToList()
                         }).OrderBy(w => w.StartDate).ToList()
                         }).OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList()
-                    }).ToList()
+                        }).ToList()
                 };
 
             return proposalDto;

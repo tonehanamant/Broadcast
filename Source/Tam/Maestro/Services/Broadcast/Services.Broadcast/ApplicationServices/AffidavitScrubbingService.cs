@@ -103,7 +103,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 ClientPostScrubbingProposalDto result = new ClientPostScrubbingProposalDto
                 {
-                    Id = proposal.Id.Value,
+                    Id = proposal.Id.Value,                    
                     Name = proposal.ProposalName,
                     Notes = proposal.Notes,
                     Markets = proposal.Markets,
@@ -115,6 +115,7 @@ namespace Services.Broadcast.ApplicationServices
                         Id = x.Id,
                         FlightStartDate = x.FlightStartDate,
                         FlightEndDate = x.FlightEndDate,
+                        FlightWeeks = x.FlightWeeks,
                         SpotLength = proposal.SpotLengths.First(y => y.Id == x.SpotLengthId).Display,
                         DayPart = x.Daypart.Text,
                         Programs = x.ProgramCriteria,
@@ -125,7 +126,7 @@ namespace Services.Broadcast.ApplicationServices
                     Advertiser = advertiser != null ? advertiser.Display : string.Empty,
                     SecondaryDemos = proposal.SecondaryDemos.Select(x => _AudiencesCache.GetDisplayAudienceById(x).AudienceString).ToList()
                 };
-
+                
                 //load ClientScrubs
                 result.Details.ForEach(x =>
                 {
@@ -137,7 +138,6 @@ namespace Services.Broadcast.ApplicationServices
                     });
                     result.ClientScrubs.AddRange(clientScrubs);
                 });
-
                 //load filters
                 result.Filters = new FilterOptions
                 {

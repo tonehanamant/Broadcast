@@ -50,10 +50,17 @@
   ],
   "Details": [
     {
-      "ClientScrubs": [],
       "DayPart": "M-F 9AM-10AM",
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2016-06-06T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 649,
+          "StartDate": "2016-05-30T00:00:00"
+        }
+      ],
       "Genres": [],
       "Id": 14,
       "Programs": [],
@@ -61,10 +68,17 @@
       "SpotLength": "30"
     },
     {
-      "ClientScrubs": [],
       "DayPart": "M-F 9AM-10AM",
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
+        }
+      ],
       "Genres": [],
       "Id": 15,
       "Programs": [],
