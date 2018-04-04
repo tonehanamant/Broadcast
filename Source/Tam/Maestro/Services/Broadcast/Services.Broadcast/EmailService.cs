@@ -41,6 +41,7 @@ public static class Emailer
 
             SmtpClient lSmtpClient = new SmtpClient();
             lSmtpClient.Host = BroadcastServiceSystemParameter.EmailHost;
+            lSmtpClient.UseDefaultCredentials = true;
             lSmtpClient.EnableSsl = true;
             lSmtpClient.Port = 587;
             lSmtpClient.Credentials = GetSMTPNetworkCredential();
@@ -106,7 +107,7 @@ public static class Emailer
         var usr = BroadcastServiceSystemParameter.EmailUsername;
 
         if (!string.IsNullOrEmpty(pwd))
-            pwd = EncryptionHelper.DecryptString(pwd, BroadcastConstants.EMAIL_PROFILE_SEED);
+            pwd = EncryptionHelper.DecryptString(pwd, BroadcastConstants.EMAIL_PROFILE_SEED).Replace("\n", "\\n");
 
         return new NetworkCredential(usr, pwd);
     }
