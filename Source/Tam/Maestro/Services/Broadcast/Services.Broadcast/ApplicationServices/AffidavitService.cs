@@ -156,7 +156,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var affidavitFileDetail in affidavit_file.affidavit_file_details)
             {
                 if (!affidavitFileDetail.affidavit_client_scrubs.Any())
-                    break;
+                    continue;
 
                 if (!stations.ContainsKey(affidavitFileDetail.station))
                 {
@@ -175,9 +175,6 @@ namespace Services.Broadcast.ApplicationServices
                 var affidavitStation = stations[affidavitFileDetail.station];
                 foreach (var scrub in affidavitFileDetail.affidavit_client_scrubs)
                 {
-                    scrub.match_station = false;
-                    scrub.match_market = false;
-
                     var quarterWeekId = scrub.proposal_version_detail_quarter_week_id;
                     var proposal = proposals[quarterWeekId];
                     var proposalDetail = proposal.Details.Single(d =>
@@ -191,6 +188,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     // match market/station
                     scrub.match_station = false;
+                    scrub.match_market = false;
                     var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, proposalDetail);
 
                     var marketGeoName = affidavitStation.OriginMarket;

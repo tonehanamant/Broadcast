@@ -206,6 +206,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Ensure_Correct_Scrubbing_Records_Following_Unmatched_Record()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = new ProposalDto();
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+
+                proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
+                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+
+                var request = _SetupAffidavit();
+                request.Details.Add(new AffidavitSaveRequestDetail
+                {
+                    AirTime = DateTime.Parse("06/29/2017 8:04AM"),
+                    Isci = "DDDDDDDD",
+                    ProgramName = ProgramName1,
+                    SpotLength = 30,
+                    Genre = Genre1.Display,
+                    Station = "WWSB"
+                });
+                request.Details.First().Isci = "Uknown_Unmatched_ISCI";
+                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                VerifyAffidavit(id);
+            }
+        }
+
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
