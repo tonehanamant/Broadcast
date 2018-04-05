@@ -130,14 +130,14 @@ namespace Services.Broadcast.ApplicationServices
         {
             var mailBody = new StringBuilder();
 
-            mailBody.AppendFormat("File {0} failed validation for WWTV upload", invalidFile.FileName);
+            mailBody.AppendFormat("File {0} failed validation for WWTV upload\n\n", invalidFile.FileName);
 
             foreach (var errorMessage in invalidFile.ErrorMessages)
             {
-                mailBody.Append(errorMessage);
+                mailBody.Append(string.Format("{0}\n",errorMessage));
             }
 
-            mailBody.AppendFormat("File located in {0}", invalidFilePath);
+            mailBody.AppendFormat("\n\nFile located in {0}\n", invalidFilePath);
 
             return mailBody.ToString();
         }

@@ -140,15 +140,15 @@ namespace Services.Broadcast.ApplicationServices
         {
             var emailBody = new StringBuilder();
 
-            emailBody.AppendFormat("File {0} failed validation for WWTV upload", Path.GetFileName(filePath));
+            emailBody.AppendFormat("File {0} failed validation for WWTV upload\n\n", Path.GetFileName(filePath));
 
             foreach (var affidavitValidationResult in affidavitValidationResults)
             {
-                emailBody.AppendFormat("Failed validation at line {0} on field {1}", affidavitValidationResult.InvalidLine, affidavitValidationResult.InvalidField);
+                emailBody.AppendFormat("Failed validation at line {0} on field '{1}'.  ", affidavitValidationResult.InvalidLine+1, affidavitValidationResult.InvalidField);
                 emailBody.Append(affidavitValidationResult.ErrorMessage);
             }
 
-            emailBody.AppendFormat("File located in {0}", filePath);
+            emailBody.AppendFormat("\n\nFile located in {0}\n", filePath);
 
             return emailBody.ToString();
         }

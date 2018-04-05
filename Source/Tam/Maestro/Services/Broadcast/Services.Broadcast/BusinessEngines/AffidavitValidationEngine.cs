@@ -33,73 +33,73 @@ namespace Services.Broadcast.BusinessEngines
             if (string.IsNullOrWhiteSpace(affidavitDetail.ProgramName))
             {
                 affidavitValidationResult.InvalidField = "ProgramName";
-                affidavitValidationResult.ErrorMessage = "ProgramName is required";
+                affidavitValidationResult.ErrorMessage = "'ProgramName' is required";
             }
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.Genre))
             {
                 affidavitValidationResult.InvalidField = "Genre";
-                affidavitValidationResult.ErrorMessage = "Genre is required";
+                affidavitValidationResult.ErrorMessage = "'Genre' is required";
             }
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.LeadInProgramName))
             {
                 affidavitValidationResult.InvalidField = "LeadInProgramName";
-                affidavitValidationResult.ErrorMessage = "LeadInProgramName is required";
+                affidavitValidationResult.ErrorMessage = "'LeadInProgramName' is required";
             }
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.LeadInGenre))
             {
                 affidavitValidationResult.InvalidField = "LeadInGenre";
-                affidavitValidationResult.ErrorMessage = "LeadInGenre is required";
+                affidavitValidationResult.ErrorMessage = "'LeadInGenre' is required";
             }
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.LeadOutProgramName))
             {
                 affidavitValidationResult.InvalidField = "LeadOutProgramName";
-                affidavitValidationResult.ErrorMessage = "LeadOutProgramName is required";
+                affidavitValidationResult.ErrorMessage = "'LeadOutProgramName' is required";
             }
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.LeadOutGenre))
             {
                 affidavitValidationResult.InvalidField = "LeadOutGenre";
-                affidavitValidationResult.ErrorMessage = "LeadOutGenre is required";
+                affidavitValidationResult.ErrorMessage = "'LeadOutGenre' is required";
             }
 
             if (affidavitDetail.AirTime == DateTime.MinValue)
             {
                 affidavitValidationResult.InvalidField = "AirTime";
-                affidavitValidationResult.ErrorMessage = "AirTime must be a valid date";
+                affidavitValidationResult.ErrorMessage = "'AirTime' must be a valid date";
             }
 
             if (affidavitDetail.InventorySource == (int)(InventorySourceEnum.Blank))
             {
                 affidavitValidationResult.InvalidField = "InventorySource";
-                affidavitValidationResult.ErrorMessage = "InventorySource must be valid";
+                affidavitValidationResult.ErrorMessage = "'InventorySource' must be valid";
             }
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.Station))
             {
                 affidavitValidationResult.InvalidField = "Station";
-                affidavitValidationResult.ErrorMessage = "Station is required";
+                affidavitValidationResult.ErrorMessage = "'Station' is required";
             }
 
             if (!_IsSpotLengthValid(affidavitDetail.SpotLength, ref spotLengthDict))
             {
                 affidavitValidationResult.InvalidField = "SpotLength";
-                affidavitValidationResult.ErrorMessage = "SpotLength must be valid broadcast spot length: 15,30,60,120,180,300";
+                affidavitValidationResult.ErrorMessage = "'SpotLength' must be valid broadcast spot length: 15,30,60,120,180,300";
             }
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.Isci))
             {
                 affidavitValidationResult.InvalidField = "Isci";
-                affidavitValidationResult.ErrorMessage = "Isci is required";
+                affidavitValidationResult.ErrorMessage = "'Isci' is required";
             }
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.Affiliate))
             {
                 affidavitValidationResult.InvalidField = "Affiliate";
-                affidavitValidationResult.ErrorMessage = "Affiliate is required";
+                affidavitValidationResult.ErrorMessage = "'Affiliate' is required";
             }
 
             if (affidavitValidationResult.InvalidField != null)
