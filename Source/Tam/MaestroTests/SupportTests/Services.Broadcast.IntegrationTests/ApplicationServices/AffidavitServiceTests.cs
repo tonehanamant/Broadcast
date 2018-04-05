@@ -301,7 +301,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProgramName = ProgramName1,
                     SpotLength = 30,
                     Genre = Genre1.Display,
-                    Station = "WWSB"
+                    Station = "WWSB",
+                    ProgramShowType = "News",
+                    LeadInShowType = "Comedy",
+                    LeadOutShowType = "Documentary"
                 });
                 request.Details.First().Isci = "Uknown_Unmatched_ISCI";
                 int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
