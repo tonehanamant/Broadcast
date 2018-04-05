@@ -193,6 +193,9 @@ namespace Services.Broadcast.ApplicationServices
                     var path = remoteFTPPath + "/" + filePath.Remove(0, filePath.IndexOf(@"/") + 1);
                     var transferPath = BroadcastServiceSystemParameter.WWTV_LocalFtpErrorFolder + @"\" +
                                         filePath.Replace(@"/", @"\");
+                    if (File.Exists(transferPath))
+                        File.Delete(transferPath);
+
                     ftpClient.DownloadFile(path, transferPath);
                     local.Add(transferPath);
                     DeleteFTPFile(path);

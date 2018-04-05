@@ -154,6 +154,9 @@ namespace Services.Broadcast.ApplicationServices
         {
             var combinedFilePath = Path.Combine(BroadcastServiceSystemParameter.WWTV_FailedFolder, Path.GetFileName(fileName));
 
+            if (File.Exists(combinedFilePath))
+                File.Delete(combinedFilePath);
+
             File.Move(fileName, combinedFilePath);
 
             return combinedFilePath;
