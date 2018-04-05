@@ -82,7 +82,6 @@ namespace WWTVData.Service
         public override bool RunService(DateTime timeSignaled)
         {
             _LastRun = DateTime.Now;
-            BaseWindowsService.LogServiceEvent("Checking files to download. . .");
             try
             {
                 var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
