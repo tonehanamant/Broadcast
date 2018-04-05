@@ -71,11 +71,7 @@ namespace Services.Broadcast.ApplicationServices
                 AffidavitSaveRequest affidavitFile = ParseWWTVFile(filePath);
                 if (AffidavitValidationResult.Count > 0)
                 {
-                    var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
-
-                    var emailBody = _CreateInvalidFileEmailBody(AffidavitValidationResult, invalidFilePath);
-
-                    _AffidavitEmailSenderService.Send(emailBody);
+                    ProcessError(filePath);
                     return;
                 }
 
@@ -91,11 +87,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (AffidavitValidationResult.Count > 0)
                 {
-                    var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
-
-                    var emailBody = _CreateInvalidFileEmailBody(AffidavitValidationResult, invalidFilePath);
-
-                    _AffidavitEmailSenderService.Send(emailBody);
+                    ProcessError(filePath);
                 }
 
                 if (response.Success)
@@ -103,6 +95,17 @@ namespace Services.Broadcast.ApplicationServices
                     _DeleteWWTVFTPFile(Path.GetFileName(filePath));
                 }
             }
+        }
+
+        private void ProcessError(string filePath)
+        {
+            var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
+
+            var emailBody = _CreateInvalidFileEmailBody(AffidavitValidationResult, invalidFilePath);
+
+            _AffidavitEmailSenderService.Send(emailBody);
+
+            _DeleteWWTVFTPFile(Path.GetFileName(filePath));
         }
 
         /// <summary>
