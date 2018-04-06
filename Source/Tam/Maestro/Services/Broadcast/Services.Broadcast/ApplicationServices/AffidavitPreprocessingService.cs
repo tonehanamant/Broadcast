@@ -171,9 +171,9 @@ namespace Services.Broadcast.ApplicationServices
 
             filePaths.ForEach(filePath =>
             {
-                var body = "Error file!";
+                var body = string.Format("{0}",Path.GetFileName(filePath));
                 var subject = "Error files from WWTV";
-                var from = BroadcastServiceSystemParameter.EmailFrom;
+                var from = BroadcastServiceSystemParameter.EmailUsername;
                 var Tos = new string[] { BroadcastServiceSystemParameter.WWTV_NotificationEmail };
                 Emailer.QuickSend(true, body, subject, MailPriority.Normal,from , Tos, new List<string>() {filePath });
             });
