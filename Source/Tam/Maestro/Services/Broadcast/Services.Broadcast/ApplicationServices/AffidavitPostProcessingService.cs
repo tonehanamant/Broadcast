@@ -71,11 +71,7 @@ namespace Services.Broadcast.ApplicationServices
                 AffidavitSaveRequest affidavitFile = ParseWWTVFile(filePath);
                 if (AffidavitValidationResult.Count > 0)
                 {
-                    var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
-
-                    var emailBody = _CreateInvalidFileEmailBody(AffidavitValidationResult, invalidFilePath);
-
-                    _AffidavitEmailSenderService.Send(emailBody);
+                    ProcessError(filePath);
                     return;
                 }
 
@@ -91,11 +87,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (AffidavitValidationResult.Count > 0)
                 {
-                    var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
-
-                    var emailBody = _CreateInvalidFileEmailBody(AffidavitValidationResult, invalidFilePath);
-
-                    _AffidavitEmailSenderService.Send(emailBody);
+                    ProcessError(filePath);
                 }
 
                 if (response.Success)
@@ -103,6 +95,17 @@ namespace Services.Broadcast.ApplicationServices
                     _DeleteWWTVFTPFile(Path.GetFileName(filePath));
                 }
             }
+        }
+
+        private void ProcessError(string filePath)
+        {
+            var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
+
+            var emailBody = _CreateInvalidFileEmailBody(AffidavitValidationResult, invalidFilePath);
+
+            _AffidavitEmailSenderService.Send(emailBody);
+
+            _DeleteWWTVFTPFile(Path.GetFileName(filePath));
         }
 
         /// <summary>
@@ -137,15 +140,15 @@ namespace Services.Broadcast.ApplicationServices
         {
             var emailBody = new StringBuilder();
 
-            emailBody.AppendFormat("File {0} failed validation for WWTV upload", Path.GetFileName(filePath));
+            emailBody.AppendFormat("File {0} failed validation for WWTV upload\n\n", Path.GetFileName(filePath));
 
             foreach (var affidavitValidationResult in affidavitValidationResults)
             {
-                emailBody.AppendFormat("Failed validation at line {0} on field {1}", affidavitValidationResult.InvalidLine, affidavitValidationResult.InvalidField);
+                emailBody.AppendFormat("Failed validation at line {0} on field '{1}'.  ", affidavitValidationResult.InvalidLine+1, affidavitValidationResult.InvalidField);
                 emailBody.Append(affidavitValidationResult.ErrorMessage);
             }
 
-            emailBody.AppendFormat("File located in {0}", filePath);
+            emailBody.AppendFormat("\n\nFile located in {0}\n", filePath);
 
             return emailBody.ToString();
         }
@@ -153,6 +156,9 @@ namespace Services.Broadcast.ApplicationServices
         private string _MoveFileToInvalidFilesFolder(string fileName)
         {
             var combinedFilePath = Path.Combine(BroadcastServiceSystemParameter.WWTV_FailedFolder, Path.GetFileName(fileName));
+
+            if (File.Exists(combinedFilePath))
+                File.Delete(combinedFilePath);
 
             File.Move(fileName, combinedFilePath);
 

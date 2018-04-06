@@ -130,14 +130,14 @@ namespace Services.Broadcast.ApplicationServices
         {
             var mailBody = new StringBuilder();
 
-            mailBody.AppendFormat("File {0} failed validation for WWTV upload", invalidFile.FileName);
+            mailBody.AppendFormat("File {0} failed validation for WWTV upload\n\n", invalidFile.FileName);
 
             foreach (var errorMessage in invalidFile.ErrorMessages)
             {
-                mailBody.Append(errorMessage);
+                mailBody.Append(string.Format("{0}\n",errorMessage));
             }
 
-            mailBody.AppendFormat("File located in {0}", invalidFilePath);
+            mailBody.AppendFormat("\n\nFile located in {0}\n", invalidFilePath);
 
             return mailBody.ToString();
         }
@@ -171,9 +171,9 @@ namespace Services.Broadcast.ApplicationServices
 
             filePaths.ForEach(filePath =>
             {
-                var body = "Error file!";
+                var body = string.Format("{0}",Path.GetFileName(filePath));
                 var subject = "Error files from WWTV";
-                var from = BroadcastServiceSystemParameter.EmailFrom;
+                var from = BroadcastServiceSystemParameter.EmailUsername;
                 var Tos = new string[] { BroadcastServiceSystemParameter.WWTV_NotificationEmail };
                 Emailer.QuickSend(true, body, subject, MailPriority.Normal,from , Tos, new List<string>() {filePath });
             });
@@ -193,6 +193,9 @@ namespace Services.Broadcast.ApplicationServices
                     var path = remoteFTPPath + "/" + filePath.Remove(0, filePath.IndexOf(@"/") + 1);
                     var transferPath = BroadcastServiceSystemParameter.WWTV_LocalFtpErrorFolder + @"\" +
                                         filePath.Replace(@"/", @"\");
+                    if (File.Exists(transferPath))
+                        File.Delete(transferPath);
+
                     ftpClient.DownloadFile(path, transferPath);
                     local.Add(transferPath);
                     DeleteFTPFile(path);

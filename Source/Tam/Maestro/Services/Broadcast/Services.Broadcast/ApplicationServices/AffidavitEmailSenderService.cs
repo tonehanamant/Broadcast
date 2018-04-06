@@ -21,7 +21,7 @@ namespace Services.Broadcast.BusinessEngines
                 return;
             var from = new MailAddress(BroadcastServiceSystemParameter.EmailUsername);
             var to = new List<MailAddress>() {new MailAddress(BroadcastServiceSystemParameter.WWTV_NotificationEmail)};
-            Emailer.QuickSend(true,emailBody, _EmailSubject,MailPriority.Normal,from ,to);
+            Emailer.QuickSend(false,emailBody, _EmailSubject,MailPriority.Normal,from ,to);
         }
 
         //private void _SendInvalidFileEmail(string mailBody)
