@@ -1,0 +1,17 @@
+﻿[
+  {
+    "AirtimeMatch": true,
+    "Brand": null,
+    "ClientIsci": null,
+    "HouseIsci": "ABC123",
+    "IsLeadInMatch": false,
+    "MarriedHouseIsci": false,
+    "ProposalVersionDetailDaypartId": 5,
+    "ProposalVersionDetailId": 5,
+    "ProposalVersionDetailQuarterWeekId": 1,
+    "ProposalVersionDetailWeekEnd": "2018-01-07T00:00:00",
+    "ProposalVersionDetailWeekStart": "2018-01-01T00:00:00",
+    "ProposalVersionId": 1,
+    "Spots": 1
+  }
+]

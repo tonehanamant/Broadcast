@@ -1,42 +1,53 @@
 ﻿using System;
+using System.Collections.Generic;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Services;
 using Topshelf;
+using Topshelf.Hosts;
 
 namespace WWTVData.Service
 {
-    
     public class WWTVDataServiceHost
     {
         public const string _serviceName = "_WWTVData.Service";
 
+        private static void Warmup()
+        {
+            // this is lame, but will hydrate the SMS Client otherwise an error will be thrown
+            (new BroadcastApplicationServiceFactory()).GetApplicationService<IProposalService>().GetInitialProposalData(DateTime.Now);
+        }
+
         public static void Main(string[] args)
         {
-            var _ApplicationServiceFactory = new BroadcastApplicationServiceFactory();
-            _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetInitialProposalData(DateTime.Now);
+            Warmup();
 
-            if (args.Length >= 1 && args[0] == "-console")
+            List<ScheduledServiceMethod> servicesToRun = new List<ScheduledServiceMethod>()
             {
-                (new WWTV(_serviceName)).CheckWWTVFiles(DateTime.Now);
-            }
-            else
+                new WWTVDataFile(),
+                new WWTVErrorFiles(),
+                new WWTVDownloadFromWWTV()
+            }; 
+
+            var rc = HostFactory.Run(x =>
             {
-                var rc = HostFactory.Run(x =>
+                x.Service<ScheduledWindowsServiceMethodRunner>(s =>
                 {
-                    x.Service<WWTV>(s =>
+                    s.ConstructUsing(name => new ScheduledWindowsServiceMethodRunner(servicesToRun));
+                    s.WhenStarted((runner, control)  =>
                     {
-                        s.ConstructUsing(name => new WWTV(_serviceName));
-                        s.WhenStarted(tc => tc.Start());
-                        s.WhenStopped(tc => tc.Stop());
+                        runner.IsConsole = control is ConsoleRunHost;
+                        runner.Start();
+                        return true;
                     });
-                    //x.RunAsLocalSystem();
-
-                    x.SetDescription("_WWTV Data Service");
-                    x.SetDisplayName(_serviceName);
-                    x.SetServiceName(_serviceName);
+                    s.WhenStopped(tc => tc.Stop());
                 });
-                var exitCode = (int)Convert.ChangeType(rc, rc.GetTypeCode()); 
-                Environment.ExitCode = exitCode;
-            }
+
+                x.SetDescription("_WWTV Data Service");
+                x.SetDisplayName(_serviceName);
+                x.SetServiceName(_serviceName);
+            });
+            var exitCode = (int)Convert.ChangeType(rc, rc.GetTypeCode()); 
+            Environment.ExitCode = exitCode;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using Common.Services.WebComponents;
@@ -7,6 +8,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
+using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
@@ -28,6 +30,16 @@ namespace BroadcastComposerWeb.Controllers
             ViewBag.Message = "Choose File from above and hit submit";
             return View("Index");
         }
+
+        [HttpPost]
+        public ActionResult TestEmail(string test_email)
+        {
+            Emailer.QuickSend(true, "<b>test</b><br/> This is only a test", "Test Email from Broadcast",
+                MailPriority.Normal, "test@test.com", new string[] {"test_email@test.com"});
+            ViewBag.Message = "Test email sent.";
+           return View("Index");
+        }
+
         [HttpPost]
         public ActionResult Index(HttpPostedFileBase file)
         {
@@ -52,5 +64,19 @@ namespace BroadcastComposerWeb.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public ActionResult ClearCache()
+        {
+            ClearSystemParameterCache();
+            ViewBag.Message = "Cache cleared, good luck with that!";
+            return View("Index");
+        }
+
+        public void ClearSystemParameterCache()
+        {
+            SMSClient.Handler.ClearSystemComponentParameterCache(null, null);
+        }
+
     }
 }

@@ -38,12 +38,12 @@ namespace Services.Broadcast.ApplicationServices
         List<DisplayProposalVersion> GetProposalVersionsByProposalId(int proposalId);
         ProposalDto GetProposalByIdWithVersion(int proposalId, int proposalVersion);
         ProposalDetailDto GetProposalDetail(ProposalDetailRequestDto proposalDetailRequestDto);
-        ProposalDto UpdateProposal(List<ProposalDetailDto> proposalDetailDtos);
+        ProposalDto CalculateProposalChanges(ProposalChangeRequest changeRequest);
         ProposalDto UnorderProposal(int proposalId, string username);
         Tuple<string, Stream> GenerateScxFileArchive(int proposalIds);
         ValidationWarningDto DeleteProposal(int proposalId);
         Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
-        List<LookupDto> FindGenres(string genreSearchString);        
+        List<LookupDto> FindGenres(string genreSearchString);
         List<LookupDto> FindPrograms(ProgramSearchRequest request, string requestUrl);
         List<LookupDto> FindProgramsExternalApi(ProgramSearchRequest request);
     }
@@ -426,7 +426,7 @@ namespace Services.Broadcast.ApplicationServices
                     isciDay.Friday = splitDays.Any(l => l.Equals("F", StringComparison.CurrentCultureIgnoreCase));
                     isciDay.Saturday = splitDays.Any(l => l.Equals("Sa", StringComparison.CurrentCultureIgnoreCase));
                     isciDay.Sunday = splitDays.Any(l => l.Equals("Su", StringComparison.CurrentCultureIgnoreCase));
-                }                
+                }
             }))));
         }
 
@@ -981,7 +981,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 FlightStartDate = proposalDetailRequestDto.StartDate,
                 FlightEndDate = proposalDetailRequestDto.EndDate,
-                Quarters = proposalQuarterDto.ToList(),
+                Quarters = proposalQuarterDto.OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList(),
                 DefaultPostingBooks = _PostingBooksService.GetDefaultPostingBooks(proposalDetailRequestDto.StartDate)
             };
 
@@ -990,16 +990,19 @@ namespace Services.Broadcast.ApplicationServices
             return proposalDetail;
         }
 
-        public ProposalDto UpdateProposal(List<ProposalDetailDto> proposalDetailDtos)
+        public ProposalDto CalculateProposalChanges(ProposalChangeRequest changeRequest)
         {
-            var proposalDto = new ProposalDto
+            var proposalDto = new ProposalDto();
+            if (changeRequest.Id.HasValue)
             {
-                Details = proposalDetailDtos
-            };
+                proposalDto = _ProposalRepository.GetProposalById(changeRequest.Id.Value);
+            }
+
+            proposalDto.Details = changeRequest.Details;
 
             // deal with edited flights
-            if (proposalDetailDtos.Any(a => a.FlightEdited))
-                _SetEditedProposalDetailFlights(proposalDetailDtos);
+            if (proposalDto.Details.Any(a => a.FlightEdited))
+                _SetEditedProposalDetailFlights(proposalDto.Details);
 
             _ProposalCalculationEngine.UpdateProposal(proposalDto);
 
@@ -1350,7 +1353,7 @@ namespace Services.Broadcast.ApplicationServices
         public List<LookupDto> FindGenres(string genreSearchString)
         {
             return _GenreRepository.FindGenres(genreSearchString);
-        }        
+        }
 
         public List<LookupDto> FindPrograms(ProgramSearchRequest request, string requestUrl)
         {
@@ -1361,7 +1364,8 @@ namespace Services.Broadcast.ApplicationServices
                 var url = new Uri(requestUrl);
                 searchUrl = url.GetLeftPart(UriPartial.Authority) + "/api/Proposals/FindProgramsExternalApi";
             }
-            else{
+            else
+            {
                 searchUrl = BroadcastServiceSystemParameter.ProgramSearchApiUrl;
             }
 

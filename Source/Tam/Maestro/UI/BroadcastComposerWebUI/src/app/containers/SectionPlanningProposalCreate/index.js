@@ -12,6 +12,7 @@ import { getProposalInitialData, getProposal, updateProposalEditForm, updateProp
 import ProposalHeader from 'Components/planning/ProposalHeader';
 import ProposalActions from 'Components/planning/ProposalActions';
 import ProposalDetails from 'Components/planning/ProposalDetails';
+// import { toggleEditIsciClass, toggleEditGridCellClass } from '../../ducks/planning';
 
 
 const mapStateToProps = ({ planning: { initialdata, proposal, proposalEditForm, proposalValidationStates } }) => ({
@@ -180,6 +181,8 @@ export class SectionPlanningProposalCreate extends Component {
               isValidProposalDetails={this.isValidProposalDetails}
               isValidProposalDetailGrids={this.isValidProposalDetailGrids}
               isDirty={this.isDirty}
+              // toggleEditIsciClass={this.props.toggleEditIsciClass}
+              // toggleEditGridCellClass={this.props.toggleEditGridCellClass}
             />
           </div>
         }
@@ -218,6 +221,8 @@ SectionPlanningProposalCreate.propTypes = {
 
   toggleModal: PropTypes.func.isRequired,
   createAlert: PropTypes.func.isRequired,
+  // toggleEditIsciClass: PropTypes.func.isRequired,
+  // toggleEditGridCellClass: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SectionPlanningProposalCreate);

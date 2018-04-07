@@ -68,6 +68,7 @@
       "Year": 2016
     }
   ],
+  "Sequence": null,
   "SharePostingBookId": null,
   "SinglePostingBookId": null,
   "SpotLengthId": 0,

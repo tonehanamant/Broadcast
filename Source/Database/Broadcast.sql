@@ -52,228 +52,103 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
-/*************************************** START BCOP-2512 *********************************************************/
-
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
-              WHERE name = 'monday' OR name = 'tuesday' OR name = 'wednesday' OR name = 'thursday' OR name = 'friday' OR name = 'saturday' OR name = 'sunday'
-              AND OBJECT_ID = OBJECT_ID('[proposal_version_detail_quarter_week_iscis]'))
+/*************************************** START BCOP-2665 *********************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'order' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
 BEGIN
-    ALTER TABLE [proposal_version_detail_quarter_week_iscis] 
-	ADD monday bit, 
-		tuesday bit, 
-		wednesday bit, 
-		thursday bit, 
-		friday bit, 
-		saturday bit,
-		sunday bit 
+    EXEC sp_rename 'proposal_version_details.order', 'sequence', 'COLUMN';
 END
-
-/*************************************** END BCOP-2450 ***********************************************************/
-
-/*************************************** START BCOP-2450 *********************************************************/
-
 IF NOT EXISTS(SELECT 1 FROM sys.columns 
-              WHERE name = 'market'
-              AND OBJECT_ID = OBJECT_ID('affidavit_file_details'))
+              WHERE name = 'sequence' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
 BEGIN
-    ALTER TABLE affidavit_file_details
-	ADD market VARCHAR(63) NULL
+	ALTER TABLE [proposal_version_details] 
+	ADD [sequence] INT
 END
+/*************************************** END BCOP-2665 ***********************************************************/
 
-/*************************************** END BCOP-2450 ***********************************************************/
-
-/*************************************** START BCOP-2452 *****************************************************/
-
-IF OBJECT_ID('affidavit_file_detail_problems', 'U') IS NULL
+/*************************************** START BCOP-2449 *********************************************************/
+IF OBJECT_ID('affidavit_file_detail_demographics', 'U') IS NULL
 BEGIN
-	CREATE TABLE affidavit_file_detail_problems
-	(
+	CREATE TABLE [affidavit_file_detail_demographics](
 		id INT IDENTITY(1,1) NOT NULL,
-		affidavit_file_detail_id BIGINT NOT NULL,
-		problem_type INT NOT NULL,
-		problem_description VARCHAR(255) NULL
-		CONSTRAINT [PK_affidavit_file_detail_problems] PRIMARY KEY CLUSTERED
+		audience_id INT,
+		affidavit_file_detail_id BIGINT,
+		overnight_rating FLOAT,
+		overnight_impressions INT		
+		CONSTRAINT [PK_affidavit_file_detail_demographics] PRIMARY KEY CLUSTERED
 		(
 			id ASC
-		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]		
 	)
-
-	ALTER TABLE [dbo].[affidavit_file_detail_problems] 
-	WITH CHECK ADD CONSTRAINT [FK_affidavit_file_detail_problems_affidavit_file_details] 
-	FOREIGN KEY(affidavit_file_detail_id)
-	REFERENCES [dbo].[affidavit_file_details] ([id])
+	ALTER TABLE [dbo].[affidavit_file_detail_demographics] 
+	WITH CHECK ADD CONSTRAINT [FK_affidavit_file_detail_demographics_audiences] 
+	FOREIGN KEY(audience_id)
+	REFERENCES [dbo].[audiences] ([id])
 	ON DELETE CASCADE
 
-	ALTER TABLE [dbo].affidavit_file_detail_problems CHECK CONSTRAINT [FK_affidavit_file_detail_problems_affidavit_file_details]
+	ALTER TABLE [dbo].[affidavit_file_detail_demographics] CHECK CONSTRAINT [FK_affidavit_file_detail_demographics_audiences]
 
+	ALTER TABLE [dbo].[affidavit_file_detail_demographics] 
+	WITH CHECK ADD CONSTRAINT [FK_affidavit_file_detail_demographics_affidavit_file_details] 
+	FOREIGN KEY([affidavit_file_detail_id])
+	REFERENCES [dbo].[affidavit_file_details] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[affidavit_file_detail_demographics] CHECK CONSTRAINT [FK_affidavit_file_detail_demographics_affidavit_file_details]
 END
-
-/*************************************** END BCOP-2452 *****************************************************/
-
-/*************************************** START BCOP-2409 *********************************************************/
 
 IF NOT EXISTS(SELECT 1 FROM sys.columns 
-              WHERE name = 'program_name_id'
-              AND OBJECT_ID = OBJECT_ID('proposal_version_detail_criteria_programs'))
+              WHERE (name = 'estimate_id' OR name = 'inventory_source' OR name = 'spot_cost' OR name = 'affiliate')
+              AND OBJECT_ID = OBJECT_ID('[dbo].[affidavit_file_details]'))
 BEGIN
-    ALTER TABLE proposal_version_detail_criteria_programs
-	ADD program_name_id INT NULL
+    ALTER TABLE [affidavit_file_details] 
+	ADD estimate_id INT, 
+		inventory_source INT, 
+		spot_cost FLOAT, 
+		affiliate VARCHAR(15)
 END
-GO
 
-UPDATE proposal_Version_detail_criteria_programs
-SET program_name_id = 0
-GO
+/*************************************** END BCOP-2517 ***********************************************************/
 
-ALTER TABLE proposal_version_detail_criteria_programs
-ALTER COLUMN program_name_id INT NOT NULL
-GO
-
-IF OBJECT_ID('program_names', 'U') IS NULL
+/*************************************** START BCOP-2517 *********************************************************/
+IF OBJECT_ID('affidavit_outbound_files', 'U') IS NULL
 BEGIN
-	CREATE TABLE program_names
-	(
+    CREATE TABLE affidavit_outbound_files(
 		id INT IDENTITY(1,1) NOT NULL,
-		program_name NVARCHAR(100) NOT NULL
-		CONSTRAINT [PK_program_names] PRIMARY KEY CLUSTERED
+		file_name VARCHAR(255) NOT NULL,
+		file_hash VARCHAR(63) NOT NULL,
+		source_id INT NOT NULL,
+		status INT NOT NULL,
+		created_date DATETIME NOT NULL,
+		created_by VARCHAR(63) NOT NULL,
+		CONSTRAINT [PK_affidavit_outbound_files] PRIMARY KEY CLUSTERED
 		(
 			id ASC
 		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 	)
 END
 
-if not exists (select 1 from program_names)
-begin
-insert into program_names (program_name) values ('18 Again!')
-insert into program_names (program_name) values ('ABBA: The Movie')
-insert into program_names (program_name) values ('Above Us the Waves')
-insert into program_names (program_name) values ('Above the Law')
-insert into program_names (program_name) values ('Above the Rim')
-insert into program_names (program_name) values ('Abraham')
-insert into program_names (program_name) values ('Absolute Power')
-insert into program_names (program_name) values ('Addams Family, The')
-insert into program_names (program_name) values ('Addicted to Love')
-insert into program_names (program_name) values ('Adventures of Milo and Otis, The')
-insert into program_names (program_name) values ('America Undercover')
-insert into program_names (program_name) values ('Annie O')
-insert into program_names (program_name) values ('Attic: The Hiding of Anne Frank, The')
-insert into program_names (program_name) values ('Austin Powers: The Spy Who Shagged Me')
-insert into program_names (program_name) values ('Autobiography of Miss Jane Pittman, The')
-insert into program_names (program_name) values ('Babe: Pig in the City')
-insert into program_names (program_name) values ('Belly')
-insert into program_names (program_name) values ('Beyond the Call')
-insert into program_names (program_name) values ('Black Fox: The Price of Peace')
-insert into program_names (program_name) values ('Blind Faith')
-insert into program_names (program_name) values ('Brotherhood of Justice')
-insert into program_names (program_name) values ('Case of Deadly Force, A')
-insert into program_names (program_name) values ('Chaplin')
-insert into program_names (program_name) values ('Chasing Amy')
-insert into program_names (program_name) values ('Cheers')
-insert into program_names (program_name) values ('Clerks')
-insert into program_names (program_name) values ('Consenting Adults')
-insert into program_names (program_name) values ('Courtyard, The')
-insert into program_names (program_name) values ('Daily Show with Jon Stewart, The')
-insert into program_names (program_name) values ('Dances with Wolves')
-insert into program_names (program_name) values ('Death Wish II')
-insert into program_names (program_name) values ('Elizabeth')
-insert into program_names (program_name) values ('Fabulous Baker Boys, The')
-insert into program_names (program_name) values ('Faculty, The')
-insert into program_names (program_name) values ('Fixer, The')
-insert into program_names (program_name) values ('For Richer, for Poorer')
-insert into program_names (program_name) values ('Four Feathers, The')
-insert into program_names (program_name) values ('Glass House, The')
-insert into program_names (program_name) values ('Gleaming the Cube')
-insert into program_names (program_name) values ('Gods and Monsters')
-insert into program_names (program_name) values ('Gone with the Wind')
-insert into program_names (program_name) values ('Hands of a Murderer')
-insert into program_names (program_name) values ('Harvest of Fire')
-insert into program_names (program_name) values ('Harvey')
-insert into program_names (program_name) values ('Holy Man')
-insert into program_names (program_name) values ('Hotline')
-insert into program_names (program_name) values ('I Know What You Did Last Summer')
-insert into program_names (program_name) values ('I Still Know What You Did Last Summer')
-insert into program_names (program_name) values ('In Dreams')
-insert into program_names (program_name) values ('Lantern Hill')
-insert into program_names (program_name) values ('Larry King Live')
-insert into program_names (program_name) values ('Late Show with David Letterman')
-insert into program_names (program_name) values ('Looking for Miracles')
-insert into program_names (program_name) values ('Love Potion No. 9')
-insert into program_names (program_name) values ('M')
-insert into program_names (program_name) values ('Mac and Me')
-insert into program_names (program_name) values ('Max Is Missing')
-insert into program_names (program_name) values ('Miles To Go')
-insert into program_names (program_name) values ('Mind Games')
-insert into program_names (program_name) values ('Movie')
-insert into program_names (program_name) values ('Mr. and Mrs. Loving')
-insert into program_names (program_name) values ('My Chauffeur')
-insert into program_names (program_name) values ('NFL Football')
-insert into program_names (program_name) values ('Night at the Roxbury, A')
-insert into program_names (program_name) values ('Off Air')
-insert into program_names (program_name) values ('Over the Hill')
-insert into program_names (program_name) values ('Paid Program')
-insert into program_names (program_name) values ('Pals')
-insert into program_names (program_name) values ('Patch Adams')
-insert into program_names (program_name) values ('Phar Lap')
-insert into program_names (program_name) values ('Psycho')
-insert into program_names (program_name) values ('Rehearsal for Murder')
-insert into program_names (program_name) values ('Return of the Native, The')
-insert into program_names (program_name) values ('Sabrina the Teenage Witch')
-insert into program_names (program_name) values ('Saving Private Ryan')
-insert into program_names (program_name) values ('Shadow of a Doubt')
-insert into program_names (program_name) values ('ShadowZone: The Undead Express')
-insert into program_names (program_name) values ('Siege, The')
-insert into program_names (program_name) values ('Simon Birch')
-insert into program_names (program_name) values ('Simple Plan, A')
-insert into program_names (program_name) values ('Six Weeks')
-insert into program_names (program_name) values ('Square Dance')
-insert into program_names (program_name) values ('Star Trek: Insurrection')
-insert into program_names (program_name) values ('Star Wars: Episode IV - A New Hope')
-insert into program_names (program_name) values ('Stepmom')
-insert into program_names (program_name) values ('Take Your Best Shot')
-insert into program_names (program_name) values ('Terror in the Shadows')
-insert into program_names (program_name) values ('Thin Red Line, The')
-insert into program_names (program_name) values ('To Be Announced')
-insert into program_names (program_name) values ('Top Gun')
-insert into program_names (program_name) values ('Valley Girl')
-insert into program_names (program_name) values ('Varsity Blues')
-insert into program_names (program_name) values ('Waking Ned Devine')
-insert into program_names (program_name) values ('Wall, The')
-insert into program_names (program_name) values ('Welcome Home')
-insert into program_names (program_name) values ('What''s Up, Tiger Lily?')
-insert into program_names (program_name) values ('Where the Heart Is')
-insert into program_names (program_name) values ('Wild Flower')
-insert into program_names (program_name) values ('Yearling, The')
-end
-
-
-/*************************************** END BCOP-2409 ***********************************************************/
-
-/*************************************** BCOP-2513 ***************************************************************/
-
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
-              WHERE name = 'match_isci_days'
-              AND OBJECT_ID = OBJECT_ID('affidavit_client_scrubs'))
+IF OBJECT_ID('affidavit_outbound_file_problems', 'U') IS NULL
 BEGIN
-    ALTER TABLE affidavit_client_scrubs
-	ADD match_isci_days BIT NULL
-	
-	EXEC('UPDATE affidavit_client_scrubs
-	      SET match_isci_days = 1')
-		  
-	ALTER TABLE affidavit_client_scrubs
-	ALTER COLUMN match_isci_days BIT NOT NULL
+	CREATE TABLE affidavit_outbound_file_problems(
+		id INT IDENTITY(1,1) NOT NULL,
+		affidavit_outbound_file_id  INT,
+		problem_description VARCHAR(255) NOT NULL,		
+		CONSTRAINT [PK_affidavit_outbound_file_problems] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]		
+	)
+	ALTER TABLE [dbo].[affidavit_outbound_file_problems] 
+	WITH CHECK ADD CONSTRAINT [FK_affidavit_outbound_file_problems_affidavit_outbound_files] 
+	FOREIGN KEY(affidavit_outbound_file_id)
+	REFERENCES [dbo].[affidavit_outbound_files] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[affidavit_outbound_file_problems] CHECK CONSTRAINT [FK_affidavit_outbound_file_problems_affidavit_outbound_files]
 END
 
-/*************************************** END BCOP-2513 ***********************************************************/
-
-/*************************************** BCOP-2411/2561 ***********************************************************/
-
-if not exists(select 1 from genres where name = 'Instructional')
-insert into genres (name, created_by, created_date, modified_by, modified_date)
-values ('Instructional', 'System', current_timestamp, 'System', current_timestamp)
-go
-
-/*************************************** END BCOP-2411/2561 ***********************************************************/
+/*************************************** END BCOP-2517 ***********************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
@@ -281,7 +156,7 @@ go
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-SET parameter_value = '18.03.1' -- Current release version
+SET parameter_value = '18.04.1' -- Current release version
 WHERE parameter_key = 'SchemaVersion'
 GO
 
@@ -292,8 +167,8 @@ BEGIN
 	
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
-		WHERE [version] = '18.02.1' -- Previous release version
-		OR [version] = '18.03.1') -- Current release version
+		WHERE [version] = '18.03.1' -- Previous release version
+		OR [version] = '18.04.1') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
 		COMMIT TRANSACTION

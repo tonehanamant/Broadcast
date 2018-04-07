@@ -1,5 +1,5 @@
 ﻿{
-  "AdvertiserId": 0,
+  "AdvertiserId": 37444,
   "BlackoutMarketGroup": null,
   "BlackoutMarketGroupId": null,
   "CanDelete": false,
@@ -131,6 +131,7 @@
           "Year": 2016
         }
       ],
+      "Sequence": null,
       "SharePostingBookId": 410,
       "SinglePostingBookId": 410,
       "SpotLengthId": 1,
@@ -195,6 +196,7 @@
           "Year": 2016
         }
       ],
+      "Sequence": null,
       "SharePostingBookId": 410,
       "SinglePostingBookId": 410,
       "SpotLengthId": 1,
@@ -220,25 +222,28 @@
       "StartDate": "2016-06-07T00:00:00"
     }
   ],
-  "GuaranteedDemoId": 0,
-  "Margin": null,
+  "GuaranteedDemoId": 31,
+  "Margin": 20.0,
   "MarketGroup": null,
-  "MarketGroupId": 0,
+  "MarketGroupId": 100,
   "Notes": null,
-  "PostType": 0,
-  "ProposalName": null,
-  "SecondaryDemos": [],
+  "PostType": 1,
+  "ProposalName": "Proposal Test",
+  "SecondaryDemos": [
+    5,
+    6
+  ],
   "SpotLengths": [
     {
       "Display": "30"
     }
   ],
-  "Status": 0,
+  "Status": 3,
   "TargetBudget": 2020.00,
   "TargetCPM": 20.00,
   "TargetImpressions": 101000.0,
   "TargetUnits": 20,
-  "TotalCost": 0.0,
+  "TotalCost": 0.0000,
   "TotalCostMarginAchieved": false,
   "TotalCostPercent": 0.0,
   "TotalCPM": 0.0,
@@ -248,6 +253,6 @@
   "TotalImpressionsMarginAchieved": false,
   "TotalImpressionsPercent": 0.0,
   "ValidationWarning": null,
-  "Version": null,
-  "VersionId": 0
+  "Version": 1,
+  "VersionId": 53
 }

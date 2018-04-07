@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
+using System.Security.Principal;
 using Common.Systems.DataTransferObjects;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using Tam.Maestro.Services.ServiceManager.Service;
 
 
 namespace Services.Broadcast.IntegrationTests
@@ -16,7 +17,7 @@ namespace Services.Broadcast.IntegrationTests
     {
         public event GenericEvent<TAMService, string> UriChanged;
         public event GenericEvent<TAMResource, string> ResourceChanged;
-        public TAMEnvironment TamEnvironment { get; private set; }
+        public string TamEnvironment { get; private set; }
         public ServiceStatus GetStatus()
         {
             throw new System.NotImplementedException();
@@ -27,45 +28,117 @@ namespace Services.Broadcast.IntegrationTests
             throw new System.NotImplementedException();
         }
 
-        public SmsDbConnectionInfo GetSmsDbConnectionInfo(TAMResource pTamResource)
+        public SmsDbConnectionInfo GetSmsDbConnectionInfo(string pTamResource)
         {
             throw new System.NotImplementedException();
         }
 
-        public string GetResource(TAMResource pTamResource)
+        public string GetResource(string pTamResource)
         {
-            return EnvironmentSettings.Handler.GetResource(pTamResource, TAMEnvironment.LOCAL);
+            //@todo, Temporary switch to check if the CI server is running the tests.
+            if (System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Development")
+            {
+                if (pTamResource == "BroadcastConnectionString")
+                {
+                    return
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                }
+                else if (pTamResource == "BroadcastForecastConnectionString")
+                {
+                    return
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_forecast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                }
+            }
+            else if(System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Staging")
+            {
+                if (pTamResource == "BroadcastConnectionString")
+                {
+                    return
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_integration_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                }
+                else if (pTamResource == "BroadcastForecastConnectionString")
+                {
+                    return
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_forecast_integration_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                }
+            }
+            else if (System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Release")
+            {
+                if (pTamResource == "BroadcastConnectionString")
+                {
+                    return
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_integration_codefreeze;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                }
+                else if (pTamResource == "BroadcastForecastConnectionString")
+                {
+                    return
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_forecast_integration_codefreeze;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                }
+            }
+
+            throw new Exception("Un-coded resource: " + pTamResource);
         }
 
         public string GetSystemComponentParameterValue(string pSystemComponentID, string pSystemParameterID)
         {
-            if (pSystemParameterID == "BroadcastMatchingBuffer")
+            string result = string.Empty;
+            switch (pSystemParameterID)
             {
-                return "120";
+                case "BroadcastMatchingBuffer":
+                    result = "120";
+                    break;
+                case "DaypartCacheSlidingExpirationSeconds":
+                    result = "1800";
+                    break;
+                case "UseDayByDayImpressions":
+                    result = "False";
+                    break;
+                case "WWTV_FtpUsername":
+                    result = "broadcast";
+                    break;
+                case "WWTV_FtpPassword":
+                    result = "Password01";
+                    break;
+                case "WWTV_FtpHost":
+                    result = "localhost";
+                    break;
+                case "WWTV_FtpOutboundFolder":
+                    result = "uploads";
+                    break;
+                case "WWTV_FtpErrorFolder":
+                    result = "Errors";
+                    break;
+                case "WWTV_FailedFolder":
+                    result = @"E:\temp";
+                    break;
+                case "EmailHost": 
+                    result = "smtp.office365.com";
+                    break;
+                case "EmailFrom":
+                    result = "broadcast@crossmw.com";
+                    break;
+                case "EmailUsername":
+                    result = "broadcastsmtp@crossmw.com";
+                    break;
+                case "EmailPassword":
+                    result = "7TUCE+HAp3LDexQ6JIvaEA==";
+                    break;
+                case "EmailWhiteList":
+                    result = "mhohenshilt@crossmw.com";
+                    break;
+                case "WWTV_NotificationEmail":
+                    result = "mhohenshilt@crossmw.com";
+                    break;
+                case "EmailNotificationsEnabled":
+                    result = "True";
+                    break;
+                default:
+                    throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }
-            else if (pSystemParameterID == "DaypartCacheSlidingExpirationSeconds")
-            {
-                return "1800";
-            }
-            else if (pSystemParameterID == "UseDayByDayImpressions")
-            {
-                return "False";
-            }
-
-            throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
+            return result;
         }
 
         public bool ClearSystemComponentParameterCache(string pSystemComponentID, string pSystemParameterID)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnUriChanged(ServiceManagerServiceEventArgs pArgs)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnResourceChanged(ServiceManagerResourceEventArgs pArgs)
         {
             throw new System.NotImplementedException();
         }

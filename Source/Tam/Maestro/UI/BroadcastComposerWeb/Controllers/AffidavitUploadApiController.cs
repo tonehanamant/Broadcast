@@ -15,7 +15,6 @@ using Tam.Maestro.Web.Common;
 namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/AffidavitUpload")]
-    [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class AffidavitUploadApiController : BroadcastControllerBase
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
