@@ -14,7 +14,7 @@ import ProposalHeader from 'Components/planning/ProposalHeader';
 import ProposalActions from 'Components/planning/ProposalActions';
 import ProposalSwitchVersionModal from 'Components/planning/ProposalSwitchVersionModal';
 import ProposalDetails from 'Components/planning/ProposalDetails';
-
+// import { toggleEditIsciClass, toggleEditGridCellClass } from '../../ducks/planning';
 
 const mapStateToProps = ({ app: { employee }, planning: { proposalLock, initialdata, proposal, versions, proposalEditForm, proposalValidationStates } }) => ({
   employee,
@@ -49,13 +49,6 @@ export class SectionPlanningProposal extends Component {
 
   componentDidMount() {
     window.addEventListener('beforeunload', this.onUnload);
-    this.props.createAlert(
-      {
-        type: 'success',
-        headline: 'Proposal Saved Successfully',
-        message: '',
-      },
-    );
   }
 
   componentWillUnmount() {
@@ -275,6 +268,8 @@ export class SectionPlanningProposal extends Component {
               isValidProposalDetails={this.isValidProposalDetails}
               isValidProposalDetailGrids={this.isValidProposalDetailGrids}
               isDirty={this.isDirty}
+              // toggleEditIsciClass={this.props.toggleEditIsciClass}
+              // toggleEditGridCellClass={this.props.toggleEditGridCellClass}
             />
           </div>
         }
@@ -328,6 +323,8 @@ SectionPlanningProposal.propTypes = {
 
   toggleModal: PropTypes.func.isRequired,
   createAlert: PropTypes.func.isRequired,
+  // toggleEditIsciClass: PropTypes.func.isRequired,
+  // toggleEditGridCellClass: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SectionPlanningProposal);

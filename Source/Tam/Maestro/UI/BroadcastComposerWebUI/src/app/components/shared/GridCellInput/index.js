@@ -20,17 +20,19 @@ export default class GridCellInput extends Component {
 	onInputFocus() {
 		if (this.state.inputValue === 0 || this.state.inputValue === '0') {
 			this.setState({
-				touched: true,
+				// touched: true,
 				inputValue: '',
 			});
+			// this.props.toggleEditGridCellClass(true);
 		}
 	}
 
 	onInputChange(event) {
 		this.setState({
-			touched: true,
+			// touched: true,
 			inputValue: event.target.value,
 		});
+		// this.props.toggleEditGridCellClass(true);
 	}
 
 	onInput(event) {
@@ -58,9 +60,10 @@ export default class GridCellInput extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.value !== this.props.value) {
 			this.setState({
-				touched: true,
+				// touched: true,
 				inputValue: nextProps.value,
 			});
+		//	this.props.toggleEditGridCellClass(true);
 		}
 	}
 
@@ -91,7 +94,7 @@ export default class GridCellInput extends Component {
 		};
 
 		const editableClass = this.props.isEditable ? 'editable-cell' : 'non-editable-cell';
-		const touchedClass = this.state.touched && this.props.isEditable ? 'editable-cell-changed' : '';
+		const touchedClass = (this.state.touched && this.props.isEditable && this.props.isGridCellEdited) ? 'editable-cell-changed' : '';
 		const hasErrorTouchedClass = (this.state.touched && (this.state.inputValue === 0 || this.state.inputValue === '0')) && this.props.isEditable ? 'editable-cell-has-error' : '';
 		const hasErrorOnSaveClass = (this.props.onSaveShowValidation && (this.state.inputValue === 0 || this.state.inputValue === '0')) && this.props.isEditable ? 'editable-cell-has-error' : '';
 
@@ -184,4 +187,6 @@ GridCellInput.propTypes = {
 	maskAllowNegative: PropTypes.bool,
 	maskAllowLeadingZeros: PropTypes.bool,
 
+	isGridCellEdited: PropTypes.bool.isRequired,
+	// toggleEditGridCellClass: PropTypes.func.isRequired,
 };

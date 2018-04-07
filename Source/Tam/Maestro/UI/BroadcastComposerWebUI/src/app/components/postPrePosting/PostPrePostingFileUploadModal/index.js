@@ -65,7 +65,7 @@ export class PostPrePostingFileUploadModal extends Component {
     // todo MERGE with postFile data
     if (this.checkValid()) {
       const postFile = {
-        UserName: this.props.employee._Username,
+        UserName: this.props.employee.Username,
         FileName: this.props.file.raw.name,
         RawData: this.props.file.base64,
         BvsStream: null,

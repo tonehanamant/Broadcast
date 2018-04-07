@@ -10,7 +10,7 @@ namespace Services.Broadcast.Repositories
     public class BroadcastForecastRepositoryBase : CoreRepositoryBase<QueryHintBroadcastForecastContext>
     {
         public BroadcastForecastRepositoryBase(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, TAMResource.BroadcastForecastConnectionString)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, TAMResource.BroadcastForecastConnectionString.ToString())
         {
         }
     }

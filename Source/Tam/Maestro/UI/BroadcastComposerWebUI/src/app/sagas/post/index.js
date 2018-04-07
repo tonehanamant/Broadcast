@@ -123,9 +123,20 @@ export function* assignPostDisplay({ payload: request }) {
 }
 
 export function* requestPostFiltered({ payload: query }) {
-  const postUnfiltered = yield select(state => state.post.postUnfiltered);
-  const keys = ['DisplayUploadDate', 'ContractName'/* 'ContractId' *//* 'SpotsInSpec', 'SpotsOutOfSpec', 'PrimaryAudienceImpressions' */];
-  const searcher = new FuzzySearch(postUnfiltered, keys, { caseSensitive: false });
+  const postListUnfiltered = yield select(state => state.post.postUnfiltered);
+
+  // for each post, convert all properties to string to enable use on FuzzySearch object
+  postListUnfiltered.map(post => (
+    Object.keys(post).map((key) => {
+      if (post[key] !== null && post[key] !== undefined) {
+        post[key] = post[key].toString(); // eslint-disable-line no-param-reassign
+      }
+      return post[key];
+    })
+  ));
+
+  const keys = ['ContractId', 'ContractName', 'DisplayUploadDate', 'PrimaryAudienceImpressions', 'SpotsInSpec', 'SpotsOutOfSpec', 'UploadDate'];
+  const searcher = new FuzzySearch(postListUnfiltered, keys, { caseSensitive: false });
   const postFiltered = () => searcher.search(query);
 
   try {
@@ -147,7 +158,7 @@ export function* requestPostFiltered({ payload: query }) {
 }
 
 /* ////////////////////////////////// */
-/* REQUEST POST PROPOSAL */
+/* REQUEST POST SCRUBBING HEADER */
 /* ////////////////////////////////// */
 export function* requestPostScrubbingHeader({ payload: proposalID }) {
   const { getPostScrubbingHeader } = api.post;
@@ -225,6 +236,44 @@ export function* requestPostScrubbingHeader({ payload: proposalID }) {
   }
 }
 
+export function* requestScrubbingDataFiltered({ payload: query }) {
+  const listUnfiltered = yield select(state => state.post.proposalHeader.scrubbingData);
+
+  listUnfiltered.Details.forEach((details) => {
+      details.ClientScrubs.forEach((item) => {
+          item.map(post => (
+            Object.keys(post).map((key) => {
+              if (post[key] !== null && post[key] !== undefined) {
+                post[key] = post[key].toString(); // eslint-disable-line no-param-reassign
+              }
+              return post[key];
+            })
+          ));
+      });
+  });
+
+  const keys = ['WeekStart', 'TimeAired', 'MatchTime', 'DayOfWeek', 'SpotLength', 'ISCI', 'ProgramName', 'GenreName', 'Affiliate', 'Market', 'Station'];
+  const searcher = new FuzzySearch(listUnfiltered, keys, { caseSensitive: false });
+  const scrubbingDataFiltered = () => searcher.search(query);
+
+  try {
+    const filtered = yield scrubbingDataFiltered();
+    yield put({
+      type: ACTIONS.RECEIVE_FILTERED_SCRUBBING_DATA,
+      data: filtered,
+    });
+  } catch (e) {
+    if (e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
@@ -243,4 +292,8 @@ export function* watchRequestPostFiltered() {
 
 export function* watchRequestPostScrubbingHeader() {
   yield takeEvery(ACTIONS.REQUEST_POST_SCRUBBING_HEADER, requestPostScrubbingHeader);
+}
+
+export function* watchRequestScrubbingDataFiltered() {
+  yield takeEvery(ACTIONS.REQUEST_FILTERED_SCRUBBING_DATA, requestScrubbingDataFiltered);
 }

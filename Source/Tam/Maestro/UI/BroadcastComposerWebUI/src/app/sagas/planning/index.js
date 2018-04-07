@@ -629,7 +629,7 @@ export function* saveProposal({ payload: params }) {
       });
     }
     if (isNew) {
-      window.location.assign(`/broadcastreact/planning/proposal/${data.Data.Id}`);
+      setTimeout(() => { window.location.assign(`/broadcastreact/planning/proposal/${data.Data.Id}`); }, 1000);
     } else {
     data.Data = yield flattenProposalDetails(data.Data);
     yield put({
@@ -1051,6 +1051,8 @@ export function* updateProposal() { // { payload: params }
   /* eslint-disable no-shadow */
   const { updateProposal } = api.planning;
   const details = yield select(state => state.planning.proposalEditForm.Details);
+  const proposalId = yield select(state => state.planning.proposalEditForm.Id);
+  const params = { Id: proposalId, Details: details };
   try {
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
@@ -1059,7 +1061,7 @@ export function* updateProposal() { // { payload: params }
         processing: true,
       },
     });
-    const response = yield updateProposal(details);
+    const response = yield updateProposal(params);
     const { status, data } = response;
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
@@ -1169,7 +1171,7 @@ export function* requestGenres({ payload: query }) {
 		const { data } = response;
 		yield put({
       type: ACTIONS.RECEIVE_GENRES,
-      payload: data.Data,
+      payload: data.Data || [],
     });
 
     yield put({
@@ -1178,6 +1180,11 @@ export function* requestGenres({ payload: query }) {
 		});
 	} catch (e) {
 		if (e.response) {
+      yield put({
+        type: ACTIONS.TOGGLE_GENRE_LOADING,
+        payload: {},
+      });
+
 			yield put({
 				type: ACTIONS.DEPLOY_ERROR,
 				error: {
@@ -1212,7 +1219,7 @@ export function* requestPrograms({ payload: params }) {
 		const { data } = response;
 		yield put({
       type: ACTIONS.RECEIVE_PROGRAMS,
-      payload: data.Data,
+      payload: data.Data || [],
     });
 
     yield put({
@@ -1221,6 +1228,11 @@ export function* requestPrograms({ payload: params }) {
 		});
 	} catch (e) {
 		if (e.response) {
+      yield put({
+        type: ACTIONS.TOGGLE_PROGRAM_LOADING,
+        payload: {},
+      });
+
 			yield put({
 				type: ACTIONS.DEPLOY_ERROR,
 				error: {
@@ -1240,6 +1252,18 @@ export function* requestPrograms({ payload: params }) {
 			});
 		}
 	}
+}
+
+export function* deleteProposalDetail({ payload: params }) {
+  yield put({
+    type: ACTIONS.PROPOSAL_DETAIL_DELETED,
+    payload: params,
+  });
+
+  yield put({
+    type: ACTIONS.UPDATE_PROPOSAL,
+    payload: params,
+  });
 }
 
 /* ////////////////////////////////// */
@@ -1303,6 +1327,10 @@ export function* watchRequestGenres() {
 
 export function* watchRequestPrograms() {
 	yield takeEvery(ACTIONS.REQUEST_PROGRAMS, requestPrograms);
+}
+
+export function* watchDeleteProposalDetail() {
+	yield takeEvery(ACTIONS.DELETE_PROPOSAL_DETAIL, deleteProposalDetail);
 }
 
 // if assign watcher > assign in sagas/index rootSaga also

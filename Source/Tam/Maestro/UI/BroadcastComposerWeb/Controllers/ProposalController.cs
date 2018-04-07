@@ -50,13 +50,13 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetInitialProposalData(DateTime.Now));
-        } 
+        }
 
         [HttpPost]
         [Route("SaveProposal")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ProposalDto> SaveProposal(ProposalDto proposal)
-        {            
+        {
             return
                 _ConvertToBaseResponse(
                     () =>
@@ -118,15 +118,15 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        [Route("UpdateProposal")]
+        [Route("CalculateProposalChanges")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-        public BaseResponse<ProposalDto> UpdateProposal(List<ProposalDetailDto> proposalDetailDtos)
+        public BaseResponse<ProposalDto> CalculateProposalChanges(ProposalChangeRequest changeRequest)
         {
             return
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IProposalService>()
-                            .UpdateProposal(proposalDetailDtos));
+                            .CalculateProposalChanges(changeRequest));
         }
 
         [HttpGet]
@@ -187,7 +187,7 @@ namespace BroadcastComposerWeb.Controllers
 
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindGenres(genreSearchString));
-        }        
+        }
 
         [HttpPost]
         [Route("FindPrograms")]

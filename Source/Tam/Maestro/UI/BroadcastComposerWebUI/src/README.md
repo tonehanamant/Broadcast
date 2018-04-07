@@ -51,3 +51,14 @@ Application Notes
     const selectedIds = this.props.selection.get(this.props.stateKey).get('indexes');
     const rowData = this.props.dataSource.get(this.props.stateKey);
     const recData = rowData.toJS().data[selectedIds[0]];
+
+
+    //////////
+    ADDING CSS classes to grid:
+
+    classNames={['hidden-header']}
+    where hidden-header - gets react-grid added to so css should look like:
+
+    .react-grid-hidden-header .react-grid-header-fixed-container {
+    display: none;
+    }

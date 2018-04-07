@@ -65,6 +65,7 @@
           "Year": 2016
         }
       ],
+      "Sequence": null,
       "SharePostingBookId": 413,
       "SinglePostingBookId": null,
       "SpotLengthId": 1,
@@ -126,6 +127,7 @@
           "Year": 2016
         }
       ],
+      "Sequence": null,
       "SharePostingBookId": 413,
       "SinglePostingBookId": null,
       "SpotLengthId": 1,

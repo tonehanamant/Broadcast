@@ -14,25 +14,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [UseReporter(typeof(DiffReporter))]
     public class AffidavitScrubbingServiceIntegrationTests
     {
-        private readonly IAffidavitScrubbingService _PostService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>();
+        private readonly IAffidavitScrubbingService _AffidavitScrubbingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>();
 
         [Test]
         public void GetPostsTest()
         {
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_PostService.GetPosts()));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitScrubbingService.GetPosts()));
         }
-
+                
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetClientPostScrubbingProposalHeader()
+        public void GetClientScrubbingForProposal()
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PostService.GetClientPostScrubbingProposalHeader(253);
+                var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(253);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
-                jsonResolver.Ignore(typeof(ClientPostScrubbingProposalHeaderDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
@@ -50,15 +49,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetClientPostScrubbingProposalDetail()
+        public void GetClientScrubbingForProposalMultipleGenres()
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PostService.GetClientPostScrubbingProposalDetail(253, 14);
+                var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(255);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
-                jsonResolver.Ignore(typeof(ClientPostScrubbingProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+                jsonResolver.Ignore(typeof(GenreCriteria), "Id");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
