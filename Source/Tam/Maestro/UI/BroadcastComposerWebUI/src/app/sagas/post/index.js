@@ -83,7 +83,7 @@ export function* requestPost() {
 /* ASSIGN POST DISPLAY */
 /* ////////////////////////////////// */
 export function* assignPostDisplay({ payload: request }) {
-  const assignDisplay = () => request.data.map((item) => {
+  const assignDisplay = () => request.data.Posts.map((item) => {
       const post = item;
 
       // UploadDate
@@ -99,7 +99,8 @@ export function* assignPostDisplay({ payload: request }) {
         id: 'postPostsDisplay',
         loading: true },
       });
-    const post = yield assignDisplay();
+    const Posts = yield assignDisplay();
+    const post = Object.assign({}, request.data, { Posts });
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,
       overlay: {
@@ -123,7 +124,7 @@ export function* assignPostDisplay({ payload: request }) {
 }
 
 export function* requestPostFiltered({ payload: query }) {
-  const postListUnfiltered = yield select(state => state.post.postUnfiltered);
+  const postListUnfiltered = yield select(state => state.post.postUnfilteredGridData);
 
   // for each post, convert all properties to string to enable use on FuzzySearch object
   postListUnfiltered.map(post => (

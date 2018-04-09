@@ -150,13 +150,176 @@ END
 
 /*************************************** END BCOP-2517 ***********************************************************/
 
+/*************************************** BCOP-2745 ***************************************************************/
+
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'leadin_end_time' AND 
+		object_id = OBJECT_ID('affidavit_file_details'))
+BEGIN
+	ALTER TABLE affidavit_file_details
+	ADD leadin_end_time INT NULL
+
+	EXEC('UPDATE affidavit_file_details
+	      SET leadin_end_time = air_time')
+
+	ALTER TABLE affidavit_file_details
+	ALTER COLUMN leadin_end_time INT NOT NULL
+END
+GO
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'leadout_start_time' AND 
+		object_id = OBJECT_ID('affidavit_file_details'))
+BEGIN
+	ALTER TABLE affidavit_file_details
+	ADD leadout_start_time INT NULL
+
+	EXEC('UPDATE affidavit_file_details
+	      SET leadout_start_time = air_time')
+
+	ALTER TABLE affidavit_file_details
+	ALTER COLUMN leadout_start_time INT NOT NULL
+END
+GO
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'program_show_type' AND 
+		object_id = OBJECT_ID('affidavit_file_details'))
+BEGIN
+	ALTER TABLE affidavit_file_details
+	ADD program_show_type VARCHAR(255) NULL
+
+	EXEC('UPDATE affidavit_file_details
+	      SET program_show_type = ''''')
+
+	ALTER TABLE affidavit_file_details
+	ALTER COLUMN program_show_type VARCHAR(255) NOT NULL
+END
+GO
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'leadin_show_type' AND 
+		object_id = OBJECT_ID('affidavit_file_details'))
+BEGIN
+	ALTER TABLE affidavit_file_details
+	ADD leadin_show_type VARCHAR(255) NULL
+
+	EXEC('UPDATE affidavit_file_details
+	      SET leadin_show_type = ''''')
+
+	ALTER TABLE affidavit_file_details
+	ALTER COLUMN leadin_show_type VARCHAR(255) NOT NULL
+END
+GO
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'leadout_show_type' AND 
+		object_id = OBJECT_ID('affidavit_file_details'))
+BEGIN
+	ALTER TABLE affidavit_file_details
+	ADD leadout_show_type VARCHAR(255) NULL
+
+	EXEC('UPDATE affidavit_file_details
+	      SET leadout_show_type = ''''')
+
+	ALTER TABLE affidavit_file_details
+	ALTER COLUMN leadout_show_type VARCHAR(255) NOT NULL
+END
+GO
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'match_date' AND 
+		object_id = OBJECT_ID('affidavit_client_scrubs'))
+BEGIN
+	ALTER TABLE affidavit_client_scrubs
+	ADD match_date BIT NULL
+
+	EXEC('UPDATE affidavit_client_scrubs
+		  SET match_date = match_time')
+
+	ALTER TABLE affidavit_client_scrubs
+	ALTER COLUMN match_date BIT NOT NULL
+END
+GO
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'effective_program_name' AND 
+		object_id = OBJECT_ID('affidavit_client_scrubs'))
+BEGIN
+	ALTER TABLE affidavit_client_scrubs
+	ADD effective_program_name  VARCHAR(255) NULL
+
+	EXEC('UPDATE acs
+		  SET acs.effective_program_name = afd.program_name
+		  FROM affidavit_client_scrubs acs
+	      JOIN affidavit_file_details afd ON affidavit_file_detail_id = afd.id')
+
+	ALTER TABLE affidavit_client_scrubs
+	ALTER COLUMN effective_program_name VARCHAR(255) NOT NULL
+END
+GO
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'effective_genre' AND 
+		object_id = OBJECT_ID('affidavit_client_scrubs'))
+BEGIN
+	ALTER TABLE affidavit_client_scrubs
+	ADD effective_genre VARCHAR(255) NULL
+
+	EXEC('UPDATE acs
+		  SET acs.effective_genre = afd.genre
+		  FROM affidavit_client_scrubs acs
+	      JOIN affidavit_file_details afd ON affidavit_file_detail_id = afd.id')
+
+	ALTER TABLE affidavit_client_scrubs
+	ALTER COLUMN effective_genre VARCHAR(255) NOT NULL
+END
+GO
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'effective_show_type' AND 
+		object_id = OBJECT_ID('affidavit_client_scrubs'))
+BEGIN
+	ALTER TABLE affidavit_client_scrubs
+	ADD effective_show_type VARCHAR(255) NULL
+
+	EXEC('UPDATE acs
+		  SET acs.effective_show_type = afd.program_show_type
+		  FROM affidavit_client_scrubs acs
+	      JOIN affidavit_file_details afd ON affidavit_file_detail_id = afd.id')
+
+	ALTER TABLE affidavit_client_scrubs
+	ALTER COLUMN effective_show_type VARCHAR(255) NOT NULL
+END
+
+/*************************************** END - BCOP-2745 *********************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-SET parameter_value = '18.04.1' -- Current release version
+SET parameter_value = '18.05.1' -- Current release version
 WHERE parameter_key = 'SchemaVersion'
 GO
 
@@ -167,8 +330,8 @@ BEGIN
 	
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
-		WHERE [version] = '18.03.1' -- Previous release version
-		OR [version] = '18.04.1') -- Current release version
+		WHERE [version] = '18.04.1' -- Previous release version
+		OR [version] = '18.05.1') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
 		COMMIT TRANSACTION

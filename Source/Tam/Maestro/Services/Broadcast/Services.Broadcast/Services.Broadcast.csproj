@@ -267,12 +267,15 @@
     <Compile Include="Entities\AffidavitMatchingProposalWeek.cs" />
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\BvsTrackingAudience.cs" />
+    <Compile Include="Entities\PostedContractedProposalsDto.cs" />
     <Compile Include="Entities\ClientPostScrubbingProposalDto.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
     <Compile Include="Entities\FlightWeekGroup.cs" />
     <Compile Include="Entities\IHavePostingBooks.cs" />
+    <Compile Include="Entities\InSpecAffidavitFileDetail.cs" />
     <Compile Include="Entities\InventorySourceEnum.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
+    <Compile Include="Entities\NsiPostReport.cs" />
     <Compile Include="Entities\OpenMarketInventoryAllocationSnapshotDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\BaseProposalInventoryWeekDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\OpenMarketAllocationSaveRequest.cs" />
@@ -329,6 +332,7 @@
     <Compile Include="Exceptions\FileUploadException.cs" />
     <Compile Include="Extensions\Bvs.cs" />
     <Compile Include="ReportGenerators\IReportGenerator.cs" />
+    <Compile Include="ReportGenerators\NSIPostReportGenerator.cs" />
     <Compile Include="ReportGenerators\PostExcelReportGenerator.cs" />
     <Compile Include="Entities\InventoryDetail.cs" />
     <Compile Include="Entities\InventoryDetailSlot.cs" />

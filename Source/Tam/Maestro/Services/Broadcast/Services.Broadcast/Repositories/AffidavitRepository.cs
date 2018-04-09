@@ -8,6 +8,7 @@ using Common.Services.Extensions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
+using Services.Broadcast.ApplicationServices;
 
 namespace Services.Broadcast.Repositories
 {
@@ -16,6 +17,13 @@ namespace Services.Broadcast.Repositories
         int SaveAffidavitFile(affidavit_files affidatite_file);
         AffidavitFile GetAffidavit(int affidavitId, bool includeScrubbingDetail = false);
         List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalVersionId);
+
+        /// <summary>
+        /// Gets the data for the NSI Post Report
+        /// </summary>
+        /// <param name="proposalId">Proposal Id to get the data for</param>
+        /// <returns>List of NSIPostReportDto objects</returns>
+        List<InSpecAffidavitFileDetail> GetInSpecSpotsForProposal(int proposalId);
     }
 
     public class AffidavitRepository : BroadcastRepositoryBase, IAffidavitRepository
@@ -84,6 +92,11 @@ namespace Services.Broadcast.Repositories
                     LeadinProgramName = d.leadin_program_name,
                     LeadoutGenre = d.leadout_genre,
                     LeadoutProgramName = d.leadout_program_name,
+                    ProgramShowType = d.program_show_type,
+                    LeadInShowType = d.leadin_show_type,
+                    LeadOutShowType = d.leadout_show_type,
+                    LeadOutStartTime = d.leadout_start_time,
+                    LeadInEndTime = d.leadin_end_time,
                     Market = d.market,
                     Affiliate = d.affiliate,
                     EstimateId = d.estimate_id.Value,
@@ -104,6 +117,7 @@ namespace Services.Broadcast.Repositories
                         MatchGenre = a.match_genre,
                         MatchMarket = a.match_market,
                         MatchTime = a.match_time,
+                        MatchDate = a.match_date,
                         MatchIsciDays = a.match_isci_days,
                         Status = (AffidavitClientScrubStatus)a.status,
                         Comment = a.comment,
@@ -159,6 +173,7 @@ namespace Services.Broadcast.Repositories
                             MatchProgram = x.affidavitFileScrub.match_program,
                             MatchStation = x.affidavitFileScrub.match_station,
                             MatchTime = x.affidavitFileScrub.match_time,
+                            MatchDate = x.affidavitFileScrub.match_date,
                             MatchISCI = x.affidavitFileScrub.match_isci_days,
                             Comments = x.affidavitFileScrub.comment,
                             ClientISCI = x.proposalVersionWeekIscis.client_isci,
@@ -167,6 +182,50 @@ namespace Services.Broadcast.Repositories
                     }
                     ).ToList());
                     return posts;
+                });
+        }
+
+        /// <summary>
+        /// Gets the data for the NSI Post Report
+        /// </summary>
+        /// <param name="proposalId">Proposal Id to get the data for</param>
+        /// <returns>List of NSIPostReportDto objects</returns>
+        public List<InSpecAffidavitFileDetail> GetInSpecSpotsForProposal(int proposalId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var inSpecDetails = (from proposal in context.proposals
+                                         from proposalVersion in proposal.proposal_versions
+                                         from proposalVersionDetail in proposalVersion.proposal_version_details
+                                         from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                                         from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
+                                         from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
+                                         let affidavitFileDetails = affidavitClientScrub.affidavit_file_details
+                                         where proposal.id == proposalId && affidavitClientScrub.status == (int)ScrubbingStatus.InSpec
+                                         select new { affidavitFileDetails, proposalVersionQuarters, proposalVersionDetail, proposalVersion, proposal, proposalVersionWeeks })
+                                         .ToList();
+
+
+                    var inSpecAffidavitFileDetails = inSpecDetails.Select(x => new InSpecAffidavitFileDetail()
+                    {
+                        Station = x.affidavitFileDetails.station,
+                        Isci = x.affidavitFileDetails.isci,
+                        ProgramName = x.affidavitFileDetails.program_name,
+                        SpotLengthId = x.affidavitFileDetails.spot_length_id,
+                        AirTime = x.affidavitFileDetails.air_time,
+                        AirDate = x.affidavitFileDetails.original_air_date,
+                        DaypartName = x.proposalVersionDetail.daypart_code,
+                        AudienceImpressions = x.affidavitFileDetails.affidavit_file_detail_audiences
+                                                .ToDictionary( i => i.audience_id, j => j.impressions),
+                        Quarter = x.proposalVersionQuarters.quarter,
+                        Year = x.proposalVersionQuarters.year,
+                        AdvertiserId = x.proposal.advertiser_id,
+                        ProposalWeekCost = x.proposalVersionWeeks.cost,
+                        ProposalWeekImpressionsGoal = x.proposalVersionWeeks.impressions_goal
+                    }).ToList();
+
+                    return inSpecAffidavitFileDetails;
                 });
         }
     }

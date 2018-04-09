@@ -28,6 +28,7 @@ namespace Services.Broadcast.Entities
         public List<ClientPostScrubbingProposalDetailDto> Details { get; set; } = new List<ClientPostScrubbingProposalDetailDto>();
 
         public List<ProposalDetailPostScrubbingDto> ClientScrubs { get; set; } = new List<ProposalDetailPostScrubbingDto>();
+                
 
         public FilterOptions Filters { get; set; }
     }

@@ -393,10 +393,28 @@
     <Compile Include="usage.cs">
       <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="usages_arc.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usages_trunc.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="viewers.cs">
       <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="viewers_arc.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="viewers_trunc.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="viewer_details.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="viewer_details_arc.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="viewer_details_trunc.cs">
       <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -17,5 +17,6 @@ namespace Services.Broadcast.Entities
         public string ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool LeadIn { get; set; }
+        public bool MatchDate { get; set; }
     }
 }

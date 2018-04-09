@@ -69,12 +69,15 @@ export class PostScrubbingModal extends Component {
 		return (
 			<Modal ref={this.setWrapperRef} show={this.props.modal.active} dialogClassName="post-scrubbing-modal">
 					<Modal.Header>
+            <Modal.Title style={{ display: 'inline-block' }}>Scrubbing Screen</Modal.Title>
 						<Button className="close" bsStyle="link" onClick={this.close} style={{ display: 'inline-block', float: 'right' }}>
 							<span>&times;</span>
 						</Button>
+          </Modal.Header>
+          <Modal.Body>
 						<PostScrubbingHeader
 							advertiser={Advertiser}
-							date={Details}
+							details={Details}
 							guaranteedDemo={GuaranteedDemo}
 							Id={Id}
 							market={Markets}
@@ -84,8 +87,6 @@ export class PostScrubbingModal extends Component {
 							secondaryDemo={SecondaryDemos}
 							// getPostScrubbingDetail={getPostScrubbingDetail}
 						/>
-					</Modal.Header>
-					<Modal.Body>
 						<PostScrubbingDetail
 							activeScrubbingData={activeScrubbingData}
 							grid={grid}

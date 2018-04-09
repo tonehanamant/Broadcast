@@ -14,6 +14,6 @@ namespace Services.Broadcast.Entities
         public List<ProgramCriteria> Programs { get; set; }
         public List<GenreCriteria> Genres { get; set; }
         public int? Sequence { get; set; }
-        public List<ProposalDetailPostScrubbingDto> ClientScrubs  { get; set; } = new List<ProposalDetailPostScrubbingDto>();
+        public List<ProposalFlightWeek> FlightWeeks { get; set; }
     }
 }

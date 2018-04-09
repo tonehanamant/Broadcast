@@ -23,6 +23,10 @@
           <Property Name="lead_in" Type="bit" Nullable="false" />
           <Property Name="match_station" Type="bit" Nullable="false" />
           <Property Name="match_isci_days" Type="bit" Nullable="false" />
+          <Property Name="match_date" Type="bit" Nullable="false" />
+          <Property Name="effective_program_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="effective_genre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="effective_show_type" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="affidavit_file_detail_audiences">
           <Key>
@@ -75,6 +79,11 @@
           <Property Name="inventory_source" Type="int" />
           <Property Name="spot_cost" Type="float" />
           <Property Name="affiliate" Type="varchar" MaxLength="15" />
+          <Property Name="leadin_end_time" Type="int" Nullable="false" />
+          <Property Name="leadout_start_time" Type="int" Nullable="false" />
+          <Property Name="program_show_type" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="leadin_show_type" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="leadout_show_type" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="affidavit_files">
           <Key>
@@ -522,7 +531,6 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="proposal_id" Type="int" Nullable="false" />
           <Property Name="proposal_version" Type="smallint" Nullable="false" />
           <Property Name="start_date" Type="date" />
@@ -533,6 +541,7 @@
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="target_budget" Type="money" />
           <Property Name="target_units" Type="int" />
           <Property Name="target_impressions" Type="float" Nullable="false" />
@@ -827,7 +836,7 @@
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -898,9 +907,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_affidavit_file_detail_demographics_audiences">
-          <End Role="audiences" Type="Self.audiences" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="audiences" Type="Self.audiences" Multiplicity="0..1" />
           <End Role="affidavit_file_detail_demographics" Type="Self.affidavit_file_detail_demographics" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="audiences">
@@ -4605,6 +4612,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="match_station" Type="Boolean" Nullable="false" />
           <Property Name="match_isci_days" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="affidavit_file_details" Relationship="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" FromRole="affidavit_client_scrubs" ToRole="affidavit_file_details" />
+          <Property Name="match_date" Type="Boolean" Nullable="false" />
+          <Property Name="effective_program_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="effective_genre" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="effective_show_type" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="affidavit_files">
           <Key>
@@ -4789,6 +4800,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="affidavit_file_detail_demographics" Relationship="BroadcastModel.FK_affidavit_file_detail_demographics_affidavit_file_details" FromRole="affidavit_file_details" ToRole="affidavit_file_detail_demographics" />
           <NavigationProperty Name="affidavit_file_detail_problems" Relationship="BroadcastModel.FK_affidavit_file_detail_problems_affidavit_file_details" FromRole="affidavit_file_details" ToRole="affidavit_file_detail_problems" />
           <NavigationProperty Name="affidavit_files" Relationship="BroadcastModel.FK_affidavit_files_affidavit_file_details" FromRole="affidavit_file_details" ToRole="affidavit_files" />
+          <Property Name="leadin_end_time" Type="Int32" Nullable="false" />
+          <Property Name="leadout_start_time" Type="Int32" Nullable="false" />
+          <Property Name="program_show_type" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leadin_show_type" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leadout_show_type" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_affidavit_file_details_affidavit_client_scrubs">
           <End Type="BroadcastModel.affidavit_file_details" Role="affidavit_file_details" Multiplicity="1">
@@ -5777,6 +5793,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="affidavit_client_scrubs">
             <EntityTypeMapping TypeName="BroadcastModel.affidavit_client_scrubs">
               <MappingFragment StoreEntitySet="affidavit_client_scrubs">
+                <ScalarProperty Name="effective_show_type" ColumnName="effective_show_type" />
+                <ScalarProperty Name="effective_genre" ColumnName="effective_genre" />
+                <ScalarProperty Name="effective_program_name" ColumnName="effective_program_name" />
+                <ScalarProperty Name="match_date" ColumnName="match_date" />
                 <ScalarProperty Name="match_isci_days" ColumnName="match_isci_days" />
                 <ScalarProperty Name="match_station" ColumnName="match_station" />
                 <ScalarProperty Name="lead_in" ColumnName="lead_in" />
@@ -5894,6 +5914,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="affidavit_file_details">
             <EntityTypeMapping TypeName="BroadcastModel.affidavit_file_details">
               <MappingFragment StoreEntitySet="affidavit_file_details">
+                <ScalarProperty Name="leadout_show_type" ColumnName="leadout_show_type" />
+                <ScalarProperty Name="leadin_show_type" ColumnName="leadin_show_type" />
+                <ScalarProperty Name="program_show_type" ColumnName="program_show_type" />
+                <ScalarProperty Name="leadout_start_time" ColumnName="leadout_start_time" />
+                <ScalarProperty Name="leadin_end_time" ColumnName="leadin_end_time" />
                 <ScalarProperty Name="affiliate" ColumnName="affiliate" />
                 <ScalarProperty Name="spot_cost" ColumnName="spot_cost" />
                 <ScalarProperty Name="inventory_source" ColumnName="inventory_source" />

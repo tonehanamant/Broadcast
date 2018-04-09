@@ -106,15 +106,24 @@ namespace Services.Broadcast.ApplicationServices
                     leadout_genre = matchedAffidavitDetail.AffidavitDetail.LeadOutGenre,
                     leadin_program_name = matchedAffidavitDetail.AffidavitDetail.LeadInProgramName,
                     leadout_program_name = matchedAffidavitDetail.AffidavitDetail.LeadOutProgramName,
+                    leadin_end_time = Convert.ToInt32(matchedAffidavitDetail.AffidavitDetail.LeadInEndTime.TimeOfDay.TotalSeconds),
+                    leadout_start_time = Convert.ToInt32(matchedAffidavitDetail.AffidavitDetail.LeadOutStartTime.TimeOfDay.TotalSeconds),
+                    program_show_type = matchedAffidavitDetail.AffidavitDetail.ProgramShowType,
+                    leadin_show_type = matchedAffidavitDetail.AffidavitDetail.LeadInShowType,
+                    leadout_show_type = matchedAffidavitDetail.AffidavitDetail.LeadOutShowType,
 
                     affidavit_client_scrubs =
                     matchedAffidavitDetail.ProposalDetailWeeks.Select(
                         w => new affidavit_client_scrubs
                         {
                             proposal_version_detail_quarter_week_id = w.ProposalVersionDetailQuarterWeekId,
-                            match_time = w.AirtimeMatch,
+                            match_time = w.TimeMatch,
+                            match_date = w.DateMatch,
                             modified_by = username,
                             modified_date = currentDateTime,
+                            effective_program_name = matchedAffidavitDetail.AffidavitDetail.ProgramName,
+                            effective_genre = matchedAffidavitDetail.AffidavitDetail.Genre,
+                            effective_show_type = matchedAffidavitDetail.AffidavitDetail.ProgramShowType,
                             lead_in = w.IsLeadInMatch
                         }).ToList(),
                     affidavit_file_detail_problems =
@@ -219,7 +228,7 @@ namespace Services.Broadcast.ApplicationServices
                             scrub.match_genre = genreCriteria.Contain == ContainTypeEnum.Include;
                     }
 
-                    scrub.status = (scrub.match_station && scrub.match_market && scrub.match_genre && scrub.match_program && scrub.match_time && scrub.match_isci_days) 
+                    scrub.status = (scrub.match_station && scrub.match_market && scrub.match_genre && scrub.match_program && scrub.match_time && scrub.match_isci_days && scrub.match_date) 
                         ? (int)ScrubbingStatus.InSpec 
                         : (int)ScrubbingStatus.OutOfSpec;
                 }

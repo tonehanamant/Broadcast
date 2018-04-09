@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using System.IO;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -19,7 +20,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void GetPostsTest()
         {
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitScrubbingService.GetPosts()));
+            var result = _AffidavitScrubbingService.GetPosts();
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PostDto), "Id");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
         }
                 
         [Test]
@@ -49,6 +61,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetNsiPostReportData()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _AffidavitScrubbingService.GetNsiPostReportData(253);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [Ignore]
+        public void GenerateReportFile()
+        {
+            const int proposalId = 253;
+            var report = _AffidavitScrubbingService.GenerateNSIPostReport(proposalId);
+            File.WriteAllBytes(@"\\tsclient\cadent\" + @"NSIPostReport" + proposalId + ".xlsx", report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
+                                                                                                                       //            File.WriteAllBytes(string.Format("..\\bvsreport{0}.xlsx", scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
+            Assert.IsNotNull(report.Stream);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetClientScrubbingForProposalMultipleGenres()
         {
             using (new TransactionScopeWrapper())
@@ -71,6 +115,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
-        }
+        }        
     }
 }

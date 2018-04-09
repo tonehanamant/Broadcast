@@ -13,12 +13,19 @@ namespace Services.Broadcast.Repositories
 {
     public interface IPostRepository : IDataRepository
     {
-        List<PostDto> GetAllPostFiles();       
+        List<PostDto> GetAllPostFiles();
+
+        /// <summary>
+        /// Counts all the unlinked iscis
+        /// </summary>
+        /// <returns>Number of unlinked iscis</returns>
+        int CountUnlinkedIscis();
     }
 
     public class PostRepository : BroadcastRepositoryBase, IPostRepository
     {
-        public PostRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
+        public PostRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
         {
         }
 
@@ -63,6 +70,24 @@ namespace Services.Broadcast.Repositories
                     }
 
                     return posts.OrderByDescending(x => x.UploadDate).ToList();
+                });
+        }
+
+        /// <summary>
+        /// Counts all the unlinked iscis
+        /// </summary>
+        /// <returns>Number of unlinked iscis</returns>
+        public int CountUnlinkedIscis()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return (from fileDetails in context.affidavit_file_details
+                            join clientScrubs in context.affidavit_client_scrubs on fileDetails.id equals clientScrubs.affidavit_file_detail_id
+                            into dataGroupped
+                            from x in dataGroupped.DefaultIfEmpty()
+                            where x == null
+                            select fileDetails).Count();
                 });
         }
     }

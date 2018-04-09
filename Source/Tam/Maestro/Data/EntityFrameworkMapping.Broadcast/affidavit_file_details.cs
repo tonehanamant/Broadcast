@@ -41,6 +41,11 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> inventory_source { get; set; }
         public Nullable<double> spot_cost { get; set; }
         public string affiliate { get; set; }
+        public int leadin_end_time { get; set; }
+        public int leadout_start_time { get; set; }
+        public string program_show_type { get; set; }
+        public string leadin_show_type { get; set; }
+        public string leadout_show_type { get; set; }
     
         public virtual ICollection<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual ICollection<affidavit_file_detail_audiences> affidavit_file_detail_audiences { get; set; }
