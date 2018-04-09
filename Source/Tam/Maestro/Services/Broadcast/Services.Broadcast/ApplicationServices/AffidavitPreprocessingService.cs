@@ -137,7 +137,7 @@ namespace Services.Broadcast.ApplicationServices
                 mailBody.Append(string.Format("{0}\n",errorMessage));
             }
 
-            mailBody.AppendFormat("\n\nFile located in {0}\n", invalidFilePath);
+            mailBody.AppendFormat("\nFile located in {0}\n", invalidFilePath);
 
             return mailBody.ToString();
         }
@@ -313,7 +313,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     if (string.IsNullOrWhiteSpace(tab.Cells[row, headers[name]].Value?.ToString()))
                     {
-                        currentFile.ErrorMessages.Add($"Missing {name} on row {row}");
+                        currentFile.ErrorMessages.Add($"Data missing in Column {name}");
                         hasMissingData = true;
                     }
                 }
