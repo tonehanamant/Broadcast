@@ -1121,10 +1121,6 @@
   ],
   "SpotLengths": [
     {
-      "Display": "15",
-      "Id": 3
-    },
-    {
       "Display": "30",
       "Id": 1
     },
@@ -1133,12 +1129,28 @@
       "Id": 2
     },
     {
-      "Display": "90",
-      "Id": 7
+      "Display": "15",
+      "Id": 3
     },
     {
       "Display": "120",
       "Id": 4
+    },
+    {
+      "Display": "180",
+      "Id": 5
+    },
+    {
+      "Display": "300",
+      "Id": 6
+    },
+    {
+      "Display": "90",
+      "Id": 7
+    },
+    {
+      "Display": "45",
+      "Id": 8
     }
   ],
   "Statuses": [

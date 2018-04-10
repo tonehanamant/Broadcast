@@ -1084,25 +1084,19 @@ namespace Services.Broadcast.ApplicationServices
 
         public ProposalLoadDto GetInitialProposalData(DateTime? currentDateTime)
         {
-            var broadcastSpothLengths = new List<int>()
+            var result = new ProposalLoadDto
             {
-                15,
-                30,
-                60,
-                90,
-                120
-            };
-
-            var result = new ProposalLoadDto();
-            result.Advertisers = _SmsClient.GetActiveAdvertisers();
-            result.Audiences = _AudiencesCache.GetAllLookups();
-            result.SpotLengths = _SpotLengthRepository.GetSpotLengthsByLength(broadcastSpothLengths);
-            result.SchedulePostTypes =
+                Advertisers = _SmsClient.GetActiveAdvertisers(),
+                Audiences = _AudiencesCache.GetAllLookups(),
+                SpotLengths = _SpotLengthRepository.GetSpotLengths(),
+                SchedulePostTypes =
                 Enum.GetValues(typeof(SchedulePostType))
                     .Cast<SchedulePostType>()
                     .Select(e => new LookupDto { Display = e.ToString(), Id = (int)e })
-                    .ToList();
-            result.Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos().OrderBy(m => m.Display).ToList();
+                    .ToList(),
+                Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos().OrderBy(m => m.Display).ToList()
+            };
+
             result.MarketGroups = _GetMarketGroupList(result.Markets.Count);
             result.ForecastDefaults = new ForecastRatingsDefaultsDto
             {
@@ -1118,6 +1112,7 @@ namespace Services.Broadcast.ApplicationServices
                     .ToList()
             };
             result.Statuses = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalStatusType>();
+
             return result;
         }
 
