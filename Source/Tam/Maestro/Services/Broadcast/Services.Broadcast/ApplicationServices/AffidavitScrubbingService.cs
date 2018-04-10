@@ -32,28 +32,41 @@ namespace Services.Broadcast.ApplicationServices
         ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId);
 
         /// <summary>
+        /// Returns a list of unlinked iscis
+        /// </summary>
+        /// <returns>List of UnlinkedIscisDto objects</returns>
+        List<UnlinkedIscisDto> GetUnlinkedIscis();
+
+        /// <summary>
         /// Generates the excep NSI Post Report for a specific proposal
         /// </summary>
         /// <param name="proposalId">Proposal id to generate the report for</param>
         /// <returns>ReportOutput object containing the report and the filename</returns>
         ReportOutput GenerateNSIPostReport(int proposalId);
-        NsiPostReport GetNsiPostReportData(int proposalId);      
+
+        /// <summary>
+        /// Gets the NSI Post Report data
+        /// </summary>
+        /// <param name="proposalId">Proposal Id to get the data for</param>
+        /// <returns>List of NSIPostReportDto objects</returns>
+        NsiPostReport GetNsiPostReportData(int proposalId);
     }
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
     {
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
-        private readonly IAffidavitRepository _AffidavitRepositry;
+        private readonly IAffidavitRepository _AffidavitRepository;
         private readonly INsiMarketRepository _NsiMarketRepository;
-        private readonly IPostRepository _PostRepository;
+        private readonly IAffidavitRepository _AffidavitRepositry;
         private readonly ISpotLengthRepository _SpotLengthRepository;
+        private readonly IPostRepository _PostRepository;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly ISMSClient _SmsClient;
         private readonly IProposalService _ProposalService;
-        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly Lazy<Image> _LogoImage;
         private readonly IPostingBooksService _PostingBooksService;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISMSClient smsClient,
@@ -63,10 +76,11 @@ namespace Services.Broadcast.ApplicationServices
             IPostingBooksService postingBooksService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
-            _AffidavitRepositry = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
-            _SpotLengthRepository = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
+            _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
             _PostRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
             _NsiMarketRepository = _BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>();
+            _AffidavitRepositry = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
+            _SpotLengthRepository = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _BroadcastAudienceRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _AudiencesCache = audiencesCache;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
@@ -130,7 +144,7 @@ namespace Services.Broadcast.ApplicationServices
                 //load ClientScrubs
                 result.Details.ForEach(x =>
                 {
-                    var clientScrubs = _AffidavitRepositry.GetProposalDetailPostScrubbing(x.Id.Value);
+                    var clientScrubs = _AffidavitRepository.GetProposalDetailPostScrubbing(x.Id.Value);
                     clientScrubs.ForEach(y =>
                     {
                         y.Sequence = x.Sequence;
@@ -150,6 +164,15 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
+         /// <summary>
+        /// Returns a list of unlinked iscis
+        /// </summary>
+        /// <returns>List of UnlinkedIscisDto objects</returns>
+        public List<UnlinkedIscisDto> GetUnlinkedIscis()
+        {
+            return _PostRepository.GetUnlinkedIscis();
+}
+        
         /// <summary>
         /// Generates the excep NSI Post Report for a specific proposal
         /// </summary>
@@ -231,7 +254,6 @@ namespace Services.Broadcast.ApplicationServices
 
         private DateTime? _MaxDate(DateTime? first, DateTime? second)
         {
-            return first > second ? first : second;
             return first > second ? first : second;
         }
     }

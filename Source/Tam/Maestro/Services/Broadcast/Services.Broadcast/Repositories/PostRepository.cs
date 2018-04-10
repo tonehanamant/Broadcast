@@ -20,6 +20,12 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns>Number of unlinked iscis</returns>
         int CountUnlinkedIscis();
+
+        /// <summary>
+        /// Gets the unlinked iscis
+        /// </summary>
+        /// <returns>List of UnlinkedIscisDto objects</returns>
+        List<UnlinkedIscisDto> GetUnlinkedIscis();
     }
 
     public class PostRepository : BroadcastRepositoryBase, IPostRepository
@@ -89,6 +95,43 @@ namespace Services.Broadcast.Repositories
                             where x == null
                             select fileDetails).Count();
                 });
+        }
+        
+        /// <summary>
+        /// Gets the unlinked iscis
+        /// </summary>
+        /// <returns>List of UnlinkedIscisDto objects</returns>
+        public List<UnlinkedIscisDto> GetUnlinkedIscis()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var spotLengths = (from sl in context.spot_lengths select sl).ToList();
+                    var iscis = _GetUnlinkedIscisQuery(context).ToList();
+                    return iscis.Select(x => new UnlinkedIscisDto
+                    {
+                        Affiliate = x.affiliate,
+                        Genre = x.genre,
+                        FileDetailId = x.id,
+                        ISCI = x.isci,
+                        Market = x.market,
+                        ProgramName = x.program_name,
+                        SpotLength = spotLengths.Single(y => y.id == x.spot_length_id).length,
+                        Station = x.station,
+                        TimeAired = x.air_time,
+                        DateAired = x.original_air_date
+                    }).ToList();
+                });
+        }
+
+        private IQueryable<affidavit_file_details> _GetUnlinkedIscisQuery(QueryHintBroadcastContext context)
+        {
+            return from fileDetails in context.affidavit_file_details
+                   join clientScrubs in context.affidavit_client_scrubs on fileDetails.id equals clientScrubs.affidavit_file_detail_id
+                   into dataGroupped
+                   from x in dataGroupped.DefaultIfEmpty()
+                   where x == null
+                   select fileDetails;
         }
     }
 }
