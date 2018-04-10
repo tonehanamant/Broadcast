@@ -232,7 +232,6 @@ namespace Services.Broadcast.ApplicationServices
         private DateTime? _MaxDate(DateTime? first, DateTime? second)
         {
             return first > second ? first : second;
-            return first > second ? first : second;
         }
     }
 }
