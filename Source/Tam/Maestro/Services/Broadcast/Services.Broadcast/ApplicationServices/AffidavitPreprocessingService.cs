@@ -313,7 +313,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     if (string.IsNullOrWhiteSpace(tab.Cells[row, headers[name]].Value?.ToString()))
                     {
-                        currentFile.ErrorMessages.Add($"Data missing in Column {name}");
+                        currentFile.ErrorMessages.Add($"Missing {name} on row {row}");
                         hasMissingData = true;
                     }
                 }
