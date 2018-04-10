@@ -174,7 +174,7 @@ export class ProposalSwitchVersionModal extends Component {
 		};
 
     return (
-      <Modal show={this.props.modal.active} onHide={this.close} dialogClassName="planning-versions-modal">
+      <Modal show={this.props.modal.active} onHide={this.close} dialogClassName="large-80-modal">
         <Modal.Header>
           <Modal.Title style={{ display: 'inline-block' }}>Switch Proposal Version</Modal.Title>
           <Button className="close" bsStyle="link" onClick={this.close} style={{ display: 'inline-block', float: 'right' }}>

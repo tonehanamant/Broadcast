@@ -1,0 +1,14 @@
+﻿[
+  {
+    "Affiliate": null,
+    "DateAired": "2016-06-03T00:00:00",
+    "FileDetailId": 1003,
+    "Genre": "Do It Yourself",
+    "ISCI": "SomeISCI",
+    "Market": "New York",
+    "ProgramName": "Program Names R us",
+    "SpotLength": 30,
+    "Station": "WNBC",
+    "TimeAired": 32400
+  }
+]

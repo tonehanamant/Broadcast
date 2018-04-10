@@ -37,8 +37,8 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetClientScrubbingForProposal(proposalId));
         }
-
-        [HttpGet]
+        
+         [HttpGet]
         [Route("DownloadNSIPostReport/{proposalId}")]
         public HttpResponseMessage DownloadNSIPostReport(int proposalId)
         {
@@ -54,5 +54,16 @@ namespace BroadcastComposerWeb.Controllers
 
             return result;
         }
+
+        
+        
+         [HttpGet]
+        [Route("UnlinkedIscis")]
+        public BaseResponse<List<UnlinkedIscisDto>> GetUnlinkedIscis()
+        {
+            return _ConvertToBaseResponse(() =>
+                _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetUnlinkedIscis());
+        }
+
     }
 }

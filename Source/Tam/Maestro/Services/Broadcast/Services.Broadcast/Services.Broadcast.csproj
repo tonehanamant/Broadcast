@@ -325,6 +325,7 @@
     <Compile Include="Entities\StationProgramConflictRequest.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
     <Compile Include="Entities\OutboundAffidavitFileValidationResultDto.cs" />
+    <Compile Include="Entities\UnlinkedIscisDto.cs" />
     <Compile Include="Entities\ValidationWarningDto.cs" />
     <Compile Include="Entities\WhosWatchingTvSearchResult.cs" />
     <Compile Include="Entities\WhosWatchingTVPostProcessingFile.cs" />
