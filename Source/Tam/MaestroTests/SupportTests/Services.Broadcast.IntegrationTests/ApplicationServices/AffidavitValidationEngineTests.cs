@@ -54,6 +54,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("ProgramName", result.InvalidField);
+            Assert.AreEqual("'ProgramName' is required", result.ErrorMessage);
         }
 
         [Test]
@@ -67,6 +68,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("Genre", result.InvalidField);
+            Assert.AreEqual("'Genre' is required", result.ErrorMessage);
         }
 
         [Test]
@@ -81,6 +83,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("LeadInProgramName", result.InvalidField);
+            Assert.AreEqual("'LeadInProgramName' is required", result.ErrorMessage);
         }
 
         [Test]
@@ -94,6 +97,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("LeadInGenre", result.InvalidField);
+            Assert.AreEqual("'LeadInGenre' is required", result.ErrorMessage);
         }
 
         [Test]
@@ -107,6 +111,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("LeadOutProgramName", result.InvalidField);
+            Assert.AreEqual("'LeadOutProgramName' is required", result.ErrorMessage);
         }
 
         [Test]
@@ -120,6 +125,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("LeadOutGenre", result.InvalidField);
+            Assert.AreEqual("'LeadOutGenre' is required", result.ErrorMessage);
         }
 
         [Test]
@@ -133,6 +139,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("AirTime", result.InvalidField);
+            Assert.AreEqual("'AirTime' must be a valid date", result.ErrorMessage);
         }
 
         [Test]
@@ -146,6 +153,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("InventorySource", result.InvalidField);
+            Assert.AreEqual("'InventorySource' must be valid", result.ErrorMessage);
         }
 
         [Test]
@@ -159,6 +167,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("Station", result.InvalidField);
+            Assert.AreEqual("'Station' is required", result.ErrorMessage);
         }
 
         [Test]
@@ -172,6 +181,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("SpotLength", result.InvalidField);
+            Assert.AreEqual("'SpotLength' must be valid broadcast spot length: 15,30,60,120,180,300", result.ErrorMessage);
         }
 
         [Test]
@@ -185,6 +195,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("Isci", result.InvalidField);
+            Assert.AreEqual("'Isci' is required", result.ErrorMessage);
         }
 
         [Test]
@@ -198,6 +209,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("Affiliate", result.InvalidField);
+            Assert.AreEqual("'Affiliate' is required",result.ErrorMessage);
         }
     }
 }
