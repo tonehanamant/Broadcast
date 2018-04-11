@@ -23,27 +23,5 @@ namespace Services.Broadcast.BusinessEngines
             var to = new List<MailAddress>() {new MailAddress(BroadcastServiceSystemParameter.WWTV_NotificationEmail)};
             Emailer.QuickSend(false,emailBody, _EmailSubject,MailPriority.Normal,from ,to);
         }
-
-        //private void _SendInvalidFileEmail(string mailBody)
-        //{
-        //    var mailMessage = new MailMessage
-        //    {
-        //        From = new MailAddress(BroadcastServiceSystemParameter.EmailUsername),
-        //        Subject = _EmailSubject,
-        //        Body = mailBody,To=
-
-        //    };
-
-        //    mailMessage.To.Add(BroadcastServiceSystemParameter.WWTV_NotificationEmail);
-
-        //    using (var smtpClient = new SmtpClient())
-        //    {
-        //        smtpClient.Host = BroadcastServiceSystemParameter.EmailHost;
-        //        smtpClient.EnableSsl = true;
-        //        smtpClient.Port = _SmtpPort;
-        //        smtpClient.Credentials = Emailer.GetSMTPNetworkCredential();
-        //        smtpClient.Send(mailMessage);
-        //    }
-        //}
     }
 }
