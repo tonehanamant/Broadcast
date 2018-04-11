@@ -56,7 +56,7 @@ namespace BroadcastComposerWeb.Controllers
                     AffidavitSaveRequest request = new AffidavitSaveRequest();
                     var json = service.JSONifyFile(file.InputStream, fileName,out request);
 
-                    ViewBag.Id = service.SaveAffidavit(request, "uma", DateTime.Now);
+//                    ViewBag.Id = service.SaveAffidavit(request, "uma", DateTime.Now);
                     ViewBag.Message = json;
 
                 }
