@@ -95,12 +95,29 @@ namespace Services.Broadcast.BusinessEngines
                 affidavitValidationResult.InvalidField = "Isci";
                 affidavitValidationResult.ErrorMessage = "'Isci' is required";
             }
-
             if (string.IsNullOrWhiteSpace(affidavitDetail.Affiliate))
             {
                 affidavitValidationResult.InvalidField = "Affiliate";
                 affidavitValidationResult.ErrorMessage = "'Affiliate' is required";
             }
+
+            if (string.IsNullOrWhiteSpace(affidavitDetail.ProgramShowType))
+            {
+                affidavitValidationResult.InvalidField = "ProgramShowType";
+                affidavitValidationResult.ErrorMessage = "'ProgramShowType' is required";
+            }
+            if (string.IsNullOrWhiteSpace(affidavitDetail.LeadInShowType))
+            {
+                affidavitValidationResult.InvalidField = "LeadInShowType";
+                affidavitValidationResult.ErrorMessage = "'LeadInShowType' is required";
+            }
+
+            if (string.IsNullOrWhiteSpace(affidavitDetail.LeadOutShowType))
+            {
+                affidavitValidationResult.InvalidField = "LeadOutShowType";
+                affidavitValidationResult.ErrorMessage = "'LeadOutShowType' is required";
+            }
+
 
             if (affidavitValidationResult.InvalidField != null)
                 affidavitValidationResult.IsValid = false;

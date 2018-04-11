@@ -36,8 +36,8 @@ namespace Services.Broadcast.Entities
         public List<Demographics> Demographics { get; set; } = new List<Demographics>();
         public DateTime LeadInEndTime { get; set; }
         public DateTime LeadOutStartTime { get; set; }
-        public string ProgramShowType { get; internal set; }
-        public string LeadInShowType { get; internal set; }
-        public string LeadOutShowType { get; internal set; }
+        public string ProgramShowType { get; set; }
+        public string LeadInShowType { get; set; }
+        public string LeadOutShowType { get; set; }
     }
 }

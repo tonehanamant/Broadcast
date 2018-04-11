@@ -199,6 +199,46 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void ValidateAffidavitRecordInvalidProgramShowTypeTest()
+        {
+            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
+
+            affidavitSaveRequestDetail.ProgramShowType = "";
+
+            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+
+            Assert.IsFalse(result.IsValid);
+            Assert.AreEqual("ProgramShowType", result.InvalidField);
+            Assert.AreEqual("'ProgramShowType' is required",result.ErrorMessage);
+        }
+        [Test]
+        public void ValidateAffidavitRecordInvalidLeadInShowTypeTest()
+        {
+            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
+
+            affidavitSaveRequestDetail.LeadInShowType = "";
+
+            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+
+            Assert.IsFalse(result.IsValid);
+            Assert.AreEqual("LeadInShowType", result.InvalidField);
+            Assert.AreEqual("'LeadInShowType' is required", result.ErrorMessage);
+        }
+        [Test]
+        public void ValidateAffidavitRecordInvalidLeadOutShowTypeTest()
+        {
+            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
+
+            affidavitSaveRequestDetail.LeadOutShowType = "";
+
+            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+
+            Assert.IsFalse(result.IsValid);
+            Assert.AreEqual("LeadOutShowType", result.InvalidField);
+            Assert.AreEqual("'LeadOutShowType' is required", result.ErrorMessage);
+        }
+        
+        [Test]
         public void ValidateAffidavitRecordInvalidAffiliateTest()
         {
             var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
