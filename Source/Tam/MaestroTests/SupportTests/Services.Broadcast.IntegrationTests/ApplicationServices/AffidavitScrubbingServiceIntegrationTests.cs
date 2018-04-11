@@ -61,6 +61,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetUnlinkedIscis()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _AffidavitScrubbingService.GetUnlinkedIscis();
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(UnlinkedIscisDto), "FileDetailsId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetNsiPostReportData()
         {
             using (new TransactionScopeWrapper())

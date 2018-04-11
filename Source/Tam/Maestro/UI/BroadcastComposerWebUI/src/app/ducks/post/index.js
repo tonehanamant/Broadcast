@@ -5,6 +5,7 @@ const initialState = {
   post: {},
   postGridData: [],
   proposalHeader: {},
+  unlinkedIscis: [],
   modals: {},
 };
 
@@ -45,6 +46,11 @@ export default function reducer(state = initialState, action) {
           activeScrubbingData: data,
         },
       };
+      case ACTIONS.RECEIVE_UNLINKED_ISCIS_DATA:
+      return {
+        ...state,
+        unlinkedIscis: data.Data,
+      };
 
     default:
       return state;
@@ -70,4 +76,9 @@ export const getProposalHeader = proposalID => ({
 export const getScubbingDataFiltered = query => ({
   type: ACTIONS.RECEIVE_FILTERED_SCRUBBING_DATA,
   payload: query,
+});
+
+export const getUnlinkedIscis = () => ({
+  type: ACTIONS.REQUEST_UNLINKED_ISCIS_DATA,
+  payload: {},
 });

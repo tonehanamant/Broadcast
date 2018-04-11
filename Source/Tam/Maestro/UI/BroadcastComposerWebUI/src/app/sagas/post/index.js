@@ -276,6 +276,85 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
 }
 
 /* ////////////////////////////////// */
+/* REQUEST POST SCRUBBING HEADER */
+/* ////////////////////////////////// */
+export function* requestUnlinkedIscis() {
+  const { getUnlinkedIscis } = api.post;
+  try {
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'PostUniqueIscis',
+        loading: true },
+      });
+    const response = yield getUnlinkedIscis();
+    const { status, data } = response;
+
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'PostUniqueIscis',
+        loading: false,
+      },
+    });
+    if (status !== 200) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No post unique ISCI data returned.',
+          message: `The server encountered an error processing the request (Unique ISCIs). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Success) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No Unique Isci data returned.',
+          message: data.Message || 'The server encountered an error processing the request (Unique ISCIs). Please try again or contact your administrator to review error logs.',
+        },
+      });
+      throw new Error();
+    }
+    yield put({
+      type: ACTIONS.RECEIVE_UNLINKED_ISCIS_DATA,
+      data,
+    });
+    yield put({
+      type: ACTIONS.TOGGLE_MODAL,
+      modal: {
+        modal: 'postUnlinkedIsciModal',
+        active: true,
+        properties: {
+          titleText: 'POST Unique Iscis',
+          bodyText: 'Isci Details',
+        },
+      },
+    });
+  } catch (e) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No unique Isci data returned.',
+          message: 'The server encountered an error processing the request (Unique Iscis). Please try again or contact your administrator to review error logs.',
+          exception: e.response.data.ExceptionMessage || '',
+        },
+      });
+    }
+    if (!e.response && e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
+/* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
 
@@ -297,4 +376,8 @@ export function* watchRequestPostScrubbingHeader() {
 
 export function* watchRequestScrubbingDataFiltered() {
   yield takeEvery(ACTIONS.REQUEST_FILTERED_SCRUBBING_DATA, requestScrubbingDataFiltered);
+}
+
+export function* watchRequestUniqueIscis() {
+  yield takeEvery(ACTIONS.REQUEST_UNLINKED_ISCIS_DATA, requestUnlinkedIscis);
 }
