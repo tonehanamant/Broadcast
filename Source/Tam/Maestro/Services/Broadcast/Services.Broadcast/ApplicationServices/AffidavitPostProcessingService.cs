@@ -124,9 +124,18 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("Invalid file extension.");
             }
 
-            AffidavitSaveRequest affidavitFile = _MapWWTVFileToAffidavitFile(filePath);
-            if(affidavitFile.Details.Count == 0)
+            AffidavitSaveRequest affidavitFile;
+            try
             {
+                affidavitFile = _MapWWTVFileToAffidavitFile(filePath);
+                if (affidavitFile.Details.Count == 0)
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                AffidavitValidationResult.Add(new AffidavitValidationResult() { ErrorMessage = "Could not process file.\n  " + e.ToString() });
                 return null;
             }
 
@@ -144,7 +153,13 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var affidavitValidationResult in affidavitValidationResults)
             {
-                emailBody.AppendFormat("Failed validation at line {0} on field '{1}'.  ", affidavitValidationResult.InvalidLine+1, affidavitValidationResult.InvalidField);
+                if (affidavitValidationResult.InvalidLine != -1
+                    && !string.IsNullOrEmpty(affidavitValidationResult.InvalidField))
+                {
+                    emailBody.AppendFormat("Failed validation at line {0} on field '{1}'.  ",
+                        affidavitValidationResult.InvalidLine + 1, affidavitValidationResult.InvalidField);
+                }
+
                 emailBody.Append(affidavitValidationResult.ErrorMessage);
             }
 

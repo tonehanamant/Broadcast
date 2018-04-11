@@ -21,17 +21,15 @@ namespace Services.Broadcast.Services
         private bool _RunWhenChecked = false;
         private DateTime? _RunWhen = null;
         /// <summary>
-        /// Use when you want day/time of week to run.
+        /// When RunWeeklyWhen is null, SecondsBetweenRuns is used
         /// </summary>
-        protected abstract DateTime? RunWhen
+        public virtual int SecondsBetweenRuns
         {
-            get;
+            get
+            {
+                return BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
+            }
         }
-
-        /// <summary>
-        /// Use when you want task to run periodically.
-        /// </summary>
-        public abstract int SecondsBetweenRuns { get; }
 
         private BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         public BroadcastApplicationServiceFactory ApplicationServiceFactory
@@ -50,11 +48,45 @@ namespace Services.Broadcast.Services
         
         public abstract string ServiceName { get; }
 
-        public abstract bool RunWhenReady(DateTime timeSignaled);
+        /// <summary>
+        /// Calls RunService when ready
+        /// It is ready first call.
+        /// Then ready is calculated using:
+        ///     If RunWeeklyWhen is null, SecondsBetweenRuns is used to check is ready
+        ///     otherwise RunWeeklyWhen is used 
+        /// </summary>
+        /// <param name="timeSignaled"></param>
+        public bool RunWhenReady(DateTime timeSignaled)
+        {
+            if (_LastRun == null)
+            {   // first time run
+                return RunService(timeSignaled);
+            }
+
+            bool ret = false;
+            if (RunWeeklyWhen == null)
+            {
+                if (_LastRun.Value.AddSeconds(SecondsBetweenRuns) < timeSignaled)
+                    ret = RunService(timeSignaled);
+            }
+            else
+            if (DateTime.Now.DayOfWeek == RunWeeklyWhen.Value.DayOfWeek
+                && DateTime.Now.TimeOfDay > RunWeeklyWhen.Value.TimeOfDay)
+            {
+                ret = RunService(timeSignaled);
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// Use when you want day/time of week to run.
+        /// </summary>
+        protected abstract DateTime? RunWeeklyWhen
+        {
+            get;
+        }
+
 
         public abstract bool RunService(DateTime timeSignaled);
-
-
     }
-
 }

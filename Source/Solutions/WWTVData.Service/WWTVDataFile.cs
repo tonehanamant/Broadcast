@@ -36,7 +36,7 @@ namespace WWTVData.Service
         /// <summary>
         /// Use when you want day/time of week to run.
         /// </summary>
-        protected override DateTime? RunWhen
+        protected override DateTime? RunWeeklyWhen
         {
             get
             {
@@ -63,29 +63,6 @@ namespace WWTVData.Service
             {
                 return BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
             }
-        }
-
-
-        public override bool RunWhenReady(DateTime timeSignaled)
-        {
-            if (_LastRun == null)
-            {   // first time run
-                return RunService(timeSignaled);
-            }
-
-            bool ret = false;
-            if (RunWhen == null)
-            {
-                if (_LastRun.Value.AddSeconds(SecondsBetweenRuns) < timeSignaled)
-                    ret = RunService(timeSignaled);
-            }
-            else
-            if (DateTime.Now.DayOfWeek == RunWhen.Value.DayOfWeek 
-                    && DateTime.Now.TimeOfDay > RunWhen.Value.TimeOfDay)
-            {
-                ret = RunService(timeSignaled);
-            }
-            return ret;
         }
 
         public override bool RunService(DateTime timeSignaled)
