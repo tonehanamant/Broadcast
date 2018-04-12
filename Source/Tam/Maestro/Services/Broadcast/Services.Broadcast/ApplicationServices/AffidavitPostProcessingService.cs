@@ -84,7 +84,7 @@ namespace Services.Broadcast.ApplicationServices
                 var url = BroadcastServiceSystemParameter.AffidavitUploadUrl;
                 var postResponse = client.PostAsJsonAsync(url, affidavitFile).GetAwaiter().GetResult();
                 var responseText = postResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                var response = JsonConvert.DeserializeObject<BaseResponse<int>>(responseText);
+                var response = JsonConvert.DeserializeObject<BaseResponse<AffidavitSaveResult>>(responseText);
 
                 if (response.Success == false)
                 {
