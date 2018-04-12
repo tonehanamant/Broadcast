@@ -6,6 +6,7 @@ using System;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
+    [Ignore]
     [TestFixture]
     public class AffidavitValidationEngineTests
     {
