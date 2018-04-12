@@ -4,7 +4,7 @@ import { Grid } from 'react-redux-grid';
 // import Sorter from 'Utils/react-redux-grid-sorter';
 
 // import CustomPager from 'Components/shared/CustomPager';
-import { getDateInFormat, getDay } from '../../../../utils/dateFormatter';
+import { getDateInFormat, getSecondsToTimeString, getDay } from '../../../../utils/dateFormatter';
 
 /* eslint-disable */
 export class PostScrubbingGrid extends Component {
@@ -82,10 +82,10 @@ export class PostScrubbingGrid extends Component {
             },
             {
                 name: 'Date',
-                dataIndex: 'TimeAired',
+                dataIndex: 'DateAired',
                 width: '6%',
                 renderer: ({ row }) => {
-                    const date = <span>{getDateInFormat(row.TimeAired) || '-'}</span>
+                    const date = row.MatchDate ? <span>{getDateInFormat(row.DateAired) || '-'}</span> : <span style={style}>{getDateInFormat(row.DateAired) || '-'}</span>
                     return (
                         date
                     )
@@ -93,10 +93,10 @@ export class PostScrubbingGrid extends Component {
             },
             {
                 name: 'Time Aired',
-                dataIndex: 'MatchTime',
+                dataIndex: 'TimeAired',
                 width: '6%',
                 renderer: ({ row }) => {
-                    const TimeAired = row.MatchTime ? <span>{getDateInFormat(row.TimeAired, false, true) || '-'}</span> : <span style={style}>{getDateInFormat(row.TimeAired, false, true) || '-'}</span>
+                    const TimeAired = row.MatchTime ? <span>{getSecondsToTimeString(row.TimeAired) || '-'}</span> : <span style={style}>{getSecondsToTimeString(row.TimeAired) || '-'}</span>
                     return (
                         TimeAired
                     )
