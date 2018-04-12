@@ -66,7 +66,8 @@ namespace Services.Broadcast.ReportGenerators
         private const string ADVERTISER = "Advertiser";
         private const string DAYPART = "Daypart";
         private const string BACKGROUNT_COLOR_CODE = "#A1E5FD";
-        private const string NUMBER_FORMAT = "$###,###,##0";
+        private const string NUMBER_FORMAT = "###,###,##0";
+        private const string MONEY_FORMAT = "$###,###,##0";
         private const string PERCENTAGE_FORMAT = "#0.00%";
         private Color BACKGROUND_COLOR = ColorTranslator.FromHtml(BACKGROUNT_COLOR_CODE);
 
@@ -258,10 +259,10 @@ namespace Services.Broadcast.ReportGenerators
 
             //styles for data
             wsSummary.Cells[$"N{firstTableRow}:N{rowOffset}"].Style.Numberformat.Format = PERCENTAGE_FORMAT;
-            wsSummary.Cells[$"J{firstTableRow}:J{rowOffset}"].Style.Numberformat.Format = NUMBER_FORMAT;
-            wsSummary.Cells[$"F{firstTableRow}:G{rowOffset}"].Style.Numberformat.Format = NUMBER_FORMAT;
+            wsSummary.Cells[$"I{firstTableRow}:J{rowOffset}"].Style.Numberformat.Format = NUMBER_FORMAT;
+            wsSummary.Cells[$"F{firstTableRow}:G{rowOffset}"].Style.Numberformat.Format = MONEY_FORMAT;
+            wsSummary.Cells[$"K{firstTableRow}:K{rowOffset}"].Style.Numberformat.Format = MONEY_FORMAT;
             wsSummary.Cells[$"D{firstTableRow}:N{rowOffset}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            wsSummary.Cells[$"J{rowOffset}"].Style.Numberformat.Format = NUMBER_FORMAT;
 
             //styles for totals
             wsSummary.Cells[$"B{rowOffset}:N{rowOffset}"].Style.Font.Bold = true;
