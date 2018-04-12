@@ -53,6 +53,7 @@ namespace Services.Broadcast.Entities
             public Dictionary<int, double> AudienceImpressions { get; set; }
             public decimal ProposalWeekCost { get; set; }
             public double ProposalWeekImpressionsGoal { get; set; }
+            public int ProposalWeekUnits { get; set; }
         }
 
         public class NsiPostReportQuarterSummaryTableRow
@@ -112,7 +113,8 @@ namespace Services.Broadcast.Entities
                             DaypartName = r.DaypartName,
                             AudienceImpressions = audienceImpressions,
                             ProposalWeekCost = r.ProposalWeekCost,
-                            ProposalWeekImpressionsGoal = r.ProposalWeekImpressionsGoal
+                            ProposalWeekImpressionsGoal = r.ProposalWeekImpressionsGoal,
+                            ProposalWeekUnits = r.Units
                         };
                     }).ToList()
                 };
@@ -130,10 +132,10 @@ namespace Services.Broadcast.Entities
                                     Contract = x.Key.DaypartName,
                                     SpotLength = x.Key.SpotLength,
                                     WeekStartDate = x.Key.WeekStart,
-                                    Spots = x.Count(),
+                                    Spots = tab.TabRows.Select(y => y.ProposalWeekUnits).First(),
                                     ActualImpressions = tab.TabRows.Select(y => y.AudienceImpressions[guaranteedDemoId]).Sum(),
-                                    ProposalWeekCost = tab.TabRows.Select(y=>y.ProposalWeekCost).Sum(),
-                                    ProposalWeekImpressionsGoal = tab.TabRows.Select(y => y.ProposalWeekImpressionsGoal).Sum()
+                                    ProposalWeekCost = tab.TabRows.Select(y=>y.ProposalWeekCost).First(),
+                                    ProposalWeekImpressionsGoal = tab.TabRows.Select(y => y.ProposalWeekImpressionsGoal).First()
                                 };
                             }).ToList()
                     });

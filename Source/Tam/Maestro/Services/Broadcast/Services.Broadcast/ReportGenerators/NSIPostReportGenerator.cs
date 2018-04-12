@@ -217,8 +217,8 @@ namespace Services.Broadcast.ReportGenerators
                     wsSummary.Cells[$"C{rowOffset}"].Value = row.WeekStartDate.ToShortDateString();
                     wsSummary.Cells[$"D{rowOffset}"].Value = row.Spots;
                     wsSummary.Cells[$"E{rowOffset}"].Value = row.SpotLength;
-                    wsSummary.Cells[$"F{rowOffset}"].Value = row.ProposalWeekCost;
-                    wsSummary.Cells[$"G{rowOffset}"].Value = row.ProposalWeekCost * row.Spots;
+                    wsSummary.Cells[$"F{rowOffset}"].Formula = $"G{rowOffset} / D{rowOffset}";
+                    wsSummary.Cells[$"G{rowOffset}"].Value = row.ProposalWeekCost;
                     wsSummary.Cells[$"I{rowOffset}"].Formula = $"J{rowOffset} / D{rowOffset}";
                     wsSummary.Cells[$"J{rowOffset}"].Value = row.ProposalWeekImpressionsGoal;
                     wsSummary.Cells[$"K{rowOffset}"].Formula = $"G{rowOffset} / J{rowOffset} * 1000";
