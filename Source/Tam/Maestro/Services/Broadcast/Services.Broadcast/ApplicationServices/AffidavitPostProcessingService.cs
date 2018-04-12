@@ -59,6 +59,7 @@ namespace Services.Broadcast.ApplicationServices
 
         /// <summary>
         /// Downloads the WWTV processed files and calls the affidavit processing service
+        /// This involves FTP 
         /// </summary>
         public void DownloadAndProcessWWTVFiles()
         {
@@ -239,14 +240,12 @@ namespace Services.Broadcast.ApplicationServices
                     }).ToList()
                 };
 
-                var validationResult = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+                var validationResults = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
 
-                if (!validationResult.IsValid)
+                if (validationResults.Any())
                 {
-                    validationResult.InvalidLine = lineNumber;
-
-                    AffidavitValidationResult.Add(validationResult);
-
+                    validationResults.ForEach(r => r.InvalidLine = lineNumber);
+                    AffidavitValidationResult.AddRange(validationResults);
                     continue;
                 }
 

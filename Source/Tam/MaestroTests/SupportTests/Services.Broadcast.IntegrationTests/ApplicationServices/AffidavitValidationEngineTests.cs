@@ -3,10 +3,10 @@ using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using System;
+using System.Linq;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
-    [Ignore]
     [TestFixture]
     public class AffidavitValidationEngineTests
     {
@@ -30,7 +30,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ProgramName = "Saturday Night Live",
                 SpotCost = 10,
                 SpotLength = 15,
-                Station = "NBC"
+                Station = "NBC",
+                LeadInShowType = "News",
+                ProgramShowType = "News",
+                LeadOutShowType = "News"
             };
         }
 
@@ -41,7 +44,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
 
-            Assert.IsTrue(result.IsValid);
+            Assert.IsTrue(!result.Any());
         }
 
         [Test]
@@ -51,9 +54,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.ProgramName = "";
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "ProgramName" );
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("ProgramName", result.InvalidField);
             Assert.AreEqual("'ProgramName' is required", result.ErrorMessage);
         }
@@ -65,9 +68,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.Genre = "";
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "Genre");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("Genre", result.InvalidField);
             Assert.AreEqual("'Genre' is required", result.ErrorMessage);
         }
@@ -80,9 +83,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.LeadInProgramName = "";
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "LeadInProgramName");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("LeadInProgramName", result.InvalidField);
             Assert.AreEqual("'LeadInProgramName' is required", result.ErrorMessage);
         }
@@ -94,9 +97,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.LeadInGenre = null;
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "LeadInGenre");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("LeadInGenre", result.InvalidField);
             Assert.AreEqual("'LeadInGenre' is required", result.ErrorMessage);
         }
@@ -108,9 +111,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.LeadOutProgramName = null;
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "LeadOutProgramName");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("LeadOutProgramName", result.InvalidField);
             Assert.AreEqual("'LeadOutProgramName' is required", result.ErrorMessage);
         }
@@ -122,9 +125,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.LeadOutGenre = null;
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "LeadOutGenre");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("LeadOutGenre", result.InvalidField);
             Assert.AreEqual("'LeadOutGenre' is required", result.ErrorMessage);
         }
@@ -136,9 +139,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.AirTime = DateTime.MinValue;
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "AirTime");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("AirTime", result.InvalidField);
             Assert.AreEqual("'AirTime' must be a valid date", result.ErrorMessage);
         }
@@ -150,9 +153,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.InventorySource = (int)(InventorySourceEnum.Blank);
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "InventorySource");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("InventorySource", result.InvalidField);
             Assert.AreEqual("'InventorySource' must be valid", result.ErrorMessage);
         }
@@ -164,9 +167,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.Station = null;
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "Station");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("Station", result.InvalidField);
             Assert.AreEqual("'Station' is required", result.ErrorMessage);
         }
@@ -178,9 +181,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.SpotLength = 100;
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "SpotLength");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("SpotLength", result.InvalidField);
             Assert.AreEqual("'SpotLength' must be valid broadcast spot length: 15,30,60,120,180,300", result.ErrorMessage);
         }
@@ -192,9 +195,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.Isci = "";
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "Isci");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("Isci", result.InvalidField);
             Assert.AreEqual("'Isci' is required", result.ErrorMessage);
         }
@@ -206,9 +209,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.ProgramShowType = "";
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "ProgramShowType");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("ProgramShowType", result.InvalidField);
             Assert.AreEqual("'ProgramShowType' is required",result.ErrorMessage);
         }
@@ -219,9 +222,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.LeadInShowType = "";
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "LeadInShowType");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("LeadInShowType", result.InvalidField);
             Assert.AreEqual("'LeadInShowType' is required", result.ErrorMessage);
         }
@@ -232,9 +235,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.LeadOutShowType = "";
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "LeadOutShowType");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("LeadOutShowType", result.InvalidField);
             Assert.AreEqual("'LeadOutShowType' is required", result.ErrorMessage);
         }
@@ -246,9 +249,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             affidavitSaveRequestDetail.Affiliate = "";
 
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+            var result = results.First(r => r.InvalidField == "Affiliate");
 
-            Assert.IsFalse(result.IsValid);
             Assert.AreEqual("Affiliate", result.InvalidField);
             Assert.AreEqual("'Affiliate' is required",result.ErrorMessage);
         }

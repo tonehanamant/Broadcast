@@ -8,6 +8,7 @@ namespace Services.Broadcast.Entities
 {
     public class AffidavitMatchingDetail
     {
+        public int LineNumber { get; set; }
         public AffidavitSaveRequestDetail AffidavitDetail { get; set; }
         public List<AffidavitMatchingProposalWeek> ProposalDetailWeeks { get; set; }
 
