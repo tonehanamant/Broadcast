@@ -52,8 +52,7 @@ namespace Services.Broadcast.Services
         /// Calls RunService when ready
         /// It is ready first call.
         /// Then ready is calculated using:
-        ///     If RunWeeklyWhen is null, SecondsBetweenRuns is used to check is ready
-        ///     otherwise RunWeeklyWhen is used 
+        ///     RunWeeklyWhen or SecondsBetweenRuns is used to check is ready
         /// </summary>
         /// <param name="timeSignaled"></param>
         public bool RunWhenReady(DateTime timeSignaled)

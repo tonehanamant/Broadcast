@@ -85,6 +85,10 @@ namespace Services.Broadcast.ApplicationServices
                 var responseText = postResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 var response = JsonConvert.DeserializeObject<BaseResponse<int>>(responseText);
 
+                if (response.Success == false)
+                {
+                    AffidavitValidationResult.Add(new AffidavitValidationResult() {  ErrorMessage = "Error uploading affidavit to CMW api:\n\n" + response.Message });
+                }
                 if (AffidavitValidationResult.Count > 0)
                 {
                     ProcessError(filePath);
