@@ -114,7 +114,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                         HouseIsci = "AAAAAA",
                                         Brand = "Testing",
                                         MarriedHouseIsci = true,
-                                        Days = "|F"
+                                        Days = "-F"
                                     },
                                     new ProposalWeekIsciDto
                                     {
@@ -122,7 +122,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                         HouseIsci = "BBBBBBB",
                                         Brand = "Testing 2",
                                         MarriedHouseIsci = false,
-                                        Days = "M|T|W|TH|"
+                                        Days = "M-T-W-TH-"
                                     }
                                 }
                             }
@@ -611,7 +611,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var proposalId = 253;
             var proposalDto = _ProposalService.GetProposalById(proposalId);
 
-            proposalDto.Details[0].Quarters[0].Weeks[0].Iscis[0].Days = "M|W|F";
+            proposalDto.Details[0].Quarters[0].Weeks[0].Iscis[0].Days = "M-W-F";
 
             var changeRequest = new ProposalChangeRequest
             {
@@ -1008,7 +1008,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ClientIsci = "ZZZZZZ",
                     HouseIsci = "ZZZZZZ",
                     MarriedHouseIsci = true,
-                    Days = "|W|Th|F|Sa|"
+                    Days = "-W-Th-F-Sa-"
                 });
 
                 var changeRequest = new ProposalChangeRequest
@@ -1063,7 +1063,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ClientIsci = "ZZZZZZ",
                     HouseIsci = "ZZZZZZ",
                     MarriedHouseIsci = true,
-                    Days = "|W|Th|F|Sa|"
+                    Days = "-W-Th-F-Sa-"
                 });
 
                 var changeRequest = new ProposalChangeRequest
