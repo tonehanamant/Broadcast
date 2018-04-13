@@ -60,7 +60,7 @@ namespace Services.Broadcast.ApplicationServices
         ///
         /// Scrubs, but does not save results
         ///
-        void ScrubAffidavitFile(affidavit_files affidavit_file);
+        void ScrubAffidavitFile(affidavit_files affidavit_file,int marketBookingId);
 
         string JSONifyFile(Stream rawStream,string fileName,out AffidavitSaveRequest request);
     }
@@ -188,9 +188,9 @@ namespace Services.Broadcast.ApplicationServices
                 return result;
             }
 
-            ScrubAffidavitFile(affidavit_file);
-
             var postingBookId = _GetPostingBookId();
+            ScrubAffidavitFile(affidavit_file,postingBookId);
+
             _CalculateAffidavitImpressions(affidavit_file, postingBookId);
 
             var id = _AffidavitRepository.SaveAffidavitFile(affidavit_file);
@@ -200,7 +200,7 @@ namespace Services.Broadcast.ApplicationServices
 
         }
 
-        public void ScrubAffidavitFile(affidavit_files affidavit_file)
+        public void ScrubAffidavitFile(affidavit_files affidavit_file,int marketBookingId)
         {
             var callLetters = affidavit_file.affidavit_file_details.Select(a => a.station).ToList();
             var stations = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
@@ -240,8 +240,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     if (affidavitStation != null)
                     {
-                        var bookingId = _GetPostingBookId();
-                        var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, bookingId);
+                        var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, marketBookingId);
 
                         var marketGeoName = affidavitStation.OriginMarket;
                         if (markets.Any(m => m.Display == marketGeoName))
