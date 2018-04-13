@@ -237,10 +237,12 @@ namespace Services.Broadcast.ApplicationServices
                     // match market/station
                     scrub.match_station = false;
                     scrub.match_market = false;
-                    var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, proposalDetail);
 
                     if (affidavitStation != null)
                     {
+                        var bookingId = _GetPostingBookId();
+                        var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, bookingId);
+
                         var marketGeoName = affidavitStation.OriginMarket;
                         if (markets.Any(m => m.Display == marketGeoName))
                         {

@@ -14,6 +14,7 @@ namespace Services.Broadcast.BusinessEngines
     {
         List<LookupDto> GetProposalMarketsList(int proposalId, int versionNumber, int proposalDetailDto);
         List<LookupDto> GetProposalMarketsList(ProposalDto proposal, ProposalDetailDto proposalDetail);
+        List<LookupDto> GetProposalMarketsList(ProposalDto proposal, int postingBookId);
     }
 
     public class ProposalMarketsCalculationEngine : IProposalMarketsCalculationEngine
@@ -44,6 +45,11 @@ namespace Services.Broadcast.BusinessEngines
         {
 
             var postingBookId = _ProposalPostingBooksEngine.GetPostingBookId(proposalDetail);
+            return GetProposalMarketsList(proposal, postingBookId);
+        }
+
+        public List<LookupDto> GetProposalMarketsList(ProposalDto proposal, int postingBookId)
+        {
 
             var marketRankings =
                 _DataRepositoryFactory.GetDataRepository<INsiMarketRepository>()
