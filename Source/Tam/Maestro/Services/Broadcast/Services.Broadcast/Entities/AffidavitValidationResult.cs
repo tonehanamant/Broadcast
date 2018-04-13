@@ -1,4 +1,4 @@
-﻿namespace Services.Broadcast.BusinessEngines
+﻿namespace Services.Broadcast.Entities
 {
     public class AffidavitValidationResult
     {
