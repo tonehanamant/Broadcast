@@ -24,6 +24,11 @@ namespace Services.Broadcast.Repositories
         /// <param name="proposalId">Proposal Id to get the data for</param>
         /// <returns>List of NSIPostReportDto objects</returns>
         List<InSpecAffidavitFileDetail> GetInSpecSpotsForProposal(int proposalId);
+        /// <summary>
+        /// Persists a List of OutboundAffidavitFileValidationResultDto objects
+        /// </summary>
+        /// <param name="model">List of OutboundAffidavitFileValidationResultDto objects to be saved</param>
+        void SaveValidationObject(List<OutboundAffidavitFileValidationResultDto> model);
     }
 
     public class AffidavitRepository : BroadcastRepositoryBase, IAffidavitRepository
@@ -228,6 +233,32 @@ namespace Services.Broadcast.Repositories
 
                     return inSpecAffidavitFileDetails;
                 });
+        }
+
+        /// <summary>
+        /// Persists a List of OutboundAffidavitFileValidationResultDto objects
+        /// </summary>
+        /// <param name="model">List of OutboundAffidavitFileValidationResultDto objects to be saved</param>
+        public void SaveValidationObject(List<OutboundAffidavitFileValidationResultDto> model)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                context.affidavit_outbound_files.AddRange(model.Select(item =>
+                    new affidavit_outbound_files()
+                    {
+                        created_date = item.CreatedDate,
+                        file_hash = item.FileHash,
+                        file_name = item.FileName,
+                        source_id = item.SourceId,
+                        status = (int)item.Status,
+                        created_by = item.CreatedBy,
+                        affidavit_outbound_file_problems = item.ErrorMessages.Select(y => new affidavit_outbound_file_problems()
+                        {
+                            problem_description = y
+                        }).ToList()
+                    }).ToList());
+                context.SaveChanges();
+            });
         }
     }
 }

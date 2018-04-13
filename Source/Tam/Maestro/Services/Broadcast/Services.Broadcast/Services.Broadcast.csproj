@@ -467,7 +467,6 @@
     <Compile Include="MediaMonthAndWeekAggregateCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProposalCache.cs" />
-    <Compile Include="Repositories\AffidavitPreprocessingRepository.cs" />
     <Compile Include="Repositories\AudienceRepository.cs" />
     <Compile Include="Repositories\BroadcastAudienceRepository.cs" />
     <Compile Include="Repositories\BroadcastForecastRepositoryBase.cs" />
@@ -509,7 +508,6 @@
     <Compile Include="Repositories\ScheduleRepository.cs" />
     <Compile Include="Repositories\BroadcastDataRepositoryFactory.cs" />
     <Compile Include="Repositories\SpotLengthBroadcastRepository.cs" />
-    <Compile Include="Repositories\SpotLengthMultiplierRepository.cs" />
     <Compile Include="Repositories\StationContactsRepository.cs" />
     <Compile Include="Repositories\StationProgramRepository.cs" />
     <Compile Include="Repositories\StationRepository.cs" />

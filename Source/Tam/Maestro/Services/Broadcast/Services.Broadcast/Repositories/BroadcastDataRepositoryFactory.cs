@@ -52,7 +52,6 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IBvsTestDataGeneratorRepository, BvsTestDataGeneratorRepository>();
             instance.RegisterType<INsiUniverseRepository, NsiUniverseRepository>();
             instance.RegisterType<INsiMarketRepository, NsiMarketRepository>();
-            instance.RegisterType<ISpotLengthMultiplierRepository, SpotLengthMultiplierRepository>();
             instance.RegisterType<IRatingForecastRepository, RatingForecastRepository>();
             instance.RegisterType<IMarketRepository, MarketRepository>();
             instance.RegisterType<IMarketDmaMapRepository, MarketDmaMapRepository>();
@@ -71,7 +70,6 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IAffidavitRepository, AffidavitRepository>();
             instance.RegisterType<INsiComponentAudienceRepository, NsiComponentAudienceRepository>();
             instance.RegisterType<IPostRepository, PostRepository>();
-            instance.RegisterType<IAffidavitPreprocessingRepository, AffidavitPreprocessingRepository>();
 
             WasRegistered = true;
         }
