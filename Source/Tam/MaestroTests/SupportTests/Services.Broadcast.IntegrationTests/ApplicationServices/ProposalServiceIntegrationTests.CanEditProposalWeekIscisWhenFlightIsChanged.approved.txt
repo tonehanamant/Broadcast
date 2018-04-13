@@ -121,7 +121,7 @@
                 {
                   "Brand": "Testing 45",
                   "ClientIsci": "ZZZZZZ",
-                  "Days": "|W|Th|F|Sa|",
+                  "Days": "-W-Th-F-Sa-",
                   "Friday": false,
                   "HouseIsci": "ZZZZZZ",
                   "MarriedHouseIsci": true,
@@ -186,7 +186,7 @@
                 {
                   "Brand": null,
                   "ClientIsci": "FFFFFF",
-                  "Days": "Su|M|T|W|Th|F|Sa",
+                  "Days": "Su-M-T-W-Th-F-Sa",
                   "Friday": true,
                   "HouseIsci": "FFFFFF",
                   "MarriedHouseIsci": false,

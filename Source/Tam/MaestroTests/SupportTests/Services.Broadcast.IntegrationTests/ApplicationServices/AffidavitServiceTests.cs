@@ -46,9 +46,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = _SetupAffidavit();
 
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
 
-                VerifyAffidavit(id);
+                VerifyAffidavit(result);
             }
         }
 
@@ -64,9 +64,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.Details.First().LeadInShowType = "Drama2";
                 request.Details.First().LeadOutShowType = "Drama3";
 
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
 
-                VerifyAffidavit(id);
+                VerifyAffidavit(result);
             }
         }
 
@@ -80,9 +80,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 request.Details.First().LeadInEndTime = DateTime.Parse("06/29/2017 10:00 AM");
 
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
 
-                VerifyAffidavit(id);
+                VerifyAffidavit(result);
             }
         }
 
@@ -96,9 +96,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 request.Details.First().LeadOutStartTime = DateTime.Parse("06/29/2017 12:12 AM");
 
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
 
-                VerifyAffidavit(id);
+                VerifyAffidavit(result);
             }
         }
 
@@ -112,9 +112,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 request.Details.First().ProgramShowType = "Drama";
 
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
 
-                VerifyAffidavit(id);
+                VerifyAffidavit(result);
             }
         }
 
@@ -126,15 +126,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = _SetupAffidavitMultipleIscis();
 
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
 
-                VerifyAffidavit(id);
+                VerifyAffidavit(result);
             }
         }
         
-        private void VerifyAffidavit(int id)
+        private void VerifyAffidavit(AffidavitSaveResult result)
         {
-            var affidavite = _Repo.GetAffidavit(id, true);
+            Assert.IsTrue(result.ID.HasValue,result.ToString());
+
+            var affidavite = _Repo.GetAffidavit(result.ID.Value, true);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(AffidavitFile), "CreatedDate");
@@ -145,7 +147,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(AffidavitFileDetailAudience), "AffidavitFileDetailId");
             jsonResolver.Ignore(typeof(AffidavitClientScrub), "AffidavitFileDetailId");
             jsonResolver.Ignore(typeof(AffidavitClientScrub), "ModifiedDate");
-
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -176,7 +177,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
                 ProgramShowType = "News",
                 LeadInShowType = "Comedy",
-                LeadOutShowType = "Documentary"
+                LeadOutShowType = "Documentary",
+                LeadInGenre = "News",
+                LeadOutProgramName = "LeadOutProgramName",
+                LeadInProgramName = "LeadInProgramName",
+                InventorySource = 1,
+                LeadOutGenre = "LeadOutGenre",
+                Affiliate = "Affiate"
             };
 
             request.Details.Add(detail);
@@ -203,7 +210,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
                         ProgramShowType = "News",
                         LeadInShowType = "Comedy",
-                        LeadOutShowType = "Documentary"
+                        LeadOutShowType = "Documentary",
+                        LeadInGenre = "News",
+                        LeadOutProgramName = "LeadOutProgramName",
+                        LeadInProgramName = "LeadInProgramName",
+                        InventorySource = 1,
+                        LeadOutGenre = "LeadOutGenre",
+                        Affiliate = "Affiate"
                     }
                 }
             };
@@ -234,8 +247,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = _SetupAffidavit();
                 request.Details.First().Isci = "WAWA";
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
-                VerifyAffidavit(id);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                VerifyAffidavit(result);
             }
         }
         [Test]
@@ -255,8 +268,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = _SetupAffidavit();
                 request.Details.First().Isci = "WAWA";
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
-                VerifyAffidavit(id);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                VerifyAffidavit(result);
             }
         }
         [Test]
@@ -276,8 +289,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = _SetupAffidavit();
                 request.Details.First().Isci = "WAWA";
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
-                VerifyAffidavit(id);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                VerifyAffidavit(result);
             }
         }
 
@@ -304,11 +317,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Station = "WWSB",
                     ProgramShowType = "News",
                     LeadInShowType = "Comedy",
-                    LeadOutShowType = "Documentary"
+                    LeadOutShowType = "Documentary",
+                    LeadInGenre = "News",
+                    LeadOutProgramName = "LeadOutProgramName",
+                    LeadInProgramName = "LeadInProgramName",
+                    InventorySource = 1,
+                    LeadOutGenre = "LeadOutGenre",
+                    Affiliate = "Affiate"
                 });
                 request.Details.First().Isci = "Uknown_Unmatched_ISCI";
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
-                VerifyAffidavit(id);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                VerifyAffidavit(result);
             }
         }
 
@@ -330,8 +349,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = _SetupAffidavit();
                 request.Details.First().Isci = "WAWA";
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
-                VerifyAffidavit(id);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                VerifyAffidavit(result);
             }
         }
         [Ignore]
@@ -352,8 +371,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = _SetupAffidavit();
                 request.Details.First().Isci = "WAWA";
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
-                VerifyAffidavit(id);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                VerifyAffidavit(result);
             }
         }
 
@@ -380,8 +399,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = _SetupAffidavit();
                 request.Details.First().Isci = "WAWA";
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
-                VerifyAffidavit(id);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                VerifyAffidavit(result);
             }
         }
 
@@ -411,9 +430,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 request.Details.First().Isci = "WAWA";
 
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
 
-                VerifyAffidavit(id);
+                VerifyAffidavit(result);
             }
         }
 
@@ -448,9 +467,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 request.Details.First().Isci = "WAWA";
 
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
 
-                VerifyAffidavit(id);
+                VerifyAffidavit(result);
             }
         }
 
@@ -485,9 +504,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 request.Details.First().Isci = "WAWA";
 
-                int id = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
 
-                VerifyAffidavit(id);
+                VerifyAffidavit(result);
             }
         }
 

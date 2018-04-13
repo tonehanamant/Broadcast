@@ -3,7 +3,6 @@ using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Common.Systems.LockTokens;
-using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
@@ -12,10 +11,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Transactions;
 using Services.Broadcast.Converters;
-using Services.Broadcast.Entities.spotcableXML;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
@@ -69,6 +66,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalTotalsCalculationEngine _ProposalTotalsCalculationEngine;
         private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService;
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService;
+        const char ISCI_DAYS_DELIMITER = '-';
 
         public ProposalService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
@@ -415,7 +413,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             proposalDto.Details.ForEach(quarter => quarter.Quarters.ForEach(week => week.Weeks.ForEach(isci => isci.Iscis.ForEach(isciDay =>
             {
-                List<string> splitDays = isciDay.Days?.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                List<string> splitDays = isciDay.Days?.Split(new char[] { ISCI_DAYS_DELIMITER }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 if (splitDays != null && splitDays.Any())
                 {
                     isciDay.Thursday = splitDays.Any(l => l.Equals("TH", StringComparison.CurrentCultureIgnoreCase));
@@ -835,34 +833,34 @@ namespace Services.Broadcast.ApplicationServices
             isciDto.Days = string.Empty;
             if (isciDto.Sunday)
             {
-                isciDto.Days = "Su|";
+                isciDto.Days = $"Su{ISCI_DAYS_DELIMITER}";
             }
             if (isciDto.Monday)
             {
-                isciDto.Days = $"{isciDto.Days}M|";
+                isciDto.Days = $"{isciDto.Days}M{ISCI_DAYS_DELIMITER}";
             }
             if (isciDto.Tuesday)
             {
-                isciDto.Days = $"{isciDto.Days}T|";
+                isciDto.Days = $"{isciDto.Days}T{ISCI_DAYS_DELIMITER}";
             }
             if (isciDto.Wednesday)
             {
-                isciDto.Days = $"{isciDto.Days}W|";
+                isciDto.Days = $"{isciDto.Days}W{ISCI_DAYS_DELIMITER}";
             }
             if (isciDto.Thursday)
             {
-                isciDto.Days = $"{isciDto.Days}Th|";
+                isciDto.Days = $"{isciDto.Days}Th{ISCI_DAYS_DELIMITER}";
             }
             if (isciDto.Friday)
             {
-                isciDto.Days = $"{isciDto.Days}F|";
+                isciDto.Days = $"{isciDto.Days}F{ISCI_DAYS_DELIMITER}";
             }
             if (isciDto.Saturday)
             {
                 isciDto.Days = $"{isciDto.Days}Sa";
             }
 
-            isciDto.Days = isciDto.Days.EndsWith("|") ? isciDto.Days.Remove(isciDto.Days.Length - 1) : isciDto.Days;
+            isciDto.Days = isciDto.Days.EndsWith( ISCI_DAYS_DELIMITER.ToString()) ? isciDto.Days.Remove(isciDto.Days.Length - 1) : isciDto.Days;
             if (string.IsNullOrWhiteSpace(isciDto.Days))
                 isciDto.Days = null;
         }

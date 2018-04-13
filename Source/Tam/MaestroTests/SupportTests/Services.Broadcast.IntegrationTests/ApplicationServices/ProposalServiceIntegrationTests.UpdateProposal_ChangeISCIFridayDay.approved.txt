@@ -52,7 +52,7 @@
                 {
                   "Brand": null,
                   "ClientIsci": "AAAAAAAA",
-                  "Days": "M|W|F",
+                  "Days": "M-W-F",
                   "Friday": false,
                   "HouseIsci": "AAAAAAAA",
                   "Id": 1,
@@ -191,7 +191,7 @@
                 {
                   "Brand": null,
                   "ClientIsci": "FFFFFF",
-                  "Days": "Su|M|T|W|Th|F|Sa",
+                  "Days": "Su-M-T-W-Th-F-Sa",
                   "Friday": true,
                   "HouseIsci": "FFFFFF",
                   "Id": 6,
