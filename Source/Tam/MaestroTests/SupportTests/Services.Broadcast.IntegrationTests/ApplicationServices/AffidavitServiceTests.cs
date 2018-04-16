@@ -216,7 +216,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInProgramName = "LeadInProgramName",
                         InventorySource = 1,
                         LeadOutGenre = "LeadOutGenre",
-                        Affiliate = "Affiate"
+                        Affiliate = "Affiate",
+                        Market = "market"
                     }
                 }
             };
