@@ -36,22 +36,22 @@ namespace Services.Broadcast.ApplicationServices
         public int? ID { get; set; }
         public List<AffidavitValidationResult> ValidationResults { get; set; }
 
-        public override string ToString()
-        {
-            string str = "";
+        //public override string ToString()
+        //{
+        //    string str = "";
 
-            if (ID.HasValue) str += "ID=" + ID.Value;
-            if (ValidationResults.Any())
-            {
-                if (str.Length > 0) str += "\r\n";
-                str += "Validation Results\r\n";
-                ValidationResults.ForEach(r => { str += r.ToString() + "\r\n"; });
-            }
+        //    if (ID.HasValue) str += "ID=" + ID.Value;
+        //    if (ValidationResults.Any())
+        //    {
+        //        if (str.Length > 0) str += "\r\n";
+        //        str += "Validation Results\r\n";
+        //        ValidationResults.ForEach(r => { str += r.ToString() + "\r\n"; });
+        //    }
 
-            if (!string.IsNullOrEmpty(str)) str += "\r\n";
-            str += GetType().FullName;
-            return str;
-        }
+        //    if (!string.IsNullOrEmpty(str)) str += "\r\n";
+        //    str += GetType().FullName;
+        //    return str;
+        //}
     }
     public interface IAffidavitService : IApplicationService
     {
@@ -197,7 +197,6 @@ namespace Services.Broadcast.ApplicationServices
 
             result.ID = id;
             return result;
-
         }
 
         public void ScrubAffidavitFile(affidavit_files affidavit_file,int marketBookingId)

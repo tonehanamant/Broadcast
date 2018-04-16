@@ -10,15 +10,15 @@
         public int InvalidLine { get; set; }
         public string ErrorMessage { get; set; }
 
-        public override string ToString()
-        {
-            string str = "";
-            if (!string.IsNullOrEmpty(InvalidField)) str += InvalidField;
+        //public override string ToString()
+        //{
+        //    string str = "";
+        //    if (!string.IsNullOrEmpty(InvalidField)) str += InvalidField;
 
-            if (!string.IsNullOrEmpty(str))
-                str += "::";
-            str += this.GetType().FullName;
-            return str;
-        }
+        //    if (!string.IsNullOrEmpty(str))
+        //        str += "::";
+        //    str += this.GetType().FullName;
+        //    return str;
+        //}
     }
 }
