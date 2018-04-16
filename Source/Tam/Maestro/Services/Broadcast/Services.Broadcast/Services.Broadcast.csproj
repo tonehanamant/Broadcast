@@ -231,6 +231,7 @@
     <Compile Include="ApplicationServices\AffidavitScrubbingService.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryGroupService.cs" />
+    <Compile Include="ApplicationServices\ProposalServiceHelper.cs" />
     <Compile Include="ApplicationServices\WhosWatchingTvService.cs" />
     <Compile Include="ApplicationServices\AffidavitEmailSenderService.cs" />
     <Compile Include="BusinessEngines\AffidavitMatchingEngine.cs" />
@@ -244,7 +245,6 @@
     <Compile Include="BusinessEngines\ProposalMarketsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalMath.cs" />
     <Compile Include="BusinessEngines\ProposalOpenMarketsTotalsCalculationEngine.cs" />
-    <Compile Include="BusinessEngines\ProposalPostingBooksEngine.cs" />
     <Compile Include="BusinessEngines\ProposalProprietaryTotalsCalculationEngine.cs" />
     <Compile Include="Converters\PlaybackTypeConverter.cs" />
     <Compile Include="Converters\Post\BasePostFileParser.cs" />
@@ -271,7 +271,7 @@
     <Compile Include="Entities\ClientPostScrubbingProposalDto.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
     <Compile Include="Entities\FlightWeekGroup.cs" />
-    <Compile Include="Entities\IHavePostingBooks.cs" />
+    <Compile Include="Entities\IHaveSingleSharedPostingBooks.cs" />
     <Compile Include="Entities\InSpecAffidavitFileDetail.cs" />
     <Compile Include="Entities\InventorySourceEnum.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />

@@ -31,8 +31,8 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly IProposalProgramsCalculationEngine _ProposalProgramsCalculationEngine;
         private readonly IProposalOpenMarketsTotalsCalculationEngine _ProposalOpenMarketsTotalsCalculationEngine;
-        private readonly IProposalPostingBooksEngine _ProposalPostingBooksEngine;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+
         internal static readonly string MissingGuaranteedAudienceErorMessage = "Unable to get proprietary inventory information due to null guaranteed audience";
 
         private const string HOUSEHOLD_AUDIENCE_CODE = "HH";
@@ -41,14 +41,13 @@ namespace Services.Broadcast.ApplicationServices
             IDaypartCache daypartCache, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
             IProposalProgramsCalculationEngine proposalProgramsCalculationEngine,
             IProposalOpenMarketsTotalsCalculationEngine proposalOpenMarketsTotalsCalculationEngine,
-            IProposalPostingBooksEngine proposalPostingBooksEngine, IImpressionAdjustmentEngine impressionAdjustmentEngine,
+            IImpressionAdjustmentEngine impressionAdjustmentEngine,
             IProposalTotalsCalculationEngine proposalTotalsCalculationEngine,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
             : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine, impressionAdjustmentEngine, proposalTotalsCalculationEngine)
         {
             _ProposalProgramsCalculationEngine = proposalProgramsCalculationEngine;
             _ProposalOpenMarketsTotalsCalculationEngine = proposalOpenMarketsTotalsCalculationEngine;
-            _ProposalPostingBooksEngine = proposalPostingBooksEngine;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
 
@@ -377,7 +376,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var inventoryMarkets = _GroupProgramsByMarketAndStation(programs);
 
-            var postingBook = _ProposalPostingBooksEngine.GetPostingBookId(dto);
+            var postingBook = PropoeralsServiceHelper.GetBookId(dto);
             _ApplyInventoryMarketSubscribers(postingBook, inventoryMarkets);
             _ApplyInventoryMarketRankings(postingBook, inventoryMarkets);
 
