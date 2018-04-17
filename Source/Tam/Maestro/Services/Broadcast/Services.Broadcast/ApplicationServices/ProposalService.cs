@@ -65,7 +65,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IRatingForecastService _RatingForecastService;
         private readonly IProposalTotalsCalculationEngine _ProposalTotalsCalculationEngine;
         private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService;
-        private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService;
+
         const char ISCI_DAYS_DELIMITER = '-';
 
         public ProposalService(IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -79,8 +79,7 @@ namespace Services.Broadcast.ApplicationServices
             IPostingBooksService postingBooksService,
             IRatingForecastService ratingForecastService,
             IProposalTotalsCalculationEngine proposalTotalsCalculationEngine,
-            IProposalProprietaryInventoryService proposalProprietaryInventoryService,
-            IProposalOpenMarketInventoryService proposalOpenMarketInventoryService)
+            IProposalProprietaryInventoryService proposalProprietaryInventoryService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AudiencesCache = audiencesCache;
@@ -101,7 +100,6 @@ namespace Services.Broadcast.ApplicationServices
             _RatingForecastService = ratingForecastService;
             _ProposalTotalsCalculationEngine = proposalTotalsCalculationEngine;
             _ProposalProprietaryInventoryService = proposalProprietaryInventoryService;
-            _ProposalOpenMarketInventoryService = proposalOpenMarketInventoryService;
         }
 
         public List<DisplayProposal> GetAllProposals()
@@ -1379,6 +1377,5 @@ namespace Services.Broadcast.ApplicationServices
             if (request.Start < 1) request.Start = 1;
             return _ProgramNameRepository.FindPrograms(request.Name, request.Start, request.Limit);
         }
-
     }
 }

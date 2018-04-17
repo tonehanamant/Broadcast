@@ -2047,5 +2047,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
+
+        [Test]
+        public void CanGetShareBookFromProposal()
+        {
+            var proposal = _ProposalService.GetProposalById(248);
+            var proposalDetail = proposal.Details.First();
+
+            var ratingBook = PropoeralsServiceHelper.GetBookId(proposalDetail);
+
+            Assert.AreEqual(413, ratingBook);
+        }
+
+        [Test]
+        public void CanGetSinglePostingBookFromProposal()
+        {
+            var proposal = _ProposalService.GetProposalById(253);
+            var proposalDetail = proposal.Details.First();
+
+            var ratingBook = PropoeralsServiceHelper.GetBookId(proposalDetail);
+
+            Assert.AreEqual(410, ratingBook);
+        }
+
     }
 }

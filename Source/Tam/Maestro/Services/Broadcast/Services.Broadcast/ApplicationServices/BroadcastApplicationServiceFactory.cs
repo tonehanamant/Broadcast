@@ -87,7 +87,6 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalProgramsCalculationEngine, ProposalProgramsCalculationEngine>();
             unityContainer.RegisterType<IProposalMarketsCalculationEngine, ProposalMarketsCalculationEngine>();
             unityContainer.RegisterType<IProposalOpenMarketsTotalsCalculationEngine, ProposalOpenMarketsTotalsCalculationEngine>();
-            unityContainer.RegisterType<IProposalPostingBooksEngine, ProposalPostingBooksEngine>();
 
             unityContainer.RegisterType<IPostEngine, PostEngine>();
             unityContainer.RegisterType<IPostFileParser, PostFileParser>();
