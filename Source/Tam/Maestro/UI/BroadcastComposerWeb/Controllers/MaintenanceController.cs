@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +10,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Web.Common;
 
@@ -56,7 +59,7 @@ namespace BroadcastComposerWeb.Controllers
                     AffidavitSaveRequest request = new AffidavitSaveRequest();
                     var json = service.JSONifyFile(file.InputStream, fileName,out request);
 
-//                    ViewBag.Id = service.SaveAffidavit(request, "uma", DateTime.Now);
+                    ViewBag.Id = service.SaveAffidavit(request, "uma", DateTime.Now);
                     ViewBag.Message = json;
 
                 }

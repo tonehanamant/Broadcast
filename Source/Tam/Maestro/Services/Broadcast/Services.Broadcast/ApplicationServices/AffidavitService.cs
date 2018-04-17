@@ -360,11 +360,48 @@ namespace Services.Broadcast.ApplicationServices
                 audiencesRepository.GetAllNsiComponentAudiences().
                 Select(a => a.Id).
                 ToList();
+            var stationDetails = new List<StationDetailPointInTime>();
 
+            CalcMultiDetailImpressions(postingBookId, details, stationDetails, audiencesIds);
+        }
+
+        private void CalcMultiDetailImpressions(int postingBookId, ICollection<affidavit_file_details> details, List<StationDetailPointInTime> stationDetails, List<int> audiencesIds)
+        {
+            var ctr = 1;
             foreach (var affidavitFileDetail in details)
             {
+                //affidavitFileDetail.affidavit_file_detail_audiences =
+                //    _CalculdateImpressionsForNielsenAudiences(affidavitFileDetail, audiencesIds, postingBookId);
+
+                stationDetails.Add(
+                    new StationDetailPointInTime
+                    {
+                        Id = ctr++,
+                        LegacyCallLetters = affidavitFileDetail.station,
+                        DayOfWeek = affidavitFileDetail.original_air_date.DayOfWeek,
+                        TimeAired = affidavitFileDetail.air_time
+                    }
+                );
+            }
+
+            var ratingForecastRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
+            var impressionsPointInTime = ratingForecastRepository.GetImpressionsPointInTime(postingBookId, audiencesIds,
+                stationDetails,
+                DefaultPlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+
+            ctr = 1;
+            foreach (var affidavitFileDetail in details)
+            {
+                var imps = impressionsPointInTime.Where(i => i.id == ctr);
+
                 affidavitFileDetail.affidavit_file_detail_audiences =
-                    _CalculdateImpressionsForNielsenAudiences(affidavitFileDetail, audiencesIds, postingBookId);
+                    imps.Select(imp => new affidavit_file_detail_audiences
+                    {
+                        affidavit_file_detail_id = affidavitFileDetail.id,
+                        audience_id = imp.audience_id,
+                        impressions = imp.impressions
+                    }).ToList();
+                ctr++;
             }
         }
 
@@ -454,6 +491,11 @@ namespace Services.Broadcast.ApplicationServices
                     detail.LeadInGenre = reader.GetCellValue("LeadInGenre");
                     detail.LeadOutProgramName = reader.GetCellValue("LeadOutTitle");
                     detail.LeadOutGenre = reader.GetCellValue("LeadOutGenre");
+                    detail.InventorySource = Int32.Parse(reader.GetCellValue("Inventory Source"));
+                    detail.Affiliate = reader.GetCellValue("Affiliate");
+                    detail.ProgramShowType = reader.GetCellValue("ProgramShowType");
+                    detail.LeadInShowType = reader.GetCellValue("LeadInShowType");
+                    detail.LeadOutShowType = reader.GetCellValue("LeadOutShowType");
 
                     request.Details.Add(detail);
                 }

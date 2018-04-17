@@ -191,14 +191,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return request;
         }
 
-        private AffidavitSaveRequest _SetupAffidavit()
+        private AffidavitSaveRequest _SetupSmallAffidavit()
         {
             AffidavitSaveRequest request = new AffidavitSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)AffidaviteFileSource.Strata,
+                Source = (int) AffidaviteFileSource.Strata,
                 FileName = "test.file",
-                Details = new List<AffidavitSaveRequestDetail>(){ new AffidavitSaveRequestDetail
+                Details = new List<AffidavitSaveRequestDetail>()
+                {
+                    new AffidavitSaveRequestDetail
                     {
                         AirTime = DateTime.Parse("06/29/2017 8:04AM"),
                         Isci = "DDDDDDDD",
@@ -221,6 +223,123 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 }
             };
+            return request;
+        }
+
+        private AffidavitSaveRequest _SetupAffidavit()
+        {
+            AffidavitSaveRequest request = new AffidavitSaveRequest
+            {
+                FileHash = "abc123",
+                Source = (int)AffidaviteFileSource.Strata,
+                FileName = "test.file",
+                Details = new List<AffidavitSaveRequestDetail>(){ new AffidavitSaveRequestDetail
+                    {
+                        AirTime = DateTime.Parse("06/29/2017 8:04AM"),
+                        Isci = "DDDDDDDD",
+                        ProgramName = ProgramName1,
+                        SpotLength = 30,
+                        Genre = Genre1.Display,
+                        Station = "WNBC",
+                        LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                        LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                        ProgramShowType = "News",
+                        LeadInShowType = "Comedy",
+                        LeadOutShowType = "Documentary",
+                        LeadInGenre = "News",
+                        LeadOutProgramName = "LeadOutProgramName",
+                        LeadInProgramName = "LeadInProgramName",
+                        InventorySource = 1,
+                        LeadOutGenre = "LeadOutGenre",
+                        Affiliate = "Affiate",
+                        Market = "market"
+                    }
+                }
+            };
+            request.Details.Add(new AffidavitSaveRequestDetail()
+            {
+                AirTime = DateTime.Parse("2016-05-30 9:04AM"),
+                Isci = "AAAAAAAA",
+                ProgramName = ProgramName1,
+                SpotLength = 30,
+                Genre = Genre1.Display,
+                Station = "WNBC",
+                LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                ProgramShowType = "News",
+                LeadInShowType = "Comedy",
+                LeadOutShowType = "Documentary",
+                LeadInGenre = "News",
+                LeadOutProgramName = "LeadOutProgramName",
+                LeadInProgramName = "LeadInProgramName",
+                InventorySource = 1,
+                LeadOutGenre = "LeadOutGenre",
+                Affiliate = "Affiate",
+                Market = "market"
+            });
+            request.Details.Add(new AffidavitSaveRequestDetail()
+            {
+                AirTime = DateTime.Parse("2016-05-30 9:44AM"),
+                Isci = "BBBBBBBBB",
+                ProgramName = ProgramName1,
+                SpotLength = 30,
+                Genre = Genre1.Display,
+                Station = "WNBC",
+                LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                ProgramShowType = "News",
+                LeadInShowType = "Comedy",
+                LeadOutShowType = "Documentary",
+                LeadInGenre = "News",
+                LeadOutProgramName = "LeadOutProgramName",
+                LeadInProgramName = "LeadInProgramName",
+                InventorySource = 1,
+                LeadOutGenre = "LeadOutGenre",
+                Affiliate = "Affiate",
+                Market = "market"
+            });
+            request.Details.Add(new AffidavitSaveRequestDetail()
+            {
+                AirTime = DateTime.Parse("2016-05-30 9:06AM"),
+                Isci = "CCCCCCCCCC",
+                ProgramName = ProgramName1,
+                SpotLength = 30,
+                Genre = Genre1.Display,
+                Station = "WNBC",
+                LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                ProgramShowType = "News",
+                LeadInShowType = "Comedy",
+                LeadOutShowType = "Documentary",
+                LeadInGenre = "News",
+                LeadOutProgramName = "LeadOutProgramName",
+                LeadInProgramName = "LeadInProgramName",
+                InventorySource = 1,
+                LeadOutGenre = "LeadOutGenre",
+                Affiliate = "Affiate",
+                Market = "market"
+            });
+            request.Details.Add(new AffidavitSaveRequestDetail()
+            {
+                AirTime = DateTime.Parse("2016-05-30 9:34AM"),
+                Isci = "EEEEEEEEEEE",
+                ProgramName = ProgramName1,
+                SpotLength = 30,
+                Genre = Genre1.Display,
+                Station = "WNBC",
+                LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                ProgramShowType = "News",
+                LeadInShowType = "Comedy",
+                LeadOutShowType = "Documentary",
+                LeadInGenre = "News",
+                LeadOutProgramName = "LeadOutProgramName",
+                LeadInProgramName = "LeadInProgramName",
+                InventorySource = 1,
+                LeadOutGenre = "LeadOutGenre",
+                Affiliate = "Affiate",
+                Market = "market"
+            });
 
             return request;
         }
