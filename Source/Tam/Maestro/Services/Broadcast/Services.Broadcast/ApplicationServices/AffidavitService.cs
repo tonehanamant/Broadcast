@@ -36,22 +36,22 @@ namespace Services.Broadcast.ApplicationServices
         public int? ID { get; set; }
         public List<AffidavitValidationResult> ValidationResults { get; set; }
 
-        public override string ToString()
-        {
-            string str = "";
+        //public override string ToString()
+        //{
+        //    string str = "";
 
-            if (ID.HasValue) str += "ID=" + ID.Value;
-            if (ValidationResults.Any())
-            {
-                if (str.Length > 0) str += "\r\n";
-                str += "Validation Results\r\n";
-                ValidationResults.ForEach(r => { str += r.ToString() + "\r\n"; });
-            }
+        //    if (ID.HasValue) str += "ID=" + ID.Value;
+        //    if (ValidationResults.Any())
+        //    {
+        //        if (str.Length > 0) str += "\r\n";
+        //        str += "Validation Results\r\n";
+        //        ValidationResults.ForEach(r => { str += r.ToString() + "\r\n"; });
+        //    }
 
-            if (!string.IsNullOrEmpty(str)) str += "\r\n";
-            str += GetType().FullName;
-            return str;
-        }
+        //    if (!string.IsNullOrEmpty(str)) str += "\r\n";
+        //    str += GetType().FullName;
+        //    return str;
+        //}
     }
     public interface IAffidavitService : IApplicationService
     {
@@ -60,7 +60,7 @@ namespace Services.Broadcast.ApplicationServices
         ///
         /// Scrubs, but does not save results
         ///
-        void ScrubAffidavitFile(affidavit_files affidavit_file);
+        void ScrubAffidavitFile(affidavit_files affidavit_file,int marketBookingId);
 
         string JSONifyFile(Stream rawStream,string fileName,out AffidavitSaveRequest request);
     }
@@ -188,19 +188,18 @@ namespace Services.Broadcast.ApplicationServices
                 return result;
             }
 
-            ScrubAffidavitFile(affidavit_file);
-
             var postingBookId = _GetPostingBookId();
+            ScrubAffidavitFile(affidavit_file,postingBookId);
+
             _CalculateAffidavitImpressions(affidavit_file, postingBookId);
 
             var id = _AffidavitRepository.SaveAffidavitFile(affidavit_file);
 
             result.ID = id;
             return result;
-
         }
 
-        public void ScrubAffidavitFile(affidavit_files affidavit_file)
+        public void ScrubAffidavitFile(affidavit_files affidavit_file,int marketBookingId)
         {
             var callLetters = affidavit_file.affidavit_file_details.Select(a => a.station).ToList();
             var stations = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
@@ -237,10 +236,11 @@ namespace Services.Broadcast.ApplicationServices
                     // match market/station
                     scrub.match_station = false;
                     scrub.match_market = false;
-                    var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, proposalDetail);
 
                     if (affidavitStation != null)
                     {
+                        var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, marketBookingId);
+
                         var marketGeoName = affidavitStation.OriginMarket;
                         if (markets.Any(m => m.Display == marketGeoName))
                         {

@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using EntityFrameworkMapping.Broadcast;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -82,8 +83,22 @@ namespace Services.Broadcast.ApplicationServices
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HTTP_ACCEPT_HEADER));
 
                 var url = BroadcastServiceSystemParameter.AffidavitUploadUrl;
-                var postResponse = client.PostAsJsonAsync(url, affidavitFile).GetAwaiter().GetResult();
-                var responseText = postResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                HttpResponseMessage postResponse = null;
+                string responseText = "";
+                try
+                {
+                    postResponse = client.PostAsJsonAsync(url, affidavitFile).GetAwaiter().GetResult();
+                    responseText = postResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                }
+                catch (Exception e)
+                {
+                    AffidavitValidationResult.Add(new AffidavitValidationResult()
+                    {
+                        ErrorMessage = "Could not read from broadcast SaveAffidavit API:\r\n" + e.ToString()
+                    });
+                    ProcessError(filePath);
+                    return;
+                }
                 var response = JsonConvert.DeserializeObject<BaseResponse<AffidavitSaveResult>>(responseText);
 
                 if (response.Success == false)
