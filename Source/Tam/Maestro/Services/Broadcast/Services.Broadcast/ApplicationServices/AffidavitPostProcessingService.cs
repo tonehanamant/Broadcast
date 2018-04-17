@@ -87,6 +87,7 @@ namespace Services.Broadcast.ApplicationServices
                 string responseText = "";
                 try
                 {
+                    client.Timeout = TimeSpan.FromSeconds(180);
                     postResponse = client.PostAsJsonAsync(url, affidavitFile).GetAwaiter().GetResult();
                     responseText = postResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 }
