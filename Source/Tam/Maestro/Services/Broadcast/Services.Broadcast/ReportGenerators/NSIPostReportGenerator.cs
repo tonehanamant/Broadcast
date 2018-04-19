@@ -32,7 +32,6 @@ namespace Services.Broadcast.ReportGenerators
             CONTRACT,
             WEEK,
             UNITS,
-            UNITS,
             UNIT_LENGTH,
             COST,
             TOTAL_COST,
@@ -231,6 +230,7 @@ namespace Services.Broadcast.ReportGenerators
                 wsSummary.Cells[$"D{rowOffset}"].Formula = $"SUM(D{firstTableRow}:D{rowOffset - 1})";
                 wsSummary.Cells[$"G{rowOffset}"].Formula = $"SUM(G{firstTableRow}:G{rowOffset - 1})";
                 wsSummary.Cells[$"J{rowOffset}"].Formula = $"SUM(J{firstTableRow}:J{rowOffset - 1})";
+                wsSummary.Cells[$"K{rowOffset}"].Formula = $"SUM(K{firstTableRow}:K{rowOffset - 1})";
                 wsSummary.Cells[$"M{rowOffset}"].Formula = $"SUM(M{firstTableRow}:M{rowOffset - 1})";
                 wsSummary.Cells[$"N{rowOffset}"].Formula = $"M{rowOffset} / J{rowOffset}";
 
