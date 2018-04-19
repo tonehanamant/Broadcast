@@ -20,39 +20,39 @@
       "AffidavitFileDetailAudiences": [
         {
           "AudienceId": 4,
-          "Impressions": 0.0
+          "Impressions": 1189.25
         },
         {
           "AudienceId": 5,
-          "Impressions": 0.0
+          "Impressions": 3080.8
         },
         {
           "AudienceId": 6,
-          "Impressions": 0.0
+          "Impressions": 1151.35
         },
         {
           "AudienceId": 7,
-          "Impressions": 0.0
+          "Impressions": 616.2
         },
         {
           "AudienceId": 13,
-          "Impressions": 2826.05
+          "Impressions": 23513.15
         },
         {
           "AudienceId": 14,
-          "Impressions": 2803.75
+          "Impressions": 46558.15
         },
         {
           "AudienceId": 15,
-          "Impressions": 2151.45
+          "Impressions": 55361.3
         },
         {
           "AudienceId": 19,
-          "Impressions": 0.0
+          "Impressions": 1225.05
         },
         {
           "AudienceId": 20,
-          "Impressions": 0.0
+          "Impressions": 2811.3
         },
         {
           "AudienceId": 21,
@@ -60,71 +60,575 @@
         },
         {
           "AudienceId": 22,
-          "Impressions": 189.65
+          "Impressions": 2543.75
         },
         {
           "AudienceId": 28,
-          "Impressions": 0.0
+          "Impressions": 8885.45
         },
         {
           "AudienceId": 29,
-          "Impressions": 703.25
+          "Impressions": 16341.55
         },
         {
           "AudienceId": 30,
-          "Impressions": 0.0
+          "Impressions": 12689.15
         },
         {
           "AudienceId": 31,
-          "Impressions": 9141.6
+          "Impressions": 213532.95
         },
         {
           "AudienceId": 46,
-          "Impressions": 233.95
+          "Impressions": 9777.15
         },
         {
           "AudienceId": 284,
-          "Impressions": 0.0
+          "Impressions": 5413.95
         },
         {
           "AudienceId": 290,
-          "Impressions": 128.75
+          "Impressions": 13419.1
         },
         {
           "AudienceId": 339,
-          "Impressions": 446.4
+          "Impressions": 1305.7
         },
         {
           "AudienceId": 347,
-          "Impressions": 343.6
+          "Impressions": 47357.6
         },
         {
           "AudienceId": 348,
-          "Impressions": 0.0
+          "Impressions": 4696.1
         }
       ],
-      "Affiliate": null,
+      "Affiliate": "Affiate",
       "AirTime": 29040,
       "Demographics": [],
       "EstimateId": 0,
       "Genre": "Do It Yourself",
-      "InventorySource": 0,
+      "InventorySource": 1,
       "Isci": "DDDDDDDD",
       "LeadInEndTime": 36000,
-      "LeadinGenre": null,
-      "LeadinProgramName": null,
+      "LeadinGenre": "News",
+      "LeadinProgramName": "LeadInProgramName",
       "LeadInShowType": "Comedy",
-      "LeadoutGenre": null,
-      "LeadoutProgramName": null,
+      "LeadoutGenre": "LeadOutGenre",
+      "LeadoutProgramName": "LeadOutProgramName",
       "LeadOutShowType": "Documentary",
       "LeadOutStartTime": 28920,
-      "Market": "Tampa-St. Pete (Sarasota)",
+      "Market": "New York",
       "OriginalAirDate": "2017-06-29T00:00:00",
       "ProgramName": "Program Names R us",
       "ProgramShowType": "News",
       "SpotCost": 0.0,
       "SpotLengthId": 1,
-      "Station": "WWSB"
+      "Station": "WNBC"
+    },
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "AffidavitClientScrubs": [
+        {
+          "Comment": null,
+          "LeadIn": false,
+          "MatchDate": true,
+          "MatchGenre": true,
+          "MatchIsciDays": false,
+          "MatchMarket": true,
+          "MatchProgram": true,
+          "MatchTime": true,
+          "ModifiedBy": "test user",
+          "ProposalVersionDetailQuarterWeekId": 18,
+          "Status": 0
+        }
+      ],
+      "AffidavitFileDetailAudiences": [
+        {
+          "AudienceId": 4,
+          "Impressions": 210.0
+        },
+        {
+          "AudienceId": 5,
+          "Impressions": 1802.85
+        },
+        {
+          "AudienceId": 6,
+          "Impressions": 833.3
+        },
+        {
+          "AudienceId": 7,
+          "Impressions": 798.55
+        },
+        {
+          "AudienceId": 13,
+          "Impressions": 14532.35
+        },
+        {
+          "AudienceId": 14,
+          "Impressions": 27565.65
+        },
+        {
+          "AudienceId": 15,
+          "Impressions": 53944.85
+        },
+        {
+          "AudienceId": 19,
+          "Impressions": 294.1
+        },
+        {
+          "AudienceId": 20,
+          "Impressions": 901.85
+        },
+        {
+          "AudienceId": 21,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 22,
+          "Impressions": 1036.85
+        },
+        {
+          "AudienceId": 28,
+          "Impressions": 7478.0
+        },
+        {
+          "AudienceId": 29,
+          "Impressions": 14784.25
+        },
+        {
+          "AudienceId": 30,
+          "Impressions": 10248.05
+        },
+        {
+          "AudienceId": 31,
+          "Impressions": 157433.4
+        },
+        {
+          "AudienceId": 46,
+          "Impressions": 1693.6
+        },
+        {
+          "AudienceId": 284,
+          "Impressions": 811.2
+        },
+        {
+          "AudienceId": 290,
+          "Impressions": 8230.05
+        },
+        {
+          "AudienceId": 339,
+          "Impressions": 2490.8
+        },
+        {
+          "AudienceId": 347,
+          "Impressions": 30304.75
+        },
+        {
+          "AudienceId": 348,
+          "Impressions": 5238.85
+        }
+      ],
+      "Affiliate": "Affiate",
+      "AirTime": 32640,
+      "Demographics": [],
+      "EstimateId": 0,
+      "Genre": "Do It Yourself",
+      "InventorySource": 1,
+      "Isci": "AAAAAAAA",
+      "LeadInEndTime": 30660,
+      "LeadinGenre": "News",
+      "LeadinProgramName": "LeadInProgramName",
+      "LeadInShowType": "Comedy",
+      "LeadoutGenre": "LeadOutGenre",
+      "LeadoutProgramName": "LeadOutProgramName",
+      "LeadOutShowType": "Documentary",
+      "LeadOutStartTime": 28920,
+      "Market": "New York",
+      "OriginalAirDate": "2016-05-30T00:00:00",
+      "ProgramName": "Program Names R us",
+      "ProgramShowType": "News",
+      "SpotCost": 0.0,
+      "SpotLengthId": 1,
+      "Station": "WNBC"
+    },
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "AffidavitClientScrubs": [
+        {
+          "Comment": null,
+          "LeadIn": false,
+          "MatchDate": true,
+          "MatchGenre": true,
+          "MatchIsciDays": false,
+          "MatchMarket": true,
+          "MatchProgram": true,
+          "MatchTime": true,
+          "ModifiedBy": "test user",
+          "ProposalVersionDetailQuarterWeekId": 18,
+          "Status": 0
+        }
+      ],
+      "AffidavitFileDetailAudiences": [
+        {
+          "AudienceId": 4,
+          "Impressions": 210.0
+        },
+        {
+          "AudienceId": 5,
+          "Impressions": 579.8
+        },
+        {
+          "AudienceId": 6,
+          "Impressions": 459.4
+        },
+        {
+          "AudienceId": 7,
+          "Impressions": 299.35
+        },
+        {
+          "AudienceId": 13,
+          "Impressions": 8314.75
+        },
+        {
+          "AudienceId": 14,
+          "Impressions": 19202.85
+        },
+        {
+          "AudienceId": 15,
+          "Impressions": 35573.8
+        },
+        {
+          "AudienceId": 19,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 20,
+          "Impressions": 901.85
+        },
+        {
+          "AudienceId": 21,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 22,
+          "Impressions": 326.3
+        },
+        {
+          "AudienceId": 28,
+          "Impressions": 6064.85
+        },
+        {
+          "AudienceId": 29,
+          "Impressions": 8488.75
+        },
+        {
+          "AudienceId": 30,
+          "Impressions": 11624.9
+        },
+        {
+          "AudienceId": 31,
+          "Impressions": 113777.4
+        },
+        {
+          "AudienceId": 46,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 284,
+          "Impressions": 1799.2
+        },
+        {
+          "AudienceId": 290,
+          "Impressions": 5436.3
+        },
+        {
+          "AudienceId": 339,
+          "Impressions": 2577.3
+        },
+        {
+          "AudienceId": 347,
+          "Impressions": 23163.05
+        },
+        {
+          "AudienceId": 348,
+          "Impressions": 3678.85
+        }
+      ],
+      "Affiliate": "Affiate",
+      "AirTime": 35040,
+      "Demographics": [],
+      "EstimateId": 0,
+      "Genre": "Do It Yourself",
+      "InventorySource": 1,
+      "Isci": "BBBBBBBBB",
+      "LeadInEndTime": 30660,
+      "LeadinGenre": "News",
+      "LeadinProgramName": "LeadInProgramName",
+      "LeadInShowType": "Comedy",
+      "LeadoutGenre": "LeadOutGenre",
+      "LeadoutProgramName": "LeadOutProgramName",
+      "LeadOutShowType": "Documentary",
+      "LeadOutStartTime": 28920,
+      "Market": "New York",
+      "OriginalAirDate": "2016-05-30T00:00:00",
+      "ProgramName": "Program Names R us",
+      "ProgramShowType": "News",
+      "SpotCost": 0.0,
+      "SpotLengthId": 1,
+      "Station": "WNBC"
+    },
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "AffidavitClientScrubs": [
+        {
+          "Comment": null,
+          "LeadIn": false,
+          "MatchDate": true,
+          "MatchGenre": true,
+          "MatchIsciDays": false,
+          "MatchMarket": true,
+          "MatchProgram": true,
+          "MatchTime": true,
+          "ModifiedBy": "test user",
+          "ProposalVersionDetailQuarterWeekId": 18,
+          "Status": 0
+        }
+      ],
+      "AffidavitFileDetailAudiences": [
+        {
+          "AudienceId": 4,
+          "Impressions": 210.0
+        },
+        {
+          "AudienceId": 5,
+          "Impressions": 1802.85
+        },
+        {
+          "AudienceId": 6,
+          "Impressions": 833.3
+        },
+        {
+          "AudienceId": 7,
+          "Impressions": 798.55
+        },
+        {
+          "AudienceId": 13,
+          "Impressions": 14532.35
+        },
+        {
+          "AudienceId": 14,
+          "Impressions": 27565.65
+        },
+        {
+          "AudienceId": 15,
+          "Impressions": 53944.85
+        },
+        {
+          "AudienceId": 19,
+          "Impressions": 294.1
+        },
+        {
+          "AudienceId": 20,
+          "Impressions": 901.85
+        },
+        {
+          "AudienceId": 21,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 22,
+          "Impressions": 1036.85
+        },
+        {
+          "AudienceId": 28,
+          "Impressions": 7478.0
+        },
+        {
+          "AudienceId": 29,
+          "Impressions": 14784.25
+        },
+        {
+          "AudienceId": 30,
+          "Impressions": 10248.05
+        },
+        {
+          "AudienceId": 31,
+          "Impressions": 157433.4
+        },
+        {
+          "AudienceId": 46,
+          "Impressions": 1693.6
+        },
+        {
+          "AudienceId": 284,
+          "Impressions": 811.2
+        },
+        {
+          "AudienceId": 290,
+          "Impressions": 8230.05
+        },
+        {
+          "AudienceId": 339,
+          "Impressions": 2490.8
+        },
+        {
+          "AudienceId": 347,
+          "Impressions": 30304.75
+        },
+        {
+          "AudienceId": 348,
+          "Impressions": 5238.85
+        }
+      ],
+      "Affiliate": "Affiate",
+      "AirTime": 32760,
+      "Demographics": [],
+      "EstimateId": 0,
+      "Genre": "Do It Yourself",
+      "InventorySource": 1,
+      "Isci": "CCCCCCCCCC",
+      "LeadInEndTime": 30660,
+      "LeadinGenre": "News",
+      "LeadinProgramName": "LeadInProgramName",
+      "LeadInShowType": "Comedy",
+      "LeadoutGenre": "LeadOutGenre",
+      "LeadoutProgramName": "LeadOutProgramName",
+      "LeadOutShowType": "Documentary",
+      "LeadOutStartTime": 28920,
+      "Market": "New York",
+      "OriginalAirDate": "2016-05-30T00:00:00",
+      "ProgramName": "Program Names R us",
+      "ProgramShowType": "News",
+      "SpotCost": 0.0,
+      "SpotLengthId": 1,
+      "Station": "WNBC"
+    },
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "AffidavitClientScrubs": [
+        {
+          "Comment": null,
+          "LeadIn": false,
+          "MatchDate": true,
+          "MatchGenre": true,
+          "MatchIsciDays": false,
+          "MatchMarket": true,
+          "MatchProgram": true,
+          "MatchTime": true,
+          "ModifiedBy": "test user",
+          "ProposalVersionDetailQuarterWeekId": 18,
+          "Status": 0
+        }
+      ],
+      "AffidavitFileDetailAudiences": [
+        {
+          "AudienceId": 4,
+          "Impressions": 210.0
+        },
+        {
+          "AudienceId": 5,
+          "Impressions": 579.8
+        },
+        {
+          "AudienceId": 6,
+          "Impressions": 459.4
+        },
+        {
+          "AudienceId": 7,
+          "Impressions": 299.35
+        },
+        {
+          "AudienceId": 13,
+          "Impressions": 8314.75
+        },
+        {
+          "AudienceId": 14,
+          "Impressions": 19202.85
+        },
+        {
+          "AudienceId": 15,
+          "Impressions": 35573.8
+        },
+        {
+          "AudienceId": 19,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 20,
+          "Impressions": 901.85
+        },
+        {
+          "AudienceId": 21,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 22,
+          "Impressions": 326.3
+        },
+        {
+          "AudienceId": 28,
+          "Impressions": 6064.85
+        },
+        {
+          "AudienceId": 29,
+          "Impressions": 8488.75
+        },
+        {
+          "AudienceId": 30,
+          "Impressions": 11624.9
+        },
+        {
+          "AudienceId": 31,
+          "Impressions": 113777.4
+        },
+        {
+          "AudienceId": 46,
+          "Impressions": 0.0
+        },
+        {
+          "AudienceId": 284,
+          "Impressions": 1799.2
+        },
+        {
+          "AudienceId": 290,
+          "Impressions": 5436.3
+        },
+        {
+          "AudienceId": 339,
+          "Impressions": 2577.3
+        },
+        {
+          "AudienceId": 347,
+          "Impressions": 23163.05
+        },
+        {
+          "AudienceId": 348,
+          "Impressions": 3678.85
+        }
+      ],
+      "Affiliate": "Affiate",
+      "AirTime": 34440,
+      "Demographics": [],
+      "EstimateId": 0,
+      "Genre": "Do It Yourself",
+      "InventorySource": 1,
+      "Isci": "EEEEEEEEEEE",
+      "LeadInEndTime": 30660,
+      "LeadinGenre": "News",
+      "LeadinProgramName": "LeadInProgramName",
+      "LeadInShowType": "Comedy",
+      "LeadoutGenre": "LeadOutGenre",
+      "LeadoutProgramName": "LeadOutProgramName",
+      "LeadOutShowType": "Documentary",
+      "LeadOutStartTime": 28920,
+      "Market": "New York",
+      "OriginalAirDate": "2016-05-30T00:00:00",
+      "ProgramName": "Program Names R us",
+      "ProgramShowType": "News",
+      "SpotCost": 0.0,
+      "SpotLengthId": 1,
+      "Station": "WNBC"
     }
   ],
   "FileHash": "abc123",

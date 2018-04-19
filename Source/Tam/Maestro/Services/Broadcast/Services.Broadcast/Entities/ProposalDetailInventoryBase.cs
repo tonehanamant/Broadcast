@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
-    public class ProposalDetailInventoryBase : IHavePostingBooks
+    public class ProposalDetailInventoryBase : IHaveSingleSharedPostingBooks
     {
         public ProposalDetailInventoryBase()
         {

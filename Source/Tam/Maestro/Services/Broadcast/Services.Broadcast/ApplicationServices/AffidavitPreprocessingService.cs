@@ -59,14 +59,14 @@ namespace Services.Broadcast.ApplicationServices
         public readonly string _ValidStrataExtension = ".xlsx";
         public readonly string _ValidStrataTabName = "PostAnalRep_ExportDetail";
 
-        private readonly IAffidavitPreprocessingRepository _AffidavitPreprocessingRepository;
+        private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IAffidavitEmailSenderService _AffidavitEmailSenderService;
         
         public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory, IAffidavitEmailSenderService affidavitEmailSenderService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
-            _AffidavitPreprocessingRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitPreprocessingRepository>();
+            _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
             _AffidavitEmailSenderService = affidavitEmailSenderService;
         }
 
@@ -79,7 +79,7 @@ namespace Services.Broadcast.ApplicationServices
         public List<OutboundAffidavitFileValidationResultDto> ProcessFiles(List<string> filepathList, string userName)
         {
             List<OutboundAffidavitFileValidationResultDto> validationList = ValidateFiles(filepathList, userName);
-            _AffidavitPreprocessingRepository.SaveValidationObject(validationList);
+            _AffidavitRepository.SaveValidationObject(validationList);
             var validFileList = validationList.Where(v => v.Status == AffidaviteFileProcessingStatus.Valid)
                                                 .ToList();
             if (validFileList.Any())

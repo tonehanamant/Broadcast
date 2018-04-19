@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
-    public class ProposalDetailDto : IHavePostingBooks
+    public class ProposalDetailDto : IHaveSingleSharedPostingBooks
     {
         public int? Id { get; set; }
         private List<ProposalFlightWeek> _ProposalFlightWeeks;

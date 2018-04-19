@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using EntityFrameworkMapping.Broadcast;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -19,12 +20,12 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface IAffidavitPostProcessingService : IApplicationService
     {
-        List<AffidavitValidationResult> AffidavitValidationResult { get;  }
+        List<AffidavitValidationResult> AffidavitValidationResult { get; }
 
         /// <summary>
         /// Downloads the WWTV processed files and calls the affidavit processing service
         /// </summary>
-        void DownloadAndProcessWWTVFiles();
+        void DownloadAndProcessWWTVFiles(string userName);
 
         /// <summary>
         /// Process and WWTV post processing file
@@ -40,18 +41,25 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly IAffidavitValidationEngine _AffidavitValidationEngine;
         private readonly IAffidavitEmailSenderService _AffidavitEmailSenderService;
+        private readonly IAffidavitService _AffidavidService;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
         private const string HTTP_ACCEPT_HEADER = "application/json";
         private const string FTP_SCHEME = "ftp://";
 
 
-        public AffidavitPostProcessingService(IBroadcastAudiencesCache audienceCache, IDataRepositoryFactory broadcastDataRepositoryFactory, IAffidavitValidationEngine affidavitValidationEngine, IAffidavitEmailSenderService affidavitEmailSenderService)
+        public AffidavitPostProcessingService(
+            IBroadcastAudiencesCache audienceCache,
+            IDataRepositoryFactory broadcastDataRepositoryFactory,
+            IAffidavitValidationEngine affidavitValidationEngine,
+            IAffidavitEmailSenderService affidavitEmailSenderService,
+            IAffidavitService affidavidService)
         {
             _AudienceCache = audienceCache;
             _AffidavitValidationEngine = affidavitValidationEngine;
             _AffidavitEmailSenderService = affidavitEmailSenderService;
             AffidavitValidationResult = new List<AffidavitValidationResult>();
+            _AffidavidService = affidavidService;
         }
 
         public List<AffidavitValidationResult> AffidavitValidationResult { get; set; }
@@ -59,8 +67,9 @@ namespace Services.Broadcast.ApplicationServices
 
         /// <summary>
         /// Downloads the WWTV processed files and calls the affidavit processing service
+        /// This involves FTP 
         /// </summary>
-        public void DownloadAndProcessWWTVFiles()
+        public void DownloadAndProcessWWTVFiles(string userName)
         {
             List<string> filesToProcess = _GetWWTVFTPFileNames();
             foreach (var file in filesToProcess)
@@ -75,26 +84,50 @@ namespace Services.Broadcast.ApplicationServices
                     return;
                 }
 
-                var handler = new HttpClientHandler();
-                handler.UseDefaultCredentials = true;
-                var client = new HttpClient(handler);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HTTP_ACCEPT_HEADER));
+                //var handler = new HttpClientHandler();
+                //handler.UseDefaultCredentials = true;
+                //var client = new HttpClient(handler);
+                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HTTP_ACCEPT_HEADER));
 
-                var url = BroadcastServiceSystemParameter.AffidavitUploadUrl;
-                var postResponse = client.PostAsJsonAsync(url, affidavitFile).GetAwaiter().GetResult();
-                var responseText = postResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                var response = JsonConvert.DeserializeObject<BaseResponse<int>>(responseText);
+                //var url = BroadcastServiceSystemParameter.AffidavitUploadUrl;
+                //HttpResponseMessage postResponse = null;
+                //string responseText = "";
+                //try
+                //{
+                //    client.Timeout = TimeSpan.FromSeconds(180);
+                //    postResponse = client.PostAsJsonAsync(url, affidavitFile).GetAwaiter().GetResult();
+                //    responseText = postResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                //}
+                //catch (Exception e)
+                //{
+                //    AffidavitValidationResult.Add(new AffidavitValidationResult()
+                //    {
+                //        ErrorMessage = "Could not read from broadcast SaveAffidavit API:\r\n" + e.ToString()
+                //    });
+                //    ProcessError(filePath);
+                //    return;
+                //}
+                //var response = JsonConvert.DeserializeObject<BaseResponse<AffidavitSaveResult>>(responseText);
 
-                if (response.Success == false)
+                AffidavitSaveResult response = null;
+                try
                 {
-                    AffidavitValidationResult.Add(new AffidavitValidationResult() {  ErrorMessage = "Error uploading affidavit to CMW api:\n\n" + response.Message });
+                    response = _AffidavidService.SaveAffidavit(affidavitFile, userName, DateTime.Now);
                 }
+                catch (Exception e)
+                {
+                    AffidavitValidationResult.Add(new AffidavitValidationResult()
+                        {ErrorMessage = "Error saving affidavit:\n\n" + e.ToString()});
+                }
+
+                if (response != null)
+                    AffidavitValidationResult.AddRange(response.ValidationResults);
+
                 if (AffidavitValidationResult.Count > 0)
                 {
                     ProcessError(filePath);
                 }
-
-                if (response.Success)
+                else
                 {
                     _DeleteWWTVFTPFile(Path.GetFileName(filePath));
                 }
@@ -123,6 +156,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 throw new Exception("File does not exist.");
             }
+
             if (!Path.GetExtension(filePath).Equals(".txt"))
             {
                 throw new Exception("Invalid file extension.");
@@ -139,7 +173,10 @@ namespace Services.Broadcast.ApplicationServices
             }
             catch (Exception e)
             {
-                AffidavitValidationResult.Add(new AffidavitValidationResult() { ErrorMessage = "Could not process file.\n  " + e.ToString() });
+                AffidavitValidationResult.Add(new AffidavitValidationResult()
+                {
+                    ErrorMessage = "Could not process file.\n  " + e.ToString()
+                });
                 return null;
             }
 
@@ -149,7 +186,8 @@ namespace Services.Broadcast.ApplicationServices
             return affidavitFile;
         }
 
-        private string _CreateInvalidFileEmailBody(List<AffidavitValidationResult> affidavitValidationResults, string filePath)
+        private string _CreateInvalidFileEmailBody(List<AffidavitValidationResult> affidavitValidationResults,
+            string filePath)
         {
             var emailBody = new StringBuilder();
 
@@ -174,7 +212,8 @@ namespace Services.Broadcast.ApplicationServices
 
         private string _MoveFileToInvalidFilesFolder(string fileName)
         {
-            var combinedFilePath = Path.Combine(BroadcastServiceSystemParameter.WWTV_FailedFolder, Path.GetFileName(fileName));
+            var combinedFilePath = Path.Combine(BroadcastServiceSystemParameter.WWTV_FailedFolder,
+                Path.GetFileName(fileName));
 
             if (File.Exists(combinedFilePath))
                 File.Delete(combinedFilePath);
@@ -186,26 +225,41 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _DeleteWWTVFTPFile(string fileName)
         {
-            string uri = $"{FTP_SCHEME}{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpInboundFolder}/{fileName}";
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
-            request.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername, BroadcastServiceSystemParameter.WWTV_FtpPassword);
+            string uri =
+                $"{FTP_SCHEME}{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpInboundFolder}/{fileName}";
+            FtpWebRequest request = (FtpWebRequest) WebRequest.Create(uri);
+            request.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername,
+                BroadcastServiceSystemParameter.WWTV_FtpPassword);
             request.Method = WebRequestMethods.Ftp.DeleteFile;
 
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            FtpWebResponse response = (FtpWebResponse) request.GetResponse();
             response.Close();
         }
 
         private AffidavitSaveRequest _MapWWTVFileToAffidavitFile(string filePath)
         {
-            var jsonFile = JsonConvert.DeserializeObject<WhosWatchingTVPostProcessingFile>(File.ReadAllText(filePath));
-
             AffidavitSaveRequest file = new AffidavitSaveRequest
             {
-                Source = (int)AffidaviteFileSource.Strata,
+                Source = (int) AffidaviteFileSource.Strata,
                 Details = new List<AffidavitSaveRequestDetail>()
             };
 
-            for(var lineNumber = 0; lineNumber < jsonFile.Details.Count; lineNumber++)
+            WhosWatchingTVPostProcessingFile jsonFile;
+            try
+            {
+                jsonFile = JsonConvert.DeserializeObject<WhosWatchingTVPostProcessingFile>(File.ReadAllText(filePath));
+            }
+            catch (Exception)
+            {
+                AffidavitValidationResult.Add(new AffidavitValidationResult()
+                {
+                    ErrorMessage =
+                        "File is in an invalid format.  It cannot be read in its current state; must be a valid JSON file."
+                });
+                return file;
+            }
+
+            for (var lineNumber = 0; lineNumber < jsonFile.Details.Count; lineNumber++)
             {
                 var jsonDetail = jsonFile.Details[lineNumber];
 
@@ -224,7 +278,8 @@ namespace Services.Broadcast.ApplicationServices
                     Station = jsonDetail.Station,
                     Affiliate = jsonDetail.Affiliate,
                     EstimateId = jsonDetail.EstimateId,
-                    InventorySource = (int)(InventorySourceEnum)Enum.Parse(typeof(InventorySourceEnum), jsonDetail.InventorySource),
+                    InventorySource =
+                        (int) (InventorySourceEnum) Enum.Parse(typeof(InventorySourceEnum), jsonDetail.InventorySource),
                     SpotCost = jsonDetail.SpotCost,
                     LeadInEndTime = jsonDetail.Date.Add(DateTime.Parse(jsonDetail.LeadInEndTime).TimeOfDay),
                     LeadOutStartTime = jsonDetail.Date.Add(DateTime.Parse(jsonDetail.LeadOutStartTime).TimeOfDay),
@@ -239,14 +294,12 @@ namespace Services.Broadcast.ApplicationServices
                     }).ToList()
                 };
 
-                var validationResult = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
+                var validationResults = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
 
-                if (!validationResult.IsValid)
+                if (validationResults.Any())
                 {
-                    validationResult.InvalidLine = lineNumber;
-
-                    AffidavitValidationResult.Add(validationResult);
-
+                    validationResults.ForEach(r => r.InvalidLine = lineNumber);
+                    AffidavitValidationResult.AddRange(validationResults);
                     continue;
                 }
 
@@ -260,7 +313,8 @@ namespace Services.Broadcast.ApplicationServices
         {
             using (var ftpClient = new WebClient())
             {
-                ftpClient.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername, BroadcastServiceSystemParameter.WWTV_FtpPassword);
+                ftpClient.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername,
+                    BroadcastServiceSystemParameter.WWTV_FtpPassword);
                 ftpClient.DownloadFile(
                     $"{FTP_SCHEME}{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpInboundFolder}/{fileName}",
                     filePath);
@@ -269,11 +323,13 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<string> _GetWWTVFTPFileNames()
         {
-            string uri = $"{FTP_SCHEME}{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpInboundFolder}";
-            FtpWebRequest ftpRequest = (FtpWebRequest)WebRequest.Create(uri);
-            ftpRequest.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername, BroadcastServiceSystemParameter.WWTV_FtpPassword);
+            string uri =
+                $"{FTP_SCHEME}{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpInboundFolder}";
+            FtpWebRequest ftpRequest = (FtpWebRequest) WebRequest.Create(uri);
+            ftpRequest.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername,
+                BroadcastServiceSystemParameter.WWTV_FtpPassword);
             ftpRequest.Method = WebRequestMethods.Ftp.ListDirectory;
-            FtpWebResponse response = (FtpWebResponse)ftpRequest.GetResponse();
+            FtpWebResponse response = (FtpWebResponse) ftpRequest.GetResponse();
             StreamReader streamReader = new StreamReader(response.GetResponseStream());
 
             List<string> files = new List<string>();
@@ -285,6 +341,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     files.Add(line);
                 }
+
                 line = streamReader.ReadLine();
             }
 

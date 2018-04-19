@@ -67,7 +67,7 @@ export class UnlinkedIsciModal extends Component {
         },
     },
     {
-      name: 'Ad Length',
+      name: 'Spot Length',
       dataIndex: 'SpotLength',
       width: '8%',
       renderer: ({ row }) => (

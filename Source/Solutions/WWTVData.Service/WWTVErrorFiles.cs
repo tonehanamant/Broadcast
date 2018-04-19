@@ -52,7 +52,7 @@ namespace WWTVData.Service
         public override bool RunService(DateTime timeSignaled)
         {
             _LastRun = DateTime.Now;
-            BaseWindowsService.LogServiceEvent("Checking Error Files . . .");
+            //BaseWindowsService.LogServiceEvent("Checking Error Files . . .");
             try
             {
                 var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPreprocessingService>();
@@ -63,7 +63,7 @@ namespace WWTVData.Service
                 BaseWindowsService.LogServiceError("Error reading FTP Error files", e);
                 return false;
             }
-            BaseWindowsService.LogServiceEvent(". . . Done Checking Error Files\n");
+            //BaseWindowsService.LogServiceEvent(". . . Done Checking Error Files\n");
             return true;
         }
     }

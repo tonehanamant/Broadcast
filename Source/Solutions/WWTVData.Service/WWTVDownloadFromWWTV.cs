@@ -61,10 +61,11 @@ namespace WWTVData.Service
         {
             _LastRun = DateTime.Now;
             BaseWindowsService.LogServiceEvent("Checking files to download . . .");
+
             try
             {
                 var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
-                service.DownloadAndProcessWWTVFiles();
+                service.DownloadAndProcessWWTVFiles("WWTV Service");
                 _LastRun = DateTime.Now;
             }
             catch (Exception e)

@@ -231,11 +231,12 @@
     <Compile Include="ApplicationServices\AffidavitScrubbingService.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryGroupService.cs" />
+    <Compile Include="ApplicationServices\ProposalServiceHelper.cs" />
     <Compile Include="ApplicationServices\WhosWatchingTvService.cs" />
     <Compile Include="ApplicationServices\AffidavitEmailSenderService.cs" />
     <Compile Include="BusinessEngines\AffidavitMatchingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
-    <Compile Include="BusinessEngines\AffidavitValidationResult.cs" />
+    <Compile Include="Entities\AffidavitValidationResult.cs" />
     <Compile Include="BusinessEngines\ImpressionAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailHeaderTotalsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalDetailWeekTotalsCalculationEngine.cs" />
@@ -244,7 +245,6 @@
     <Compile Include="BusinessEngines\ProposalMarketsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProposalMath.cs" />
     <Compile Include="BusinessEngines\ProposalOpenMarketsTotalsCalculationEngine.cs" />
-    <Compile Include="BusinessEngines\ProposalPostingBooksEngine.cs" />
     <Compile Include="BusinessEngines\ProposalProprietaryTotalsCalculationEngine.cs" />
     <Compile Include="Converters\PlaybackTypeConverter.cs" />
     <Compile Include="Converters\Post\BasePostFileParser.cs" />
@@ -271,7 +271,7 @@
     <Compile Include="Entities\ClientPostScrubbingProposalDto.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
     <Compile Include="Entities\FlightWeekGroup.cs" />
-    <Compile Include="Entities\IHavePostingBooks.cs" />
+    <Compile Include="Entities\IHaveSingleSharedPostingBooks.cs" />
     <Compile Include="Entities\InSpecAffidavitFileDetail.cs" />
     <Compile Include="Entities\InventorySourceEnum.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
@@ -467,7 +467,6 @@
     <Compile Include="MediaMonthAndWeekAggregateCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProposalCache.cs" />
-    <Compile Include="Repositories\AffidavitPreprocessingRepository.cs" />
     <Compile Include="Repositories\AudienceRepository.cs" />
     <Compile Include="Repositories\BroadcastAudienceRepository.cs" />
     <Compile Include="Repositories\BroadcastForecastRepositoryBase.cs" />
@@ -509,7 +508,6 @@
     <Compile Include="Repositories\ScheduleRepository.cs" />
     <Compile Include="Repositories\BroadcastDataRepositoryFactory.cs" />
     <Compile Include="Repositories\SpotLengthBroadcastRepository.cs" />
-    <Compile Include="Repositories\SpotLengthMultiplierRepository.cs" />
     <Compile Include="Repositories\StationContactsRepository.cs" />
     <Compile Include="Repositories\StationProgramRepository.cs" />
     <Compile Include="Repositories\StationRepository.cs" />
