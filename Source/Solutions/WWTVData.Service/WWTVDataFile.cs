@@ -68,7 +68,7 @@ namespace WWTVData.Service
         public override bool RunService(DateTime timeSignaled)
         {
             _LastRun = DateTime.Now;
-            BaseWindowsService.LogServiceEvent("Checking WWTV OutPost files. . .");
+            //BaseWindowsService.LogServiceEvent("Checking WWTV OutPost files. . .");
 
             string[] filesFound;
             int filesProcessed = 0;
@@ -104,9 +104,9 @@ namespace WWTVData.Service
             }
 
 
-            BaseWindowsService.LogServiceEvent(". . . Done Checking WWTV OutPost files\n");
+            //BaseWindowsService.LogServiceEvent(". . . Done Checking WWTV OutPost files\n");
             var message = string.Format("Found {0} file; Process {1}; Failed {2}", filesFound.Length, filesProcessed, filesFailed);
-            BaseWindowsService.LogServiceEvent(message);
+            //BaseWindowsService.LogServiceEvent(message);
             return true;
         }
     }
