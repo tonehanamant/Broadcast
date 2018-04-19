@@ -1,6 +1,7 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
@@ -194,7 +195,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var proposal = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProposalById(proposalId);
 
-            var flights = _GetFlightDays(proposal.Details);
+            var flights = _GetFlightsRange(proposal.Details);
             var inspecSpots = _AffidavitRepositry.GetInSpecSpotsForProposal(proposalId);
             var proposalAdvertiser = _SmsClient.FindAdvertiserById(proposal.AdvertiserId);
             var proposalAudienceIds = new List<int>() { proposal.GuaranteedDemoId };
@@ -215,46 +216,59 @@ namespace Services.Broadcast.ApplicationServices
                                                 mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, proposal.GuaranteedDemoId, flights);
 
             return nsiPostReport;
-
         }
 
-        private List<Tuple<DateTime?, DateTime?>> _GetFlightDays(List<ProposalDetailDto> details)
+        private List<Tuple<DateTime, DateTime>> _GetFlightsRange(List<ProposalDetailDto> details)
         {
-            List<Tuple<DateTime?, DateTime?>> result = new List<Tuple<DateTime?, DateTime?>>();
-            details.ForEach(x =>
+            var proposalWeekFlights = details.SelectMany(d => d.Quarters.SelectMany(q => q.Weeks.Select(w => new ProposalFlightWeek()
             {
-                result.Add(new Tuple<DateTime?, DateTime?>(x.FlightStartDate, x.FlightEndDate));
-            });
-            if (result.Count <= 1) return result;
-
-            result = result.OrderBy(x => x.Item1).ToList();
-            int i = 0;
-            do
+                StartDate = w.StartDate,
+                EndDate = w.EndDate,
+                IsHiatus = w.IsHiatus,
+                MediaWeekId = w.MediaWeekId
+            }))).GroupBy(x => x.MediaWeekId).Select(x => new ProposalFlightWeek()
             {
-                bool overlap = result[i].Item1 <= result[i + 1].Item2 && result[i + 1].Item1 <= result[i].Item2;
-                if (overlap)
+                StartDate = x.First().StartDate,
+                EndDate = x.First().EndDate,
+                IsHiatus = x.All(y => y.IsHiatus),
+                MediaWeekId = x.First().MediaWeekId
+            }).OrderBy(x => x.StartDate).ToList();
+
+            var flightRanges = new List<Tuple<DateTime, DateTime>>();
+            var flights = new List<ProposalFlightWeek>();
+            ProposalFlightWeek lastFlight = null;
+
+            foreach (var flight in proposalWeekFlights)
+            {
+                var isWeekGap = lastFlight != null && flight.StartDate.AddDays(-1) != lastFlight.EndDate;
+                var isDateGap = flight.IsHiatus || isWeekGap;
+
+                if (isDateGap && flights.Any())
                 {
-                    result[i] = new Tuple<DateTime?, DateTime?>(_MinDate(result[i].Item1, result[i + 1].Item1), _MaxDate(result[i].Item2, result[i + 1].Item2));
-                    result.RemoveAt(i + 1);
+                    var dateRangeTuple = new Tuple<DateTime, DateTime>(flights.Min(d => d.StartDate), flights.Max(d => d.EndDate));
+                    flightRanges.Add(dateRangeTuple);
+                    flights.Clear();
                 }
-                else
+
+                if (!flight.IsHiatus)
                 {
-                    i++;
+                    flights.Add(flight);
                 }
 
-            } while (i < result.Count - 1);
+                lastFlight = flight;
 
-            return result;
+                if (isWeekGap)
+                    lastFlight = null;
+            }
+
+            if (flights.Any())
+            {
+                var dateRangeTuple = new Tuple<DateTime, DateTime>(flights.Min(d => d.StartDate), flights.Max(d => d.EndDate));
+                flightRanges.Add(dateRangeTuple);
+            }
+
+            return flightRanges;
         }
 
-        private DateTime? _MinDate(DateTime? first, DateTime? second)
-        {
-            return first < second ? first : second;
-        }
-
-        private DateTime? _MaxDate(DateTime? first, DateTime? second)
-        {
-            return first > second ? first : second;
-        }
     }
 }
