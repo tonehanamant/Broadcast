@@ -104,9 +104,9 @@ namespace Services.Broadcast.Repositories
                     LeadInEndTime = d.leadin_end_time,
                     Market = d.market,
                     Affiliate = d.affiliate,
-                    EstimateId = d.estimate_id.Value,
+                    EstimateId = d.estimate_id,
                     InventorySource = d.inventory_source.Value,
-                    SpotCost = d.spot_cost.Value,
+                    SpotCost = d.spot_cost,
                     Demographics = d.affidavit_file_detail_demographics.Select(a => new Demographics()
                     {
                         AudienceId = a.audience_id.Value,

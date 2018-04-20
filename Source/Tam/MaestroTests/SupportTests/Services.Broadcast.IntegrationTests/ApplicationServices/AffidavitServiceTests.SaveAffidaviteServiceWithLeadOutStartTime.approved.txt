@@ -106,7 +106,7 @@
       "Affiliate": "Affiate",
       "AirTime": 29040,
       "Demographics": [],
-      "EstimateId": 0,
+      "EstimateId": null,
       "Genre": "Do It Yourself",
       "InventorySource": 1,
       "Isci": "DDDDDDDD",
@@ -122,7 +122,7 @@
       "OriginalAirDate": "2017-06-29T00:00:00",
       "ProgramName": "Program Names R us",
       "ProgramShowType": "News",
-      "SpotCost": 0.0,
+      "SpotCost": null,
       "SpotLengthId": 1,
       "Station": "WWSB"
     }

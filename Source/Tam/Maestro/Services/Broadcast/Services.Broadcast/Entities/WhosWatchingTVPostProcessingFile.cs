@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Services.Broadcast.Entities
 {
@@ -10,14 +11,14 @@ namespace Services.Broadcast.Entities
 
     public class WhosWatchingTVDetail
     {
-        public int EstimateId { get; set; }
+        public int? EstimateId { get; set; }
         public string Market { get; set; }
         public DateTime Date { get; set; }
         public string InventorySource { get; set; }
         public string Station { get; set; }
         public int SpotLength { get; set; }
         public string Time { get; set; }
-        public double SpotCost { get; set; }
+        public double? SpotCost { get; set; }
         public string ISCI { get; set; }
         public string Affiliate { get; set; }
         public string Program { get; set; }

@@ -224,7 +224,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 jsonFile = JsonConvert.DeserializeObject<WhosWatchingTVPostProcessingFile>(File.ReadAllText(filePath));
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 AffidavitValidationResult.Add(new AffidavitValidationResult()
                 {

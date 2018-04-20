@@ -125,5 +125,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPostProcessing_ValidFileContent_SpotCost()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_AffidavitValidFileContent_SpotCost.txt";
+                var request = File.ReadAllText(filePath);
+
+                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(BaseResponse), "Data");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver,
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
+            }
+        }
     }
 }

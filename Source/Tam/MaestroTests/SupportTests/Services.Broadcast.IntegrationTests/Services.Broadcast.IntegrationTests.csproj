@@ -632,6 +632,9 @@
     <Content Include="Files\WWTV_AffidavitValidFile.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\WWTV_AffidavitValidFileContent_SpotCost.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Penny_test.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

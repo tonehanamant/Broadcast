@@ -1,0 +1,67 @@
+﻿{
+  "Details": [
+    {
+      "Affiliate": "CBS",
+      "AirTime": "2017-12-26T22:35:26",
+      "Demographics": [
+        {
+          "AudienceId": 36,
+          "Demographic": null,
+          "OvernightImpressions": 1928,
+          "OvernightRating": 2.3
+        }
+      ],
+      "EstimateId": null,
+      "Genre": "Comedy",
+      "InventorySource": 5,
+      "Isci": "ABC123",
+      "LeadInEndTime": "2017-12-26T22:34:02",
+      "LeadInGenre": "Comedy",
+      "LeadInProgramName": "Seinfeld",
+      "LeadInShowType": "News",
+      "LeadOutGenre": "News",
+      "LeadOutProgramName": "11 o'clock news",
+      "LeadOutShowType": "Documentary",
+      "LeadOutStartTime": "2017-12-26T23:01:15",
+      "Market": "New York",
+      "ProgramName": "Everybody Loves Raymond",
+      "ProgramShowType": "Comedy",
+      "SpotCost": null,
+      "SpotLength": 30,
+      "Station": "WCBS"
+    },
+    {
+      "Affiliate": "CBS",
+      "AirTime": "2017-12-15T09:22:45",
+      "Demographics": [
+        {
+          "AudienceId": 36,
+          "Demographic": null,
+          "OvernightImpressions": 825,
+          "OvernightRating": 1.5
+        }
+      ],
+      "EstimateId": 456,
+      "Genre": "Talk",
+      "InventorySource": 4,
+      "Isci": "DEF456",
+      "LeadInEndTime": "2017-12-15T09:01:02",
+      "LeadInGenre": "Talk",
+      "LeadInProgramName": "Oprah",
+      "LeadInShowType": "News",
+      "LeadOutGenre": "Gameshow",
+      "LeadOutProgramName": "The Price is Right",
+      "LeadOutShowType": "Documentary",
+      "LeadOutStartTime": "2017-12-15T10:01:15",
+      "Market": "Philadelphia",
+      "ProgramName": "The View",
+      "ProgramShowType": "Comedy",
+      "SpotCost": 222.0,
+      "SpotLength": 30,
+      "Station": "WKYW"
+    }
+  ],
+  "FileHash": "8E-38-8E-9D-FA-60-3D-5A-7C-EF-17-8D-A3-64-C0-42-04-3B-6C-38",
+  "FileName": "WWTV_AffidavitValidFileContent_SpotCost.txt",
+  "Source": 1
+}
