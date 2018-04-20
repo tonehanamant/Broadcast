@@ -212,7 +212,6 @@ namespace Services.Broadcast.Repositories
                                          select new { affidavitFileDetails, proposalVersionQuarters, proposalVersionDetail, proposalVersion, proposal, proposalVersionWeeks })
                                          .ToList();
 
-
                     var inSpecAffidavitFileDetails = inSpecDetails.Select(x => new InSpecAffidavitFileDetail()
                     {
                         Station = x.affidavitFileDetails.station,
@@ -223,12 +222,13 @@ namespace Services.Broadcast.Repositories
                         AirDate = x.affidavitFileDetails.original_air_date,
                         DaypartName = x.proposalVersionDetail.daypart_code,
                         AudienceImpressions = x.affidavitFileDetails.affidavit_file_detail_audiences
-                                                .ToDictionary( i => i.audience_id, j => j.impressions),
+                                                .ToDictionary(i => i.audience_id, j => j.impressions),
                         Quarter = x.proposalVersionQuarters.quarter,
                         Year = x.proposalVersionQuarters.year,
                         AdvertiserId = x.proposal.advertiser_id,
                         ProposalWeekCost = x.proposalVersionWeeks.cost,
-                        ProposalWeekImpressionsGoal = x.proposalVersionWeeks.impressions_goal
+                        ProposalWeekImpressionsGoal = x.proposalVersionWeeks.impressions_goal,
+                        Units = x.proposalVersionWeeks.units
                     }).ToList();
 
                     return inSpecAffidavitFileDetails;

@@ -15,7 +15,7 @@ namespace Services.Broadcast.Entities
         public string Advertiser { get; set; }
         public string GuaranteedDemo { get; set; }
         public string Daypart { get; set; }
-        public List<Tuple<DateTime?, DateTime?>> FlightDates { get; set; }
+        public List<Tuple<DateTime, DateTime>> FlightDates { get; set; }
 
         public class NsiPostReportQuarterTab
         {
@@ -53,6 +53,7 @@ namespace Services.Broadcast.Entities
             public Dictionary<int, double> AudienceImpressions { get; set; }
             public decimal ProposalWeekCost { get; set; }
             public double ProposalWeekImpressionsGoal { get; set; }
+            public int ProposalWeekUnits { get; set; }
         }
 
         public class NsiPostReportQuarterSummaryTableRow
@@ -74,7 +75,7 @@ namespace Services.Broadcast.Entities
                             Dictionary<DateTime, MediaWeek> mediaWeekMappings,
                             Dictionary<string, DisplayBroadcastStation> stationMappings,
                             Dictionary<int, int> nsiMarketRankings, string guaranteedDemo, int guaranteedDemoId,
-                            List<Tuple<DateTime?, DateTime?>> flightDates)
+                            List<Tuple<DateTime, DateTime>> flightDates)
         {
             ProposalId = proposalId;
             ProposalAudiences = proposalAudiences;
@@ -112,7 +113,8 @@ namespace Services.Broadcast.Entities
                             DaypartName = r.DaypartName,
                             AudienceImpressions = audienceImpressions,
                             ProposalWeekCost = r.ProposalWeekCost,
-                            ProposalWeekImpressionsGoal = r.ProposalWeekImpressionsGoal
+                            ProposalWeekImpressionsGoal = r.ProposalWeekImpressionsGoal,
+                            ProposalWeekUnits = r.Units
                         };
                     }).ToList()
                 };
@@ -122,7 +124,15 @@ namespace Services.Broadcast.Entities
                     new NsiPostReportQuarterSummaryTable()
                     {
                         TableName = String.Format("{0}Q'{1}", group.Key.Quarter, group.Key.Year.ToString().Substring(2)),
-                        TableRows = tab.TabRows.GroupBy(x => new { x.DaypartName, x.SpotLength, x.WeekStart })
+                        TableRows = tab.TabRows.GroupBy(x => new
+                        {
+                            x.DaypartName,
+                            x.SpotLength,
+                            x.WeekStart,
+                            x.ProposalWeekUnits,
+                            x.ProposalWeekImpressionsGoal,
+                            x.ProposalWeekCost
+                        })
                             .Select(x =>
                             {
                                 return new NsiPostReportQuarterSummaryTableRow
@@ -130,10 +140,10 @@ namespace Services.Broadcast.Entities
                                     Contract = x.Key.DaypartName,
                                     SpotLength = x.Key.SpotLength,
                                     WeekStartDate = x.Key.WeekStart,
-                                    Spots = x.Count(),
+                                    Spots = x.Key.ProposalWeekUnits,
                                     ActualImpressions = tab.TabRows.Select(y => y.AudienceImpressions[guaranteedDemoId]).Sum(),
-                                    ProposalWeekCost = tab.TabRows.Select(y=>y.ProposalWeekCost).Sum(),
-                                    ProposalWeekImpressionsGoal = tab.TabRows.Select(y => y.ProposalWeekImpressionsGoal).Sum()
+                                    ProposalWeekCost = x.Key.ProposalWeekCost,
+                                    ProposalWeekImpressionsGoal = x.Key.ProposalWeekImpressionsGoal
                                 };
                             }).ToList()
                     });

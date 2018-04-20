@@ -32,7 +32,6 @@ namespace Services.Broadcast.ReportGenerators
             CONTRACT,
             WEEK,
             UNITS,
-            UNITS,
             UNIT_LENGTH,
             COST,
             TOTAL_COST,
@@ -193,10 +192,10 @@ namespace Services.Broadcast.ReportGenerators
         {
             int rowOffset = 21;
 
-            foreach (var item in reportData.QuarterTables)
+            foreach (var quarterTable in reportData.QuarterTables)
             {
                 int columnOffset = 2;
-                wsSummary.Cells[$"B{rowOffset}"].Value = item.TableName;
+                wsSummary.Cells[$"B{rowOffset}"].Value = quarterTable.TableName;
                 wsSummary.Cells[$"M{rowOffset}"].Value = "Post";
                 rowOffset++;
 
@@ -211,14 +210,14 @@ namespace Services.Broadcast.ReportGenerators
 
                 //data
                 int firstTableRow = rowOffset;
-                foreach (var row in item.TableRows)
+                foreach (var row in quarterTable.TableRows)
                 {
                     wsSummary.Cells[$"B{rowOffset}"].Value = row.Contract;
                     wsSummary.Cells[$"C{rowOffset}"].Value = row.WeekStartDate.ToShortDateString();
                     wsSummary.Cells[$"D{rowOffset}"].Value = row.Spots;
                     wsSummary.Cells[$"E{rowOffset}"].Value = row.SpotLength;
-                    wsSummary.Cells[$"F{rowOffset}"].Value = row.ProposalWeekCost;
-                    wsSummary.Cells[$"G{rowOffset}"].Value = row.ProposalWeekCost * row.Spots;
+                    wsSummary.Cells[$"F{rowOffset}"].Formula = $"G{rowOffset} / D{rowOffset}";
+                    wsSummary.Cells[$"G{rowOffset}"].Value = row.ProposalWeekCost;
                     wsSummary.Cells[$"I{rowOffset}"].Formula = $"J{rowOffset} / D{rowOffset}";
                     wsSummary.Cells[$"J{rowOffset}"].Value = row.ProposalWeekImpressionsGoal;
                     wsSummary.Cells[$"K{rowOffset}"].Formula = $"G{rowOffset} / J{rowOffset} * 1000";
@@ -231,6 +230,7 @@ namespace Services.Broadcast.ReportGenerators
                 wsSummary.Cells[$"D{rowOffset}"].Formula = $"SUM(D{firstTableRow}:D{rowOffset - 1})";
                 wsSummary.Cells[$"G{rowOffset}"].Formula = $"SUM(G{firstTableRow}:G{rowOffset - 1})";
                 wsSummary.Cells[$"J{rowOffset}"].Formula = $"SUM(J{firstTableRow}:J{rowOffset - 1})";
+                wsSummary.Cells[$"K{rowOffset}"].Formula = $"SUM(K{firstTableRow}:K{rowOffset - 1})";
                 wsSummary.Cells[$"M{rowOffset}"].Formula = $"SUM(M{firstTableRow}:M{rowOffset - 1})";
                 wsSummary.Cells[$"N{rowOffset}"].Formula = $"M{rowOffset} / J{rowOffset}";
 
@@ -291,7 +291,7 @@ namespace Services.Broadcast.ReportGenerators
                 { "B16", "Daypart:"},
                 { "B17", "Flight:" },
                 { "C9", reportData.Advertiser},
-                { "C17", string.Join(" & ", reportData.FlightDates.Select(x=> $"{x.Item1.Value.ToString(@"M\/d\/yyyy")}-{x.Item2.Value.ToString(@"M\/d\/yyyy")}").ToList())},
+                { "C17", string.Join(" & ", reportData.FlightDates.Select(x=> $"{x.Item1.ToString(@"M\/d\/yyyy")}-{x.Item2.ToString(@"M\/d\/yyyy")}").ToList())},
                 { "I9", "Guaranteed Demo:"},
                 { "I10", "Post Type:"},
                 { "I11", "Unit Length:" },
@@ -299,7 +299,7 @@ namespace Services.Broadcast.ReportGenerators
                 { "I13", "Report:"},
                 { "J9", reportData.GuaranteedDemo },
                 { "J10", "NSI"},
-                { "J11", string.Join(",", reportData.QuarterTabs.SelectMany(x => x.TabRows.Select(y => $":{y.SpotLength}")).Distinct().OrderBy(x=>x).ToList())},
+                { "J11", string.Join(",", reportData.QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x=>x).Select(x => $":{x}").ToList())},
                 { "J12", DateTime.Now.ToShortDateString()},
             };
 
