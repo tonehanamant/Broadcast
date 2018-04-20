@@ -124,7 +124,15 @@ namespace Services.Broadcast.Entities
                     new NsiPostReportQuarterSummaryTable()
                     {
                         TableName = String.Format("{0}Q'{1}", group.Key.Quarter, group.Key.Year.ToString().Substring(2)),
-                        TableRows = tab.TabRows.GroupBy(x => new { x.DaypartName, x.SpotLength, x.WeekStart })
+                        TableRows = tab.TabRows.GroupBy(x => new
+                        {
+                            x.DaypartName,
+                            x.SpotLength,
+                            x.WeekStart,
+                            x.ProposalWeekUnits,
+                            x.ProposalWeekImpressionsGoal,
+                            x.ProposalWeekCost
+                        })
                             .Select(x =>
                             {
                                 return new NsiPostReportQuarterSummaryTableRow
@@ -132,10 +140,10 @@ namespace Services.Broadcast.Entities
                                     Contract = x.Key.DaypartName,
                                     SpotLength = x.Key.SpotLength,
                                     WeekStartDate = x.Key.WeekStart,
-                                    Spots = tab.TabRows.Select(y => y.ProposalWeekUnits).First(),
+                                    Spots = x.Key.ProposalWeekUnits,
                                     ActualImpressions = tab.TabRows.Select(y => y.AudienceImpressions[guaranteedDemoId]).Sum(),
-                                    ProposalWeekCost = tab.TabRows.Select(y=>y.ProposalWeekCost).First(),
-                                    ProposalWeekImpressionsGoal = tab.TabRows.Select(y => y.ProposalWeekImpressionsGoal).First()
+                                    ProposalWeekCost = x.Key.ProposalWeekCost,
+                                    ProposalWeekImpressionsGoal = x.Key.ProposalWeekImpressionsGoal
                                 };
                             }).ToList()
                     });

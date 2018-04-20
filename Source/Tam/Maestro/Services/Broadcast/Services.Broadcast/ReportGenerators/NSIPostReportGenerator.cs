@@ -192,10 +192,10 @@ namespace Services.Broadcast.ReportGenerators
         {
             int rowOffset = 21;
 
-            foreach (var item in reportData.QuarterTables)
+            foreach (var quarterTable in reportData.QuarterTables)
             {
                 int columnOffset = 2;
-                wsSummary.Cells[$"B{rowOffset}"].Value = item.TableName;
+                wsSummary.Cells[$"B{rowOffset}"].Value = quarterTable.TableName;
                 wsSummary.Cells[$"M{rowOffset}"].Value = "Post";
                 rowOffset++;
 
@@ -210,7 +210,7 @@ namespace Services.Broadcast.ReportGenerators
 
                 //data
                 int firstTableRow = rowOffset;
-                foreach (var row in item.TableRows)
+                foreach (var row in quarterTable.TableRows)
                 {
                     wsSummary.Cells[$"B{rowOffset}"].Value = row.Contract;
                     wsSummary.Cells[$"C{rowOffset}"].Value = row.WeekStartDate.ToShortDateString();
