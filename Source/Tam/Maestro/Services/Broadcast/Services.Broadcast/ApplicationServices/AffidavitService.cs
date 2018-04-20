@@ -35,23 +35,6 @@ namespace Services.Broadcast.ApplicationServices
     {
         public int? ID { get; set; }
         public List<AffidavitValidationResult> ValidationResults { get; set; }
-
-        //public override string ToString()
-        //{
-        //    string str = "";
-
-        //    if (ID.HasValue) str += "ID=" + ID.Value;
-        //    if (ValidationResults.Any())
-        //    {
-        //        if (str.Length > 0) str += "\r\n";
-        //        str += "Validation Results\r\n";
-        //        ValidationResults.ForEach(r => { str += r.ToString() + "\r\n"; });
-        //    }
-
-        //    if (!string.IsNullOrEmpty(str)) str += "\r\n";
-        //    str += GetType().FullName;
-        //    return str;
-        //}
     }
     public interface IAffidavitService : IApplicationService
     {
@@ -370,9 +353,6 @@ namespace Services.Broadcast.ApplicationServices
             var ctr = 1;
             foreach (var affidavitFileDetail in details)
             {
-                //affidavitFileDetail.affidavit_file_detail_audiences =
-                //    _CalculdateImpressionsForNielsenAudiences(affidavitFileDetail, audiencesIds, postingBookId);
-
                 stationDetails.Add(
                     new StationDetailPointInTime
                     {
@@ -454,8 +434,6 @@ namespace Services.Broadcast.ApplicationServices
         public string JSONifyFile(Stream rawStream,string fileName,out AffidavitSaveRequest request)
         {
             TextFileLineReader reader;
-            //if (fileName.EndsWith("xlsx"))
-            //    reader = new ExcelFileReader(FileHeaders);
             if (fileName.EndsWith("csv"))
             { 
                 reader = new CsvFileReader(FileHeaders);
