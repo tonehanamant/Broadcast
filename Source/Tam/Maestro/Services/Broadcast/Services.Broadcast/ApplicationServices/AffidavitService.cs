@@ -1,18 +1,13 @@
 ﻿using Common.Services.ApplicationServices;
-using System.Data.Entity.Core.Mapping;
 using System.Linq;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using Services.Broadcast.Converters;
 using Tam.Maestro.Common;
@@ -31,28 +26,6 @@ namespace Services.Broadcast.ApplicationServices
         InSpec = 1
     }
 
-    public class AffidavitSaveResult
-    {
-        public int? ID { get; set; }
-        public List<AffidavitValidationResult> ValidationResults { get; set; }
-
-        //public override string ToString()
-        //{
-        //    string str = "";
-
-        //    if (ID.HasValue) str += "ID=" + ID.Value;
-        //    if (ValidationResults.Any())
-        //    {
-        //        if (str.Length > 0) str += "\r\n";
-        //        str += "Validation Results\r\n";
-        //        ValidationResults.ForEach(r => { str += r.ToString() + "\r\n"; });
-        //    }
-
-        //    if (!string.IsNullOrEmpty(str)) str += "\r\n";
-        //    str += GetType().FullName;
-        //    return str;
-        //}
-    }
     public interface IAffidavitService : IApplicationService
     {
         AffidavitSaveResult SaveAffidavit(AffidavitSaveRequest saveRequest, string username,DateTime currentDateTime);
@@ -370,9 +343,6 @@ namespace Services.Broadcast.ApplicationServices
             var ctr = 1;
             foreach (var affidavitFileDetail in details)
             {
-                //affidavitFileDetail.affidavit_file_detail_audiences =
-                //    _CalculdateImpressionsForNielsenAudiences(affidavitFileDetail, audiencesIds, postingBookId);
-
                 stationDetails.Add(
                     new StationDetailPointInTime
                     {
@@ -392,7 +362,7 @@ namespace Services.Broadcast.ApplicationServices
             ctr = 1;
             foreach (var affidavitFileDetail in details)
             {
-                var imps = impressionsPointInTime.Where(i => i.id == ctr);
+                var imps = impressionsPointInTime.Where(i => i.id == ctr).ToList();
 
                 affidavitFileDetail.affidavit_file_detail_audiences =
                     imps.Select(imp => new affidavit_file_detail_audiences
@@ -454,8 +424,6 @@ namespace Services.Broadcast.ApplicationServices
         public string JSONifyFile(Stream rawStream,string fileName,out AffidavitSaveRequest request)
         {
             TextFileLineReader reader;
-            //if (fileName.EndsWith("xlsx"))
-            //    reader = new ExcelFileReader(FileHeaders);
             if (fileName.EndsWith("csv"))
             { 
                 reader = new CsvFileReader(FileHeaders);

@@ -1,43 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Broadcast.Entities
 {
-    public class AffidavitSaveRequest
+    public class AffidavitSaveResult
     {
-        public string FileName { get; set; }
-        public string FileHash { get; set; }
-        public int Source { get; set; }
-        public List<AffidavitSaveRequestDetail> Details { get; set; }
+        public int? ID { get; set; }
+        public List<AffidavitValidationResult> ValidationResults { get; set; }
 
-        public AffidavitSaveRequest()
+        public override string ToString()
         {
-            Details = new List<AffidavitSaveRequestDetail>();
-        }
-    }
+            string str = "";
 
-    public class AffidavitSaveRequestDetail
-    {
-        public string Station { get; set; }
-        public DateTime AirTime { get; set; }
-        public string ProgramName { get; set; }
-        public string Genre { get; set; }
-        public int SpotLength { get; set; }
-        public string Isci { get; set; }
-        public string LeadInProgramName { get; set; }
-        public string LeadInGenre { get; set; }
-        public string LeadOutProgramName { get; set; }
-        public string LeadOutGenre { get; set; }
-        public string Market { get; set; }
-        public int EstimateId { get; set; }
-        public int InventorySource { get; set; }
-        public double SpotCost { get; set; }
-        public string Affiliate { get; set; }
-        public List<Demographics> Demographics { get; set; } = new List<Demographics>();
-        public DateTime LeadInEndTime { get; set; }
-        public DateTime LeadOutStartTime { get; set; }
-        public string ProgramShowType { get; set; }
-        public string LeadInShowType { get; set; }
-        public string LeadOutShowType { get; set; }
+            if (ID.HasValue) str += "ID=" + ID.Value;
+            if (ValidationResults.Any())
+            {
+                if (str.Length > 0) str += "\r\n";
+                str += "Validation Results\r\n";
+                ValidationResults.ForEach(r => { str += r.ToString() + "\r\n"; });
+            }
+
+            if (!string.IsNullOrEmpty(str)) str += "\r\n";
+            str += GetType().FullName;
+            return str;
+        }
     }
 }
