@@ -291,7 +291,7 @@ namespace Services.Broadcast.ReportGenerators
                 { "B16", "Daypart:"},
                 { "B17", "Flight:" },
                 { "C9", reportData.Advertiser},
-                { "C17", string.Join(" & ", reportData.FlightDates.Select(x=> $"{x.Item1.Value.ToString(@"M\/d\/yyyy")}-{x.Item2.Value.ToString(@"M\/d\/yyyy")}").ToList())},
+                { "C17", string.Join(" & ", reportData.FlightDates.Select(x=> $"{x.Item1.ToString(@"M\/d\/yyyy")}-{x.Item2.ToString(@"M\/d\/yyyy")}").ToList())},
                 { "I9", "Guaranteed Demo:"},
                 { "I10", "Post Type:"},
                 { "I11", "Unit Length:" },

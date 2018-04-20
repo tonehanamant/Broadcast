@@ -15,7 +15,7 @@ namespace Services.Broadcast.Entities
         public string Advertiser { get; set; }
         public string GuaranteedDemo { get; set; }
         public string Daypart { get; set; }
-        public List<Tuple<DateTime?, DateTime?>> FlightDates { get; set; }
+        public List<Tuple<DateTime, DateTime>> FlightDates { get; set; }
 
         public class NsiPostReportQuarterTab
         {
@@ -75,7 +75,7 @@ namespace Services.Broadcast.Entities
                             Dictionary<DateTime, MediaWeek> mediaWeekMappings,
                             Dictionary<string, DisplayBroadcastStation> stationMappings,
                             Dictionary<int, int> nsiMarketRankings, string guaranteedDemo, int guaranteedDemoId,
-                            List<Tuple<DateTime?, DateTime?>> flightDates)
+                            List<Tuple<DateTime, DateTime>> flightDates)
         {
             ProposalId = proposalId;
             ProposalAudiences = proposalAudiences;
