@@ -11,9 +11,10 @@ export class PostScrubbingDetail extends Component {
 
     render() {
         /* const { proposalDetail: { DayPart, FlightEndDate, FlightStartDate, SpotLength, Genres, ClientScrubs } } = this.state; */
-        const { isReadOnly } = this.props;
-        const { activeScrubbingData, grid, dataSource } = this.props;
-		const { selectRow, deselectAll, doLocalSort, setOverlayLoading } = this.props;
+      const { isReadOnly } = this.props;
+      const { activeScrubbingData, scrubbingFiltersList, grid, dataSource } = this.props;
+      const { selectRow, deselectAll, doLocalSort, setOverlayLoading } = this.props;
+      const hasData = activeScrubbingData.ClientScrubs.length > 0;
         /* eslint-disable no-unused-vars */
         return (
             <Well bsSize="small">
@@ -65,8 +66,12 @@ export class PostScrubbingDetail extends Component {
                 {
                     <Row style={{ marginTop: 10 }}>
                         <Col md={12}>
-                            <PostScrubbingFilters />
-                            <PostScrubbingGrid 
+                            { hasData &&
+                            <PostScrubbingFilters
+                              activeFilters={scrubbingFiltersList}
+                            />
+                            }
+                            <PostScrubbingGrid
                                 activeScrubbingData={activeScrubbingData}
                                 grid={grid}
                                 dataSource={dataSource}
@@ -88,15 +93,14 @@ PostScrubbingDetail.defaultProps = {
 };
 
 PostScrubbingDetail.propTypes = {
-    isReadOnly: PropTypes.bool.isRequired,
-    grid: PropTypes.object.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
+  grid: PropTypes.object.isRequired,
 	dataSource: PropTypes.object.isRequired,
-    activeScrubbingData: PropTypes.object.isRequired,
-
-    setOverlayLoading: PropTypes.func.isRequired,
-    selectRow: PropTypes.func.isRequired,
-    deselectAll: PropTypes.func.isRequired,
-    doLocalSort: PropTypes.func.isRequired,
+  scrubbingFiltersList: PropTypes.array.isRequired,
+  setOverlayLoading: PropTypes.func.isRequired,
+  selectRow: PropTypes.func.isRequired,
+  deselectAll: PropTypes.func.isRequired,
+  doLocalSort: PropTypes.func.isRequired,
 };
 
 export default PostScrubbingDetail;
