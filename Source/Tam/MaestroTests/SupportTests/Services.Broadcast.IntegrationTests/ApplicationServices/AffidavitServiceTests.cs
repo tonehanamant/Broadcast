@@ -37,6 +37,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _Repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
                 .GetDataRepository<IAffidavitRepository>();
         }
+        [Ignore]
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveBigAffidaviteService()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupBigAffidavit();
+
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+
+                VerifyAffidavit(result);
+            }
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -191,7 +205,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return request;
         }
 
-        private AffidavitSaveRequest _SetupSmallAffidavit()
+        private AffidavitSaveRequest _SetupAffidavit()
         {
             AffidavitSaveRequest request = new AffidavitSaveRequest
             {
@@ -226,7 +240,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return request;
         }
 
-        private AffidavitSaveRequest _SetupAffidavit()
+        private AffidavitSaveRequest _SetupBigAffidavit()
         {
             AffidavitSaveRequest request = new AffidavitSaveRequest
             {
@@ -235,7 +249,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FileName = "test.file",
                 Details = new List<AffidavitSaveRequestDetail>(){ new AffidavitSaveRequestDetail
                     {
-                        AirTime = DateTime.Parse("06/29/2017 8:04AM"),
+                        AirTime = DateTime.Parse("05/30/2016 8:00AM"),
                         Isci = "DDDDDDDD",
                         ProgramName = ProgramName1,
                         SpotLength = 30,
@@ -256,90 +270,53 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 }
             };
-            request.Details.Add(new AffidavitSaveRequestDetail()
+            var iscis = new List<string>()
             {
-                AirTime = DateTime.Parse("2016-05-30 9:04AM"),
-                Isci = "AAAAAAAA",
-                ProgramName = ProgramName1,
-                SpotLength = 30,
-                Genre = Genre1.Display,
-                Station = "WNBC",
-                LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
-                LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
-                ProgramShowType = "News",
-                LeadInShowType = "Comedy",
-                LeadOutShowType = "Documentary",
-                LeadInGenre = "News",
-                LeadOutProgramName = "LeadOutProgramName",
-                LeadInProgramName = "LeadInProgramName",
-                InventorySource = 1,
-                LeadOutGenre = "LeadOutGenre",
-                Affiliate = "Affiate",
-                Market = "market"
-            });
-            request.Details.Add(new AffidavitSaveRequestDetail()
+                "AAAAAAAA",
+                "BBBBBBBBB",
+                "CCCCCCCCCC",
+                "DDDDDDDD",
+                "EEEEEEEEEEE",
+                "FFFFFF"
+            };
+            int maxTimeAdd  = 60 * 59;
+            // first 3 stations of the top 16 markets
+            var stations= new List<string>()
             {
-                AirTime = DateTime.Parse("2016-05-30 9:44AM"),
-                Isci = "BBBBBBBBB",
-                ProgramName = ProgramName1,
-                SpotLength = 30,
-                Genre = Genre1.Display,
-                Station = "WNBC",
-                LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
-                LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
-                ProgramShowType = "News",
-                LeadInShowType = "Comedy",
-                LeadOutShowType = "Documentary",
-                LeadInGenre = "News",
-                LeadOutProgramName = "LeadOutProgramName",
-                LeadInProgramName = "LeadInProgramName",
-                InventorySource = 1,
-                LeadOutGenre = "LeadOutGenre",
-                Affiliate = "Affiate",
-                Market = "market"
-            });
-            request.Details.Add(new AffidavitSaveRequestDetail()
+                "WFUT","HPIX","WNJN","OTLA","NKJR","HMM","ESNS","WESV","GGN","WNJS","RDZN",
+                "GPHL","QUBO","NKJR","FBN","RLZC","HMM","NKJR","WPXW","NKJR","GDCW","NKJR",
+                "GENH","WBPX","NKJR","FBN","HMM","NTMD","KUVM","QUBO","NKJR","FBN","GMOR",
+                "KTVW","KFPH","KPNX","NKJR","QUBO","FBN","NKJR","KBTC","FBN","KSTP","KAWE",
+                "WCCO","HMM","HSTE","NKJR","KDVR","NKJR",
+            };
+
+            for (int c = 0; c < 102; c++)
             {
-                AirTime = DateTime.Parse("2016-05-30 9:06AM"),
-                Isci = "CCCCCCCCCC",
-                ProgramName = ProgramName1,
-                SpotLength = 30,
-                Genre = Genre1.Display,
-                Station = "WNBC",
-                LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
-                LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
-                ProgramShowType = "News",
-                LeadInShowType = "Comedy",
-                LeadOutShowType = "Documentary",
-                LeadInGenre = "News",
-                LeadOutProgramName = "LeadOutProgramName",
-                LeadInProgramName = "LeadInProgramName",
-                InventorySource = 1,
-                LeadOutGenre = "LeadOutGenre",
-                Affiliate = "Affiate",
-                Market = "market"
-            });
-            request.Details.Add(new AffidavitSaveRequestDetail()
-            {
-                AirTime = DateTime.Parse("2016-05-30 9:34AM"),
-                Isci = "EEEEEEEEEEE",
-                ProgramName = ProgramName1,
-                SpotLength = 30,
-                Genre = Genre1.Display,
-                Station = "WNBC",
-                LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
-                LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
-                ProgramShowType = "News",
-                LeadInShowType = "Comedy",
-                LeadOutShowType = "Documentary",
-                LeadInGenre = "News",
-                LeadOutProgramName = "LeadOutProgramName",
-                LeadInProgramName = "LeadInProgramName",
-                InventorySource = 1,
-                LeadOutGenre = "LeadOutGenre",
-                Affiliate = "Affiate",
-                Market = "market"
-            });
+                var airTime = DateTime.Parse("2016-05-30 8:01AM").AddSeconds(c % maxTimeAdd).AddDays(c%5);
+                var isci = iscis[c%iscis.Count];
+                var station = stations[c % stations.Count];
+                request.Details.Add(new AffidavitSaveRequestDetail()
+                {
+                    AirTime = airTime,
+                    Isci = isci,
+                    ProgramName = ProgramName1,
+                    SpotLength = 30,
+                    Genre = Genre1.Display,
+                    Station = station,
+                    LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                    LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                    ProgramShowType = "News",
+                    LeadInShowType = "Comedy",
+                    LeadOutShowType = "Documentary",
+                    LeadInGenre = "News",
+                    LeadOutProgramName = "LeadOutProgramName",
+                    LeadInProgramName = "LeadInProgramName",
+                    InventorySource = 1,
+                    LeadOutGenre = "LeadOutGenre",
+                    Affiliate = "Affiate",
+                    Market = "market"
+                });
+            }
 
             return request;
         }

@@ -83,32 +83,7 @@ namespace Services.Broadcast.ApplicationServices
                     ProcessError(filePath);
                     return;
                 }
-
-                //var handler = new HttpClientHandler();
-                //handler.UseDefaultCredentials = true;
-                //var client = new HttpClient(handler);
-                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(HTTP_ACCEPT_HEADER));
-
-                //var url = BroadcastServiceSystemParameter.AffidavitUploadUrl;
-                //HttpResponseMessage postResponse = null;
-                //string responseText = "";
-                //try
-                //{
-                //    client.Timeout = TimeSpan.FromSeconds(180);
-                //    postResponse = client.PostAsJsonAsync(url, affidavitFile).GetAwaiter().GetResult();
-                //    responseText = postResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                //}
-                //catch (Exception e)
-                //{
-                //    AffidavitValidationResult.Add(new AffidavitValidationResult()
-                //    {
-                //        ErrorMessage = "Could not read from broadcast SaveAffidavit API:\r\n" + e.ToString()
-                //    });
-                //    ProcessError(filePath);
-                //    return;
-                //}
-                //var response = JsonConvert.DeserializeObject<BaseResponse<AffidavitSaveResult>>(responseText);
-
+                
                 AffidavitSaveResult response = null;
                 try
                 {
@@ -249,7 +224,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 jsonFile = JsonConvert.DeserializeObject<WhosWatchingTVPostProcessingFile>(File.ReadAllText(filePath));
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 AffidavitValidationResult.Add(new AffidavitValidationResult()
                 {
