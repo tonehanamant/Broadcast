@@ -135,12 +135,12 @@ namespace Services.Broadcast.BusinessEngines
                 });
             }
 
-            if (string.IsNullOrWhiteSpace(affidavitDetail.ProgramShowType))
+            if (string.IsNullOrWhiteSpace(affidavitDetail.ShowType))
             {
                 validationResults.Add(new AffidavitValidationResult()
                 {
-                    InvalidField = "ProgramShowType",
-                    ErrorMessage = "'ProgramShowType' is required",
+                    InvalidField = "ShowType",
+                    ErrorMessage = "'ShowType' is required",
                 });
             }
 

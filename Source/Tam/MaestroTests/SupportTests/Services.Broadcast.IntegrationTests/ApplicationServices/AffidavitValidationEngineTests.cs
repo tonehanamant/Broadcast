@@ -32,7 +32,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 SpotLength = 15,
                 Station = "NBC",
                 LeadInShowType = "News",
-                ProgramShowType = "News",
+                ShowType = "News",
                 LeadOutShowType = "News"
             };
         }
@@ -203,17 +203,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ValidateAffidavitRecordInvalidProgramShowTypeTest()
+        public void ValidateAffidavitRecordInvalidShowTypeTest()
         {
             var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
 
-            affidavitSaveRequestDetail.ProgramShowType = "";
+            affidavitSaveRequestDetail.ShowType = "";
 
             var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-            var result = results.First(r => r.InvalidField == "ProgramShowType");
+            var result = results.First(r => r.InvalidField == "ShowType");
 
-            Assert.AreEqual("ProgramShowType", result.InvalidField);
-            Assert.AreEqual("'ProgramShowType' is required",result.ErrorMessage);
+            Assert.AreEqual("ShowType", result.InvalidField);
+            Assert.AreEqual("'ShowType' is required",result.ErrorMessage);
         }
         [Test]
         public void ValidateAffidavitRecordInvalidLeadInShowTypeTest()

@@ -116,7 +116,7 @@ namespace Services.Broadcast.ApplicationServices
                     leadout_program_name = matchedAffidavitDetail.AffidavitDetail.LeadOutProgramName,
                     leadin_end_time = Convert.ToInt32(matchedAffidavitDetail.AffidavitDetail.LeadInEndTime.TimeOfDay.TotalSeconds),
                     leadout_start_time = Convert.ToInt32(matchedAffidavitDetail.AffidavitDetail.LeadOutStartTime.TimeOfDay.TotalSeconds),
-                    program_show_type = matchedAffidavitDetail.AffidavitDetail.ProgramShowType,
+                    program_show_type = matchedAffidavitDetail.AffidavitDetail.ShowType,
                     leadin_show_type = matchedAffidavitDetail.AffidavitDetail.LeadInShowType,
                     leadout_show_type = matchedAffidavitDetail.AffidavitDetail.LeadOutShowType,
 
@@ -131,7 +131,7 @@ namespace Services.Broadcast.ApplicationServices
                             modified_date = currentDateTime,
                             effective_program_name = matchedAffidavitDetail.AffidavitDetail.ProgramName,
                             effective_genre = matchedAffidavitDetail.AffidavitDetail.Genre,
-                            effective_show_type = matchedAffidavitDetail.AffidavitDetail.ProgramShowType,
+                            effective_show_type = matchedAffidavitDetail.AffidavitDetail.ShowType,
                             lead_in = w.IsLeadInMatch
                         }).ToList(),
                     affidavit_file_detail_problems =
@@ -461,7 +461,7 @@ namespace Services.Broadcast.ApplicationServices
                     detail.LeadOutGenre = reader.GetCellValue("LeadOutGenre");
                     detail.InventorySource = Int32.Parse(reader.GetCellValue("Inventory Source"));
                     detail.Affiliate = reader.GetCellValue("Affiliate");
-                    detail.ProgramShowType = reader.GetCellValue("ProgramShowType");
+                    detail.ShowType = reader.GetCellValue("ShowType");
                     detail.LeadInShowType = reader.GetCellValue("LeadInShowType");
                     detail.LeadOutShowType = reader.GetCellValue("LeadOutShowType");
 

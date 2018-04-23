@@ -97,7 +97,7 @@ namespace Services.Broadcast.Repositories
                     LeadinProgramName = d.leadin_program_name,
                     LeadoutGenre = d.leadout_genre,
                     LeadoutProgramName = d.leadout_program_name,
-                    ProgramShowType = d.program_show_type,
+                    ShowType = d.program_show_type,
                     LeadInShowType = d.leadin_show_type,
                     LeadOutShowType = d.leadout_show_type,
                     LeadOutStartTime = d.leadout_start_time,

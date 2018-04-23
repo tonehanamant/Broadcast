@@ -258,7 +258,7 @@ namespace Services.Broadcast.ApplicationServices
                     SpotCost = jsonDetail.SpotCost,
                     LeadInEndTime = jsonDetail.Date.Add(DateTime.Parse(jsonDetail.LeadInEndTime).TimeOfDay),
                     LeadOutStartTime = jsonDetail.Date.Add(DateTime.Parse(jsonDetail.LeadOutStartTime).TimeOfDay),
-                    ProgramShowType = jsonDetail.ProgramShowType,
+                    ShowType = jsonDetail.ShowType,
                     LeadInShowType = jsonDetail.LeadInShowType,
                     LeadOutShowType = jsonDetail.LeadOutShowType,
                     Demographics = jsonDetail.Demographics.Select(y => new Demographics()

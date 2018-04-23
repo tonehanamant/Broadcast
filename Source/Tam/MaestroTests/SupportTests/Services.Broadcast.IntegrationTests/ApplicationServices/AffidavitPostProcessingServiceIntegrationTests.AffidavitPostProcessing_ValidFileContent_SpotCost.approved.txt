@@ -25,7 +25,7 @@
       "LeadOutStartTime": "2017-12-26T23:01:15",
       "Market": "New York",
       "ProgramName": "Everybody Loves Raymond",
-      "ProgramShowType": "Comedy",
+      "ShowType": "Comedy",
       "SpotCost": null,
       "SpotLength": 30,
       "Station": "WCBS"
@@ -55,13 +55,13 @@
       "LeadOutStartTime": "2017-12-15T10:01:15",
       "Market": "Philadelphia",
       "ProgramName": "The View",
-      "ProgramShowType": "Comedy",
+      "ShowType": "Comedy",
       "SpotCost": 222.0,
       "SpotLength": 30,
       "Station": "WKYW"
     }
   ],
-  "FileHash": "8E-38-8E-9D-FA-60-3D-5A-7C-EF-17-8D-A3-64-C0-42-04-3B-6C-38",
+  "FileHash": "41-AF-03-51-84-25-1C-30-D7-CE-9E-64-4E-91-37-AD-10-77-EC-F3",
   "FileName": "WWTV_AffidavitValidFileContent_SpotCost.txt",
   "Source": 1
 }
