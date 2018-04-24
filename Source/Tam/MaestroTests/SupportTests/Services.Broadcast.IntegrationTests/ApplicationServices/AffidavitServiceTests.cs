@@ -68,13 +68,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SaveAffidaviteServiceWithShowType()
+        public void SaveAffidaviteServiceWithShowTypes()
         {
             using (new TransactionScopeWrapper())
             {
                 var request = _SetupAffidavit();
 
-                request.Details.First().ProgramShowType = "Drama1";
+                request.Details.First().ShowType = "Drama1";
                 request.Details.First().LeadInShowType = "Drama2";
                 request.Details.First().LeadOutShowType = "Drama3";
 
@@ -118,13 +118,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SaveAffidaviteServiceWithProgramShowType()
+        public void SaveAffidaviteServiceWithShowType()
         {
             using (new TransactionScopeWrapper())
             {
                 var request = _SetupAffidavit();
 
-                request.Details.First().ProgramShowType = "Drama";
+                request.Details.First().ShowType = "Drama";
 
                 var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
 
@@ -189,7 +189,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Station = "WWSB",
                 LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
                 LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
-                ProgramShowType = "News",
+                ShowType = "News",
                 LeadInShowType = "Comedy",
                 LeadOutShowType = "Documentary",
                 LeadInGenre = "News",
@@ -224,7 +224,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         Station = "WWSB",
                         LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
                         LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
-                        ProgramShowType = "News",
+                        ShowType = "News",
                         LeadInShowType = "Comedy",
                         LeadOutShowType = "Documentary",
                         LeadInGenre = "News",
@@ -257,7 +257,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         Station = "WNBC",
                         LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
                         LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
-                        ProgramShowType = "News",
+                        ShowType = "News",
                         LeadInShowType = "Comedy",
                         LeadOutShowType = "Documentary",
                         LeadInGenre = "News",
@@ -305,7 +305,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Station = station,
                     LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
                     LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
-                    ProgramShowType = "News",
+                    ShowType = "News",
                     LeadInShowType = "Comedy",
                     LeadOutShowType = "Documentary",
                     LeadInGenre = "News",
@@ -412,7 +412,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     SpotLength = 30,
                     Genre = Genre1.Display,
                     Station = "WWSB",
-                    ProgramShowType = "News",
+                    ShowType = "News",
                     LeadInShowType = "Comedy",
                     LeadOutShowType = "Documentary",
                     LeadInGenre = "News",

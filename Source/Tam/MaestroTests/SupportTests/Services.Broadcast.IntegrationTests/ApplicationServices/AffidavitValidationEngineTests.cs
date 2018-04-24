@@ -32,7 +32,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 SpotLength = 15,
                 Station = "NBC",
                 LeadInShowType = "News",
-                ProgramShowType = "News",
+                ShowType = "News",
                 LeadOutShowType = "News"
             };
         }
@@ -46,92 +46,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsTrue(!result.Any());
         }
-
-        [Test]
-        public void ValidateAffidavitRecordInvalidProgramNameTest()
-        {
-            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
-
-            affidavitSaveRequestDetail.ProgramName = "";
-
-            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-            var result = results.First(r => r.InvalidField == "ProgramName" );
-
-            Assert.AreEqual("ProgramName", result.InvalidField);
-            Assert.AreEqual("'ProgramName' is required", result.ErrorMessage);
-        }
-
-        [Test]
-        public void ValidateAffidavitRecordInvalidGenreTest()
-        {
-            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
-
-            affidavitSaveRequestDetail.Genre = "";
-
-            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-            var result = results.First(r => r.InvalidField == "Genre");
-
-            Assert.AreEqual("Genre", result.InvalidField);
-            Assert.AreEqual("'Genre' is required", result.ErrorMessage);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ValidateAffidavitRecordInvalidLeadInProgramNameTest()
-        {
-            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
-
-            affidavitSaveRequestDetail.LeadInProgramName = "";
-
-            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-            var result = results.First(r => r.InvalidField == "LeadInProgramName");
-
-            Assert.AreEqual("LeadInProgramName", result.InvalidField);
-            Assert.AreEqual("'LeadInProgramName' is required", result.ErrorMessage);
-        }
-
-        [Test]
-        public void ValidateAffidavitRecordInvalidLeadInGenreTest()
-        {
-            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
-
-            affidavitSaveRequestDetail.LeadInGenre = null;
-
-            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-            var result = results.First(r => r.InvalidField == "LeadInGenre");
-
-            Assert.AreEqual("LeadInGenre", result.InvalidField);
-            Assert.AreEqual("'LeadInGenre' is required", result.ErrorMessage);
-        }
-
-        [Test]
-        public void ValidateAffidavitRecordInvalidLeadOutProgramNameTest()
-        {
-            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
-
-            affidavitSaveRequestDetail.LeadOutProgramName = null;
-
-            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-            var result = results.First(r => r.InvalidField == "LeadOutProgramName");
-
-            Assert.AreEqual("LeadOutProgramName", result.InvalidField);
-            Assert.AreEqual("'LeadOutProgramName' is required", result.ErrorMessage);
-        }
-
-        [Test]
-        public void ValidateAffidavitRecordInvalidLeadOutGenreTest()
-        {
-            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
-
-            affidavitSaveRequestDetail.LeadOutGenre = null;
-
-            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-            var result = results.First(r => r.InvalidField == "LeadOutGenre");
-
-            Assert.AreEqual("LeadOutGenre", result.InvalidField);
-            Assert.AreEqual("'LeadOutGenre' is required", result.ErrorMessage);
-        }
-
+        
+        
+        
         [Test]
         public void ValidateAffidavitRecordInvalidAirTimeTest()
         {
@@ -146,19 +63,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.AreEqual("'AirTime' must be a valid date", result.ErrorMessage);
         }
 
-        [Test]
-        public void ValidateAffidavitRecordInvalidInventorySourceTest()
-        {
-            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
-
-            affidavitSaveRequestDetail.InventorySource = (int)(InventorySourceEnum.Blank);
-
-            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-            var result = results.First(r => r.InvalidField == "InventorySource");
-
-            Assert.AreEqual("InventorySource", result.InvalidField);
-            Assert.AreEqual("'InventorySource' must be valid", result.ErrorMessage);
-        }
 
         [Test]
         public void ValidateAffidavitRecordInvalidStationTest()
@@ -203,17 +107,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ValidateAffidavitRecordInvalidProgramShowTypeTest()
+        public void ValidateAffidavitRecordInvalidShowTypeTest()
         {
             var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
 
-            affidavitSaveRequestDetail.ProgramShowType = "";
+            affidavitSaveRequestDetail.ShowType = "";
 
             var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-            var result = results.First(r => r.InvalidField == "ProgramShowType");
+            var result = results.First(r => r.InvalidField == "ShowType");
 
-            Assert.AreEqual("ProgramShowType", result.InvalidField);
-            Assert.AreEqual("'ProgramShowType' is required",result.ErrorMessage);
+            Assert.AreEqual("ShowType", result.InvalidField);
+            Assert.AreEqual("'ShowType' is required",result.ErrorMessage);
         }
         [Test]
         public void ValidateAffidavitRecordInvalidLeadInShowTypeTest()

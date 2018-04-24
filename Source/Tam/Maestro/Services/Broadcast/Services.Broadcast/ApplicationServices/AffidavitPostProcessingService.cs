@@ -258,17 +258,21 @@ namespace Services.Broadcast.ApplicationServices
                     SpotCost = jsonDetail.SpotCost,
                     LeadInEndTime = jsonDetail.Date.Add(DateTime.Parse(jsonDetail.LeadInEndTime).TimeOfDay),
                     LeadOutStartTime = jsonDetail.Date.Add(DateTime.Parse(jsonDetail.LeadOutStartTime).TimeOfDay),
-                    ProgramShowType = jsonDetail.ProgramShowType,
+                    ShowType = jsonDetail.ShowType,
                     LeadInShowType = jsonDetail.LeadInShowType,
-                    LeadOutShowType = jsonDetail.LeadOutShowType,
-                    Demographics = jsonDetail.Demographics.Select(y => new Demographics()
+                    LeadOutShowType = jsonDetail.LeadOutShowType
+                };
+
+                if (jsonDetail.Demographics != null)
+                {
+                    affidavitSaveRequestDetail.Demographics = jsonDetail.Demographics.Select(y => new Demographics()
                     {
                         AudienceId = _AudienceCache.GetDisplayAudienceByCode(y.Demographic).Id,
                         OvernightImpressions = y.OvernightImpressions,
                         OvernightRating = y.OvernightRating
-                    }).ToList()
-                };
+                    }).ToList();
 
+                }
                 var validationResults = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
 
                 if (validationResults.Any())

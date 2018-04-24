@@ -30,7 +30,7 @@ namespace Services.Broadcast.Entities
         public List<Demographics> Demographics { get; set; } = new List<Demographics>();
         public string LeadInEndTime { get; set; }
         public string LeadOutStartTime { get; set; }
-        public string ProgramShowType { get; set; }
+        public string ShowType { get; set; }
         public string LeadInShowType { get; set; }
         public string LeadOutShowType { get; set; }
     }

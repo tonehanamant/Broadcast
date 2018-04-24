@@ -148,5 +148,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPostProcessing_AffidavitValidFileContent_NullDemo()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_AffidavitValidFileContent_NullDemo.txt";
+                var request = File.ReadAllText(filePath);
+
+                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(BaseResponse), "Data");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver,
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
+            }
+        }
     }
 }

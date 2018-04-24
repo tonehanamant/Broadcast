@@ -16,6 +16,7 @@ namespace Services.Broadcast.Entities
         public string GuaranteedDemo { get; set; }
         public string Daypart { get; set; }
         public List<Tuple<DateTime, DateTime>> FlightDates { get; set; }
+        public string SpotLengthsDisplay { get; set; }
 
         public class NsiPostReportQuarterTab
         {
@@ -147,7 +148,8 @@ namespace Services.Broadcast.Entities
                                 };
                             }).ToList()
                     });
-            }            
+            }
+            SpotLengthsDisplay = string.Join(",", QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
         }
     }
 }

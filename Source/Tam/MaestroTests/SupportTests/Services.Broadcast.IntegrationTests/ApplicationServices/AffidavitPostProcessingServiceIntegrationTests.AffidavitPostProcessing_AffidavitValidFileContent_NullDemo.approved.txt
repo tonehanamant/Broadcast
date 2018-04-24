@@ -3,15 +3,8 @@
     {
       "Affiliate": "CBS",
       "AirTime": "2017-12-26T22:35:26",
-      "Demographics": [
-        {
-          "AudienceId": 36,
-          "Demographic": null,
-          "OvernightImpressions": 1928,
-          "OvernightRating": 2.3
-        }
-      ],
-      "EstimateId": 123,
+      "Demographics": [],
+      "EstimateId": null,
       "Genre": "Comedy",
       "InventorySource": 5,
       "Isci": "ABC123",
@@ -26,7 +19,7 @@
       "Market": "New York",
       "ProgramName": "Everybody Loves Raymond",
       "ShowType": "Comedy",
-      "SpotCost": 315.25,
+      "SpotCost": null,
       "SpotLength": 30,
       "Station": "WCBS"
     },
@@ -61,7 +54,7 @@
       "Station": "WKYW"
     }
   ],
-  "FileHash": "36-AD-50-08-C4-ED-ED-9B-67-3A-6D-11-CD-82-5E-53-B8-39-98-14",
-  "FileName": "WWTV_AffidavitValidFile.txt",
+  "FileHash": "C4-A9-30-A4-79-CB-91-12-A7-5E-1A-14-9F-46-2C-BB-D1-79-31-82",
+  "FileName": "WWTV_AffidavitValidFileContent_NullDemo.txt",
   "Source": 1
 }

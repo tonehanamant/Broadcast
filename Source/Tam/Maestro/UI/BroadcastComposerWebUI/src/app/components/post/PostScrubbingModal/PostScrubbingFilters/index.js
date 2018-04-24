@@ -1,222 +1,190 @@
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import CSSModules from 'react-css-modules';
-// import { bindActionCreators } from 'redux';
 import { Grid } from 'react-redux-grid';
+import { getScrubbingDataFiltered, clearScrubbingFiltersList } from 'Ducks/post';
 import styles from './index.scss';
-// import { Grid, Actions. applyGridConfig } from 'react-redux-grid';
-// import Sorter from 'Utils/react-redux-grid-sorter';
-
-// import { setOverlayLoading } from 'Ducks/app';
-// import CustomPager from 'Components/shared/CustomPager';
-import TestFilterGridCell from './Filters/TestFilterGridCell';
-
-// const { SelectionActions, GridActions } = Actions;
+import FilterPopoverWrapper from './Filters/FilterPopoverWrapper';
 
 const mapStateToProps = (grid, dataSource) => ({
   grid,
   dataSource,
 });
 
-/* const mapDispatchToProps = dispatch => (bindActionCreators(
+const mapDispatchToProps = dispatch => (bindActionCreators(
     {
-      doLocalSort,
-      setOverlayLoading,
+      getScrubbingDataFiltered,
+      clearScrubbingFiltersList,
     }, dispatch)
-); */
+);
 
-/* eslint-disable */
 export class PostScrubbingFilters extends Component {
   constructor(props, context) {
     super(props, context);
     this.context = context;
+
+    this.applyFilter = this.applyFilter.bind(this);
+    // remove as should not be needed - use saga/props
+    /* this.state = {
+      filterOptions: {},
+    }; */
   }
 
-    /* componentDidMount() {
-      applyGridConfig({
-        CLASS_NAMES: {
-          HEADER: 'hidden',
-        },
-        CSS_PREFIX: '',
-      });
-    }
-   /*  shouldComponentUpdate(nextProps) {
-        return nextProps.ActiveFilters !== this.props.ActiveFilters;
-    }
+  /* componentWillReceiveProps(nextProps) {
+    console.log('filtergrid receive props', nextProps, this);
+  } */
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.ActiveFilters !== this.props.ActiveFilters) {
-            this.props.setOverlayLoading({
-                id: 'PostScrubbingFiltersGrid',
-                loading: true,
-            });
-          // evaluate column sort direction
-        setTimeout(() => {
-            const cols = this.props.grid.get('PostScrubbingFiltersGrid').get('columns');
-            let sortCol = cols.find(x => x.sortDirection);
-            if (!sortCol) sortCol = cols.find(x => x.defaultSortDirection);
+  /* shouldComponentUpdate(nextProps, nextState) {
+    console.log('filtergrid should component update', nextProps, nextState);
+    return true;
+  } */
 
-            if (sortCol) {
-                const datasource = this.props.dataSource.get('PostScrubbingFiltersGrid');
-                const sorted = Sorter.sortBy(sortCol.dataIndex, sortCol.sortDirection || sortCol.defaultSortDirection, datasource);
+  applyFilter(filter) {
+    // ISSUE: Data changes but Object so does not update
+    // clear the grid data then reset (combining in saga/reducer does not work)
+    this.props.clearScrubbingFiltersList();
+    // no longer maintaining here
+    // const filterOptions = { ...this.state.filterOptions };
+    // filterOptions[filter.filterKey] = filter;
+    // this.setState({ filterOptions });
+    // console.log('apply filter', filter);
+    // wait so the store will update/clear first
+    setTimeout(() => {
+      this.props.getScrubbingDataFiltered(filter);
+    }, 50);
+  }
 
-                this.props.doLocalSort({
-                    data: sorted,
-                    stateKey: 'PostScrubbingFiltersGrid',
-                });
-            }
-
-            this.props.setOverlayLoading({
-                id: 'PostScrubbingFiltersGrid',
-                loading: false,
-            });
-        }, 0);
-        }
-    } */
-
-    /* ////////////////////////////////// */
-    /* // GRID ACTION METHOD BINDINGS
-    /* ////////////////////////////////// */
-
-
-
-    render() {
-      const stateKey = 'PostScrubbingFiltersGrid';
-      const inactiveFilterStyle = { backgroundColor: '#bfbfbf', minHeight: '20px', maxHeight: '20px', width: '100%' };
-      const columns = [
-        {
-          name: 'Week Start',
-          dataIndex: 'WeekStart',
-          width: '6%',
-          renderer: ({ row }) => {
-            return (
-              <div style={ inactiveFilterStyle }></div>
-            )
-          },
-        },
-        {
-          name: 'Date',
-          dataIndex: 'TimeAired',
-          width: '6%',
-          renderer: ({ row }) => {
-            return (
-              <div style={ inactiveFilterStyle }></div>
-            )
-          },
-        },
-        {
-          name: 'Time Aired',
-          dataIndex: 'MatchTime',
-          width: '6%',
-          renderer: ({ row }) => {
-            return (
-              <div style={ inactiveFilterStyle }></div>
-            )
-          },
-        },
-        {
-          name: 'Day',
-          dataIndex: 'DayOfWeek',
-          width: '6%',
-          renderer: ({ value, row }) => {
-            return (
-              <TestFilterGridCell />
-            )
-          },
-
-        },
-        {
-          name: 'Ad Length',
-          dataIndex: 'SpotLength',
-          width: '4%',
-          renderer: ({ row }) => {
-            return (
-              <div style={ inactiveFilterStyle }></div>
-            )
-          },
-        },
-        {
-          name: 'House ISCI',
-          dataIndex: 'ISCI',
-          width: '10%',
-          renderer: ({ row }) => {
-            return (
-              <div style={ inactiveFilterStyle }></div>
-            )
-          },
-        },
-        {
-          name: 'Client ISCI',
-          dataIndex: 'ClientISCI',
-          width: '10%',
-          renderer: ({ row }) => {
-            return (
-              <div style={ inactiveFilterStyle }></div>
-            )
-          },
-        },
-        {
-          name: 'Program',
-          dataIndex: 'ProgramName',
-          width: '12%',
-          renderer: ({ row }) => {
-            return (
-              <div style={ inactiveFilterStyle }></div>
-            )
-          },
-        },
-        {
-          name: 'Genre',
-          dataIndex: 'GenreName',
-          width: '6%',
-          renderer: ({ row }) => {
-            return (
-              <div style={ inactiveFilterStyle }></div>
-            )
-          },
-        },
-        {
-          name: 'Affiliate',
-          dataIndex: 'Affiliate',
-          width: '6%',
-          renderer: ({ row }) => {
-            return (
-              <div style={ inactiveFilterStyle }></div>
-            )
-          },
-        },
-        {
-          name: 'Market',
-          dataIndex: 'Market',
-          width: '12%',
-          renderer: ({ row }) => {
-            return (
-              <div style={ inactiveFilterStyle }></div>
-            )
-          },
-        },
-        {
-          name: 'Station',
-          dataIndex: 'Station',
-          width: '6%',
-          renderer: ({ row }) => {
-            return (
-              <div style={ inactiveFilterStyle }></div>
-            )
-          },
-        },
-        {
-          name: 'Comments',
-          dataIndex: 'Comments',
-          width: '10%',
-          renderer: ({ row }) => {
-            return (
-              <div style={ inactiveFilterStyle }></div>
-            )
-          },
-        },
-    ];
+  render() {
+    const stateKey = 'PostScrubbingFiltersGrid';
+    const inactiveFilterStyle = { backgroundColor: '#bfbfbf', minHeight: '20px', maxHeight: '20px', width: '100%', borderRadius: '2px' };
+    const columns = [
+      {
+        name: 'Week Start',
+        dataIndex: 'WeekStart',
+        width: '6%',
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
+        name: 'Date',
+        dataIndex: 'TimeAired',
+        width: '6%',
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
+        name: 'Time Aired',
+        dataIndex: 'MatchTime',
+        width: '6%',
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
+        name: 'Day',
+        dataIndex: 'DayOfWeek',
+        width: '6%',
+        // renderer: ({ value, row }) => {
+        renderer: ({ value }) => (
+            <FilterPopoverWrapper
+              filterDisplay={value.filterDisplay}
+              filterKey={value.filterKey}
+              textSearch={false}
+              filterOptions={value.filterOptions}
+              filterActive={value.active}
+              applyFilter={this.applyFilter}
+            />
+          ),
+      },
+      {
+        name: 'Ad Length',
+        dataIndex: 'SpotLength',
+        width: '4%',
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
+        name: 'House ISCI',
+        dataIndex: 'ISCI',
+        width: '10%',
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
+        name: 'Client ISCI',
+        dataIndex: 'ClientISCI',
+        width: '10%',
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
+        name: 'Program',
+        dataIndex: 'ProgramName',
+        width: '12%',
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+        // testing
+       /*  renderer: ({ value }) => (
+            <FilterPopoverWrapper
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            textSearch
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
+            />
+          ), */
+      },
+      {
+        name: 'Genre',
+        dataIndex: 'GenreName',
+        width: '6%',
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
+        name: 'Affiliate',
+        dataIndex: 'Affiliate',
+        width: '6%',
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
+        name: 'Market',
+        dataIndex: 'Market',
+        width: '12%',
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
+        name: 'Station',
+        dataIndex: 'Station',
+        width: '6%',
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
+        name: 'Comments',
+        dataIndex: 'Comments',
+        width: '10%',
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+  ];
 
     const plugins = {
       COLUMN_MANAGER: {
@@ -236,23 +204,58 @@ export class PostScrubbingFilters extends Component {
     };
 
     return (
-      <div style={ {marginBottom: '2px' } }>
-        <Grid {...grid} classNames={['filter-grid']} data={this.props.ActiveFilters} store={this.context.store} height={false}/>
+      <div style={{ maxHeight: '28px', overflow: 'hidden', marginBottom: '2px' }}>
+        <Grid {...grid} classNames={['filter-grid']} data={this.props.activeFilters} store={this.context.store} height={false} />
       </div>
     );
   }
 }
 
-
 PostScrubbingFilters.defaultProps = {
-  ActiveFilters: [{DayOfWeek: 'Day Filter'}],
+  // getScrubbingDataFiltered: () => { },
+  /* activeFilters: [
+    {
+      DayOfWeek: {
+        filterDisplay: 'Days',
+        filterKey: 'DayOfWeek',
+        type: 'filterList',
+        exclusions: [],
+        filterOptions: [
+          { Display: 'Monday', Value: 0, Selected: true },
+          { Display: 'Tuesday', Value: 1, Selected: true },
+          { Display: 'Wednesday', Value: 2, Selected: false },
+          { Display: 'Thursday', Value: 3, Selected: true },
+          { Display: 'Friday', Value: 4, Selected: true },
+          { Display: 'Saturday', Value: 5, Selected: true },
+          { Display: 'Sunday', Value: 6, Selected: false },
+        ],
+      },
+      ProgramName: {
+        filterDisplay: 'Programs',
+        filterKey: 'ProgramName',
+        type: 'filterList',
+        exclusions: [],
+        filterOptions: [
+          { Display: 'Hot Bench', Value: 'Hot Bench', Selected: true },
+          { Display: 'Inside Edition', Value: 'Inside Edition', Selected: true },
+          { Display: 'Jeopardy', Value: 'Jeopardy', Selected: true },
+          { Display: 'Jimmy Fallon', Value: 'Jimmy Fallon', Selected: true },
+          { Display: 'Judge Judy', Value: 'Judge Judy', Selected: true },
+          { Display: 'TMZ Live', Value: 'TMZ Live', Selected: true },
+          { Display: 'Regis & Kelly', Value: 'Regis & Kelly', Selected: true },
+          { Display: 'Stephen Colbert', Value: 'Stephen Colbert', Selected: true },
+        ],
+      },
+    },
+  ], */
 };
-PostScrubbingFilters.PropTypes = {
+PostScrubbingFilters.propTypes = {
   grid: PropTypes.object.isRequired,
   dataSource: PropTypes.object.isRequired,
-  ActiveFilters: PropTypes.array.isRequired,
+  activeFilters: PropTypes.array.isRequired,
   // doLocalSort: PropTypes.func.isRequired,
+  getScrubbingDataFiltered: PropTypes.func.isRequired,
+  clearScrubbingFiltersList: PropTypes.func.isRequired,
 };
 
-const styledComponent = CSSModules(PostScrubbingFilters, styles);
-export default connect(mapStateToProps)(PostScrubbingFilters);
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(PostScrubbingFilters, styles));

@@ -26,60 +26,8 @@ namespace Services.Broadcast.BusinessEngines
             Dictionary<int, int> spotLengthDict = null;
 
             var validationResults = new List<AffidavitValidationResult>();
+            
 
-            if (string.IsNullOrWhiteSpace(affidavitDetail.ProgramName))
-            {
-                validationResults.Add(new AffidavitValidationResult()
-                {
-                    InvalidField = "ProgramName",
-                    ErrorMessage = "'ProgramName' is required",
-                });
-            }
-
-            if (string.IsNullOrWhiteSpace(affidavitDetail.Genre))
-            {
-                validationResults.Add(new AffidavitValidationResult()
-                {
-                    InvalidField = "Genre",
-                    ErrorMessage = "'Genre' is required",
-                });
-            }
-
-            if (string.IsNullOrWhiteSpace(affidavitDetail.LeadInProgramName))
-            {
-                validationResults.Add(new AffidavitValidationResult()
-                {
-                    InvalidField = "LeadInProgramName",
-                    ErrorMessage = "'LeadInProgramName' is required",
-                });
-            }
-
-            if (string.IsNullOrWhiteSpace(affidavitDetail.LeadInGenre))
-            {
-                validationResults.Add(new AffidavitValidationResult()
-                {
-                    InvalidField = "LeadInGenre",
-                    ErrorMessage = "'LeadInGenre' is required",
-                });
-            }
-
-            if (string.IsNullOrWhiteSpace(affidavitDetail.LeadOutProgramName))
-            {
-                validationResults.Add(new AffidavitValidationResult()
-                {
-                    InvalidField = "LeadOutProgramName",
-                    ErrorMessage = "'LeadOutProgramName' is required",
-                });
-            }
-
-            if (string.IsNullOrWhiteSpace(affidavitDetail.LeadOutGenre))
-            {
-                validationResults.Add(new AffidavitValidationResult()
-                {
-                    InvalidField = "LeadOutGenre",
-                    ErrorMessage = "'LeadOutGenre' is required",
-                });
-            }
 
             if (affidavitDetail.AirTime == DateTime.MinValue)
             {
@@ -135,12 +83,12 @@ namespace Services.Broadcast.BusinessEngines
                 });
             }
 
-            if (string.IsNullOrWhiteSpace(affidavitDetail.ProgramShowType))
+            if (string.IsNullOrWhiteSpace(affidavitDetail.ShowType))
             {
                 validationResults.Add(new AffidavitValidationResult()
                 {
-                    InvalidField = "ProgramShowType",
-                    ErrorMessage = "'ProgramShowType' is required",
+                    InvalidField = "ShowType",
+                    ErrorMessage = "'ShowType' is required",
                 });
             }
 
