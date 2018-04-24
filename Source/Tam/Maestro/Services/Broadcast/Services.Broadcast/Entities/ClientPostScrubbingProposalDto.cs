@@ -36,7 +36,7 @@ namespace Services.Broadcast.Entities
     public class FilterOptions
     {
         public List<DayOfWeek> DistinctDayOfWeek { get; set; }
-        public List<GenreCriteria> DistinctGenres { get; set; }
+        public List<string> DistinctGenres { get; set; }
         public DateTime? WeekStart { get; set; }
         public DateTime? WeekEnd { get; set; }
     }

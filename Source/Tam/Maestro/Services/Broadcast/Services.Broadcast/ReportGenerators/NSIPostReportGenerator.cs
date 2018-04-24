@@ -299,7 +299,7 @@ namespace Services.Broadcast.ReportGenerators
                 { "I13", "Report:"},
                 { "J9", reportData.GuaranteedDemo },
                 { "J10", "NSI"},
-                { "J11", string.Join(",", reportData.QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x=>x).Select(x => $":{x}").ToList())},
+                { "J11", reportData.SpotLengthsDisplay},
                 { "J12", DateTime.Now.ToShortDateString()},
             };
 

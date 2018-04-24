@@ -157,7 +157,7 @@ namespace Services.Broadcast.ApplicationServices
                 result.Filters = new FilterOptions
                 {
                     DistinctDayOfWeek = result.ClientScrubs.Select(x => x.DayOfWeek).Distinct().OrderBy(x => x).ToList(),
-                    DistinctGenres = result.Details.SelectMany(x => x.Genres).Distinct().OrderBy(x => x.Genre.Display).ToList(),
+                    DistinctGenres = result.ClientScrubs.Select(x => x.GenreName).Distinct().OrderBy(x => x).ToList(),
                     WeekStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).First() : (DateTime?)null,
                     WeekEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).Last().AddDays(7) : (DateTime?)null
                 };

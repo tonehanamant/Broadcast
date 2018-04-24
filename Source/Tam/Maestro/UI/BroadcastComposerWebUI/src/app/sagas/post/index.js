@@ -1,7 +1,7 @@
 import { takeEvery, put, select } from 'redux-saga/effects';
 import FuzzySearch from 'fuzzy-search';
 import moment from 'moment';
-
+import _ from 'lodash';
 import * as appActions from 'Ducks/app/actionTypes';
 import * as postActions from 'Ducks/post/actionTypes';
 import api from '../api';
@@ -237,34 +237,81 @@ export function* requestPostScrubbingHeader({ payload: proposalID }) {
   }
 }
 
-export function* requestScrubbingDataFiltered({ payload: query }) {
-  const listUnfiltered = yield select(state => state.post.proposalHeader.scrubbingData);
-
-  listUnfiltered.Details.forEach((details) => {
-      details.ClientScrubs.forEach((item) => {
-          item.map(post => (
-            Object.keys(post).map((key) => {
-              if (post[key] !== null && post[key] !== undefined) {
-                post[key] = post[key].toString(); // eslint-disable-line no-param-reassign
-              }
-              return post[key];
-            })
-          ));
+export function* requestClearScrubbingDataFiltersList() {
+  try {
+    yield put({
+      type: ACTIONS.RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
+      data: [],
+    });
+  } catch (e) {
+    if (e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
       });
-  });
+    }
+  }
+}
 
-  const keys = ['WeekStart', 'TimeAired', 'MatchTime', 'DayOfWeek', 'SpotLength', 'ISCI', 'ProgramName', 'GenreName', 'Affiliate', 'Market', 'Station'];
-  const searcher = new FuzzySearch(listUnfiltered, keys, { caseSensitive: false });
-  const scrubbingDataFiltered = () => searcher.search(query);
+
+// tbd how to iterate multiple versus single and determine set to check active or original
+// todo break down original scrubbing to ClientScrubs etc
+export function* requestScrubbingDataFiltered({ payload: query }) {
+  const listUnfiltered = yield select(state => state.post.proposalHeader.scrubbingData.ClientScrubs);
+  const listFiltered = yield select(state => state.post.proposalHeader.activeScrubbingData.ClientScrubs);
+  const activeFilters = yield select(state => state.post.activeScrubbingFilters);
+  const actingFilter = activeFilters[query.filterKey]; // this is undefined
+  // console.log('request scrub filter', query, activeFilters, actingFilter);
+  // TODO REVISE for specific types, etc
+  // Using base version for initial story - DayOfWeek only
+  const applyFilter = () => {
+     // active -depends on if clearing etc
+    const isActive = query.exclusions.length > 0;
+     // todo should apply copy?
+    actingFilter.active = isActive;
+    actingFilter.exclusions = query.exclusions;
+    actingFilter.filterOptions = query.filterOptions;
+    // TBD iterate existing or acting only?
+    let filteredResult = listFiltered; // use listFiltered by default
+    if (actingFilter.filterKey === 'DayOfWeek') {
+      // DayOfWeek filter based on exclusions
+      filteredResult = listUnfiltered.filter(item => !_.includes(query.exclusions, item.DayOfWeek));
+    }
+    // console.log('request apply filter', actingFilter, activeFilters);
+
+    return { filteredClientScrubs: filteredResult, actingFilter, activeFilters };
+  };
 
   try {
-    const filtered = yield scrubbingDataFiltered();
+    /* yield put({
+      type: ACTIONS.RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
+      data: [],
+    }); */
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'PostScrubbingFilter',
+        loading: true },
+    });
+
+    const filtered = yield applyFilter();
+    // show loading?
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'PostScrubbingFilter',
+        loading: false },
+    });
+
     yield put({
       type: ACTIONS.RECEIVE_FILTERED_SCRUBBING_DATA,
       data: filtered,
     });
   } catch (e) {
     if (e.message) {
+      // todo should reset activeFilters (cleared) if error?
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
@@ -376,6 +423,10 @@ export function* watchRequestPostScrubbingHeader() {
 
 export function* watchRequestScrubbingDataFiltered() {
   yield takeEvery(ACTIONS.REQUEST_FILTERED_SCRUBBING_DATA, requestScrubbingDataFiltered);
+}
+
+export function* watchRequestClearScrubbingFiltersList() {
+  yield takeEvery(ACTIONS.REQUEST_CLEAR_SCRUBBING_FILTERS_LIST, requestClearScrubbingDataFiltersList);
 }
 
 export function* watchRequestUniqueIscis() {

@@ -62,26 +62,7 @@
   ],
   "Filters": {
     "DistinctDayOfWeek": [],
-    "DistinctGenres": [
-      {
-        "Contain": 2,
-        "Genre": {
-          "Display": "Action"
-        }
-      },
-      {
-        "Contain": 2,
-        "Genre": {
-          "Display": "Adult"
-        }
-      },
-      {
-        "Contain": 2,
-        "Genre": {
-          "Display": "Adventure"
-        }
-      }
-    ],
+    "DistinctGenres": [],
     "WeekEnd": null,
     "WeekStart": null
   },
