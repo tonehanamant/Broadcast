@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
@@ -44,6 +45,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="proposalId">Proposal id to generate the report for</param>
         /// <returns>ReportOutput object containing the report and the filename</returns>
         ReportOutput GenerateNSIPostReport(int proposalId);
+
+        /// <summary>
+        /// Generates My Events report
+        /// </summary>
+        /// <param name="proposalId">Proposal id to generate the report for</param>
+        /// <returns>ReportOutput object containing the report and the filename</returns>
+        ReportOutput GenerateMyEventsReport(int proposalId);
 
         /// <summary>
         /// Gets the NSI Post Report data
@@ -118,7 +126,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 ClientPostScrubbingProposalDto result = new ClientPostScrubbingProposalDto
                 {
-                    Id = proposal.Id.Value,                    
+                    Id = proposal.Id.Value,
                     Name = proposal.ProposalName,
                     Notes = proposal.Notes,
                     Markets = proposal.Markets,
@@ -141,7 +149,7 @@ namespace Services.Broadcast.ApplicationServices
                     Advertiser = advertiser != null ? advertiser.Display : string.Empty,
                     SecondaryDemos = proposal.SecondaryDemos.Select(x => _AudiencesCache.GetDisplayAudienceById(x).AudienceString).ToList()
                 };
-                
+
                 //load ClientScrubs
                 result.Details.ForEach(x =>
                 {
@@ -165,15 +173,15 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-         /// <summary>
+        /// <summary>
         /// Returns a list of unlinked iscis
         /// </summary>
         /// <returns>List of UnlinkedIscisDto objects</returns>
         public List<UnlinkedIscisDto> GetUnlinkedIscis()
         {
             return _PostRepository.GetUnlinkedIscis();
-}
-        
+        }
+
         /// <summary>
         /// Generates the excep NSI Post Report for a specific proposal
         /// </summary>
@@ -270,5 +278,12 @@ namespace Services.Broadcast.ApplicationServices
             return flightRanges;
         }
 
+        public ReportOutput GenerateMyEventsReport(int proposalId)
+        {
+            var myEventsReportDataRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IMyEventsReportDataRepository>();
+            var myEventsReportGenerator = new MyEventsReportGenerator();
+
+            return myEventsReportGenerator.Generate(myEventsReportDataRepository.GetMyEventsReportData(proposalId));
+        }
     }
 }

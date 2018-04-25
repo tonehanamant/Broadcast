@@ -196,6 +196,22 @@ export class DataGridContainer extends Component {
               }
             },
           },
+          {
+            text: 'MYEvents Report',
+            key: 'menu-post-myevents-report',
+            EVENT_HANDLER: ({ metaData }) => {
+              const inSpec = metaData.rowData.SpotsInSpec !== 0;
+              if (inSpec) {
+                window.open(`${window.location.origin}/broadcast/api/Post/DownloadMyEventsReport/${metaData.rowData.ContractId}`, '_blank');
+              } else {
+                this.props.createAlert({
+                  type: 'warning',
+                  headline: 'MYEvents Report Unavailable',
+                  message: 'There are no in-spec spots for this proposal.',
+                });
+              }
+            },
+          },
         ],
       },
       ROW: {

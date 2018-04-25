@@ -38,7 +38,7 @@ namespace BroadcastComposerWeb.Controllers
                     () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetClientScrubbingForProposal(proposalId));
         }
         
-         [HttpGet]
+        [HttpGet]
         [Route("DownloadNSIPostReport/{proposalId}")]
         public HttpResponseMessage DownloadNSIPostReport(int proposalId)
         {
@@ -55,9 +55,24 @@ namespace BroadcastComposerWeb.Controllers
             return result;
         }
 
-        
-        
-         [HttpGet]
+        [HttpGet]
+        [Route("DownloadMyEventsReport/{proposalId}")]
+        public HttpResponseMessage DownloadMyEventsReport(int proposalId)
+        {
+            var report = _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GenerateMyEventsReport(proposalId);
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+
+            result.Content = new ByteArrayContent(report.Stream.ToArray());
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = report.Filename
+            };
+
+            return result;
+        }
+
+        [HttpGet]
         [Route("UnlinkedIscis")]
         public BaseResponse<List<UnlinkedIscisDto>> GetUnlinkedIscis()
         {

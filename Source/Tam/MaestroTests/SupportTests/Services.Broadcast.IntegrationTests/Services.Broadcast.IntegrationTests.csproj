@@ -626,6 +626,9 @@
     <Content Include="Files\rate-file-invalid-schema.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Files\Test Adve NAV 30 05-30-16.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Files\WWTV_AffidavitInValidFileContent.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

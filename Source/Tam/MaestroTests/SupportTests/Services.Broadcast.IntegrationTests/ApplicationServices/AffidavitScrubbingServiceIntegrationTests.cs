@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using System;
 using System.IO;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -33,7 +34,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
         }
-                
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetClientScrubbingForProposal()
@@ -123,13 +124,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetNsiPostReportDataWithImpressionsForEachWeek()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _AffidavitScrubbingService.GetNsiPostReportData(26000);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
         [Ignore]
         public void GenerateReportFile()
         {
             const int proposalId = 253;
             var report = _AffidavitScrubbingService.GenerateNSIPostReport(proposalId);
             File.WriteAllBytes(@"\\tsclient\cadent\" + @"NSIPostReport" + proposalId + ".xlsx", report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
-                                                                                                                       //            File.WriteAllBytes(string.Format("..\\bvsreport{0}.xlsx", scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
+                                                                                                                           //            File.WriteAllBytes(string.Format("..\\bvsreport{0}.xlsx", scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
             Assert.IsNotNull(report.Stream);
         }
 
@@ -157,6 +179,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
-        }        
+        }
+
+        [Test]
+        public void GenerateMyEventsReportTest()
+        {
+            var expectedFileName = "Test Adve NAV 30 05-30-16.txt";
+            var expectedFilePath = @".\Files\" + expectedFileName;
+            var myEventsReport = _AffidavitScrubbingService.GenerateMyEventsReport(25999);
+            var tempPath = Path.GetTempFileName();
+
+            File.WriteAllBytes(tempPath, myEventsReport.Stream.ToArray());
+
+            FileAssert.AreEqual(expectedFilePath, tempPath);
+            Assert.AreEqual(expectedFileName, myEventsReport.Filename);
+        }
     }
 }
