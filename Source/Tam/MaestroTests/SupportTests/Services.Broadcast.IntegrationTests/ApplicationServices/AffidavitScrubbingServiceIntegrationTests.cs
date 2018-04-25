@@ -123,6 +123,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetNsiPostReportDataWithImpressionsForEachWeek()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _AffidavitScrubbingService.GetNsiPostReportData(26000);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
         [Ignore]
         public void GenerateReportFile()
         {

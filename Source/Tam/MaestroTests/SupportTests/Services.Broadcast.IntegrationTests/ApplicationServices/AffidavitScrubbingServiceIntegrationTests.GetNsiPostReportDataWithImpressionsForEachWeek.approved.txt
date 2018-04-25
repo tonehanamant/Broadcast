@@ -1,0 +1,132 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "Daypart": null,
+  "FlightDates": [
+    {
+      "Item1": "2016-05-30T00:00:00",
+      "Item2": "2016-06-14T00:00:00"
+    }
+  ],
+  "GuaranteedDemo": "House Holds",
+  "ProposalAudiences": [
+    {
+      "Display": "HH",
+      "Id": 31
+    }
+  ],
+  "QuarterTables": [
+    {
+      "TableName": "2Q'16",
+      "TableRows": [
+        {
+          "ActualImpressions": 999.0,
+          "Contract": "NAV1",
+          "HHRating": 0,
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
+          "SpotLength": 30,
+          "Spots": 10,
+          "WeekStartDate": "2016-05-30T00:00:00"
+        },
+        {
+          "ActualImpressions": 1443.0,
+          "Contract": "NAV2",
+          "HHRating": 0,
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
+          "SpotLength": 30,
+          "Spots": 10,
+          "WeekStartDate": "2016-05-30T00:00:00"
+        }
+      ]
+    }
+  ],
+  "QuarterTabs": [
+    {
+      "TabName": "Spot Detail 2Q16",
+      "TabRows": [
+        {
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 444.0
+          },
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NAV1",
+          "Isci": "NSI1",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 30,
+          "Station": "WNBC",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        },
+        {
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 555.0
+          },
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NAV1",
+          "Isci": "NSI2",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 30,
+          "Station": "WNBC",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        },
+        {
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 666.0
+          },
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NAV2",
+          "Isci": "NSI3",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 30,
+          "Station": "WNBC",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        },
+        {
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 777.0
+          },
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NAV2",
+          "Isci": "NSI4",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 30,
+          "Station": "WNBC",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        }
+      ],
+      "Title": "Test Advertiser 9 2Q16 Post Spot Detail"
+    }
+  ]
+}
