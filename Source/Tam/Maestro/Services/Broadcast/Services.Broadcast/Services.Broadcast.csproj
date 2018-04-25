@@ -268,6 +268,7 @@
     <Compile Include="Entities\AffidavitMatchingProposalWeek.cs" />
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\BvsTrackingAudience.cs" />
+    <Compile Include="Entities\MyEventsReportData.cs" />
     <Compile Include="Entities\PostedContractedProposalsDto.cs" />
     <Compile Include="Entities\ClientPostScrubbingProposalDto.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
@@ -334,6 +335,7 @@
     <Compile Include="Exceptions\FileUploadException.cs" />
     <Compile Include="Extensions\Bvs.cs" />
     <Compile Include="ReportGenerators\IReportGenerator.cs" />
+    <Compile Include="ReportGenerators\MyEventsReportGenerator.cs" />
     <Compile Include="ReportGenerators\NSIPostReportGenerator.cs" />
     <Compile Include="ReportGenerators\PostExcelReportGenerator.cs" />
     <Compile Include="Entities\InventoryDetail.cs" />
@@ -483,6 +485,7 @@
     <Compile Include="Repositories\AffidavitRepository.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
     <Compile Include="Repositories\MarketDmaMapRepository.cs" />
+    <Compile Include="Repositories\MyEventsReportDataRepository.cs" />
     <Compile Include="Repositories\NsiComponentAudienceRepository.cs" />
     <Compile Include="Repositories\PostPrePostingRepository.cs" />
     <Compile Include="Repositories\MarketRepository.cs" />
