@@ -148,8 +148,15 @@ export class PostScrubbingFilters extends Component {
         name: 'Genre',
         dataIndex: 'GenreName',
         width: '6%',
-        renderer: () => (
-          <div style={inactiveFilterStyle} />
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            textSearch
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
+          />
         ),
       },
       {

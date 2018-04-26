@@ -261,7 +261,8 @@ export function* requestClearScrubbingDataFiltersList() {
 export function* requestScrubbingDataFiltered({ payload: query }) {
   const listUnfiltered = yield select(state => state.post.proposalHeader.scrubbingData.ClientScrubs);
   const listFiltered = yield select(state => state.post.proposalHeader.activeScrubbingData.ClientScrubs);
-  const activeFilters = yield select(state => state.post.activeScrubbingFilters);
+  const activeFilters = _.cloneDeep(yield select(state => state.post.activeScrubbingFilters));
+  const originalFilters = yield select(state => state.post.activeScrubbingFilters);
   const actingFilter = activeFilters[query.filterKey]; // this is undefined
   // console.log('request scrub filter', query, activeFilters, actingFilter);
   // TODO REVISE for specific types, etc
@@ -274,14 +275,37 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
     actingFilter.exclusions = query.exclusions;
     actingFilter.filterOptions = query.filterOptions;
     // TBD iterate existing or acting only?
-    let filteredResult = listFiltered; // use listFiltered by default
-    if (actingFilter.filterKey === 'DayOfWeek') {
+    // let filteredResult = listFiltered; // use listFiltered by default
+    /* if (actingFilter.filterKey === 'DayOfWeek') {
       // DayOfWeek filter based on exclusions
       filteredResult = listUnfiltered.filter(item => !_.includes(query.exclusions, item.DayOfWeek));
-    }
+    } */
+
+    const filteredResult = listUnfiltered.filter((item) => {
+       let ret = true;
+      _.forEach(activeFilters, (value) => {
+        if (value.active && ret === true) {
+           ret = !_.includes(value.exclusions, item[value.filterKey]);
+           // console.log('filter each', ret, item[value.filterKey]);
+        }
+      });
+      return ret;
+    });
+    // for now test as filter on all active - needs to add to the array
+    /* let filtersApplied = [...listUnfiltered];
+    _.forEach(activeFilters, (value) => {
+      if (value.active) {
+        filtersApplied = listUnfiltered.filter(item => !_.includes(value.exclusions, item[value.filterKey]));
+      }
+    });
+    console.log('test filters', filtersApplied); */
     // console.log('request apply filter', actingFilter, activeFilters);
 
-    return { filteredClientScrubs: filteredResult, actingFilter, activeFilters };
+    // test to make sure there is returned data
+    if (filteredResult.length < 1) {
+      return { filteredClientScrubs: listFiltered, actingFilter, activeFilters: originalFilters, alertEmpty: true };
+    }
+    return { filteredClientScrubs: filteredResult, actingFilter, activeFilters, alertEmpty: false };
   };
 
   try {
@@ -289,6 +313,7 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
       type: ACTIONS.RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
       data: [],
     }); */
+    // show loading?
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,
       overlay: {
@@ -297,13 +322,24 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
     });
 
     const filtered = yield applyFilter();
-    // show loading?
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,
       overlay: {
         id: 'PostScrubbingFilter',
         loading: false },
     });
+    // if empty show alert - will set to original state
+    if (filtered.alertEmpty) {
+      const msg = `${filtered.actingFilter.filterDisplay} Filter will remove all data.`;
+      yield put({
+        type: ACTIONS.CREATE_ALERT,
+        alert: {
+          type: 'warning',
+          headline: 'Filter Not Applied',
+          message: msg,
+        },
+      });
+    }
 
     yield put({
       type: ACTIONS.RECEIVE_FILTERED_SCRUBBING_DATA,
