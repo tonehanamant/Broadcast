@@ -65,6 +65,7 @@
           }
         }
       ],
+      "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 21.1300,
@@ -119,6 +120,20 @@
       ],
       "Sequence": 0,
       "SharePostingBookId": 413,
+      "ShowTypeCriteria": [
+        {
+          "Contain": 1,
+          "ShowType": {
+            "Display": "Mini-Movie"
+          }
+        },
+        {
+          "Contain": 1,
+          "ShowType": {
+            "Display": "Movie"
+          }
+        }
+      ],
       "SinglePostingBookId": null,
       "SpotLengthId": 1,
       "TotalCost": 0.0000,

@@ -12,5 +12,10 @@ namespace Services.Broadcast.Entities
         public DateTime CreatedDate { get; set; }
         public int MediaMonthId { get; set; }
         public List<AffidavitFileDetail> AffidavitFileDetails { get; set; }
+
+        public AffidavitFile()
+        {
+            AffidavitFileDetails = new List<AffidavitFileDetail>();
+        }
     }
 }

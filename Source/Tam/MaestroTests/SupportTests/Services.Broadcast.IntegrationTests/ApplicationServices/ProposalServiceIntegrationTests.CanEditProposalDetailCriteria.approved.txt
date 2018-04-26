@@ -51,6 +51,7 @@
           }
         }
       ],
+      "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 12.5300,
@@ -98,6 +99,7 @@
       ],
       "Sequence": null,
       "SharePostingBookId": 413,
+      "ShowTypeCriteria": [],
       "SinglePostingBookId": 413,
       "SpotLengthId": 1,
       "TotalCost": 226655.17,

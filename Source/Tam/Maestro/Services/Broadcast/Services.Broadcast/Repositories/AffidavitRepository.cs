@@ -9,12 +9,13 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using Services.Broadcast.ApplicationServices;
+using System;
 
 namespace Services.Broadcast.Repositories
 {
     public interface IAffidavitRepository : IDataRepository
     {
-        int SaveAffidavitFile(affidavit_files affidatite_file);
+        int SaveAffidavitFile(AffidavitFile affidavitFile);
         AffidavitFile GetAffidavit(int affidavitId, bool includeScrubbingDetail = false);
         List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalVersionId);
 
@@ -39,15 +40,91 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public int SaveAffidavitFile(affidavit_files affidavit_file)
+        public int SaveAffidavitFile(AffidavitFile affidavitFile)
         {
-            _InReadUncommitedTransaction(
+            return _InReadUncommitedTransaction(
                 context =>
                 {
+                    var affidavit_file = _MapFromAffidavitFile(affidavitFile);
                     context.affidavit_files.Add(affidavit_file);
                     context.SaveChanges();
+                    return affidavit_file.id;
                 });
-            return affidavit_file.id;
+        }
+
+        private affidavit_files _MapFromAffidavitFile(AffidavitFile affidavitFile)
+        {
+            var result = new affidavit_files
+            {
+                created_date = affidavitFile.CreatedDate,
+                file_hash = affidavitFile.FileHash,
+                file_name = affidavitFile.FileName,
+                source_id = affidavitFile.SourceId,
+                media_month_id = affidavitFile.MediaMonthId,
+                affidavit_file_details = affidavitFile.AffidavitFileDetails.Select(d => new affidavit_file_details
+                 {
+                      air_time = d.AirTime,
+                      original_air_date = d.OriginalAirDate,
+                      isci = d.Isci,
+                      program_name = d.ProgramName,
+                      genre = d.Genre,
+                      spot_length_id = d.SpotLengthId,
+                      station = d.Station,
+                      market = d.Market,
+                      affiliate = d.Affiliate,
+                      estimate_id = d.EstimateId,
+                      inventory_source = d.InventorySource,
+                      spot_cost = d.SpotCost,
+                      leadin_genre = d.LeadinGenre,
+                      leadout_genre = d.LeadoutGenre,
+                      leadin_program_name = d.LeadinProgramName,
+                      leadout_program_name = d.LeadoutProgramName,
+                      leadin_end_time = d.LeadInEndTime,
+                      leadout_start_time = d.LeadOutStartTime,
+                      program_show_type = d.ShowType,
+                      leadin_show_type = d.LeadInShowType,
+                      leadout_show_type = d.LeadOutShowType,
+                      adjusted_air_date = d.AdjustedAirDate,
+                      affidavit_client_scrubs = d.AffidavitClientScrubs.Select(s => new affidavit_client_scrubs
+                      {
+                          proposal_version_detail_quarter_week_id = s.ProposalVersionDetailQuarterWeekId,
+                          match_program = s.MatchProgram,
+                          match_genre = s.MatchGenre,
+                          match_show_type = s.MatchShowType,
+                          match_market = s.MatchMarket,
+                          match_station = s.MatchStation,
+                          match_time = s.MatchTime,
+                          match_date = s.MatchDate,
+                          modified_by = s.ModifiedBy,
+                          modified_date = s.ModifiedDate,
+                          match_isci_days = s.MatchIsciDays,
+                          effective_program_name = s.EffectiveProgramName,
+                          effective_genre = s.EffectiveGenre,
+                          effective_show_type = s.EffectiveShowType,
+                          lead_in = s.LeadIn,
+                          status = (int) s.Status
+                      }).ToList(),
+                      affidavit_file_detail_problems = d.AffidavitFileDetailProblems.Select(p => new affidavit_file_detail_problems
+                      {
+                           problem_description = p.Description,
+                           problem_type = (int) p.Type
+                      }).ToList(),
+                      affidavit_file_detail_demographics = d.Demographics.Select(demo => new affidavit_file_detail_demographics
+                      {
+                           audience_id = demo.AudienceId,
+                           overnight_impressions = demo.OvernightImpressions,
+                           overnight_rating = demo.OvernightRating
+                      }).ToList(),
+                      affidavit_file_detail_audiences = d.AffidavitFileDetailAudiences.Select(a => new affidavit_file_detail_audiences
+                      {
+                           audience_id = a.AudienceId,
+                           impressions = a.Impressions
+                      }).ToList()
+
+                 }).ToList()
+            };
+
+            return result;
         }
 
         public AffidavitFile GetAffidavit(int affidavitId, bool includeScrubbingDetail = false)
@@ -63,6 +140,7 @@ namespace Services.Broadcast.Repositories
                     {
                         query.Include(a => a.affidavit_file_details.Select(d => d.affidavit_client_scrubs));
                         query.Include(a => a.affidavit_file_details.Select(d => d.affidavit_file_detail_demographics));
+                        query.Include(a => a.affidavit_file_details.Select(d => d.affidavit_file_detail_problems));
                     }
 
                     var affidavitFile = query.Single(a => a.id == affidavitId, "Affidavit/Post not found in database");
@@ -107,7 +185,7 @@ namespace Services.Broadcast.Repositories
                     EstimateId = d.estimate_id,
                     InventorySource = d.inventory_source.Value,
                     SpotCost = d.spot_cost,
-                    Demographics = d.affidavit_file_detail_demographics.Select(a => new Demographics()
+                    Demographics = d.affidavit_file_detail_demographics.Select(a => new AffidavitDemographics()
                     {
                         AudienceId = a.audience_id.Value,
                         OvernightImpressions = a.overnight_impressions.Value,
@@ -120,11 +198,16 @@ namespace Services.Broadcast.Repositories
                         ProposalVersionDetailQuarterWeekId = a.proposal_version_detail_quarter_week_id,
                         MatchProgram = a.match_program,
                         MatchGenre = a.match_genre,
+                        MatchShowType = a.match_show_type,
                         MatchMarket = a.match_market,
+                        MatchStation = a.match_station,
                         MatchTime = a.match_time,
                         MatchDate = a.match_date,
                         MatchIsciDays = a.match_isci_days,
-                        Status = (AffidavitClientScrubStatus)a.status,
+                        EffectiveProgramName = a.effective_program_name,
+                        EffectiveGenre = a.effective_genre,
+                        EffectiveShowType = a.effective_show_type,
+                        Status = (ScrubbingStatus)a.status,
                         Comment = a.comment,
                         ModifiedBy = a.modified_by,
                         ModifiedDate = a.modified_date,
@@ -209,14 +292,14 @@ namespace Services.Broadcast.Repositories
                                          from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
                                          let affidavitFileDetails = affidavitClientScrub.affidavit_file_details
                                          where proposal.id == proposalId && affidavitClientScrub.status == (int)ScrubbingStatus.InSpec
-                                         select new { affidavitFileDetails, proposalVersionQuarters, proposalVersionDetail, proposalVersion, proposal, proposalVersionWeeks })
+                                         select new { affidavitFileDetails, proposalVersionQuarters, proposalVersionDetail, proposalVersion, proposal, proposalVersionWeeks, affidavitClientScrub })
                                          .ToList();
 
                     var inSpecAffidavitFileDetails = inSpecDetails.Select(x => new InSpecAffidavitFileDetail()
                     {
                         Station = x.affidavitFileDetails.station,
                         Isci = x.affidavitFileDetails.isci,
-                        ProgramName = x.affidavitFileDetails.program_name,
+                        ProgramName = x.affidavitClientScrub.effective_program_name,
                         SpotLengthId = x.affidavitFileDetails.spot_length_id,
                         AirTime = x.affidavitFileDetails.air_time,
                         AirDate = x.affidavitFileDetails.original_air_date,

@@ -80,7 +80,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_spot_audiences> station_inventory_spot_audiences { get; set; }
         public virtual DbSet<station_inventory_spots> station_inventory_spots { get; set; }
         public virtual DbSet<proposal_version_detail_quarter_week_iscis> proposal_version_detail_quarter_week_iscis { get; set; }
-        public virtual DbSet<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual DbSet<affidavit_files> affidavit_files { get; set; }
         public virtual DbSet<affidavit_file_detail_audiences> affidavit_file_detail_audiences { get; set; }
         public virtual DbSet<nsi_component_audiences> nsi_component_audiences { get; set; }
@@ -92,5 +91,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<affidavit_file_detail_demographics> affidavit_file_detail_demographics { get; set; }
         public virtual DbSet<affidavit_file_details> affidavit_file_details { get; set; }
         public virtual DbSet<proposal_version_details> proposal_version_details { get; set; }
+        public virtual DbSet<proposal_version_detail_criteria_show_types> proposal_version_detail_criteria_show_types { get; set; }
+        public virtual DbSet<show_types> show_types { get; set; }
+        public virtual DbSet<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
     }
 }

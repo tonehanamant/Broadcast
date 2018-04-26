@@ -33,7 +33,7 @@ namespace Services.Broadcast.Entities
         public int InventorySource { get; set; }
         public double? SpotCost { get; set; }
         public string Affiliate { get; set; }
-        public List<Demographics> Demographics { get; set; } = new List<Demographics>();
+        public List<AffidavitDemographics> Demographics { get; set; } = new List<AffidavitDemographics>();
         public DateTime LeadInEndTime { get; set; }
         public DateTime LeadOutStartTime { get; set; }
         public string ShowType { get; set; }

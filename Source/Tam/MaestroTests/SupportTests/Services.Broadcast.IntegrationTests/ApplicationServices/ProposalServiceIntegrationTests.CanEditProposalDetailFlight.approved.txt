@@ -59,6 +59,7 @@
       "HutPostingBookId": null,
       "PlaybackType": 3,
       "ProgramCriteria": [],
+      "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 0.0,
@@ -128,6 +129,7 @@
       ],
       "Sequence": null,
       "SharePostingBookId": 413,
+      "ShowTypeCriteria": [],
       "SinglePostingBookId": 413,
       "SpotLengthId": 1,
       "TotalCost": 0.0,
