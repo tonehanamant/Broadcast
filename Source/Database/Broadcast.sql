@@ -389,7 +389,7 @@ IF NOT EXISTS(
 		object_id = OBJECT_ID('affidavit_client_scrubs'))
 BEGIN
 	ALTER TABLE affidavit_client_scrubs
-	ADD match_date BIT NULL
+	ADD match_show_type BIT NULL
 
 	EXEC('UPDATE affidavit_client_scrubs
 		  SET match_show_type = 1')
