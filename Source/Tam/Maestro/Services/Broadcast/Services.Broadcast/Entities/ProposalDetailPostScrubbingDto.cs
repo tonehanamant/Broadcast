@@ -21,7 +21,7 @@ namespace Services.Broadcast.Entities
         public bool MatchMarket { get; set; }
         public bool MatchStation { get; set; }
         public bool MatchTime { get; set; }
-        public bool MatchISCI { get; set; }
+        public bool MatchIsciDays { get; set; }
         public string ClientISCI { get; set; }
         public string Comments { get; set; }
         public int? Sequence { get; set; }
