@@ -471,6 +471,9 @@
     <Compile Include="proposal_version_detail_criteria_programs.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="proposal_version_detail_criteria_show_types.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="proposal_version_detail_quarters.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -515,6 +518,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="schedule_restriction_dayparts.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="show_types.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="spot_lengths.cs">

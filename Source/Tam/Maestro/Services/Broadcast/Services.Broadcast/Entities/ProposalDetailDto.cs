@@ -7,17 +7,14 @@ namespace Services.Broadcast.Entities
     public class ProposalDetailDto : IHaveSingleSharedPostingBooks
     {
         public int? Id { get; set; }
-        private List<ProposalFlightWeek> _ProposalFlightWeeks;
-        private List<GenreCriteria> _GenreCriteria;
-        private List<ProgramCriteria> _ProgramCriteria; 
+        public List<ProposalFlightWeek> ProposalFlightWeeks { get; set; } = new List<ProposalFlightWeek>();
+        public List<GenreCriteria> GenreCriteria { get; set; } = new List<GenreCriteria>();
+        public List<ProgramCriteria> ProgramCriteria { get; set; } = new List<ProgramCriteria>();
+        public List<ShowTypeCriteria> ShowTypeCriteria { get; set; } = new List<ShowTypeCriteria>();
 
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }
-        public List<ProposalFlightWeek> FlightWeeks
-        {
-            get { return _ProposalFlightWeeks ?? (_ProposalFlightWeeks = new List<ProposalFlightWeek>()); }
-            set { _ProposalFlightWeeks = value; }
-        }
+        public List<ProposalFlightWeek> FlightWeeks { get; set; } = new List<ProposalFlightWeek>();
         public int SpotLengthId { get; set; }
         public DaypartDto Daypart { get; set; }
         [JsonIgnore]
@@ -33,19 +30,7 @@ namespace Services.Broadcast.Entities
         public int? SharePostingBookId { get; set; }
         public int? HutPostingBookId { get; set; }
         public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
-        public DefaultPostingBooksDto DefaultPostingBooks { get; set; }
-
-        public List<GenreCriteria> GenreCriteria
-        {
-            get { return _GenreCriteria ?? (_GenreCriteria = new List<GenreCriteria>()); }
-            set { _GenreCriteria = value; }
-        }
-
-        public List<ProgramCriteria> ProgramCriteria
-        {
-            get { return _ProgramCriteria ?? (_ProgramCriteria = new List<ProgramCriteria>()); }
-            set { _ProgramCriteria = value; }
-        }
+        public DefaultPostingBooksDto DefaultPostingBooks { get; set; }        
         public int? Sequence { get; set; }
     }
 }

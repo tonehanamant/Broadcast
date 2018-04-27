@@ -62,7 +62,8 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IProposalProgramsCriteriaRepository, ProposalProgramsCriteriaRepository>();
             instance.RegisterType<ITrafficRepository, TrafficRepository>();
             instance.RegisterType<IStationProgramRepository, StationProgramRepository>();
-            
+            instance.RegisterType<IShowTypeRepository, ShowTypeRepository>();
+
             instance.RegisterType<IMediaMonthAndWeekAggregateRepository, MediaMonthAndWeekAggregateAndWeekAggregateRepository>();
             instance.RegisterType<IMediaMonthAndWeekAggregateCache, MediaMonthAndWeekAggregateCache>();
             instance.RegisterType<IDisplayDaypartRepository, DisplayDaypartBroadcastRepository>();

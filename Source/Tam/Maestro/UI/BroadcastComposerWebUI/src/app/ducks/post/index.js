@@ -20,6 +20,14 @@ const initialState = {
         exclusions: [],
         filterOptions: [],
       },
+      GenreName: {
+        filterDisplay: 'Genres',
+        filterKey: 'GenreName',
+        type: 'filterList',
+        active: false,
+        exclusions: [],
+        filterOptions: [],
+      },
       // testing
       /* ProgramName: {
         filterDisplay: 'Programs',
@@ -61,15 +69,24 @@ export default function reducer(state = initialState, action) {
       };
 
     case ACTIONS.RECEIVE_POST_SCRUBBING_HEADER: {
-      const filters = data.Data.Filters;
-      const activeFilters = { ...state.defaultScrubbingFilters };
-      const dayOfWeekOptions = [];
-      filters.DistinctDayOfWeek.forEach((item) => {
-        const display = getDay(item);
-        const ret = { Value: item, Selected: true, Display: display };
-        dayOfWeekOptions.push(ret);
-      });
-      activeFilters.DayOfWeek.filterOptions = dayOfWeekOptions;
+      const filtersData = data.Data.Filters;
+      const activeFilters = { ...state.defaultScrubbingFilters }; // todo seems to get mutated
+      const prepareFilterOptions = () => {
+        const dayOfWeekOptions = [];
+        const genreOptions = [];
+        filtersData.DistinctDayOfWeek.forEach((item) => {
+          const display = getDay(item);
+          const ret = { Value: item, Selected: true, Display: display };
+          dayOfWeekOptions.push(ret);
+        });
+        filtersData.DistinctGenres.forEach((item) => {
+          const ret = { Value: item, Selected: true, Display: item };
+          genreOptions.push(ret);
+        });
+        activeFilters.DayOfWeek.filterOptions = dayOfWeekOptions;
+        activeFilters.GenreName.filterOptions = genreOptions;
+      };
+      prepareFilterOptions();
       return {
         ...state,
         proposalHeader: {

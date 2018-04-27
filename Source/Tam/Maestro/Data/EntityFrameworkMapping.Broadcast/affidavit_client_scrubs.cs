@@ -32,8 +32,9 @@ namespace EntityFrameworkMapping.Broadcast
         public string effective_program_name { get; set; }
         public string effective_genre { get; set; }
         public string effective_show_type { get; set; }
+        public bool match_show_type { get; set; }
     
-        public virtual proposal_version_detail_quarter_weeks proposal_version_detail_quarter_weeks { get; set; }
         public virtual affidavit_file_details affidavit_file_details { get; set; }
+        public virtual proposal_version_detail_quarter_weeks proposal_version_detail_quarter_weeks { get; set; }
     }
 }

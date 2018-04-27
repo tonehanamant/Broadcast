@@ -43,6 +43,12 @@ namespace Services.Broadcast.ApplicationServices
         List<LookupDto> FindGenres(string genreSearchString);
         List<LookupDto> FindPrograms(ProgramSearchRequest request, string requestUrl);
         List<LookupDto> FindProgramsExternalApi(ProgramSearchRequest request);
+        /// <summary>
+        /// Finds show types based on the input string
+        /// </summary>
+        /// <param name="showTypeSearchString">Show type to filter by</param>
+        /// <returns>List of LookupDto objects</returns>
+        List<LookupDto> FindShowType(string showTypeSearchString);
     }
 
     public class ProposalService : IProposalService
@@ -58,6 +64,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalInventoryRepository _ProposalInventoryRepository;
         private readonly IStationRepository _StationRepository;
         private readonly IGenreRepository _GenreRepository;
+        private readonly IShowTypeRepository _ShowTypeReporitory;
         private readonly IProgramNameRepository _ProgramNameRepository;
         private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine;
         private readonly IProposalScxConverter _ProposalScxConverter;
@@ -100,6 +107,7 @@ namespace Services.Broadcast.ApplicationServices
             _RatingForecastService = ratingForecastService;
             _ProposalTotalsCalculationEngine = proposalTotalsCalculationEngine;
             _ProposalProprietaryInventoryService = proposalProprietaryInventoryService;
+            _ShowTypeReporitory = broadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
         }
 
         public List<DisplayProposal> GetAllProposals()
@@ -792,6 +800,9 @@ namespace Services.Broadcast.ApplicationServices
                 if (detail.GenreCriteria.Exists(g => g.Contain == ContainTypeEnum.Include) && detail.GenreCriteria.Exists(g => g.Contain == ContainTypeEnum.Exclude))
                     throw new Exception("Cannot save proposal detail that contains both genre inclusion and genre exclusion criteria.");
 
+                if (detail.ShowTypeCriteria.Exists(g => g.Contain == ContainTypeEnum.Include) && detail.ShowTypeCriteria.Exists(g => g.Contain == ContainTypeEnum.Exclude))
+                    throw new Exception("Cannot save proposal detail that contains both show type inclusion and show type exclusion criteria.");
+
                 if (detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Include) && detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Exclude))
                     throw new Exception("Cannot save proposal detail that contains both program name inclusion and program name exclusion criteria.");
             }
@@ -1344,6 +1355,16 @@ namespace Services.Broadcast.ApplicationServices
         public List<LookupDto> FindGenres(string genreSearchString)
         {
             return _GenreRepository.FindGenres(genreSearchString);
+        }
+
+        /// <summary>
+        /// Finds show types based on the input string
+        /// </summary>
+        /// <param name="showTypeSearchString">Show type to filter by</param>
+        /// <returns>List of LookupDto objects</returns>
+        public List<LookupDto> FindShowType(string showTypeSearchString)
+        {
+            return _ShowTypeReporitory.FindShowType(showTypeSearchString);
         }
 
         public List<LookupDto> FindPrograms(ProgramSearchRequest request, string requestUrl)

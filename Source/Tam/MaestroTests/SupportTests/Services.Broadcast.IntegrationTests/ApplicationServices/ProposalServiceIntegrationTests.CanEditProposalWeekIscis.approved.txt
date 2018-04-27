@@ -23,6 +23,7 @@
       "HutPostingBookId": null,
       "PlaybackType": 4,
       "ProgramCriteria": [],
+      "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -133,6 +134,15 @@
       ],
       "Sequence": null,
       "SharePostingBookId": 410,
+      "ShowTypeCriteria": [
+        {
+          "Contain": 1,
+          "Id": 1,
+          "ShowType": {
+            "Display": "Mini-Movie"
+          }
+        }
+      ],
       "SinglePostingBookId": 410,
       "SpotLengthId": 1,
       "TotalCost": 2000.00,
@@ -158,6 +168,7 @@
       "HutPostingBookId": null,
       "PlaybackType": 4,
       "ProgramCriteria": [],
+      "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -198,6 +209,15 @@
       ],
       "Sequence": null,
       "SharePostingBookId": 410,
+      "ShowTypeCriteria": [
+        {
+          "Contain": 2,
+          "Id": 2,
+          "ShowType": {
+            "Display": "Movie"
+          }
+        }
+      ],
       "SinglePostingBookId": 410,
       "SpotLengthId": 1,
       "TotalCost": 20.00,

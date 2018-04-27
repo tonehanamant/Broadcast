@@ -52,6 +52,72 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-2755 *****************************************************/
+
+IF OBJECT_ID('show_types', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[show_types](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[name] [varchar](127) NOT NULL,
+		[created_by] [varchar](63) NOT NULL,
+		[created_date] [datetime] NOT NULL,
+		[modified_by] [varchar](63) NOT NULL,
+		[modified_date] [datetime] NOT NULL,
+	 CONSTRAINT [PK_show_types] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Mini-Movie', 'System', current_timestamp, 'System', current_timestamp)
+	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Miscellaneous', 'System', current_timestamp, 'System', current_timestamp)
+	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Movie', 'System', current_timestamp, 'System', current_timestamp)
+	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('News', 'System', current_timestamp, 'System', current_timestamp)
+	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Off Air', 'System', current_timestamp, 'System', current_timestamp)
+	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Paid Programming', 'System', current_timestamp, 'System', current_timestamp)
+	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Series', 'System', current_timestamp, 'System', current_timestamp)
+	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Special', 'System', current_timestamp, 'System', current_timestamp)
+	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Special Event', 'System', current_timestamp, 'System', current_timestamp)
+	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Sports', 'System', current_timestamp, 'System', current_timestamp)
+	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('TBA Movie', 'System', current_timestamp, 'System', current_timestamp)
+	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('To Be Announced', 'System', current_timestamp, 'System', current_timestamp)
+END
+GO
+
+IF OBJECT_ID('proposal_version_detail_criteria_show_types', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[proposal_version_detail_criteria_show_types](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[proposal_version_detail_id] [INT] NOT NULL,
+		[contain_type] [TINYINT] NOT NULL,
+		[show_type_id] [INT] NOT NULL
+	 CONSTRAINT [PK_proposal_version_detail_criteria_show_types] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+	
+	ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] 
+	WITH CHECK ADD CONSTRAINT [FK_proposal_version_detail_criteria_show_types_show_types] 
+	FOREIGN KEY(show_type_id)
+	REFERENCES [dbo].[show_types] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] CHECK CONSTRAINT [FK_proposal_version_detail_criteria_show_types_show_types]
+	
+	ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] 
+	WITH CHECK ADD CONSTRAINT [FK_proposal_version_details_show_types] 
+	FOREIGN KEY(proposal_version_detail_id)
+	REFERENCES [dbo].[proposal_version_details] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] CHECK CONSTRAINT [FK_proposal_version_details_show_types]
+END
+GO
+
+/*************************************** END BCOP-2755 *****************************************************/
+
+
 /*************************************** START BCOP-2665 *********************************************************/
 IF EXISTS(SELECT 1 FROM sys.columns 
               WHERE name = 'order' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
@@ -312,6 +378,28 @@ BEGIN
 END
 
 /*************************************** END - BCOP-2745 *********************************************************/
+
+/*************************************** START - BCOP-2631 *********************************************************/
+
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'match_show_type' AND 
+		object_id = OBJECT_ID('affidavit_client_scrubs'))
+BEGIN
+	ALTER TABLE affidavit_client_scrubs
+	ADD match_show_type BIT NULL
+
+	EXEC('UPDATE affidavit_client_scrubs
+		  SET match_show_type = 1')
+
+	ALTER TABLE affidavit_client_scrubs
+	ALTER COLUMN match_show_type BIT NOT NULL
+END
+GO
+
+/*************************************** END - BCOP-2631 *********************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

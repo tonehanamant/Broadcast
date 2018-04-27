@@ -5,12 +5,17 @@
       "AffidavitClientScrubs": [
         {
           "Comment": null,
+          "EffectiveGenre": "Do It Yourself",
+          "EffectiveProgramName": "Program Names R us",
+          "EffectiveShowType": "News",
           "LeadIn": false,
           "MatchDate": true,
           "MatchGenre": true,
           "MatchIsciDays": false,
           "MatchMarket": true,
           "MatchProgram": true,
+          "MatchShowType": true,
+          "MatchStation": true,
           "MatchTime": true,
           "ModifiedBy": "test user",
           "ProposalVersionDetailQuarterWeekId": 8522,
@@ -103,6 +108,7 @@
           "Impressions": 0.0
         }
       ],
+      "AffidavitFileDetailProblems": [],
       "Affiliate": "Affiate",
       "AirTime": 29040,
       "Demographics": [],
@@ -129,6 +135,5 @@
   ],
   "FileHash": "abc123",
   "FileName": "test.file",
-  "MediaMonthId": 0,
   "SourceId": 1
 }

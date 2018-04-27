@@ -27,7 +27,7 @@ namespace Services.Broadcast.Entities
         public string LeadInGenre { get; set; }
         public string LeadOutProgram { get; set; }
         public string LeadOutGenre { get; set; }
-        public List<Demographics> Demographics { get; set; } = new List<Demographics>();
+        public List<AffidavitDemographics> Demographics { get; set; } = new List<AffidavitDemographics>();
         public string LeadInEndTime { get; set; }
         public string LeadOutStartTime { get; set; }
         public string ShowType { get; set; }
@@ -35,11 +35,4 @@ namespace Services.Broadcast.Entities
         public string LeadOutShowType { get; set; }
     }
 
-    public class Demographics
-    {
-        public int AudienceId { get; set; }
-        public string Demographic { get; set; }
-        public double OvernightRating { get; set; }
-        public int OvernightImpressions { get; set; }
-    }
 }

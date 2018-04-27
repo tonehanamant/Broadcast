@@ -265,7 +265,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (jsonDetail.Demographics != null)
                 {
-                    affidavitSaveRequestDetail.Demographics = jsonDetail.Demographics.Select(y => new Demographics()
+                    affidavitSaveRequestDetail.Demographics = jsonDetail.Demographics.Select(y => new AffidavitDemographics()
                     {
                         AudienceId = _AudienceCache.GetDisplayAudienceByCode(y.Demographic).Id,
                         OvernightImpressions = y.OvernightImpressions,

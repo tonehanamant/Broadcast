@@ -189,6 +189,16 @@ namespace BroadcastComposerWeb.Controllers
                 () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindGenres(genreSearchString));
         }
 
+        [HttpGet]
+        [Route("FindShowType/{showTypeSearchString}")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
+        public BaseResponse<List<LookupDto>> FindShowType(string showTypeSearchString)
+        {
+
+            return _ConvertToBaseResponse(
+                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindShowType(showTypeSearchString));
+        }
+
         [HttpPost]
         [Route("FindPrograms")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]

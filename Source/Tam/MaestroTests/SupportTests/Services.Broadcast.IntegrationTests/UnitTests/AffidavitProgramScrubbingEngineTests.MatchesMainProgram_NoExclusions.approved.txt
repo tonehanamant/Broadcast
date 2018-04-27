@@ -1,0 +1,21 @@
+﻿{
+  "AffidavitFileDetailId": 0,
+  "Comment": null,
+  "EffectiveGenre": null,
+  "EffectiveProgramName": null,
+  "EffectiveShowType": null,
+  "Id": 0,
+  "LeadIn": false,
+  "MatchDate": false,
+  "MatchGenre": true,
+  "MatchIsciDays": false,
+  "MatchMarket": false,
+  "MatchProgram": true,
+  "MatchShowType": true,
+  "MatchStation": false,
+  "MatchTime": false,
+  "ModifiedBy": null,
+  "ModifiedDate": null,
+  "ProposalVersionDetailQuarterWeekId": 0,
+  "Status": 0
+}

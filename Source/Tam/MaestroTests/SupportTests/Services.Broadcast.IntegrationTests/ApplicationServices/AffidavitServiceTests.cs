@@ -161,6 +161,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(AffidavitFileDetailAudience), "AffidavitFileDetailId");
             jsonResolver.Ignore(typeof(AffidavitClientScrub), "AffidavitFileDetailId");
             jsonResolver.Ignore(typeof(AffidavitClientScrub), "ModifiedDate");
+            jsonResolver.Ignore(typeof(AffidavitFile), "MediaMonthId");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -333,14 +334,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
 
-                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+                //????var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA", Days = "M|T|W|TH|F|SA|SU" } };
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
                 _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
 
-                var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
+                //????var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
 
-                AllocationProgram(proposalDetailId, programId, proposal.FlightWeeks.First().MediaWeekId);
+                //???? AllocationProgram(proposalDetailId, programId, proposal.FlightWeeks.First().MediaWeekId);
 
                 var request = _SetupAffidavit();
                 request.Details.First().Isci = "WAWA";
@@ -375,19 +376,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposal = new ProposalDto();
-                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+                    var proposal = new ProposalDto();
+                    var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
 
-                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
-                proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA" } };
-                proposal.Details.First().GenreCriteria.Add(new GenreCriteria() { Contain = ContainTypeEnum.Exclude, Genre = new LookupDto() { Id = Genre1.Id, Display = Genre1.Display } });
-                proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
-                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+                    var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+                    proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA" } };
+                    proposal.Details.First().GenreCriteria.Add(new GenreCriteria() { Contain = ContainTypeEnum.Exclude, Genre = new LookupDto() { Id = Genre1.Id, Display = Genre1.Display } });
+                    proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
+                    _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
 
-                var request = _SetupAffidavit();
-                request.Details.First().Isci = "WAWA";
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
-                VerifyAffidavit(result);
+                    var request = _SetupAffidavit();
+                    var detail = request.Details.First();
+                    detail.Isci = "WAWA";
+                    detail.LeadOutGenre = detail.Genre;
+                    detail.LeadOutProgramName = detail.ProgramName;
+                    var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                    VerifyAffidavit(result);
             }
         }
 
