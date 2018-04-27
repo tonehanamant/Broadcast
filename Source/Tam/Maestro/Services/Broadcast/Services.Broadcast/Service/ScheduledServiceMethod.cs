@@ -53,10 +53,15 @@ namespace Services.Broadcast.Services
         /// It is ready first call.
         /// Then ready is calculated using:
         ///     RunWeeklyWhen or SecondsBetweenRuns is used to check is ready
+        /// Set RunWeeklyWhen to null and SecondsBetweenRuns to 0 to effectively turn off 
         /// </summary>
         /// <param name="timeSignaled"></param>
         public bool RunWhenReady(DateTime timeSignaled)
         {
+
+            if (RunWeeklyWhen == null && SecondsBetweenRuns == 0)
+                return false;
+
             if (_LastRun == null)
             {   // first time run
                 return RunService(timeSignaled);
@@ -75,6 +80,25 @@ namespace Services.Broadcast.Services
                 ret = RunService(timeSignaled);
             }
             return ret;
+        }
+
+        protected DateTime? _EnsureRunWeeklyWhen(string val)
+        {
+            DateTime? runWhen;
+
+            if (DateTime.TryParse(val, out DateTime d))
+            {
+                runWhen = d;
+            }
+            else
+            {
+                runWhen = null;
+            }
+
+            if (SMSClient.Handler.TamEnvironment != TAMEnvironment.PROD.ToString())
+                runWhen = null;
+
+            return runWhen;
         }
 
         /// <summary>

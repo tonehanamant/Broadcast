@@ -6,14 +6,14 @@ namespace Services.Broadcast.Entities
 {
     public class AffidavitSaveResult
     {
-        public int? ID { get; set; }
+        public int? Id { get; set; }
         public List<AffidavitValidationResult> ValidationResults { get; set; }
 
         public override string ToString()
         {
             string str = "";
 
-            if (ID.HasValue) str += "ID=" + ID.Value;
+            if (Id.HasValue) str += "ID=" + Id.Value;
             if (ValidationResults.Any())
             {
                 if (str.Length > 0) str += "\r\n";

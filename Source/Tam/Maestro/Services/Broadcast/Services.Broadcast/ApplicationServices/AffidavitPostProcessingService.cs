@@ -20,12 +20,10 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface IAffidavitPostProcessingService : IApplicationService
     {
-        List<AffidavitValidationResult> AffidavitValidationResult { get; }
-
         /// <summary>
         /// Downloads the WWTV processed files and calls the affidavit processing service
         /// </summary>
-        void DownloadAndProcessWWTVFiles(string userName);
+        void DownloadAndProcessWWTVFiles(string userName, out List<string> filesFailedDownload);
 
         /// <summary>
         /// Process and WWTV post processing file
@@ -47,6 +45,7 @@ namespace Services.Broadcast.ApplicationServices
         private const string HTTP_ACCEPT_HEADER = "application/json";
         private const string FTP_SCHEME = "ftp://";
 
+        private string _errorMessage;
 
         public AffidavitPostProcessingService(
             IBroadcastAudiencesCache audienceCache,
@@ -58,62 +57,63 @@ namespace Services.Broadcast.ApplicationServices
             _AudienceCache = audienceCache;
             _AffidavitValidationEngine = affidavitValidationEngine;
             _AffidavitEmailSenderService = affidavitEmailSenderService;
-            AffidavitValidationResult = new List<AffidavitValidationResult>();
             _AffidavidService = affidavidService;
         }
 
-        public List<AffidavitValidationResult> AffidavitValidationResult { get; set; }
 
 
         /// <summary>
         /// Downloads the WWTV processed files and calls the affidavit processing service
+        /// return true if download success, false if download fails (use for loggin)
         /// This involves FTP 
+        /// 
         /// </summary>
-        public void DownloadAndProcessWWTVFiles(string userName)
+        public void DownloadAndProcessWWTVFiles(string userName,out List<string> filesFailedDownload)
         {
+            filesFailedDownload = new List<string>();
             List<string> filesToProcess = _GetWWTVFTPFileNames();
             foreach (var file in filesToProcess)
             {
                 string filePath = $"{Path.GetTempPath()}{file}";
-                _DownloadFileFromWWTVFtp(file, filePath);
+                try
+                {
+                    _DownloadFileFromWWTVFtp(file, filePath);
+                }
+                catch 
+                {               
+                    // cannot download file
+                    filesFailedDownload.Add(file);
+                    continue;   // skip to next file 
+                }
+                AffidavitSaveResult response = null;
 
                 AffidavitSaveRequest affidavitFile = ParseWWTVFile(filePath);
-                if (AffidavitValidationResult.Count > 0)
+                                
+                if (affidavitFile == null)
                 {
-                    ProcessError(filePath);
+                    _ProcessError(filePath);
                     return;
                 }
-                
-                AffidavitSaveResult response = null;
                 try
                 {
                     response = _AffidavidService.SaveAffidavit(affidavitFile, userName, DateTime.Now);
                 }
                 catch (Exception e)
                 {
-                    AffidavitValidationResult.Add(new AffidavitValidationResult()
-                        {ErrorMessage = "Error saving affidavit:\n\n" + e.ToString()});
+                    _errorMessage = "Error saving affidavit:\n\n" + e.ToString();
+                    _ProcessError(filePath);
+                    return;
                 }
 
-                if (response != null)
-                    AffidavitValidationResult.AddRange(response.ValidationResults);
-
-                if (AffidavitValidationResult.Count > 0)
-                {
-                    ProcessError(filePath);
-                }
-                else
-                {
-                    _DeleteWWTVFTPFile(Path.GetFileName(filePath));
-                }
+                _DeleteWWTVFTPFile(Path.GetFileName(filePath));
             }
         }
 
-        private void ProcessError(string filePath)
+        private void _ProcessError(string filePath)
         {
             var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
 
-            var emailBody = _CreateInvalidFileEmailBody(AffidavitValidationResult, invalidFilePath);
+            var emailBody = _CreateInvalidFileEmailBody(_errorMessage, invalidFilePath);
 
             _AffidavitEmailSenderService.Send(emailBody);
 
@@ -148,10 +148,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             catch (Exception e)
             {
-                AffidavitValidationResult.Add(new AffidavitValidationResult()
-                {
-                    ErrorMessage = "Could not process file.\n  " + e.ToString()
-                });
+                _errorMessage = "Could not process file.\n  " + e.ToString();
                 return null;
             }
 
@@ -161,24 +158,12 @@ namespace Services.Broadcast.ApplicationServices
             return affidavitFile;
         }
 
-        private string _CreateInvalidFileEmailBody(List<AffidavitValidationResult> affidavitValidationResults,
+        private string _CreateInvalidFileEmailBody(string errorMessage,
             string filePath)
         {
             var emailBody = new StringBuilder();
 
-            emailBody.AppendFormat("File {0} failed validation for WWTV upload\n\n", Path.GetFileName(filePath));
-
-            foreach (var affidavitValidationResult in affidavitValidationResults)
-            {
-                if (affidavitValidationResult.InvalidLine != -1
-                    && !string.IsNullOrEmpty(affidavitValidationResult.InvalidField))
-                {
-                    emailBody.AppendFormat("Failed validation at line {0} on field '{1}'.  ",
-                        affidavitValidationResult.InvalidLine + 1, affidavitValidationResult.InvalidField);
-                }
-
-                emailBody.Append(affidavitValidationResult.ErrorMessage);
-            }
+            emailBody.AppendFormat("File {0} failed validation for WWTV upload\n\n{1}", Path.GetFileName(filePath), errorMessage);
 
             emailBody.AppendFormat("\n\nFile located in {0}\n", filePath);
 
@@ -226,11 +211,9 @@ namespace Services.Broadcast.ApplicationServices
             }
             catch (Exception e)
             {
-                AffidavitValidationResult.Add(new AffidavitValidationResult()
-                {
-                    ErrorMessage =
-                        "File is in an invalid format.  It cannot be read in its current state; must be a valid JSON file."
-                });
+                _errorMessage =
+                    "File is in an invalid format.  It cannot be read in its current state; must be a valid JSON file." +
+                    "\r\n" + e.ToString();
                 return file;
             }
 
@@ -272,14 +255,6 @@ namespace Services.Broadcast.ApplicationServices
                         OvernightRating = y.OvernightRating
                     }).ToList();
 
-                }
-                var validationResults = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-
-                if (validationResults.Any())
-                {
-                    validationResults.ForEach(r => r.InvalidLine = lineNumber);
-                    AffidavitValidationResult.AddRange(validationResults);
-                    continue;
                 }
 
                 file.Details.Add(affidavitSaveRequestDetail);

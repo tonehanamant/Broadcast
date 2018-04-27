@@ -54,7 +54,7 @@ namespace Services.Broadcast.Services
             return results;
         }
 
-        public void LogServiceError(string message, Exception exception)
+        public void LogServiceError(string message, Exception exception = null)
         {
             if (IsConsole)
             {
@@ -76,7 +76,12 @@ namespace Services.Broadcast.Services
             catch
             {
             }
-            TamMaestroEventSource.Log.ServiceError(serviceName, message, exception.ToString(), userName, environment);
+
+            string expMessage = "";
+            if (exception != null)
+                expMessage = exception.ToString();
+
+            TamMaestroEventSource.Log.ServiceError(serviceName, message, expMessage, userName, environment);
         }
 
         public void LogServiceErrorNoCallStack(string message)

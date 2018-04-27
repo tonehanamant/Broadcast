@@ -115,6 +115,7 @@ BEGIN
 END
 GO
 
+
 /*************************************** END BCOP-2755 *****************************************************/
 
 
@@ -400,6 +401,61 @@ END
 GO
 
 /*************************************** END - BCOP-2631 *********************************************************/
+
+
+/*************************************** START - BCOP-2894 *********************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'status'
+          AND Object_ID = Object_ID(N'dbo.affidavit_files'))
+BEGIN
+	ALTER TABLE affidavit_files
+	  ADD [status] int ;
+
+  
+END
+
+GO 
+
+if  exists (
+	SELECT *
+	from Affidavit_files
+	where [status] is null)
+BEGIN
+
+	UPDATE affidavit_files
+	SET [Status] = 1	-- VALID
+	WHERE [status] is null
+
+	ALTER TABLE [affidavit_files] ALTER COLUMN [status] int NOT NULL
+
+END
+
+IF OBJECT_ID('affidavit_file_problems', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[affidavit_file_problems](
+		[id] bigint IDENTITY(1,1) NOT NULL,
+		[affidavit_file_id] [int] NOT NULL,
+		[problem_description] [nvarchar](max) NOT NULL,
+	 CONSTRAINT [PK_affidavit_file_problems] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[affidavit_file_problems] 
+	WITH CHECK ADD CONSTRAINT [FK_affidavit_file_problems_affidiavit_file_id_affidavit_id] 
+	FOREIGN KEY(affidavit_file_id)
+	REFERENCES [dbo].[affidavit_files] ([id])
+	ON DELETE CASCADE
+
+
+END
+
+GO 
+
+
+/*************************************** END - BCOP-2894 *********************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

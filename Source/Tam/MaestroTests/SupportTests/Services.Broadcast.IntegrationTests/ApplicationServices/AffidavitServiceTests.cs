@@ -54,6 +54,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteService_Validation_Problems()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAffidavit();
+
+                var det = request.Details.First();
+                det.Affiliate = "";
+                det.AirTime = DateTime.MinValue;
+                det.InventorySource = 0;
+
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+
+                VerifyAffidavit(result);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void SaveAffidaviteService()
         {
             using (new TransactionScopeWrapper())
@@ -148,9 +167,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         
         private void VerifyAffidavit(AffidavitSaveResult result)
         {
-            Assert.IsTrue(result.ID.HasValue,result.ToString());
+            Assert.IsTrue(result.Id.HasValue,result.ToString());
 
-            var affidavite = _Repo.GetAffidavit(result.ID.Value, true);
+            AffidavitFile affidavit;
+            affidavit = _Repo.GetAffidavit(result.Id.Value, true);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(AffidavitFile), "CreatedDate");
@@ -162,12 +182,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(AffidavitClientScrub), "AffidavitFileDetailId");
             jsonResolver.Ignore(typeof(AffidavitClientScrub), "ModifiedDate");
             jsonResolver.Ignore(typeof(AffidavitFile), "MediaMonthId");
+            jsonResolver.Ignore(typeof(AffidavitFileProblem), "Id");
+            jsonResolver.Ignore(typeof(AffidavitFileProblem), "AffidavitFileId");
+
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ContractResolver = jsonResolver
             };
-            var json = IntegrationTestHelper.ConvertToJson(affidavite, jsonSettings);
+            var json = IntegrationTestHelper.ConvertToJson(affidavit, jsonSettings);
             Approvals.Verify(json);
         }
 
