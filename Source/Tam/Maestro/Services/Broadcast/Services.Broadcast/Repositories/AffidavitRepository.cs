@@ -278,7 +278,7 @@ namespace Services.Broadcast.Repositories
                             MatchStation = x.affidavitFileScrub.match_station,
                             MatchTime = x.affidavitFileScrub.match_time,
                             MatchDate = x.affidavitFileScrub.match_date,
-                            MatchISCI = x.affidavitFileScrub.match_isci_days,
+                            MatchIsciDays = x.affidavitFileScrub.match_isci_days,
                             Comments = x.affidavitFileScrub.comment,
                             ClientISCI = x.proposalVersionWeekIscis.client_isci,
                             WeekStart = x.proposalVersionWeekIscis.proposal_version_detail_quarter_weeks.start_date
