@@ -1,16 +1,17 @@
 ﻿using Common.Services.ApplicationServices;
-using System.Linq;
 using Common.Services.Repositories;
-using EntityFrameworkMapping.Broadcast;
+using Newtonsoft.Json;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
-using Services.Broadcast.Converters;
+using System.Linq;
+using EntityFrameworkMapping.Broadcast;
 using Tam.Maestro.Common;
+using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
@@ -19,6 +20,12 @@ namespace Services.Broadcast.ApplicationServices
     {
         Strata = 1
     };
+    public enum AffidaviteFileProcessingStatus
+    {
+        Valid = 1,
+        Invalid = 2
+    };
+
 
     public interface IAffidavitService : IApplicationService
     {
@@ -68,7 +75,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public AffidavitSaveResult SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime)
         {
-            Dictionary<int, int> spotLengthDict = null;
+
             if (saveRequest == null)
             {
                 throw new Exception("No affidavit data received.");
@@ -82,21 +89,36 @@ namespace Services.Broadcast.ApplicationServices
                 SourceId = saveRequest.Source
             };
 
+
+            AffidavitSaveResult result;
+            result = AffidavitSaveResult(saveRequest, username, currentDateTime, affidavitFile);
+
+            return result;
+        }
+
+        private AffidavitSaveResult AffidavitSaveResult(AffidavitSaveRequest saveRequest, string username,
+            DateTime currentDateTime, AffidavitFile affidavitFile)
+        {
+            Dictionary<int, int> spotLengthDict = null;
             var matchedAffidavitDetails = _LinkAndValidateContractIscis(saveRequest);
             var affidavitValidationResults = new List<AffidavitValidationResult>();
 
             foreach (var matchedAffidavitDetail in matchedAffidavitDetails)
             {
-                var validationResults = _AffidavitValidationEngine.ValidateAffidavitRecord(matchedAffidavitDetail.AffidavitDetail);
+                var validationResults =
+                    _AffidavitValidationEngine.ValidateAffidavitRecord(matchedAffidavitDetail.AffidavitDetail);
 
-               if (validationResults.Any())
+                if (validationResults.Any())
                 {
                     validationResults.ForEach(r => r.InvalidLine = matchedAffidavitDetail.LineNumber);
                     affidavitValidationResults.AddRange(validationResults);
+
+                    var problems = _MapValidationErrorToAffidavitFileProblem(affidavitValidationResults);
+                    affidavitFile.AffidavitFileProblems.AddRange(problems);
                     continue;
                 }
 
-		var det = new AffidavitFileDetail
+                var det = new AffidavitFileDetail
                 {
                     AirTime = Convert.ToInt32(matchedAffidavitDetail.AffidavitDetail.AirTime.TimeOfDay.TotalSeconds),
                     OriginalAirDate = matchedAffidavitDetail.AffidavitDetail.AirTime,
@@ -114,26 +136,28 @@ namespace Services.Broadcast.ApplicationServices
                     LeadoutGenre = matchedAffidavitDetail.AffidavitDetail.LeadOutGenre,
                     LeadinProgramName = matchedAffidavitDetail.AffidavitDetail.LeadInProgramName,
                     LeadoutProgramName = matchedAffidavitDetail.AffidavitDetail.LeadOutProgramName,
-                    LeadInEndTime = Convert.ToInt32(matchedAffidavitDetail.AffidavitDetail.LeadInEndTime.TimeOfDay.TotalSeconds),
-                    LeadOutStartTime = Convert.ToInt32(matchedAffidavitDetail.AffidavitDetail.LeadOutStartTime.TimeOfDay.TotalSeconds),
+                    LeadInEndTime =
+                        Convert.ToInt32(matchedAffidavitDetail.AffidavitDetail.LeadInEndTime.TimeOfDay.TotalSeconds),
+                    LeadOutStartTime =
+                        Convert.ToInt32(matchedAffidavitDetail.AffidavitDetail.LeadOutStartTime.TimeOfDay.TotalSeconds),
                     ShowType = matchedAffidavitDetail.AffidavitDetail.ShowType,
                     LeadInShowType = matchedAffidavitDetail.AffidavitDetail.LeadInShowType,
                     LeadOutShowType = matchedAffidavitDetail.AffidavitDetail.LeadOutShowType,
 
                     AffidavitClientScrubs =
-                    matchedAffidavitDetail.ProposalDetailWeeks.Select(
-                        w => new AffidavitClientScrub
-                        {
-                            ProposalVersionDetailQuarterWeekId = w.ProposalVersionDetailQuarterWeekId,
-                            MatchTime = w.TimeMatch,
-                            MatchDate = w.DateMatch,
-                            ModifiedBy = username,
-                            ModifiedDate = currentDateTime,
-                            EffectiveProgramName = matchedAffidavitDetail.AffidavitDetail.ProgramName,
-                            EffectiveGenre = matchedAffidavitDetail.AffidavitDetail.Genre,
-                            EffectiveShowType = matchedAffidavitDetail.AffidavitDetail.ShowType,
-                            LeadIn = w.IsLeadInMatch
-                        }).ToList(),
+                        matchedAffidavitDetail.ProposalDetailWeeks.Select(
+                            w => new AffidavitClientScrub
+                            {
+                                ProposalVersionDetailQuarterWeekId = w.ProposalVersionDetailQuarterWeekId,
+                                MatchTime = w.TimeMatch,
+                                MatchDate = w.DateMatch,
+                                ModifiedBy = username,
+                                ModifiedDate = currentDateTime,
+                                EffectiveProgramName = matchedAffidavitDetail.AffidavitDetail.ProgramName,
+                                EffectiveGenre = matchedAffidavitDetail.AffidavitDetail.Genre,
+                                EffectiveShowType = matchedAffidavitDetail.AffidavitDetail.ShowType,
+                                LeadIn = w.IsLeadInMatch
+                            }).ToList(),
                     AffidavitFileDetailProblems = matchedAffidavitDetail.AffidavitDetailProblems,
                     Demographics = matchedAffidavitDetail.AffidavitDetail.Demographics
                 };
@@ -146,17 +170,21 @@ namespace Services.Broadcast.ApplicationServices
 
             if (affidavitValidationResults.Any())
             {
-                return result;
+                affidavitFile.Status = AffidaviteFileProcessingStatus.Invalid;
             }
+            else
+            {
+                var postingBookId = _GetPostingBookId();
+                ScrubAffidavitFile(affidavitFile, postingBookId);
 
-            var postingBookId = _GetPostingBookId();
-            ScrubAffidavitFile(affidavitFile, postingBookId);
+                _CalculateAffidavitImpressions(affidavitFile, postingBookId);
 
-            _CalculateAffidavitImpressions(affidavitFile, postingBookId);
+                affidavitFile.Status = AffidaviteFileProcessingStatus.Valid;
+            }
 
             var id = _AffidavitRepository.SaveAffidavitFile(affidavitFile);
 
-            result.ID = id;
+            result.Id = id;
             return result;
         }
 
@@ -218,6 +246,24 @@ namespace Services.Broadcast.ApplicationServices
                         : ScrubbingStatus.OutOfSpec;
                 }
             }
+        }
+
+        private List<AffidavitFileProblem> _MapValidationErrorToAffidavitFileProblem(List<AffidavitValidationResult> affidavitValidationResults)
+        {
+            List<AffidavitFileProblem> problems = new List<AffidavitFileProblem>();
+
+            affidavitValidationResults.ForEach(v =>
+            {
+                AffidavitFileProblem problem = new AffidavitFileProblem();
+                var description = v.ErrorMessage;
+                if (!string.IsNullOrEmpty(v.InvalidField))
+                {
+                    description = string.Format("Line: {0}: Field: '{1}' is invalid\r\n{2}",v.InvalidLine,v.InvalidField,v.ErrorMessage);
+                }
+                problem.ProblemDescription = description;
+                problems.Add(problem);
+            });
+            return problems;
         }
 
         private bool _IsIsciDaysMatch(ProposalWeekIsciDto proposalWeekIsci, DayOfWeek dayOfWeek)

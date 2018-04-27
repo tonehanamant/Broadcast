@@ -246,7 +246,9 @@
       "Station": "WWSB"
     }
   ],
+  "AffidavitFileProblems": [],
   "FileHash": "abc123",
   "FileName": "test.file",
-  "SourceId": 1
+  "SourceId": 1,
+  "Status": 1
 }

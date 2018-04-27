@@ -46,12 +46,6 @@ namespace Services.Broadcast.ApplicationServices
         void ProcessInvalidFiles(List<OutboundAffidavitFileValidationResultDto> files);
     }
 
-    public enum AffidaviteFileProcessingStatus
-    {
-        Valid = 1,
-        Invalid = 2
-    };
-
     public class AffidavitPreprocessingService : IAffidavitPreprocessingService
     {
         internal List<string> AffidavitFileHeaders = new List<string>() { "ESTIMATE_ID", "STATION_NAME", "DATE_RANGE", "SPOT_TIME", "SPOT_DESCRIPTOR", "COST" };

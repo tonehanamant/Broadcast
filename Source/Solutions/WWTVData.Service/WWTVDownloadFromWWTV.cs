@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Services.Broadcast.ApplicationServices;
@@ -31,18 +32,7 @@ namespace WWTVData.Service
         {
             get
             {
-                if (!_RunWhenChecked)
-                {
-                    if (SMSClient.Handler.TamEnvironment != TAMEnvironment.PROD.ToString())
-                        _RunWhen = null;
-                    else
-                    {
-                        DateTime d;
-                        if (DateTime.TryParse(BroadcastServiceSystemParameter.WWTV_WhenToCheckWWTV, out d))
-                            _RunWhen = d;
-                    }
-                    _RunWhenChecked = true;
-                }
+                _RunWhen = _EnsureRunWeeklyWhen(BroadcastServiceSystemParameter.WWTV_WhenToCheckWWTV);
 
                 return _RunWhen;
             }
@@ -65,12 +55,18 @@ namespace WWTVData.Service
             try
             {
                 var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
-                service.DownloadAndProcessWWTVFiles("WWTV Service");
+                List<string> filesFailedDownload;
+                service.DownloadAndProcessWWTVFiles("WWTV Service", out filesFailedDownload);
+                filesFailedDownload.ForEach(f =>
+                    {
+                        BaseWindowsService.LogServiceError(string.Format("Error downloading file {0}", f));
+                    });
+            
                 _LastRun = DateTime.Now;
             }
             catch (Exception e)
             {
-                BaseWindowsService.LogServiceError("Error reading from WWTV FTP.", e);
+                BaseWindowsService.LogServiceError("Error reading from WWTV FTP.");
                 return false;
             }
             BaseWindowsService.LogServiceEvent(". . . Done Checking files to download\n");
