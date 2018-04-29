@@ -60,7 +60,14 @@ namespace Services.Broadcast.Repositories
                 file_hash = affidavitFile.FileHash,
                 file_name = affidavitFile.FileName,
                 source_id = affidavitFile.SourceId,
+                status = (int)affidavitFile.Status,
                 media_month_id = affidavitFile.MediaMonthId,
+                affidavit_file_problems = affidavitFile.AffidavitFileProblems.Select(p => new affidavit_file_problems()
+                    {
+                        id = p.Id,
+                        affidavit_file_id = p.AffidavitFileId,
+                        problem_description = p.ProblemDescription
+                    }).ToList(),
                 affidavit_file_details = affidavitFile.AffidavitFileDetails.Select(d => new affidavit_file_details
                  {
                       air_time = d.AirTime,
@@ -134,7 +141,8 @@ namespace Services.Broadcast.Repositories
                 {
                     var query = context.affidavit_files
                         .Include(a => a.affidavit_file_details)
-                        .Include(a => a.affidavit_file_details.Select(d => d.affidavit_file_detail_audiences));
+                        .Include(a => a.affidavit_file_details.Select(d => d.affidavit_file_detail_audiences))
+                        .Include(a => a.affidavit_file_problems);
 
                     if (includeScrubbingDetail)
                     {
@@ -157,8 +165,15 @@ namespace Services.Broadcast.Repositories
                 FileName = affidavitFile.file_name,
                 FileHash = affidavitFile.file_hash,
                 SourceId = affidavitFile.source_id,
+                Status = (AffidaviteFileProcessingStatus)affidavitFile.status,
                 CreatedDate = affidavitFile.created_date,
                 MediaMonthId = affidavitFile.media_month_id,
+                AffidavitFileProblems = affidavitFile.affidavit_file_problems.Select(p => new AffidavitFileProblem()
+                {
+                    Id = p.id,
+                    AffidavitFileId = p.affidavit_file_id,
+                    ProblemDescription = p.problem_description
+                }).ToList(),
                 AffidavitFileDetails = affidavitFile.affidavit_file_details.Select(d => new AffidavitFileDetail
                 {
                     Id = d.id,
@@ -263,7 +278,7 @@ namespace Services.Broadcast.Repositories
                             MatchStation = x.affidavitFileScrub.match_station,
                             MatchTime = x.affidavitFileScrub.match_time,
                             MatchDate = x.affidavitFileScrub.match_date,
-                            MatchISCI = x.affidavitFileScrub.match_isci_days,
+                            MatchIsciDays = x.affidavitFileScrub.match_isci_days,
                             Comments = x.affidavitFileScrub.comment,
                             ClientISCI = x.proposalVersionWeekIscis.client_isci,
                             WeekStart = x.proposalVersionWeekIscis.proposal_version_detail_quarter_weeks.start_date

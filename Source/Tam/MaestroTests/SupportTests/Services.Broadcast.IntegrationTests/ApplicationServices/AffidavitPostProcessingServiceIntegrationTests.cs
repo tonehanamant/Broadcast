@@ -75,7 +75,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [ExpectedException(typeof(Exception))]
-        [UseReporter(typeof(DiffReporter))]
         public void AffidavitPostProcessing_InvalidFileContent()
         {
             using (new TransactionScopeWrapper())
@@ -84,20 +83,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = File.ReadAllText(filePath);
 
                 AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath);
-                if (_AffidavitPostProcessingService.AffidavitValidationResult.Any() 
-                        || response == null)
+                if (response == null)
                     throw new Exception("Invalid file content.");
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(BaseResponse), "Data");
-
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
             }
         }
 

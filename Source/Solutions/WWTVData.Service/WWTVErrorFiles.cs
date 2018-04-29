@@ -32,18 +32,7 @@ namespace WWTVData.Service
         {
             get
             {
-                if (!_RunWhenChecked)
-                {
-                    if (SMSClient.Handler.TamEnvironment != TAMEnvironment.PROD.ToString())
-                        _RunWhen = null;
-                    else
-                    {
-                        DateTime d;
-                        if (DateTime.TryParse(BroadcastServiceSystemParameter.WWTV_WhenToCheckErrorFiles, out d))
-                            _RunWhen = d;
-                    }
-                    _RunWhenChecked = true;
-                }
+                _RunWhen = _EnsureRunWeeklyWhen(BroadcastServiceSystemParameter.WWTV_WhenToCheckErrorFiles);
 
                 return _RunWhen;
             }

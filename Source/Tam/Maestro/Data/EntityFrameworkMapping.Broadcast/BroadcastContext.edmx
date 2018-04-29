@@ -86,6 +86,14 @@
           <Property Name="leadin_show_type" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="leadout_show_type" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <EntityType Name="affidavit_file_problems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="affidavit_file_id" Type="int" Nullable="false" />
+          <Property Name="problem_description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="affidavit_files">
           <Key>
             <PropertyRef Name="id" />
@@ -96,6 +104,7 @@
           <Property Name="source_id" Type="int" Nullable="false" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="media_month_id" Type="int" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="affidavit_outbound_file_problems">
           <Key>
@@ -966,6 +975,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="affidavit_client_scrubs">
               <PropertyRef Name="affidavit_file_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_affidavit_file_problems_affidiavit_file_id_affidavit_id">
+          <End Role="affidavit_files" Type="Self.affidavit_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="affidavit_file_problems" Type="Self.affidavit_file_problems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="affidavit_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="affidavit_file_problems">
+              <PropertyRef Name="affidavit_file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2091,6 +2114,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="affidavit_file_detail_demographics" EntityType="Self.affidavit_file_detail_demographics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_file_detail_problems" EntityType="Self.affidavit_file_detail_problems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_file_details" EntityType="Self.affidavit_file_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="affidavit_file_problems" EntityType="Self.affidavit_file_problems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_files" EntityType="Self.affidavit_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_outbound_file_problems" EntityType="Self.affidavit_outbound_file_problems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_outbound_files" EntityType="Self.affidavit_outbound_files" Schema="dbo" store:Type="Tables" />
@@ -2198,6 +2222,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_affidavit_file_details_affidavit_client_scrubs" Association="Self.FK_affidavit_file_details_affidavit_client_scrubs">
             <End Role="affidavit_file_details" EntitySet="affidavit_file_details" />
             <End Role="affidavit_client_scrubs" EntitySet="affidavit_client_scrubs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_affidavit_file_problems_affidiavit_file_id_affidavit_id" Association="Self.FK_affidavit_file_problems_affidiavit_file_id_affidavit_id">
+            <End Role="affidavit_files" EntitySet="affidavit_files" />
+            <End Role="affidavit_file_problems" EntitySet="affidavit_file_problems" />
           </AssociationSet>
           <AssociationSet Name="FK_affidavit_files_affidavit_file_details" Association="Self.FK_affidavit_files_affidavit_file_details">
             <End Role="affidavit_files" EntitySet="affidavit_files" />
@@ -2977,6 +3005,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs">
             <End Role="proposal_version_detail_quarter_weeks" EntitySet="proposal_version_detail_quarter_weeks" />
             <End Role="affidavit_client_scrubs" EntitySet="affidavit_client_scrubs" />
+          </AssociationSet>
+          <EntitySet Name="affidavit_file_problems" EntityType="BroadcastModel.affidavit_file_problems" />
+          <AssociationSet Name="FK_affidavit_file_problems_affidiavit_file_id_affidavit_id" Association="BroadcastModel.FK_affidavit_file_problems_affidiavit_file_id_affidavit_id">
+            <End Role="affidavit_files" EntitySet="affidavit_files" />
+            <End Role="affidavit_file_problems" EntitySet="affidavit_file_problems" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -4674,6 +4707,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="media_month_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="affidavit_file_details" Relationship="BroadcastModel.FK_affidavit_files_affidavit_file_details" FromRole="affidavit_files" ToRole="affidavit_file_details" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="affidavit_file_problems" Relationship="BroadcastModel.FK_affidavit_file_problems_affidiavit_file_id_affidavit_id" FromRole="affidavit_files" ToRole="affidavit_file_problems" />
         </EntityType>
         <EntityType Name="affidavit_file_detail_audiences">
           <Key>
@@ -5176,6 +5211,29 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="affidavit_client_scrubs">
               <PropertyRef Name="proposal_version_detail_quarter_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="affidavit_file_problems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="affidavit_file_id" Type="Int32" Nullable="false" />
+          <Property Name="problem_description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="affidavit_files" Relationship="BroadcastModel.FK_affidavit_file_problems_affidiavit_file_id_affidavit_id" FromRole="affidavit_file_problems" ToRole="affidavit_files" />
+        </EntityType>
+        <Association Name="FK_affidavit_file_problems_affidiavit_file_id_affidavit_id">
+          <End Type="BroadcastModel.affidavit_files" Role="affidavit_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.affidavit_file_problems" Role="affidavit_file_problems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="affidavit_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="affidavit_file_problems">
+              <PropertyRef Name="affidavit_file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5917,6 +5975,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="affidavit_files">
             <EntityTypeMapping TypeName="BroadcastModel.affidavit_files">
               <MappingFragment StoreEntitySet="affidavit_files">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
                 <ScalarProperty Name="source_id" ColumnName="source_id" />
@@ -6110,6 +6169,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="match_program" ColumnName="match_program" />
                 <ScalarProperty Name="proposal_version_detail_quarter_week_id" ColumnName="proposal_version_detail_quarter_week_id" />
                 <ScalarProperty Name="affidavit_file_detail_id" ColumnName="affidavit_file_detail_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="affidavit_file_problems">
+            <EntityTypeMapping TypeName="BroadcastModel.affidavit_file_problems">
+              <MappingFragment StoreEntitySet="affidavit_file_problems">
+                <ScalarProperty Name="problem_description" ColumnName="problem_description" />
+                <ScalarProperty Name="affidavit_file_id" ColumnName="affidavit_file_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
