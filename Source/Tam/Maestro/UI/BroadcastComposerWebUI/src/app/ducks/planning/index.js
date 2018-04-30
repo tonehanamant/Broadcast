@@ -60,6 +60,8 @@ const initialState = {
   isGenresLoading: false,
   programs: [],
   isProgramsLoading: false,
+  showTypes: [],
+  isShowTypesLoading: false,
   isISCIEdited: false,
   isGridCellEdited: false,
 };
@@ -295,6 +297,20 @@ export default function reducer(state = initialState, action) {
       };
     }
 
+    case ACTIONS.TOGGLE_SHOWTYPES_LOADING: {
+      return {
+        ...state,
+        isShowTypesLoading: !state.isShowTypesLoading,
+      };
+    }
+
+    case ACTIONS.RECEIVE_SHOWTYPES: {
+      return {
+        ...state,
+        showTypes: payload,
+      };
+    }
+
    /*  case ACTIONS.TOGGLE_EDIT_ISCI_CLASS: {
       return {
         ...state,
@@ -418,6 +434,11 @@ export const getGenres = query => ({
 export const getPrograms = params => ({
   type: ACTIONS.REQUEST_PROGRAMS,
   payload: params,
+});
+
+export const getShowTypes = query => ({
+  type: ACTIONS.REQUEST_SHOWTYPES,
+  payload: query,
 });
 
 /* export const toggleEditIsciClass = bool => ({

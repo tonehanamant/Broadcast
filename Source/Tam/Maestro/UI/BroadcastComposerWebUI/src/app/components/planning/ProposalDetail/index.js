@@ -316,7 +316,7 @@ export class ProposalDetail extends Component {
                       <MenuItem eventKey="1" onClick={() => this.openInventory('inventory')}>Proprietary Inventory</MenuItem>
                       <MenuItem eventKey="2" onClick={() => this.openInventory('openMarket')}>Open Market Inventory</MenuItem>
                       <MenuItem eventKey="3" onClick={this.openSweepsModal}>Sweeps</MenuItem>
-                      <MenuItem eventKey="4" onClick={this.openProgramGenreModal}>Program/Genre</MenuItem>
+                      <MenuItem eventKey="4" onClick={this.openProgramGenreModal}>Program/Genre/Show Type</MenuItem>
                   </DropdownButton>
                 </div>
               }

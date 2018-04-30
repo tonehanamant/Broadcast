@@ -1258,6 +1258,54 @@ export function* requestPrograms({ payload: params }) {
 	}
 }
 
+export function* requestShowTypes({ payload: query }) {
+	const { getShowTypes } = api.planning;
+
+	try {
+    yield put({
+      type: ACTIONS.TOGGLE_SHOWTYPES_LOADING,
+      payload: {},
+		});
+
+		const response = yield getShowTypes(query);
+		const { data } = response;
+		yield put({
+      type: ACTIONS.RECEIVE_SHOWTYPES,
+      payload: data.Data || [],
+    });
+
+    yield put({
+      type: ACTIONS.TOGGLE_SHOWTYPES_LOADING,
+      payload: {},
+		});
+	} catch (e) {
+		if (e.response) {
+      yield put({
+        type: ACTIONS.TOGGLE_SHOWTYPES_LOADING,
+        payload: {},
+      });
+
+			yield put({
+				type: ACTIONS.DEPLOY_ERROR,
+				error: {
+					error: 'No show types data returned.',
+					message: 'The server encountered an error processing the request (show types). Please try again or contact your administrator to review error logs.',
+					exception: e.response.data.ExceptionMessage || '',
+				},
+			});
+		}
+
+		if (!e.response && e.message) {
+			yield put({
+					type: ACTIONS.DEPLOY_ERROR,
+					error: {
+					message: e.message,
+				},
+			});
+		}
+	}
+}
+
 export function* deleteProposalDetail({ payload: params }) {
   yield put({
     type: ACTIONS.PROPOSAL_DETAIL_DELETED,
@@ -1331,6 +1379,10 @@ export function* watchRequestGenres() {
 
 export function* watchRequestPrograms() {
 	yield takeEvery(ACTIONS.REQUEST_PROGRAMS, requestPrograms);
+}
+
+export function* watchRequestShowTypes() {
+	yield takeEvery(ACTIONS.REQUEST_SHOWTYPES, requestShowTypes);
 }
 
 export function* watchDeleteProposalDetail() {
