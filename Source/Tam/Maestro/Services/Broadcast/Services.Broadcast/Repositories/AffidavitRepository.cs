@@ -289,7 +289,8 @@ namespace Services.Broadcast.Repositories
                             MatchIsciDays = x.affidavitFileScrub.match_isci_days,
                             Comments = x.affidavitFileScrub.comment,
                             ClientISCI = x.proposalVersionWeekIscis.client_isci,
-                            WeekStart = x.proposalVersionWeekIscis.proposal_version_detail_quarter_weeks.start_date
+                            WeekStart = x.proposalVersionWeekIscis.proposal_version_detail_quarter_weeks.start_date,
+                            Status = (ScrubbingStatus)x.affidavitFileScrub.status
                         };
                     }
                     ).ToList());

@@ -6,6 +6,8 @@ import { Grid } from 'react-redux-grid';
 // import CustomPager from 'Components/shared/CustomPager';
 import { getDateInFormat, getSecondsToTimeString, getDay } from '../../../../utils/dateFormatter';
 
+import './index.scss';
+
 /* eslint-disable */
 export class PostScrubbingGrid extends Component {
     constructor(props, context) {
@@ -70,6 +72,17 @@ export class PostScrubbingGrid extends Component {
 
         const columns = [
             {
+                name: 'Status',
+                dataIndex: 'Status',
+                width: '6%',
+                renderer: ({ row }) => {
+                    const iconClassName = row.Status ? 'fa-check-circle' : 'fa-times-circle'
+                    return (
+                        <i className={`status-icon fa ${iconClassName}`} />
+                    )
+                },
+            },
+            {
                 name: 'Week Start',
                 dataIndex: 'WeekStart',
                 width: '6%',
@@ -126,7 +139,7 @@ export class PostScrubbingGrid extends Component {
                 name: 'House ISCI',
                 dataIndex: 'ISCI',
                 // defaultSortDirection: 'ASC',
-                width: '10%',
+                width: '7%',
                 renderer: ({ row }) => {
                     return (
                         <span>{row.ISCI || '-'}</span>
@@ -137,7 +150,7 @@ export class PostScrubbingGrid extends Component {
               name: 'Client ISCI',
               dataIndex: 'ClientISCI',
               // defaultSortDirection: 'ASC',
-              width: '10%',
+              width: '7%',
               renderer: ({ row }) => {
                   return (
                       <span>{row.ClientISCI || '-'}</span>

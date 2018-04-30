@@ -1,0 +1,14 @@
+.status-icon.fa {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.status-icon.fa-check-circle {
+    color: green
+}
+
+.status-icon.fa-times-circle {
+    color: red
+}

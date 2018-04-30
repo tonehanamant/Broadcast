@@ -26,6 +26,6 @@ namespace Services.Broadcast.Entities
         public string Comments { get; set; }
         public int? Sequence { get; set; }
         public bool MatchDate { get; set; }
-        
+        public ScrubbingStatus Status { get; set; }
     }
 }

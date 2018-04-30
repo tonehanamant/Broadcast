@@ -62,6 +62,14 @@ export class PostScrubbingFilters extends Component {
     const inactiveFilterStyle = { backgroundColor: '#bfbfbf', minHeight: '20px', maxHeight: '20px', width: '100%', borderRadius: '2px' };
     const columns = [
       {
+        name: 'Status',
+        dataIndex: 'Status',
+        width: '6%',
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
         name: 'Week Start',
         dataIndex: 'WeekStart',
         width: '6%',
@@ -112,7 +120,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'House ISCI',
         dataIndex: 'ISCI',
-        width: '10%',
+        width: '7%',
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -120,7 +128,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Client ISCI',
         dataIndex: 'ClientISCI',
-        width: '10%',
+        width: '7%',
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
