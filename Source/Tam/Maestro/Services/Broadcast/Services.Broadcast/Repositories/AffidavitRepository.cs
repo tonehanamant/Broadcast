@@ -260,13 +260,21 @@ namespace Services.Broadcast.Repositories
                         var marketStation = (from stations in context.stations
                                              where stations.legacy_call_letters.Equals(x.affidavitFile.station)
                                              select new { markets = stations.market, stations }).SingleOrDefault();
+
+                        var aff = marketStation?.stations.affiliation;
+                        var market = marketStation?.markets.geography_name;
+                        if (marketStation ==  null)
+                        {
+                            market = x.affidavitFile.market;
+                            aff = x.affidavitFile.affiliate;
+                        }
                         return new ProposalDetailPostScrubbingDto()
                         {
                             Station = x.affidavitFile.station,
                             ISCI = x.affidavitFile.isci,
                             ProgramName = x.affidavitFile.program_name,
-                            Market = marketStation?.markets.geography_name,
-                            Affiliate = marketStation?.stations.affiliation,
+                            Market = market,
+                            Affiliate = aff,
                             SpotLength = spotLengths.Single(y => y.id == x.affidavitFile.spot_length_id).length,
                             TimeAired = x.affidavitFile.air_time,
                             DateAired = x.affidavitFile.original_air_date,
