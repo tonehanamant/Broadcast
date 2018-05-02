@@ -389,6 +389,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 _SetProposalDefaultValues(proposalDto);
                 _SetISCIWeekDays(proposalDto);
+                _SetProposalDetailSequenceNumbers(proposalDto);
 
                 // check if an existing proposal is being saved
                 var isValidProposalIdAndVersion = proposalDto.Id.HasValue && proposalDto.Version.HasValue;
@@ -412,6 +413,16 @@ namespace Services.Broadcast.ApplicationServices
                 transaction.Complete();
 
                 return proposalDto.Id.Value;
+            }
+        }
+
+        private static void _SetProposalDetailSequenceNumbers(ProposalDto proposalDto)
+        {
+            var sequence = 1;
+            foreach(var detail in proposalDto.Details)
+            {
+                detail.Sequence = sequence;
+                sequence++;
             }
         }
 
@@ -1018,6 +1029,8 @@ namespace Services.Broadcast.ApplicationServices
             _SetProposalDetailFlightWeeks(proposalDto);
 
             _SetProposalFlightWeeksAndIds(proposalDto);
+
+            _SetProposalDetailSequenceNumbers(proposalDto);
 
             return proposalDto;
         }
