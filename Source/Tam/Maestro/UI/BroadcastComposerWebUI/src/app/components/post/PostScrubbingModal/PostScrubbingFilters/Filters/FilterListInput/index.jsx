@@ -14,7 +14,7 @@ class FilterInput extends Component {
     this.apply = this.apply.bind(this);
     this.clear = this.clear.bind(this);
     this.setValidSelections = this.setValidSelections.bind(this);
-
+    this.checkSelectAll = this.checkSelectAll.bind(this);
     this.state = {
       selectAll: true,
       filterText: '',
@@ -27,6 +27,9 @@ class FilterInput extends Component {
   componentWillMount() {
     // console.log('input mount', this.props);
     this.setState({ filterOptions: this.props.filterOptions });
+    setTimeout(() => {
+      this.checkSelectAll();
+    }, 50);
   }
 
   /* componentWillReceiveProps(nextProps) {
@@ -49,6 +52,12 @@ class FilterInput extends Component {
     this.setValidSelections(selectAll);
   }
 
+  checkSelectAll() {
+    const allChecked = this.state.filterOptions.find(item => item.Selected === false) === undefined;
+    // console.log('check select all', allChecked);
+    this.setState({ selectAll: allChecked });
+  }
+
   handleOptionChecked(changedOption) {
     const filterOptions = this.state.filterOptions.map((option) => {
       if (option.Value === changedOption.Value) {
@@ -60,7 +69,8 @@ class FilterInput extends Component {
     this.setState({ filterOptions });
     setTimeout(() => {
       const valid = this.state.filterOptions.find(item => item.Selected === true) !== undefined;
-      // console.log('valid', valid, this.state.filterOptions);
+      console.log('valid', changedOption, valid, this.state.filterOptions);
+      this.checkSelectAll();
       this.setValidSelections(valid);
     }, 200);
   }

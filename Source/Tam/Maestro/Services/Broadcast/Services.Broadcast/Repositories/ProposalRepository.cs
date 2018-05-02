@@ -438,6 +438,7 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.hut_posting_book_id = detail.HutPostingBookId;
                     updatedDetail.share_posting_book_id = detail.SharePostingBookId;
                     updatedDetail.playback_type = (byte)detail.PlaybackType;
+                    updatedDetail.sequence = detail.Sequence;
 
                     //update proposal detail genre criteria
                     context.proposal_version_detail_criteria_genres.RemoveRange(
@@ -883,7 +884,7 @@ namespace Services.Broadcast.Repositories
                             }).ToList()
                         }).OrderBy(w => w.StartDate).ToList()
                         }).OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList()
-                        }).ToList()
+                        }).OrderBy(d => d.Sequence).ToList()
                 };
 
             return proposalDto;
