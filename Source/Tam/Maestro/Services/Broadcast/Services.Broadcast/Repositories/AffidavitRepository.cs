@@ -30,6 +30,8 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="model">List of OutboundAffidavitFileValidationResultDto objects to be saved</param>
         void SaveValidationObject(List<OutboundAffidavitFileValidationResultDto> model);
+
+        List<MyEventsReportData> GetMyEventsReportData(int proposalId);
     }
 
     public class AffidavitRepository : BroadcastRepositoryBase, IAffidavitRepository
@@ -366,6 +368,43 @@ namespace Services.Broadcast.Repositories
                     }).ToList());
                 context.SaveChanges();
             });
+        }
+
+        public List<MyEventsReportData> GetMyEventsReportData(int proposalId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var myEventsReportData = new List<MyEventsReportData>();
+
+                    var affidavitData = (from proposal in context.proposals
+                                         from proposalVersion in proposal.proposal_versions
+                                         from proposalVersionDetail in proposalVersion.proposal_version_details
+                                         from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                                         from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
+                                         from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
+                                         let affidavitFileDetail = affidavitClientScrub.affidavit_file_details
+                                         where proposalVersionDetail.proposal_versions.proposal_id == proposalId &&
+                                         affidavitClientScrub.status == (int)ScrubbingStatus.InSpec
+                                         select new { affidavitFileDetail, affidavitClientScrub, proposal, proposalVersionDetail }).ToList();
+
+                    foreach (var affidavit in affidavitData)
+                    {
+                        var myEventsReportDataItem = new MyEventsReportData
+                        {
+                            CallLetter = affidavit.affidavitFileDetail.station,
+                            LineupStartDate = affidavit.affidavitFileDetail.original_air_date,
+                            LineupStartTime = new DateTime().AddSeconds(affidavit.affidavitFileDetail.air_time),
+                            AdvertiserId = affidavit.proposal.advertiser_id,
+                            SpotLengthId = affidavit.affidavitFileDetail.spot_length_id,
+                            DaypartCode = affidavit.proposalVersionDetail.daypart_code
+                        };
+
+                        myEventsReportData.Add(myEventsReportDataItem);
+                    }
+
+                    return myEventsReportData;
+                });
         }
     }
 }

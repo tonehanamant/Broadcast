@@ -1,7 +1,5 @@
-﻿using Common.Services;
-using Common.Services.ApplicationServices;
+﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
@@ -10,7 +8,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
@@ -226,6 +223,20 @@ namespace Services.Broadcast.ApplicationServices
             return nsiPostReport;
         }
 
+        /// <summary>
+        /// Generates My Events report
+        /// </summary>
+        /// <param name="proposalId">Proposal id to generate the report for</param>
+        /// <returns>ReportOutput object containing the report and the filename</returns>
+        public ReportOutput GenerateMyEventsReport(int proposalId)
+        {
+            var affidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
+            var myEventsReportData = _GetMyEventsReportData(affidavitRepository.GetMyEventsReportData(proposalId));
+            var myEventsReportGenerator = new MyEventsReportGenerator();
+
+            return myEventsReportGenerator.Generate(myEventsReportData);
+        }
+
         private List<Tuple<DateTime, DateTime>> _GetFlightsRange(List<ProposalDetailDto> details)
         {
             var proposalWeekFlights = details.SelectMany(d => d.Quarters.SelectMany(q => q.Weeks.Select(w => new ProposalFlightWeek()
@@ -278,12 +289,19 @@ namespace Services.Broadcast.ApplicationServices
             return flightRanges;
         }
 
-        public ReportOutput GenerateMyEventsReport(int proposalId)
+        private List<MyEventsReportData> _GetMyEventsReportData(List<MyEventsReportData> myEventsReportDataList)
         {
-            var myEventsReportDataRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IMyEventsReportDataRepository>();
-            var myEventsReportGenerator = new MyEventsReportGenerator();
+            var spotLengths = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthsById();
 
-            return myEventsReportGenerator.Generate(myEventsReportDataRepository.GetMyEventsReportData(proposalId));
+            foreach (var myEventsReportData in myEventsReportDataList)
+            {
+                var advertiser = _SmsClient.FindAdvertiserById(myEventsReportData.AdvertiserId);
+
+                myEventsReportData.Advertiser = advertiser.Display;
+                myEventsReportData.SpotLength = spotLengths[myEventsReportData.SpotLengthId];
+            }
+
+            return myEventsReportDataList;
         }
     }
 }
