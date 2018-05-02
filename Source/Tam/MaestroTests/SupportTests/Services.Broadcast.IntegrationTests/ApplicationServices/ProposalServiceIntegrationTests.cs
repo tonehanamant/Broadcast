@@ -777,6 +777,65 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void UpdateSequenceWhenUpdatingProposalDetails()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposalDto = _setupProposalDto();
+
+                var proposalDetailDto1 = _setupProposalDetailDto();
+                proposalDetailDto1.DaypartCode = "A1";
+
+                proposalDto.Details.Add(proposalDetailDto1);
+
+                var proposalDetailDto2 = _setupProposalDetailDto();
+                proposalDetailDto2.DaypartCode = "A2";
+                proposalDto.Details.Add(proposalDetailDto2);
+
+                var proposalDetailDto3 = _setupProposalDetailDto();
+                proposalDetailDto3.DaypartCode = "A3";
+                proposalDto.Details.Add(proposalDetailDto3);
+
+                proposalDto = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
+
+                proposalDto.Details.Remove(proposalDto.Details[1]);
+
+                var proposalDetailDto4 = _setupProposalDetailDto();
+                proposalDetailDto4.DaypartCode = "A4";
+                proposalDto.Details.Add(proposalDetailDto4);
+
+                var result = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
+                
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
+                jsonResolver.Ignore(typeof(ProposalDto), "ProgramDisplayFilter");
+                jsonResolver.Ignore(typeof(ProposalDto), "ProgramFilter");
+                jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
+                jsonResolver.Ignore(typeof(ProposalDto), "VersionId");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+                jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+                jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot save proposal detail that contains both genre inclusion and genre exclusion criteria", MatchType = MessageMatch.Contains)]
         public void CannotAddProposalWithDetailWithInvalidGenreCriteria()
         {

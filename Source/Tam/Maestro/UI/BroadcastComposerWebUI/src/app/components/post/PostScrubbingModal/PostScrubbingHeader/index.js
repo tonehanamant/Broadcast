@@ -47,7 +47,7 @@ export class PostScrubbingHeader extends Component {
     const columns = [
       {
         name: 'ID',
-        dataIndex: 'Id',
+        dataIndex: 'Sequence',
         width: '10%',
       },
       {

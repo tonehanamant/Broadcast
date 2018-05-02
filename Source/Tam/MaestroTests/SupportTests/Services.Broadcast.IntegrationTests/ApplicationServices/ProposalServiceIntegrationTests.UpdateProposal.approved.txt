@@ -148,7 +148,7 @@
           "Year": 2017
         }
       ],
-      "Sequence": null,
+      "Sequence": 1,
       "SharePostingBookId": 413,
       "ShowTypeCriteria": [
         {
@@ -254,7 +254,7 @@
           "Year": 2017
         }
       ],
-      "Sequence": null,
+      "Sequence": 2,
       "SharePostingBookId": 413,
       "ShowTypeCriteria": [],
       "SinglePostingBookId": 413,
