@@ -118,6 +118,20 @@ GO
 
 /*************************************** END BCOP-2755 *****************************************************/
 
+/*************************************** START BCOP-2755/2971 *****************************************************/
+IF (OBJECT_ID('FK_proposal_version_detail_criteria_show_types_show_types', 'F') IS NOT NULL)
+BEGIN
+    ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] DROP CONSTRAINT [FK_proposal_version_detail_criteria_show_types_show_types]
+
+    ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] 
+    WITH CHECK ADD CONSTRAINT [FK_proposal_version_detail_criteria_show_types_show_types] 
+    FOREIGN KEY(show_type_id)
+    REFERENCES [dbo].[show_types] ([id])
+    ON DELETE NO ACTION
+    
+    ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] CHECK CONSTRAINT [FK_proposal_version_detail_criteria_show_types_show_types]
+END
+/*************************************** END BCOP-2755/2971 *****************************************************/
 
 /*************************************** START BCOP-2665 *********************************************************/
 IF EXISTS(SELECT 1 FROM sys.columns 
