@@ -54,12 +54,12 @@ namespace Services.Broadcast.IntegrationTests
                 if (pTamResource == "BroadcastConnectionString")
                 {
                     return
-                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_integration_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
                 else if (pTamResource == "BroadcastForecastConnectionString")
                 {
                     return
-                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_forecast_integration_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_forecast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
             }
             else if (System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Release")

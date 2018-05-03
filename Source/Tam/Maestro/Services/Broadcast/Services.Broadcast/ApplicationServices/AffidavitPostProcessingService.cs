@@ -33,13 +33,13 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="filePath">Path of the file to process</param>
         /// <returns>BaseResponse object</returns>
-        AffidavitSaveRequest ParseWWTVFile(string filePath);
+        AffidavitSaveRequest ParseWWTVFile(string filePath,out string errorMessage);
 
         /// <summary>
         /// Logs any errors that happened in DownloadAndProcessWWTV Files and ParseWWTVFile.
         /// Do not call directly, only used for Integration testing
         /// </summary>
-        int LogAffidavitError(string filePath);
+        int LogAffidavitError(string filePath, string errorMessage);
     }
 
 
@@ -53,8 +53,6 @@ namespace Services.Broadcast.ApplicationServices
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
         private const string HTTP_ACCEPT_HEADER = "application/json";
         private const string FTP_SCHEME = "ftp://";
-
-        private string _errorMessage;
 
         public AffidavitPostProcessingService(
             IBroadcastAudiencesCache audienceCache,
@@ -104,10 +102,11 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 AffidavitSaveResult response = null;
 
-                AffidavitSaveRequest affidavitSaveRequest = ParseWWTVFile(filePath);
-                if (!string.IsNullOrEmpty(_errorMessage))
+                string errorMessage;
+                AffidavitSaveRequest affidavitSaveRequest = ParseWWTVFile(filePath,out errorMessage);
+                if (!string.IsNullOrEmpty(errorMessage))
                 {
-                    ProcessErrorFromFtp(filePath);
+                    ProcessErrorWWTVFile(filePath, errorMessage);
                     continue;
                 }
                 try
@@ -116,8 +115,8 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 catch (Exception e)
                 {
-                    _errorMessage = "Error saving affidavit:\n\n" + e.ToString();
-                    ProcessErrorFromFtp(filePath);
+                    errorMessage = "Error saving affidavit:\n\n" + e.ToString();
+                    ProcessErrorWWTVFile(filePath, errorMessage);
                     continue;
                 }
 
@@ -127,8 +126,8 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 catch (Exception e)
                 {
-                    _errorMessage = "Error deleting affidavit file from FTP site:\n\n" + e.ToString();
-                    ProcessErrorFromFtp(filePath, false);
+                    errorMessage = "Error deleting affidavit file from FTP site:\n\n" + e.ToString();
+                    ProcessErrorWWTVFile(filePath,errorMessage,false);
                     continue;
                 }
             }
@@ -156,21 +155,21 @@ namespace Services.Broadcast.ApplicationServices
             _AffidavitEmailSenderService.Send(emailBody);
         }
 
-        public void ProcessErrorFromFtp(string filePath,bool deleteFtpFile = true)
+        public void ProcessErrorWWTVFile(string filePath,string errorMessage,bool deleteFtpFile = true)
         {
             var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
 
-            var emailBody = _CreateInvalidFileEmailBody(_errorMessage, invalidFilePath);
+            var emailBody = _CreateInvalidFileEmailBody(errorMessage, invalidFilePath);
 
             _AffidavitEmailSenderService.Send(emailBody, "WWTV File Failed");
 
             if (deleteFtpFile)
                 _DeleteWWTVFTPFile(Path.GetFileName(filePath));
 
-            LogAffidavitError(filePath);
+            LogAffidavitError(filePath,errorMessage);
         }
 
-        public int LogAffidavitError(string filePath)
+        public int LogAffidavitError(string filePath,string errorMessage)
         {
             var affidavitFile = new AffidavitFile();
             affidavitFile.FileName = Path.GetFileName(filePath);
@@ -180,7 +179,7 @@ namespace Services.Broadcast.ApplicationServices
             affidavitFile.SourceId = (int)AffidaviteFileSource.Strata;
 
             var problem = new AffidavitFileProblem();
-            problem.ProblemDescription = _errorMessage;
+            problem.ProblemDescription = errorMessage;
 
             affidavitFile.AffidavitFileProblems.Add(problem);
             var id = _AffidavitRepository.SaveAffidavitFile(affidavitFile);
@@ -193,10 +192,12 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="filePath">Path of the file to process</param>
         /// <returns>BaseResponse object containing the new id of the affidavit_file</returns>
-        public AffidavitSaveRequest ParseWWTVFile(string filePath)
+        public AffidavitSaveRequest ParseWWTVFile(string filePath,out string errorMessage)
         {
             AffidavitSaveRequest affidavitSaveRequest = new AffidavitSaveRequest();
             affidavitSaveRequest.FileName = Path.GetFileName(filePath);
+            errorMessage = "";
+
             try
             {
                 if (!File.Exists(filePath))
@@ -209,15 +210,15 @@ namespace Services.Broadcast.ApplicationServices
                     throw new Exception("Invalid file extension.");
                 }
 
-                _MapWWTVFileToAffidavitFile(affidavitSaveRequest,filePath);
-                if (!string.IsNullOrEmpty(_errorMessage))
+                _MapWWTVFileToAffidavitFile(affidavitSaveRequest,filePath,out errorMessage);
+                if (!string.IsNullOrEmpty(errorMessage))
                 {
                     return affidavitSaveRequest;
                 }
             }
             catch (Exception e)
             {
-                _errorMessage = "Could not process file.\n  " + e.ToString();
+                errorMessage = "Could not process file.\n  " + e.ToString();
 
                 return affidavitSaveRequest;
             }
@@ -266,10 +267,11 @@ namespace Services.Broadcast.ApplicationServices
             response.Close();
         }
 
-        private AffidavitSaveRequest _MapWWTVFileToAffidavitFile(AffidavitSaveRequest affidavitSaveRequest,string filePath)
+        private AffidavitSaveRequest _MapWWTVFileToAffidavitFile(AffidavitSaveRequest affidavitSaveRequest,string filePath,out string errorMessage)
         {
             affidavitSaveRequest.Source = (int) AffidaviteFileSource.Strata;
             affidavitSaveRequest.Details = new List<AffidavitSaveRequestDetail>();
+            errorMessage = "";
 
             WhosWatchingTVPostProcessingFile jsonFile;
             try
@@ -278,7 +280,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             catch (Exception e)
             {
-                _errorMessage =
+                errorMessage =
                     "File is in an invalid format.  It cannot be read in its current state; must be a valid JSON file." +
                     "\r\n" + e.ToString();
                 return affidavitSaveRequest;

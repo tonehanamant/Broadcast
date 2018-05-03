@@ -2,7 +2,7 @@
   "AffidavitFileDetails": [],
   "AffidavitFileProblems": [
     {
-      "ProblemDescription": "Could not process file.\n  System.Exception: Invalid file extension.\r\n   at Services.Broadcast.ApplicationServices.AffidavitPostProcessingService.ParseWWTVFile(String filePath) in C:\\src\\Broadcast\\Source\\Tam\\Maestro\\Services\\Broadcast\\Services.Broadcast\\ApplicationServices\\AffidavitPostProcessingService.cs:line 212"
+      "ProblemDescription": "Could not process file.\n "
     }
   ],
   "FileHash": "CE-FC-58-15-39-70-32-86-80-32-1F-CB-D5-E2-86-00-0E-04-1C-DF",

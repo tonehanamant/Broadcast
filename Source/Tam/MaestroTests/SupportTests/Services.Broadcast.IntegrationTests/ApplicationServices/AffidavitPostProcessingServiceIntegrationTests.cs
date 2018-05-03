@@ -36,7 +36,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\SomeNonExistingFile.txt";
                 var request = File.ReadAllText(filePath);
 
-                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath);
+                string errorMessage;
+                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath,out errorMessage);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(BaseResponse), "Data");
@@ -59,8 +60,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var filePath = @".\Files\Checkers BVS Report.DAT";
 
-                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath);
-                int affidavitId = _AffidavitPostProcessingService.LogAffidavitError(filePath);
+                string errorMessage;
+                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath, out errorMessage);
+                int affidavitId = _AffidavitPostProcessingService.LogAffidavitError(filePath, errorMessage.Substring(0, 25));
+
                 VerifyAffidavitLog(affidavitId);
             }
         }
@@ -74,8 +77,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_AffidavitInValidFileContent.txt";
                 var request = File.ReadAllText(filePath);
 
-                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath);
-                int affidavitId = _AffidavitPostProcessingService.LogAffidavitError(filePath);
+                string errorMessage;
+                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath,out errorMessage);
+                // necessary to substring as the error will contain line number source code which may change
+                int affidavitId = _AffidavitPostProcessingService.LogAffidavitError(filePath, errorMessage.Substring(0, 25));
                 VerifyAffidavitLog(affidavitId);
             }
         }
@@ -89,7 +94,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_AffidavitValidFile.txt";
                 var request = File.ReadAllText(filePath);
 
-                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath);
+                string errorMessage;
+                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath, out errorMessage);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(BaseResponse), "Data");
@@ -113,7 +119,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_AffidavitValidFileContent_SpotCost.txt";
                 var request = File.ReadAllText(filePath);
 
-                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath);
+                string errorMessage;
+                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath, out errorMessage);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(BaseResponse), "Data");
@@ -137,7 +144,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_AffidavitValidFileContent_NullDemo.txt";
                 var request = File.ReadAllText(filePath);
 
-                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath);
+                string errorMessage;
+                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath, out errorMessage);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(BaseResponse), "Data");
@@ -160,8 +168,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_bad_file.txt";
                 var request = File.ReadAllText(filePath);
 
-                _AffidavitPostProcessingService.ParseWWTVFile(filePath);
-                int affidavitId = _AffidavitPostProcessingService.LogAffidavitError(filePath);
+                string errorMessage;
+                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath, out errorMessage);
+                int affidavitId = _AffidavitPostProcessingService.LogAffidavitError(filePath, errorMessage.Substring(0,25));
 
                 VerifyAffidavitLog(affidavitId);
             }
