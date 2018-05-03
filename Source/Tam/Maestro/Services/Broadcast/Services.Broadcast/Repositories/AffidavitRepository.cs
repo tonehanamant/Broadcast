@@ -335,8 +335,8 @@ namespace Services.Broadcast.Repositories
                         Quarter = x.proposalVersionQuarters.quarter,
                         Year = x.proposalVersionQuarters.year,
                         AdvertiserId = x.proposal.advertiser_id,
-                        ProposalWeekCost = x.proposalVersionWeeks.cost,
-                        ProposalWeekImpressionsGoal = x.proposalVersionWeeks.impressions_goal,
+                        ProposalWeekTotalCost = x.proposalVersionWeeks.cost,
+                        ProposalWeekTotalImpressionsGoal = x.proposalVersionWeeks.impressions_goal,
                         Units = x.proposalVersionWeeks.units
                     }).ToList();
 

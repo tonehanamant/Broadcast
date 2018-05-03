@@ -202,6 +202,14 @@ namespace Services.Broadcast.ApplicationServices
 
             var flights = _GetFlightsRange(proposal.Details);
             var inspecSpots = _AffidavitRepositry.GetInSpecSpotsForProposal(proposalId);
+
+            inspecSpots.ForEach(x =>
+            {
+                x.ProposalWeekCost = x.ProposalWeekTotalCost / x.Units;
+                x.ProposalWeekImpressionsGoal = x.ProposalWeekTotalImpressionsGoal / x.Units;
+                x.ProposalWeekCPM = x.ProposalWeekTotalCost / (decimal)x.ProposalWeekTotalImpressionsGoal * 1000;
+            });
+
             var proposalAdvertiser = _SmsClient.FindAdvertiserById(proposal.AdvertiserId);
             var proposalAudienceIds = new List<int>() { proposal.GuaranteedDemoId };
             proposalAudienceIds.AddRange(proposal.SecondaryDemos);

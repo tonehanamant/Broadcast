@@ -33,11 +33,6 @@ namespace Services.Broadcast.Entities
 
         public class NsiPostReportQuarterTabRow
         {
-            public NsiPostReportQuarterTabRow()
-            {
-                AudienceImpressions = new Dictionary<int, double>();
-            }
-
             public int Rank { get; set; }
             public string Market { get; set; }
             public string Station { get; set; }
@@ -51,8 +46,11 @@ namespace Services.Broadcast.Entities
             public string Isci { get; set; }
             public string Advertiser { get; set; }
             public string DaypartName { get; set; }
-            public Dictionary<int, double> AudienceImpressions { get; set; }
+            public Dictionary<int, double> AudienceImpressions { get; set; } = new Dictionary<int, double>();
+            public decimal ProposalWeekTotalCost { get; set; }
             public decimal ProposalWeekCost { get; set; }
+            public decimal ProposalWeekCPM { get; set; }
+            public double ProposalWeekTotalImpressionsGoal { get; set; }
             public double ProposalWeekImpressionsGoal { get; set; }
             public int ProposalWeekUnits { get; set; }
         }
@@ -63,10 +61,14 @@ namespace Services.Broadcast.Entities
             public DateTime WeekStartDate { get; set; }
             public int Spots { get; set; }
             public int SpotLength { get; set; }
+            public decimal ProposalWeekTotalCost { get; set; }
             public decimal ProposalWeekCost { get; set; }
+            public decimal ProposalWeekCPM { get; set; }
             public int HHRating { get; set; }
+            public double ProposalWeekTotalImpressionsGoal { get; set; }
             public double ProposalWeekImpressionsGoal { get; set; }
             public double ActualImpressions { get; set; }
+            public double DeliveredImpressionsPercentage { get; set; }
         }
 
         public NsiPostReport(int proposalId, List<InSpecAffidavitFileDetail> inSpecAffidavitFileDetails,
@@ -114,9 +116,12 @@ namespace Services.Broadcast.Entities
                             Advertiser = advertiser.Display,
                             DaypartName = r.DaypartName,
                             AudienceImpressions = audienceImpressions,
+                            ProposalWeekTotalCost = r.ProposalWeekTotalCost,
                             ProposalWeekCost = r.ProposalWeekCost,
+                            ProposalWeekTotalImpressionsGoal = r.ProposalWeekTotalImpressionsGoal,
                             ProposalWeekImpressionsGoal = r.ProposalWeekImpressionsGoal,
-                            ProposalWeekUnits = r.Units
+                            ProposalWeekUnits = r.Units,
+                            ProposalWeekCPM = r.ProposalWeekCPM
                         };
                     }).ToList()
                 };
@@ -128,32 +133,37 @@ namespace Services.Broadcast.Entities
                 QuarterTables.Add(
                     new NsiPostReportQuarterSummaryTable()
                     {
-                        TableName = String.Format("{0}Q'{1}", group.Key.Quarter, group.Key.Year.ToString().Substring(2)),
-                        TableRows = tab.TabRows.GroupBy(x => new
+                        TableName = string.Format("{0}Q'{1}", group.Key.Quarter, group.Key.Year.ToString().Substring(2)),
+                        TableRows = Enumerable.ToList(Enumerable.Select(Enumerable.GroupBy(tab.TabRows, x => new
                         {
                             x.DaypartName,
                             x.SpotLength,
                             x.WeekStart,
                             x.ProposalWeekUnits,
+                            x.ProposalWeekTotalImpressionsGoal,
                             x.ProposalWeekImpressionsGoal,
-                            x.ProposalWeekCost
-                        })
-                            .Select(x =>
-                            {
-                                return new NsiPostReportQuarterSummaryTableRow
-                                {
-                                    Contract = x.Key.DaypartName,
-                                    SpotLength = x.Key.SpotLength,
-                                    WeekStartDate = x.Key.WeekStart,
-                                    Spots = x.Key.ProposalWeekUnits,
-                                    ActualImpressions = impressionsByDaypart.ContainsKey(x.Key.DaypartName) ? impressionsByDaypart[x.Key.DaypartName] : 0,
-                                    ProposalWeekCost = x.Key.ProposalWeekCost,
-                                    ProposalWeekImpressionsGoal = x.Key.ProposalWeekImpressionsGoal
-                                };
-                            }).ToList()
+                            x.ProposalWeekTotalCost,
+                            x.ProposalWeekCost,
+                            x.ProposalWeekCPM
+                        }), x =>
+                             {
+                                 return new NsiPostReportQuarterSummaryTableRow
+                                 {
+                                     Contract = x.Key.DaypartName,
+                                     SpotLength = x.Key.SpotLength,
+                                     WeekStartDate = x.Key.WeekStart,
+                                     Spots = x.Key.ProposalWeekUnits,
+                                     ActualImpressions = impressionsByDaypart.ContainsKey(x.Key.DaypartName) ? impressionsByDaypart[x.Key.DaypartName] : 0,
+                                     ProposalWeekTotalCost = x.Key.ProposalWeekTotalCost,
+                                     ProposalWeekCost = x.Key.ProposalWeekCost,
+                                     ProposalWeekTotalImpressionsGoal = x.Key.ProposalWeekTotalImpressionsGoal,
+                                     ProposalWeekImpressionsGoal = x.Key.ProposalWeekImpressionsGoal,
+                                     ProposalWeekCPM = x.Key.ProposalWeekCPM
+                                 };
+                             }))
                     });
             }
-
+            QuarterTables.ForEach(x => x.TableRows.ForEach(y => y.DeliveredImpressionsPercentage = y.ActualImpressions / y.ProposalWeekTotalImpressionsGoal));
             SpotLengthsDisplay = string.Join(",", QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
         }
 
