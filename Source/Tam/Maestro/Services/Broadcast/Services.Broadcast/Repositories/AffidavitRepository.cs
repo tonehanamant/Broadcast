@@ -251,37 +251,37 @@ namespace Services.Broadcast.Repositories
                                           from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
                                           from proposalVersionWeekIscis in proposalVersionWeeks.proposal_version_detail_quarter_week_iscis
                                           from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
-                                          let affidavitFile = affidavitFileScrub.affidavit_file_details
-                                          where proposalVersionWeekIscis.house_isci == affidavitFile.isci && proposalVersionDetail.id == proposalDetailId
-                                          select new { affidavitFile, affidavitFileScrub, proposalVersionWeekIscis }).ToList();
+                                          let affidavitDetails = affidavitFileScrub.affidavit_file_details
+                                          where proposalVersionWeekIscis.house_isci == affidavitDetails.isci && proposalVersionDetail.id == proposalDetailId
+                                          select new { affidavitDetails, affidavitFileScrub, proposalVersionWeekIscis }).ToList();
                     var spotLengths = (from sl in context.spot_lengths select sl).ToList();
 
                     var posts = new List<ProposalDetailPostScrubbingDto>();
                     posts.AddRange(affidavitFiles.Select(x =>
                     {
                         var marketStation = (from stations in context.stations
-                                             where stations.legacy_call_letters.Equals(x.affidavitFile.station)
+                                             where stations.legacy_call_letters.Equals(x.affidavitDetails.station)
                                              select new { markets = stations.market, stations }).SingleOrDefault();
 
                         var aff = marketStation?.stations.affiliation;
                         var market = marketStation?.markets.geography_name;
                         if (marketStation ==  null)
                         {
-                            market = x.affidavitFile.market;
-                            aff = x.affidavitFile.affiliate;
+                            market = x.affidavitDetails.market;
+                            aff = x.affidavitDetails.affiliate;
                         }
                         return new ProposalDetailPostScrubbingDto()
                         {
-                            Station = x.affidavitFile.station,
-                            ISCI = x.affidavitFile.isci,
-                            ProgramName = x.affidavitFile.program_name,
+                            Station = x.affidavitDetails.station,
+                            ISCI = x.affidavitDetails.isci,
+                            ProgramName = x.affidavitDetails.program_name,
                             Market = market,
                             Affiliate = aff,
-                            SpotLength = spotLengths.Single(y => y.id == x.affidavitFile.spot_length_id).length,
-                            TimeAired = x.affidavitFile.air_time,
-                            DateAired = x.affidavitFile.original_air_date,
-                            DayOfWeek = x.affidavitFile.original_air_date.DayOfWeek,
-                            GenreName = x.affidavitFile.genre,
+                            SpotLength = spotLengths.Single(y => y.id == x.affidavitDetails.spot_length_id).length,
+                            TimeAired = x.affidavitDetails.air_time,
+                            DateAired = x.affidavitDetails.original_air_date,
+                            DayOfWeek = x.affidavitDetails.original_air_date.DayOfWeek,
+                            GenreName = x.affidavitDetails.genre,
                             MatchGenre = x.affidavitFileScrub.match_genre,
                             MatchMarket = x.affidavitFileScrub.match_market,
                             MatchProgram = x.affidavitFileScrub.match_program,
