@@ -8,6 +8,7 @@ using Services.Broadcast.Entities;
 using System;
 using System.IO;
 using System.Linq;
+using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.Entities;
 
@@ -17,10 +18,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class AffidavitPostProcessingServiceIntegrationTests
     {
         private readonly IAffidavitPostProcessingService _AffidavitPostProcessingService;
+        private readonly IAffidavitRepository _AffidavitRepository;
 
         public AffidavitPostProcessingServiceIntegrationTests()
         {
             _AffidavitPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
+            _AffidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
         }
 
         [Test]
@@ -49,32 +52,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [ExpectedException(typeof(Exception))]
         [UseReporter(typeof(DiffReporter))]
         public void AffidavitPostProcessing_InvalidFileType()
         {
             using (new TransactionScopeWrapper())
             {
                 var filePath = @".\Files\Checkers BVS Report.DAT";
-                var request = File.ReadAllText(filePath);
 
                 AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(BaseResponse), "Data");
-
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
+                int affidavitId = _AffidavitPostProcessingService.LogAffidavitError(filePath);
+                VerifyAffidavitLog(affidavitId);
             }
         }
 
         [Test]
-        [ExpectedException(typeof(Exception))]
+        [UseReporter(typeof(DiffReporter))]
         public void AffidavitPostProcessing_InvalidFileContent()
         {
             using (new TransactionScopeWrapper())
@@ -83,8 +75,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = File.ReadAllText(filePath);
 
                 AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath);
-                if (response == null)
-                    throw new Exception("Invalid file content.");
+                int affidavitId = _AffidavitPostProcessingService.LogAffidavitError(filePath);
+                VerifyAffidavitLog(affidavitId);
             }
         }
 
@@ -158,6 +150,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
             }
+        }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPostProcessing_File_Error_Logging()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_bad_file.txt";
+                var request = File.ReadAllText(filePath);
+
+                _AffidavitPostProcessingService.ParseWWTVFile(filePath);
+                int affidavitId = _AffidavitPostProcessingService.LogAffidavitError(filePath);
+
+                VerifyAffidavitLog(affidavitId);
+            }
+        }
+
+        private void VerifyAffidavitLog(int affidavitId)
+        {
+            var response = _AffidavitRepository.GetAffidavit(affidavitId);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(AffidavitFileProblem), "Id");
+            jsonResolver.Ignore(typeof(AffidavitFileProblem), "AffidavitFileId");
+            jsonResolver.Ignore(typeof(AffidavitFile), "CreatedDate");
+            jsonResolver.Ignore(typeof(AffidavitFile), "Id");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver,
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
         }
     }
 }

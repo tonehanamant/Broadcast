@@ -1,5 +1,5 @@
 {
-    "glossary": {
+    "Details": {
         "title": "example glossary",
 		"GlossDiv": {
             "title": "S",

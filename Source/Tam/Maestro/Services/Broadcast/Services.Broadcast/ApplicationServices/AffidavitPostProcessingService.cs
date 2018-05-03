@@ -34,6 +34,12 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="filePath">Path of the file to process</param>
         /// <returns>BaseResponse object</returns>
         AffidavitSaveRequest ParseWWTVFile(string filePath);
+
+        /// <summary>
+        /// Logs any errors that happened in DownloadAndProcessWWTV Files and ParseWWTVFile.
+        /// Do not call directly, only used for Integration testing
+        /// </summary>
+        int LogAffidavitError(string filePath);
     }
 
 
@@ -101,7 +107,7 @@ namespace Services.Broadcast.ApplicationServices
                 AffidavitSaveRequest affidavitSaveRequest = ParseWWTVFile(filePath);
                 if (!string.IsNullOrEmpty(_errorMessage))
                 {
-                    _ProcessError(filePath);
+                    ProcessErrorFromFtp(filePath);
                     continue;
                 }
                 try
@@ -111,7 +117,7 @@ namespace Services.Broadcast.ApplicationServices
                 catch (Exception e)
                 {
                     _errorMessage = "Error saving affidavit:\n\n" + e.ToString();
-                    _ProcessError(filePath);
+                    ProcessErrorFromFtp(filePath);
                     continue;
                 }
 
@@ -122,7 +128,7 @@ namespace Services.Broadcast.ApplicationServices
                 catch (Exception e)
                 {
                     _errorMessage = "Error deleting affidavit file from FTP site:\n\n" + e.ToString();
-                    _ProcessError(filePath, false);
+                    ProcessErrorFromFtp(filePath, false);
                     continue;
                 }
             }
@@ -150,7 +156,7 @@ namespace Services.Broadcast.ApplicationServices
             _AffidavitEmailSenderService.Send(emailBody);
         }
 
-        private void _ProcessError(string filePath,bool deleteFtpFile = true)
+        public void ProcessErrorFromFtp(string filePath,bool deleteFtpFile = true)
         {
             var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
 
@@ -161,10 +167,10 @@ namespace Services.Broadcast.ApplicationServices
             if (deleteFtpFile)
                 _DeleteWWTVFTPFile(Path.GetFileName(filePath));
 
-            _LogAffidavitError(filePath,_errorMessage);
+            LogAffidavitError(filePath);
         }
 
-        private void _LogAffidavitError(string filePath,string errorMessage)
+        public int LogAffidavitError(string filePath)
         {
             var affidavitFile = new AffidavitFile();
             affidavitFile.FileName = Path.GetFileName(filePath);
@@ -174,10 +180,12 @@ namespace Services.Broadcast.ApplicationServices
             affidavitFile.SourceId = (int)AffidaviteFileSource.Strata;
 
             var problem = new AffidavitFileProblem();
-            problem.ProblemDescription = errorMessage;
+            problem.ProblemDescription = _errorMessage;
 
             affidavitFile.AffidavitFileProblems.Add(problem);
             var id = _AffidavitRepository.SaveAffidavitFile(affidavitFile);
+
+            return id;
         }
 
         /// <summary>

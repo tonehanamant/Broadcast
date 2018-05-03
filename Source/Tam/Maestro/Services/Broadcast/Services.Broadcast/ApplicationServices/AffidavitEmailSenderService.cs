@@ -13,7 +13,6 @@ namespace Services.Broadcast.BusinessEngines
     public class AffidavitEmailSenderService : IAffidavitEmailSenderService
     {
         private const string _EmailValidationSubject = "WWTV File Failed Validation";
-        private const int _SmtpPort = 587;
 
         public void Send(string emailBody, string subject = null)
         {
