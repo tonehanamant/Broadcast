@@ -169,12 +169,15 @@ namespace Services.Broadcast.ReportGenerators
                     columnOffset++;
                 }
 
+                //Apply formatting to every cell. Using ranges you cannot create the correct border
+                for (int i = firstDataColumn; i < columnOffset; i++)
+                {
+                    ws.Cells[rowOffset, i].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    ws.Cells[rowOffset, i].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                }
+
                 rowOffset++;
             }
-
-            //Apply formatting to the whole table
-            ws.Cells[firstDataRow, firstDataColumn, rowOffset - 1, columnOffset].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-            ws.Cells[firstDataRow, firstDataColumn, rowOffset - 1, columnOffset].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
             ws.Cells.AutoFitColumns();
         }
