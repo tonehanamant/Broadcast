@@ -55,18 +55,12 @@ namespace WWTVData.Service
             try
             {
                 var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
-                List<string> filesFailedDownload;
-                service.DownloadAndProcessWWTVFiles("WWTV Service", out filesFailedDownload);
-                filesFailedDownload.ForEach(f =>
-                    {
-                        BaseWindowsService.LogServiceError(string.Format("Error downloading file {0}", f));
-                    });
-            
+                service.DownloadAndProcessWWTVFiles("WWTV Service");
                 _LastRun = DateTime.Now;
             }
             catch (Exception e)
             {
-                BaseWindowsService.LogServiceError("Error reading from WWTV FTP.");
+                BaseWindowsService.LogServiceError("Error reading from WWTV FTP.\r\n" + e.ToString());
                 return false;
             }
             BaseWindowsService.LogServiceEvent(". . . Done Checking files to download\n");
