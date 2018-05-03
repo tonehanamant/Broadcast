@@ -41,7 +41,7 @@ namespace Services.Broadcast.IntegrationTests
                 if (pTamResource == "BroadcastConnectionString")
                 {
                     return
-                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
                 else if (pTamResource == "BroadcastForecastConnectionString")
                 {
@@ -97,10 +97,10 @@ namespace Services.Broadcast.IntegrationTests
                     result = "broadcast";
                     break;
                 case "WWTV_FtpPassword":
-                    result = "Password01";
+                    result = "password";
                     break;
                 case "WWTV_FtpHost":
-                    result = "localhost";
+                    result = "cad-phl-mhohens.crossmw.com";
                     break;
                 case "WWTV_FtpOutboundFolder":
                     result = "uploads";
@@ -110,6 +110,9 @@ namespace Services.Broadcast.IntegrationTests
                     break;
                 case "WWTV_FailedFolder":
                     result = @"E:\temp";
+                    break;
+                case "WWTV_FtpInboundFolder":
+                    result = @"OutPost";
                     break;
                 case "EmailHost": 
                     result = "smtp.office365.com";
