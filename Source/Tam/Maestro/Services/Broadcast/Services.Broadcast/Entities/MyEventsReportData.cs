@@ -64,5 +64,8 @@ namespace Services.Broadcast.Entities
         public int LineupMultiBarter { get { return 1; } }
         public char LineupCashOnly { get { return 'N'; } }
         public int LineupAiringNumber { get { return 1; } }
+
+        public int AdvertiserId { get; internal set; }
+        public int SpotLengthId { get; internal set; }
     }
 }
