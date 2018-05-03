@@ -99,6 +99,9 @@
     "DistinctGenres": [
       "Do It Yourself"
     ],
+    "DistinctPrograms": [
+      "Program Names R us"
+    ],
     "WeekEnd": "2016-06-06T00:00:00",
     "WeekStart": "2016-05-30T00:00:00"
   },

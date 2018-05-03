@@ -63,6 +63,7 @@
   "Filters": {
     "DistinctDayOfWeek": [],
     "DistinctGenres": [],
+    "DistinctPrograms": [],
     "WeekEnd": null,
     "WeekStart": null
   },
