@@ -9,6 +9,7 @@ namespace Services.Broadcast.Entities
         public int? Id { get; set; }
         public List<AffidavitValidationResult> ValidationResults { get; set; }
 
+       
         public override string ToString()
         {
             string str = "";

@@ -89,14 +89,13 @@ namespace Services.Broadcast.ApplicationServices
                 SourceId = saveRequest.Source
             };
 
-
             AffidavitSaveResult result;
-            result = AffidavitSaveResult(saveRequest, username, currentDateTime, affidavitFile);
+            result = _AffidavitSaveResult(saveRequest, username, currentDateTime, affidavitFile);
 
             return result;
         }
 
-        private AffidavitSaveResult AffidavitSaveResult(AffidavitSaveRequest saveRequest, string username,
+        private AffidavitSaveResult _AffidavitSaveResult(AffidavitSaveRequest saveRequest, string username,
             DateTime currentDateTime, AffidavitFile affidavitFile)
         {
             Dictionary<int, int> spotLengthDict = null;
@@ -258,7 +257,7 @@ namespace Services.Broadcast.ApplicationServices
                 var description = v.ErrorMessage;
                 if (!string.IsNullOrEmpty(v.InvalidField))
                 {
-                    description = string.Format("Line: {0}: Field: '{1}' is invalid\r\n{2}",v.InvalidLine,v.InvalidField,v.ErrorMessage);
+                    description = string.Format("Record: {0}: Field: '{1}' is invalid\r\n{2}",v.InvalidLine,v.InvalidField,v.ErrorMessage);
                 }
                 problem.ProblemDescription = description;
                 problems.Add(problem);
