@@ -128,8 +128,6 @@ namespace Services.Broadcast.Entities
 
                 QuarterTabs.Add(tab);
 
-                var impressionsByDaypart = _GetImpressionsByDaypart(guaranteedDemoId, tab);
-
                 QuarterTables.Add(
                     new NsiPostReportQuarterSummaryTable()
                     {
@@ -153,7 +151,7 @@ namespace Services.Broadcast.Entities
                                      SpotLength = x.Key.SpotLength,
                                      WeekStartDate = x.Key.WeekStart,
                                      Spots = x.Key.ProposalWeekUnits,
-                                     ActualImpressions = impressionsByDaypart.ContainsKey(x.Key.DaypartName) ? impressionsByDaypart[x.Key.DaypartName] : 0,
+                                     ActualImpressions = x.Sum(y => y.AudienceImpressions.ContainsKey(guaranteedDemoId) ? y.AudienceImpressions[guaranteedDemoId] : 0),
                                      ProposalWeekTotalCost = x.Key.ProposalWeekTotalCost,
                                      ProposalWeekCost = x.Key.ProposalWeekCost,
                                      ProposalWeekTotalImpressionsGoal = x.Key.ProposalWeekTotalImpressionsGoal,
@@ -165,21 +163,6 @@ namespace Services.Broadcast.Entities
             }
             QuarterTables.ForEach(x => x.TableRows.ForEach(y => y.DeliveredImpressionsPercentage = y.ActualImpressions / y.ProposalWeekTotalImpressionsGoal));
             SpotLengthsDisplay = string.Join(",", QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
-        }
-
-        private Dictionary<string, double> _GetImpressionsByDaypart(int guaranteedDemoId, NsiPostReportQuarterTab tab)
-        {
-            var impressionsByDaypart = new Dictionary<string, double>();
-            var tabRowsGroupedByDaypart = tab.TabRows.GroupBy(x => x.DaypartName);
-
-            foreach (var tabRow in tabRowsGroupedByDaypart)
-            {
-                var impressionsSum = tabRow.Sum(x => x.AudienceImpressions.ContainsKey(guaranteedDemoId) ? x.AudienceImpressions[guaranteedDemoId] : 0);
-
-                impressionsByDaypart.Add(tabRow.Key, impressionsSum);
-            }
-
-            return impressionsByDaypart;
         }
     }
 }
