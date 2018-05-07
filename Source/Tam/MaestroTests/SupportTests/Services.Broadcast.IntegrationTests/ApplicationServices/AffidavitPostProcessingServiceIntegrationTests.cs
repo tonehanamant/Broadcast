@@ -92,7 +92,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var filePath = @".\Files\WWTV_AffidavitValidFile.txt";
-                var request = File.ReadAllText(filePath);
 
                 string errorMessage;
                 AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath, out errorMessage);
@@ -117,7 +116,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var filePath = @".\Files\WWTV_AffidavitValidFileContent_SpotCost.txt";
-                var request = File.ReadAllText(filePath);
 
                 string errorMessage;
                 AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath, out errorMessage);
@@ -142,7 +140,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var filePath = @".\Files\WWTV_AffidavitValidFileContent_NullDemo.txt";
-                var request = File.ReadAllText(filePath);
 
                 string errorMessage;
                 AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath, out errorMessage);
@@ -169,10 +166,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = File.ReadAllText(filePath);
 
                 string errorMessage;
-                AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath, out errorMessage);
+                _AffidavitPostProcessingService.ParseWWTVFile(filePath, out errorMessage);
                 int affidavitId = _AffidavitPostProcessingService.LogAffidavitError(filePath, errorMessage.Substring(0,25));
 
                 VerifyAffidavitLog(affidavitId);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPostProcessing_File_Error_Date_Time()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_bad_file_Times.txt";
+
+                string errorMessage;
+                _AffidavitPostProcessingService.ParseWWTVFile(filePath, out errorMessage);
+
+                Assert.IsTrue(errorMessage.Contains("Record: 1: field: 'Time'"),errorMessage);
+                Assert.IsTrue(errorMessage.Contains("Record: 1: field: 'LeadOutStartTime'"), errorMessage);
+                Assert.IsTrue(errorMessage.Contains("Record: 1: field: 'LeadInEndTime'"),errorMessage);
             }
         }
 
