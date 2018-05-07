@@ -987,21 +987,21 @@ export function* modelNewProposalDetail({ payload: params }) {
     const Detail = { ...payload };
     let warnings = [];
     if (Detail) {
-      if (Detail.DefaultPostingBooks &&
-          Detail.DefaultPostingBooks.DefautlHutBook &&
-          Detail.DefaultPostingBooksDefautlHutBook.HasWarning) {
-          warnings.push(Detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+      if (Detail.DefaultProjectionBooks &&
+          Detail.DefaultProjectionBooks.DefaultHutBook &&
+          Detail.DefaultProjectionBooks.DefaultHutBook.HasWarning) {
+          warnings.push(Detail.DefaultProjectionBooks.DefaultShareBook.WarningMessage);
           warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
 
-          payload.DefaultPostingBooksDefautlHutBook.HasWarning = false; // Unset to stop repeat unless BE explicit changes
+          payload.DefaultProjectionBooks.DefaultHutBook.HasWarning = false; // Unset to stop repeat unless BE explicit changes
       }
-      if (Detail.DefaultPostingBooks &&
-          Detail.DefaultPostingBooks.DefaultShareBook &&
-          Detail.DefaultPostingBooks.DefaultShareBook.HasWarning) {
-          warnings.push(Detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+      if (Detail.DefaultProjectionBooks &&
+          Detail.DefaultProjectionBooks.DefaultShareBook &&
+          Detail.DefaultProjectionBooks.DefaultShareBook.HasWarning) {
+          warnings.push(Detail.DefaultProjectionBooks.DefaultShareBook.WarningMessage);
           warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
 
-          payload.DefaultPostingBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
+          payload.DefaultProjectionBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
       }
     }
     yield put({
@@ -1100,21 +1100,21 @@ export function* updateProposal() { // { payload: params }
     let warnings = [];
     if (Details) {
       Details.forEach((detail, index) => {
-        if (detail.DefaultPostingBooks &&
-            detail.DefaultPostingBooks.DefautlHutBook &&
-            detail.DefaultPostingBooksDefautlHutBook.HasWarning) {
-            warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+        if (detail.DefaultProjectionBooks &&
+            detail.DefaultProjectionBooks.DefaultHutBook &&
+            detail.DefaultProjectionBooks.DefaultHutBook.HasWarning) {
+            warnings.push(detail.DefaultProjectionBooks.DefaultShareBook.WarningMessage);
             warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
 
-            data.Data.Details[index].DefaultPostingBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
+            data.Data.Details[index].DefaultProjectionBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
         }
-        if (detail.DefaultPostingBooks &&
-            detail.DefaultPostingBooks.DefaultShareBook &&
-            detail.DefaultPostingBooks.DefaultShareBook.HasWarning) {
-            warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+        if (detail.DefaultProjectionBooks &&
+            detail.DefaultProjectionBooks.DefaultShareBook &&
+            detail.DefaultProjectionBooks.DefaultShareBook.HasWarning) {
+            warnings.push(detail.DefaultProjectionBooks.DefaultShareBook.WarningMessage);
             warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
 
-            data.Data.Details[index].DefaultPostingBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
+            data.Data.Details[index].DefaultProjectionBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
         }
       });
     }

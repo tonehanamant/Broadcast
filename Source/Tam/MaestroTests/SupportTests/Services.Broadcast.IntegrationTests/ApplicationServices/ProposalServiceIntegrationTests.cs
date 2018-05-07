@@ -61,8 +61,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Daypart = new DaypartDto() { mon = true, tue = true },
                 SpotLengthId = 1,
                 DaypartCode = "NAV",
-                SharePostingBookId = 413,
-                HutPostingBookId = 410,
+                ShareProjectionBookId = 413,
+                HutProjectionBookId = 410,
                 PlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
                 GenreCriteria = new List<GenreCriteria>()
                 {
@@ -1309,15 +1309,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 proposal.Details.Add(detail);
 
-                detail.HutPostingBookId = null;
-                detail.SharePostingBookId = shareBookMonthId;
+                detail.HutProjectionBookId = null;
+                detail.ShareProjectionBookId = shareBookMonthId;
 
                 var resultProposal = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
                 var resultProposalDetail = resultProposal.Details.First();
 
-                Assert.AreEqual(shareBookMonthId, resultProposalDetail.SinglePostingBookId);
-                Assert.AreEqual(shareBookMonthId, resultProposalDetail.SharePostingBookId);
-                Assert.Null(resultProposalDetail.HutPostingBookId);
+                Assert.AreEqual(shareBookMonthId, resultProposalDetail.SingleProjectionBookId);
+                Assert.AreEqual(shareBookMonthId, resultProposalDetail.ShareProjectionBookId);
+                Assert.Null(resultProposalDetail.HutProjectionBookId);
             }
         }
 
@@ -1330,8 +1330,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposal = _ProposalService.GetProposalById(251);
                 var firstDetail = proposal.Details.First();
 
-                Assert.AreEqual(413, firstDetail.SharePostingBookId);
-                Assert.Null(firstDetail.HutPostingBookId);
+                Assert.AreEqual(413, firstDetail.ShareProjectionBookId);
+                Assert.Null(firstDetail.HutProjectionBookId);
             }
         }
 

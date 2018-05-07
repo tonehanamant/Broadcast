@@ -11,19 +11,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void GetRatingAdjustmentMonth_HasShareAndHut_UsesHut()
         {
             var dto = new ProposalDetailInventoryBase();
-            dto.HutPostingBookId = 420;
-            dto.SharePostingBookId = 322;
+            dto.HutProjectionBookId = 420;
+            dto.ShareProjectionBookId = 322;
 
-            Assert.That(BaseProposalInventoryService.GetRatingAdjustmentMonth(dto), Is.EqualTo(dto.HutPostingBookId));
+            Assert.That(BaseProposalInventoryService.GetRatingAdjustmentMonth(dto), Is.EqualTo(dto.HutProjectionBookId));
         }
 
         [Test]
         public void GetRatingAdjustmentMonth_HasSweeps_UsesSweeps()
         {
             var dto = new ProposalDetailInventoryBase();
-            dto.SinglePostingBookId = 420;
+            dto.SingleProjectionBookId = 420;
 
-            Assert.That(BaseProposalInventoryService.GetRatingAdjustmentMonth(dto), Is.EqualTo(dto.SinglePostingBookId));
+            Assert.That(BaseProposalInventoryService.GetRatingAdjustmentMonth(dto), Is.EqualTo(dto.SingleProjectionBookId));
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IAffidavitProgramScrubbingEngine _AffidavitProgramScrubbingEngine;
         protected readonly IProposalService _ProposalService;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
-        private readonly IPostingBooksService _PostingBooksService;
+        private readonly IProjectionBooksService _PostingBooksService;
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly int _BroadcastMatchingBuffer;
         private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine;
@@ -58,7 +58,7 @@ namespace Services.Broadcast.ApplicationServices
             IAffidavitProgramScrubbingEngine affidavitProgramScrubbingEngine,
             IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
             IProposalService proposalService,
-            IPostingBooksService postingBooksService,
+            IProjectionBooksService postingBooksService,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IAffidavitValidationEngine affidavitValidationEngine)
         {
@@ -331,12 +331,12 @@ namespace Services.Broadcast.ApplicationServices
 
         private int _GetPostingBookId()
         {
-            var defaultPostingBooks = _PostingBooksService.GetDefaultPostingBooks();
+            var defaultProjectionBooks = _PostingBooksService.GetDefaultProjectionBooks();
 
-            if (!defaultPostingBooks.DefaultShareBook.PostingBookId.HasValue)
+            if (!defaultProjectionBooks.DefaultShareBook.PostingBookId.HasValue)
                 throw new Exception("No default posting book available");
 
-            return defaultPostingBooks.DefaultShareBook.PostingBookId.Value;
+            return defaultProjectionBooks.DefaultShareBook.PostingBookId.Value;
         }
 
         private void _CalculateAffidavitImpressions(AffidavitFile affidavitFile, int postingBookId)

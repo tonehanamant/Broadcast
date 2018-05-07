@@ -95,7 +95,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostPrePostingService, PostPrePostingService>();
             unityContainer.RegisterType<IProprietarySpotCostCalculationEngine, ProprietarySpotCostCalculationEngine>();
             unityContainer.RegisterType<IImpressionAdjustmentEngine, ImpressionAdjustmentEngine>();
-			unityContainer.RegisterType<IPostingBooksService, PostingBooksService>();
+			unityContainer.RegisterType<IProjectionBooksService, ProjectionBooksService>();
             unityContainer.RegisterType<IProposalDetailHeaderTotalsCalculationEngine, ProposalDetailHeaderTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalDetailWeekTotalsCalculationEngine, ProposalDetailWeekTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalTotalsCalculationEngine, ProposalTotalsCalculationEngine>();

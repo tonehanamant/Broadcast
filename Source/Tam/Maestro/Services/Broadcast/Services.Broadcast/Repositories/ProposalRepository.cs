@@ -327,9 +327,9 @@ namespace Services.Broadcast.Repositories
                     end_date = proposalDetail.FlightEndDate,
                     daypart_id = proposalDetail.DaypartId,
                     adu = proposalDetail.Adu,
-                    single_posting_book_id = proposalDetail.SinglePostingBookId,
-                    hut_posting_book_id = proposalDetail.HutPostingBookId,
-                    share_posting_book_id = proposalDetail.SharePostingBookId,
+                    single_projection_book_id = proposalDetail.SingleProjectionBookId,
+                    hut_projection_book_id = proposalDetail.HutProjectionBookId,
+                    share_projection_book_id = proposalDetail.ShareProjectionBookId,
                     playback_type = (byte)proposalDetail.PlaybackType,
                     proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
                     {
@@ -434,9 +434,9 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.end_date = detail.FlightEndDate;
                     updatedDetail.daypart_id = detail.DaypartId;
                     updatedDetail.adu = detail.Adu;
-                    updatedDetail.single_posting_book_id = detail.SinglePostingBookId;
-                    updatedDetail.hut_posting_book_id = detail.HutPostingBookId;
-                    updatedDetail.share_posting_book_id = detail.SharePostingBookId;
+                    updatedDetail.single_projection_book_id = detail.SingleProjectionBookId;
+                    updatedDetail.hut_projection_book_id = detail.HutProjectionBookId;
+                    updatedDetail.share_projection_book_id = detail.ShareProjectionBookId;
                     updatedDetail.playback_type = (byte)detail.PlaybackType;
                     updatedDetail.sequence = detail.Sequence;
 
@@ -823,9 +823,9 @@ namespace Services.Broadcast.Repositories
                     FlightStartDate = version.start_date,
                     DaypartId = version.daypart_id,
                     Adu = version.adu,
-                    SinglePostingBookId = version.single_posting_book_id,
-                    SharePostingBookId = version.share_posting_book_id,
-                    HutPostingBookId = version.hut_posting_book_id,
+                    SingleProjectionBookId = version.single_projection_book_id,
+                    ShareProjectionBookId = version.share_projection_book_id,
+                    HutProjectionBookId = version.hut_projection_book_id,
                     PlaybackType = (ProposalEnums.ProposalPlaybackType)version.playback_type,
                     GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
@@ -1079,9 +1079,9 @@ namespace Services.Broadcast.Repositories
                     FlightStartDate = proposalDetail.start_date,
                     DaypartId = proposalDetail.daypart_id,
                     Adu = proposalDetail.adu,
-                    SinglePostingBookId = proposalDetail.single_posting_book_id,
-                    SharePostingBookId = proposalDetail.share_posting_book_id,
-                    HutPostingBookId = proposalDetail.hut_posting_book_id,
+                    SingleProjectionBookId = proposalDetail.single_projection_book_id,
+                    ShareProjectionBookId = proposalDetail.share_projection_book_id,
+                    HutProjectionBookId = proposalDetail.hut_projection_book_id,
                     PlaybackType = (ProposalEnums.ProposalPlaybackType)proposalDetail.playback_type,
                     GenreCriteria = proposalDetail.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
@@ -1300,8 +1300,8 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(c =>
             {
                 var detail = c.proposal_version_details.Find(proposalDetailId);
-                detail.hut_posting_book_id = hutBook;
-                detail.share_posting_book_id = shareBook;
+                detail.hut_projection_book_id = hutBook;
+                detail.share_projection_book_id = shareBook;
                 c.SaveChanges();
             });
         }
@@ -1311,7 +1311,7 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(c =>
             {
                 var detail = c.proposal_version_details.Find(proposalDetailId);
-                detail.single_posting_book_id = book;
+                detail.single_projection_book_id = book;
                 c.SaveChanges();
             });
         }
@@ -1453,9 +1453,9 @@ namespace Services.Broadcast.Repositories
                         IsHiatus = week.is_hiatus,
                         MediaWeekId = week.media_week_id
                     })).OrderBy(w => w.StartDate).ToList();
-            baseDto.SinglePostingBookId = pvd.single_posting_book_id;
-            baseDto.SharePostingBookId = pvd.share_posting_book_id;
-            baseDto.HutPostingBookId = pvd.hut_posting_book_id;
+            baseDto.SingleProjectionBookId = pvd.single_projection_book_id;
+            baseDto.SingleProjectionBookId = pvd.share_projection_book_id;
+            baseDto.HutProjectionBookId = pvd.hut_projection_book_id;
             baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.playback_type;
         }
 

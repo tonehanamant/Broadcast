@@ -36,14 +36,14 @@ class Sweeps extends Component {
     const { initialdata, detail, updateProposalEditFormDetail } = this.props;
 
     if (detail) {
-      let shareBookId = detail.SharePostingBookId;
-      let hutBookId = detail.HutPostingBookId;
+      let shareBookId = detail.ShareProjectionBookId;
+      let hutBookId = detail.HutProjectionBookId;
       let playbackTypeId = detail.PlaybackType;
 
-      if (detail.DefaultPostingBooks) {
-        shareBookId = shareBookId || detail.DefaultPostingBooks.DefaultShareBook.PostingBookId;
-        hutBookId = hutBookId || detail.DefaultPostingBooks.DefaultHutBook.PostingBookId;
-        playbackTypeId = playbackTypeId || detail.DefaultPostingBooks.DefaultPlaybackType;
+      if (detail.DefaultProjectionBooks) {
+        shareBookId = shareBookId || detail.DefaultProjectionBooks.DefaultShareBook.PostingBookId;
+        hutBookId = hutBookId || detail.DefaultProjectionBooks.DefaultHutBook.PostingBookId;
+        playbackTypeId = playbackTypeId || detail.DefaultProjectionBooks.DefaultPlaybackType;
       }
 
       // select options
@@ -71,8 +71,8 @@ class Sweeps extends Component {
       });
 
       // default values
-      updateProposalEditFormDetail({ id: detail.Id, key: 'SharePostingBookId', value: shareBookId });
-      updateProposalEditFormDetail({ id: detail.Id, key: 'HutPostingBookId', value: hutBookId });
+      updateProposalEditFormDetail({ id: detail.Id, key: 'ShareProjectionBookId', value: shareBookId });
+      updateProposalEditFormDetail({ id: detail.Id, key: 'HutProjectionBookId', value: hutBookId });
       updateProposalEditFormDetail({ id: detail.Id, key: 'PlaybackType', value: playbackTypeId });
     }
   }
@@ -91,8 +91,8 @@ class Sweeps extends Component {
     const { updateProposalEditFormDetail, detail } = this.props;
     const { currentShareBook, currentHutBook, currentPlaybackType } = this.state;
 
-    updateProposalEditFormDetail({ id: detail.Id, key: 'SharePostingBookId', value: currentShareBook.Id });
-    updateProposalEditFormDetail({ id: detail.Id, key: 'HutPostingBookId', value: currentHutBook.Id });
+    updateProposalEditFormDetail({ id: detail.Id, key: 'ShareProjectionBookId', value: currentShareBook.Id });
+    updateProposalEditFormDetail({ id: detail.Id, key: 'HutProjectionBookId', value: currentHutBook.Id });
     updateProposalEditFormDetail({ id: detail.Id, key: 'PlaybackType', value: currentPlaybackType.Id });
 
     this.setState({

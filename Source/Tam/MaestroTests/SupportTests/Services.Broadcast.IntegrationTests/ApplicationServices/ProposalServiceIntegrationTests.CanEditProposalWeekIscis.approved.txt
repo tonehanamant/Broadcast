@@ -7,7 +7,7 @@
     {
       "Adu": false,
       "DaypartCode": "NAV",
-      "DefaultPostingBooks": null,
+      "DefaultProjectionBooks": null,
       "FlightEdited": false,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
@@ -20,7 +20,7 @@
         }
       ],
       "GenreCriteria": [],
-      "HutPostingBookId": null,
+      "HutProjectionBookId": null,
       "PlaybackType": 4,
       "ProgramCriteria": [],
       "ProposalFlightWeeks": [],
@@ -133,7 +133,7 @@
         }
       ],
       "Sequence": 1,
-      "SharePostingBookId": 410,
+      "ShareProjectionBookId": 410,
       "ShowTypeCriteria": [
         {
           "Contain": 1,
@@ -143,7 +143,7 @@
           }
         }
       ],
-      "SinglePostingBookId": 410,
+      "SingleProjectionBookId": 410,
       "SpotLengthId": 1,
       "TotalCost": 2000.00,
       "TotalImpressions": 100000.0,
@@ -152,7 +152,7 @@
     {
       "Adu": false,
       "DaypartCode": "NAV",
-      "DefaultPostingBooks": null,
+      "DefaultProjectionBooks": null,
       "FlightEdited": false,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
@@ -165,7 +165,7 @@
         }
       ],
       "GenreCriteria": [],
-      "HutPostingBookId": null,
+      "HutProjectionBookId": null,
       "PlaybackType": 4,
       "ProgramCriteria": [],
       "ProposalFlightWeeks": [],
@@ -208,7 +208,7 @@
         }
       ],
       "Sequence": 2,
-      "SharePostingBookId": 410,
+      "ShareProjectionBookId": 410,
       "ShowTypeCriteria": [
         {
           "Contain": 2,
@@ -218,7 +218,7 @@
           }
         }
       ],
-      "SinglePostingBookId": 410,
+      "SingleProjectionBookId": 410,
       "SpotLengthId": 1,
       "TotalCost": 20.00,
       "TotalImpressions": 1000.0,

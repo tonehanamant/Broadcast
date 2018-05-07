@@ -52,6 +52,58 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-2910 ***************************************************************/
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'single_projection_book_id' AND 
+		object_id = OBJECT_ID('proposal_version_details'))
+BEGIN
+	EXEC sp_RENAME 'proposal_version_details.single_posting_book_id', 'single_projection_book_id', 'COLUMN'
+END
+GO
+
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'hut_projection_book_id' AND 
+		object_id = OBJECT_ID('proposal_version_details'))
+BEGIN
+	EXEC sp_RENAME 'proposal_version_details.hut_posting_book_id', 'hut_projection_book_id', 'COLUMN'
+END
+GO
+
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'share_projection_book_id' AND 
+		object_id = OBJECT_ID('proposal_version_details'))
+BEGIN
+	EXEC sp_RENAME 'proposal_version_details.share_posting_book_id', 'share_projection_book_id', 'COLUMN'
+END
+GO
+
+IF NOT EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'posting_book_id' AND 
+		object_id = OBJECT_ID('proposal_version_details'))
+BEGIN
+	ALTER TABLE proposal_version_details
+	ADD posting_book_id INT NULL
+
+	ALTER TABLE [dbo].[proposal_version_details]  WITH CHECK ADD  CONSTRAINT [FK_proposal_version_details_posting_media_months] FOREIGN KEY([posting_book_id])
+	REFERENCES [dbo].[media_months] ([id])
+
+	ALTER TABLE [dbo].[proposal_version_details] CHECK CONSTRAINT [FK_proposal_version_details_posting_media_months]
+
+END
+GO
+/*************************************** END BCOP-2910 ***************************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

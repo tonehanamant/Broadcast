@@ -146,26 +146,27 @@
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_demographics_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_problems_affidavit_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_files_affidavit_file_details" />
-        <EntityTypeShape EntityType="BroadcastModel.proposal_version_details" Width="1.5" PointX="24.125" PointY="19.875" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_dayparts" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_hut_media_months" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_share_media_months" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_single_media_months" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_proposal_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_criteria_show_types" Width="1.5" PointX="26.25" PointY="22.875" />
         <EntityTypeShape EntityType="BroadcastModel.show_types" Width="1.5" PointX="24" PointY="28.75" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_show_types_show_types" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_show_types" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_client_scrubs" Width="1.5" PointX="24.875" PointY="13.375" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_file_problems" Width="1.5" PointX="22.75" PointY="16" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_problems_affidiavit_file_id_affidavit_id" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_version_details" Width="1.5" PointX="24.125" PointY="19.625" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_hut_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_posting_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_share_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_single_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_show_types" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_proposal_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

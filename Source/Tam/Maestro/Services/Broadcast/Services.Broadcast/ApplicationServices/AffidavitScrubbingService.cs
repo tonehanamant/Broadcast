@@ -71,7 +71,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalService _ProposalService;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly Lazy<Image> _LogoImage;
-        private readonly IPostingBooksService _PostingBooksService;
+        private readonly IProjectionBooksService _PostingBooksService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -79,7 +79,7 @@ namespace Services.Broadcast.ApplicationServices
             IProposalService proposalService,
             IBroadcastAudiencesCache audiencesCache,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IPostingBooksService postingBooksService)
+            IProjectionBooksService postingBooksService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -222,7 +222,7 @@ namespace Services.Broadcast.ApplicationServices
             var stationMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
                 .GetBroadcastStationListByLegacyCallLetters(inspecSpots.Select(s => s.Station).Distinct().ToList())
                 .ToDictionary(k => k.LegacyCallLetters, v => v);
-            var latestPostingBooks = _PostingBooksService.GetDefaultPostingBooks();
+            var latestPostingBooks = _PostingBooksService.GetDefaultProjectionBooks();
             var nsiMarketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(latestPostingBooks.DefaultShareBook.PostingBookId.Value);
             var guaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
             var nsiPostReport = new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences,
