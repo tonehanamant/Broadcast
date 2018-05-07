@@ -84,7 +84,7 @@ namespace Services.Broadcast.Entities
             GuaranteedDemo = guaranteedDemo;
             FlightDates = flightDates;
 
-            var quartersGroup = inSpecAffidavitFileDetails.GroupBy(d => new { d.Year, d.Quarter });
+            var quartersGroup = inSpecAffidavitFileDetails.GroupBy(d => new { d.Year, d.Quarter }).OrderBy(x => x.Key.Year).ThenBy(x => x.Key.Quarter);
 
             foreach (var group in quartersGroup)
             {
