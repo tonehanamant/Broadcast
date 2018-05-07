@@ -74,7 +74,9 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Status',
                 dataIndex: 'Status',
-                width: '6%',
+                // width: '3%',
+                // test specific width
+                width: 44,
                 renderer: ({ row }) => {
                     const iconClassName = row.Status ? 'fa-check-circle' : 'fa-times-circle'
                     return (
@@ -85,7 +87,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Week Start',
                 dataIndex: 'WeekStart',
-                width: '6%',
+                width: '7%',
                 renderer: ({ row }) => {
                     const weekStart = <span>{(row.WeekStart && getDateInFormat(row.WeekStart)) || '-'}</span>
                     return (
@@ -96,7 +98,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Date',
                 dataIndex: 'DateAired',
-                width: '6%',
+                width: '7%',
                 renderer: ({ row }) => {
                     const date = row.MatchDate ? <span>{getDateInFormat(row.DateAired) || '-'}</span> : <span style={style}>{getDateInFormat(row.DateAired) || '-'}</span>
                     return (
@@ -107,7 +109,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Time Aired',
                 dataIndex: 'TimeAired',
-                width: '6%',
+                width: '7%',
                 renderer: ({ row }) => {
                     const TimeAired = row.MatchTime ? <span>{getSecondsToTimeString(row.TimeAired) || '-'}</span> : <span style={style}>{getSecondsToTimeString(row.TimeAired) || '-'}</span>
                     return (

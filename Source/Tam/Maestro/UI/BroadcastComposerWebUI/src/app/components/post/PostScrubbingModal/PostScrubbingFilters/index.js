@@ -64,7 +64,9 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Status',
         dataIndex: 'Status',
-        width: '6%',
+        // width: '3%',
+        // test specific width
+        width: 44,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -72,7 +74,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Week Start',
         dataIndex: 'WeekStart',
-        width: '6%',
+        width: '7%',
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -80,7 +82,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Date',
         dataIndex: 'TimeAired',
-        width: '6%',
+        width: '7%',
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -88,7 +90,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Time Aired',
         dataIndex: 'MatchTime',
-        width: '6%',
+        width: '7%',
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -102,7 +104,9 @@ export class PostScrubbingFilters extends Component {
             <FilterPopoverWrapper
               filterDisplay={value.filterDisplay}
               filterKey={value.filterKey}
-              textSearch={false}
+              hasTextSearch={false}
+              hasMatchSpec={value.hasMatchSpec}
+              matchOptions={value.matchOptions}
               filterOptions={value.filterOptions}
               filterActive={value.active}
               applyFilter={this.applyFilter}
@@ -137,20 +141,18 @@ export class PostScrubbingFilters extends Component {
         name: 'Program',
         dataIndex: 'ProgramName',
         width: '12%',
-        renderer: () => (
-          <div style={inactiveFilterStyle} />
-        ),
-        // testing
-       /*  renderer: ({ value }) => (
+        renderer: ({ value }) => (
             <FilterPopoverWrapper
             filterDisplay={value.filterDisplay}
             filterKey={value.filterKey}
-            textSearch
+            hasTextSearch
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
             filterOptions={value.filterOptions}
             filterActive={value.active}
             applyFilter={this.applyFilter}
             />
-          ), */
+          ),
       },
       {
         name: 'Genre',
@@ -160,7 +162,9 @@ export class PostScrubbingFilters extends Component {
           <FilterPopoverWrapper
             filterDisplay={value.filterDisplay}
             filterKey={value.filterKey}
-            textSearch
+            hasTextSearch
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
             filterOptions={value.filterOptions}
             filterActive={value.active}
             applyFilter={this.applyFilter}

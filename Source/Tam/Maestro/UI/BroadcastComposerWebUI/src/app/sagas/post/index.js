@@ -255,7 +255,7 @@ export function* requestClearScrubbingDataFiltersList() {
   }
 }
 
-
+// FILTERING
 // tbd how to iterate multiple versus single and determine set to check active or original
 // todo break down original scrubbing to ClientScrubs etc
 export function* requestScrubbingDataFiltered({ payload: query }) {
@@ -265,42 +265,33 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
   const originalFilters = yield select(state => state.post.activeScrubbingFilters);
   const actingFilter = activeFilters[query.filterKey]; // this is undefined
   // console.log('request scrub filter', query, activeFilters, actingFilter);
-  // TODO REVISE for specific types, etc
-  // Using base version for initial story - DayOfWeek only
   const applyFilter = () => {
-     // active -depends on if clearing etc
-    const isActive = query.exclusions.length > 0;
+     // active -depends on if clearing etc; also now if matching in play
+    const isActive = (query.exclusions.length > 0) || query.activeMatch;
      // todo should apply copy?
     actingFilter.active = isActive;
     actingFilter.exclusions = query.exclusions;
     actingFilter.filterOptions = query.filterOptions;
+    actingFilter.matchOptions = query.matchOptions;
+    actingFilter.activeMatch = query.activeMatch;
     // TBD iterate existing or acting only?
-    // let filteredResult = listFiltered; // use listFiltered by default
-    /* if (actingFilter.filterKey === 'DayOfWeek') {
-      // DayOfWeek filter based on exclusions
-      filteredResult = listUnfiltered.filter(item => !_.includes(query.exclusions, item.DayOfWeek));
-    } */
-
     const filteredResult = listUnfiltered.filter((item) => {
        let ret = true;
       _.forEach(activeFilters, (value) => {
         if (value.active && ret === true) {
-           ret = !_.includes(value.exclusions, item[value.filterKey]);
+          if (value.activeMatch) {
+            // just base on one or the other?
+            const toMatch = (value.matchOptions.inSpec === true);
+           ret = !_.includes(value.exclusions, item[value.filterKey]) && item[value.matchOptions.matchKey] === toMatch;
            // console.log('filter each', ret, item[value.filterKey]);
+          } else {
+            ret = !_.includes(value.exclusions, item[value.filterKey]);
+          }
         }
       });
       return ret;
     });
-    // for now test as filter on all active - needs to add to the array
-    /* let filtersApplied = [...listUnfiltered];
-    _.forEach(activeFilters, (value) => {
-      if (value.active) {
-        filtersApplied = listUnfiltered.filter(item => !_.includes(value.exclusions, item[value.filterKey]));
-      }
-    });
-    console.log('test filters', filtersApplied); */
     // console.log('request apply filter', actingFilter, activeFilters);
-
     // test to make sure there is returned data
     if (filteredResult.length < 1) {
       return { filteredClientScrubs: listFiltered, actingFilter, activeFilters: originalFilters, alertEmpty: true };
@@ -309,10 +300,6 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
   };
 
   try {
-    /* yield put({
-      type: ACTIONS.RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
-      data: [],
-    }); */
     // show loading?
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,

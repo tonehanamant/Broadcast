@@ -153,7 +153,7 @@ namespace Services.Broadcast.Entities
                                      SpotLength = x.Key.SpotLength,
                                      WeekStartDate = x.Key.WeekStart,
                                      Spots = x.Key.ProposalWeekUnits,
-                                     ActualImpressions = impressionsByDaypart.ContainsKey(x.Key.DaypartName) ? impressionsByDaypart[x.Key.DaypartName] : 0,
+                                     ActualImpressions = x.Sum(y => y.AudienceImpressions.ContainsKey(guaranteedDemoId) ? y.AudienceImpressions[guaranteedDemoId] : 0),
                                      ProposalWeekTotalCost = x.Key.ProposalWeekTotalCost,
                                      ProposalWeekCost = x.Key.ProposalWeekCost,
                                      ProposalWeekTotalImpressionsGoal = x.Key.ProposalWeekTotalImpressionsGoal,

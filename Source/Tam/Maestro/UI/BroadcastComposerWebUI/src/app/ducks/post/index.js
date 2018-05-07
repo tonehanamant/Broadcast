@@ -16,7 +16,14 @@ const initialState = {
         filterDisplay: 'Days',
         filterKey: 'DayOfWeek',
         type: 'filterList',
+        hasMatchSpec: false,
         active: false,
+        activeMatch: false,
+        matchOptions: {
+          matchKey: 'MatchIsciDays',
+          inSpec: true,
+          outSpec: true,
+        },
         exclusions: [],
         filterOptions: [],
       },
@@ -24,28 +31,32 @@ const initialState = {
         filterDisplay: 'Genres',
         filterKey: 'GenreName',
         type: 'filterList',
+        hasMatchSpec: false,
+        activeMatch: false,
         active: false,
+        matchOptions: {
+          matchKey: 'MatchGenre',
+          inSpec: true,
+          outSpec: true,
+        },
         exclusions: [],
         filterOptions: [],
       },
-      // testing
-      /* ProgramName: {
+      ProgramName: {
         filterDisplay: 'Programs',
         filterKey: 'ProgramName',
         type: 'filterList',
+        hasMatchSpec: true,
+        activeMatch: false,
         active: false,
+        matchOptions: {
+          matchKey: 'MatchProgram',
+          inSpec: true,
+          outSpec: true,
+        },
         exclusions: [],
-        filterOptions: [
-          { Display: 'Hot Bench', Value: 'Hot Bench', Selected: false },
-          { Display: 'Inside Edition', Value: 'Inside Edition', Selected: true },
-          { Display: 'Jeopardy', Value: 'Jeopardy', Selected: true },
-          { Display: 'Jimmy Fallon', Value: 'Jimmy Fallon', Selected: true },
-          { Display: 'Judge Judy', Value: 'Judge Judy', Selected: true },
-          { Display: 'TMZ Live', Value: 'TMZ Live', Selected: true },
-          { Display: 'Regis & Kelly', Value: 'Regis & Kelly', Selected: true },
-          { Display: 'Stephen Colbert', Value: 'Stephen Colbert', Selected: true },
-        ],
-      }, */
+        filterOptions: [],
+      },
     },
 };
 
@@ -74,6 +85,7 @@ export default function reducer(state = initialState, action) {
       const prepareFilterOptions = () => {
         const dayOfWeekOptions = [];
         const genreOptions = [];
+        const programOptions = [];
         filtersData.DistinctDayOfWeek.forEach((item) => {
           const display = getDay(item);
           const ret = { Value: item, Selected: true, Display: display };
@@ -83,8 +95,13 @@ export default function reducer(state = initialState, action) {
           const ret = { Value: item, Selected: true, Display: item };
           genreOptions.push(ret);
         });
+        filtersData.DistinctPrograms.forEach((item) => {
+          const ret = { Value: item, Selected: true, Display: item };
+          programOptions.push(ret);
+        });
         activeFilters.DayOfWeek.filterOptions = dayOfWeekOptions;
         activeFilters.GenreName.filterOptions = genreOptions;
+        activeFilters.ProgramName.filterOptions = programOptions;
       };
       prepareFilterOptions();
       return {
