@@ -5,6 +5,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -18,6 +19,7 @@ using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces;
+using TimeSpan = Tam.Maestro.Services.ContractInterfaces.InventoryBusinessObjects.TimeSpan;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -267,6 +269,26 @@ namespace Services.Broadcast.ApplicationServices
             response.Close();
         }
 
+        private System.TimeSpan ExtractTime(string formattedTime,ref string errorMessage,string fieldName, int recordNumber)
+        {
+            var dtf = new DateTimeFormatInfo();
+            var timeFormat = "hhmmt";
+            if (!DateTime.TryParseExact(formattedTime, timeFormat, dtf, DateTimeStyles.None, out DateTime parsedTime))
+            {
+                errorMessage += $"Record: {recordNumber+1}: field: '{fieldName}' is invalid time.  Please use format \"HHMMA|P\".\n";
+            }
+
+            return parsedTime.TimeOfDay;
+        }
+        private System.TimeSpan ExtractDateTime(string datetime, ref string errorMessage, string fieldName, int recordNumber)
+        {
+            if (!DateTime.TryParse(datetime, out DateTime parsedTime))
+            {
+                errorMessage += $"Record: {recordNumber+1}: field: '{fieldName}' is invalid date or time.\n";
+            }
+
+            return parsedTime.TimeOfDay;
+        }
         private AffidavitSaveRequest _MapWWTVFileToAffidavitFile(AffidavitSaveRequest affidavitSaveRequest,string filePath,out string errorMessage)
         {
             affidavitSaveRequest.Source = (int) AffidaviteFileSource.Strata;
@@ -286,14 +308,23 @@ namespace Services.Broadcast.ApplicationServices
                 return affidavitSaveRequest;
             }
 
+            errorMessage = "";
+
             for (var recordNumber = 0; recordNumber < jsonFile.Details.Count; recordNumber++)
             {
                 var jsonDetail = jsonFile.Details[recordNumber];
 
+                var airTime = jsonDetail.Date.Add(ExtractTime(jsonDetail.Time, ref errorMessage,"Time",recordNumber));
+                var leadInEndTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadInEndTime, ref errorMessage, "LeadInEndTime", recordNumber));
+                var leadOutStartTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadOutStartTime, ref errorMessage, "LeadOutStartTime", recordNumber));
+
+                if (!string.IsNullOrEmpty(errorMessage))
+                    continue;
+
                 var affidavitSaveRequestDetail = new AffidavitSaveRequestDetail()
                 {
                     Genre = jsonDetail.Genre,
-                    AirTime = jsonDetail.Date.Add(DateTime.Parse(jsonDetail.Time).TimeOfDay),
+                    AirTime = airTime,
                     Isci = jsonDetail.ISCI,
                     LeadInGenre = jsonDetail.LeadInGenre,
                     LeadInProgramName = jsonDetail.LeadInProgram,
@@ -308,8 +339,8 @@ namespace Services.Broadcast.ApplicationServices
                     InventorySource =
                         (int) (InventorySourceEnum) Enum.Parse(typeof(InventorySourceEnum), jsonDetail.InventorySource),
                     SpotCost = jsonDetail.SpotCost,
-                    LeadInEndTime = jsonDetail.Date.Add(DateTime.Parse(jsonDetail.LeadInEndTime).TimeOfDay),
-                    LeadOutStartTime = jsonDetail.Date.Add(DateTime.Parse(jsonDetail.LeadOutStartTime).TimeOfDay),
+                    LeadInEndTime = leadInEndTime,
+                    LeadOutStartTime = leadOutStartTime,
                     ShowType = jsonDetail.ShowType,
                     LeadInShowType = jsonDetail.LeadInShowType,
                     LeadOutShowType = jsonDetail.LeadOutShowType
@@ -329,6 +360,8 @@ namespace Services.Broadcast.ApplicationServices
                 affidavitSaveRequest.Details.Add(affidavitSaveRequestDetail);
             }
 
+            if (!string.IsNullOrEmpty(errorMessage))
+                errorMessage = $"Found some date/time errors within the file.  \r\n\r\n{errorMessage}";
             return affidavitSaveRequest;
         }
 

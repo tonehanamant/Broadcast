@@ -1,0 +1,28 @@
+{
+  "Details":    [ 
+  {
+      "EstimateId": 3926,
+      "Market": "Birmingham",
+      "Date": "01/01/2018",
+      "InventorySource": "CNN Entertainment",
+      "Station": "WICZ-TV",
+      "SpotLength": 30,
+      "Time": "446P",
+      "SpotCost": 0.00,
+      "ISCI": "CECT21LR02H",
+      "Affiliate": null,
+      "Program": "Hot Bench",
+      "ShowType": "Series",
+      "Genre": "Reality",
+      "LeadInProgram": "Hot Bench",
+      "LeadInShowType": "Series",
+      "LeadInGenre": "Reality",
+      "LeadInEndTime": "2/30/2018 04:30 PM",
+      "LeadOutProgram": "Ellen DeGeneres Show, The",
+      "LeadOutShowType": "Series",
+      "LeadOutGenre": null,
+      "LeadOutStartTime": "01/01/2018 011:00 PM",
+      "Demographics": null
+	 }
+   ]
+}
