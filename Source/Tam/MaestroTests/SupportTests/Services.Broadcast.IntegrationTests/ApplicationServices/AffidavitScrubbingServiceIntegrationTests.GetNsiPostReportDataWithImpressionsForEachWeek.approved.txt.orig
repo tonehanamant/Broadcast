@@ -19,29 +19,24 @@
       "TableName": "1Q'16",
       "TableRows": [
         {
-          "ActualImpressions": 999.0,
+          "ActualImpressions": 1110.0,
           "Contract": "NAV1",
-          "DeliveredImpressionsPercentage": 0.999,
           "HHRating": 0,
-          "ProposalWeekCost": 5.0000,
-          "ProposalWeekCPM": 50.0000,
-          "ProposalWeekImpressionsGoal": 100.0,
-          "ProposalWeekTotalCost": 50.0000,
-          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
           "SpotLength": 30,
           "Spots": 10,
           "WeekStartDate": "2016-05-30T00:00:00"
         },
         {
+<<<<<<< HEAD
+          "ActualImpressions": 1332.0,
+=======
           "ActualImpressions": 999.0,
           "Contract": "NAV1",
-          "DeliveredImpressionsPercentage": 0.999,
           "HHRating": 0,
-          "ProposalWeekCost": 5.0000,
-          "ProposalWeekCPM": 50.0000,
-          "ProposalWeekImpressionsGoal": 100.0,
-          "ProposalWeekTotalCost": 50.0000,
-          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
           "SpotLength": 30,
           "Spots": 10,
           "WeekStartDate": "2016-06-06T00:00:00"
@@ -53,30 +48,26 @@
       "TableRows": [
         {
           "ActualImpressions": 1443.0,
+>>>>>>> feature/BCOP2975
           "Contract": "NAV1",
-          "DeliveredImpressionsPercentage": 1.443,
           "HHRating": 0,
-          "ProposalWeekCost": 5.0000,
-          "ProposalWeekCPM": 50.0000,
-          "ProposalWeekImpressionsGoal": 100.0,
-          "ProposalWeekTotalCost": 50.0000,
-          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
           "SpotLength": 30,
           "Spots": 10,
+<<<<<<< HEAD
+=======
           "WeekStartDate": "2016-05-30T00:00:00"
         },
         {
           "ActualImpressions": 1443.0,
           "Contract": "NAV1",
-          "DeliveredImpressionsPercentage": 1.443,
           "HHRating": 0,
-          "ProposalWeekCost": 5.0000,
-          "ProposalWeekCPM": 50.0000,
-          "ProposalWeekImpressionsGoal": 100.0,
-          "ProposalWeekTotalCost": 50.0000,
-          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
           "SpotLength": 30,
           "Spots": 10,
+>>>>>>> feature/BCOP2975
           "WeekStartDate": "2016-06-06T00:00:00"
         }
       ]
@@ -97,11 +88,8 @@
           "Market": "New York",
           "NetworkAffiliate": "NBC",
           "ProgramName": "Program Names R us",
-          "ProposalWeekCost": 5.0000,
-          "ProposalWeekCPM": 50.0000,
-          "ProposalWeekImpressionsGoal": 100.0,
-          "ProposalWeekTotalCost": 50.0000,
-          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
           "ProposalWeekUnits": 10,
           "Rank": 1,
           "SpotLength": 30,
@@ -120,17 +108,17 @@
           "Market": "New York",
           "NetworkAffiliate": "NBC",
           "ProgramName": "Program Names R us",
-          "ProposalWeekCost": 5.0000,
-          "ProposalWeekCPM": 50.0000,
-          "ProposalWeekImpressionsGoal": 100.0,
-          "ProposalWeekTotalCost": 50.0000,
-          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
           "ProposalWeekUnits": 10,
           "Rank": 1,
           "SpotLength": 30,
           "Station": "WNBC",
           "TimeAired": 32400,
           "WeekStart": "2016-06-06T00:00:00"
+<<<<<<< HEAD
+        },
+=======
         }
       ],
       "Title": "Test Advertiser 9 1Q16 Post Spot Detail"
@@ -138,6 +126,7 @@
     {
       "TabName": "Spot Detail 2Q16",
       "TabRows": [
+>>>>>>> feature/BCOP2975
         {
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
@@ -149,11 +138,8 @@
           "Market": "New York",
           "NetworkAffiliate": "NBC",
           "ProgramName": "Program Names R us",
-          "ProposalWeekCost": 5.0000,
-          "ProposalWeekCPM": 50.0000,
-          "ProposalWeekImpressionsGoal": 100.0,
-          "ProposalWeekTotalCost": 50.0000,
-          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
           "ProposalWeekUnits": 10,
           "Rank": 1,
           "SpotLength": 30,
@@ -172,11 +158,8 @@
           "Market": "New York",
           "NetworkAffiliate": "NBC",
           "ProgramName": "Program Names R us",
-          "ProposalWeekCost": 5.0000,
-          "ProposalWeekCPM": 50.0000,
-          "ProposalWeekImpressionsGoal": 100.0,
-          "ProposalWeekTotalCost": 50.0000,
-          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 1000.0,
           "ProposalWeekUnits": 10,
           "Rank": 1,
           "SpotLength": 30,

@@ -7,6 +7,8 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using System;
 using System.IO;
+using System.Linq;
+using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -17,6 +19,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class AffidavitScrubbingServiceIntegrationTests
     {
         private readonly IAffidavitScrubbingService _AffidavitScrubbingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>();
+        private readonly IAffidavitRepository _AffidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
 
         [Test]
         public void GetPostsTest()
@@ -42,6 +45,37 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(253);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetClientScrubbingForProposal_BadMarket()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposalId = 253;
+                var aff = _AffidavitRepository.GetAffidavit(157);
+                aff.AffidavitFileDetails[0].Station = "bad station";
+                _AffidavitRepository.SaveAffidavitFile(aff);
+
+                var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(proposalId);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");

@@ -5,8 +5,8 @@
       "ProblemDescription": "File is in an invalid for"
     }
   ],
-  "FileHash": "DE-3E-0C-72-7A-9A-22-DF-67-47-32-C8-CC-5F-6D-85-97-FC-6B-19",
-  "FileName": "WWTV_AffidavitInValidFileContent.txt",
+  "FileHash": "A2-8B-2F-E5-D2-72-D1-5B-31-D9-D7-4D-C2-A2-B3-8C-14-B9-26-E2",
+  "FileName": "WWTV_bad_file.txt",
   "MediaMonthId": 0,
   "SourceId": 1,
   "Status": 2
