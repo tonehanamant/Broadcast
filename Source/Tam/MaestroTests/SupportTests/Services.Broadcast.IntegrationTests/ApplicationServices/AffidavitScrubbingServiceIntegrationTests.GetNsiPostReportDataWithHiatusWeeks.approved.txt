@@ -26,8 +26,8 @@
           "ActualImpressions": 0.0,
           "Contract": "NAV",
           "HHRating": 0,
-          "ProposalWeekCost": 25.0000,
-          "ProposalWeekImpressionsGoal": 100000.0,
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 200000.0,
           "SpotLength": 30,
           "Spots": 10,
           "WeekStartDate": "2016-05-30T00:00:00"

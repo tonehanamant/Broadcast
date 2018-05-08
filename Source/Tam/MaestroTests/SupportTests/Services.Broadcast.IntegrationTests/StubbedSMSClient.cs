@@ -75,19 +75,6 @@ namespace Services.Broadcast.IntegrationTests
                         @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_forecast_integration_codefreeze;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
             }
-            else if (System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Release_CodeFreeze")
-            {
-                if (pTamResource == "BroadcastConnectionString")
-                {
-                    return
-                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_integration_codefreeze_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
-                }
-                else if (pTamResource == "BroadcastForecastConnectionString")
-                {
-                    return
-                        @"Data Source=DEVFSQL2014\MAESTRO2_DEV;Initial Catalog=broadcast_forecast_integration_codefreeze_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
-                }
-            }
 
             throw new Exception("Un-coded resource: " + pTamResource);
         }
