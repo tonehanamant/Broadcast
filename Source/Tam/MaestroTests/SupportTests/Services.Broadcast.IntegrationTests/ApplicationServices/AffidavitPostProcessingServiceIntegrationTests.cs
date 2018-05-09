@@ -144,6 +144,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 string errorMessage;
                 AffidavitSaveRequest response = _AffidavitPostProcessingService.ParseWWTVFile(filePath, out errorMessage);
 
+                Assert.IsEmpty(errorMessage,"Unexpected error: " + errorMessage);
+
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(BaseResponse), "Data");
 
@@ -187,6 +189,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(errorMessage.Contains("Record: 1: field: 'Time'"),errorMessage);
                 Assert.IsTrue(errorMessage.Contains("Record: 1: field: 'LeadOutStartTime'"), errorMessage);
                 Assert.IsTrue(errorMessage.Contains("Record: 1: field: 'LeadInEndTime'"),errorMessage);
+                Assert.IsTrue(!errorMessage.Contains("Record: 2: field: 'Time'"), errorMessage);
+                Assert.IsTrue(errorMessage.Contains("Record: 3: field: 'Time'"), errorMessage);
+                Assert.IsTrue(errorMessage.Contains("Record: 4: field: 'Time'"), errorMessage);
+                Assert.IsTrue(!errorMessage.Contains("Record: 5: field: 'Time'"), errorMessage);
+                Assert.IsTrue(errorMessage.Contains("Record: 6: field: 'Time'"), errorMessage);
             }
         }
 

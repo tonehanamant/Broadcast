@@ -29,9 +29,39 @@
       "SpotCost": 315.25,
       "SpotLength": 30,
       "Station": "WCBS"
+    },
+    {
+      "Affiliate": "CBS",
+      "AirTime": "2017-12-15T09:22:00",
+      "Demographics": [
+        {
+          "AudienceId": 36,
+          "Demographic": null,
+          "OvernightImpressions": 825,
+          "OvernightRating": 1.5
+        }
+      ],
+      "EstimateId": 456,
+      "Genre": "Talk",
+      "InventorySource": 4,
+      "Isci": "DEF456",
+      "LeadInEndTime": "2017-12-15T09:01:02",
+      "LeadInGenre": "Talk",
+      "LeadInProgramName": "Oprah",
+      "LeadInShowType": "News",
+      "LeadOutGenre": "Gameshow",
+      "LeadOutProgramName": "The Price is Right",
+      "LeadOutShowType": "Documentary",
+      "LeadOutStartTime": "2017-12-15T10:01:15",
+      "Market": "Philadelphia",
+      "ProgramName": "The View",
+      "ShowType": "Comedy",
+      "SpotCost": 222.0,
+      "SpotLength": 30,
+      "Station": "WKYW"
     }
   ],
-  "FileHash": null,
+  "FileHash": "69-E2-DD-30-47-71-42-83-D6-4F-3D-4E-2A-51-C9-C4-2C-FD-84-F4",
   "FileName": "WWTV_AffidavitValidFile.txt",
   "Source": 1
 }

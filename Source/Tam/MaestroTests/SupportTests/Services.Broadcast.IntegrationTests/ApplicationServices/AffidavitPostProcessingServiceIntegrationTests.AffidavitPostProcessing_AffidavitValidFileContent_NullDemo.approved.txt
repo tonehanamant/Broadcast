@@ -54,7 +54,7 @@
       "Station": "WKYW"
     }
   ],
-  "FileHash": "4B-A0-F5-54-3F-18-FC-C2-ED-A2-99-2C-95-84-2A-1E-47-B7-AE-F6",
+  "FileHash": "0E-14-8C-F9-5F-43-FD-C0-8E-B4-84-4F-C4-57-1D-64-D0-DE-35-00",
   "FileName": "WWTV_AffidavitValidFileContent_NullDemo.txt",
   "Source": 1
 }

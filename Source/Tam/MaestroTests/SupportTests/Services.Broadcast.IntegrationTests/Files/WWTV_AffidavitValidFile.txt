@@ -1,60 +1,60 @@
+[
 {
-	"Details": [{
-			"EstimateId": 123,
-			"Market": "New York",
-			"Date": "12/26/2017",
-			"InventorySource": "CNN",
-			"Station": "WCBS",
-			"SpotLength": 30,
-			"Time": "1035P",
-			"SpotCost": 315.25,
-			"ISCI": "ABC123",
-			"Affiliate": "CBS",
-			"Program": "Everybody Loves Raymond",
-			"Genre": "Comedy",
-			"LeadInProgram": "Seinfeld",
-			"LeadInGenre": "Comedy",
-			"LeadOutProgram": "11 o'clock news",
-			"LeadOutGenre": "News",
-			"LeadInEndTime": "10:34:02 PM",
-			"LeadOutStartTime": "11:01:15 PM",
-			"ShowType": "Comedy",
-			"LeadInShowType": "News",
-			"LeadOutShowType": "Documentary",
-			"Demographics": [{
-					"Demographic": "A25-49",
-					"OvernightRating": 2.3,
-					"OvernightImpressions": 1928
-				}
-			]
-		}, {
-			"EstimateId": 456,
-			"Market": "Philadelphia",
-			"Date": "12/15/2017",
-			"InventorySource": "TTNW",
-			"Station": "WKYW",
-			"SpotLength": 30,
-			"Time": "922A",
-			"SpotCost": 222.00,
-			"ISCI": "DEF456",
-			"Affiliate": "CBS",
-			"Program": "The View",
-			"Genre": "Talk",
-			"LeadInProgram": "Oprah",
-			"LeadInGenre": "Talk",
-			"LeadOutProgram": "The Price is Right",
-			"LeadOutGenre": "Gameshow",
-			"LeadInEndTime": "9:01:02 AM",
-			"LeadOutStartTime": "10:01:15 AM",
-			"ShowType": "Comedy",
-			"LeadInShowType": "News",
-			"LeadOutShowType": "Documentary",
-			"Demographics": [{
-					"Demographic": "A25-49",
-					"OvernightRating": 1.5,
-					"OvernightImpressions": 825
-				}
-			]
+	"EstimateId": 123,
+	"Market": "New York",
+	"Date": "12/26/2017",
+	"InventorySource": "CNN",
+	"Station": "WCBS",
+	"SpotLength": 30,
+	"Time": "1035P",
+	"SpotCost": 315.25,
+	"ISCI": "ABC123",
+	"Affiliate": "CBS",
+	"Program": "Everybody Loves Raymond",
+	"Genre": "Comedy",
+	"LeadInProgram": "Seinfeld",
+	"LeadInGenre": "Comedy",
+	"LeadOutProgram": "11 o'clock news",
+	"LeadOutGenre": "News",
+	"LeadInEndTime": "10:34:02 PM",
+	"LeadOutStartTime": "11:01:15 PM",
+	"ShowType": "Comedy",
+	"LeadInShowType": "News",
+	"LeadOutShowType": "Documentary",
+	"Demographics": [{
+			"Demographic": "A25-49",
+			"OvernightRating": 2.3,
+			"OvernightImpressions": 1928
+		}
+	]
+}, 
+{
+	"EstimateId": 456,
+	"Market": "Philadelphia",
+	"Date": "12/15/2017",
+	"InventorySource": "TTNW",
+	"Station": "WKYW",
+	"SpotLength": 30,
+	"Time": "922A",
+	"SpotCost": 222.00,
+	"ISCI": "DEF456",
+	"Affiliate": "CBS",
+	"Program": "The View",
+	"Genre": "Talk",
+	"LeadInProgram": "Oprah",
+	"LeadInGenre": "Talk",
+	"LeadOutProgram": "The Price is Right",
+	"LeadOutGenre": "Gameshow",
+	"LeadInEndTime": "9:01:02 AM",
+	"LeadOutStartTime": "10:01:15 AM",
+	"ShowType": "Comedy",
+	"LeadInShowType": "News",
+	"LeadOutShowType": "Documentary",
+	"Demographics": [{
+			"Demographic": "A25-49",
+			"OvernightRating": 1.5,
+			"OvernightImpressions": 825
 		}
 	]
 }
+]
