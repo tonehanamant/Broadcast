@@ -75,7 +75,7 @@ export class PostScrubbingModal extends Component {
 							<span>&times;</span>
 						</Button>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body style={{ overflowX: 'auto', paddingBottom: 0 }}>
 						<PostScrubbingHeader
 							advertiser={Advertiser}
 							details={Details}

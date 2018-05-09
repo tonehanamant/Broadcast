@@ -74,7 +74,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Week Start',
         dataIndex: 'WeekStart',
-        width: '7%',
+        width: 100,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -82,7 +82,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Date',
         dataIndex: 'TimeAired',
-        width: '7%',
+        width: 100,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -90,7 +90,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Time Aired',
         dataIndex: 'MatchTime',
-        width: '7%',
+        width: 100,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -98,7 +98,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Day',
         dataIndex: 'DayOfWeek',
-        width: '6%',
+        width: 80,
         // renderer: ({ value, row }) => {
         renderer: ({ value }) => (
             <FilterPopoverWrapper
@@ -116,7 +116,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Ad Length',
         dataIndex: 'SpotLength',
-        width: '4%',
+        width: 80,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -124,7 +124,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'House ISCI',
         dataIndex: 'ISCI',
-        width: '7%',
+        width: 150,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -132,7 +132,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Client ISCI',
         dataIndex: 'ClientISCI',
-        width: '7%',
+        width: 100,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -140,7 +140,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Program',
         dataIndex: 'ProgramName',
-        width: '12%',
+        width: 150,
         renderer: ({ value }) => (
             <FilterPopoverWrapper
             filterDisplay={value.filterDisplay}
@@ -157,7 +157,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Genre',
         dataIndex: 'GenreName',
-        width: '6%',
+        width: 100,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
             filterDisplay={value.filterDisplay}
@@ -172,9 +172,17 @@ export class PostScrubbingFilters extends Component {
         ),
       },
       {
+        name: 'Show Type',
+        dataIndex: 'ShoiwType',
+        width: 100,
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
         name: 'Affiliate',
         dataIndex: 'Affiliate',
-        width: '6%',
+        width: 60,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -182,7 +190,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Market',
         dataIndex: 'Market',
-        width: '12%',
+        width: 150,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -190,7 +198,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Station',
         dataIndex: 'Station',
-        width: '6%',
+        width: 60,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -198,7 +206,8 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Comments',
         dataIndex: 'Comments',
-        width: '10%',
+        // width: 150,
+        width: '100%',
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),

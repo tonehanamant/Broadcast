@@ -292,7 +292,9 @@ namespace Services.Broadcast.Repositories
                             Comments = x.affidavitFileScrub.comment,
                             ClientISCI = x.proposalVersionWeekIscis.client_isci,
                             WeekStart = x.proposalVersionWeekIscis.proposal_version_detail_quarter_weeks.start_date,
-                            Status = (ScrubbingStatus)x.affidavitFileScrub.status
+                            ShowTypeName = x.affidavitFileScrub.effective_show_type,
+                            Status = (ScrubbingStatus)x.affidavitFileScrub.status,
+                            MatchShowType = x.affidavitFileScrub.match_show_type
                         };
                     }
                     ).ToList());

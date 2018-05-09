@@ -17,72 +17,28 @@ export class PostScrubbingDetail extends Component {
       const hasData = activeScrubbingData.ClientScrubs.length > 0;
         /* eslint-disable no-unused-vars */
         return (
-            <Well bsSize="small">
-                {/* Commenting out few details in grid */}
-                {/* <Row>
-                    <Form inline>
-                        <Col md={3}>
-                            <FormGroup controlId="detailFlight">
-                                <ControlLabel style={{ margin: '0 10px 0 0' }}>Flight</ControlLabel>
-                                <FormControl
-                                    type="text"
-                                    defaultValue={`${getDateInFormat(FlightStartDate)} - ${getDateInFormat(FlightEndDate)}`}
-                                    disabled={isReadOnly}
-                                />
-                            </FormGroup>
-                        </Col>
-                        <Col md={3}>
-                            <FormGroup controlId="detailFlight">
-                                <ControlLabel style={{ margin: '0 10px 0 0' }}>Daypart</ControlLabel>
-                                <FormControl
-                                    type="text"
-                                    defaultValue={DayPart}
-                                    disabled={isReadOnly}
-                                />
-                            </FormGroup>
-                        </Col>
-                        <Col md={3}>
-                            <FormGroup controlId="proposalDetailSpotLength">
-                                <ControlLabel style={{ margin: '0 10px 0 0' }}>Spot Length</ControlLabel>
-                                <FormControl
-                                    type="text"
-                                    defaultValue={SpotLength}
-                                    disabled={isReadOnly}
-                                />
-                            </FormGroup>
-                        </Col>
-                        <Col md={3}>
-                            <FormGroup controlId="Program/Genre">
-                                <ControlLabel style={{ margin: '0 10px 0 0' }}><strong>Program/Genre</strong></ControlLabel>
-                                <FormControl
-                                    type="text"
-                                    defaultValue={Genres || null}
-                                    disabled={isReadOnly}
-                                />
-                            </FormGroup>
-                        </Col>
-                    </Form>
-                </Row> */}
-                {
-                    <Row style={{ marginTop: 10 }}>
-                        <Col md={12}>
-                            { hasData &&
-                            <PostScrubbingFilters
-                              activeFilters={scrubbingFiltersList}
-                            />
-                            }
-                            <PostScrubbingGrid
-                                activeScrubbingData={activeScrubbingData}
-                                grid={grid}
-                                dataSource={dataSource}
-                                selectRow={selectRow}
-                                deselectAll={deselectAll}
-                                doLocalSort={doLocalSort}
-                                setOverlayLoading={setOverlayLoading}
-                            />
-                        </Col>
-                    </Row>
-                }
+            // <Well bsSize="small"  style={{ width: 'fit-content' }}>
+            <Well bsSize="small"  style={{ width: '1600px', marginBottom: 0 }}>
+              {
+                <Row style={{ marginTop: 10 }}>
+                    <Col md={12}>
+                        { hasData &&
+                        <PostScrubbingFilters
+                          activeFilters={scrubbingFiltersList}
+                        />
+                        }
+                        <PostScrubbingGrid
+                            activeScrubbingData={activeScrubbingData}
+                            grid={grid}
+                            dataSource={dataSource}
+                            selectRow={selectRow}
+                            deselectAll={deselectAll}
+                            doLocalSort={doLocalSort}
+                            setOverlayLoading={setOverlayLoading}
+                        />
+                    </Col>
+                </Row>
+              }
             </Well>
         );
     }
