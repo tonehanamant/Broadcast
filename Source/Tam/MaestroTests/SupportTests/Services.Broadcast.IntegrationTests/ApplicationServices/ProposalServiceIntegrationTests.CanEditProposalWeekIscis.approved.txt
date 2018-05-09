@@ -168,6 +168,12 @@
           "IsHiatus": false,
           "MediaWeekId": 650,
           "StartDate": "2016-06-07T00:00:00"
+        },
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
         }
       ],
       "GenreCriteria": [],
@@ -179,7 +185,7 @@
         {
           "Cpm": 20.0000,
           "DistributeGoals": false,
-          "ImpressionGoal": 2000.0,
+          "ImpressionGoal": 3000.0,
           "Quarter": 2,
           "QuarterText": "2016 Q2",
           "Weeks": [
@@ -219,6 +225,17 @@
               "StartDate": "2016-06-07T00:00:00",
               "Units": 10,
               "Week": "6/7/2016"
+            },
+            {
+              "Cost": 20.00,
+              "EndDate": "2016-06-14T00:00:00",
+              "Impressions": 1000.0,
+              "Iscis": [],
+              "IsHiatus": false,
+              "MediaWeekId": 650,
+              "StartDate": "2016-06-07T00:00:00",
+              "Units": 10,
+              "Week": "6/7/2016"
             }
           ],
           "Year": 2016
@@ -237,9 +254,9 @@
       ],
       "SingleProjectionBookId": 410,
       "SpotLengthId": 1,
-      "TotalCost": 40.00,
-      "TotalImpressions": 2000.0,
-      "TotalUnits": 20
+      "TotalCost": 60.00,
+      "TotalImpressions": 3000.0,
+      "TotalUnits": 30
     },
     {
       "Adu": false,
@@ -309,10 +326,10 @@
     }
   ],
   "Status": 3,
-  "TargetBudget": 2040.00,
+  "TargetBudget": 2060.00,
   "TargetCPM": 20.00,
-  "TargetImpressions": 102000.0,
-  "TargetUnits": 30,
+  "TargetImpressions": 103000.0,
+  "TargetUnits": 40,
   "TotalCost": 0.0000,
   "TotalCostMarginAchieved": false,
   "TotalCostPercent": 0.0,

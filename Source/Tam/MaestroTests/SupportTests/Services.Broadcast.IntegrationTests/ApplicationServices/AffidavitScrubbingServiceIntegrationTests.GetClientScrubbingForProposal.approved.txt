@@ -89,6 +89,12 @@
           "IsHiatus": false,
           "MediaWeekId": 650,
           "StartDate": "2016-06-07T00:00:00"
+        },
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
         }
       ],
       "Genres": [],
@@ -103,7 +109,7 @@
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [],
       "Genres": [],
-      "Id": 10791,
+      "Id": 10799,
       "Programs": [],
       "Sequence": null,
       "SpotLength": "30"
