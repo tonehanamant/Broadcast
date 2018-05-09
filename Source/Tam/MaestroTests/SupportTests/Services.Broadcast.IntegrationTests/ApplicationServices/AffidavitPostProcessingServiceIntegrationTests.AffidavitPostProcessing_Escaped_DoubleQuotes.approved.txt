@@ -1,0 +1,30 @@
+﻿{
+  "Details": [
+    {
+      "Affiliate": null,
+      "AirTime": "2018-01-01T14:46:00",
+      "Demographics": [],
+      "EstimateId": 3926,
+      "Genre": "Reality",
+      "InventorySource": 5,
+      "Isci": "C\"ECT\"21LR02H",
+      "LeadInEndTime": "2018-01-01T16:30:00",
+      "LeadInGenre": "Reality",
+      "LeadInProgramName": "Hot Bench",
+      "LeadInShowType": "Series",
+      "LeadOutGenre": null,
+      "LeadOutProgramName": "Ellen DeGeneres Show, The",
+      "LeadOutShowType": "Series",
+      "LeadOutStartTime": "2018-01-01T23:00:00",
+      "Market": "Birmingham",
+      "ProgramName": "Hot Bench",
+      "ShowType": "Series",
+      "SpotCost": 0.0,
+      "SpotLength": 30,
+      "Station": "WICZ-TV"
+    }
+  ],
+  "FileHash": "9A-91-7E-E3-43-BC-E8-22-1F-6B-69-B3-4B-99-9A-E7-BB-F2-02-E3",
+  "FileName": "WWTV_Escaped_DoubleQuotes.txt",
+  "Source": 1
+}

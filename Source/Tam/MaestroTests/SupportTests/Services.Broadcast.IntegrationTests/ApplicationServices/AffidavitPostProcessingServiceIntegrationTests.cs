@@ -196,6 +196,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(errorMessage.Contains("Record: 6: field: 'Time'"), errorMessage);
             }
         }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPostProcessing_Escaped_DoubleQuotes()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_Escaped_DoubleQuotes.txt";
+
+                string errorMessage;
+                var response = _AffidavitPostProcessingService.ParseWWTVFile(filePath, out errorMessage);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver,
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
+            }
+        }
 
         private void VerifyAffidavitLog(int affidavitId)
         {
