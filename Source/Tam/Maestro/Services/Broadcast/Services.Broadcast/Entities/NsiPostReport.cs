@@ -133,34 +133,30 @@ namespace Services.Broadcast.Entities
                 QuarterTables.Add(
                     new NsiPostReportQuarterSummaryTable()
                     {
-                        TableName = string.Format("{0}Q'{1}", group.Key.Quarter, group.Key.Year.ToString().Substring(2)),
-                        TableRows = Enumerable.ToList(Enumerable.Select(Enumerable.GroupBy(tab.TabRows, x => new
+                        TableName = String.Format("{0}Q'{1}", group.Key.Quarter, group.Key.Year.ToString().Substring(2)),
+                        TableRows = tab.TabRows.GroupBy(x => new
                         {
                             x.DaypartName,
                             x.SpotLength,
                             x.WeekStart,
-                            x.ProposalWeekUnits,
-                            x.ProposalWeekTotalImpressionsGoal,
-                            x.ProposalWeekImpressionsGoal,
-                            x.ProposalWeekTotalCost,
-                            x.ProposalWeekCost,
-                            x.ProposalWeekCPM
-                        }), x =>
+                            x.ProposalWeekUnits
+                        }).Select(x =>
                              {
+                                 var items = x.ToList();
                                  return new NsiPostReportQuarterSummaryTableRow
                                  {
                                      Contract = x.Key.DaypartName,
                                      SpotLength = x.Key.SpotLength,
                                      WeekStartDate = x.Key.WeekStart,
                                      Spots = x.Key.ProposalWeekUnits,
-                                     ActualImpressions = x.Sum(y => y.AudienceImpressions.ContainsKey(guaranteedDemoId) ? y.AudienceImpressions[guaranteedDemoId] : 0),
-                                     ProposalWeekTotalCost = x.Key.ProposalWeekTotalCost,
-                                     ProposalWeekCost = x.Key.ProposalWeekCost,
-                                     ProposalWeekTotalImpressionsGoal = x.Key.ProposalWeekTotalImpressionsGoal,
-                                     ProposalWeekImpressionsGoal = x.Key.ProposalWeekImpressionsGoal,
-                                     ProposalWeekCPM = x.Key.ProposalWeekCPM
+                                     ActualImpressions = impressionsByDaypart.ContainsKey(x.Key.DaypartName) ? impressionsByDaypart[x.Key.DaypartName] : 0,
+                                     ProposalWeekCost = items.Select(y => y.ProposalWeekCost).Sum(),
+                                     ProposalWeekTotalCost = items.Select(y => y.ProposalWeekTotalCost).Sum(),
+                                     ProposalWeekImpressionsGoal = items.Select(y => y.ProposalWeekImpressionsGoal).Sum(),
+                                     ProposalWeekTotalImpressionsGoal = items.Select(y => y.ProposalWeekTotalImpressionsGoal).Sum(),
+                                     ProposalWeekCPM = items.Select(y => y.ProposalWeekCPM).Sum()
                                  };
-                             }))
+                             }).ToList()
                     });
             }
             QuarterTables.ForEach(x => x.TableRows.ForEach(y => y.DeliveredImpressionsPercentage = y.ActualImpressions / y.ProposalWeekTotalImpressionsGoal));
