@@ -11,6 +11,8 @@ using System.Linq;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using System.Collections.Generic;
+using System.IO.Compression;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -227,6 +229,46 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             FileAssert.AreEqual(expectedFilePath, tempPath);
             Assert.AreEqual(expectedFileName, myEventsReport.Filename);
+        }
+
+        [Test]
+        public void GenerateMultipleMyEventsReportsTest()
+        {
+            const int expectedNumberOfEntries = 2;
+            var expectedReportNames = new List<string>()
+            {
+                "Test Adv NAV3 30 05-30-16.txt",
+                "Test Adv NAV4 30 05-30-16.txt"
+            };
+            var expectedFilePath = new List<string>()
+            {
+                @".\Files\" + expectedReportNames[0],
+                @".\Files\" + expectedReportNames[1],
+            };
+            var myEventsReport = _AffidavitScrubbingService.GenerateMyEventsReport(26001);
+
+            using (var zip = new ZipArchive(myEventsReport.Stream, ZipArchiveMode.Read))
+            {
+                Assert.AreEqual(expectedNumberOfEntries, zip.Entries.Count);
+                var firstEntry = zip.GetEntry(expectedReportNames[0]);
+                using (var entry = firstEntry.Open())
+                using (var ms = new MemoryStream())
+                {
+                    entry.CopyTo(ms);
+                    ms.Position = 0;
+                    FileAssert.AreEqual(File.OpenRead(expectedFilePath[0]), ms);
+                }
+                Assert.AreEqual(expectedReportNames[0], firstEntry.FullName);
+                var secondEntry = zip.GetEntry(expectedReportNames[1]);
+                using (var entry = secondEntry.Open())
+                using (var ms = new MemoryStream())
+                {
+                    entry.CopyTo(ms);
+                    ms.Position = 0;
+                    FileAssert.AreEqual(File.OpenRead(expectedFilePath[1]), ms);
+                }
+                Assert.AreEqual(expectedReportNames[1], secondEntry.FullName);
+            }
         }
     }
 }

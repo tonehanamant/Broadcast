@@ -374,7 +374,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var myEventsReportData = new List<MyEventsReportData>();
+                    var myEventsReportDataList = new List<MyEventsReportData>();
 
                     var affidavitData = (from proposal in context.proposals
                                          from proposalVersion in proposal.proposal_versions
@@ -387,22 +387,31 @@ namespace Services.Broadcast.Repositories
                                          affidavitClientScrub.status == (int)ScrubbingStatus.InSpec
                                          select new { affidavitFileDetail, affidavitClientScrub, proposal, proposalVersionDetail }).ToList();
 
-                    foreach (var affidavit in affidavitData)
-                    {
-                        var myEventsReportDataItem = new MyEventsReportData
-                        {
-                            CallLetter = affidavit.affidavitFileDetail.station,
-                            LineupStartDate = affidavit.affidavitFileDetail.original_air_date,
-                            LineupStartTime = new DateTime().AddSeconds(affidavit.affidavitFileDetail.air_time),
-                            AdvertiserId = affidavit.proposal.advertiser_id,
-                            SpotLengthId = affidavit.affidavitFileDetail.spot_length_id,
-                            DaypartCode = affidavit.proposalVersionDetail.daypart_code
-                        };
+                    var affidavitDataGrouped = affidavitData.GroupBy(x => new { x.proposalVersionDetail.spot_length_id, x.proposalVersionDetail.daypart_code });
 
-                        myEventsReportData.Add(myEventsReportDataItem);
+                    foreach (var affidavitDataGroup in affidavitDataGrouped)
+                    {
+                        var myEventsReportDataGroup = new MyEventsReportData();
+
+                        foreach (var affidavit in affidavitDataGroup)
+                        {
+                            var myEventsReportDataItem = new MyEventsReportDataLine
+                            {
+                                CallLetter = affidavit.affidavitFileDetail.station,
+                                LineupStartDate = affidavit.affidavitFileDetail.original_air_date,
+                                LineupStartTime = new DateTime().AddSeconds(affidavit.affidavitFileDetail.air_time),
+                                AdvertiserId = affidavit.proposal.advertiser_id,
+                                SpotLengthId = affidavit.affidavitFileDetail.spot_length_id,
+                                DaypartCode = affidavit.proposalVersionDetail.daypart_code
+                            };
+
+                            myEventsReportDataGroup.Lines.Add(myEventsReportDataItem);
+                        }
+
+                        myEventsReportDataList.Add(myEventsReportDataGroup);
                     }
 
-                    return myEventsReportData;
+                    return myEventsReportDataList;
                 });
         }
     }

@@ -1,13 +1,11 @@
 ﻿using Services.Broadcast.Entities;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace Services.Broadcast.ReportGenerators
 {
-    public class MyEventsReportGenerator : IReportGenerator<List<MyEventsReportData>>
+    public class MyEventsReportGenerator : IReportGenerator<MyEventsReportData>
     {
         private const string Delimiter = "\t";
         private const string DateFormat = "MM/dd/yyyy";
@@ -15,40 +13,25 @@ namespace Services.Broadcast.ReportGenerators
         private const string FileExtension = ".txt";
         private const string DoubleDelimiter = Delimiter + Delimiter;
 
-        public ReportOutput Generate(List<MyEventsReportData> myEventsReportData)
+        public ReportOutput Generate(MyEventsReportData myEventsReportData)
         {
-            var myEventsReportMemoryStream = _GenerateMyEventsTextReport(myEventsReportData, out string fileName);
-            return new ReportOutput(fileName) { Stream = myEventsReportMemoryStream };
-        }
-
-        private MemoryStream _GenerateMyEventsTextReport(List<MyEventsReportData> myEventsReportData, out string fileName)
-        {
-            if (!myEventsReportData.Any())
-                throw new Exception("No data found for MyEvents report");
-
             var memoryStream = new MemoryStream();
             var tempPath = Path.GetTempPath();
-            var firstMyEventsReportData = myEventsReportData.First();
-            fileName = firstMyEventsReportData.ReportableName + FileExtension;
-            var filePath = Path.Combine(tempPath, fileName);
+            var streamWriter = new StreamWriter(memoryStream);
+            var firstMyEventsReportData = myEventsReportData.Lines.First();
+            var fileName = firstMyEventsReportData.ReportableName + FileExtension;
 
-            using (var streamWriter = new StreamWriter(filePath))
+            foreach (var data in myEventsReportData.Lines)
             {
-                foreach (var data in myEventsReportData)
-                {
-                    streamWriter.Write(_BuildReportLine(data));
-                }
+                streamWriter.Write(_BuildReportLine(data));
             }
 
-            using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-            {
-                fileStream.CopyTo(memoryStream);
-            }
+            streamWriter.Flush();
 
-            return memoryStream;
+            return new ReportOutput(fileName) { Stream = memoryStream };
         }
 
-        private string _BuildReportLine(MyEventsReportData data)
+        private string _BuildReportLine(MyEventsReportDataLine data)
         {
             var stringBuilder = new StringBuilder();
 
