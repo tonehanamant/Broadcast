@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
@@ -60,6 +61,8 @@ namespace Services.Broadcast.ApplicationServices
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
     {
+        private const string MyEventsZipFileName = "MYEventsReport.zip";
+
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly INsiMarketRepository _NsiMarketRepository;
@@ -248,8 +251,43 @@ namespace Services.Broadcast.ApplicationServices
             var affidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
             var myEventsReportData = _GetMyEventsReportData(affidavitRepository.GetMyEventsReportData(proposalId));
             var myEventsReportGenerator = new MyEventsReportGenerator();
+            var reports = new List<ReportOutput>();
 
-            return myEventsReportGenerator.Generate(myEventsReportData);
+            if (!myEventsReportData.Any())
+                throw new Exception("No data found for MyEvents report");
+
+            foreach (var reportData in myEventsReportData)
+                reports.Add(myEventsReportGenerator.Generate(reportData));
+
+            if (reports.Count == 1)
+                return reports.First();
+
+            return _CreateReportFromZipArchive(_CreateZipArchive(reports));
+        }
+
+        private ReportOutput _CreateReportFromZipArchive(MemoryStream memoryStream)
+        {
+            return new ReportOutput(MyEventsZipFileName) { Stream = memoryStream };
+        }
+
+        private MemoryStream _CreateZipArchive(List<ReportOutput> reports)
+        {
+            var memoryStream = new MemoryStream();
+
+            using (var zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+            {
+                foreach (var report in reports)
+                {
+                    var zipEntry = zip.CreateEntry(report.Filename);
+                    using (var zipStream = zipEntry.Open())
+                    {
+                        report.Stream.Position = 0;
+                        report.Stream.CopyTo(zipStream);
+                    }
+                }
+            }
+
+            return memoryStream;
         }
 
         private List<Tuple<DateTime, DateTime>> _GetFlightsRange(List<ProposalDetailDto> details)
@@ -308,12 +346,15 @@ namespace Services.Broadcast.ApplicationServices
         {
             var spotLengths = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthsById();
 
-            foreach (var myEventsReportData in myEventsReportDataList)
+            foreach (var report in myEventsReportDataList)
             {
-                var advertiser = _SmsClient.FindAdvertiserById(myEventsReportData.AdvertiserId);
+                foreach (var line in report.Lines)
+                {
+                    var advertiser = _SmsClient.FindAdvertiserById(line.AdvertiserId);
 
-                myEventsReportData.Advertiser = advertiser.Display;
-                myEventsReportData.SpotLength = spotLengths[myEventsReportData.SpotLengthId];
+                    line.Advertiser = advertiser.Display;
+                    line.SpotLength = spotLengths[line.SpotLengthId];
+                }
             }
 
             return myEventsReportDataList;

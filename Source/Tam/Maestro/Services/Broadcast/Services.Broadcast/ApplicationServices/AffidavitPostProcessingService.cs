@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Repositories;
@@ -215,7 +216,7 @@ namespace Services.Broadcast.ApplicationServices
                 _MapWWTVFileToAffidavitFile(affidavitSaveRequest,filePath,out errorMessage);
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
-                    return affidavitSaveRequest;
+                    return null;
                 }
             }
             catch (Exception e)
@@ -269,17 +270,33 @@ namespace Services.Broadcast.ApplicationServices
             response.Close();
         }
 
-        private System.TimeSpan ExtractTime(string formattedTime,ref string errorMessage,string fieldName, int recordNumber)
+        /// <summary>
+        /// Deals with fact that time comes in 2 formats  HHMMTT 
+        /// and HMMTT (single and double digit hour which is not supported properly by .NET library)
+        /// </summary>
+        private static System.TimeSpan ExtractTimeHacky(string timeToParse, ref string errorMessage, string fieldName, int recordNumber)
         {
-            var dtf = new DateTimeFormatInfo();
-            var timeFormat = "hhmmt";
-            if (!DateTime.TryParseExact(formattedTime, timeFormat, dtf, DateTimeStyles.None, out DateTime parsedTime))
+            Regex regExp = new Regex(@"^(?<hours>(([0][1-9]|[1][0-2]|[0-9])))(?<minutes>([0-5][0-9]))(?<ampm>A|P)$");
+            var match = regExp.Match(timeToParse);
+
+            if (!match.Success)
             {
-                errorMessage += $"Record: {recordNumber+1}: field: '{fieldName}' is invalid time.  Please use format \"HHMMA|P\".\n";
+                errorMessage += $"Record: {recordNumber + 1}: field: '{fieldName}' is invalid time.  Please use format \"HHMMA|P\".\n";
+                return new System.TimeSpan();
             }
 
-            return parsedTime.TimeOfDay;
+            DateTime result = new DateTime();
+
+            int hour = Int32.Parse(match.Groups["hours"].Value);
+            if (match.Groups["ampm"].Value == "P" && hour < 12)
+                hour += 12;
+            int minutes = Int32.Parse(match.Groups["minutes"].Value);
+            
+
+            result = new DateTime(1,1,1,hour,minutes,0);
+            return result.TimeOfDay;
         }
+
         private System.TimeSpan ExtractDateTime(string datetime, ref string errorMessage, string fieldName, int recordNumber)
         {
             if (!DateTime.TryParse(datetime, out DateTime parsedTime))
@@ -298,7 +315,8 @@ namespace Services.Broadcast.ApplicationServices
             WhosWatchingTVPostProcessingFile jsonFile;
             try
             {
-                jsonFile = JsonConvert.DeserializeObject<WhosWatchingTVPostProcessingFile>(File.ReadAllText(filePath));
+                jsonFile = new WhosWatchingTVPostProcessingFile();
+                jsonFile.Details = JsonConvert.DeserializeObject<List<WhosWatchingTVDetail>>(File.ReadAllText(filePath));
             }
             catch (Exception e)
             {
@@ -314,7 +332,8 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var jsonDetail = jsonFile.Details[recordNumber];
 
-                var airTime = jsonDetail.Date.Add(ExtractTime(jsonDetail.Time, ref errorMessage,"Time",recordNumber));
+
+                var airTime = jsonDetail.Date.Add(ExtractTimeHacky(jsonDetail.Time, ref errorMessage,"Time",recordNumber));
                 var leadInEndTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadInEndTime, ref errorMessage, "LeadInEndTime", recordNumber));
                 var leadOutStartTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadOutStartTime, ref errorMessage, "LeadOutStartTime", recordNumber));
 
