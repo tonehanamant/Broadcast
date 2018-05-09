@@ -124,7 +124,7 @@ namespace Services.Broadcast.Repositories
                         p.TimeAired,
                         p.TimeAired));
 
-                    WriteTableSQLDebug(stationDetails);
+                    //WriteTableSQLDebug(stationDetails);
 
                     var ratingsRequest = new SqlParameter("ratings_request", SqlDbType.Structured) { Value = ratingsInput, TypeName = "RatingsInputWithId" };
 

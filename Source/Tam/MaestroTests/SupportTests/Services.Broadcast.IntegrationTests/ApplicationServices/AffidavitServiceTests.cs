@@ -71,6 +71,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteService_With_Escaped_chars()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAffidavit_WithEscaped_Doublequotes();
+                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+
+                VerifyAffidavit(result);
+            }
+        }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SaveAffidaviteService()
@@ -242,6 +256,41 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         AirTime = DateTime.Parse("06/29/2017 8:04AM"),
                         Isci = "DDDDDDDD",
+                        ProgramName = ProgramName1,
+                        SpotLength = 30,
+                        Genre = Genre1.Display,
+                        Station = "WWSB",
+                        LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                        LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                        ShowType = "News",
+                        LeadInShowType = "Comedy",
+                        LeadOutShowType = "Documentary",
+                        LeadInGenre = "News",
+                        LeadOutProgramName = "LeadOutProgramName",
+                        LeadInProgramName = "LeadInProgramName",
+                        InventorySource = 1,
+                        LeadOutGenre = "LeadOutGenre",
+                        Affiliate = "Affiate",
+                        Market = "market"
+                    }
+                }
+            };
+            return request;
+        }
+
+        private AffidavitSaveRequest _SetupAffidavit_WithEscaped_Doublequotes()
+        {
+            AffidavitSaveRequest request = new AffidavitSaveRequest
+            {
+                FileHash = "abc123",
+                Source = (int)AffidaviteFileSource.Strata,
+                FileName = "test.file",
+                Details = new List<AffidavitSaveRequestDetail>()
+                {
+                    new AffidavitSaveRequestDetail
+                    {
+                        AirTime = DateTime.Parse("06/29/2017 8:04AM"),
+                        Isci = "DD\"DDDDDD",
                         ProgramName = ProgramName1,
                         SpotLength = 30,
                         Genre = Genre1.Display,
