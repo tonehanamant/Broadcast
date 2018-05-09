@@ -94,7 +94,7 @@ class FilterInput extends Component {
       matchOptions: {
         ...prevState.matchOptions,
         inSpec: true,
-        outSpec: true,
+        outOfSpec: true,
       },
     }), () => {
       this.props.applySelection({ filterKey: this.props.filterKey, exclusions: [], filterOptions: this.state.filterOptions, activeMatch: false, matchOptions: this.state.matchOptions });
@@ -113,7 +113,7 @@ class FilterInput extends Component {
     // determine if needs matching spec
     let activeMatch = false;
     if (this.props.hasMatchSpec) {
-      activeMatch = (this.state.matchOptions.inSpec === false) || (this.state.matchOptions.outSpec === false);
+      activeMatch = (this.state.matchOptions.inSpec === false) || (this.state.matchOptions.outOfSpec === false);
     }
     const filter = { filterKey: this.props.filterKey, exclusions: unselectedValues, filterOptions: this.state.filterOptions, activeMatch, matchOptions: this.state.matchOptions };
      // console.log('apply', filter);
@@ -124,7 +124,7 @@ class FilterInput extends Component {
   setValidSelections() {
     let isValid = this.state.filterOptions.find(item => item.Selected === true) !== undefined;
     if (this.props.hasMatchSpec && isValid) {
-      isValid = (this.state.matchOptions.inSpec === true) || (this.state.matchOptions.outSpec === true);
+      isValid = (this.state.matchOptions.inSpec === true) || (this.state.matchOptions.outOfSpec === true);
     }
     this.setState({ isValidSelection: isValid });
   }
@@ -167,8 +167,8 @@ class FilterInput extends Component {
           <Checkbox
             inline
             key={v4()}
-            defaultChecked={this.state.matchOptions.outSpec}
-            onClick={() => this.handleMatchSpeckCheck('outSpec', !this.state.matchOptions.outSpec)}
+            defaultChecked={this.state.matchOptions.outOfSpec}
+            onClick={() => this.handleMatchSpeckCheck('outOfSpec', !this.state.matchOptions.outOfSpec)}
           >
           Out Spec
           </Checkbox>

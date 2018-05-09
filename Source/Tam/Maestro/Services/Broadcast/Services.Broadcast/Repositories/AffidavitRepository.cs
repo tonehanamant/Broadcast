@@ -17,7 +17,7 @@ namespace Services.Broadcast.Repositories
     {
         int SaveAffidavitFile(AffidavitFile affidavitFile);
         AffidavitFile GetAffidavit(int affidavitId, bool includeScrubbingDetail = false);
-        List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalVersionId);
+        List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalVersionId, ScrubbingStatus? status);
 
         /// <summary>
         /// Gets the data for the NSI Post Report
@@ -240,20 +240,26 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        public List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalDetailId)
+        public List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalDetailId, ScrubbingStatus? status)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
                     context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
-                    var affidavitFiles = (from proposalVersionDetail in context.proposal_version_details
-                                          from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                                          from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
-                                          from proposalVersionWeekIscis in proposalVersionWeeks.proposal_version_detail_quarter_week_iscis
-                                          from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
-                                          let affidavitDetails = affidavitFileScrub.affidavit_file_details
-                                          where proposalVersionWeekIscis.house_isci == affidavitDetails.isci && proposalVersionDetail.id == proposalDetailId
-                                          select new { affidavitDetails, affidavitFileScrub, proposalVersionWeekIscis }).ToList();
+                    var affidavitFilesQuery = (from proposalVersionDetail in context.proposal_version_details
+                                               from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                                               from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
+                                               from proposalVersionWeekIscis in proposalVersionWeeks.proposal_version_detail_quarter_week_iscis
+                                               from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
+                                               let affidavitDetails = affidavitFileScrub.affidavit_file_details
+                                               where proposalVersionWeekIscis.house_isci == affidavitDetails.isci
+                                               && proposalVersionDetail.id == proposalDetailId
+                                               select new { affidavitDetails, affidavitFileScrub, proposalVersionWeekIscis });
+                    if (status.HasValue)
+                    {
+                        affidavitFilesQuery = affidavitFilesQuery.Where(s => s.affidavitFileScrub.status == (int) status);
+                    }
+                    var affidavitFiles = affidavitFilesQuery.ToList();
                     var spotLengths = (from sl in context.spot_lengths select sl).ToList();
 
                     var posts = new List<ProposalDetailPostScrubbingDto>();

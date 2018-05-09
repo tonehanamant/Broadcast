@@ -44,7 +44,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(253);
+                var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(253, null);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
@@ -75,7 +75,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 aff.AffidavitFileDetails[0].Station = "bad station";
                 _AffidavitRepository.SaveAffidavitFile(aff);
 
-                var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(proposalId);
+                var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(proposalId, null);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
@@ -195,7 +195,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(255);
+                var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(255, null);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");

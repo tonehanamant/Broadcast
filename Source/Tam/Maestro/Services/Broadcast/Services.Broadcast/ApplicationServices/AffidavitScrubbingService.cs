@@ -28,7 +28,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
-        ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId);
+        ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ScrubbingStatus? status);
 
         /// <summary>
         /// Returns a list of unlinked iscis
@@ -114,7 +114,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
-        public ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId)
+        public ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ScrubbingStatus? status)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -150,7 +150,7 @@ namespace Services.Broadcast.ApplicationServices
                 //load ClientScrubs
                 result.Details.ForEach(x =>
                 {
-                    var clientScrubs = _AffidavitRepository.GetProposalDetailPostScrubbing(x.Id.Value);
+                    var clientScrubs = _AffidavitRepository.GetProposalDetailPostScrubbing(x.Id.Value, status);
                     clientScrubs.ForEach(y =>
                     {
                         y.Sequence = x.Sequence;
@@ -165,7 +165,13 @@ namespace Services.Broadcast.ApplicationServices
                     DistinctGenres = result.ClientScrubs.Select(x => x.GenreName).Distinct().OrderBy(x => x).ToList(),
                     DistinctPrograms = result.ClientScrubs.Select(x => x.ProgramName).Distinct().OrderBy(x => x).ToList(),
                     WeekStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).First() : (DateTime?)null,
-                    WeekEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).Last().AddDays(7) : (DateTime?)null
+                    WeekEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).Last().AddDays(7) : (DateTime?)null,
+                    DistinctMarkets = result.ClientScrubs.Select(x => x.Market).Distinct().OrderBy(x => x).ToList(),
+                    DistinctClientIscis = result.ClientScrubs.Select(x => x.ClientISCI).Distinct().OrderBy(x => x).ToList(),
+                    DistinctHouseIscis = result.ClientScrubs.Select(x => x.ISCI).Distinct().OrderBy(x => x).ToList(),
+                    DistinctSpotLengths = result.ClientScrubs.Select(x => x.SpotLength).Distinct().OrderBy(x => x).ToList(),
+                    DistinctAffiliates = result.ClientScrubs.Select(x => x.Affiliate).Distinct().OrderBy(x => x).ToList(),
+                    DistinctStations = result.ClientScrubs.Select(x => x.Station).Distinct().OrderBy(x => x).ToList()
                 };
                 return result;
             }

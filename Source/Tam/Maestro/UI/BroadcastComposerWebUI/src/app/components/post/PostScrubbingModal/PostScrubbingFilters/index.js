@@ -45,16 +45,13 @@ export class PostScrubbingFilters extends Component {
   applyFilter(filter) {
     // ISSUE: Data changes but Object so does not update
     // clear the grid data then reset (combining in saga/reducer does not work)
-    this.props.clearScrubbingFiltersList();
-    // no longer maintaining here
-    // const filterOptions = { ...this.state.filterOptions };
-    // filterOptions[filter.filterKey] = filter;
-    // this.setState({ filterOptions });
-    // console.log('apply filter', filter);
+    // this.props.clearScrubbingFiltersList();
     // wait so the store will update/clear first
-    setTimeout(() => {
+    /* setTimeout(() => {
       this.props.getScrubbingDataFiltered(filter);
-    }, 50);
+    }, 50); */
+    // Change: use call in saga to block
+    this.props.getScrubbingDataFiltered(filter);
   }
 
   render() {
@@ -239,44 +236,6 @@ export class PostScrubbingFilters extends Component {
   }
 }
 
-PostScrubbingFilters.defaultProps = {
-  // getScrubbingDataFiltered: () => { },
-  /* activeFilters: [
-    {
-      DayOfWeek: {
-        filterDisplay: 'Days',
-        filterKey: 'DayOfWeek',
-        type: 'filterList',
-        exclusions: [],
-        filterOptions: [
-          { Display: 'Monday', Value: 0, Selected: true },
-          { Display: 'Tuesday', Value: 1, Selected: true },
-          { Display: 'Wednesday', Value: 2, Selected: false },
-          { Display: 'Thursday', Value: 3, Selected: true },
-          { Display: 'Friday', Value: 4, Selected: true },
-          { Display: 'Saturday', Value: 5, Selected: true },
-          { Display: 'Sunday', Value: 6, Selected: false },
-        ],
-      },
-      ProgramName: {
-        filterDisplay: 'Programs',
-        filterKey: 'ProgramName',
-        type: 'filterList',
-        exclusions: [],
-        filterOptions: [
-          { Display: 'Hot Bench', Value: 'Hot Bench', Selected: true },
-          { Display: 'Inside Edition', Value: 'Inside Edition', Selected: true },
-          { Display: 'Jeopardy', Value: 'Jeopardy', Selected: true },
-          { Display: 'Jimmy Fallon', Value: 'Jimmy Fallon', Selected: true },
-          { Display: 'Judge Judy', Value: 'Judge Judy', Selected: true },
-          { Display: 'TMZ Live', Value: 'TMZ Live', Selected: true },
-          { Display: 'Regis & Kelly', Value: 'Regis & Kelly', Selected: true },
-          { Display: 'Stephen Colbert', Value: 'Stephen Colbert', Selected: true },
-        ],
-      },
-    },
-  ], */
-};
 PostScrubbingFilters.propTypes = {
   grid: PropTypes.object.isRequired,
   dataSource: PropTypes.object.isRequired,

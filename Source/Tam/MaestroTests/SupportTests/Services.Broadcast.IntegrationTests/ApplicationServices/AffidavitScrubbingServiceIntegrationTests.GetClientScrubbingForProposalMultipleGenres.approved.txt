@@ -61,9 +61,15 @@
     }
   ],
   "Filters": {
+    "DistinctAffiliates": [],
+    "DistinctClientIscis": [],
     "DistinctDayOfWeek": [],
     "DistinctGenres": [],
+    "DistinctHouseIscis": [],
+    "DistinctMarkets": [],
     "DistinctPrograms": [],
+    "DistinctSpotLengths": [],
+    "DistinctStations": [],
     "WeekEnd": null,
     "WeekStart": null
   },

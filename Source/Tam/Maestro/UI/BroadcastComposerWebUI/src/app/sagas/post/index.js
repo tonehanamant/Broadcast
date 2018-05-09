@@ -1,4 +1,4 @@
-import { takeEvery, put, select } from 'redux-saga/effects';
+import { takeEvery, put, call, select } from 'redux-saga/effects';
 import FuzzySearch from 'fuzzy-search';
 import moment from 'moment';
 import _ from 'lodash';
@@ -159,74 +159,16 @@ export function* requestPostFiltered({ payload: query }) {
 }
 
 /* ////////////////////////////////// */
-/* REQUEST POST SCRUBBING HEADER */
+/* REQUEST CLEAR SCRUBBING FILTER LIST - so grid will update object data */
 /* ////////////////////////////////// */
-export function* requestPostScrubbingHeader({ payload: proposalID }) {
-  const { getPostScrubbingHeader } = api.post;
+export function* requestClearScrubbingDataFiltersList() {
   try {
     yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'PostScrubbingHeader',
-        loading: true },
-      });
-    const response = yield getPostScrubbingHeader(proposalID);
-    const { status, data } = response;
-
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'PostScrubbingHeader',
-        loading: false,
-      },
-    });
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No post proposal data returned.',
-          message: `The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
-        },
-      });
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No proposal data returned.',
-          message: data.Message || 'The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs.',
-        },
-      });
-      throw new Error();
-    }
-    yield put({
-      type: ACTIONS.RECEIVE_POST_SCRUBBING_HEADER,
-      data,
-    });
-    yield put({
-      type: ACTIONS.TOGGLE_MODAL,
-      modal: {
-        modal: 'postScrubbingModal',
-        active: true,
-        properties: {
-          titleText: 'POST SCRUBBING MODAL',
-          bodyText: 'Post Scrubbing details will be shown here!',
-        },
-      },
+      type: ACTIONS.RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
+      data: [],
     });
   } catch (e) {
-    if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No proposal data returned.',
-          message: 'The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs.',
-          exception: e.response.data.ExceptionMessage || '',
-        },
-      });
-    }
-    if (!e.response && e.message) {
+    if (e.message) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
@@ -237,14 +179,100 @@ export function* requestPostScrubbingHeader({ payload: proposalID }) {
   }
 }
 
-export function* requestClearScrubbingDataFiltersList() {
+/* ////////////////////////////////// */
+/* REQUEST POST CLIENT SCRUBBING */
+/* ////////////////////////////////// */
+// allow for params (todo from BE) to filterKey All, InSpec, OutOfSpec; optional showModal (from Post landing);
+// if not from modal show processing, else show loading (loading not shown inside modal)
+export function* requestPostClientScrubbing({ payload: params }) {
+  const { getPostClientScrubbing } = api.post;
   try {
+    if (params.showModal) {
+      yield put({
+        type: ACTIONS.SET_OVERLAY_LOADING,
+        overlay: {
+          id: 'PostClientScrubbing',
+          loading: true },
+      });
+    } else {
+      yield put({
+        type: ACTIONS.SET_OVERLAY_PROCESSING,
+        overlay: {
+          id: 'PostClientScrubbing',
+          processing: true },
+      });
+    }
+    // clear the data so filters grid registers as update - if not from modal update
+    if (!params.showModal) {
+      yield call(requestClearScrubbingDataFiltersList);
+    }
+    const response = yield getPostClientScrubbing(params);
+    const { status, data } = response;
+
+    if (params.showModal) {
+      yield put({
+        type: ACTIONS.SET_OVERLAY_LOADING,
+        overlay: {
+          id: 'PostClientScrubbing',
+          loading: false },
+      });
+    } else {
+      yield put({
+        type: ACTIONS.SET_OVERLAY_PROCESSING,
+        overlay: {
+          id: 'PostClientScrubbing',
+          processing: false },
+      });
+    }
+    if (status !== 200) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No proposal client scrubbing data returned.',
+          message: `The server encountered an error processing the request (proposal scrubbing). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Success) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No proposal client scrubbing data returned.',
+          message: data.Message || 'The server encountered an error processing the request (proposal scrubbing). Please try again or contact your administrator to review error logs.',
+        },
+      });
+      throw new Error();
+    }
     yield put({
-      type: ACTIONS.RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
-      data: [],
+      type: ACTIONS.RECEIVE_POST_CLIENT_SCRUBBING,
+      data,
     });
+    if (params.showModal) {
+      yield put({
+        type: ACTIONS.TOGGLE_MODAL,
+        modal: {
+          modal: 'postScrubbingModal',
+          active: true,
+          properties: {
+            titleText: 'POST SCRUBBING MODAL',
+            bodyText: 'Post Scrubbing details will be shown here!',
+          },
+        },
+      });
+    }
   } catch (e) {
-    if (e.message) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No proposal scrubbing data returned.',
+          message: 'The server encountered an error processing the request (proposal scrubbing). Please try again or contact your administrator to review error logs.',
+          exception: e.response.data.ExceptionMessage || '',
+        },
+      });
+    }
+    if (!e.response && e.message) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
@@ -300,20 +328,22 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
   };
 
   try {
-    // show loading?
+    // show processing?
     yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
       overlay: {
         id: 'PostScrubbingFilter',
-        loading: true },
+        processing: true },
     });
-
+    // clear the data so grid registers as update
+    yield call(requestClearScrubbingDataFiltersList);
     const filtered = yield applyFilter();
+
     yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
       overlay: {
         id: 'PostScrubbingFilter',
-        loading: false },
+        processing: false },
     });
     // if empty show alert - will set to original state
     if (filtered.alertEmpty) {
@@ -440,8 +470,8 @@ export function* watchRequestPostFiltered() {
   yield takeEvery(ACTIONS.REQUEST_FILTERED_POST, requestPostFiltered);
 }
 
-export function* watchRequestPostScrubbingHeader() {
-  yield takeEvery(ACTIONS.REQUEST_POST_SCRUBBING_HEADER, requestPostScrubbingHeader);
+export function* watchRequestPostClientScrubbing() {
+  yield takeEvery(ACTIONS.REQUEST_POST_CLIENT_SCRUBBING, requestPostClientScrubbing);
 }
 
 export function* watchRequestScrubbingDataFiltered() {

@@ -11,8 +11,8 @@ import './index.scss';
 /* eslint-disable */
 export class PostScrubbingGrid extends Component {
     constructor(props, context) {
-        super(props, context);
-        this.context = context;
+      super(props, context);
+      this.context = context;
     }
 
    /*  shouldComponentUpdate(nextProps) {

@@ -14,7 +14,6 @@ import Toast from 'Components/shared/Toast';
 import ErrorModal from 'Components/shared/ErrorModal';
 import ConfirmModal from 'Components/shared/ConfirmModal';
 import Overlay from 'Components/shared/Overlay';
-import PostScrubbingModal from 'Components/post/PostScrubbingModal';
 
 import styles from './index.style.scss';
 
@@ -24,7 +23,6 @@ export const AppMain = ({ match: { path } }) => (
     <Toast />
     <ErrorModal />
     <ConfirmModal />
-    <PostScrubbingModal />
     <AppHeader />
     <Overlay type="loading" />
     <Overlay type="processing" />

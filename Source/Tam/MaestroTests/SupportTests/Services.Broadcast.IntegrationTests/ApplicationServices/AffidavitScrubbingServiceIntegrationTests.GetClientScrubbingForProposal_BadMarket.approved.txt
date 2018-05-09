@@ -174,14 +174,37 @@
     }
   ],
   "Filters": {
+    "DistinctAffiliates": [
+      null,
+      "NBC"
+    ],
+    "DistinctClientIscis": [
+      "AAAAAAAA",
+      "BBBBBBBB"
+    ],
     "DistinctDayOfWeek": [
       5
     ],
     "DistinctGenres": [
       "Do It Yourself"
     ],
+    "DistinctHouseIscis": [
+      "AAAAAAAA",
+      "BBBBBBBBB"
+    ],
+    "DistinctMarkets": [
+      null,
+      "New York"
+    ],
     "DistinctPrograms": [
       "Program Names R us"
+    ],
+    "DistinctSpotLengths": [
+      30
+    ],
+    "DistinctStations": [
+      "bad station",
+      "WNBC"
     ],
     "WeekEnd": "2016-06-06T00:00:00",
     "WeekStart": "2016-05-30T00:00:00"

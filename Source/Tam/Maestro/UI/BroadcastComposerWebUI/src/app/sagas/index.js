@@ -13,7 +13,7 @@ export default function* rootSaga() {
     postSaga.watchRequestPost(),
     postSaga.watchRequestPostFiltered(),
     postSaga.watchRequestAssignPostDisplay(),
-    postSaga.watchRequestPostScrubbingHeader(),
+    postSaga.watchRequestPostClientScrubbing(),
     postSaga.watchRequestUniqueIscis(),
     postSaga.watchRequestScrubbingDataFiltered(),
     postSaga.watchRequestClearScrubbingFiltersList(),

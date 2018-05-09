@@ -6,7 +6,7 @@ import { Actions } from 'react-redux-grid';
 
 import { Button, Modal } from 'react-bootstrap';
 import { toggleModal, setOverlayLoading } from 'Ducks/app';
-// import { getPostScrubbingDetail, clearPostScrubbingDetail } from 'Ducks/post'; //  ?
+import { getPostClientScrubbing } from 'Ducks/post';
 
 import PostScrubbingHeader from './PostScrubbingHeader';
 import PostScrubbingDetail from './PostScrubbingDetail';
@@ -15,7 +15,6 @@ const { SelectionActions, GridActions } = Actions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
 
-/* eslint-disable */
 const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post: { proposalHeader = { }, scrubbingFiltersList = [] }, grid, dataSource }) => ({
 	modal,
   proposalHeader,
@@ -27,7 +26,8 @@ const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post:
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
 		// clearPostScrubbingDetail,
-		// getPostScrubbingDetail,
+    // getPostScrubbingDetail,
+    getPostClientScrubbing,
 		toggleModal,
 		selectRow,
 		deselectAll,
@@ -61,7 +61,7 @@ export class PostScrubbingModal extends Component {
 
 	render() {
 	// const { getPostScrubbingDetail } = this.props;
-		const { proposalHeader, scrubbingFiltersList } = this.props;
+		const { proposalHeader, scrubbingFiltersList, getPostClientScrubbing } = this.props;
 		const { scrubbingData = {}, activeScrubbingData = {} } = proposalHeader;
 		const { Advertiser, Id, Name, Markets, GuaranteedDemo, SecondaryDemos, Notes, MarketGroupId, Details } = scrubbingData;
 		const { grid, dataSource } = this.props;
@@ -91,6 +91,7 @@ export class PostScrubbingModal extends Component {
 						<PostScrubbingDetail
               activeScrubbingData={activeScrubbingData}
               scrubbingFiltersList={scrubbingFiltersList}
+              getPostClientScrubbing={getPostClientScrubbing}
 							grid={grid}
 							dataSource={dataSource}
 							selectRow={selectRow}
@@ -125,7 +126,8 @@ PostScrubbingModal.defaultProps = {
 
 PostScrubbingModal.propTypes = {
 	modal: PropTypes.object.isRequired,
-	toggleModal: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  getPostClientScrubbing: PropTypes.func.isRequired,
 	grid: PropTypes.object.isRequired,
 	dataSource: PropTypes.object.isRequired,
 	proposalHeader: PropTypes.object.isRequired,

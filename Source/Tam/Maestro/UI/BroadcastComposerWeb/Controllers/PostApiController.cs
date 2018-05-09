@@ -31,13 +31,13 @@ namespace BroadcastComposerWeb.Controllers
         
         [HttpGet]
         [Route("ClientScrubbingProposal/{proposalId}")]
-        public BaseResponse<ClientPostScrubbingProposalDto>  GetClientScrubbingForProposal(int proposalId)
+        public BaseResponse<ClientPostScrubbingProposalDto>  GetClientScrubbingForProposal(int proposalId, [FromUri] ScrubbingStatus? status=null)
         {
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetClientScrubbingForProposal(proposalId));
+                    () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetClientScrubbingForProposal(proposalId, status));
         }
-        
+
         [HttpGet]
         [Route("DownloadNSIPostReport/{proposalId}")]
         public HttpResponseMessage DownloadNSIPostReport(int proposalId)

@@ -22,7 +22,7 @@ const initialState = {
         matchOptions: {
           matchKey: 'MatchIsciDays',
           inSpec: true,
-          outSpec: true,
+          outOfSpec: true,
         },
         exclusions: [],
         filterOptions: [],
@@ -37,7 +37,7 @@ const initialState = {
         matchOptions: {
           matchKey: 'MatchGenre',
           inSpec: true,
-          outSpec: true,
+          outOfSpec: true,
         },
         exclusions: [],
         filterOptions: [],
@@ -52,7 +52,7 @@ const initialState = {
         matchOptions: {
           matchKey: 'MatchProgram',
           inSpec: true,
-          outSpec: true,
+          outOfSpec: true,
         },
         exclusions: [],
         filterOptions: [],
@@ -79,7 +79,7 @@ export default function reducer(state = initialState, action) {
         postGridData: data,
       };
 
-    case ACTIONS.RECEIVE_POST_SCRUBBING_HEADER: {
+    case ACTIONS.RECEIVE_POST_CLIENT_SCRUBBING: {
       const filtersData = data.Data.Filters;
       const activeFilters = { ...state.defaultScrubbingFilters }; // todo seems to get mutated
       const prepareFilterOptions = () => {
@@ -159,9 +159,9 @@ export const getPostFiltered = query => ({
   payload: query,
 });
 
-export const getProposalHeader = proposalID => ({
-  type: ACTIONS.REQUEST_POST_SCRUBBING_HEADER,
-  payload: proposalID,
+export const getPostClientScrubbing = params => ({
+  type: ACTIONS.REQUEST_POST_CLIENT_SCRUBBING,
+  payload: params,
 });
 
 export const getScrubbingDataFiltered = query => ({
