@@ -33,7 +33,7 @@
           "ProposalWeekTotalCost": 50.0000,
           "ProposalWeekTotalImpressionsGoal": 200000.0,
           "SpotLength": 30,
-          "Spots": 10,
+          "Spots": 20,
           "WeekStartDate": "2016-05-30T00:00:00"
         }
       ]

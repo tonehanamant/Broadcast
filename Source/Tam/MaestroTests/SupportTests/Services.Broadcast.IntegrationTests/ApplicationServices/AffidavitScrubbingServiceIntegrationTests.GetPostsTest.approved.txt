@@ -4,7 +4,7 @@
       "ContractId": 253,
       "ContractName": "Proposal Test",
       "PrimaryAudienceImpressions": 314866.80000000005,
-      "SpotsInSpec": 3,
+      "SpotsInSpec": 4,
       "SpotsOutOfSpec": 0,
       "UploadDate": "2018-02-08T12:57:39.693"
     },
