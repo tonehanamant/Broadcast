@@ -258,7 +258,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     FilePath = filepath,
                     FileName = Path.GetFileName(filepath),
-                    SourceId = (int)AffidaviteFileSource.Strata,
+                    SourceId = (int)AffidaviteFileSourceEnum.Strata,
                     CreatedBy = userName,
                     CreatedDate = DateTime.Now,
                     FileHash = HashGenerator.ComputeHash(File.ReadAllBytes(filepath))

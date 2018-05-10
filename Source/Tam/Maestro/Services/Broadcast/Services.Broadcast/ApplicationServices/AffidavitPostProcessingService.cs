@@ -179,7 +179,7 @@ namespace Services.Broadcast.ApplicationServices
             affidavitFile.Status = AffidaviteFileProcessingStatus.Invalid;
             affidavitFile.FileHash = HashGenerator.ComputeHash(filePath.ToByteArray()); // just so there is something
             affidavitFile.CreatedDate = DateTime.Now;
-            affidavitFile.SourceId = (int)AffidaviteFileSource.Strata;
+            affidavitFile.SourceId = (int)AffidaviteFileSourceEnum.Strata;
 
             var problem = new AffidavitFileProblem();
             problem.ProblemDescription = errorMessage;
@@ -308,7 +308,7 @@ namespace Services.Broadcast.ApplicationServices
         }
         private AffidavitSaveRequest _MapWWTVFileToAffidavitFile(AffidavitSaveRequest affidavitSaveRequest,string filePath,out string errorMessage)
         {
-            affidavitSaveRequest.Source = (int) AffidaviteFileSource.Strata;
+            affidavitSaveRequest.Source = (int) AffidaviteFileSourceEnum.Strata;
             affidavitSaveRequest.Details = new List<AffidavitSaveRequestDetail>();
             errorMessage = "";
 
@@ -332,10 +332,15 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var jsonDetail = jsonFile.Details[recordNumber];
 
-
-                var airTime = jsonDetail.Date.Add(ExtractTimeHacky(jsonDetail.Time, ref errorMessage,"Time",recordNumber));
+                var airTime = jsonDetail.Date.Add(ExtractTimeHacky(jsonDetail.Time, ref errorMessage, "Time", recordNumber));
                 var leadInEndTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadInEndTime, ref errorMessage, "LeadInEndTime", recordNumber));
                 var leadOutStartTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadOutStartTime, ref errorMessage, "LeadOutStartTime", recordNumber));
+
+
+                if (!Enum.TryParse(jsonDetail.InventorySource, out AffidaviteFileSourceEnum inventorySource))
+                {
+                    errorMessage += $"Record: {recordNumber + 1}: field: 'InventorySource' is inventory source.\n";
+                }
 
                 if (!string.IsNullOrEmpty(errorMessage))
                     continue;
@@ -355,8 +360,7 @@ namespace Services.Broadcast.ApplicationServices
                     Station = jsonDetail.Station,
                     Affiliate = jsonDetail.Affiliate,
                     EstimateId = jsonDetail.EstimateId,
-                    InventorySource =
-                        (int) (InventorySourceEnum) Enum.Parse(typeof(InventorySourceEnum), jsonDetail.InventorySource),
+                    InventorySource = inventorySource,
                     SpotCost = jsonDetail.SpotCost,
                     LeadInEndTime = leadInEndTime,
                     LeadOutStartTime = leadOutStartTime,

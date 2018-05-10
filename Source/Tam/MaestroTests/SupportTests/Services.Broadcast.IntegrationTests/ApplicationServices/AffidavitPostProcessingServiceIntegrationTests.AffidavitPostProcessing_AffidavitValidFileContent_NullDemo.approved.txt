@@ -6,7 +6,7 @@
       "Demographics": [],
       "EstimateId": null,
       "Genre": "Comedy",
-      "InventorySource": 5,
+      "InventorySource": 1,
       "Isci": "ABC123",
       "LeadInEndTime": "2017-12-26T22:34:02",
       "LeadInGenre": "Comedy",
@@ -36,7 +36,7 @@
       ],
       "EstimateId": 456,
       "Genre": "Talk",
-      "InventorySource": 4,
+      "InventorySource": 2,
       "Isci": "DEF456",
       "LeadInEndTime": "2017-12-15T09:01:02",
       "LeadInGenre": "Talk",
@@ -54,7 +54,7 @@
       "Station": "WKYW"
     }
   ],
-  "FileHash": "0E-14-8C-F9-5F-43-FD-C0-8E-B4-84-4F-C4-57-1D-64-D0-DE-35-00",
+  "FileHash": "00-B6-94-7B-96-7A-AC-AA-26-4C-A5-F4-26-99-E9-E4-01-4C-E3-BC",
   "FileName": "WWTV_AffidavitValidFileContent_NullDemo.txt",
   "Source": 1
 }
