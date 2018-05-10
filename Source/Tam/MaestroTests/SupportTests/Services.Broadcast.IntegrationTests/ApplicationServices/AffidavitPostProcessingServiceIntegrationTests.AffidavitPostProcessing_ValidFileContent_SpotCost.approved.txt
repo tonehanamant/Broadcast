@@ -13,7 +13,7 @@
       ],
       "EstimateId": null,
       "Genre": "Comedy",
-      "InventorySource": 5,
+      "InventorySource": 1,
       "Isci": "ABC123",
       "LeadInEndTime": "2017-12-26T22:34:02",
       "LeadInGenre": "Comedy",
@@ -43,7 +43,7 @@
       ],
       "EstimateId": 456,
       "Genre": "Talk",
-      "InventorySource": 4,
+      "InventorySource": 1,
       "Isci": "DEF456",
       "LeadInEndTime": "2017-12-15T09:01:02",
       "LeadInGenre": "Talk",
@@ -61,7 +61,7 @@
       "Station": "WKYW"
     }
   ],
-  "FileHash": "FC-88-64-7F-06-C7-82-F4-BC-37-59-E9-E0-43-11-67-9E-2D-9B-B9",
+  "FileHash": "A1-AA-55-93-92-3A-C0-7F-EA-53-C8-69-79-BE-4D-07-E1-EA-7D-A8",
   "FileName": "WWTV_AffidavitValidFileContent_SpotCost.txt",
   "Source": 1
 }

@@ -16,10 +16,6 @@ using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public enum AffidaviteFileSource
-    {
-        Strata = 1
-    };
     public enum AffidaviteFileProcessingStatus
     {
         Valid = 1,
@@ -129,7 +125,7 @@ namespace Services.Broadcast.ApplicationServices
                     Market = matchedAffidavitDetail.AffidavitDetail.Market,
                     Affiliate = matchedAffidavitDetail.AffidavitDetail.Affiliate,
                     EstimateId = matchedAffidavitDetail.AffidavitDetail.EstimateId,
-                    InventorySource = matchedAffidavitDetail.AffidavitDetail.InventorySource,
+                    InventorySource = (int)matchedAffidavitDetail.AffidavitDetail.InventorySource,
                     SpotCost = matchedAffidavitDetail.AffidavitDetail.SpotCost,
                     LeadinGenre = matchedAffidavitDetail.AffidavitDetail.LeadInGenre,
                     LeadoutGenre = matchedAffidavitDetail.AffidavitDetail.LeadOutGenre,
@@ -451,7 +447,7 @@ namespace Services.Broadcast.ApplicationServices
             request = new AffidavitSaveRequest();
             request.FileName = fileName;
             request.FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(rawStream));
-            request.Source = (int)AffidaviteFileSource.Strata;
+            request.Source = (int)AffidaviteFileSourceEnum.Strata;
 
             using (reader.Initialize(rawStream))
             {
@@ -474,7 +470,7 @@ namespace Services.Broadcast.ApplicationServices
                     detail.LeadInGenre = reader.GetCellValue("LeadInGenre");
                     detail.LeadOutProgramName = reader.GetCellValue("LeadOutTitle");
                     detail.LeadOutGenre = reader.GetCellValue("LeadOutGenre");
-                    detail.InventorySource = Int32.Parse(reader.GetCellValue("Inventory Source"));
+                    //detail.InventorySource = Int32.Parse(reader.GetCellValue("Inventory Source"));
                     detail.Affiliate = reader.GetCellValue("Affiliate");
                     detail.ShowType = reader.GetCellValue("ShowType");
                     detail.LeadInShowType = reader.GetCellValue("LeadInShowType");

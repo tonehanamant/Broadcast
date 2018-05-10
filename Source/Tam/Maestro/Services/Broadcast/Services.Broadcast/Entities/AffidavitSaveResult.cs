@@ -1,8 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using Services.Broadcast.ApplicationServices;
 
 namespace Services.Broadcast.Entities
 {
+    public enum AffidaviteFileSourceEnum
+    {
+        Strata = 1,
+        KeepingTrac
+    };
+
     public class AffidavitSaveRequest
     {
         public string FileName { get; set; }
@@ -30,7 +37,7 @@ namespace Services.Broadcast.Entities
         public string LeadOutGenre { get; set; }
         public string Market { get; set; }
         public int? EstimateId { get; set; }
-        public int InventorySource { get; set; }
+        public AffidaviteFileSourceEnum InventorySource { get; set; }
         public double? SpotCost { get; set; }
         public string Affiliate { get; set; }
         public List<AffidavitDemographics> Demographics { get; set; } = new List<AffidavitDemographics>();

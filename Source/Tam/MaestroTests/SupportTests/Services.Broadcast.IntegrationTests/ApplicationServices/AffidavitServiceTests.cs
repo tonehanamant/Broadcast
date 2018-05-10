@@ -213,7 +213,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             AffidavitSaveRequest request = new AffidavitSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)AffidaviteFileSource.Strata,
+                Source = (int)AffidaviteFileSourceEnum.Strata,
                 FileName = "test.file"
             };
 
@@ -233,7 +233,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 LeadInGenre = "News",
                 LeadOutProgramName = "LeadOutProgramName",
                 LeadInProgramName = "LeadInProgramName",
-                InventorySource = 1,
+                InventorySource = AffidaviteFileSourceEnum.Strata,
                 LeadOutGenre = "LeadOutGenre",
                 Affiliate = "Affiate"
             };
@@ -248,7 +248,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             AffidavitSaveRequest request = new AffidavitSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) AffidaviteFileSource.Strata,
+                Source = (int) AffidaviteFileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<AffidavitSaveRequestDetail>()
                 {
@@ -268,7 +268,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInGenre = "News",
                         LeadOutProgramName = "LeadOutProgramName",
                         LeadInProgramName = "LeadInProgramName",
-                        InventorySource = 1,
+                        InventorySource = AffidaviteFileSourceEnum.Strata,
                         LeadOutGenre = "LeadOutGenre",
                         Affiliate = "Affiate",
                         Market = "market"
@@ -283,7 +283,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             AffidavitSaveRequest request = new AffidavitSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)AffidaviteFileSource.Strata,
+                Source = (int)AffidaviteFileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<AffidavitSaveRequestDetail>()
                 {
@@ -303,7 +303,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInGenre = "News",
                         LeadOutProgramName = "LeadOutProgramName",
                         LeadInProgramName = "LeadInProgramName",
-                        InventorySource = 1,
+                        InventorySource = AffidaviteFileSourceEnum.Strata,
                         LeadOutGenre = "LeadOutGenre",
                         Affiliate = "Affiate",
                         Market = "market"
@@ -318,7 +318,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             AffidavitSaveRequest request = new AffidavitSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)AffidaviteFileSource.Strata,
+                Source = (int)AffidaviteFileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<AffidavitSaveRequestDetail>(){ new AffidavitSaveRequestDetail
                     {
@@ -336,7 +336,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInGenre = "News",
                         LeadOutProgramName = "LeadOutProgramName",
                         LeadInProgramName = "LeadInProgramName",
-                        InventorySource = 1,
+                        InventorySource = AffidaviteFileSourceEnum.Strata,
                         LeadOutGenre = "LeadOutGenre",
                         Affiliate = "Affiate",
                         Market = "market"
@@ -384,7 +384,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     LeadInGenre = "News",
                     LeadOutProgramName = "LeadOutProgramName",
                     LeadInProgramName = "LeadInProgramName",
-                    InventorySource = 1,
+                    InventorySource = AffidaviteFileSourceEnum.Strata,
                     LeadOutGenre = "LeadOutGenre",
                     Affiliate = "Affiate",
                     Market = "market"
@@ -494,7 +494,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     LeadInGenre = "News",
                     LeadOutProgramName = "LeadOutProgramName",
                     LeadInProgramName = "LeadInProgramName",
-                    InventorySource = 1,
+                    InventorySource = AffidaviteFileSourceEnum.Strata,
                     LeadOutGenre = "LeadOutGenre",
                     Affiliate = "Affiate"
                 });

@@ -3,7 +3,7 @@
     "EstimateId": 3926,
     "Market": "Birmingham",
     "Date": "01/01/2018",
-    "InventorySource": "CNN",
+    "InventorySource": "KeepingTrac",
     "Station": "WICZ-TV",
     "SpotLength": 30,
     "Time": "246P",
