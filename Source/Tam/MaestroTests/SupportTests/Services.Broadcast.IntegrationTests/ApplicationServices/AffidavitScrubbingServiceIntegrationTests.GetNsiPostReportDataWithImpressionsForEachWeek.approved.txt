@@ -19,7 +19,7 @@
       "TableName": "1Q'16",
       "TableRows": [
         {
-          "ActualImpressions": 999.0,
+          "ActualImpressions": 444.0,
           "Contract": "NAV1",
           "HHRating": 0,
           "ProposalWeekCost": 50.0000,
@@ -29,7 +29,7 @@
           "WeekStartDate": "2016-05-30T00:00:00"
         },
         {
-          "ActualImpressions": 999.0,
+          "ActualImpressions": 555.0,
           "Contract": "NAV1",
           "HHRating": 0,
           "ProposalWeekCost": 50.0000,
@@ -44,7 +44,7 @@
       "TableName": "2Q'16",
       "TableRows": [
         {
-          "ActualImpressions": 1443.0,
+          "ActualImpressions": 666.0,
           "Contract": "NAV1",
           "HHRating": 0,
           "ProposalWeekCost": 50.0000,
@@ -54,7 +54,7 @@
           "WeekStartDate": "2016-05-30T00:00:00"
         },
         {
-          "ActualImpressions": 1443.0,
+          "ActualImpressions": 777.0,
           "Contract": "NAV1",
           "HHRating": 0,
           "ProposalWeekCost": 50.0000,

@@ -30,10 +30,10 @@
           "ActualImpressions": 314866.8,
           "Contract": "NAV",
           "HHRating": 0,
-          "ProposalWeekCost": 110.0000,
-          "ProposalWeekImpressionsGoal": 201000.0,
+          "ProposalWeekCost": 135.0000,
+          "ProposalWeekImpressionsGoal": 301000.0,
           "SpotLength": 30,
-          "Spots": 10,
+          "Spots": 40,
           "WeekStartDate": "2016-05-30T00:00:00"
         }
       ]
@@ -75,6 +75,28 @@
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV",
           "Isci": "BBBBBBBBB",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalWeekCost": 25.0000,
+          "ProposalWeekImpressionsGoal": 100000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 30,
+          "Station": "WNBC",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        },
+        {
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 0.0,
+            "5": 0.0,
+            "6": 0.0
+          },
+          "DateAired": "2016-06-05T00:00:00",
+          "DaypartName": "NAV",
+          "Isci": "AAAAAAAA",
           "Market": "New York",
           "NetworkAffiliate": "NBC",
           "ProgramName": "Program Names R us",
