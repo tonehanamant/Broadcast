@@ -152,7 +152,7 @@ export class PostScrubbingGrid extends Component {
               name: 'Client ISCI',
               dataIndex: 'ClientISCI',
               // defaultSortDirection: 'ASC',
-              width: 100,
+              width: 150,
               renderer: ({ row }) => {
                   return (
                       <span>{row.ClientISCI || '-'}</span>

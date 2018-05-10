@@ -68,8 +68,10 @@
     "DistinctHouseIscis": [],
     "DistinctMarkets": [],
     "DistinctPrograms": [],
+    "DistinctShowTypes": [],
     "DistinctSpotLengths": [],
     "DistinctStations": [],
+    "DistinctWeekStarts": [],
     "WeekEnd": null,
     "WeekStart": null
   },

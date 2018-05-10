@@ -12,11 +12,41 @@ const initialState = {
   activeScrubbingFilters: {},
   defaultScrubbingFilters:
     {
+      Affiliate: {
+        filterDisplay: 'Affiliates',
+        filterKey: 'Affiliate',
+        type: 'filterList',
+        hasMatchSpec: false, // NA
+        activeMatch: false,
+        active: false,
+        matchOptions: {
+          matchKey: 'MatchAffiliate', // not currently available
+          inSpec: true,
+          outOfSpec: true,
+        },
+        exclusions: [],
+        filterOptions: [],
+      },
+      ClientISCI: {
+        filterDisplay: 'Client ISCIs',
+        filterKey: 'ClientISCI',
+        type: 'filterList',
+        hasMatchSpec: false, // NA
+        activeMatch: false,
+        active: false,
+        matchOptions: {
+          matchKey: 'MatchClientISCI', // not currently available
+          inSpec: true,
+          outOfSpec: true,
+        },
+        exclusions: [],
+        filterOptions: [],
+      },
       DayOfWeek: {
         filterDisplay: 'Days',
         filterKey: 'DayOfWeek',
         type: 'filterList',
-        hasMatchSpec: false,
+        hasMatchSpec: true,
         active: false,
         activeMatch: false,
         matchOptions: {
@@ -31,11 +61,41 @@ const initialState = {
         filterDisplay: 'Genres',
         filterKey: 'GenreName',
         type: 'filterList',
-        hasMatchSpec: false,
+        hasMatchSpec: true,
         activeMatch: false,
         active: false,
         matchOptions: {
           matchKey: 'MatchGenre',
+          inSpec: true,
+          outOfSpec: true,
+        },
+        exclusions: [],
+        filterOptions: [],
+      },
+      ISCI: {
+        filterDisplay: 'House ISCIs',
+        filterKey: 'ISCI',
+        type: 'filterList',
+        hasMatchSpec: false, // NA
+        activeMatch: false,
+        active: false,
+        matchOptions: {
+          matchKey: 'MatchISCI', // not currently available
+          inSpec: true,
+          outOfSpec: true,
+        },
+        exclusions: [],
+        filterOptions: [],
+      },
+      Market: {
+        filterDisplay: 'Markets',
+        filterKey: 'Market',
+        type: 'filterList',
+        hasMatchSpec: true,
+        activeMatch: false,
+        active: false,
+        matchOptions: {
+          matchKey: 'MatchMarket',
           inSpec: true,
           outOfSpec: true,
         },
@@ -51,6 +111,36 @@ const initialState = {
         active: false,
         matchOptions: {
           matchKey: 'MatchProgram',
+          inSpec: true,
+          outOfSpec: true,
+        },
+        exclusions: [],
+        filterOptions: [],
+      },
+      SpotLength: {
+        filterDisplay: 'Ad Lengths',
+        filterKey: 'SpotLength',
+        type: 'filterList',
+        hasMatchSpec: false, // NA
+        activeMatch: false,
+        active: false,
+        matchOptions: {
+          matchKey: 'MatchSpotLength',
+          inSpec: true,
+          outOfSpec: true,
+        },
+        exclusions: [],
+        filterOptions: [],
+      },
+      Station: {
+        filterDisplay: 'Stations',
+        filterKey: 'Station',
+        type: 'filterList',
+        hasMatchSpec: true,
+        activeMatch: false,
+        active: false,
+        matchOptions: {
+          matchKey: 'MatchStation',
           inSpec: true,
           outOfSpec: true,
         },
@@ -83,9 +173,23 @@ export default function reducer(state = initialState, action) {
       const filtersData = data.Data.Filters;
       const activeFilters = { ...state.defaultScrubbingFilters }; // todo seems to get mutated
       const prepareFilterOptions = () => {
+        const affiliateOptions = [];
+        const clientIsciOptions = [];
         const dayOfWeekOptions = [];
         const genreOptions = [];
+        const houseIsciOptions = [];
+        const marketOptions = [];
         const programOptions = [];
+        const spotLengthOptions = [];
+        const stationOptions = [];
+        filtersData.DistinctAffiliates.forEach((item) => {
+          const ret = { Value: item, Selected: true, Display: item };
+          affiliateOptions.push(ret);
+        });
+        filtersData.DistinctClientIscis.forEach((item) => {
+          const ret = { Value: item, Selected: true, Display: item };
+          clientIsciOptions.push(ret);
+        });
         filtersData.DistinctDayOfWeek.forEach((item) => {
           const display = getDay(item);
           const ret = { Value: item, Selected: true, Display: display };
@@ -95,13 +199,35 @@ export default function reducer(state = initialState, action) {
           const ret = { Value: item, Selected: true, Display: item };
           genreOptions.push(ret);
         });
+        filtersData.DistinctHouseIscis.forEach((item) => {
+          const ret = { Value: item, Selected: true, Display: item };
+          houseIsciOptions.push(ret);
+        });
+        filtersData.DistinctMarkets.forEach((item) => {
+          const ret = { Value: item, Selected: true, Display: item };
+          marketOptions.push(ret);
+        });
         filtersData.DistinctPrograms.forEach((item) => {
           const ret = { Value: item, Selected: true, Display: item };
           programOptions.push(ret);
         });
+        filtersData.DistinctSpotLengths.forEach((item) => {
+          const ret = { Value: item, Selected: true, Display: item };
+          spotLengthOptions.push(ret);
+        });
+        filtersData.DistinctStations.forEach((item) => {
+          const ret = { Value: item, Selected: true, Display: item };
+          stationOptions.push(ret);
+        });
+        activeFilters.Affiliate.filterOptions = affiliateOptions;
+        activeFilters.ClientISCI.filterOptions = clientIsciOptions;
         activeFilters.DayOfWeek.filterOptions = dayOfWeekOptions;
         activeFilters.GenreName.filterOptions = genreOptions;
+        activeFilters.ISCI.filterOptions = houseIsciOptions;
+        activeFilters.Market.filterOptions = marketOptions;
         activeFilters.ProgramName.filterOptions = programOptions;
+        activeFilters.SpotLength.filterOptions = spotLengthOptions;
+        activeFilters.Station.filterOptions = stationOptions;
       };
       prepareFilterOptions();
       return {

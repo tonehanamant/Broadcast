@@ -174,7 +174,9 @@ namespace Services.Broadcast.ApplicationServices
                     DistinctHouseIscis = result.ClientScrubs.Select(x => x.ISCI).Distinct().OrderBy(x => x).ToList(),
                     DistinctSpotLengths = result.ClientScrubs.Select(x => x.SpotLength).Distinct().OrderBy(x => x).ToList(),
                     DistinctAffiliates = result.ClientScrubs.Select(x => x.Affiliate).Distinct().OrderBy(x => x).ToList(),
-                    DistinctStations = result.ClientScrubs.Select(x => x.Station).Distinct().OrderBy(x => x).ToList()
+                    DistinctStations = result.ClientScrubs.Select(x => x.Station).Distinct().OrderBy(x => x).ToList(),
+                    DistinctWeekStarts = result.ClientScrubs.Select(x=>x.WeekStart).Distinct().OrderBy(x=>x).ToList(),
+                    DistinctShowTypes = result.ClientScrubs.Select(x => x.ShowTypeName).Distinct().OrderBy(x => x).ToList()
                 };
                 return result;
             }
