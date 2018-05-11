@@ -55,7 +55,6 @@ namespace Services.Broadcast.ApplicationServices
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
         private const string HTTP_ACCEPT_HEADER = "application/json";
-        private const string FTP_SCHEME = "ftp://";
 
         public AffidavitPostProcessingService(
             IBroadcastAudiencesCache audienceCache,
@@ -90,54 +89,69 @@ namespace Services.Broadcast.ApplicationServices
                 throw;
             }
 
-            foreach (var file in filesToProcess)
+            List<string> downloadedFiles = new List<string>();
+            if (!filesToProcess.Any())
             {
-                string filePath = $"{Path.GetTempPath()}{file}";
-                try
-                {
-                    _DownloadFileFromWWTVFtp(file, filePath);
-                }
-                catch (Exception e)
-                {               
-                    // cannot download file
-                    filesFailedDownload.Add(string.Format("{0} :: Reason -> {1}",file,e.Message));
-                    continue;   // skip to next file 
-                }
-                AffidavitSaveResult response = null;
-
-                string errorMessage;
-                AffidavitSaveRequest affidavitSaveRequest = ParseWWTVFile(filePath,out errorMessage);
-                if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    ProcessErrorWWTVFile(filePath, errorMessage);
-                    continue;
-                }
-                try
-                {
-                    _AffidavidService.SaveAffidavit(affidavitSaveRequest, userName, DateTime.Now);
-                }
-                catch (Exception e)
-                {
-                    errorMessage = "Error saving affidavit:\n\n" + e.ToString();
-                    ProcessErrorWWTVFile(filePath, errorMessage);
-                    continue;
-                }
-
-                try
-                {
-                    _DeleteWWTVFTPFile(Path.GetFileName(filePath));
-                }
-                catch (Exception e)
-                {
-                    errorMessage = "Error deleting affidavit file from FTP site:\n\n" + e.ToString();
-                    ProcessErrorWWTVFile(filePath,errorMessage,false);
-                    continue;
-                }
+                return;
             }
 
-            if (filesFailedDownload.Any())
+            using (WWTVSharedNetworkHelper.GetLocalErrorFolderConnection())
             {
-                _ProcessFailedFiles(filesFailedDownload);
+                foreach (var file in filesToProcess)
+                {
+                    // no need to use shared connection for local temp path (unless we have to)
+                    string filePath = $"{Path.GetTempPath()}{file}";
+                    try
+                    {
+                        _DownloadFileFromWWTVFtp(file, filePath);
+                    }
+                    catch (Exception e)
+                    {
+                        filesFailedDownload.Add(string.Format("{0} :: Reason -> {1}", file, e.Message));
+                        continue; // skip to next file 
+                    }
+
+                    downloadedFiles.Add(filePath);
+                    AffidavitSaveResult response = null;
+
+                    string errorMessage;
+                    AffidavitSaveRequest affidavitSaveRequest = ParseWWTVFile(filePath, out errorMessage);
+                    if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        ProcessErrorWWTVFile(filePath, errorMessage);
+                        continue;
+                    }
+
+                    try
+                    {
+                        _AffidavidService.SaveAffidavit(affidavitSaveRequest, userName, DateTime.Now);
+                    }
+                    catch (Exception e)
+                    {
+                        errorMessage = "Error saving affidavit:\n\n" + e.ToString();
+                        ProcessErrorWWTVFile(filePath, errorMessage);
+                        continue;
+                    }
+
+                    try
+                    {
+                        WWTVFtpHelper.DeleteFile(Path.GetFileName(filePath));
+                    }
+                    catch (Exception e)
+                    {
+                        errorMessage = "Error deleting affidavit file from FTP site:\n\n" + e.ToString();
+                        ProcessErrorWWTVFile(filePath, errorMessage);
+                        continue;
+                    }
+                }
+                if (filesFailedDownload.Any())
+                {
+                    _ProcessFailedFiles(filesFailedDownload);
+                }
+
+                var outbound = WWTVFtpHelper.GetInboundPath();
+                var ftpFilesToDelete = downloadedFiles.Select(d => outbound + "/" + Path.GetFileName(d)).ToList();
+                WWTVFtpHelper.DeleteFiles(ftpFilesToDelete);
             }
         }
 
@@ -158,16 +172,13 @@ namespace Services.Broadcast.ApplicationServices
             _AffidavitEmailSenderService.Send(emailBody);
         }
 
-        public void ProcessErrorWWTVFile(string filePath,string errorMessage,bool deleteFtpFile = true)
+        public void ProcessErrorWWTVFile(string filePath,string errorMessage)
         {
             var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
 
             var emailBody = _CreateInvalidFileEmailBody(errorMessage, invalidFilePath);
 
             _AffidavitEmailSenderService.Send(emailBody, "WWTV File Failed");
-
-            if (deleteFtpFile)
-                _DeleteWWTVFTPFile(Path.GetFileName(filePath));
 
             LogAffidavitError(filePath,errorMessage);
         }
@@ -246,8 +257,8 @@ namespace Services.Broadcast.ApplicationServices
 
         private string _MoveFileToInvalidFilesFolder(string fileName)
         {
-            var combinedFilePath = Path.Combine(BroadcastServiceSystemParameter.WWTV_FailedFolder,
-                Path.GetFileName(fileName));
+            var failFolder = WWTVSharedNetworkHelper.GetLocalErrorFolder();
+            var combinedFilePath = Path.Combine(failFolder,Path.GetFileName(fileName));
 
             if (File.Exists(combinedFilePath))
                 File.Delete(combinedFilePath);
@@ -257,19 +268,8 @@ namespace Services.Broadcast.ApplicationServices
             return combinedFilePath;
         }
 
-        private void _DeleteWWTVFTPFile(string fileName)
-        {
-            string uri =
-                $"{FTP_SCHEME}{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpInboundFolder}/{fileName}";
-            FtpWebRequest request = (FtpWebRequest) WebRequest.Create(uri);
-            request.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername,
-                BroadcastServiceSystemParameter.WWTV_FtpPassword);
-            request.Method = WebRequestMethods.Ftp.DeleteFile;
 
-            FtpWebResponse response = (FtpWebResponse) request.GetResponse();
-            response.Close();
-        }
-
+        
         /// <summary>
         /// Deals with fact that time comes in 2 formats  HHMMTT 
         /// and HMMTT (single and double digit hour which is not supported properly by .NET library)
@@ -388,44 +388,24 @@ namespace Services.Broadcast.ApplicationServices
             return affidavitSaveRequest;
         }
 
+        /// <summary>
+        /// It is assumed filePath is locally accessible resource and not networked resource
+        /// </summary>
         private void _DownloadFileFromWWTVFtp(string fileName, string filePath)
         {
+            var shareFolder = WWTVFtpHelper.GetInboundPath();
             using (var ftpClient = new WebClient())
             {
-                ftpClient.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername,
-                    BroadcastServiceSystemParameter.WWTV_FtpPassword);
-                ftpClient.DownloadFile(
-                    $"{FTP_SCHEME}{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpInboundFolder}/{fileName}",
+                ftpClient.Credentials = WWTVFtpHelper.GetFtpClientCredentials();
+                ftpClient.DownloadFile($"{shareFolder}/{fileName}",
                     filePath);
             }
         }
 
         private List<string> _GetWWTVFTPFileNames()
         {
-            string uri =
-                $"{FTP_SCHEME}{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpInboundFolder}";
-            FtpWebRequest ftpRequest = (FtpWebRequest) WebRequest.Create(uri);
-            ftpRequest.Credentials = new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername,
-                BroadcastServiceSystemParameter.WWTV_FtpPassword);
-            ftpRequest.Method = WebRequestMethods.Ftp.ListDirectory;
-            FtpWebResponse response = (FtpWebResponse) ftpRequest.GetResponse();
-            StreamReader streamReader = new StreamReader(response.GetResponseStream());
-
-            List<string> files = new List<string>();
-
-            string line = streamReader.ReadLine();
-            while (!string.IsNullOrWhiteSpace(line))
-            {
-                if (line.EndsWith(VALID_INCOMING_FILE_EXTENSION))
-                {
-                    files.Add(line);
-                }
-
-                line = streamReader.ReadLine();
-            }
-
-            streamReader.Close();
-            return files;
+            string uri = WWTVFtpHelper.GetInboundPath();
+            return WWTVFtpHelper.GetFileList(uri, (file) => file.EndsWith(VALID_INCOMING_FILE_EXTENSION));
         }
     }
 }

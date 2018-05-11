@@ -21,7 +21,7 @@ namespace Services.Broadcast.Services
         readonly Timer _Timer;
         public ScheduledWindowsServiceMethodRunner(List<ScheduledServiceMethod> servicesToRun) 
         {
-            _Timer = new Timer(MILSEC_BETWEEN_CHECKS) { AutoReset = true }; // once an hour
+            _Timer = new Timer(MILSEC_BETWEEN_CHECKS) { AutoReset = true }; 
             _Timer.Elapsed += _Timer_check_for_WWT_files;
             _ServicesToRun = servicesToRun;
             _ServicesToRun.ForEach(s => s.BaseWindowsService = this);

@@ -10,6 +10,7 @@ using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Services.Broadcast.Services;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -161,6 +162,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             _AffidavitPreprocessingService.ProcessInvalidFiles(fileList);
+        }
+        [Ignore]
+        [Test]
+        public void Testerester()
+        {
+            var src = "ddr.txt";
+            string  dest = "\\\\Cadfs10\\tbn\\WWTVErrors\\ddr.txt";
+            string share = "\\\\Cadfs10\\tbn\\WWTVErrors";
+            string result = "svc_wwtvdata@crossmw.com";
+            result = "78!ttwG&Dc$4fB2xZ94x";
+
+            using (WWTVSharedNetworkHelper.GetConnection(share))
+            {
+                File.Copy(src, dest);
+                File.Delete(dest);
+            }
         }
     }
 }

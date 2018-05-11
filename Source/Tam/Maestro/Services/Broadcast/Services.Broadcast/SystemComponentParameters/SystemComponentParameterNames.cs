@@ -125,6 +125,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "NielsenCable"; }
         }
 	 
+		public static string NsiStaging  
+		{
+            get { return "NsiStaging"; }
+        }
+	 
 		public static string PostLogAnalysis  
 		{
             get { return "PostLogAnalysis"; }
@@ -306,11 +311,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "EnableNewRatingsService"; }
         }
 	 
-		public static string EnableNsiFolderMonitor  
-		{
-            get { return "EnableNsiFolderMonitor"; }
-        }
-	 
 		public static string EnableProcessIncompleteRatingsLoadJobsCheck  
 		{
             get { return "EnableProcessIncompleteRatingsLoadJobsCheck"; }
@@ -334,26 +334,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string NoOfThreadsForRatingRequest  
 		{
             get { return "NoOfThreadsForRatingRequest"; }
-        }
-	 
-		public static string NsiDropBoxDirectory  
-		{
-            get { return "NsiDropBoxDirectory"; }
-        }
-	 
-		public static string NsiNotificationEmailAddresses  
-		{
-            get { return "NsiNotificationEmailAddresses"; }
-        }
-	 
-		public static string NsiOtherDirectory  
-		{
-            get { return "NsiOtherDirectory"; }
-        }
-	 
-		public static string NsiRatingsDirectory  
-		{
-            get { return "NsiRatingsDirectory"; }
         }
 	 
 		public static string NumMonthsToCacheForNewRatingsService  
@@ -505,6 +485,16 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string WWTV_SharedFolder  
 		{
             get { return "WWTV_SharedFolder"; }
+        }
+	 
+		public static string WWTV_SharedFolder_Password  
+		{
+            get { return "WWTV_SharedFolder_Password"; }
+        }
+	 
+		public static string WWTV_SharedFolder_UserName  
+		{
+            get { return "WWTV_SharedFolder_UserName"; }
         }
 	 
 		public static string WWTV_WhenToCheckDataFiles  
@@ -1536,6 +1526,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string InternalSalesWebApiUri  
 		{
             get { return "InternalSalesWebApiUri"; }
+        }
+	 
+		public static string OrderingApiApprovedEmailAddresses  
+		{
+            get { return "OrderingApiApprovedEmailAddresses"; }
         }
 	}
 	 

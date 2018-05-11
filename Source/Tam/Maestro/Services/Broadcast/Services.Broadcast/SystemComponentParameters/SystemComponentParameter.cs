@@ -131,6 +131,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.NielsenCable); }
         }
 	 
+		public static string NsiStaging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.NsiStaging); }
+        }
+	 
 		public static string PostLogAnalysis  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -335,12 +341,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.EnableNewRatingsService); }
         }
 	 
-		public static bool EnableNsiFolderMonitor  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<bool>
-					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.EnableNsiFolderMonitor); }
-        }
-	 
 		public static bool EnableProcessIncompleteRatingsLoadJobsCheck  
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
@@ -369,30 +369,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
 					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.NoOfThreadsForRatingRequest); }
-        }
-	 
-		public static string NsiDropBoxDirectory  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.NsiDropBoxDirectory); }
-        }
-	 
-		public static string NsiNotificationEmailAddresses  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.NsiNotificationEmailAddresses); }
-        }
-	 
-		public static string NsiOtherDirectory  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.NsiOtherDirectory); }
-        }
-	 
-		public static string NsiRatingsDirectory  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.NsiRatingsDirectory); }
         }
 	 
 		public static int NumMonthsToCacheForNewRatingsService  
@@ -561,6 +537,18 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_SharedFolder); }
+        }
+	 
+		public static string WWTV_SharedFolder_Password  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_SharedFolder_Password); }
+        }
+	 
+		public static string WWTV_SharedFolder_UserName  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_SharedFolder_UserName); }
         }
 	 
 		public static string WWTV_WhenToCheckDataFiles  
@@ -1686,6 +1674,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(SalesApiSystemParameterNames.ComponentID , SalesApiSystemParameterNames.InternalSalesWebApiUri); }
+        }
+	 
+		public static string OrderingApiApprovedEmailAddresses  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(SalesApiSystemParameterNames.ComponentID , SalesApiSystemParameterNames.OrderingApiApprovedEmailAddresses); }
         }
 	}
 	 
