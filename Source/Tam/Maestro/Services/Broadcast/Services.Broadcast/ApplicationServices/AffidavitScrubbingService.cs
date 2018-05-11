@@ -29,7 +29,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
-        ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ScrubbingStatus? status);
+        ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest);
 
         /// <summary>
         /// Returns a list of unlinked iscis
@@ -117,7 +117,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
-        public ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ScrubbingStatus? status)
+        public ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -153,7 +153,7 @@ namespace Services.Broadcast.ApplicationServices
                 //load ClientScrubs
                 result.Details.ForEach(x =>
                 {
-                    var clientScrubs = _AffidavitRepository.GetProposalDetailPostScrubbing(x.Id.Value, status);
+                    var clientScrubs = _AffidavitRepository.GetProposalDetailPostScrubbing(x.Id.Value, proposalScrubbingRequest.ScrubbingStatusFilter);
                     clientScrubs.ForEach(y =>
                     {
                         y.Sequence = x.Sequence;

@@ -31,7 +31,9 @@ const post = {
   ), */
   getPostClientScrubbing: (params) => {
     const sendStatus = params.filterKey.length && (params.filterKey !== 'All');
-    return call(GET, `${apiBase}/Post/ClientScrubbingProposal/${params.proposalId}${sendStatus ? `?status=${params.filterKey}` : ''}`, {});
+    const statusParams = sendStatus ? { ScrubbingStatusFilter: params.filterKey } : {};
+    // return call(GET, `${apiBase}/Post/ClientScrubbingProposal/${params.proposalId}${sendStatus ? `?status=${params.filterKey}` : ''}`, {});
+    return call(POST, `${apiBase}/Post/ClientScrubbingProposal/${params.proposalId}`, statusParams);
   },
   getUnlinkedIscis: () => (
     call(GET, `${apiBase}Post/UnlinkedIscis `, {})

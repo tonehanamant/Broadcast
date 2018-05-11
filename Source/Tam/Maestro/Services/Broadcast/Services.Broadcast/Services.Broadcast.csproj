@@ -263,6 +263,7 @@
     <Compile Include="DaypartCache.cs" />
     <Compile Include="EmailService.cs" />
     <Compile Include="Entities\AffidavitClientScrub.cs" />
+    <Compile Include="Entities\ProposalScrubbingRequest.cs" />
     <Compile Include="Entities\MyEventsReportDataLine.cs" />
     <Compile Include="Entities\ScrubbingStatus.cs" />
     <Compile Include="Entities\AffidavitDemographics.cs" />
