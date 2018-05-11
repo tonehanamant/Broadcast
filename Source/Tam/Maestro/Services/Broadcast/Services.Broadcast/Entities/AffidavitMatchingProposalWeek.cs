@@ -20,6 +20,7 @@ namespace Services.Broadcast.Entities
         public string Brand { get; set; }
         public bool MarriedHouseIsci { get; set; }
         public bool IsLeadInMatch { get; set; }
-        public bool AirtimeMatch { get; set; }
+        public bool DateMatch { get; set; }
+        public bool TimeMatch { get; set; }
     }
 }

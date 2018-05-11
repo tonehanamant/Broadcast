@@ -12,6 +12,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
+using System.Collections.Generic;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -86,12 +87,12 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalProgramsCalculationEngine, ProposalProgramsCalculationEngine>();
             unityContainer.RegisterType<IProposalMarketsCalculationEngine, ProposalMarketsCalculationEngine>();
             unityContainer.RegisterType<IProposalOpenMarketsTotalsCalculationEngine, ProposalOpenMarketsTotalsCalculationEngine>();
-            unityContainer.RegisterType<IProposalPostingBooksEngine, ProposalPostingBooksEngine>();
 
             unityContainer.RegisterType<IPostEngine, PostEngine>();
             unityContainer.RegisterType<IPostFileParser, PostFileParser>();
             unityContainer.RegisterType<IPostFileParserFactory, PostFileParserFactory>();
             unityContainer.RegisterType<IReportGenerator<PostPrePostingFile>, PostExcelReportGenerator>();
+            unityContainer.RegisterType<IReportGenerator<NsiPostReport>, NSIPostReportGenerator>();
             unityContainer.RegisterType<IPostPrePostingService, PostPrePostingService>();
             unityContainer.RegisterType<IProprietarySpotCostCalculationEngine, ProprietarySpotCostCalculationEngine>();
             unityContainer.RegisterType<IImpressionAdjustmentEngine, ImpressionAdjustmentEngine>();
@@ -108,6 +109,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAffidavitPreprocessingService, AffidavitPreprocessingService>();
             unityContainer.RegisterType<IAffidavitPostProcessingService, AffidavitPostProcessingService>();
             unityContainer.RegisterType<IAffidavitMatchingEngine, AffidavitMatchingEngine>();
+            unityContainer.RegisterType<IAffidavitProgramScrubbingEngine, AffidavitProgramScrubbingEngine>();
             unityContainer.RegisterType<IWhosWatchingTvService, WhosWatchingTvService>();
             unityContainer.RegisterType<IAffidavitScrubbingService, AffidavitScrubbingService>();
             unityContainer.RegisterType<IAffidavitEmailSenderService, AffidavitEmailSenderService>();

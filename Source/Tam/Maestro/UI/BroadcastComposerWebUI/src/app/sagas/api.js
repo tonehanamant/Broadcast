@@ -29,6 +29,9 @@ const post = {
   getPostScrubbingHeader: proposalID => (
     call(GET, `${apiBase}/Post/ClientScrubbingProposal/${proposalID}`, {})
   ),
+  getUnlinkedIscis: () => (
+    call(GET, `${apiBase}Post/UnlinkedIscis `, {})
+  ),
 };
 
 const postPrePosting = {

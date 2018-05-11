@@ -19,6 +19,7 @@ namespace Services.Broadcast.Repositories
         Dictionary<int, int> GetSpotLengthAndIds();
         Dictionary<int, int> GetSpotLengthsById();
         Dictionary<int, double> GetSpotLengthMultipliers();
+        Dictionary<int, double> GetSpotLengthIdsAndCostMultipliers();
     }
 
     public class SpotLengthBroadcastRepository : BroadcastRepositoryBase, ISpotLengthRepository
@@ -111,6 +112,15 @@ namespace Services.Broadcast.Repositories
                     context => (from s in context.spot_lengths
                                 select s).ToDictionary(a => a.length, a => a.delivery_multiplier));
             }
+        }
+
+        public Dictionary<int, double> GetSpotLengthIdsAndCostMultipliers()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.spot_length_cost_multipliers.ToDictionary(x => x.spot_length_id, y => y.cost_multiplier);
+                });
         }
     }
 }

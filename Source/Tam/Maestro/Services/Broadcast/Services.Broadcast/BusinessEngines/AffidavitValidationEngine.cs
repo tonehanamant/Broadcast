@@ -9,7 +9,7 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IAffidavitValidationEngine : IApplicationService
     {
-        AffidavitValidationResult ValidateAffidavitRecord(AffidavitSaveRequestDetail affidavitDetail);
+        List<AffidavitValidationResult> ValidateAffidavitRecord(AffidavitSaveRequestDetail affidavitDetail);
     }
 
     public class AffidavitValidationEngine : IAffidavitValidationEngine
@@ -21,97 +21,103 @@ namespace Services.Broadcast.BusinessEngines
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
         }
 
-        public AffidavitValidationResult ValidateAffidavitRecord(AffidavitSaveRequestDetail affidavitDetail)
+        public List<AffidavitValidationResult> ValidateAffidavitRecord(AffidavitSaveRequestDetail affidavitDetail)
         {
             Dictionary<int, int> spotLengthDict = null;
 
-            var affidavitValidationResult = new AffidavitValidationResult
-            {
-                IsValid = true
-            };
+            var validationResults = new List<AffidavitValidationResult>();
+            
 
-            if (string.IsNullOrWhiteSpace(affidavitDetail.ProgramName))
-            {
-                affidavitValidationResult.InvalidField = "ProgramName";
-                affidavitValidationResult.ErrorMessage = "'ProgramName' is required";
-            }
-
-            if (string.IsNullOrWhiteSpace(affidavitDetail.Genre))
-            {
-                affidavitValidationResult.InvalidField = "Genre";
-                affidavitValidationResult.ErrorMessage = "'Genre' is required";
-            }
-
-            if (string.IsNullOrWhiteSpace(affidavitDetail.LeadInProgramName))
-            {
-                affidavitValidationResult.InvalidField = "LeadInProgramName";
-                affidavitValidationResult.ErrorMessage = "'LeadInProgramName' is required";
-            }
-
-            if (string.IsNullOrWhiteSpace(affidavitDetail.LeadInGenre))
-            {
-                affidavitValidationResult.InvalidField = "LeadInGenre";
-                affidavitValidationResult.ErrorMessage = "'LeadInGenre' is required";
-            }
-
-            if (string.IsNullOrWhiteSpace(affidavitDetail.LeadOutProgramName))
-            {
-                affidavitValidationResult.InvalidField = "LeadOutProgramName";
-                affidavitValidationResult.ErrorMessage = "'LeadOutProgramName' is required";
-            }
-
-            if (string.IsNullOrWhiteSpace(affidavitDetail.LeadOutGenre))
-            {
-                affidavitValidationResult.InvalidField = "LeadOutGenre";
-                affidavitValidationResult.ErrorMessage = "'LeadOutGenre' is required";
-            }
 
             if (affidavitDetail.AirTime == DateTime.MinValue)
             {
-                affidavitValidationResult.InvalidField = "AirTime";
-                affidavitValidationResult.ErrorMessage = "'AirTime' must be a valid date";
+                validationResults.Add(new AffidavitValidationResult()
+                {
+                    InvalidField = "AirTime",
+                    ErrorMessage = "'AirTime' must be a valid date",
+                });
             }
 
-            if (affidavitDetail.InventorySource == (int)(InventorySourceEnum.Blank))
+            if (affidavitDetail.InventorySource == (int) (InventorySourceEnum.Blank))
             {
-                affidavitValidationResult.InvalidField = "InventorySource";
-                affidavitValidationResult.ErrorMessage = "'InventorySource' must be valid";
+                validationResults.Add(new AffidavitValidationResult()
+                {
+                    InvalidField = "InventorySource",
+                    ErrorMessage = "'InventorySource' must be valid",
+                });
             }
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.Station))
             {
-                affidavitValidationResult.InvalidField = "Station";
-                affidavitValidationResult.ErrorMessage = "'Station' is required";
+                validationResults.Add(new AffidavitValidationResult()
+                {
+                    InvalidField = "Station",
+                    ErrorMessage = "'Station' is required",
+                });
             }
 
             if (!_IsSpotLengthValid(affidavitDetail.SpotLength, ref spotLengthDict))
             {
-                affidavitValidationResult.InvalidField = "SpotLength";
-                affidavitValidationResult.ErrorMessage = "'SpotLength' must be valid broadcast spot length: 15,30,60,120,180,300";
+                validationResults.Add(new AffidavitValidationResult()
+                {
+                    InvalidField = "SpotLength",
+                    ErrorMessage = "'SpotLength' must be valid broadcast spot length: 15,30,60,120,180,300",
+                });
             }
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.Isci))
             {
-                affidavitValidationResult.InvalidField = "Isci";
-                affidavitValidationResult.ErrorMessage = "'Isci' is required";
+                validationResults.Add(new AffidavitValidationResult()
+                {
+                    InvalidField = "Isci",
+                    ErrorMessage = "'Isci' is required",
+                });
             }
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.Affiliate))
             {
-                affidavitValidationResult.InvalidField = "Affiliate";
-                affidavitValidationResult.ErrorMessage = "'Affiliate' is required";
+                validationResults.Add(new AffidavitValidationResult()
+                {
+                    InvalidField = "Affiliate",
+                    ErrorMessage = "'Affiliate' is required",
+                });
             }
 
-            if (affidavitValidationResult.InvalidField != null)
-                affidavitValidationResult.IsValid = false;
+            if (string.IsNullOrWhiteSpace(affidavitDetail.ShowType))
+            {
+                validationResults.Add(new AffidavitValidationResult()
+                {
+                    InvalidField = "ShowType",
+                    ErrorMessage = "'ShowType' is required",
+                });
+            }
 
-            return affidavitValidationResult;
+            if (string.IsNullOrWhiteSpace(affidavitDetail.LeadInShowType))
+            {
+                validationResults.Add(new AffidavitValidationResult()
+                {
+                    InvalidField = "LeadInShowType",
+                    ErrorMessage = "'LeadInShowType' is required",
+                });
+            }
+
+            if (string.IsNullOrWhiteSpace(affidavitDetail.LeadOutShowType))
+            {
+                validationResults.Add(new AffidavitValidationResult()
+                {
+                    InvalidField = "LeadOutShowType",
+                    ErrorMessage = "'LeadOutShowType' is required",
+                });
+            }
+
+            return validationResults;
         }
 
         private bool _IsSpotLengthValid(int spotLength, ref Dictionary<int, int> spotLengthDict)
         {
             if (spotLengthDict == null)
-                spotLengthDict = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+                spotLengthDict = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>()
+                    .GetSpotLengthAndIds();
 
             return spotLengthDict.ContainsKey(spotLength);
         }

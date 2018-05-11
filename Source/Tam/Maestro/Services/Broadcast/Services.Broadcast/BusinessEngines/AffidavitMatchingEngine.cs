@@ -80,17 +80,28 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var singleProposalWeeksByProposal in proposalWeeksByProposal)
             {
                 var singleProposalWeeks = singleProposalWeeksByProposal.Select(w => w);
-
                 var proposalWeeksByProposalDetail = singleProposalWeeks.GroupBy(g => g.ProposalVersionDetailId);
                 AffidavitMatchingProposalWeek matchedProposalDetailWeek;
                 var airtimeMatchingProposalDetailWeeks =
                     _GetAirtimeMatchingProposalDetailWeeks(proposalWeeksByProposalDetail, requestDetail);
-                if (airtimeMatchingProposalDetailWeeks.Any()) //if matched airtime on one or more
+                var dateAndTimeMatchs = airtimeMatchingProposalDetailWeeks.Where(a => a.TimeMatch && a.DateMatch);
+                var dateMatch = airtimeMatchingProposalDetailWeeks.Where(a => a.DateMatch);
+                var timeMatch = airtimeMatchingProposalDetailWeeks.Where(a => a.TimeMatch);
+
+                if (dateAndTimeMatchs.Any()) //if matched airtime on one or more
                 {
-                    matchedProposalDetailWeek = airtimeMatchingProposalDetailWeeks.First(); //take first matched on airtime
+                    matchedProposalDetailWeek = dateAndTimeMatchs.First(); //take first matched on airtime
+                }
+                else if (dateMatch.Any()) 
+                {
+                    matchedProposalDetailWeek = dateMatch.First();
+                }
+                else if (timeMatch.Any()) 
+                {
+                    matchedProposalDetailWeek = timeMatch.First();
                 }
                 else //if none matched on airtime
-                {
+                { 
                     matchedProposalDetailWeek = proposalWeeksByProposalDetail.First().First(); //take first week from first proposal detail
                 }
 
@@ -105,20 +116,18 @@ namespace Services.Broadcast.BusinessEngines
     , AffidavitSaveRequestDetail affidavitDetail)
         {
             var result = new List<AffidavitMatchingProposalWeek>();
-
-            var timeMatchedDetails = new List<AffidavitMatchingProposalWeek>();
             var dayparts = _DaypartCache.GetDisplayDayparts(proposalWeeksByProposalDetail.Select(d => d.First().ProposalVersionDetailDaypartId));
+
             foreach (var proposalDetail in proposalWeeksByProposalDetail)
             {
                 var bufferInSeconds = _BroadcastMatchingBuffer;
-
                 var displayDaypart = dayparts[proposalDetail.First().ProposalVersionDetailDaypartId];
                 var actualStartTime = displayDaypart.StartTime < 0 ? 86400 - Math.Abs(displayDaypart.StartTime) : displayDaypart.StartTime;
                 //add 1 second to include the daypart endTime as valid time
-                var actualEndTime = displayDaypart.EndTime < 0 ? Math.Abs(86400 - displayDaypart.EndTime + 1) : displayDaypart.EndTime + 1;
+                var actualEndTime = displayDaypart.EndTime + 1 < 0 ? Math.Abs(86400 - displayDaypart.EndTime + 1) : displayDaypart.EndTime + 1;
                 var adjustedStartTime = displayDaypart.StartTime - bufferInSeconds < 0 ? 86400 - Math.Abs(displayDaypart.StartTime - bufferInSeconds) : displayDaypart.StartTime - bufferInSeconds;
-
                 var isOvernight = (actualEndTime < actualStartTime && actualEndTime < adjustedStartTime);
+
                 if (isOvernight)
                 {
                     // some of these "if" can be combined, but will be harder to maintain and negligably performant
@@ -127,24 +136,32 @@ namespace Services.Broadcast.BusinessEngines
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
                             proposalDetailWeek.IsLeadInMatch = false;
+
+                            if (proposalDetailWeek.Spots != 0)
+                                proposalDetailWeek.TimeMatch = true;
                         }
-                        timeMatchedDetails.AddRange(proposalDetail.Select(w => w));
                     }
                     else if (affidavitDetail.AirTime.TimeOfDay.TotalSeconds >= adjustedStartTime && affidavitDetail.AirTime.TimeOfDay.TotalSeconds >= actualEndTime)
                     {   // covers lead in time
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
                             proposalDetailWeek.IsLeadInMatch = true;
+
+                            if (proposalDetailWeek.Spots != 0)
+                            {
+                                proposalDetailWeek.TimeMatch = true;
+                            }
                         }
-                        timeMatchedDetails.AddRange(proposalDetail.Select(w => w));
                     }
                     else if (affidavitDetail.AirTime.TimeOfDay.TotalSeconds <= actualEndTime && affidavitDetail.AirTime.TimeOfDay.TotalSeconds <= actualStartTime)
                     {   // covers airtime after midnight
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
                             proposalDetailWeek.IsLeadInMatch = false;
+
+                            if (proposalDetailWeek.Spots != 0)
+                                proposalDetailWeek.TimeMatch = true;
                         }
-                        timeMatchedDetails.AddRange(proposalDetail.Select(w => w));
                     }
                 }
                 else
@@ -154,35 +171,48 @@ namespace Services.Broadcast.BusinessEngines
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
                             proposalDetailWeek.IsLeadInMatch = false;
+
+                            if (proposalDetailWeek.Spots != 0)
+                                proposalDetailWeek.TimeMatch = true;
                         }
-                        timeMatchedDetails.AddRange(proposalDetail.Select(w => w));
                     }
                     else if (affidavitDetail.AirTime.TimeOfDay.TotalSeconds >= adjustedStartTime && affidavitDetail.AirTime.TimeOfDay.TotalSeconds <= actualEndTime)
                     {
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
                             proposalDetailWeek.IsLeadInMatch = true;
+
+                            if (proposalDetailWeek.Spots != 0)
+                                proposalDetailWeek.TimeMatch = true;
                         }
-                        timeMatchedDetails.AddRange(proposalDetail.Select(w => w));
                     }
                 }
-            }
 
-            foreach (var timeMatchedDetail in timeMatchedDetails)
-            {
-                var displayDaypart = _DaypartCache.GetDisplayDaypart(timeMatchedDetail.ProposalVersionDetailDaypartId);
-
-                if (affidavitDetail.AirTime.Date >= timeMatchedDetail.ProposalVersionDetailWeekStart &&
-                    affidavitDetail.AirTime.Date <= timeMatchedDetail.ProposalVersionDetailWeekEnd &&
-                    timeMatchedDetail.Spots != 0)
+                foreach (var proposalDetailWeek in proposalDetail)
                 {
-                    timeMatchedDetail.AirtimeMatch = true;
-                    result.Add(timeMatchedDetail);
+                    proposalDetailWeek.DateMatch = _IsDateMatch(affidavitDetail, result, proposalDetail);
+
+                    if (proposalDetailWeek.TimeMatch || proposalDetailWeek.DateMatch)
+                        result.Add(proposalDetailWeek);
                 }
             }
 
             return result;
         }
 
+        private bool _IsDateMatch(AffidavitSaveRequestDetail affidavitDetail, List<AffidavitMatchingProposalWeek> result, IGrouping<int, AffidavitMatchingProposalWeek> proposalDetail)
+        {
+            foreach (var proposalWeek in proposalDetail)
+            {
+                if (affidavitDetail.AirTime.Date >= proposalWeek.ProposalVersionDetailWeekStart &&
+                    affidavitDetail.AirTime.Date <= proposalWeek.ProposalVersionDetailWeekEnd &&
+                     proposalWeek.Spots != 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

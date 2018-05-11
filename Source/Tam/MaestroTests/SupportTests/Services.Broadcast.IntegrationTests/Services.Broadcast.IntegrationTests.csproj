@@ -158,6 +158,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\System.Management.Automation.dll.10.0.10586.0\lib\net40\System.Management.Automation.dll</HintPath>
     </Reference>
@@ -218,8 +219,8 @@
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.IntegrationTests.Common.18.3.1.1\lib\net45\Tam.Maestro.IntegrationTests.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.3\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
+    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.4\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -240,7 +241,6 @@
     <Compile Include="ApplicationServices\PostPrePostingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitScrubbingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\ProposalPostingBooksEngineTests.cs" />
     <Compile Include="ApplicationServices\ProposalScxConverterTest.cs" />
     <Compile Include="ApplicationServices\ProposalTestHelper.cs" />
     <Compile Include="ApplicationServices\ProposalWeeklyTotalCalculationEngineTests.cs" />
@@ -255,6 +255,7 @@
     <Compile Include="Repositories\DisplayDaypartRepositoryTests.cs" />
     <Compile Include="StubbedSMSClient.cs" />
     <Compile Include="EmailerTests.cs" />
+    <Compile Include="ApplicationServices\AffidavitProgramScrubbingEngineTests.cs" />
     <Compile Include="UnitTests\InventoryFileImporterBaseTests.cs" />
     <Compile Include="UnitTests\Post\BvsPostFileParserTests.cs" />
     <Compile Include="UnitTests\Post\BvsPostFileRow.cs" />
@@ -627,11 +628,35 @@
     <Content Include="Files\rate-file-invalid-schema.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Files\Test Adve NAV 30 05-30-16.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Test Adv NAV3 30 05-30-16.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Test Adv NAV4 30 05-30-16.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Files\WWTV_AffidavitInValidFileContent.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\WWTV_AffidavitValidFile.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\WWTV_AffidavitValidFileContent_NullDemo.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\WWTV_AffidavitValidFileContent_SpotCost.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\WWTV_Bad_File.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\WWTV_Bad_File_times.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\WWTV_Escaped_DoubleQuotes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Penny_test.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

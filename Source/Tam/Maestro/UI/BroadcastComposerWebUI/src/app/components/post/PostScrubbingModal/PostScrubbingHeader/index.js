@@ -1,88 +1,29 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, ControlLabel, FormGroup, FormControl, Badge } from 'react-bootstrap';
+import { Row, Col, ControlLabel, FormGroup, FormControl, Badge, Button, Glyphicon, Panel, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { Grid } from 'react-redux-grid';
 import Select from 'react-select';
 import styles from './index.scss';
 import CSSModules from 'react-css-modules';
 
-import { getDateForDisplay } from '../../../../utils/dateFormatter';
+import { getDateInFormat } from '../../../../utils/dateFormatter';
+import DateMDYYYY from 'Components/shared/TextFormatters/DateMDYYYY';
 
 export class PostScrubbingHeader extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+   /*  this.state = {
       dates: [],
-    };
-
-    this.datesSelectorOptionRenderer = this.datesSelectorOptionRenderer.bind(this);
-    this.datesSelectorValueRenderer = this.datesSelectorValueRenderer.bind(this);
+    }; */
   }
 
   componentDidMount() {
-    const { date } = this.props;
-    const dateInProperFormat = getDateForDisplay(date);
-    this.setState({ dates: dateInProperFormat });
+    // const { date } = this.props;
+    // const dateInProperFormat = getDateForDisplay(date);
+    // console.log('dates', dateInProperFormat);
+    // this.setState({ dates: dateInProperFormat });
   }
-
-  marketSelectorOptionRenderer(option) {
-    let count = option.Count;
-    const divStyle = { overflow: 'hidden' };
-    const countStyle = { color: '#c0c0c0' };
-    // custom
-    if (option.Id === 255) {
-      count = this.state.customMarketCount;
-    }
-    // select custom
-    const isOpenCustomOption = option.Id === -1;
-    if (isOpenCustomOption) {
-      countStyle.Display = 'none';
-    }
-    return (
-      <div style={divStyle} href="">
-        {isOpenCustomOption ? <hr style={{ margin: '8px' }} /> : null}
-        <span className="pull-left">{option.Display}</span>
-        <span className="pull-right" style={countStyle}>{count}</span>
-      </div>
-    );
-  }
-
-  marketSelectorValueRenderer() {
-    const isCustom = this.props.marketId === 255;
-
-    return (
-      <div style={{ overflow: 'hidden' }} href="">
-        <span className="pull-left " style={{ width: '100%' }} >
-          {isCustom ? 'Custom' : `Top ${this.props.marketId}`}
-          <Badge style={{
-            display: isCustom ? 'block' : 'none',
-            position: 'absolute',
-            left: '70%',
-            top: '20%'
-          }}>i</Badge>
-        </span>
-      </div>
-    );
-  }
-
-  datesSelectorOptionRenderer(option) {
-    const divStyle = { overflow: 'hidden' };
-
-    return (
-      <div style={divStyle} href="">
-        <span className="pull-left">{option.Display}</span>
-      </div>
-    );
-  }
-
-  datesSelectorValueRenderer() {
-    return (
-      <div style={{ overflow: 'hidden' }} href="">
-        <span className="pull-left ">{this.state.activeDate}</span>
-      </div>
-    );
-  }
-
   render() {
     const { advertiser, guaranteedDemo, Id, isReadOnly, marketId, name, notes, secondaryDemo } = this.props;
     const isCustomMarket = this.props.marketId === 255;
@@ -100,6 +41,80 @@ export class PostScrubbingHeader extends Component {
       option.Id = item;
       secondaryDemoOptions.push(option);
     });
+
+    const stateKey = 'PostScubbingDetailsGrid';
+
+    const columns = [
+      {
+        name: 'ID',
+        dataIndex: 'Sequence',
+        width: '10%',
+      },
+      {
+        name: 'Flight',
+        dataIndex: 'FlightStartDate',
+        width: '40%',
+        renderer: ({ row }) => {
+          let hasTip = false;
+          const checkFlightWeeksTip = (flightWeeks) => {
+            if (flightWeeks.length < 1) return '';
+            const tip = [<div key="flight">Hiatus Weeks</div>];
+            flightWeeks.forEach((flight, idx) => {
+              if (flight.IsHiatus) {
+                hasTip = true;
+                const key = `flight_ + ${idx}`;
+                tip.push(<div key={key}><DateMDYYYY date={flight.StartDate} /><span> - </span><DateMDYYYY date={flight.EndDate} /></div>);
+              }
+            });
+            const display = tip;
+            return (
+              <Tooltip id="flightstooltip">{display}</Tooltip>
+            );
+          };
+          const tooltip = checkFlightWeeksTip(row.FlightWeeks);
+          const start = getDateInFormat(row.FlightStartDate);
+          const end = getDateInFormat(row.FlightEndDate);
+          const display = `${start} - ${end}`;
+          return (
+            <div>
+              <span>{display}</span>
+              { hasTip &&
+              <OverlayTrigger placement="top" overlay={tooltip}>
+              <Button bsStyle="link"><Glyphicon style={{ color: 'black' }} glyph="info-sign" /></Button>
+              </OverlayTrigger>
+              }
+            </div>
+          )
+        },
+      },
+      {
+        name: 'Daypart',
+        dataIndex: 'DayPart',
+        width: '30%',
+      },
+      {
+        name: 'Spot Length',
+        dataIndex: 'SpotLength',
+        width: '20%',
+      },
+  ];
+
+  const plugins = {
+    COLUMN_MANAGER: {
+      resizable: false,
+      moveable: false,
+      sortable: {
+          enabled: false,
+          method: 'local',
+      },
+    },
+  };
+
+  const grid = {
+    columns,
+    plugins,
+    stateKey,
+  };
 
     return (
       <div>
@@ -138,6 +153,26 @@ export class PostScrubbingHeader extends Component {
                 </FormGroup>
               </Col>
             </Row>
+            <Row>
+              <Col md={12}>
+                <Panel defaultExpanded>
+                  <Panel.Heading style={{padding: '0'}}>
+                    <Panel.Title>
+                    <Panel.Toggle>
+                      <Button bsStyle="link" bsSize="xsmall">
+                        <Glyphicon glyph="triangle-bottom" /> Proposal Detail
+                      </Button>
+                    </Panel.Toggle>
+                    </Panel.Title>
+                  </Panel.Heading>
+                  <Panel.Collapse>
+                    <Panel.Body style={{padding: '10px'}}>
+                      <Grid {...grid} data={this.props.details} store={this.context.store} height={false}/>
+                    </Panel.Body>
+                  </Panel.Collapse>
+                </Panel>
+              </Col>
+            </Row>
           </Col>
           <Col md={6}>
             <Row>
@@ -170,22 +205,6 @@ export class PostScrubbingHeader extends Component {
             </Row>
           </Col>
         </Row>
-        {/* <Row>
-          <Col md={5}>
-            <FormGroup controlId="proposalDates">
-              <Select
-                value={this.state.dates}
-                name="proposalDates"
-                onChange={option => this.handleDatesOnChange(option)}
-                optionRenderer={this.datesSelectorOptionRenderer}
-                valueRenderer={this.datesSelectorValueRenderer}
-                options={this.state.dates}
-                clearable={false}
-                valueKey="Id"
-              />
-            </FormGroup>
-          </Col>
-        </Row> */}
       </div>
     );
   }
@@ -198,7 +217,7 @@ PostScrubbingHeader.defaultProps = {
 
 PostScrubbingHeader.propTypes = {
   advertiser: PropTypes.string,
-  date: PropTypes.array,
+  details: PropTypes.array,
   guaranteedDemo: PropTypes.string,
   Id: PropTypes.number,
   isReadOnly: PropTypes.bool,

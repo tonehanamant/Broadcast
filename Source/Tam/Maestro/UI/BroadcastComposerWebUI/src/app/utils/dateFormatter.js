@@ -1,3 +1,6 @@
+
+import moment from 'moment';
+
 export const getDateInFormat = (fullDate, withTime, timeOnly) => {
     const today = new Date(fullDate);
 
@@ -69,4 +72,18 @@ export const getDay = (date) => {
     ];
 
     return days[date];
+};
+
+export const getSecondsToTimeString = (time) => {
+  let seconds = time % 60;
+          seconds = parseInt(seconds, 10); // radix 10
+      let minutes = (time / 60) % 60;
+          minutes = parseInt(minutes, 10);
+      let hours = (time / (60 * 60)) % 24;
+          hours = parseInt(hours, 10);
+
+      const t = new Date(1970, 0, 2, hours, minutes, seconds, 0);
+
+      // return moment(t).format('h:mmA').replace(':00', '');
+      return moment(t).format('hh:mm:ss A');
 };

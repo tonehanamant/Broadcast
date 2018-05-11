@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector uri="datacollector://microsoft/TestImpact/1.0" assemblyQualifiedName="Microsoft.VisualStudio.TraceCollector.TestImpactDataCollector, Microsoft.VisualStudio.TraceCollector, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" friendlyName="Test Impact">
+        <Configuration>
+          <ImpactLevel>file</ImpactLevel>
+          <LogFilePath>true</LogFilePath>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
   <!-- Configurations that affect the Test Framework -->
   <RunConfiguration>
     <MaxCpuCount>1</MaxCpuCount>

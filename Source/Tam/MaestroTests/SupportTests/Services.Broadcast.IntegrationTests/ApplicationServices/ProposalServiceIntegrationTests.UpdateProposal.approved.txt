@@ -79,6 +79,7 @@
           }
         }
       ],
+      "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 12.5300,
@@ -147,8 +148,22 @@
           "Year": 2017
         }
       ],
-      "Sequence": null,
+      "Sequence": 1,
       "SharePostingBookId": 413,
+      "ShowTypeCriteria": [
+        {
+          "Contain": 2,
+          "ShowType": {
+            "Display": null
+          }
+        },
+        {
+          "Contain": 2,
+          "ShowType": {
+            "Display": null
+          }
+        }
+      ],
       "SinglePostingBookId": 413,
       "SpotLengthId": 1,
       "TotalCost": 5241609.21,
@@ -192,6 +207,7 @@
       "HutPostingBookId": null,
       "PlaybackType": 3,
       "ProgramCriteria": [],
+      "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 84.2000,
@@ -238,8 +254,9 @@
           "Year": 2017
         }
       ],
-      "Sequence": null,
+      "Sequence": 2,
       "SharePostingBookId": 413,
+      "ShowTypeCriteria": [],
       "SinglePostingBookId": 413,
       "SpotLengthId": 1,
       "TotalCost": 757800.00,

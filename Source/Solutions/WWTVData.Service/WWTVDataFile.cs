@@ -36,26 +36,16 @@ namespace WWTVData.Service
         /// <summary>
         /// Use when you want day/time of week to run.
         /// </summary>
-        protected override DateTime? RunWhen
+        protected override DateTime? RunWeeklyWhen
         {
             get
             {
-                if (!_RunWhenChecked)
-                {
-                    if (SMSClient.Handler.TamEnvironment != TAMEnvironment.PROD.ToString())
-                        _RunWhen = null;
-                    else
-                    {
-                        DateTime d;
-                        if (DateTime.TryParse(BroadcastServiceSystemParameter.WWTV_WhenToCheckDataFiles, out d))
-                            _RunWhen = d;
-                    }
-                    _RunWhenChecked = true;
-                }
+                _RunWhen = _EnsureRunWeeklyWhen(BroadcastServiceSystemParameter.WWTV_WhenToCheckDataFiles);
 
                 return _RunWhen;
             }
         }
+
 
         public override int SecondsBetweenRuns
         {
@@ -65,33 +55,10 @@ namespace WWTVData.Service
             }
         }
 
-
-        public override bool RunWhenReady(DateTime timeSignaled)
-        {
-            if (_LastRun == null)
-            {   // first time run
-                return RunService(timeSignaled);
-            }
-
-            bool ret = false;
-            if (RunWhen == null)
-            {
-                if (_LastRun.Value.AddSeconds(SecondsBetweenRuns) < timeSignaled)
-                    ret = RunService(timeSignaled);
-            }
-            else
-            if (DateTime.Now.DayOfWeek == RunWhen.Value.DayOfWeek 
-                    && DateTime.Now.TimeOfDay > RunWhen.Value.TimeOfDay)
-            {
-                ret = RunService(timeSignaled);
-            }
-            return ret;
-        }
-
         public override bool RunService(DateTime timeSignaled)
         {
             _LastRun = DateTime.Now;
-            BaseWindowsService.LogServiceEvent("Checking WWTV OutPost files. . .");
+            //BaseWindowsService.LogServiceEvent("Checking WWTV OutPost files. . .");
 
             string[] filesFound;
             int filesProcessed = 0;
@@ -127,9 +94,9 @@ namespace WWTVData.Service
             }
 
 
-            BaseWindowsService.LogServiceEvent(". . . Done Checking WWTV OutPost files\n");
+            //BaseWindowsService.LogServiceEvent(". . . Done Checking WWTV OutPost files\n");
             var message = string.Format("Found {0} file; Process {1}; Failed {2}", filesFound.Length, filesProcessed, filesFailed);
-            BaseWindowsService.LogServiceEvent(message);
+            //BaseWindowsService.LogServiceEvent(message);
             return true;
         }
     }

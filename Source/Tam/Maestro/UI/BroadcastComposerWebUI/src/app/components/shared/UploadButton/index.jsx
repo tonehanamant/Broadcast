@@ -30,13 +30,17 @@ export class UploadButton extends Component {
     this.processFiles = this.processFiles.bind(this);
   }
 
+  // toggling the drop zone causes data grid container to remount (sometimes more than once) - reloading the data
+  // this prevents modeal opening in compiled version
   openFileDialog() {
-    this.props.toggleDisabledDropzones();
+    // this.props.toggleDisabledDropzones();
     this.input.open();
   }
 
+  // this seems to be never called and of no use
   closeFileDialog() {
-    this.props.toggleDisabledDropzones();
+    console.log('closeFileDialog called?', this.props);
+    // this.props.toggleDisabledDropzones();
   }
 
   processFiles(acceptedFiles, rejectedFiles) {
@@ -105,7 +109,7 @@ UploadButton.propTypes = {
   acceptedMimeTypes: PropTypes.string,
   storeFile: PropTypes.func.isRequired,
   readFileB64: PropTypes.func.isRequired,
-  toggleDisabledDropzones: PropTypes.func.isRequired,
+  // toggleDisabledDropzones: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(CSSModules(UploadButton, styles));

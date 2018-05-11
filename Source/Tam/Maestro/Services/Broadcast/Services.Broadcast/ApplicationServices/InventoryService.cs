@@ -116,8 +116,7 @@ namespace Services.Broadcast.ApplicationServices
             _SpotLengthMap =
                 broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
             _SpotLengthCostMultipliers =
-                broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthMultiplierRepository>()
-                    .GetSpotLengthIdsAndCostMultipliers();
+                broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsAndCostMultipliers();
             _proprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _stationInventoryGroupService = stationInventoryGroupService;
             _inventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -1003,18 +1002,7 @@ namespace Services.Broadcast.ApplicationServices
             var result = rateFor30s*(Decimal) costMultiplier;
             return result;
         }
-
-        private Dictionary<int, double> GetSpotLengthAndMultipliers()
-        {
-            var spotMultipliers =
-                _broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthMultiplierRepository>()
-                    .GetSpotLengthIdsAndCostMultipliers();
-
-            return (from c in _SpotLengthMap
-                    join d in spotMultipliers on c.Value equals d.Key
-                    select new {c.Key, d.Value}).ToDictionary(x => x.Key, y => y.Value);
-        }
-
+        
         private IEnumerable<StationInventoryManifestRate> _GetManifestRatesFromMultipliers(decimal rate, bool has15SecondsRate)
         {
 

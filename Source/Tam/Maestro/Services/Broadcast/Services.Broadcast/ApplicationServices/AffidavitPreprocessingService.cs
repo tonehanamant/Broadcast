@@ -46,12 +46,6 @@ namespace Services.Broadcast.ApplicationServices
         void ProcessInvalidFiles(List<OutboundAffidavitFileValidationResultDto> files);
     }
 
-    public enum AffidaviteFileProcessingStatus
-    {
-        Valid = 1,
-        Invalid = 2
-    };
-
     public class AffidavitPreprocessingService : IAffidavitPreprocessingService
     {
         internal List<string> AffidavitFileHeaders = new List<string>() { "ESTIMATE_ID", "STATION_NAME", "DATE_RANGE", "SPOT_TIME", "SPOT_DESCRIPTOR", "COST" };
@@ -59,14 +53,14 @@ namespace Services.Broadcast.ApplicationServices
         public readonly string _ValidStrataExtension = ".xlsx";
         public readonly string _ValidStrataTabName = "PostAnalRep_ExportDetail";
 
-        private readonly IAffidavitPreprocessingRepository _AffidavitPreprocessingRepository;
+        private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IAffidavitEmailSenderService _AffidavitEmailSenderService;
         
         public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory, IAffidavitEmailSenderService affidavitEmailSenderService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
-            _AffidavitPreprocessingRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitPreprocessingRepository>();
+            _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
             _AffidavitEmailSenderService = affidavitEmailSenderService;
         }
 
@@ -79,7 +73,7 @@ namespace Services.Broadcast.ApplicationServices
         public List<OutboundAffidavitFileValidationResultDto> ProcessFiles(List<string> filepathList, string userName)
         {
             List<OutboundAffidavitFileValidationResultDto> validationList = ValidateFiles(filepathList, userName);
-            _AffidavitPreprocessingRepository.SaveValidationObject(validationList);
+            _AffidavitRepository.SaveValidationObject(validationList);
             var validFileList = validationList.Where(v => v.Status == AffidaviteFileProcessingStatus.Valid)
                                                 .ToList();
             if (validFileList.Any())
@@ -137,7 +131,7 @@ namespace Services.Broadcast.ApplicationServices
                 mailBody.Append(string.Format("{0}\n",errorMessage));
             }
 
-            mailBody.AppendFormat("\n\nFile located in {0}\n", invalidFilePath);
+            mailBody.AppendFormat("\nFile located in {0}\n", invalidFilePath);
 
             return mailBody.ToString();
         }
@@ -264,7 +258,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     FilePath = filepath,
                     FileName = Path.GetFileName(filepath),
-                    SourceId = (int)AffidaviteFileSource.Strata,
+                    SourceId = (int)AffidaviteFileSourceEnum.Strata,
                     CreatedBy = userName,
                     CreatedDate = DateTime.Now,
                     FileHash = HashGenerator.ComputeHash(File.ReadAllBytes(filepath))

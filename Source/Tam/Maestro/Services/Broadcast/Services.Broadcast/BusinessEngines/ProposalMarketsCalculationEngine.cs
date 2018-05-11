@@ -14,17 +14,16 @@ namespace Services.Broadcast.BusinessEngines
     {
         List<LookupDto> GetProposalMarketsList(int proposalId, int versionNumber, int proposalDetailDto);
         List<LookupDto> GetProposalMarketsList(ProposalDto proposal, ProposalDetailDto proposalDetail);
+        List<LookupDto> GetProposalMarketsList(ProposalDto proposal, int postingBookId);
     }
 
     public class ProposalMarketsCalculationEngine : IProposalMarketsCalculationEngine
     {
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
-        private readonly IProposalPostingBooksEngine _ProposalPostingBooksEngine;
 
-        public ProposalMarketsCalculationEngine(IDataRepositoryFactory dataRepositoryFactory, IProposalPostingBooksEngine proposalPostingBooksEngine)
+        public ProposalMarketsCalculationEngine(IDataRepositoryFactory dataRepositoryFactory)
         {
             _DataRepositoryFactory = dataRepositoryFactory;
-            _ProposalPostingBooksEngine = proposalPostingBooksEngine;
         }
 
         public List<LookupDto> GetProposalMarketsList(int proposalId, int versionNumber, int proposalDetailDto)
@@ -42,8 +41,12 @@ namespace Services.Broadcast.BusinessEngines
 
         public List<LookupDto> GetProposalMarketsList(ProposalDto proposal, ProposalDetailDto proposalDetail)
         {
+            var postingBookId = PropoeralsServiceHelper.GetBookId(proposalDetail);
+            return GetProposalMarketsList(proposal, postingBookId);
+        }
 
-            var postingBookId = _ProposalPostingBooksEngine.GetPostingBookId(proposalDetail);
+        public List<LookupDto> GetProposalMarketsList(ProposalDto proposal, int postingBookId)
+        {
 
             var marketRankings =
                 _DataRepositoryFactory.GetDataRepository<INsiMarketRepository>()

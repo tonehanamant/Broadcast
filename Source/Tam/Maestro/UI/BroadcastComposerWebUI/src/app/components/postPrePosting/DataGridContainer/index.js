@@ -68,9 +68,9 @@ export class DataGridContainer extends Component {
   /* LIFE-CYCLE METHODS */
   /* ////////////////////////////////// */
   componentWillMount() {
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!M PPP GRID');
-    this.props.getPostPrePostingInitialData();
-    this.props.getPostPrePosting();
+    console.warn('!!!!!!!!!!!!!!!!!!!!!!!!!!!!M PPP GRID');
+    // this.props.getPostPrePostingInitialData();
+    // this.props.getPostPrePosting();
   }
 
   componentDidUpdate(prevProps) {
