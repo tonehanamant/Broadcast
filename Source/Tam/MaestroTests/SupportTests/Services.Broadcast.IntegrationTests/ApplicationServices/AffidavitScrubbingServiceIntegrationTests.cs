@@ -30,6 +30,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(PostDto), "Id");
+            jsonResolver.Ignore(typeof(PostDto), "ContractId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
