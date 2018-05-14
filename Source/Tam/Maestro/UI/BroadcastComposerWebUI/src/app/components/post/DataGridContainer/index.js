@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleModal, createAlert } from 'Ducks/app';
-import { getPost, getProposalHeader } from 'Ducks/post';
+import { getPost, getPostClientScrubbing } from 'Ducks/post';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
 import Sorter from 'Utils/react-redux-grid-sorter';
@@ -36,7 +36,7 @@ const mapDispatchToProps = dispatch => (bindActionCreators(
     selectRow,
     deselectAll,
     doLocalSort,
-    getProposalHeader,
+    getPostClientScrubbing,
   }, dispatch)
 );
 
@@ -100,8 +100,9 @@ export class DataGridContainer extends Component {
   deselectAll(ref) {
     this.props.deselectAll(ref);
   }
-  showscrubbingModal(ID) {
-    this.props.getProposalHeader(ID);
+  showscrubbingModal(Id) {
+    // change to params
+    this.props.getPostClientScrubbing({ proposalId: Id, showModal: true, filterKey: 'All' });
   }
   render() {
     const stateKey = 'gridPostMain';
@@ -252,8 +253,8 @@ export class DataGridContainer extends Component {
         this.hideContextMenu({ stateKey });
       },
       HANDLE_ROW_CLICK: (row) => {
-          const ID = row.row.ContractId;
-          this.showscrubbingModal(ID);
+          const Id = row.row.ContractId;
+          this.showscrubbingModal(Id);
       },
     };
 
@@ -277,7 +278,7 @@ DataGridContainer.propTypes = {
   postGridData: PropTypes.array.isRequired,
 
   getPost: PropTypes.func.isRequired,
-  getProposalHeader: PropTypes.func.isRequired,
+  getPostClientScrubbing: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   createAlert: PropTypes.func.isRequired,
   // setOverlayLoading: PropTypes.func.isRequired,

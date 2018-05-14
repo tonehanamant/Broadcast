@@ -2,7 +2,7 @@
 {
     public interface IHaveSingleSharedPostingBooks
     {
-        int? SinglePostingBookId { get; set; }
-        int? SharePostingBookId { get; set; }
+        int? SingleProjectionBookId { get; set; }
+        int? ShareProjectionBookId { get; set; }
     }
 }

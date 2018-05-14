@@ -151,9 +151,9 @@
         }
       ],
       "FlightEdited": false,
-      "SinglePostingBookId": null,
-      "SharePostingBookId": 416,
-      "HutPostingBookId": 413,
+      "SingleProjectionBookId": null,
+      "ShareProjectionBookId": 416,
+      "HutProjectionBookId": 413,
       "PlaybackType": 4,
       "DefaultPostingBooks": {
         "DefaultShareBook": {

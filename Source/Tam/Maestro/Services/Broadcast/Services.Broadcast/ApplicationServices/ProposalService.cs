@@ -68,7 +68,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProgramNameRepository _ProgramNameRepository;
         private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine;
         private readonly IProposalScxConverter _ProposalScxConverter;
-        private readonly IPostingBooksService _PostingBooksService;
+        private readonly IProjectionBooksService _ProjectionBooksService;
         private readonly IRatingForecastService _RatingForecastService;
         private readonly IProposalTotalsCalculationEngine _ProposalTotalsCalculationEngine;
         private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService;
@@ -83,7 +83,7 @@ namespace Services.Broadcast.ApplicationServices
             IProposalCalculationEngine proposalCalculationEngine,
             IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
             IProposalScxConverter proposalScxConverter,
-            IPostingBooksService postingBooksService,
+            IProjectionBooksService postingBooksService,
             IRatingForecastService ratingForecastService,
             IProposalTotalsCalculationEngine proposalTotalsCalculationEngine,
             IProposalProprietaryInventoryService proposalProprietaryInventoryService)
@@ -103,7 +103,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProgramNameRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramNameRepository>();
             _ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
             _ProposalScxConverter = proposalScxConverter;
-            _PostingBooksService = postingBooksService;
+            _ProjectionBooksService = postingBooksService;
             _RatingForecastService = ratingForecastService;
             _ProposalTotalsCalculationEngine = proposalTotalsCalculationEngine;
             _ProposalProprietaryInventoryService = proposalProprietaryInventoryService;
@@ -369,16 +369,16 @@ namespace Services.Broadcast.ApplicationServices
         {
             foreach (var proposalDetailDto in saveRequest.Details)
             {
-                if (proposalDetailDto.HutPostingBookId == null &&
-                    proposalDetailDto.SharePostingBookId != null)
+                if (proposalDetailDto.HutProjectionBookId == null &&
+                    proposalDetailDto.ShareProjectionBookId != null)
                 {
-                    proposalDetailDto.SinglePostingBookId = proposalDetailDto.SharePostingBookId;
-                    proposalDetailDto.HutPostingBookId = null;
-                    proposalDetailDto.SharePostingBookId = null;
+                    proposalDetailDto.SingleProjectionBookId = proposalDetailDto.ShareProjectionBookId;
+                    proposalDetailDto.HutProjectionBookId = null;
+                    proposalDetailDto.ShareProjectionBookId = null;
                 }
                 else
                 {
-                    proposalDetailDto.SinglePostingBookId = null;
+                    proposalDetailDto.SingleProjectionBookId = null;
                 }
             }
         }
@@ -775,14 +775,14 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _ValidateProposalRatingsBooks(ProposalDetailDto proposalDetailDto)
         {
-            if (proposalDetailDto.SharePostingBookId == null)
+            if (proposalDetailDto.ShareProjectionBookId == null)
                 throw new Exception("Cannot save proposal without specifying a Share Book");
 
             if (proposalDetailDto.PlaybackType == null)
                 throw new Exception("Cannot save proposal without specifying a Playback Type");
 
-            if (proposalDetailDto.SharePostingBookId == proposalDetailDto.HutPostingBookId ||
-                proposalDetailDto.HutPostingBookId > proposalDetailDto.SharePostingBookId)
+            if (proposalDetailDto.ShareProjectionBookId == proposalDetailDto.HutProjectionBookId ||
+                proposalDetailDto.HutProjectionBookId > proposalDetailDto.ShareProjectionBookId)
                 throw new Exception("Hut Media Month must be earlier (less than) the Share Media Month");
         }
 
@@ -900,9 +900,9 @@ namespace Services.Broadcast.ApplicationServices
         {
             foreach (var proposalDetailDto in proposal.Details)
             {
-                if (proposalDetailDto.SinglePostingBookId != null)
+                if (proposalDetailDto.SingleProjectionBookId != null)
                 {
-                    proposalDetailDto.SharePostingBookId = proposalDetailDto.SinglePostingBookId;
+                    proposalDetailDto.ShareProjectionBookId = proposalDetailDto.SingleProjectionBookId;
                 }
             }
         }
@@ -1000,7 +1000,7 @@ namespace Services.Broadcast.ApplicationServices
                 FlightStartDate = proposalDetailRequestDto.StartDate,
                 FlightEndDate = proposalDetailRequestDto.EndDate,
                 Quarters = proposalQuarterDto.OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList(),
-                DefaultPostingBooks = _PostingBooksService.GetDefaultPostingBooks(proposalDetailRequestDto.StartDate)
+                DefaultProjectionBooks = _ProjectionBooksService.GetDefaultProjectionBooks(proposalDetailRequestDto.StartDate)
             };
 
             _ProposalCalculationEngine.SetQuarterTotals(proposalDetail);
@@ -1058,7 +1058,7 @@ namespace Services.Broadcast.ApplicationServices
                                     }).ToList()
                     });
 
-                editedDetail.DefaultPostingBooks = newProposalDetail.DefaultPostingBooks;
+                editedDetail.DefaultProjectionBooks = newProposalDetail.DefaultProjectionBooks;
 
                 // deal with quarters - new quarters will be dealt by user.
                 foreach (var newQuarterDto in newProposalDetail.Quarters)

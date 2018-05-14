@@ -29,7 +29,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
-        ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId);
+        ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest);
 
         /// <summary>
         /// Returns a list of unlinked iscis
@@ -74,7 +74,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalService _ProposalService;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly Lazy<Image> _LogoImage;
-        private readonly IPostingBooksService _PostingBooksService;
+        private readonly IProjectionBooksService _PostingBooksService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -82,7 +82,7 @@ namespace Services.Broadcast.ApplicationServices
             IProposalService proposalService,
             IBroadcastAudiencesCache audiencesCache,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IPostingBooksService postingBooksService)
+            IProjectionBooksService postingBooksService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -117,7 +117,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
-        public ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId)
+        public ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -153,7 +153,7 @@ namespace Services.Broadcast.ApplicationServices
                 //load ClientScrubs
                 result.Details.ForEach(x =>
                 {
-                    var clientScrubs = _AffidavitRepository.GetProposalDetailPostScrubbing(x.Id.Value);
+                    var clientScrubs = _AffidavitRepository.GetProposalDetailPostScrubbing(x.Id.Value, proposalScrubbingRequest.ScrubbingStatusFilter);
                     clientScrubs.ForEach(y =>
                     {
                         y.Sequence = x.Sequence;
@@ -166,8 +166,17 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     DistinctDayOfWeek = result.ClientScrubs.Select(x => x.DayOfWeek).Distinct().OrderBy(x => x).ToList(),
                     DistinctGenres = result.ClientScrubs.Select(x => x.GenreName).Distinct().OrderBy(x => x).ToList(),
+                    DistinctPrograms = result.ClientScrubs.Select(x => x.ProgramName).Distinct().OrderBy(x => x).ToList(),
                     WeekStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).First() : (DateTime?)null,
-                    WeekEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).Last().AddDays(7) : (DateTime?)null
+                    WeekEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).Last().AddDays(7) : (DateTime?)null,
+                    DistinctMarkets = result.ClientScrubs.Select(x => x.Market).Distinct().OrderBy(x => x).ToList(),
+                    DistinctClientIscis = result.ClientScrubs.Select(x => x.ClientISCI).Distinct().OrderBy(x => x).ToList(),
+                    DistinctHouseIscis = result.ClientScrubs.Select(x => x.ISCI).Distinct().OrderBy(x => x).ToList(),
+                    DistinctSpotLengths = result.ClientScrubs.Select(x => x.SpotLength).Distinct().OrderBy(x => x).ToList(),
+                    DistinctAffiliates = result.ClientScrubs.Select(x => x.Affiliate).Distinct().OrderBy(x => x).ToList(),
+                    DistinctStations = result.ClientScrubs.Select(x => x.Station).Distinct().OrderBy(x => x).ToList(),
+                    DistinctWeekStarts = result.ClientScrubs.Select(x=>x.WeekStart).Distinct().OrderBy(x=>x).ToList(),
+                    DistinctShowTypes = result.ClientScrubs.Select(x => x.ShowTypeName).Distinct().OrderBy(x => x).ToList()
                 };
                 return result;
             }
@@ -205,6 +214,14 @@ namespace Services.Broadcast.ApplicationServices
 
             var flights = _GetFlightsRange(proposal.Details);
             var inspecSpots = _AffidavitRepositry.GetInSpecSpotsForProposal(proposalId);
+
+            inspecSpots.ForEach(x =>
+            {
+                x.ProposalWeekCost = x.ProposalWeekTotalCost / x.Units;
+                x.ProposalWeekImpressionsGoal = x.ProposalWeekTotalImpressionsGoal / x.Units;
+                x.ProposalWeekCPM = x.ProposalWeekTotalCost / (decimal)x.ProposalWeekTotalImpressionsGoal * 1000;
+            });
+
             var proposalAdvertiser = _SmsClient.FindAdvertiserById(proposal.AdvertiserId);
             var proposalAudienceIds = new List<int>() { proposal.GuaranteedDemoId };
             proposalAudienceIds.AddRange(proposal.SecondaryDemos);
@@ -216,7 +233,7 @@ namespace Services.Broadcast.ApplicationServices
             var stationMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
                 .GetBroadcastStationListByLegacyCallLetters(inspecSpots.Select(s => s.Station).Distinct().ToList())
                 .ToDictionary(k => k.LegacyCallLetters, v => v);
-            var latestPostingBooks = _PostingBooksService.GetDefaultPostingBooks();
+            var latestPostingBooks = _PostingBooksService.GetDefaultProjectionBooks();
             var nsiMarketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(latestPostingBooks.DefaultShareBook.PostingBookId.Value);
             var guaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
             var nsiPostReport = new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences,

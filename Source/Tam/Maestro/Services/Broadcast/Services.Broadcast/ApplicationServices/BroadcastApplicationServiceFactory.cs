@@ -35,7 +35,6 @@ namespace Services.Broadcast.ApplicationServices
                         _instance = new UnityContainer();
 
                         _instance.RegisterInstance<ISMSClient>(SMSClient.Handler);
-                        _instance.RegisterType<IServiceSecurityContextWrapper, ServiceSecurityContextWrapper>();
                         _instance.RegisterType<ILockingManagerApplicationService, LockingManagerApplicationService>();
                         _instance.RegisterType<IDataRepositoryFactory, BroadcastDataDataRepositoryFactory>();
 
@@ -96,7 +95,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostPrePostingService, PostPrePostingService>();
             unityContainer.RegisterType<IProprietarySpotCostCalculationEngine, ProprietarySpotCostCalculationEngine>();
             unityContainer.RegisterType<IImpressionAdjustmentEngine, ImpressionAdjustmentEngine>();
-			unityContainer.RegisterType<IPostingBooksService, PostingBooksService>();
+			unityContainer.RegisterType<IProjectionBooksService, ProjectionBooksService>();
             unityContainer.RegisterType<IProposalDetailHeaderTotalsCalculationEngine, ProposalDetailHeaderTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalDetailWeekTotalsCalculationEngine, ProposalDetailWeekTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalTotalsCalculationEngine, ProposalTotalsCalculationEngine>();

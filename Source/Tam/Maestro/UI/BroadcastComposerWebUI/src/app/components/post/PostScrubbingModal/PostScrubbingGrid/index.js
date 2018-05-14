@@ -6,11 +6,13 @@ import { Grid } from 'react-redux-grid';
 // import CustomPager from 'Components/shared/CustomPager';
 import { getDateInFormat, getSecondsToTimeString, getDay } from '../../../../utils/dateFormatter';
 
+import './index.scss';
+
 /* eslint-disable */
 export class PostScrubbingGrid extends Component {
     constructor(props, context) {
-        super(props, context);
-        this.context = context;
+      super(props, context);
+      this.context = context;
     }
 
    /*  shouldComponentUpdate(nextProps) {
@@ -70,9 +72,22 @@ export class PostScrubbingGrid extends Component {
 
         const columns = [
             {
+                name: 'Status',
+                dataIndex: 'Status',
+                // width: '3%',
+                // test specific width
+                width: 44,
+                renderer: ({ row }) => {
+                    const iconClassName = row.Status ? 'fa-check-circle' : 'fa-times-circle'
+                    return (
+                        <i className={`status-icon fa ${iconClassName}`} />
+                    )
+                },
+            },
+            {
                 name: 'Week Start',
                 dataIndex: 'WeekStart',
-                width: '6%',
+                width: 100,
                 renderer: ({ row }) => {
                     const weekStart = <span>{(row.WeekStart && getDateInFormat(row.WeekStart)) || '-'}</span>
                     return (
@@ -83,7 +98,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Date',
                 dataIndex: 'DateAired',
-                width: '6%',
+                width: 100,
                 renderer: ({ row }) => {
                     const date = row.MatchDate ? <span>{getDateInFormat(row.DateAired) || '-'}</span> : <span style={style}>{getDateInFormat(row.DateAired) || '-'}</span>
                     return (
@@ -94,7 +109,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Time Aired',
                 dataIndex: 'TimeAired',
-                width: '6%',
+                width: 100,
                 renderer: ({ row }) => {
                     const TimeAired = row.MatchTime ? <span>{getSecondsToTimeString(row.TimeAired) || '-'}</span> : <span style={style}>{getSecondsToTimeString(row.TimeAired) || '-'}</span>
                     return (
@@ -105,7 +120,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Day',
                 dataIndex: 'DayOfWeek',
-                width: '6%',
+                width: 80,
                 renderer: ({ row }) => {
                     const DayOfWeek = row.MatchIsciDays ? <span>{getDay(row.DayOfWeek) || '-'}</span> : <span style={style}>{getDay(row.DayOfWeek) || '-'}</span>
                     // const DayOfWeek = <span>{getDay(row.DayOfWeek) || '-'}</span>
@@ -117,7 +132,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Ad Length',
                 dataIndex: 'SpotLength',
-                width: '4%',
+                width: 80,
                 renderer: ({ row }) => (
                     <span>{row.SpotLength || '-'}</span>
                 ),
@@ -126,7 +141,7 @@ export class PostScrubbingGrid extends Component {
                 name: 'House ISCI',
                 dataIndex: 'ISCI',
                 // defaultSortDirection: 'ASC',
-                width: '10%',
+                width: 150,
                 renderer: ({ row }) => {
                     return (
                         <span>{row.ISCI || '-'}</span>
@@ -137,7 +152,7 @@ export class PostScrubbingGrid extends Component {
               name: 'Client ISCI',
               dataIndex: 'ClientISCI',
               // defaultSortDirection: 'ASC',
-              width: '10%',
+              width: 150,
               renderer: ({ row }) => {
                   return (
                       <span>{row.ClientISCI || '-'}</span>
@@ -147,7 +162,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Program',
                 dataIndex: 'ProgramName',
-                width: '12%',
+                width: 150,
                 renderer: ({ row }) => {
                     const programName = row.MatchProgram ? <span>{row.ProgramName || '-'}</span> : <span style={style}>{row.ProgramName || '-'}</span>
                     return (
@@ -158,7 +173,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Genre',
                 dataIndex: 'GenreName',
-                width: '6%',
+                width: 100,
                 renderer: ({ row }) => {
                     const GenreName = row.MatchGenre ? <span>{row.GenreName || '-'}</span> : <span style={style}>{row.GenreName || '-'}</span>
                     return (
@@ -167,9 +182,20 @@ export class PostScrubbingGrid extends Component {
                 },
             },
             {
+                name: 'Show Type',
+                dataIndex: 'ShowType',
+                width: 100,
+                renderer: ({ row: { ShowTypeName, MatchShowType } }) => {
+                    const showTypeRow = <span style={MatchShowType ? {} : style }>{ShowTypeName || '-'}</span>
+                    return (
+                        showTypeRow
+                    )
+                },
+            },
+            {
                 name: 'Affiliate',
                 dataIndex: 'Affiliate',
-                width: '6%',
+                width: 60,
                 renderer: ({ row }) => (
                     <span>{row.Affiliate || '-'}</span>
                 ),
@@ -177,7 +203,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Market',
                 dataIndex: 'Market',
-                width: '12%',
+                width: 150,
                 renderer: ({ row }) => {
                     const Market = row.MatchMarket ? <span>{row.Market || '-'}</span> : <span style={style}>{row.Market || '-'}</span>
                     return (
@@ -188,7 +214,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Station',
                 dataIndex: 'Station',
-                width: '6%',
+                width: 60,
                 renderer: ({ row }) => {
                     const Station = row.MatchStation ? <span>{row.Station || '-'}</span> : <span style={style}>{row.Station || '-'}</span>
                     return (
@@ -199,7 +225,8 @@ export class PostScrubbingGrid extends Component {
             {
               name: 'Comments',
               dataIndex: 'Comments',
-              width: '10%',
+              // width: 150,
+              width: '100%',
               renderer: ({ row }) => (
                   <span>{row.Comments || '-'}</span>
               ),
@@ -241,7 +268,7 @@ export class PostScrubbingGrid extends Component {
         };
 
         return (
-            <Grid {...grid} data={ClientScrubs} store={this.context.store} height={380}/>
+            <Grid {...grid} data={ClientScrubs} store={this.context.store} height={340}/>
         );
     }
 }

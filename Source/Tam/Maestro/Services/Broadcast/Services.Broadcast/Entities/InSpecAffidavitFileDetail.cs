@@ -16,8 +16,11 @@ namespace Services.Broadcast.Entities
         public int Quarter { get; set; }
         public int Year { get; set; }
         public int AdvertiserId { get; set; }
+        public decimal ProposalWeekTotalCost { get; set; }
         public decimal ProposalWeekCost { get; set; }
+        public double ProposalWeekTotalImpressionsGoal { get; set; }
         public double ProposalWeekImpressionsGoal { get; set; }
+        public decimal ProposalWeekCPM { get; set; }
         public int Units { get; set; }
     }
 }

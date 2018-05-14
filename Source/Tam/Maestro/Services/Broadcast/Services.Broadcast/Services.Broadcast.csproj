@@ -221,13 +221,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="ApplicationServices\WWTVFtpHelper.cs" />
+    <Compile Include="ApplicationServices\SharedNetworkConnection.cs" />
+    <Compile Include="ApplicationServices\WWTVNetworkHelper.cs" />
     <Compile Include="ApplicationServices\AffidavitPostProcessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitService.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\CNNStationInventoryGroupService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryManifestService.cs" />
-    <Compile Include="ApplicationServices\PostingBooksService.cs" />
+    <Compile Include="ApplicationServices\ProjectionBooksService.cs" />
     <Compile Include="ApplicationServices\AffidavitScrubbingService.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryGroupService.cs" />
@@ -260,6 +263,7 @@
     <Compile Include="DaypartCache.cs" />
     <Compile Include="EmailService.cs" />
     <Compile Include="Entities\AffidavitClientScrub.cs" />
+    <Compile Include="Entities\ProposalScrubbingRequest.cs" />
     <Compile Include="Entities\MyEventsReportDataLine.cs" />
     <Compile Include="Entities\ScrubbingStatus.cs" />
     <Compile Include="Entities\AffidavitDemographics.cs" />
@@ -289,7 +293,7 @@
     <Compile Include="Entities\OpenMarketInventory\ProposalOpenMarketDisplayFilter.cs" />
     <Compile Include="Entities\OpenMarketInventory\ProposalOpenMarketFilter.cs" />
     <Compile Include="Entities\OpenMarketRefineProgramsRequest.cs" />
-    <Compile Include="Entities\DefaultPostingBooksDto.cs" />
+    <Compile Include="Entities\DefaultProjectionBooksDto.cs" />
     <Compile Include="Entities\PostingBookResultDto.cs" />
     <Compile Include="Entities\ClientPostScrubbingProposalDetailDto.cs" />
     <Compile Include="Entities\ProgramSearchRequest.cs" />

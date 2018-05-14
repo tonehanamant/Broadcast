@@ -40,8 +40,8 @@ function DetailVM(set, start, end) {
     $scope.aduCheckedSubscriber = null;
 
     // sweeps
-    $scope.SharePostingBookId = ko.observable();
-    $scope.HutPostingBookId = ko.observable();
+    $scope.ShareProjectionBookId = ko.observable();
+    $scope.HutProjectionBookId = ko.observable();
     $scope.PlaybackType = ko.observable();
 
     $scope.setStart = function () {
@@ -92,8 +92,8 @@ function DetailVM(set, start, end) {
         $scope.checkedAdu(detail.Adu || false);
         $scope.checkDirty(true);
         $scope.isDirty(false);
-        $scope.SharePostingBookId(detail.SharePostingBookId);
-        $scope.HutPostingBookId(detail.HutPostingBookId);
+        $scope.ShareProjectionBookId(detail.ShareProjectionBookId);
+        $scope.HutProjectionBookId(detail.HutProjectionBookId);
         $scope.PlaybackType(detail.PlaybackType);
     };
 
@@ -153,7 +153,7 @@ function DetailVM(set, start, end) {
     $scope.SpotLength.subscribe($scope.setDirty);
 
     $scope.openManageRatings = function () {
-        $($scope.set).trigger('openManageRatings', [$scope.id(), $scope.SharePostingBookId(), $scope.HutPostingBookId(), $scope.PlaybackType()]);
+        $($scope.set).trigger('openManageRatings', [$scope.id(), $scope.ShareProjectionBookId(), $scope.HutProjectionBookId(), $scope.PlaybackType()]);
     }
 };
 

@@ -23,13 +23,6 @@ namespace WWTVData.Service
             get { return "WWTV File Retriever";  }
         }
 
-        public string SharedFolder
-        {
-            get
-            {
-                return BroadcastServiceSystemParameter.WWTV_SharedFolder;
-            }
-        }
 
         private bool _RunWhenChecked = false;
         private DateTime? _RunWhen = null;
@@ -60,32 +53,12 @@ namespace WWTVData.Service
             _LastRun = DateTime.Now;
             //BaseWindowsService.LogServiceEvent("Checking WWTV OutPost files. . .");
 
-            string[] filesFound;
             int filesProcessed = 0;
             int filesFailed = 0;
-            
             try
             {
-                try
-                {
-                    filesFound = Directory.GetFiles(SharedFolder);
-                }
-                catch (Exception e)
-                {
-                    throw new InvalidOperationException("Could not find WWTV_SharedFolder.  Please check it is created.",e);
-                }
-
                 var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPreprocessingService>();
-                var response = service.ProcessFiles(filesFound.ToList(), ServiceName);
-                response.ForEach(r =>
-                {
-                    if (r.Status == AffidaviteFileProcessingStatus.Valid)
-                    {
-                        File.Delete(r.FilePath);
-                        filesProcessed++;
-                    } else if (r.Status == AffidaviteFileProcessingStatus.Valid)
-                        filesFailed++;
-                });
+                service.ProcessFiles(ServiceName);
             }
             catch (Exception e)
             {
@@ -93,10 +66,6 @@ namespace WWTVData.Service
                 return false;
             }
 
-
-            //BaseWindowsService.LogServiceEvent(". . . Done Checking WWTV OutPost files\n");
-            var message = string.Format("Found {0} file; Process {1}; Failed {2}", filesFound.Length, filesProcessed, filesFailed);
-            //BaseWindowsService.LogServiceEvent(message);
             return true;
         }
     }

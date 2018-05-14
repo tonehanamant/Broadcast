@@ -45,16 +45,13 @@ export class PostScrubbingFilters extends Component {
   applyFilter(filter) {
     // ISSUE: Data changes but Object so does not update
     // clear the grid data then reset (combining in saga/reducer does not work)
-    this.props.clearScrubbingFiltersList();
-    // no longer maintaining here
-    // const filterOptions = { ...this.state.filterOptions };
-    // filterOptions[filter.filterKey] = filter;
-    // this.setState({ filterOptions });
-    // console.log('apply filter', filter);
+    // this.props.clearScrubbingFiltersList();
     // wait so the store will update/clear first
-    setTimeout(() => {
+    /* setTimeout(() => {
       this.props.getScrubbingDataFiltered(filter);
-    }, 50);
+    }, 50); */
+    // Change: use call in saga to block
+    this.props.getScrubbingDataFiltered(filter);
   }
 
   render() {
@@ -62,9 +59,19 @@ export class PostScrubbingFilters extends Component {
     const inactiveFilterStyle = { backgroundColor: '#bfbfbf', minHeight: '20px', maxHeight: '20px', width: '100%', borderRadius: '2px' };
     const columns = [
       {
+        name: 'Status',
+        dataIndex: 'Status',
+        // width: '3%',
+        // test specific width
+        width: 44,
+        renderer: () => (
+          <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
         name: 'Week Start',
         dataIndex: 'WeekStart',
-        width: '6%',
+        width: 100,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -72,7 +79,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Date',
         dataIndex: 'TimeAired',
-        width: '6%',
+        width: 100,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -80,7 +87,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Time Aired',
         dataIndex: 'MatchTime',
-        width: '6%',
+        width: 100,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -88,13 +95,15 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Day',
         dataIndex: 'DayOfWeek',
-        width: '6%',
+        width: 80,
         // renderer: ({ value, row }) => {
         renderer: ({ value }) => (
             <FilterPopoverWrapper
               filterDisplay={value.filterDisplay}
               filterKey={value.filterKey}
-              textSearch={false}
+              hasTextSearch={false}
+              hasMatchSpec={value.hasMatchSpec}
+              matchOptions={value.matchOptions}
               filterOptions={value.filterOptions}
               filterActive={value.active}
               applyFilter={this.applyFilter}
@@ -104,55 +113,82 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Ad Length',
         dataIndex: 'SpotLength',
-        width: '4%',
-        renderer: () => (
-          <div style={inactiveFilterStyle} />
+        width: 80,
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+          filterDisplay={value.filterDisplay}
+          filterKey={value.filterKey}
+          hasTextSearch={false}
+          hasMatchSpec={value.hasMatchSpec}
+          matchOptions={value.matchOptions}
+          filterOptions={value.filterOptions}
+          filterActive={value.active}
+          applyFilter={this.applyFilter}
+          />
         ),
       },
       {
         name: 'House ISCI',
         dataIndex: 'ISCI',
-        width: '10%',
-        renderer: () => (
-          <div style={inactiveFilterStyle} />
+        width: 150,
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+          filterDisplay={value.filterDisplay}
+          filterKey={value.filterKey}
+          hasTextSearch
+          hasMatchSpec={value.hasMatchSpec}
+          matchOptions={value.matchOptions}
+          filterOptions={value.filterOptions}
+          filterActive={value.active}
+          applyFilter={this.applyFilter}
+          />
         ),
       },
       {
         name: 'Client ISCI',
         dataIndex: 'ClientISCI',
-        width: '10%',
-        renderer: () => (
-          <div style={inactiveFilterStyle} />
+        width: 150,
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+          filterDisplay={value.filterDisplay}
+          filterKey={value.filterKey}
+          hasTextSearch
+          hasMatchSpec={value.hasMatchSpec}
+          matchOptions={value.matchOptions}
+          filterOptions={value.filterOptions}
+          filterActive={value.active}
+          applyFilter={this.applyFilter}
+          />
         ),
       },
       {
         name: 'Program',
         dataIndex: 'ProgramName',
-        width: '12%',
-        renderer: () => (
-          <div style={inactiveFilterStyle} />
+        width: 150,
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+          filterDisplay={value.filterDisplay}
+          filterKey={value.filterKey}
+          hasTextSearch
+          hasMatchSpec={value.hasMatchSpec}
+          matchOptions={value.matchOptions}
+          filterOptions={value.filterOptions}
+          filterActive={value.active}
+          applyFilter={this.applyFilter}
+          />
         ),
-        // testing
-       /*  renderer: ({ value }) => (
-            <FilterPopoverWrapper
-            filterDisplay={value.filterDisplay}
-            filterKey={value.filterKey}
-            textSearch
-            filterOptions={value.filterOptions}
-            filterActive={value.active}
-            applyFilter={this.applyFilter}
-            />
-          ), */
       },
       {
         name: 'Genre',
         dataIndex: 'GenreName',
-        width: '6%',
+        width: 100,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
             filterDisplay={value.filterDisplay}
             filterKey={value.filterKey}
-            textSearch
+            hasTextSearch
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
             filterOptions={value.filterOptions}
             filterActive={value.active}
             applyFilter={this.applyFilter}
@@ -160,33 +196,69 @@ export class PostScrubbingFilters extends Component {
         ),
       },
       {
-        name: 'Affiliate',
-        dataIndex: 'Affiliate',
-        width: '6%',
+        name: 'Show Type',
+        dataIndex: 'ShoiwType',
+        width: 100,
         renderer: () => (
           <div style={inactiveFilterStyle} />
+        ),
+      },
+      {
+        name: 'Affiliate',
+        dataIndex: 'Affiliate',
+        width: 60,
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+          filterDisplay={value.filterDisplay}
+          filterKey={value.filterKey}
+          hasTextSearch
+          hasMatchSpec={value.hasMatchSpec}
+          matchOptions={value.matchOptions}
+          filterOptions={value.filterOptions}
+          filterActive={value.active}
+          applyFilter={this.applyFilter}
+          />
         ),
       },
       {
         name: 'Market',
         dataIndex: 'Market',
-        width: '12%',
-        renderer: () => (
-          <div style={inactiveFilterStyle} />
+        width: 150,
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            hasTextSearch
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
+          />
         ),
       },
       {
         name: 'Station',
         dataIndex: 'Station',
-        width: '6%',
-        renderer: () => (
-          <div style={inactiveFilterStyle} />
+        width: 60,
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+          filterDisplay={value.filterDisplay}
+          filterKey={value.filterKey}
+          hasTextSearch
+          hasMatchSpec={value.hasMatchSpec}
+          matchOptions={value.matchOptions}
+          filterOptions={value.filterOptions}
+          filterActive={value.active}
+          applyFilter={this.applyFilter}
+          />
         ),
       },
       {
         name: 'Comments',
         dataIndex: 'Comments',
-        width: '10%',
+        // width: 150,
+        width: '100%',
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -218,44 +290,6 @@ export class PostScrubbingFilters extends Component {
   }
 }
 
-PostScrubbingFilters.defaultProps = {
-  // getScrubbingDataFiltered: () => { },
-  /* activeFilters: [
-    {
-      DayOfWeek: {
-        filterDisplay: 'Days',
-        filterKey: 'DayOfWeek',
-        type: 'filterList',
-        exclusions: [],
-        filterOptions: [
-          { Display: 'Monday', Value: 0, Selected: true },
-          { Display: 'Tuesday', Value: 1, Selected: true },
-          { Display: 'Wednesday', Value: 2, Selected: false },
-          { Display: 'Thursday', Value: 3, Selected: true },
-          { Display: 'Friday', Value: 4, Selected: true },
-          { Display: 'Saturday', Value: 5, Selected: true },
-          { Display: 'Sunday', Value: 6, Selected: false },
-        ],
-      },
-      ProgramName: {
-        filterDisplay: 'Programs',
-        filterKey: 'ProgramName',
-        type: 'filterList',
-        exclusions: [],
-        filterOptions: [
-          { Display: 'Hot Bench', Value: 'Hot Bench', Selected: true },
-          { Display: 'Inside Edition', Value: 'Inside Edition', Selected: true },
-          { Display: 'Jeopardy', Value: 'Jeopardy', Selected: true },
-          { Display: 'Jimmy Fallon', Value: 'Jimmy Fallon', Selected: true },
-          { Display: 'Judge Judy', Value: 'Judge Judy', Selected: true },
-          { Display: 'TMZ Live', Value: 'TMZ Live', Selected: true },
-          { Display: 'Regis & Kelly', Value: 'Regis & Kelly', Selected: true },
-          { Display: 'Stephen Colbert', Value: 'Stephen Colbert', Selected: true },
-        ],
-      },
-    },
-  ], */
-};
 PostScrubbingFilters.propTypes = {
   grid: PropTypes.object.isRequired,
   dataSource: PropTypes.object.isRequired,

@@ -1,7 +1,6 @@
 ﻿{
   "Posts": [
     {
-      "ContractId": 253,
       "ContractName": "Proposal Test",
       "PrimaryAudienceImpressions": 314866.80000000005,
       "SpotsInSpec": 4,
@@ -9,7 +8,6 @@
       "UploadDate": "2018-02-08T12:57:39.693"
     },
     {
-      "ContractId": 26000,
       "ContractName": "NSI Report Test",
       "PrimaryAudienceImpressions": 2442.0,
       "SpotsInSpec": 4,
@@ -17,7 +15,6 @@
       "UploadDate": "2018-02-08T12:57:39.693"
     },
     {
-      "ContractId": 26001,
       "ContractName": "MYEvents Test Proposal",
       "PrimaryAudienceImpressions": 0.0,
       "SpotsInSpec": 4,
@@ -25,7 +22,6 @@
       "UploadDate": "2018-02-08T12:57:39.693"
     },
     {
-      "ContractId": 25999,
       "ContractName": "Proposal Test 5",
       "PrimaryAudienceImpressions": 0.0,
       "SpotsInSpec": 2,
@@ -33,7 +29,6 @@
       "UploadDate": "2018-02-08T12:57:39.693"
     },
     {
-      "ContractId": 255,
       "ContractName": "Proposal Test",
       "PrimaryAudienceImpressions": 0.0,
       "SpotsInSpec": 0,

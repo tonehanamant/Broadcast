@@ -16,27 +16,8 @@
           "StartDate": "2016-05-30T00:00:00"
         }
       ],
-      "Genres": [
-        {
-          "Contain": 2,
-          "Genre": {
-            "Display": "Action"
-          }
-        },
-        {
-          "Contain": 2,
-          "Genre": {
-            "Display": "Adult"
-          }
-        },
-        {
-          "Contain": 2,
-          "Genre": {
-            "Display": "Adventure"
-          }
-        }
-      ],
-      "Id": 25,
+      "Genres": [],
+      "Id": 14,
       "Programs": [],
       "Sequence": null,
       "SpotLength": "30"
@@ -51,10 +32,33 @@
           "IsHiatus": false,
           "MediaWeekId": 650,
           "StartDate": "2016-06-07T00:00:00"
+        },
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
+        },
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
         }
       ],
       "Genres": [],
-      "Id": 26,
+      "Id": 15,
+      "Programs": [],
+      "Sequence": null,
+      "SpotLength": "30"
+    },
+    {
+      "DayPart": "M-F 9AM-10AM",
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "FlightWeeks": [],
+      "Genres": [],
+      "Id": 10799,
       "Programs": [],
       "Sequence": null,
       "SpotLength": "30"
@@ -76,10 +80,13 @@
     "WeekStart": null
   },
   "GuaranteedDemo": "House Holds",
-  "Id": 255,
+  "Id": 253,
   "MarketGroupId": 100,
   "Markets": [],
   "Name": "Proposal Test",
   "Notes": null,
-  "SecondaryDemos": []
+  "SecondaryDemos": [
+    "Females 15-17",
+    "Females 18-20"
+  ]
 }

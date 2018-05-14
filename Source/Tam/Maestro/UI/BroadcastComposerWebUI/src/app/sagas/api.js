@@ -26,9 +26,15 @@ const post = {
   getPosts: () => (
     call(GET, `${apiBase}Post`, {})
   ),
-  getPostScrubbingHeader: proposalID => (
-    call(GET, `${apiBase}/Post/ClientScrubbingProposal/${proposalID}`, {})
-  ),
+ /*  getPostClientScrubbing: params => (
+    call(GET, `${apiBase}/Post/ClientScrubbingProposal/${params.proposalId}`, {})
+  ), */
+  getPostClientScrubbing: (params) => {
+    const sendStatus = params.filterKey.length && (params.filterKey !== 'All');
+    const statusParams = sendStatus ? { ScrubbingStatusFilter: params.filterKey } : {};
+    // return call(GET, `${apiBase}/Post/ClientScrubbingProposal/${params.proposalId}${sendStatus ? `?status=${params.filterKey}` : ''}`, {});
+    return call(POST, `${apiBase}/Post/ClientScrubbingProposal/${params.proposalId}`, statusParams);
+  },
   getUnlinkedIscis: () => (
     call(GET, `${apiBase}Post/UnlinkedIscis `, {})
   ),
@@ -97,6 +103,9 @@ const planning = {
   ),
   getPrograms: params => (
     call(POST, `${apiBase}Proposals/FindPrograms`, params)
+  ),
+  getShowTypes: query => (
+    call(GET, `${apiBase}Proposals/FindShowType/${query}`, {})
   ),
 };
 

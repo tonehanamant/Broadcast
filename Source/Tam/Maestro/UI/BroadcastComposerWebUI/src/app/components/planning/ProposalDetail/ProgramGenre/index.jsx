@@ -6,20 +6,23 @@ import { Modal, Panel, PanelGroup, Row, Col, Button, ButtonGroup, Form, FormGrou
 import Select from 'react-select';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { bindActionCreators } from 'redux';
-import { getGenres, getPrograms } from 'Ducks/planning';
+import { getGenres, getPrograms, getShowTypes } from 'Ducks/planning';
 
-const mapStateToProps = ({ app: { modals: { programGenreModal: modal } }, planning: { genres, isGenresLoading, programs, isProgramsLoading } }) => ({
+const mapStateToProps = ({ app: { modals: { programGenreModal: modal } }, planning: { genres, isGenresLoading, programs, isProgramsLoading, showTypes, isShowTypesLoading } }) => ({
   modal,
   genres,
   isGenresLoading,
   programs,
   isProgramsLoading,
+  showTypes,
+  isShowTypesLoading,
 });
 
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
     getGenres,
     getPrograms,
+    getShowTypes,
   }, dispatch)
 );
 
@@ -33,19 +36,28 @@ class ProgramGenre extends Component {
     this.readCriteriaFromDetail = this.readCriteriaFromDetail.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.closeModal = this.closeModal.bind(this);
+
     this.onProgramSearchSelect = this.onProgramSearchSelect.bind(this);
     this.onGenreSearchSelect = this.onGenreSearchSelect.bind(this);
+    this.onShowTypeSearchSelect = this.onShowTypeSearchSelect.bind(this);
+
     this.addIncludeCriteria = this.addIncludeCriteria.bind(this);
     this.removeIncludeCriteria = this.removeIncludeCriteria.bind(this);
     this.addExcludeCriteria = this.addExcludeCriteria.bind(this);
     this.removeExcludeCriteria = this.removeExcludeCriteria.bind(this);
+
     this.onProgramIncludeClick = this.onProgramIncludeClick.bind(this);
     this.onGenreIncludeClick = this.onGenreIncludeClick.bind(this);
+    this.onShowTypeIncludeClick = this.onShowTypeIncludeClick.bind(this);
+
     this.onProgramExcludeClick = this.onProgramExcludeClick.bind(this);
     this.onGenreExcludeClick = this.onGenreExcludeClick.bind(this);
+    this.onShowTypeExcludeClick = this.onShowTypeExcludeClick.bind(this);
 
     this.onGenreSearch = this.onGenreSearch.bind(this);
     this.onProgramSearch = this.onProgramSearch.bind(this);
+    this.onShowTypeSearch = this.onShowTypeSearch.bind(this);
+
     this.handleProgramPagination = this.handleProgramPagination.bind(this);
 
     this.setButtonDisabled = this.setButtonDisabled.bind(this);
@@ -55,6 +67,7 @@ class ProgramGenre extends Component {
     this.state = {
       selectedProgram: [],
       selectedGenre: [],
+      selectedShowType: [],
       includeCriteria: [],
       excludeCriteria: [],
       disabledButtons: {
@@ -64,6 +77,9 @@ class ProgramGenre extends Component {
         genreInclude: false,
         genreExclude: false,
         genreAll: true,
+        showTypeInclude: false,
+        showTypeExclude: false,
+        showTypeAll: true,
       },
       programPageSize: 10,
       programResultsLimit: 10,
@@ -74,6 +90,7 @@ class ProgramGenre extends Component {
     this.setState({
       selectedProgram: [],
       selectedGenre: [],
+      selectedShowType: [],
       includeCriteria: [],
       excludeCriteria: [],
       disabledButtons: {
@@ -83,12 +100,16 @@ class ProgramGenre extends Component {
         genreInclude: false,
         genreExclude: false,
         genreAll: true,
+        showTypeInclude: false,
+        showTypeExclude: false,
+        showTypeAll: true,
       },
       programPageSize: 10,
       programResultsLimit: 10,
     });
     this.programTypeahed.getInstance().clear();
     this.genreTypeahed.getInstance().clear();
+    this.showTypeTypeahed.getInstance().clear();
   }
 
   handleOnSaveClick() {
@@ -105,6 +126,7 @@ class ProgramGenre extends Component {
   setCriteriaForSave() {
     const programCriteria = [];
     const genreCriteria = [];
+    const showTypeCriteria = [];
     this.state.includeCriteria.forEach((item, idx) => {
       const include = { Contain: 1 };
       if (item.type === 'program') {
@@ -114,6 +136,10 @@ class ProgramGenre extends Component {
       if (item.type === 'genre') {
         include.Genre = { Id: item.Id, Display: item.Display };
         genreCriteria.push(include);
+      }
+      if (item.type === 'showType') {
+        include.ShowType = { Id: item.Id, Display: item.Display };
+        showTypeCriteria.push(include);
       }
     });
     this.state.excludeCriteria.forEach((item, idx) => {
@@ -126,16 +152,22 @@ class ProgramGenre extends Component {
         exclude.Genre = { Id: item.Id, Display: item.Display };
         genreCriteria.push(exclude);
       }
+      if (item.type === 'showType') {
+        exclude.ShowType = { Id: item.Id, Display: item.Display };
+        showTypeCriteria.push(exclude);
+      }
     });
-    // console.log('Criteria for save >>>', programCriteria, genreCriteria);
+    // console.log('Criteria for save >>>', programCriteria, genreCriteria, showTypeCriteria);
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'ProgramCriteria', value: programCriteria });
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'GenreCriteria', value: genreCriteria });
+    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'ShowTypeCriteria', value: showTypeCriteria });
   }
 
   // read from existing detail - based on BE format IE {Contain, Program: {Id, Display}} Contain 1 include, Contain 2 exclude
   readCriteriaFromDetail(detail) {
     const programCriteria = [...detail.ProgramCriteria];
     const genreCriteria = [...detail.GenreCriteria];
+    const showTypeCriteria = [...detail.ShowTypeCriteria];
     programCriteria.forEach((item, idx) => {
       if (item.Contain === 1) {
         this.addIncludeCriteria('program', item.Program);
@@ -150,6 +182,14 @@ class ProgramGenre extends Component {
       }
       if (item.Contain === 2) {
         this.addExcludeCriteria('genre', item.Genre);
+      }
+    });
+    showTypeCriteria.forEach((item, idx) => {
+      if (item.Contain === 1) {
+        this.addIncludeCriteria('showType', item.ShowType);
+      }
+      if (item.Contain === 2) {
+        this.addExcludeCriteria('showType', item.ShowType);
       }
     });
   }
@@ -214,6 +254,21 @@ class ProgramGenre extends Component {
     this.props.getPrograms(params);
   }
 
+  onShowTypeSearchSelect(value) {
+    this.setState({ selectedShowType: value });
+
+    if (value && value.length) {
+      this.setButtonDisabled('showTypeAll', false);
+    } else {
+      this.setButtonDisabled('showTypeAll', true);
+    }
+  }
+
+  onShowTypeSearch(query) {
+    this.props.getShowTypes(query);
+  }
+
+  //add Include Criteria based on type
   addIncludeCriteria(type, data) {
     // check already exists; change disabled states
     const dupe = this.state.includeCriteria.find(item => item.Id === data.Id && item.type === type);
@@ -221,23 +276,33 @@ class ProgramGenre extends Component {
       const key = `${type}_${data.Id}`;
       const item = Object.assign({}, data, { type, key });
       this.state.includeCriteria.push(item);
-      const toDisable = (type === 'program') ? 'programExclude' : 'genreExclude';
-      this.setButtonDisabled(toDisable, true);
+      // const toDisable = (type === 'program') ? 'programExclude' : 'genreExclude';
+      let toDisable;
+      // this.setButtonDisabled(toDisable, true);
       if (type === 'program') {
+        toDisable = 'programExclude';
         this.setState({ selectedProgram: [] });
         this.programTypeahed.getInstance().clear();
         // disable program selection
         this.setButtonDisabled('programAll', true);
-      } else {
-      this.setState({ selectedGenre: [] });
-      this.genreTypeahed.getInstance().clear();
-      // disable genre selection
-      this.setButtonDisabled('genreAll', true);
+      } else if (type === 'genre') {
+        toDisable = 'genreExclude';
+        this.setState({ selectedGenre: [] });
+        this.genreTypeahed.getInstance().clear();
+        // disable genre selection
+        this.setButtonDisabled('genreAll', true);
+      } else if (type === 'showType') {
+        toDisable = 'showTypeExclude';
+        this.setState({ selectedShowType: [] });
+        this.showTypeTypeahed.getInstance().clear();
+        // disable genre selection
+        this.setButtonDisabled('showTypeAll', true);
       }
+      this.setButtonDisabled(toDisable, true);
       // console.log('addInclude', this.state, type);
     }
   }
-
+  //Remove Include Criteria includeItem type, key
   removeIncludeCriteria(includeItem) {
     const includes = [...this.state.includeCriteria];
     const removed = includes.filter(item => item.key !== includeItem.key);
@@ -245,13 +310,13 @@ class ProgramGenre extends Component {
     // check includes by type to reset enable buttons as needed
     const check = removed.find(item => item.type === includeItem.type);
     if (check === undefined) {
-      const toEnable = (includeItem.type === 'program') ? 'programExclude' : 'genreExclude';
+      const toEnable = (includeItem.type === 'program') ? 'programExclude' : (includeItem.type === 'genre') ? 'genreExclude' : 'showTypeExclude';
       // console.log('toEnable', toEnable);
       this.setButtonDisabled(toEnable, false);
     }
     // console.log('removeIncludeCriteria', check, includeItem, removed, this.state.includeCriteria);
   }
-
+  //add Exclude Criteria based on type
   addExcludeCriteria(type, data) {
     // check already exists; change disabled states; check allowed include/exclude?
     const dupe = this.state.excludeCriteria.find(item => item.Id === data.Id && item.type === type);
@@ -259,23 +324,28 @@ class ProgramGenre extends Component {
       const key = `${type}_${data.Id}`;
       const item = Object.assign({}, data, { type, key });
       this.state.excludeCriteria.push(item);
-      const toDisable = (type === 'program') ? 'programInclude' : 'genreInclude';
-      this.setButtonDisabled(toDisable, true);
+      // const toDisable = (type === 'program') ? 'programInclude' : 'genreInclude';
+      let toDisable;
+      // this.setButtonDisabled(toDisable, true);
       if (type === 'program') {
+        toDisable = 'programInclude';
         this.setState({ selectedProgram: [] });
         this.programTypeahed.getInstance().clear();
         // disable program selection
         this.setButtonDisabled('programAll', true);
-      } else {
-      this.setState({ selectedGenre: [] });
-      this.genreTypeahed.getInstance().clear();
-      // disable genre selection
-      this.setButtonDisabled('genreAll', true);
       }
+      else if (type === 'showType') {
+        toDisable = 'showTypeInclude';
+        this.setState({ selectedShowType: [] });
+        this.showTypeTypeahed.getInstance().clear();
+        // disable genre selection
+        this.setButtonDisabled('showTypeAll', true);
+      }
+      this.setButtonDisabled(toDisable, true);
       // console.log('addExclude', this.state, type);
     }
   }
-
+   //Remove Exclude Criteria includeItem type, key
   removeExcludeCriteria(excludeItem) {
     const excludes = [...this.state.excludeCriteria];
     const removed = excludes.filter(item => item.key !== excludeItem.key);
@@ -283,11 +353,11 @@ class ProgramGenre extends Component {
     // check excludes by type to reset enable buttons as needed
     const check = removed.find(item => item.type === excludeItem.type);
     if (check === undefined) {
-      const toEnable = (excludeItem.type === 'program') ? 'programInclude' : 'genreInclude';
+      const toEnable = (excludeItem.type === 'program') ? 'programInclude' : (excludeItem.type === 'genre') ? 'genreInclude' : 'showTypeInclude';
       // console.log('toEnable', toEnable);
       this.setButtonDisabled(toEnable, false);
     }
-    console.log('removeIncludeCriteria', excludeItem, removed, this.state.excludeCriteria);
+    // console.log('removeIncludeCriteria', excludeItem, removed, this.state.excludeCriteria);
   }
 
   onProgramIncludeClick() {
@@ -326,6 +396,24 @@ class ProgramGenre extends Component {
     }
   }
 
+  onShowTypeIncludeClick() {
+    const selected = this.state.selectedShowType;
+    if (selected && selected.length) {
+      selected.forEach((item, idx) => {
+        this.addIncludeCriteria('showType', item);
+      });
+    }
+  }
+
+  onShowTypeExcludeClick() {
+    const selected = this.state.selectedShowType;
+    if (selected && selected.length) {
+      selected.forEach((item, idx) => {
+        this.addExcludeCriteria('showType', item);
+      });
+    }
+  }
+
   setButtonDisabled(type, disabled) {
     this.setState(prevState => ({
       ...prevState,
@@ -343,13 +431,13 @@ class ProgramGenre extends Component {
 
     return (
       <div>
-        <Modal show={show} onEntered={this.onModalShow} onExit={this.onModalHide} bsSize="large">
+        <Modal show={show} id='program_genre_modal' onEntered={this.onModalShow} onExit={this.onModalHide} dialogClassName="large-80-modal">
           <Modal.Header>
             <Button className="close" bsStyle="link" onClick={this.onCancel} style={{ display: 'inline-block', float: 'right' }}>
             <span>&times;</span>
           </Button>
           <Modal.Title>
-            Include/Exclude Programs/Genres
+            Include/Exclude Programs/Genres/Show Type
             {isReadOnly && <span style={{ color: 'red' }}> (Read Only)</span>}
             </Modal.Title>
           </Modal.Header>
@@ -358,7 +446,7 @@ class ProgramGenre extends Component {
               <Col sm={12}>
                 <PanelGroup id="panel_actions_group" style={{ margin: 0 }}>
                   <Panel>
-                    <Panel.Heading style={{ padding: '8px 12px' }}>
+                    <Panel.Heading style={{ padding: '4px 8px' }}>
                       <Row>
                         <Col sm={8}>
                           Program
@@ -399,7 +487,7 @@ class ProgramGenre extends Component {
                   </Panel>
 
                   <Panel>
-                    <Panel.Heading style={{ padding: '8px 12px' }}>
+                    <Panel.Heading style={{ padding: '4px 8px' }}>
                       <Row>
                         <Col sm={8}>
                           Genre
@@ -435,6 +523,43 @@ class ProgramGenre extends Component {
                       </Row>
                     </Panel.Body>
                   </Panel>
+                  <Panel>
+                    <Panel.Heading style={{ padding: '4px 8px' }}>
+                      <Row>
+                        <Col sm={8}>
+                          Show Type
+                        </Col>
+                        <Col sm={4}>
+                          Include/Exclude
+                        </Col>
+                      </Row>
+                    </Panel.Heading>
+                    <Panel.Body>
+                      <Row>
+                      <Col sm={8}>
+                      <AsyncTypeahead
+                        options={this.props.showTypes}
+                        ref={(input) => { this.showTypeTypeahed = input; }}
+                        isLoading={this.props.isShowTypesLoading}
+                        allowNew={false}
+                        multiple
+                        labelKey="Display"
+                        minLength={2}
+                        disabled={isReadOnly}
+                        onChange={this.onShowTypeSearchSelect}
+                        onSearch={this.onShowTypeSearch}
+                        placeholder="Search Show Types..."
+                      />
+                    </Col>
+                        <Col sm={4} style={{ maxHeight: '34px' }}>
+                          <ButtonGroup justified>
+                            <Button disabled={isReadOnly || disabledButtons.showTypeInclude || disabledButtons.showTypeAll} style={{ width: '50%', maxHeight: '34px', paddingTop: '4px' }} onClick={this.onShowTypeIncludeClick}><Glyphicon style={{ color: '#666', fontSize: '22px' }} glyph="plus-sign" /></Button>
+                            <Button disabled={isReadOnly || disabledButtons.showTypeExclude || disabledButtons.showTypeAll} style={{ width: '50%', maxHeight: '34px', paddingTop: '4px' }} onClick={this.onShowTypeExcludeClick}><Glyphicon style={{ color: '#666', fontSize: '22px' }} glyph="minus-sign" /></Button>
+                          </ButtonGroup>
+                        </Col>
+                      </Row>
+                    </Panel.Body>
+                  </Panel>
                 </PanelGroup>
               </Col>
             </Row>
@@ -442,13 +567,14 @@ class ProgramGenre extends Component {
               <hr />
               <Col md={6}>
                 <Panel>
-                  <Panel.Heading style={{ padding: '8px 12px' }}>Includes</Panel.Heading>
+                  <Panel.Heading style={{ padding: '4px 8px' }}>Includes</Panel.Heading>
                   <Panel.Body style={{ padding: 2 }}>
                     <Table responsive condensed>
                       <thead>
                         <tr>
                           <th>Program</th>
                           <th>Genre</th>
+                          <th>Show Type</th>
                           <th style={{ width: '60px' }}>Action</th>
                         </tr>
                       </thead>
@@ -461,10 +587,25 @@ class ProgramGenre extends Component {
                         {item.type === 'program' &&
                         <td>&nbsp;</td>
                         }
+                        {item.type === 'program' &&
+                        <td>&nbsp;</td>
+                        }
                         {item.type === 'genre' &&
                         <td>&nbsp;</td>
                         }
                         {item.type === 'genre' &&
+                        <td>{item.Display}</td>
+                        }
+                        {item.type === 'genre' &&
+                        <td>&nbsp;</td>
+                        }
+                        {item.type === 'showType' &&
+                        <td>&nbsp;</td>
+                        }
+                        {item.type === 'showType' &&
+                        <td>&nbsp;</td>
+                        }
+                        {item.type === 'showType' &&
                         <td>{item.Display}</td>
                         }
                         <td><Button disabled={isReadOnly} onClick={() => this.removeIncludeCriteria(item)} bsStyle="link" style={{ padding: '0 8px' }}><Glyphicon style={{ color: '#c12e2a', fontSize: '12px' }} glyph="trash" /></Button></td>
@@ -477,13 +618,14 @@ class ProgramGenre extends Component {
               </Col>
               <Col md={6}>
                 <Panel>
-                  <Panel.Heading style={{ padding: '8px 12px' }}>Excludes</Panel.Heading>
+                  <Panel.Heading style={{ padding: '4px 8px' }}>Excludes</Panel.Heading>
                   <Panel.Body style={{ padding: 2 }}>
                     <Table responsive condensed>
                       <thead>
                         <tr>
                           <th>Program</th>
                           <th>Genre</th>
+                          <th>Show Type</th>
                           <th style={{ width: '60px' }}>Action</th>
                         </tr>
                       </thead>
@@ -496,10 +638,25 @@ class ProgramGenre extends Component {
                           {item.type === 'program' &&
                           <td>&nbsp;</td>
                           }
+                          {item.type === 'program' &&
+                          <td>&nbsp;</td>
+                          }
                           {item.type === 'genre' &&
                           <td>&nbsp;</td>
                           }
                           {item.type === 'genre' &&
+                          <td>{item.Display}</td>
+                          }
+                          {item.type === 'genre' &&
+                          <td>&nbsp;</td>
+                          }
+                          {item.type === 'showType' &&
+                          <td>&nbsp;</td>
+                          }
+                          {item.type === 'showType' &&
+                          <td>&nbsp;</td>
+                          }
+                          {item.type === 'showType' &&
                           <td>{item.Display}</td>
                           }
                           <td><Button disabled={isReadOnly} onClick={() => this.removeExcludeCriteria(item)} bsStyle="link" style={{ padding: '0 8px' }}><Glyphicon style={{ color: '#c12e2a', fontSize: '12px' }} glyph="trash" /></Button></td>
@@ -541,6 +698,8 @@ ProgramGenre.propTypes = {
   getPrograms: PropTypes.func.isRequired,
   programs: PropTypes.array.isRequired,
   isProgramsLoading: PropTypes.bool.isRequired,
+  showTypes: PropTypes.array.isRequired,
+  isShowTypesLoading: PropTypes.bool.isRequired,
   updateProposalEditFormDetail: PropTypes.func.isRequired,
 };
 

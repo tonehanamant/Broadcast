@@ -2,7 +2,7 @@
   "Adu": false,
   "Daypart": null,
   "DaypartCode": null,
-  "DefaultPostingBooks": {
+  "DefaultProjectionBooks": {
     "DefaultHutBook": {
       "HasWarning": true,
       "PostingBookId": 413,
@@ -20,7 +20,7 @@
   "FlightStartDate": "2016-12-05T00:00:00",
   "FlightWeeks": [],
   "GenreCriteria": [],
-  "HutPostingBookId": null,
+  "HutProjectionBookId": null,
   "PlaybackType": 0,
   "ProgramCriteria": [],
   "ProposalFlightWeeks": [],
@@ -70,9 +70,9 @@
     }
   ],
   "Sequence": null,
-  "SharePostingBookId": null,
+  "ShareProjectionBookId": null,
   "ShowTypeCriteria": [],
-  "SinglePostingBookId": null,
+  "SingleProjectionBookId": null,
   "SpotLengthId": 0,
   "TotalCost": 0.0,
   "TotalImpressions": 0.0,

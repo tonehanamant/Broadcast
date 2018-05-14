@@ -7,7 +7,7 @@
     {
       "Adu": false,
       "DaypartCode": "NAV",
-      "DefaultPostingBooks": {
+      "DefaultProjectionBooks": {
         "DefaultHutBook": {
           "HasWarning": false,
           "PostingBookId": 416,
@@ -56,7 +56,7 @@
         }
       ],
       "GenreCriteria": [],
-      "HutPostingBookId": null,
+      "HutProjectionBookId": null,
       "PlaybackType": 3,
       "ProgramCriteria": [],
       "ProposalFlightWeeks": [],
@@ -128,9 +128,9 @@
         }
       ],
       "Sequence": 1,
-      "SharePostingBookId": 413,
+      "ShareProjectionBookId": 413,
       "ShowTypeCriteria": [],
-      "SinglePostingBookId": 413,
+      "SingleProjectionBookId": 413,
       "SpotLengthId": 1,
       "TotalCost": 0.0,
       "TotalImpressions": 18089000.0,

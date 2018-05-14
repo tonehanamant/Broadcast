@@ -1,4 +1,4 @@
-import { takeEvery, put, select } from 'redux-saga/effects';
+import { takeEvery, put, call, select } from 'redux-saga/effects';
 import FuzzySearch from 'fuzzy-search';
 import moment from 'moment';
 import _ from 'lodash';
@@ -159,84 +159,8 @@ export function* requestPostFiltered({ payload: query }) {
 }
 
 /* ////////////////////////////////// */
-/* REQUEST POST SCRUBBING HEADER */
+/* REQUEST CLEAR SCRUBBING FILTER LIST - so grid will update object data */
 /* ////////////////////////////////// */
-export function* requestPostScrubbingHeader({ payload: proposalID }) {
-  const { getPostScrubbingHeader } = api.post;
-  try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'PostScrubbingHeader',
-        loading: true },
-      });
-    const response = yield getPostScrubbingHeader(proposalID);
-    const { status, data } = response;
-
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'PostScrubbingHeader',
-        loading: false,
-      },
-    });
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No post proposal data returned.',
-          message: `The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
-        },
-      });
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No proposal data returned.',
-          message: data.Message || 'The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs.',
-        },
-      });
-      throw new Error();
-    }
-    yield put({
-      type: ACTIONS.RECEIVE_POST_SCRUBBING_HEADER,
-      data,
-    });
-    yield put({
-      type: ACTIONS.TOGGLE_MODAL,
-      modal: {
-        modal: 'postScrubbingModal',
-        active: true,
-        properties: {
-          titleText: 'POST SCRUBBING MODAL',
-          bodyText: 'Post Scrubbing details will be shown here!',
-        },
-      },
-    });
-  } catch (e) {
-    if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No proposal data returned.',
-          message: 'The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs.',
-          exception: e.response.data.ExceptionMessage || '',
-        },
-      });
-    }
-    if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message,
-        },
-      });
-    }
-  }
-}
-
 export function* requestClearScrubbingDataFiltersList() {
   try {
     yield put({
@@ -255,7 +179,111 @@ export function* requestClearScrubbingDataFiltersList() {
   }
 }
 
+/* ////////////////////////////////// */
+/* REQUEST POST CLIENT SCRUBBING */
+/* ////////////////////////////////// */
+// allow for params (todo from BE) to filterKey All, InSpec, OutOfSpec; optional showModal (from Post landing);
+// if not from modal show processing, else show loading (loading not shown inside modal)
+export function* requestPostClientScrubbing({ payload: params }) {
+  const { getPostClientScrubbing } = api.post;
+  try {
+    if (params.showModal) {
+      yield put({
+        type: ACTIONS.SET_OVERLAY_LOADING,
+        overlay: {
+          id: 'PostClientScrubbing',
+          loading: true },
+      });
+    } else {
+      yield put({
+        type: ACTIONS.SET_OVERLAY_PROCESSING,
+        overlay: {
+          id: 'PostClientScrubbing',
+          processing: true },
+      });
+    }
+    // clear the data so filters grid registers as update - if not from modal update
+    if (!params.showModal) {
+      yield call(requestClearScrubbingDataFiltersList);
+    }
+    const response = yield getPostClientScrubbing(params);
+    const { status, data } = response;
 
+    if (params.showModal) {
+      yield put({
+        type: ACTIONS.SET_OVERLAY_LOADING,
+        overlay: {
+          id: 'PostClientScrubbing',
+          loading: false },
+      });
+    } else {
+      yield put({
+        type: ACTIONS.SET_OVERLAY_PROCESSING,
+        overlay: {
+          id: 'PostClientScrubbing',
+          processing: false },
+      });
+    }
+    if (status !== 200) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No proposal client scrubbing data returned.',
+          message: `The server encountered an error processing the request (proposal scrubbing). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Success) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No proposal client scrubbing data returned.',
+          message: data.Message || 'The server encountered an error processing the request (proposal scrubbing). Please try again or contact your administrator to review error logs.',
+        },
+      });
+      throw new Error();
+    }
+    yield put({
+      type: ACTIONS.RECEIVE_POST_CLIENT_SCRUBBING,
+      data,
+    });
+    if (params.showModal) {
+      yield put({
+        type: ACTIONS.TOGGLE_MODAL,
+        modal: {
+          modal: 'postScrubbingModal',
+          active: true,
+          properties: {
+            titleText: 'POST SCRUBBING MODAL',
+            bodyText: 'Post Scrubbing details will be shown here!',
+          },
+        },
+      });
+    }
+  } catch (e) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No proposal scrubbing data returned.',
+          message: 'The server encountered an error processing the request (proposal scrubbing). Please try again or contact your administrator to review error logs.',
+          exception: e.response.data.ExceptionMessage || '',
+        },
+      });
+    }
+    if (!e.response && e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
+// FILTERING
 // tbd how to iterate multiple versus single and determine set to check active or original
 // todo break down original scrubbing to ClientScrubs etc
 export function* requestScrubbingDataFiltered({ payload: query }) {
@@ -265,42 +293,33 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
   const originalFilters = yield select(state => state.post.activeScrubbingFilters);
   const actingFilter = activeFilters[query.filterKey]; // this is undefined
   // console.log('request scrub filter', query, activeFilters, actingFilter);
-  // TODO REVISE for specific types, etc
-  // Using base version for initial story - DayOfWeek only
   const applyFilter = () => {
-     // active -depends on if clearing etc
-    const isActive = query.exclusions.length > 0;
+     // active -depends on if clearing etc; also now if matching in play
+    const isActive = (query.exclusions.length > 0) || query.activeMatch;
      // todo should apply copy?
     actingFilter.active = isActive;
     actingFilter.exclusions = query.exclusions;
     actingFilter.filterOptions = query.filterOptions;
+    actingFilter.matchOptions = query.matchOptions;
+    actingFilter.activeMatch = query.activeMatch;
     // TBD iterate existing or acting only?
-    // let filteredResult = listFiltered; // use listFiltered by default
-    /* if (actingFilter.filterKey === 'DayOfWeek') {
-      // DayOfWeek filter based on exclusions
-      filteredResult = listUnfiltered.filter(item => !_.includes(query.exclusions, item.DayOfWeek));
-    } */
-
     const filteredResult = listUnfiltered.filter((item) => {
        let ret = true;
       _.forEach(activeFilters, (value) => {
         if (value.active && ret === true) {
-           ret = !_.includes(value.exclusions, item[value.filterKey]);
+          if (value.activeMatch) {
+            // just base on one or the other?
+            const toMatch = (value.matchOptions.inSpec === true);
+           ret = !_.includes(value.exclusions, item[value.filterKey]) && item[value.matchOptions.matchKey] === toMatch;
            // console.log('filter each', ret, item[value.filterKey]);
+          } else {
+            ret = !_.includes(value.exclusions, item[value.filterKey]);
+          }
         }
       });
       return ret;
     });
-    // for now test as filter on all active - needs to add to the array
-    /* let filtersApplied = [...listUnfiltered];
-    _.forEach(activeFilters, (value) => {
-      if (value.active) {
-        filtersApplied = listUnfiltered.filter(item => !_.includes(value.exclusions, item[value.filterKey]));
-      }
-    });
-    console.log('test filters', filtersApplied); */
     // console.log('request apply filter', actingFilter, activeFilters);
-
     // test to make sure there is returned data
     if (filteredResult.length < 1) {
       return { filteredClientScrubs: listFiltered, actingFilter, activeFilters: originalFilters, alertEmpty: true };
@@ -309,24 +328,22 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
   };
 
   try {
-    /* yield put({
-      type: ACTIONS.RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
-      data: [],
-    }); */
-    // show loading?
+    // show processing?
     yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
       overlay: {
         id: 'PostScrubbingFilter',
-        loading: true },
+        processing: true },
     });
-
+    // clear the data so grid registers as update
+    yield call(requestClearScrubbingDataFiltersList);
     const filtered = yield applyFilter();
+
     yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
+      type: ACTIONS.SET_OVERLAY_PROCESSING,
       overlay: {
         id: 'PostScrubbingFilter',
-        loading: false },
+        processing: false },
     });
     // if empty show alert - will set to original state
     if (filtered.alertEmpty) {
@@ -453,8 +470,8 @@ export function* watchRequestPostFiltered() {
   yield takeEvery(ACTIONS.REQUEST_FILTERED_POST, requestPostFiltered);
 }
 
-export function* watchRequestPostScrubbingHeader() {
-  yield takeEvery(ACTIONS.REQUEST_POST_SCRUBBING_HEADER, requestPostScrubbingHeader);
+export function* watchRequestPostClientScrubbing() {
+  yield takeEvery(ACTIONS.REQUEST_POST_CLIENT_SCRUBBING, requestPostClientScrubbing);
 }
 
 export function* watchRequestScrubbingDataFiltered() {

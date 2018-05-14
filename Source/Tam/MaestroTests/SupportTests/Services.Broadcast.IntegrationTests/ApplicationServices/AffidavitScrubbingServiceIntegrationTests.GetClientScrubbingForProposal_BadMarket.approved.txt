@@ -17,13 +17,16 @@
       "MatchIsciDays": true,
       "MatchMarket": true,
       "MatchProgram": true,
+      "MatchShowType": true,
       "MatchStation": true,
       "MatchTime": true,
       "ProgramName": "Program Names R us",
       "ProposalDetailId": 14,
       "Sequence": null,
+      "ShowTypeName": "",
       "SpotLength": 30,
       "Station": "WNBC",
+      "Status": 1,
       "TimeAired": 32400,
       "WeekStart": "2016-05-30T00:00:00"
     },
@@ -41,13 +44,16 @@
       "MatchIsciDays": true,
       "MatchMarket": true,
       "MatchProgram": true,
+      "MatchShowType": true,
       "MatchStation": true,
       "MatchTime": true,
       "ProgramName": "Program Names R us",
       "ProposalDetailId": 14,
       "Sequence": null,
+      "ShowTypeName": "",
       "SpotLength": 30,
       "Station": "WNBC",
+      "Status": 1,
       "TimeAired": 32400,
       "WeekStart": "2016-05-30T00:00:00"
     },
@@ -59,19 +65,22 @@
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
       "ISCI": "AAAAAAAA",
-      "Market": "Super Test Market",
+      "Market": null,
       "MatchDate": true,
       "MatchGenre": true,
       "MatchIsciDays": true,
       "MatchMarket": true,
       "MatchProgram": true,
+      "MatchShowType": true,
       "MatchStation": true,
       "MatchTime": true,
       "ProgramName": "Program Names R us",
       "ProposalDetailId": 14,
       "Sequence": null,
+      "ShowTypeName": "",
       "SpotLength": 30,
       "Station": "bad station",
+      "Status": 1,
       "TimeAired": 32400,
       "WeekStart": "2016-05-30T00:00:00"
     },
@@ -89,13 +98,16 @@
       "MatchIsciDays": true,
       "MatchMarket": true,
       "MatchProgram": true,
+      "MatchShowType": true,
       "MatchStation": true,
       "MatchTime": true,
       "ProgramName": "Program Names R us",
       "ProposalDetailId": 14,
       "Sequence": null,
+      "ShowTypeName": "",
       "SpotLength": 30,
       "Station": "WNBC",
+      "Status": 1,
       "TimeAired": 32400,
       "WeekStart": "2016-05-30T00:00:00"
     },
@@ -113,13 +125,16 @@
       "MatchIsciDays": true,
       "MatchMarket": true,
       "MatchProgram": true,
+      "MatchShowType": true,
       "MatchStation": true,
       "MatchTime": true,
       "ProgramName": "Program Names R us",
       "ProposalDetailId": 14,
       "Sequence": null,
+      "ShowTypeName": "",
       "SpotLength": 30,
       "Station": "WNBC",
+      "Status": 1,
       "TimeAired": 32400,
       "WeekStart": "2016-05-30T00:00:00"
     },
@@ -137,13 +152,16 @@
       "MatchIsciDays": true,
       "MatchMarket": true,
       "MatchProgram": true,
+      "MatchShowType": true,
       "MatchStation": true,
       "MatchTime": true,
       "ProgramName": "Program Names R us",
       "ProposalDetailId": 14,
       "Sequence": null,
+      "ShowTypeName": "",
       "SpotLength": 30,
       "Station": "WNBC",
+      "Status": 1,
       "TimeAired": 32400,
       "WeekStart": "2016-05-30T00:00:00"
     }
@@ -183,6 +201,12 @@
           "IsHiatus": false,
           "MediaWeekId": 650,
           "StartDate": "2016-06-07T00:00:00"
+        },
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
         }
       ],
       "Genres": [],
@@ -197,19 +221,51 @@
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [],
       "Genres": [],
-      "Id": 10627,
+      "Id": 10799,
       "Programs": [],
       "Sequence": null,
       "SpotLength": "30"
     }
   ],
   "Filters": {
+    "DistinctAffiliates": [
+      null,
+      "NBC"
+    ],
+    "DistinctClientIscis": [
+      "AAAAAAAA",
+      "BBBBBBBB"
+    ],
     "DistinctDayOfWeek": [
       0,
       5
     ],
     "DistinctGenres": [
       "Do It Yourself"
+    ],
+    "DistinctHouseIscis": [
+      "AAAAAAAA",
+      "BBBBBBBBB"
+    ],
+    "DistinctMarkets": [
+      null,
+      "New York"
+    ],
+    "DistinctPrograms": [
+      "Program Names R us"
+    ],
+    "DistinctShowTypes": [
+      ""
+    ],
+    "DistinctSpotLengths": [
+      30
+    ],
+    "DistinctStations": [
+      "bad station",
+      "WNBC"
+    ],
+    "DistinctWeekStarts": [
+      "2016-05-30T00:00:00"
     ],
     "WeekEnd": "2016-06-06T00:00:00",
     "WeekStart": "2016-05-30T00:00:00"

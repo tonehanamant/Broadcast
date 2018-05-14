@@ -110,10 +110,10 @@ namespace Services.Broadcast.IntegrationTests
                     result = "broadcast";
                     break;
                 case "WWTV_FtpPassword":
-                    result = "Password01";
+                    result = "password";
                     break;
                 case "WWTV_FtpHost":
-                    result = "localhost";
+                    result = "cad-phl-mhohens.crossmw.com";
                     break;
                 case "WWTV_FtpOutboundFolder":
                     result = "uploads";
@@ -123,6 +123,9 @@ namespace Services.Broadcast.IntegrationTests
                     break;
                 case "WWTV_FailedFolder":
                     result = @"E:\temp";
+                    break;
+                case "WWTV_FtpInboundFolder":
+                    result = @"OutPost";
                     break;
                 case "EmailHost": 
                     result = "smtp.office365.com";
