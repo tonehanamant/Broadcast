@@ -65,6 +65,7 @@
           }
         }
       ],
+      "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 21.1300,
@@ -95,7 +96,7 @@
                 {
                   "Brand": "Testing 2",
                   "ClientIsci": "BBBBBBB",
-                  "Days": "M|T|W|Th",
+                  "Days": "M-T-W-Th",
                   "Friday": false,
                   "HouseIsci": "BBBBBBB",
                   "MarriedHouseIsci": false,
@@ -117,8 +118,22 @@
           "Year": 2016
         }
       ],
-      "Sequence": 0,
+      "Sequence": 1,
       "SharePostingBookId": 413,
+      "ShowTypeCriteria": [
+        {
+          "Contain": 1,
+          "ShowType": {
+            "Display": "Mini-Movie"
+          }
+        },
+        {
+          "Contain": 1,
+          "ShowType": {
+            "Display": "Movie"
+          }
+        }
+      ],
       "SinglePostingBookId": null,
       "SpotLengthId": 1,
       "TotalCost": 0.0000,

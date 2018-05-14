@@ -35,6 +35,7 @@
       "HutPostingBookId": null,
       "PlaybackType": 4,
       "ProgramCriteria": [],
+      "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -52,7 +53,7 @@
                 {
                   "Brand": null,
                   "ClientIsci": "AAAAAAAA",
-                  "Days": "M|W|F",
+                  "Days": "M-W-F",
                   "Friday": false,
                   "HouseIsci": "AAAAAAAA",
                   "Id": 1,
@@ -135,8 +136,16 @@
           "Year": 2016
         }
       ],
-      "Sequence": null,
+      "Sequence": 1,
       "SharePostingBookId": 410,
+      "ShowTypeCriteria": [
+        {
+          "Contain": 1,
+          "ShowType": {
+            "Display": "Mini-Movie"
+          }
+        }
+      ],
       "SinglePostingBookId": 410,
       "SpotLengthId": 1,
       "TotalCost": 2000.00,
@@ -168,18 +177,25 @@
           "IsHiatus": false,
           "MediaWeekId": 650,
           "StartDate": "2016-06-07T00:00:00"
+        },
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
         }
       ],
       "GenreCriteria": [],
       "HutPostingBookId": null,
       "PlaybackType": 4,
       "ProgramCriteria": [],
+      "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
           "DistributeGoals": false,
           "Id": 15,
-          "ImpressionGoal": 1000.0,
+          "ImpressionGoal": 2000.0,
           "Quarter": 2,
           "QuarterText": "2016 Q2",
           "Weeks": [
@@ -191,7 +207,7 @@
                 {
                   "Brand": null,
                   "ClientIsci": "FFFFFF",
-                  "Days": "Su|M|T|W|Th|F|Sa",
+                  "Days": "Su-M-T-W-Th-F-Sa",
                   "Friday": true,
                   "HouseIsci": "FFFFFF",
                   "Id": 6,
@@ -209,18 +225,83 @@
               "StartDate": "2016-06-07T00:00:00",
               "Units": 10,
               "Week": "6/7/2016"
+            },
+            {
+              "Cost": 20.00,
+              "EndDate": "2016-06-14T00:00:00",
+              "Impressions": 1000.0,
+              "Iscis": [],
+              "IsHiatus": false,
+              "MediaWeekId": 650,
+              "StartDate": "2016-06-07T00:00:00",
+              "Units": 10,
+              "Week": "6/7/2016"
             }
           ],
           "Year": 2016
         }
       ],
-      "Sequence": null,
+      "Sequence": 2,
       "SharePostingBookId": 410,
+      "ShowTypeCriteria": [
+        {
+          "Contain": 2,
+          "ShowType": {
+            "Display": "Movie"
+          }
+        }
+      ],
       "SinglePostingBookId": 410,
       "SpotLengthId": 1,
-      "TotalCost": 20.00,
-      "TotalImpressions": 1000.0,
-      "TotalUnits": 10
+      "TotalCost": 40.00,
+      "TotalImpressions": 2000.0,
+      "TotalUnits": 20
+    },
+    {
+      "Adu": false,
+      "Daypart": {
+        "endTime": 36000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 32400,
+        "sun": false,
+        "Text": "M-F 9AM-10AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      },
+      "DaypartCode": "NAV",
+      "DefaultPostingBooks": null,
+      "FlightEdited": false,
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "FlightWeeks": [],
+      "GenreCriteria": [],
+      "HutPostingBookId": null,
+      "PlaybackType": 4,
+      "ProgramCriteria": [],
+      "ProposalFlightWeeks": [],
+      "Quarters": [
+        {
+          "Cpm": 20.0000,
+          "DistributeGoals": false,
+          "Id": 10621,
+          "ImpressionGoal": 0.0,
+          "Quarter": 3,
+          "QuarterText": "2016 Q3",
+          "Weeks": [],
+          "Year": 2016
+        }
+      ],
+      "Sequence": 3,
+      "SharePostingBookId": 410,
+      "ShowTypeCriteria": [],
+      "SinglePostingBookId": 410,
+      "SpotLengthId": 1,
+      "TotalCost": 0.0,
+      "TotalImpressions": 0.0,
+      "TotalUnits": 0
     }
   ],
   "Equivalized": false,
@@ -259,10 +340,10 @@
     }
   ],
   "Status": 3,
-  "TargetBudget": 2020.00,
+  "TargetBudget": 2040.00,
   "TargetCPM": 20.00,
-  "TargetImpressions": 101000.0,
-  "TargetUnits": 20,
+  "TargetImpressions": 102000.0,
+  "TargetUnits": 30,
   "TotalCost": 0.0000,
   "TotalCostMarginAchieved": false,
   "TotalCostPercent": 0.0,

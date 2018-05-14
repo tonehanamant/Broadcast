@@ -3,7 +3,7 @@
 import { takeEvery, put, select } from 'redux-saga/effects';
 // import { push } from 'react-router-redux';
 import moment from 'moment';
-
+import _ from 'lodash';
 import * as appActions from 'Ducks/app/actionTypes';
 import * as planningActions from 'Ducks/planning/actionTypes';
 import api from '../api';
@@ -582,7 +582,9 @@ export function* saveProposal({ payload: params }) {
         processing: true,
       },
     });
-    let proposal = { ...params.proposal };
+    // let proposal = { ...params.proposal };
+    // BUG ISSUE - spread copy not deep (mutates temp create Ids)
+    let proposal = _.cloneDeep(params.proposal);
         if (params.force) {
           proposal.ForceSave = true;
           proposal.ValidationWarning = null;
@@ -673,7 +675,9 @@ export function* saveProposalAsVersion({ payload: params }) {
         processing: true,
       },
     });
-    let proposal = { ...params };
+    // let proposal = { ...params };
+    // BUG ISSUE - spread copy not deep (mutates temp create Ids)
+    let proposal = _.cloneDeep(params);
         proposal.Version = null; // Set to null, BE assigns new version
         proposal = yield preSaveDetailIdNull(proposal);
     const response = yield saveProposal(proposal);

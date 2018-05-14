@@ -20,6 +20,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_detail_criteria_genres = new HashSet<proposal_version_detail_criteria_genres>();
             this.proposal_version_detail_criteria_programs = new HashSet<proposal_version_detail_criteria_programs>();
             this.proposal_version_detail_quarters = new HashSet<proposal_version_detail_quarters>();
+            this.proposal_version_detail_criteria_show_types = new HashSet<proposal_version_detail_criteria_show_types>();
         }
     
         public int id { get; set; }
@@ -53,5 +54,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_version_detail_quarters> proposal_version_detail_quarters { get; set; }
         public virtual proposal_versions proposal_versions { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
+        public virtual ICollection<proposal_version_detail_criteria_show_types> proposal_version_detail_criteria_show_types { get; set; }
     }
 }

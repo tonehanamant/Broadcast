@@ -1,0 +1,21 @@
+﻿{
+  "AffidavitFileDetailId": 0,
+  "Comment": null,
+  "EffectiveGenre": "Nature",
+  "EffectiveProgramName": "East Works",
+  "EffectiveShowType": "Documentary",
+  "Id": 0,
+  "LeadIn": false,
+  "MatchDate": false,
+  "MatchGenre": false,
+  "MatchIsciDays": false,
+  "MatchMarket": false,
+  "MatchProgram": false,
+  "MatchShowType": false,
+  "MatchStation": false,
+  "MatchTime": false,
+  "ModifiedBy": null,
+  "ModifiedDate": null,
+  "ProposalVersionDetailQuarterWeekId": 0,
+  "Status": 0
+}

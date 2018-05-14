@@ -21,12 +21,26 @@ namespace Services.Broadcast.Entities
         public string LeadoutGenre { get; set; }        
         public string LeadoutProgramName { get; set; }
         public string Market { get; set; }
-        public int EstimateId { get; set; }
+        public int? EstimateId { get; set; }
         public int InventorySource { get; set; }
-        public double SpotCost { get; set; }
+        public double? SpotCost { get; set; }
         public string Affiliate { get; set; }
-        public List<Demographics> Demographics { get; set; }
+        public List<AffidavitDemographics> Demographics { get; set; }
         public List<AffidavitClientScrub> AffidavitClientScrubs { get; set; }
         public List<AffidavitFileDetailAudience> AffidavitFileDetailAudiences { get; set; }
+        public List<AffidavitFileDetailProblem> AffidavitFileDetailProblems { get; set; }
+        public string ShowType { get; set; }
+        public string LeadInShowType { get; set; }
+        public string LeadOutShowType { get; set; }
+        public int LeadOutStartTime { get; set; }
+        public int LeadInEndTime { get; set; }
+
+        public AffidavitFileDetail()
+        {
+            Demographics = new List<AffidavitDemographics>();
+            AffidavitClientScrubs = new List<AffidavitClientScrub>();
+            AffidavitFileDetailAudiences = new List<AffidavitFileDetailAudience>();
+            AffidavitFileDetailProblems = new List<Entities.AffidavitFileDetailProblem>();
+        }
     }
 }

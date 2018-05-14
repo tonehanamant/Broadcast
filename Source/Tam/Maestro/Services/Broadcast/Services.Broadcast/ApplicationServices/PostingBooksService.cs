@@ -2,6 +2,7 @@
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Services.Broadcast.ApplicationServices
@@ -57,19 +58,22 @@ namespace Services.Broadcast.ApplicationServices
 
         public DefaultPostingBooksDto GetDefaultPostingBooks(DateTime dateTime)
         {
-            var shareBook = _GetSharePostingBook(dateTime);
+            var crunchedMonths =
+                _RatingForecastService.GetMediaMonthCrunchStatuses()
+                    .Where(month => month.Crunched == CrunchStatus.Crunched).ToList();
+            var shareBook = _GetSharePostingBook(dateTime, crunchedMonths);
 
             var defaultPostingBookDto = new DefaultPostingBooksDto
             {
                 DefaultShareBook = shareBook,
-                DefaultHutBook = _GetHutPostingBook(dateTime, shareBook.PostingBookId),
+                DefaultHutBook = _GetHutPostingBook(dateTime, shareBook.PostingBookId, crunchedMonths),
                 DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
             };
 
             return defaultPostingBookDto;
         }
 
-        private PostingBookResultDto _GetHutPostingBook(DateTime dateTime, int? shareBookMonthId)
+        private PostingBookResultDto _GetHutPostingBook(DateTime dateTime, int? shareBookMonthId, List<MediaMonthCrunchStatus> crunchedMonths)
         {
             var mediaMonthForQuarter = _MediaMonthAndWeekAggregateCache.GetMediaMonthContainingDate(dateTime);
 
@@ -77,10 +81,6 @@ namespace Services.Broadcast.ApplicationServices
             {
                 return new PostingBookResultDto();
             }
-
-            var crunchedMonths =
-                _RatingForecastService.GetMediaMonthCrunchStatuses()
-                    .Where(month => month.Crunched == CrunchStatus.Crunched).ToList();
 
             var mediaMonth = _MediaMonthAndWeekAggregateCache.GetMediaMonthContainingDate(dateTime);
 
@@ -119,12 +119,8 @@ namespace Services.Broadcast.ApplicationServices
             return new PostingBookResultDto { PostingBookId = previousYearQuarterBook.MediaMonth.Id };
         }
 
-        private PostingBookResultDto _GetSharePostingBook(DateTime dateTime)
+        private PostingBookResultDto _GetSharePostingBook(DateTime dateTime, List<MediaMonthCrunchStatus> crunchedMonths)
         {
-            var crunchedMonths =
-                _RatingForecastService.GetMediaMonthCrunchStatuses()
-                    .Where(month => month.Crunched == CrunchStatus.Crunched).ToList();
-
             var mediaMonth = _MediaMonthAndWeekAggregateCache.GetMediaMonthContainingDate(dateTime);
             
             var currentQuarterBeginEndDate = _QuarterCalculationEngine.GetDatesForTimeframe(RatesTimeframe.THISQUARTER, dateTime);

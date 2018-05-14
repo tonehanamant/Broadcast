@@ -336,6 +336,10 @@ namespace Services.Broadcast.Repositories
                         genre_id = g.Genre.Id,
                         contain_type = (byte)g.Contain
                     }).ToList(),
+                    proposal_version_detail_criteria_show_types = proposalDetail.ShowTypeCriteria.Select(st => new proposal_version_detail_criteria_show_types {
+                        contain_type = (byte)st.Contain,
+                        show_type_id = st.ShowType.Id
+                    }).ToList(),
                     proposal_version_detail_criteria_programs = proposalDetail.ProgramCriteria.Select(p => new proposal_version_detail_criteria_programs()
                     {
                         program_name = p.Program.Display,
@@ -434,6 +438,7 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.hut_posting_book_id = detail.HutPostingBookId;
                     updatedDetail.share_posting_book_id = detail.SharePostingBookId;
                     updatedDetail.playback_type = (byte)detail.PlaybackType;
+                    updatedDetail.sequence = detail.Sequence;
 
                     //update proposal detail genre criteria
                     context.proposal_version_detail_criteria_genres.RemoveRange(
@@ -448,10 +453,23 @@ namespace Services.Broadcast.Repositories
                                     proposal_version_detail_id = detail.Id.Value
                                 }));
 
+                    //update proposal detail show type criteria
+                    context.proposal_version_detail_criteria_show_types.RemoveRange(
+                        context.proposal_version_detail_criteria_show_types.Where(g => g.proposal_version_detail_id == detail.Id));
+                    if (detail.ShowTypeCriteria != null && detail.ShowTypeCriteria?.Count > 0)
+                        context.proposal_version_detail_criteria_show_types.AddRange(
+                            detail.ShowTypeCriteria.Select(
+                                g => new proposal_version_detail_criteria_show_types()
+                                {
+                                    show_type_id = g.ShowType.Id,
+                                    contain_type = (byte)g.Contain,
+                                    proposal_version_detail_id = detail.Id.Value
+                                }));
+
                     //update proposal detail program name criteria
                     context.proposal_version_detail_criteria_programs.RemoveRange(
                         context.proposal_version_detail_criteria_programs.Where(g => g.proposal_version_detail_id == detail.Id));
-                    if (detail.ProgramCriteria != null && detail.ProgramCriteria.Count > 0)
+                    if (detail.ProgramCriteria != null && detail.ProgramCriteria?.Count > 0)
                         context.proposal_version_detail_criteria_programs.AddRange(
                             detail.ProgramCriteria.Select(
                                 p => new proposal_version_detail_criteria_programs()
@@ -461,10 +479,7 @@ namespace Services.Broadcast.Repositories
                                     contain_type = (byte)p.Contain,
                                     proposal_version_detail_id = detail.Id.Value
                                 }));
-
-
-
-
+                    
                     // deal with quarters that have been deleted 
                     // scenario where user maintain the detail but change completely the flight generating new quarters for this particular detail
                     var deletedQuartersIds =
@@ -818,6 +833,11 @@ namespace Services.Broadcast.Repositories
                         Contain = (ContainTypeEnum)c.contain_type,
                         Genre = new LookupDto { Id = c.genre.id, Display = c.genre.name }
                     }).ToList(),
+                    ShowTypeCriteria = version.proposal_version_detail_criteria_show_types.Select(st => new ShowTypeCriteria {
+                        Id = st.id,
+                        Contain = (ContainTypeEnum)st.contain_type,
+                        ShowType = new LookupDto { Id = st.show_types.id, Display = st.show_types.name }
+                    }).ToList(),
                     ProgramCriteria = version.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
                     {
                         Id = p.id,
@@ -864,7 +884,7 @@ namespace Services.Broadcast.Repositories
                             }).ToList()
                         }).OrderBy(w => w.StartDate).ToList()
                         }).OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList()
-                    }).ToList()
+                        }).OrderBy(d => d.Sequence).ToList()
                 };
 
             return proposalDto;
@@ -1068,6 +1088,12 @@ namespace Services.Broadcast.Repositories
                         Id = c.id,
                         Contain = (ContainTypeEnum)c.contain_type,
                         Genre = new LookupDto { Id = c.genre_id }
+                    }).ToList(),
+                    ShowTypeCriteria = proposalDetail.proposal_version_detail_criteria_show_types.Select(st => new ShowTypeCriteria
+                    {
+                        Id = st.id,
+                        Contain = (ContainTypeEnum)st.contain_type,
+                        ShowType = new LookupDto { Id = st.show_types.id, Display = st.show_types.name }
                     }).ToList(),
                     ProgramCriteria = proposalDetail.proposal_version_detail_criteria_programs.Select(p => new ProgramCriteria()
                     {

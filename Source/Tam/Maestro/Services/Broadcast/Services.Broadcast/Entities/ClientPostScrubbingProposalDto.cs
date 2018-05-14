@@ -28,6 +28,7 @@ namespace Services.Broadcast.Entities
         public List<ClientPostScrubbingProposalDetailDto> Details { get; set; } = new List<ClientPostScrubbingProposalDetailDto>();
 
         public List<ProposalDetailPostScrubbingDto> ClientScrubs { get; set; } = new List<ProposalDetailPostScrubbingDto>();
+                
 
         public FilterOptions Filters { get; set; }
     }
@@ -35,7 +36,7 @@ namespace Services.Broadcast.Entities
     public class FilterOptions
     {
         public List<DayOfWeek> DistinctDayOfWeek { get; set; }
-        public List<GenreCriteria> DistinctGenres { get; set; }
+        public List<string> DistinctGenres { get; set; }
         public DateTime? WeekStart { get; set; }
         public DateTime? WeekEnd { get; set; }
     }

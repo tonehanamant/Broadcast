@@ -124,5 +124,10 @@ namespace Services.Broadcast
         {
             return _MediaMonthAndWeekAggregate.GetMediaMonthsBetweenDatesInclusive(startDate, endDate);
         }
+
+        public Dictionary<DateTime, MediaWeek> GetMediaWeeksByContainingDate(List<DateTime> dates)
+        {
+            return _MediaMonthAndWeekAggregate.GetMediaWeeksByContainingDate(dates);
+        }
     }
 }

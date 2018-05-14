@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Services.Broadcast.ApplicationServices;
@@ -27,22 +28,11 @@ namespace WWTVData.Service
         /// <summary>
         /// Use when you want day/time of week to run.
         /// </summary>
-        protected override DateTime? RunWhen
+        protected override DateTime? RunWeeklyWhen
         {
             get
             {
-                if (!_RunWhenChecked)
-                {
-                    if (SMSClient.Handler.TamEnvironment != TAMEnvironment.PROD.ToString())
-                        _RunWhen = null;
-                    else
-                    {
-                        DateTime d;
-                        if (DateTime.TryParse(BroadcastServiceSystemParameter.WWTV_WhenToCheckWWTV, out d))
-                            _RunWhen = d;
-                    }
-                    _RunWhenChecked = true;
-                }
+                _RunWhen = _EnsureRunWeeklyWhen(BroadcastServiceSystemParameter.WWTV_WhenToCheckWWTV);
 
                 return _RunWhen;
             }
@@ -57,40 +47,20 @@ namespace WWTVData.Service
         }
 
 
-        public override bool RunWhenReady(DateTime timeSignaled)
-        {
-            if (_LastRun == null)
-            {   // first time run
-                return RunService(timeSignaled);
-            }
-
-            bool ret = false;
-            if (RunWhen == null)
-            {
-                if (_LastRun.Value.AddSeconds(SecondsBetweenRuns) < timeSignaled)
-                    ret = RunService(timeSignaled);
-            }
-            else
-            if (DateTime.Now.DayOfWeek == RunWhen.Value.DayOfWeek 
-                    && DateTime.Now.TimeOfDay > RunWhen.Value.TimeOfDay)
-            {
-                ret = RunService(timeSignaled);
-            }
-            return ret;
-        }
-
         public override bool RunService(DateTime timeSignaled)
         {
             _LastRun = DateTime.Now;
+            BaseWindowsService.LogServiceEvent("Checking files to download . . .");
+
             try
             {
                 var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
-                service.DownloadAndProcessWWTVFiles();
+                service.DownloadAndProcessWWTVFiles("WWTV Service");
                 _LastRun = DateTime.Now;
             }
             catch (Exception e)
             {
-                BaseWindowsService.LogServiceError("Error reading from WWTV FTP.", e);
+                BaseWindowsService.LogServiceError("Error reading from WWTV FTP.\r\n" + e.ToString());
                 return false;
             }
             BaseWindowsService.LogServiceEvent(". . . Done Checking files to download\n");

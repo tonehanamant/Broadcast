@@ -1,0 +1,87 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "Daypart": null,
+  "FlightDates": [
+    {
+      "Item1": "2016-05-30T00:00:00",
+      "Item2": "2016-06-14T00:00:00"
+    },
+    {
+      "Item1": "2016-07-01T00:00:00",
+      "Item2": "2016-07-08T00:00:00"
+    }
+  ],
+  "GuaranteedDemo": "House Holds",
+  "ProposalAudiences": [
+    {
+      "Display": "HH",
+      "Id": 31
+    }
+  ],
+  "QuarterTables": [
+    {
+      "TableName": "2Q'16",
+      "TableRows": [
+        {
+          "ActualImpressions": 0.0,
+          "Contract": "NAV",
+          "HHRating": 0,
+          "ProposalWeekCost": 50.0000,
+          "ProposalWeekImpressionsGoal": 200000.0,
+          "SpotLength": 30,
+          "Spots": 20,
+          "WeekStartDate": "2016-05-30T00:00:00"
+        }
+      ]
+    }
+  ],
+  "QuarterTabs": [
+    {
+      "TabName": "Spot Detail 2Q16",
+      "TabRows": [
+        {
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 0.0
+          },
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NAV",
+          "Isci": "AAAAAAAA1",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalWeekCost": 25.0000,
+          "ProposalWeekImpressionsGoal": 100000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 30,
+          "Station": "WNBC",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        },
+        {
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 0.0
+          },
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NAV",
+          "Isci": "BBBBBBBBB2",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalWeekCost": 25.0000,
+          "ProposalWeekImpressionsGoal": 100000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 30,
+          "Station": "WNBC",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        }
+      ],
+      "Title": "Test Advertiser 9 2Q16 Post Spot Detail"
+    }
+  ],
+  "SpotLengthsDisplay": ":30s"
+}

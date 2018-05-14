@@ -136,7 +136,7 @@ namespace Services.Broadcast.Converters.RateImport
             var spotLengthIds = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
 
             // load spot lenght ids and multipliers
-            var spotMultipliers = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthMultiplierRepository>().GetSpotLengthIdsAndCostMultipliers();
+            var spotMultipliers = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsAndCostMultipliers();
 
             return (from c in spotLengthIds
                     join d in spotMultipliers on c.Value equals d.Key

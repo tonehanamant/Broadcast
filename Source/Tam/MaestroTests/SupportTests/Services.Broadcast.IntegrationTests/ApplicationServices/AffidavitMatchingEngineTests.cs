@@ -180,6 +180,88 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void IsciOnMultipleProposalDetailMatchDateOnly()
+        {
+            var affidavitDetail = new AffidavitSaveRequestDetail
+            {
+                Isci = "ABC123",
+                AirTime = DateTime.Parse("2018-01-05T01:00:00")
+            };
+
+            var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
+            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            {
+                ProposalVersionId = 1,
+                ProposalVersionDetailId = 5,
+                ProposalVersionDetailQuarterWeekId = 1,
+                ProposalVersionDetailDaypartId = 9,
+                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                HouseIsci = "ABC123",
+                MarriedHouseIsci = false,
+                Spots = 1
+            });
+            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            {
+                ProposalVersionId = 1,
+                ProposalVersionDetailId = 4,
+                ProposalVersionDetailQuarterWeekId = 2,
+                ProposalVersionDetailDaypartId = 1,
+                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                HouseIsci = "ABC123",
+                MarriedHouseIsci = false,
+                Spots = 1
+            });
+
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(matchedWeeks));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void IsciOnMultipleProposalDetailMatchTimeOnly()
+        {
+            var affidavitDetail = new AffidavitSaveRequestDetail
+            {
+                Isci = "ABC123",
+                AirTime = DateTime.Parse("2018-01-08T09:00:00")
+            };
+
+            var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
+            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            {
+                ProposalVersionId = 1,
+                ProposalVersionDetailId = 5,
+                ProposalVersionDetailQuarterWeekId = 1,
+                ProposalVersionDetailDaypartId = 9,
+                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                HouseIsci = "ABC123",
+                MarriedHouseIsci = false,
+                Spots = 1
+            });
+            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            {
+                ProposalVersionId = 1,
+                ProposalVersionDetailId = 4,
+                ProposalVersionDetailQuarterWeekId = 2,
+                ProposalVersionDetailDaypartId = 1,
+                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                HouseIsci = "ABC123",
+                MarriedHouseIsci = false,
+                Spots = 1
+            });
+
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(matchedWeeks));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void IsciOnMultipleProposalDetailPicksAirtimeMatchWithLeadIn()
         {
             var affidavitDetail = new AffidavitSaveRequestDetail
@@ -267,7 +349,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var affidavitDetail = new AffidavitSaveRequestDetail
             {
                 Isci = "ABC123",
-                AirTime = DateTime.Parse("2018-01-05T05:00:00")
+                AirTime = DateTime.Parse("2018-01-08T05:00:00")
             };
 
             var proposalWeeks = new List<AffidavitMatchingProposalWeek>();

@@ -42,6 +42,7 @@
           }
         }
       ],
+      "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -65,8 +66,9 @@
           "Year": 2016
         }
       ],
-      "Sequence": null,
+      "Sequence": 1,
       "SharePostingBookId": 413,
+      "ShowTypeCriteria": [],
       "SinglePostingBookId": null,
       "SpotLengthId": 1,
       "TotalCost": 50.0000,
@@ -104,6 +106,7 @@
       "HutPostingBookId": 410,
       "PlaybackType": 4,
       "ProgramCriteria": [],
+      "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -127,8 +130,9 @@
           "Year": 2016
         }
       ],
-      "Sequence": null,
+      "Sequence": 2,
       "SharePostingBookId": 413,
+      "ShowTypeCriteria": [],
       "SinglePostingBookId": null,
       "SpotLengthId": 1,
       "TotalCost": 50.0000,

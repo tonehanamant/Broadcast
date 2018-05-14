@@ -353,8 +353,8 @@
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.IntegrationTests.Common.18.3.1.1\lib\net45\Tam.Maestro.IntegrationTests.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.3\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
+    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.4\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -393,10 +393,28 @@
     <Compile Include="usage.cs">
       <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="usages_arc.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usages_trunc.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="viewers.cs">
       <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="viewers_arc.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="viewers_trunc.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="viewer_details.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="viewer_details_arc.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="viewer_details_trunc.cs">
       <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
     </Compile>
   </ItemGroup>

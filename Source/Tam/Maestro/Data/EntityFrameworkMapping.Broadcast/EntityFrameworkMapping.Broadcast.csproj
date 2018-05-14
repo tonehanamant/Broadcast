@@ -336,8 +336,8 @@
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.IntegrationTests.Common.18.3.1.1\lib\net45\Tam.Maestro.IntegrationTests.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.3\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
+    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.4\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -358,6 +358,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="affidavit_file_detail_problems.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="affidavit_file_problems.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="affidavit_outbound_files.cs">
@@ -471,6 +474,9 @@
     <Compile Include="proposal_version_detail_criteria_programs.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="proposal_version_detail_criteria_show_types.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="proposal_version_detail_quarters.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -515,6 +521,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="schedule_restriction_dayparts.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="show_types.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="spot_lengths.cs">

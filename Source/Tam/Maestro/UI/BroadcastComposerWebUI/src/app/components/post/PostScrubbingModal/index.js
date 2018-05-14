@@ -16,11 +16,12 @@ const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
 
 /* eslint-disable */
-const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post: { proposalHeader = { } }, grid, dataSource }) => ({
+const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post: { proposalHeader = { }, scrubbingFiltersList = [] }, grid, dataSource }) => ({
 	modal,
-	proposalHeader,
+  proposalHeader,
+  scrubbingFiltersList,
 	grid,
-    dataSource,
+  dataSource,
 });
 
 const mapDispatchToProps = dispatch => (
@@ -60,21 +61,24 @@ export class PostScrubbingModal extends Component {
 
 	render() {
 	// const { getPostScrubbingDetail } = this.props;
-		const { proposalHeader } = this.props;
+		const { proposalHeader, scrubbingFiltersList } = this.props;
 		const { scrubbingData = {}, activeScrubbingData = {} } = proposalHeader;
 		const { Advertiser, Id, Name, Markets, GuaranteedDemo, SecondaryDemos, Notes, MarketGroupId, Details } = scrubbingData;
 		const { grid, dataSource } = this.props;
 		const { selectRow, deselectAll, doLocalSort, setOverlayLoading } = this.props;
 
 		return (
-			<Modal ref={this.setWrapperRef} show={this.props.modal.active} dialogClassName="post-scrubbing-modal">
+			<Modal ref={this.setWrapperRef} show={this.props.modal.active} dialogClassName="post-scrubbing-modal" enforceFocus={false}>
 					<Modal.Header>
+            <Modal.Title style={{ display: 'inline-block' }}>Scrubbing Screen</Modal.Title>
 						<Button className="close" bsStyle="link" onClick={this.close} style={{ display: 'inline-block', float: 'right' }}>
 							<span>&times;</span>
 						</Button>
+          </Modal.Header>
+          <Modal.Body>
 						<PostScrubbingHeader
 							advertiser={Advertiser}
-							date={Details}
+							details={Details}
 							guaranteedDemo={GuaranteedDemo}
 							Id={Id}
 							market={Markets}
@@ -84,10 +88,9 @@ export class PostScrubbingModal extends Component {
 							secondaryDemo={SecondaryDemos}
 							// getPostScrubbingDetail={getPostScrubbingDetail}
 						/>
-					</Modal.Header>
-					<Modal.Body>
 						<PostScrubbingDetail
-							activeScrubbingData={activeScrubbingData}
+              activeScrubbingData={activeScrubbingData}
+              scrubbingFiltersList={scrubbingFiltersList}
 							grid={grid}
 							dataSource={dataSource}
 							selectRow={selectRow}
@@ -126,11 +129,11 @@ PostScrubbingModal.propTypes = {
 	grid: PropTypes.object.isRequired,
 	dataSource: PropTypes.object.isRequired,
 	proposalHeader: PropTypes.object.isRequired,
-
-    setOverlayLoading: PropTypes.func.isRequired,
-    selectRow: PropTypes.func.isRequired,
-    deselectAll: PropTypes.func.isRequired,
-    doLocalSort: PropTypes.func.isRequired,
+  scrubbingFiltersList: PropTypes.array.isRequired,
+  setOverlayLoading: PropTypes.func.isRequired,
+  selectRow: PropTypes.func.isRequired,
+  deselectAll: PropTypes.func.isRequired,
+  doLocalSort: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostScrubbingModal);

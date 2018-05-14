@@ -1,0 +1,13 @@
+﻿{
+  "AffidavitFileDetails": [],
+  "AffidavitFileProblems": [
+    {
+      "ProblemDescription": "File is in an invalid for"
+    }
+  ],
+  "FileHash": "A2-8B-2F-E5-D2-72-D1-5B-31-D9-D7-4D-C2-A2-B3-8C-14-B9-26-E2",
+  "FileName": "WWTV_bad_file.txt",
+  "MediaMonthId": 0,
+  "SourceId": 1,
+  "Status": 2
+}

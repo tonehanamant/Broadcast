@@ -34,6 +34,12 @@ namespace Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast
         public virtual DbSet<post_months> post_months { get; set; }
         public virtual DbSet<viewers> viewers { get; set; }
         public virtual DbSet<market_headers> market_headers { get; set; }
+        public virtual DbSet<usages_arc> usages_arc { get; set; }
+        public virtual DbSet<usages_trunc> usages_trunc { get; set; }
+        public virtual DbSet<viewer_details_arc> viewer_details_arc { get; set; }
+        public virtual DbSet<viewer_details_trunc> viewer_details_trunc { get; set; }
+        public virtual DbSet<viewers_arc> viewers_arc { get; set; }
+        public virtual DbSet<viewers_trunc> viewers_trunc { get; set; }
     
         public virtual int usp_ForecastNsiRatingsMonth(Nullable<short> media_month_id)
         {

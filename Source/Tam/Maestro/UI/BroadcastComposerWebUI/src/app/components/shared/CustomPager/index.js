@@ -49,7 +49,7 @@ CustomPager.defaultProps = {
 CustomPager.propTypes = {
   // Component Accepts
   stateKey: PropTypes.string.isRequired,
-  idProperty: PropTypes.isRequired,
+  idProperty: PropTypes.string.isRequired,
   // Grid
   dataSource: PropTypes.object.isRequired,
   selection: PropTypes.object.isRequired,
