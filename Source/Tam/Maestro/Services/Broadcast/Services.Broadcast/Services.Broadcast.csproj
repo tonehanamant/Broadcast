@@ -264,7 +264,7 @@
     <Compile Include="EmailService.cs" />
     <Compile Include="Entities\AffidavitClientScrub.cs" />
     <Compile Include="Entities\ProposalScrubbingRequest.cs" />
-    <Compile Include="Entities\MyEventsReportDataLine.cs" />
+	<Compile Include="Entities\MyEventsReportData.cs" />
     <Compile Include="Entities\ScrubbingStatus.cs" />
     <Compile Include="Entities\AffidavitDemographics.cs" />
     <Compile Include="Entities\AffidavitFileDetailProblem.cs" />
@@ -276,7 +276,7 @@
     <Compile Include="Entities\AffidavitMatchingProposalWeek.cs" />
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\BvsTrackingAudience.cs" />
-    <Compile Include="Entities\MyEventsReportData.cs" />
+    <Compile Include="Entities\MyEventsReportDataLine.cs" />
     <Compile Include="Entities\PostedContractedProposalsDto.cs" />
     <Compile Include="Entities\ClientPostScrubbingProposalDto.cs" />
     <Compile Include="Entities\DaypartDto.cs" />

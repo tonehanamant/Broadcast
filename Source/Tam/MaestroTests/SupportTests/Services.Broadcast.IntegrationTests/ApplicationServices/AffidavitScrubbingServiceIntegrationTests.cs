@@ -325,5 +325,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.AreEqual(expectedReportNames[1], secondEntry.FullName);
             }
         }
+
+        [Test]
+        public void GenerateMyEventsReportWithAdjustedTimeWindowTest()
+        {
+            var myEventsReportData = _AffidavitScrubbingService.GetMyEventsReportData(25999);
+            var firstExpectedDate = new DateTime(1, 1, 1, 9, 0, 0);
+            var secondExpectedDate = new DateTime(1, 1, 1, 9, 3, 0);
+
+            Assert.AreEqual(firstExpectedDate, myEventsReportData[0].Lines[0].LineupStartTime);
+            Assert.AreEqual(secondExpectedDate, myEventsReportData[0].Lines[1].LineupStartTime);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GenerateMyEventsReportWithAdjustedTimeWindowMultipleTest()
+        {
+            var result = _AffidavitScrubbingService.GetMyEventsReportData(26002);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+        }
     }
 }
