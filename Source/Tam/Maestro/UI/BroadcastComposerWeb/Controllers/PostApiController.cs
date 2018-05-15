@@ -42,7 +42,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("DownloadNSIPostReport/{proposalId}")]
         public HttpResponseMessage DownloadNSIPostReport(int proposalId)
         {
-            var report = _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GenerateNSIPostReport(proposalId);
+            var report = _ApplicationServiceFactory.GetApplicationService<IPostReportService>().GenerateNSIPostReport(proposalId);
             var result = Request.CreateResponse(HttpStatusCode.OK);
 
             result.Content = new StreamContent(report.Stream);
@@ -59,7 +59,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("DownloadMyEventsReport/{proposalId}")]
         public HttpResponseMessage DownloadMyEventsReport(int proposalId)
         {
-            var report = _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GenerateMyEventsReport(proposalId);
+            var report = _ApplicationServiceFactory.GetApplicationService<IPostReportService>().GenerateMyEventsReport(proposalId);
             var result = Request.CreateResponse(HttpStatusCode.OK);
 
             result.Content = new ByteArrayContent(report.Stream.ToArray());
