@@ -51,9 +51,8 @@
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 157433.4,
-            "5": 500.0,
-            "6": 500.0,
-            "4": 500.0
+            "5": 1802.85,
+            "6": 833.3
           },
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV",
@@ -127,9 +126,8 @@
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 157433.4,
-            "5": 500.0,
-            "6": 500.0,
-            "4": 500.0
+            "5": 1802.85,
+            "6": 833.3
           },
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV",

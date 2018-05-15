@@ -154,5 +154,5 @@
     }
   ],
   "SpotLengthsDisplay": ":30s",
-  "WithOvernightImpressions": false
+  "WithOvernightImpressions": true
 }
