@@ -132,18 +132,8 @@ namespace Services.Broadcast.ApplicationServices
                         ProcessErrorWWTVFile(filePath, errorMessage);
                         continue;
                     }
-
-                    try
-                    {
-                        WWTVFtpHelper.DeleteFile(Path.GetFileName(filePath));
-                    }
-                    catch (Exception e)
-                    {
-                        errorMessage = "Error deleting affidavit file from FTP site:\n\n" + e.ToString();
-                        ProcessErrorWWTVFile(filePath, errorMessage);
-                        continue;
-                    }
                 }
+
                 if (filesFailedDownload.Any())
                 {
                     _ProcessFailedFiles(filesFailedDownload);
@@ -151,7 +141,15 @@ namespace Services.Broadcast.ApplicationServices
 
                 var outbound = WWTVFtpHelper.GetInboundPath();
                 var ftpFilesToDelete = downloadedFiles.Select(d => outbound + "/" + Path.GetFileName(d)).ToList();
-                WWTVFtpHelper.DeleteFiles(ftpFilesToDelete);
+                try
+                {
+                    WWTVFtpHelper.DeleteFiles(ftpFilesToDelete);
+                }
+                catch (Exception e)
+                {
+                    var errorMessage = "Error deleting affidavit file(s) from FTP site:\n\n" + e.ToString();
+                    ftpFilesToDelete.ForEach(filePath => ProcessErrorWWTVFile(filePath, errorMessage));
+                }
             }
         }
 
