@@ -172,18 +172,18 @@ namespace Services.Broadcast.ApplicationServices
                 result.Filters = new FilterOptions
                 {
                     DistinctDayOfWeek = result.ClientScrubs.Select(x => x.DayOfWeek).Distinct().OrderBy(x => x).ToList(),
-                    DistinctGenres = result.ClientScrubs.Select(x => x.GenreName).Distinct().OrderBy(x => x).ToList(),
-                    DistinctPrograms = result.ClientScrubs.Select(x => x.ProgramName).Distinct().OrderBy(x => x).ToList(),
+                    DistinctGenres = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.GenreName)).Select(x => x.GenreName).Distinct().OrderBy(x => x).ToList(),
+                    DistinctPrograms = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ProgramName)).Select(x => x.ProgramName).Distinct().OrderBy(x => x).ToList(),
                     WeekStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).First() : (DateTime?)null,
                     WeekEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).Last().AddDays(7) : (DateTime?)null,
-                    DistinctMarkets = result.ClientScrubs.Select(x => x.Market).Distinct().OrderBy(x => x).ToList(),
-                    DistinctClientIscis = result.ClientScrubs.Select(x => x.ClientISCI).Distinct().OrderBy(x => x).ToList(),
-                    DistinctHouseIscis = result.ClientScrubs.Select(x => x.ISCI).Distinct().OrderBy(x => x).ToList(),
+                    DistinctMarkets = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.Market)).Select(x => x.Market).Distinct().OrderBy(x => x).ToList(),
+                    DistinctClientIscis = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ClientISCI)).Select(x => x.ClientISCI).Distinct().OrderBy(x => x).ToList(),
+                    DistinctHouseIscis = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ISCI)).Select(x => x.ISCI).Distinct().OrderBy(x => x).ToList(),
                     DistinctSpotLengths = result.ClientScrubs.Select(x => x.SpotLength).Distinct().OrderBy(x => x).ToList(),
-                    DistinctAffiliates = result.ClientScrubs.Select(x => x.Affiliate).Distinct().OrderBy(x => x).ToList(),
-                    DistinctStations = result.ClientScrubs.Select(x => x.Station).Distinct().OrderBy(x => x).ToList(),
-                    DistinctWeekStarts = result.ClientScrubs.Select(x=>x.WeekStart).Distinct().OrderBy(x=>x).ToList(),
-                    DistinctShowTypes = result.ClientScrubs.Select(x => x.ShowTypeName).Distinct().OrderBy(x => x).ToList()
+                    DistinctAffiliates = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.Affiliate)).Select(x => x.Affiliate).Distinct().OrderBy(x => x).ToList(),
+                    DistinctStations = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.Station)).Select(x => x.Station).Distinct().OrderBy(x => x).ToList(),
+                    DistinctWeekStarts = result.ClientScrubs.Select(x => x.WeekStart).Distinct().OrderBy(x => x).ToList(),
+                    DistinctShowTypes = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ShowTypeName)).Select(x => x.ShowTypeName).Distinct().OrderBy(x => x).ToList()
                 };
                 return result;
             }
@@ -378,7 +378,7 @@ namespace Services.Broadcast.ApplicationServices
 
             for (var i = 0; i < sorted.Length; i++)
             {
-                for(var j = i + 1; j < sorted.Length; j++)
+                for (var j = i + 1; j < sorted.Length; j++)
                 {
                     var timeDifference = _GetDateWithoutSeconds(sorted[j].AirDate) - _GetDateWithoutSeconds(sorted[i].AirDate);
 
