@@ -117,6 +117,21 @@ const initialState = {
         exclusions: [],
         filterOptions: [],
       },
+      ShowTypeName: {
+        filterDisplay: 'Show Types',
+        filterKey: 'ShowTypeName',
+        type: 'filterList',
+        hasMatchSpec: true,
+        activeMatch: false,
+        active: false,
+        matchOptions: {
+          matchKey: 'MatchShowType',
+          inSpec: true,
+          outOfSpec: true,
+        },
+        exclusions: [],
+        filterOptions: [],
+      },
       SpotLength: {
         filterDisplay: 'Ad Lengths',
         filterKey: 'SpotLength',
@@ -181,6 +196,7 @@ export default function reducer(state = initialState, action) {
         const marketOptions = [];
         const programOptions = [];
         const spotLengthOptions = [];
+        const showTypeOptions = [];
         const stationOptions = [];
         filtersData.DistinctAffiliates.forEach((item) => {
           const ret = { Value: item, Selected: true, Display: item };
@@ -211,6 +227,10 @@ export default function reducer(state = initialState, action) {
           const ret = { Value: item, Selected: true, Display: item };
           programOptions.push(ret);
         });
+        filtersData.DistinctShowTypes.forEach((item) => {
+          const ret = { Value: item, Selected: true, Display: item };
+          showTypeOptions.push(ret);
+        });
         filtersData.DistinctSpotLengths.forEach((item) => {
           const ret = { Value: item, Selected: true, Display: item };
           spotLengthOptions.push(ret);
@@ -226,6 +246,7 @@ export default function reducer(state = initialState, action) {
         activeFilters.ISCI.filterOptions = houseIsciOptions;
         activeFilters.Market.filterOptions = marketOptions;
         activeFilters.ProgramName.filterOptions = programOptions;
+        activeFilters.ShowTypeName.filterOptions = showTypeOptions;
         activeFilters.SpotLength.filterOptions = spotLengthOptions;
         activeFilters.Station.filterOptions = stationOptions;
       };

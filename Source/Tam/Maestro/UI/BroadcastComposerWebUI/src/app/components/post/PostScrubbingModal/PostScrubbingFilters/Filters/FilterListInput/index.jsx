@@ -135,6 +135,8 @@ class FilterInput extends Component {
     if (!filterOptions) {
       return null;
     }
+    // disable buttons if no options
+    const canFilter = filterOptions.length > 0;
     const hasMatchSpec = this.props.hasMatchSpec;
     // create the checkbox array considering the current text filter
     const checkboxes = filterOptions.reduce((result, option) => {
@@ -159,6 +161,7 @@ class FilterInput extends Component {
           <Checkbox
             inline
             key={v4()}
+            disabled={!canFilter}
             defaultChecked={this.state.matchOptions.inSpec}
             onClick={() => this.handleMatchSpeckCheck('inSpec', !this.state.matchOptions.inSpec)}
           >
@@ -167,6 +170,7 @@ class FilterInput extends Component {
           <Checkbox
             inline
             key={v4()}
+            disabled={!canFilter}
             defaultChecked={this.state.matchOptions.outOfSpec}
             onClick={() => this.handleMatchSpeckCheck('outOfSpec', !this.state.matchOptions.outOfSpec)}
           >
@@ -187,6 +191,7 @@ class FilterInput extends Component {
           <Checkbox
             key={v4()}
             defaultChecked={this.state.selectAll}
+            disabled={!canFilter}
             onClick={() => this.applyCheckToAll(!this.state.selectAll)}
           >
             <strong>Select All</strong>
@@ -199,6 +204,7 @@ class FilterInput extends Component {
             bsSize="xsmall"
             // onClick={() => this.applyCheckToAll(false)}
             onClick={this.clear}
+            disabled={!canFilter}
           >
             Clear
           </Button>
@@ -206,7 +212,7 @@ class FilterInput extends Component {
           <Button
             bsStyle="success"
             bsSize="xsmall"
-            disabled={!this.state.isValidSelection}
+            disabled={!canFilter || !this.state.isValidSelection}
             style={{ marginLeft: '10px' }}
             onClick={this.apply}
           >
