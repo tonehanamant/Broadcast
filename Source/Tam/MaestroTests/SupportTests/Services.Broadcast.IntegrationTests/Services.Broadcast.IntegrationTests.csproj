@@ -240,6 +240,7 @@
     <Compile Include="ApplicationServices\PostPrePostingRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostPrePostingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitScrubbingServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\PostReportServiceTests.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProposalScxConverterTest.cs" />
     <Compile Include="ApplicationServices\ProposalTestHelper.cs" />
