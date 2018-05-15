@@ -16,6 +16,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class AffidavitScrubbingServiceIntegrationTests
     {
         private readonly IAffidavitScrubbingService _AffidavitScrubbingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>();
+        private readonly IPostReportService _PostReportService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostReportService>();
         private readonly IAffidavitRepository _AffidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
 
         [Test]
@@ -165,10 +166,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
-
+                
         
-
-        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetClientScrubbingForProposalMultipleGenres()
         {

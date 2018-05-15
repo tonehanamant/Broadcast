@@ -20,8 +20,9 @@ namespace Services.Broadcast.ApplicationServices
         /// Generates the excep NSI Post Report for a specific proposal
         /// </summary>
         /// <param name="proposalId">Proposal id to generate the report for</param>
+        /// <param name="withOvernightImpressions">Optional parameter used to generate the NSI report with overnight impressions</param>
         /// <returns>ReportOutput object containing the report and the filename</returns>
-        ReportOutput GenerateNSIPostReport(int proposalId);
+        ReportOutput GenerateNSIPostReport(int proposalId, bool withOvernightImpressions = false);
 
         /// <summary>
         /// Generates My Events report
@@ -34,8 +35,9 @@ namespace Services.Broadcast.ApplicationServices
         /// Gets the NSI Post Report data
         /// </summary>
         /// <param name="proposalId">Proposal Id to get the data for</param>
+        /// <param name="withOvernightImpressions">Switch for overnight impressions</param>
         /// <returns>List of NSIPostReportDto objects</returns>
-        NsiPostReport GetNsiPostReportData(int proposalId);
+        NsiPostReport GetNsiPostReportData(int proposalId, bool withOvernightImpressions = false);
 
         /// <summary>
         /// Gets the My Events Report data
@@ -82,13 +84,14 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <summary>
-        /// Generates the excep NSI Post Report for a specific proposal
+        /// Generates the excel NSI Post Report for a specific proposal
         /// </summary>
         /// <param name="proposalId">Proposal id to generate the report for</param>
+        /// <param name="withOvernightImpressions">Optional parameter used to generate the NSI report with overnight impressions</param>
         /// <returns>ReportOutput object containing the report and the filename</returns>
-        public ReportOutput GenerateNSIPostReport(int proposalId)
+        public ReportOutput GenerateNSIPostReport(int proposalId, bool withOvernightImpressions = false)
         {
-            var nsiPostReport = GetNsiPostReportData(proposalId);
+            var nsiPostReport = GetNsiPostReportData(proposalId, withOvernightImpressions);
             var reportGenerator = new NSIPostReportGenerator(_LogoImage.Value);
             return reportGenerator.Generate(nsiPostReport);
         }
@@ -97,8 +100,9 @@ namespace Services.Broadcast.ApplicationServices
         /// Gets the NSI Post Report data
         /// </summary>
         /// <param name="proposalId">Proposal Id to get the data for</param>
+        /// <param name="withOvernightImpressions">Switch for overnight impressions</param>
         /// <returns>List of NSIPostReportDto objects</returns>
-        public NsiPostReport GetNsiPostReportData(int proposalId)
+        public NsiPostReport GetNsiPostReportData(int proposalId, bool withOvernightImpressions)
         {
             var proposal = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProposalById(proposalId);
 
@@ -126,11 +130,10 @@ namespace Services.Broadcast.ApplicationServices
             var latestPostingBooks = _PostingBooksService.GetDefaultProjectionBooks();
             var nsiMarketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(latestPostingBooks.DefaultShareBook.PostingBookId.Value);
             var guaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
-            var nsiPostReport = new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences,
-                                                audiencesMappings, spotLengthMappings,
-                                                mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, proposal.GuaranteedDemoId, flights);
 
-            return nsiPostReport;
+            return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences, audiencesMappings, spotLengthMappings,
+                                                mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, proposal.GuaranteedDemoId, flights,
+                                                withOvernightImpressions);
         }
 
         private List<Tuple<DateTime, DateTime>> _GetFlightsRange(List<ProposalDetailDto> details)

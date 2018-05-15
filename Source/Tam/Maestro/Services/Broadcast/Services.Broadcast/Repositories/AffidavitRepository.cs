@@ -65,72 +65,72 @@ namespace Services.Broadcast.Repositories
                 status = (int)affidavitFile.Status,
                 media_month_id = affidavitFile.MediaMonthId,
                 affidavit_file_problems = affidavitFile.AffidavitFileProblems.Select(p => new affidavit_file_problems()
-                    {
-                        id = p.Id,
-                        affidavit_file_id = p.AffidavitFileId,
-                        problem_description = p.ProblemDescription
-                    }).ToList(),
+                {
+                    id = p.Id,
+                    affidavit_file_id = p.AffidavitFileId,
+                    problem_description = p.ProblemDescription
+                }).ToList(),
                 affidavit_file_details = affidavitFile.AffidavitFileDetails.Select(d => new affidavit_file_details
-                 {
-                      air_time = d.AirTime,
-                      original_air_date = d.OriginalAirDate,
-                      isci = d.Isci,
-                      program_name = d.ProgramName,
-                      genre = d.Genre,
-                      spot_length_id = d.SpotLengthId,
-                      station = d.Station,
-                      market = d.Market,
-                      affiliate = d.Affiliate,
-                      estimate_id = d.EstimateId,
-                      inventory_source = d.InventorySource,
-                      spot_cost = d.SpotCost,
-                      leadin_genre = d.LeadinGenre,
-                      leadout_genre = d.LeadoutGenre,
-                      leadin_program_name = d.LeadinProgramName,
-                      leadout_program_name = d.LeadoutProgramName,
-                      leadin_end_time = d.LeadInEndTime,
-                      leadout_start_time = d.LeadOutStartTime,
-                      program_show_type = d.ShowType,
-                      leadin_show_type = d.LeadInShowType,
-                      leadout_show_type = d.LeadOutShowType,
-                      adjusted_air_date = d.AdjustedAirDate,
-                      affidavit_client_scrubs = d.AffidavitClientScrubs.Select(s => new affidavit_client_scrubs
-                      {
-                          proposal_version_detail_quarter_week_id = s.ProposalVersionDetailQuarterWeekId,
-                          match_program = s.MatchProgram,
-                          match_genre = s.MatchGenre,
-                          match_show_type = s.MatchShowType,
-                          match_market = s.MatchMarket,
-                          match_station = s.MatchStation,
-                          match_time = s.MatchTime,
-                          match_date = s.MatchDate,
-                          modified_by = s.ModifiedBy,
-                          modified_date = s.ModifiedDate,
-                          match_isci_days = s.MatchIsciDays,
-                          effective_program_name = s.EffectiveProgramName,
-                          effective_genre = s.EffectiveGenre,
-                          effective_show_type = s.EffectiveShowType,
-                          lead_in = s.LeadIn,
-                          status = (int) s.Status
-                      }).ToList(),
-                      affidavit_file_detail_problems = d.AffidavitFileDetailProblems.Select(p => new affidavit_file_detail_problems
-                      {
-                           problem_description = p.Description,
-                           problem_type = (int) p.Type
-                      }).ToList(),
-                      affidavit_file_detail_demographics = d.Demographics.Select(demo => new affidavit_file_detail_demographics
-                      {
-                           audience_id = demo.AudienceId,
-                           overnight_impressions = demo.OvernightImpressions,
-                           overnight_rating = demo.OvernightRating
-                      }).ToList(),
-                      affidavit_file_detail_audiences = d.AffidavitFileDetailAudiences.Select(a => new affidavit_file_detail_audiences
-                      {
-                           audience_id = a.AudienceId,
-                           impressions = a.Impressions
-                      }).ToList()
+                {
+                    air_time = d.AirTime,
+                    original_air_date = d.OriginalAirDate,
+                    isci = d.Isci,
+                    program_name = d.ProgramName,
+                    genre = d.Genre,
+                    spot_length_id = d.SpotLengthId,
+                    station = d.Station,
+                    market = d.Market,
+                    affiliate = d.Affiliate,
+                    estimate_id = d.EstimateId,
+                    inventory_source = d.InventorySource,
+                    spot_cost = d.SpotCost,
+                    leadin_genre = d.LeadinGenre,
+                    leadout_genre = d.LeadoutGenre,
+                    leadin_program_name = d.LeadinProgramName,
+                    leadout_program_name = d.LeadoutProgramName,
+                    leadin_end_time = d.LeadInEndTime,
+                    leadout_start_time = d.LeadOutStartTime,
+                    program_show_type = d.ShowType,
+                    leadin_show_type = d.LeadInShowType,
+                    leadout_show_type = d.LeadOutShowType,
+                    adjusted_air_date = d.AdjustedAirDate,
+                    affidavit_client_scrubs = d.AffidavitClientScrubs.Select(s => new affidavit_client_scrubs
+                    {
+                        proposal_version_detail_quarter_week_id = s.ProposalVersionDetailQuarterWeekId,
+                        match_program = s.MatchProgram,
+                        match_genre = s.MatchGenre,
+                        match_show_type = s.MatchShowType,
+                        match_market = s.MatchMarket,
+                        match_station = s.MatchStation,
+                        match_time = s.MatchTime,
+                        match_date = s.MatchDate,
+                        modified_by = s.ModifiedBy,
+                        modified_date = s.ModifiedDate,
+                        match_isci_days = s.MatchIsciDays,
+                        effective_program_name = s.EffectiveProgramName,
+                        effective_genre = s.EffectiveGenre,
+                        effective_show_type = s.EffectiveShowType,
+                        lead_in = s.LeadIn,
+                        status = (int)s.Status
+                    }).ToList(),
+                    affidavit_file_detail_problems = d.AffidavitFileDetailProblems.Select(p => new affidavit_file_detail_problems
+                    {
+                        problem_description = p.Description,
+                        problem_type = (int)p.Type
+                    }).ToList(),
+                    affidavit_file_detail_demographics = d.Demographics.Select(demo => new affidavit_file_detail_demographics
+                    {
+                        audience_id = demo.AudienceId,
+                        overnight_impressions = demo.OvernightImpressions,
+                        overnight_rating = demo.OvernightRating
+                    }).ToList(),
+                    affidavit_file_detail_audiences = d.AffidavitFileDetailAudiences.Select(a => new affidavit_file_detail_audiences
+                    {
+                        audience_id = a.AudienceId,
+                        impressions = a.Impressions
+                    }).ToList()
 
-                 }).ToList()
+                }).ToList()
             };
 
             return result;
@@ -271,7 +271,7 @@ namespace Services.Broadcast.Repositories
 
                         var aff = marketStation?.stations.affiliation;
                         var market = marketStation?.markets.geography_name;
-                        if (marketStation ==  null)
+                        if (marketStation == null)
                         {
                             market = x.affidavitDetails.market;
                             aff = x.affidavitDetails.affiliate;
@@ -340,6 +340,8 @@ namespace Services.Broadcast.Repositories
                         DaypartName = x.proposalVersionDetail.daypart_code,
                         AudienceImpressions = x.affidavitFileDetails.affidavit_file_detail_audiences
                                                 .ToDictionary(i => i.audience_id, j => j.impressions),
+                        OvernightImpressions = x.affidavitFileDetails.affidavit_file_detail_demographics
+                                                .ToDictionary(i => i.audience_id.Value, j => (double)j.overnight_impressions.Value),
                         Quarter = x.proposalVersionQuarters.quarter,
                         Year = x.proposalVersionQuarters.year,
                         AdvertiserId = x.proposal.advertiser_id,
@@ -351,7 +353,7 @@ namespace Services.Broadcast.Repositories
                     return inSpecAffidavitFileDetails;
                 });
         }
-
+        
         /// <summary>
         /// Persists a List of OutboundAffidavitFileValidationResultDto objects
         /// </summary>

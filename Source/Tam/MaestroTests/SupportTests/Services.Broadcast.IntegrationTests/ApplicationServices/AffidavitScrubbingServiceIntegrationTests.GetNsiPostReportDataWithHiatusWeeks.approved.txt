@@ -93,5 +93,6 @@
       "Title": "Test Advertiser 9 2Q16 Post Spot Detail"
     }
   ],
-  "SpotLengthsDisplay": ":30s"
+  "SpotLengthsDisplay": ":30s",
+  "WithOvernightImpressions": false
 }

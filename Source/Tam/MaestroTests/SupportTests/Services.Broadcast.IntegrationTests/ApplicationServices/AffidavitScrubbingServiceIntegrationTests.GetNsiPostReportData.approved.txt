@@ -51,8 +51,9 @@
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 157433.4,
-            "5": 1802.85,
-            "6": 833.3
+            "5": 500.0,
+            "6": 500.0,
+            "4": 500.0
           },
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV",
@@ -126,8 +127,9 @@
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 157433.4,
-            "5": 1802.85,
-            "6": 833.3
+            "5": 500.0,
+            "6": 500.0,
+            "4": 500.0
           },
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV",
@@ -151,5 +153,6 @@
       "Title": "Test Advertiser 9 2Q16 Post Spot Detail"
     }
   ],
-  "SpotLengthsDisplay": ":30s"
+  "SpotLengthsDisplay": ":30s",
+  "WithOvernightImpressions": false
 }

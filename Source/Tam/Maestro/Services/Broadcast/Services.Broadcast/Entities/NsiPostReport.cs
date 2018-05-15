@@ -8,6 +8,7 @@ namespace Services.Broadcast.Entities
 {
     public class NsiPostReport
     {
+        public bool WithOvernightImpressions { get; set; } = false;
         public List<NsiPostReportQuarterSummaryTable> QuarterTables { get; set; } = new List<NsiPostReportQuarterSummaryTable>();
         public List<NsiPostReportQuarterTab> QuarterTabs { get; set; } = new List<NsiPostReportQuarterTab>();
         public List<LookupDto> ProposalAudiences { get; set; }
@@ -78,13 +79,14 @@ namespace Services.Broadcast.Entities
                             Dictionary<DateTime, MediaWeek> mediaWeekMappings,
                             Dictionary<string, DisplayBroadcastStation> stationMappings,
                             Dictionary<int, int> nsiMarketRankings, string guaranteedDemo, int guaranteedDemoId,
-                            List<Tuple<DateTime, DateTime>> flightDates)
+                            List<Tuple<DateTime, DateTime>> flightDates, bool withOvernightImpressions)
         {
             ProposalId = proposalId;
             ProposalAudiences = proposalAudiences;
             Advertiser = advertiser.Display;
             GuaranteedDemo = guaranteedDemo;
             FlightDates = flightDates;
+            WithOvernightImpressions = withOvernightImpressions;
 
             var quartersGroup = inSpecAffidavitFileDetails.GroupBy(d => new { d.Year, d.Quarter }).OrderBy(x => x.Key.Year).ThenBy(x => x.Key.Quarter);
 
@@ -96,11 +98,15 @@ namespace Services.Broadcast.Entities
                     Title = String.Format("{0} {1}Q{2} Post Spot Detail", advertiser, group.Key.Quarter, group.Key.Year.ToString().Substring(2)),
                     TabRows = group.Select(r =>
                     {
-
                         var audienceImpressions = proposalAudiences
                         .ToDictionary(proposalAudience => proposalAudience.Id, proposalAudience => r.AudienceImpressions
                             .Where(i => audienceMappings.Where(m => m.Key == proposalAudience.Id).SelectMany(m => m.Value).Contains(i.Key))
                             .Select(i => i.Value).Sum());
+                        if (withOvernightImpressions)
+                        {
+                            ApplyOvernightImpressions(audienceImpressions, r.OvernightImpressions);
+                        }
+
                         return new NsiPostReportQuarterTabRow()
                         {
                             Rank = stationMappings.TryGetValue(r.Station, out DisplayBroadcastStation currentStation) ? nsiMarketRankings[currentStation.MarketCode] : 0,
@@ -145,8 +151,8 @@ namespace Services.Broadcast.Entities
                                      Contract = x.Key.DaypartName,
                                      SpotLength = x.Key.SpotLength,
                                      WeekStartDate = x.Key.WeekStart,
-                                    Spots = items.Select(y => y.ProposalWeekUnits).Sum(),
-                                    ActualImpressions = items
+                                     Spots = items.Select(y => y.ProposalWeekUnits).Sum(),
+                                     ActualImpressions = items
                                             .Select(y => y.AudienceImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value))
                                             .Sum(),
                                      ProposalWeekCost = items.Select(y => y.ProposalWeekCost).Sum(),
@@ -160,6 +166,24 @@ namespace Services.Broadcast.Entities
             }
             QuarterTables.ForEach(x => x.TableRows.ForEach(y => y.DeliveredImpressionsPercentage = y.ActualImpressions / y.ProposalWeekTotalImpressionsGoal));
             SpotLengthsDisplay = string.Join(",", QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
+        }
+
+        private void ApplyOvernightImpressions(Dictionary<int, double> audienceImpressions, Dictionary<int, double> overnightImpressions)
+        {
+            if (audienceImpressions.Any())
+            {
+                foreach (var audienceKey in overnightImpressions.Keys)
+                {
+                    if (audienceImpressions.Keys.Contains(audienceKey))
+                    {
+                        audienceImpressions[audienceKey] = overnightImpressions[audienceKey];
+                    }
+                }
+            }
+            else
+            {
+                audienceImpressions = overnightImpressions;
+            }
         }
     }
 }

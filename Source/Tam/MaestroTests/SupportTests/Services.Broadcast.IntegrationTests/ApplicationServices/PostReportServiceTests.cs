@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -18,7 +17,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [UseReporter(typeof(DiffReporter))]
     public class PostReportServiceTests
     {
-        private readonly IPostReportService _AffidavitScrubbingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostReportService>();
+        private readonly IPostReportService _PostReportService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostReportService>();
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -26,7 +25,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _AffidavitScrubbingService.GetNsiPostReportData(253);
+                var result = _PostReportService.GetNsiPostReportData(253);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
@@ -47,7 +46,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _AffidavitScrubbingService.GetNsiPostReportData(25999);
+                var result = _PostReportService.GetNsiPostReportData(25999);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
@@ -68,7 +67,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _AffidavitScrubbingService.GetNsiPostReportData(26000);
+                var result = _PostReportService.GetNsiPostReportData(26000);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetNsiPostReportDataWithOvernightImpressions()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PostReportService.GetNsiPostReportData(253, true);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
@@ -88,7 +108,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void GenerateReportFile()
         {
             const int proposalId = 253;
-            var report = _AffidavitScrubbingService.GenerateNSIPostReport(proposalId);
+            var report = _PostReportService.GenerateNSIPostReport(proposalId);
             File.WriteAllBytes(@"\\tsclient\cadent\" + @"NSIPostReport" + proposalId + ".xlsx", report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
                                                                                                                            //            File.WriteAllBytes(string.Format("..\\bvsreport{0}.xlsx", scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
             Assert.IsNotNull(report.Stream);
@@ -99,7 +119,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var expectedFileName = "Test Adve NAV 30 05-30-16.txt";
             var expectedFilePath = @".\Files\" + expectedFileName;
-            var myEventsReport = _AffidavitScrubbingService.GenerateMyEventsReport(25999);
+            var myEventsReport = _PostReportService.GenerateMyEventsReport(25999);
             var tempPath = Path.GetTempFileName();
 
             File.WriteAllBytes(tempPath, myEventsReport.Stream.ToArray());
@@ -132,7 +152,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 @".\Files\" + expectedReportNames[0],
                 @".\Files\" + expectedReportNames[1],
             };
-            var myEventsReport = _AffidavitScrubbingService.GenerateMyEventsReport(26001);
+            var myEventsReport = _PostReportService.GenerateMyEventsReport(26001);
 
             using (var zip = new ZipArchive(myEventsReport.Stream, ZipArchiveMode.Read))
             {
@@ -161,7 +181,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void GenerateMyEventsReportWithAdjustedTimeWindowTest()
         {
-            var myEventsReportData = _AffidavitScrubbingService.GetMyEventsReportData(25999);
+            var myEventsReportData = _PostReportService.GetMyEventsReportData(25999);
             var firstExpectedDate = new DateTime(1, 1, 1, 9, 0, 0);
             var secondExpectedDate = new DateTime(1, 1, 1, 9, 3, 0);
 
@@ -173,7 +193,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GenerateMyEventsReportWithAdjustedTimeWindowMultipleTest()
         {
-            var result = _AffidavitScrubbingService.GetMyEventsReportData(26002);
+            var result = _PostReportService.GetMyEventsReportData(26002);
             var jsonSettings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
