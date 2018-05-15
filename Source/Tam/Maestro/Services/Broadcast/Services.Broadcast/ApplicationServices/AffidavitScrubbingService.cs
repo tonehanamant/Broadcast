@@ -57,6 +57,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="proposalId">Proposal Id to get the data for</param>
         /// <returns>List of NSIPostReportDto objects</returns>
         NsiPostReport GetNsiPostReportData(int proposalId);
+
+        /// <summary>
+        /// Gets the My Events Report data
+        /// </summary>
+        /// <param name="proposalId">Proposal Id to get the data for</param>
+        /// <returns>List of My Events Data</returns>
+        List<MyEventsReportData> GetMyEventsReportData(int proposalId);
     }
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
@@ -243,55 +250,6 @@ namespace Services.Broadcast.ApplicationServices
             return nsiPostReport;
         }
 
-        /// <summary>
-        /// Generates My Events report
-        /// </summary>
-        /// <param name="proposalId">Proposal id to generate the report for</param>
-        /// <returns>ReportOutput object containing the report and the filename</returns>
-        public ReportOutput GenerateMyEventsReport(int proposalId)
-        {
-            var affidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
-            var myEventsReportData = _GetMyEventsReportData(affidavitRepository.GetMyEventsReportData(proposalId));
-            var myEventsReportGenerator = new MyEventsReportGenerator();
-            var reports = new List<ReportOutput>();
-
-            if (!myEventsReportData.Any())
-                throw new Exception("No data found for MyEvents report");
-
-            foreach (var reportData in myEventsReportData)
-                reports.Add(myEventsReportGenerator.Generate(reportData));
-
-            if (reports.Count == 1)
-                return reports.First();
-
-            return _CreateReportFromZipArchive(_CreateZipArchive(reports));
-        }
-
-        private ReportOutput _CreateReportFromZipArchive(MemoryStream memoryStream)
-        {
-            return new ReportOutput(MyEventsZipFileName) { Stream = memoryStream };
-        }
-
-        private MemoryStream _CreateZipArchive(List<ReportOutput> reports)
-        {
-            var memoryStream = new MemoryStream();
-
-            using (var zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
-            {
-                foreach (var report in reports)
-                {
-                    var zipEntry = zip.CreateEntry(report.Filename);
-                    using (var zipStream = zipEntry.Open())
-                    {
-                        report.Stream.Position = 0;
-                        report.Stream.CopyTo(zipStream);
-                    }
-                }
-            }
-
-            return memoryStream;
-        }
-
         private List<Tuple<DateTime, DateTime>> _GetFlightsRange(List<ProposalDetailDto> details)
         {
             var proposalWeekFlights = details.SelectMany(d => d.Quarters.SelectMany(q => q.Weeks.Select(w => new ProposalFlightWeek()
@@ -344,8 +302,58 @@ namespace Services.Broadcast.ApplicationServices
             return flightRanges;
         }
 
-        private List<MyEventsReportData> _GetMyEventsReportData(List<MyEventsReportData> myEventsReportDataList)
+        /// <summary>
+        /// Generates My Events report
+        /// </summary>
+        /// <param name="proposalId">Proposal id to generate the report for</param>
+        /// <returns>ReportOutput object containing the report and the filename</returns>
+        public ReportOutput GenerateMyEventsReport(int proposalId)
         {
+            var myEventsReportData = GetMyEventsReportData(proposalId);
+            var myEventsReportGenerator = new MyEventsReportGenerator();
+            var reports = new List<ReportOutput>();
+
+            if (!myEventsReportData.Any())
+                throw new Exception("No data found for MyEvents report");
+
+            foreach (var reportData in myEventsReportData)
+                reports.Add(myEventsReportGenerator.Generate(reportData));
+
+            if (reports.Count == 1)
+                return reports.First();
+
+            return _CreateReportFromZipArchive(_CreateZipArchive(reports));
+        }
+
+        private ReportOutput _CreateReportFromZipArchive(MemoryStream memoryStream)
+        {
+            return new ReportOutput(MyEventsZipFileName) { Stream = memoryStream };
+        }
+
+        private MemoryStream _CreateZipArchive(List<ReportOutput> reports)
+        {
+            var memoryStream = new MemoryStream();
+
+            using (var zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+            {
+                foreach (var report in reports)
+                {
+                    var zipEntry = zip.CreateEntry(report.Filename);
+                    using (var zipStream = zipEntry.Open())
+                    {
+                        report.Stream.Position = 0;
+                        report.Stream.CopyTo(zipStream);
+                    }
+                }
+            }
+
+            return memoryStream;
+        }
+
+        public List<MyEventsReportData> GetMyEventsReportData(int proposalId)
+        {
+            var affidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
+            var myEventsReportDataList = affidavitRepository.GetMyEventsReportData(proposalId);
             var spotLengths = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthsById();
 
             foreach (var report in myEventsReportDataList)
@@ -357,9 +365,37 @@ namespace Services.Broadcast.ApplicationServices
                     line.Advertiser = advertiser.Display;
                     line.SpotLength = spotLengths[line.SpotLengthId];
                 }
+
+                _UpdateSpotTimesForThreeMinuteWindow(report.Lines);
             }
 
             return myEventsReportDataList;
+        }
+
+        private void _UpdateSpotTimesForThreeMinuteWindow(List<MyEventsReportDataLine> myEventsReportDataList)
+        {
+            var sorted = myEventsReportDataList.OrderBy(x => x.AirDate).ToArray();
+
+            for (var i = 0; i < sorted.Length; i++)
+            {
+                for(var j = i + 1; j < sorted.Length; j++)
+                {
+                    var timeDifference = _GetDateWithoutSeconds(sorted[j].AirDate) - _GetDateWithoutSeconds(sorted[i].AirDate);
+
+                    if (timeDifference.TotalMinutes >= 0 && timeDifference.TotalMinutes < 3)
+                    {
+                        var adjustmentTimeDifference = 3 - timeDifference.TotalMinutes;
+
+                        sorted[j].AirDate = sorted[j].AirDate.AddMinutes(adjustmentTimeDifference);
+                        sorted[j].LineupStartTime = sorted[j].LineupStartTime.AddMinutes(adjustmentTimeDifference);
+                    }
+                }
+            }
+        }
+
+        private DateTime _GetDateWithoutSeconds(DateTime dateTime)
+        {
+            return dateTime.AddSeconds(-dateTime.Second);
         }
     }
 }

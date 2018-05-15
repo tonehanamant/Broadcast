@@ -398,7 +398,7 @@ namespace Services.Broadcast.Repositories
 
                     var affidavitDataGrouped = affidavitData.GroupBy(x => new { x.proposalVersionDetail.spot_length_id, x.proposalVersionDetail.daypart_code });
 
-                    foreach (var affidavitDataGroup in affidavitDataGrouped)
+                    foreach(var affidavitDataGroup in affidavitDataGrouped)
                     {
                         var myEventsReportDataGroup = new MyEventsReportData();
 
@@ -409,6 +409,7 @@ namespace Services.Broadcast.Repositories
                                 CallLetter = affidavit.affidavitFileDetail.station,
                                 LineupStartDate = affidavit.affidavitFileDetail.original_air_date,
                                 LineupStartTime = new DateTime().AddSeconds(affidavit.affidavitFileDetail.air_time),
+                                AirDate = affidavit.affidavitFileDetail.original_air_date.AddSeconds(affidavit.affidavitFileDetail.air_time),
                                 AdvertiserId = affidavit.proposal.advertiser_id,
                                 SpotLengthId = affidavit.affidavitFileDetail.spot_length_id,
                                 DaypartCode = affidavit.proposalVersionDetail.daypart_code

@@ -22,6 +22,13 @@
       "UploadDate": "2018-02-08T12:57:39.693"
     },
     {
+      "ContractName": "MYEvents Test Proposal 2",
+      "PrimaryAudienceImpressions": 0.0,
+      "SpotsInSpec": 8,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-02-08T12:57:39.693"
+    },
+    {
       "ContractName": "Proposal Test 5",
       "PrimaryAudienceImpressions": 0.0,
       "SpotsInSpec": 2,

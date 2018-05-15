@@ -22,7 +22,6 @@ namespace Services.Broadcast.ApplicationServices
         Invalid = 2
     };
 
-
     public interface IAffidavitService : IApplicationService
     {
         AffidavitSaveResult SaveAffidavit(AffidavitSaveRequest saveRequest, string username,DateTime currentDateTime);
