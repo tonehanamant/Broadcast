@@ -202,6 +202,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             affidavitDetail.ProgramName = "West World";
             affidavitDetail.Genre = "Action";
             affidavitDetail.ShowType = "Movie";
+            affidavitDetail.AirTime = 1800;
+            affidavitDetail.LeadInEndTime = 0;
+            affidavitDetail.LeadOutStartTime = 3600;
             var affidavitScrub = new AffidavitClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
@@ -231,8 +234,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             affidavitDetail.LeadinProgramName = "West World";
             affidavitDetail.LeadinGenre = "Action";
             affidavitDetail.LeadInShowType = "Movie";
-            affidavitDetail.AirTime = 32280;
-            affidavitDetail.LeadInEndTime = 32400;
+            affidavitDetail.AirTime = 32400;
+            affidavitDetail.LeadInEndTime = 32280;
             var affidavitScrub = new AffidavitClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
@@ -262,8 +265,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             affidavitDetail.LeadinProgramName = "West World";
             affidavitDetail.LeadinGenre = "Action";
             affidavitDetail.LeadInShowType = "Movie";
-            affidavitDetail.AirTime = 86340;
-            affidavitDetail.LeadInEndTime = 60;
+            affidavitDetail.AirTime = 60;
+            affidavitDetail.LeadInEndTime = 86340;
             var affidavitScrub = new AffidavitClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
@@ -293,8 +296,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             affidavitDetail.LeadoutProgramName = "West World";
             affidavitDetail.LeadoutGenre = "Action";
             affidavitDetail.LeadOutShowType = "Movie";
-            affidavitDetail.AirTime = 32400;
-            affidavitDetail.LeadOutStartTime = 32280;
+            affidavitDetail.AirTime = 32280;
+            affidavitDetail.LeadOutStartTime = 32400;
             var affidavitScrub = new AffidavitClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
@@ -324,8 +327,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             affidavitDetail.LeadoutProgramName = "West World";
             affidavitDetail.LeadoutGenre = "Action";
             affidavitDetail.LeadOutShowType = "Movie";
-            affidavitDetail.AirTime = 60;
-            affidavitDetail.LeadOutStartTime = 86340;
+            affidavitDetail.AirTime = 86340;
+            affidavitDetail.LeadOutStartTime = 60;
             var affidavitScrub = new AffidavitClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
