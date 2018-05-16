@@ -1,6 +1,6 @@
 // Actions
 import * as ACTIONS from './actionTypes.js';
-import { getDay } from '../../utils/dateFormatter';
+import { getDay, getDateInFormat } from '../../utils/dateFormatter';
 
 const initialState = {
   post: {},
@@ -162,6 +162,21 @@ const initialState = {
         exclusions: [],
         filterOptions: [],
       },
+      WeekStart: {
+        filterDisplay: 'Week Starts',
+        filterKey: 'WeekStart',
+        type: 'filterList',
+        hasMatchSpec: false, // NA
+        activeMatch: false,
+        active: false,
+        matchOptions: {
+          matchKey: null, // NA
+          inSpec: true,
+          outOfSpec: true,
+        },
+        exclusions: [],
+        filterOptions: [],
+      },
     },
 };
 
@@ -198,6 +213,7 @@ export default function reducer(state = initialState, action) {
         const spotLengthOptions = [];
         const showTypeOptions = [];
         const stationOptions = [];
+        const weekStartOptions = [];
         filtersData.DistinctAffiliates.forEach((item) => {
           const ret = { Value: item, Selected: true, Display: item };
           affiliateOptions.push(ret);
@@ -239,6 +255,12 @@ export default function reducer(state = initialState, action) {
           const ret = { Value: item, Selected: true, Display: item };
           stationOptions.push(ret);
         });
+        // display as formatted; values as date string
+        filtersData.DistinctWeekStarts.forEach((item) => {
+          const display = getDateInFormat(item);
+          const ret = { Value: item, Selected: true, Display: display };
+          weekStartOptions.push(ret);
+        });
         activeFilters.Affiliate.filterOptions = affiliateOptions;
         activeFilters.ClientISCI.filterOptions = clientIsciOptions;
         activeFilters.DayOfWeek.filterOptions = dayOfWeekOptions;
@@ -249,6 +271,7 @@ export default function reducer(state = initialState, action) {
         activeFilters.ShowTypeName.filterOptions = showTypeOptions;
         activeFilters.SpotLength.filterOptions = spotLengthOptions;
         activeFilters.Station.filterOptions = stationOptions;
+        activeFilters.WeekStart.filterOptions = weekStartOptions;
       };
       prepareFilterOptions();
       return {

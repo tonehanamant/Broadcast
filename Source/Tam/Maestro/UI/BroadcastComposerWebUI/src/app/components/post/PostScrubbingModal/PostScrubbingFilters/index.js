@@ -72,8 +72,17 @@ export class PostScrubbingFilters extends Component {
         name: 'Week Start',
         dataIndex: 'WeekStart',
         width: 100,
-        renderer: () => (
-          <div style={inactiveFilterStyle} />
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+          filterDisplay={value.filterDisplay}
+          filterKey={value.filterKey}
+          hasTextSearch
+          hasMatchSpec={value.hasMatchSpec}
+          matchOptions={value.matchOptions}
+          filterOptions={value.filterOptions}
+          filterActive={value.active}
+          applyFilter={this.applyFilter}
+          />
         ),
       },
       {
