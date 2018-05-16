@@ -31,9 +31,9 @@
           "Contract": "NAV",
           "DeliveredImpressionsPercentage": 1.0460691,
           "HHRating": 0,
-          "ProposalWeekCost": 13.5000,
+          "ProposalWeekCost": 3.3750,
           "ProposalWeekCPM": 60.75000,
-          "ProposalWeekImpressionsGoal": 30100.0,
+          "ProposalWeekImpressionsGoal": 7525.0,
           "ProposalWeekTotalCost": 135.0000,
           "ProposalWeekTotalImpressionsGoal": 301000.0,
           "SpotLength": 30,
@@ -51,9 +51,8 @@
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 157433.4,
-            "5": 500.0,
-            "6": 500.0,
-            "4": 500.0
+            "5": 1802.85,
+            "6": 833.3
           },
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV",
@@ -127,9 +126,8 @@
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 157433.4,
-            "5": 500.0,
-            "6": 500.0,
-            "4": 500.0
+            "5": 1802.85,
+            "6": 833.3
           },
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV",
@@ -154,5 +152,5 @@
     }
   ],
   "SpotLengthsDisplay": ":30s",
-  "WithOvernightImpressions": false
+  "WithOvernightImpressions": true
 }

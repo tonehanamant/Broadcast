@@ -171,9 +171,7 @@
     "DistinctPrograms": [
       "Program Names R us"
     ],
-    "DistinctShowTypes": [
-      ""
-    ],
+    "DistinctShowTypes": [],
     "DistinctSpotLengths": [
       30
     ],

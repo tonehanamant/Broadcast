@@ -229,7 +229,6 @@
   ],
   "Filters": {
     "DistinctAffiliates": [
-      null,
       "NBC"
     ],
     "DistinctClientIscis": [
@@ -248,15 +247,12 @@
       "BBBBBBBBB"
     ],
     "DistinctMarkets": [
-      null,
       "New York"
     ],
     "DistinctPrograms": [
       "Program Names R us"
     ],
-    "DistinctShowTypes": [
-      ""
-    ],
+    "DistinctShowTypes": [],
     "DistinctSpotLengths": [
       30
     ],

@@ -78,7 +78,7 @@ export default class FilterPopoverWrapper extends Component {
           ref={(ref) => { this.popover = ref; }}
         >
           <div
-            style={{ backgroundColor: 'white' }}
+            style={{ backgroundColor: 'white', cursor: 'pointer' }}
             className={'editable-cell'}
           >
             <Glyphicon

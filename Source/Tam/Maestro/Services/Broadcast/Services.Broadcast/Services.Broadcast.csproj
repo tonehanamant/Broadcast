@@ -221,6 +221,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="ApplicationServices\PostReportService.cs" />
     <Compile Include="ApplicationServices\WWTVFtpHelper.cs" />
     <Compile Include="ApplicationServices\SharedNetworkConnection.cs" />
     <Compile Include="ApplicationServices\WWTVNetworkHelper.cs" />
@@ -264,7 +265,7 @@
     <Compile Include="EmailService.cs" />
     <Compile Include="Entities\AffidavitClientScrub.cs" />
     <Compile Include="Entities\ProposalScrubbingRequest.cs" />
-	<Compile Include="Entities\MyEventsReportData.cs" />
+    <Compile Include="Entities\MyEventsReportData.cs" />
     <Compile Include="Entities\ScrubbingStatus.cs" />
     <Compile Include="Entities\AffidavitDemographics.cs" />
     <Compile Include="Entities\AffidavitFileDetailProblem.cs" />

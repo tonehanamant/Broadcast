@@ -42,7 +42,24 @@ namespace BroadcastComposerWeb.Controllers
         [Route("DownloadNSIPostReport/{proposalId}")]
         public HttpResponseMessage DownloadNSIPostReport(int proposalId)
         {
-            var report = _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GenerateNSIPostReport(proposalId);
+            var report = _ApplicationServiceFactory.GetApplicationService<IPostReportService>().GenerateNSIPostReport(proposalId);
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+
+            result.Content = new StreamContent(report.Stream);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = report.Filename
+            };
+
+            return result;
+        }
+
+        [HttpGet]
+        [Route("DownloadNSIPostReportWithOvernight/{proposalId}")]
+        public HttpResponseMessage DownloadNSIPostReportWithOvernight(int proposalId)
+        {
+            var report = _ApplicationServiceFactory.GetApplicationService<IPostReportService>().GenerateNSIPostReport(proposalId, true);
             var result = Request.CreateResponse(HttpStatusCode.OK);
 
             result.Content = new StreamContent(report.Stream);
@@ -59,7 +76,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("DownloadMyEventsReport/{proposalId}")]
         public HttpResponseMessage DownloadMyEventsReport(int proposalId)
         {
-            var report = _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GenerateMyEventsReport(proposalId);
+            var report = _ApplicationServiceFactory.GetApplicationService<IPostReportService>().GenerateMyEventsReport(proposalId);
             var result = Request.CreateResponse(HttpStatusCode.OK);
 
             result.Content = new ByteArrayContent(report.Stream.ToArray());

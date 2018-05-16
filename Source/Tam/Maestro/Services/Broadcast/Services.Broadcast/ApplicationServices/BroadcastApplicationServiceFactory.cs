@@ -113,6 +113,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAffidavitScrubbingService, AffidavitScrubbingService>();
             unityContainer.RegisterType<IAffidavitEmailSenderService, AffidavitEmailSenderService>();
             unityContainer.RegisterType<IAffidavitValidationEngine, AffidavitValidationEngine>();
+            unityContainer.RegisterType<IPostReportService, PostReportService>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
