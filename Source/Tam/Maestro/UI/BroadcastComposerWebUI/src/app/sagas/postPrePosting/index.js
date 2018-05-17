@@ -1,79 +1,57 @@
-/* eslint-disable import/prefer-default-export */
 import { takeEvery, put, select } from 'redux-saga/effects';
 import FuzzySearch from 'fuzzy-search';
 import moment from 'moment';
 
+
 import * as appActions from 'Ducks/app/actionTypes';
 import * as postPrePostingActions from 'Ducks/postPrePosting/actionTypes';
+import {
+  setOverlayLoading,
+  setOverlayProcessing,
+  createAlert,
+  toggleModal,
+  deployError,
+  clearFile,
+} from 'Ducks/app/index';
+import {
+  getPostPrePosting,
+  clearFileUploadForm,
+  receiveFilteredPostPrePosting,
+} from 'Ducks/postPrePosting/index';
+
+import sagaWrapper from '../wrapper';
 import api from '../api';
 
 const ACTIONS = { ...appActions, ...postPrePostingActions };
+
+const assignDisplay = data => (
+  data.map((item) => {
+    const post = item;
+    // DemoLookups
+    post.DisplayDemos = post.DemoLookups.map((demo, index, arr) => {
+      if (index === arr.length - 1) {
+        return `${demo.Display}`;
+      }
+      return `${demo.Display}, `;
+    });
+    // UploadDate
+    post.DisplayUploadDate = moment(post.UploadDate).format('M/D/YYYY');
+    // ModifiedDate
+    post.DisplayModifiedDate = moment(post.ModifiedDate).format('M/D/YYYY');
+    return post;
+  })
+);
 
 /* ////////////////////////////////// */
 /* REQUEST POST PRE POSTING INITIAL DATA */
 /* ////////////////////////////////// */
 export function* requestPostPrePostingInitialData() {
   const { getInitialData } = api.postPrePosting;
-
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'postInitialData',
-        loading: true },
-      });
-    const response = yield getInitialData();
-    const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'postInitialData',
-        loading: false,
-      },
-    });
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No post initial data returned.',
-          message: `The server encountered an error processing the request (post initial data). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
-        },
-      });
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No post initial data returned.',
-          message: data.Message || 'The server encountered an error processing the request (post initial data). Please try again or contact your administrator to review error logs.',
-        },
-      });
-      throw new Error();
-    }
-    yield put({
-      type: ACTIONS.RECEIVE_POST_PRE_POSTING_INITIALDATA,
-      data,
-    });
-  } catch (e) {
-    if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No post initial data returned.',
-          message: 'The server encountered an error processing the request (post initial data). Please try again or contact your administrator to review error logs.',
-          exception: e.response.data.ExceptionMessage || '',
-        },
-      });
-    }
-    if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message,
-        },
-      });
-    }
+    yield put(setOverlayLoading({ id: 'postInitialData', loading: true }));
+    return yield getInitialData();
+  } finally {
+    yield put(setOverlayLoading({ id: 'postInitialData', loading: false }));
   }
 }
 
@@ -82,125 +60,16 @@ export function* requestPostPrePostingInitialData() {
 /* ////////////////////////////////// */
 export function* requestPostPrePosting() {
   const { getPosts } = api.postPrePosting;
-
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'postPosts',
-        loading: true },
-      });
-    const response = yield getPosts();
-    const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'postPosts',
-        loading: false,
-      },
-    });
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No post returned.',
-          message: `The server encountered an error processing the request (post). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
-        },
-      });
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No post returned.',
-          message: data.Message || 'The server encountered an error processing the request (post). Please try again or contact your administrator to review error logs.',
-        },
-      });
-      throw new Error();
-    }
-    yield put({
-      type: ACTIONS.RECEIVE_POST_PRE_POSTING,
-      data,
-    });
-    yield put({
-      type: ACTIONS.REQUEST_ASSIGN_POST_PRE_POSTING_DISPLAY,
-      payload: {
-        data: data.Data,
-      },
-    });
-  } catch (e) {
-    if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No post returned.',
-          message: 'The server encountered an error processing the request (post). Please try again or contact your administrator to review error logs.',
-          exception: e.response.data.ExceptionMessage || '',
-        },
-      });
-    }
-    if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message,
-        },
-      });
-    }
+    yield put(setOverlayLoading({ id: 'postPosts', loading: true }));
+    const { status, data } = yield getPosts();
+    const assignedData = assignDisplay(data.Data);
+    return { status, data: { ...data, Data: assignedData } };
+  } finally {
+    yield put(setOverlayLoading({ id: 'postPosts', loading: false }));
   }
 }
 
-/* ////////////////////////////////// */
-/* ASSIGN POST PRE POSTING DISPLAY */
-/* ////////////////////////////////// */
-export function* assignPostPrePostingDisplay({ payload: request }) {
-  const assignDisplay = () => request.data.map((item) => {
-      const post = item;
-      // DemoLookups
-      post.DisplayDemos = post.DemoLookups.map((demo, index, arr) => {
-        if (index === arr.length - 1) {
-          return `${demo.Display}`;
-        }
-        return `${demo.Display}, `;
-      });
-      // UploadDate
-      post.DisplayUploadDate = moment(post.UploadDate).format('M/D/YYYY');
-      // ModifiedDate
-      post.DisplayModifiedDate = moment(post.ModifiedDate).format('M/D/YYYY');
-      return post;
-    },
-  );
-
-  try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'postPostsPrePostingDisplay',
-        loading: true },
-      });
-    const post = yield assignDisplay();
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'postPostsPrePostingDisplay',
-        loading: false },
-      });
-    yield put({
-      type: ACTIONS.ASSIGN_POST_PRE_POSTING_DISPLAY,
-      data: post,
-    });
-  } catch (e) {
-    if (e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message,
-        },
-      });
-    }
-  }
-}
 
 /* ////////////////////////////////// */
 /* REQUEST POST PRE POSTING FILTERED */
@@ -209,21 +78,12 @@ export function* requestPostPrePostingFiltered({ payload: query }) {
   const postUnfiltered = yield select(state => state.postPrePosting.postUnfiltered);
   const searcher = new FuzzySearch(postUnfiltered, ['FileName', 'DisplayDemos', 'DisplayUploadDate', 'DisplayModifiedDate'], { caseSensitive: false });
   const postFiltered = () => searcher.search(query);
-
   try {
     const filtered = yield postFiltered();
-    yield put({
-      type: ACTIONS.RECEIVE_FILTERED_POST_PRE_POSTING,
-      data: filtered,
-    });
+    yield put(receiveFilteredPostPrePosting(filtered));
   } catch (e) {
     if (e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message,
-        },
-      });
+      yield put(deployError({ message: e.message }));
     }
   }
 }
@@ -231,319 +91,76 @@ export function* requestPostPrePostingFiltered({ payload: query }) {
 /* ////////////////////////////////// */
 /* DELETE POST PRE POSTING BY ID */
 /* ////////////////////////////////// */
-export function* deletePostPrePostingById({ payload: id }) {
-  const { deletePost } = api.postPrePosting;
 
-  try {
-    const response = yield deletePost(id);
-    const { status, data } = response;
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'Post not deleted.',
-          message: `The server encountered an error processing the request (delete post ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
-        },
-      });
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'Post not deleted.',
-          message: data.Message || `The server encountered an error processing the request (delete post ${id}). Please try again or contact your administrator to review error logs.`,
-        },
-      });
-      throw new Error();
-    }
-    yield put({
-      type: ACTIONS.CREATE_ALERT,
-      alert: {
-        type: 'success',
-        headline: 'Posting Removed',
-        message: `${id} was successfully removed.`,
-      },
-    });
-    yield put({
-      type: ACTIONS.REQUEST_POST_PRE_POSTING });
-  } catch (e) {
-    if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'Post not deleted.',
-          message: 'The server encountered an error processing the request (delete post). Please try again or contact your administrator to review error logs.',
-          exception: e.response.data.ExceptionMessage || '',
-        },
-      });
-    }
-    if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message,
-        },
-      });
-    }
-  }
+export function* deletePostPrePostingById(id) {
+  const { deletePost } = api.postPrePosting;
+  return yield deletePost(id);
+}
+
+export function* deletePostPrePostingByIdSuccess({ payload }) {
+  yield put(createAlert({
+    type: 'success',
+    headline: 'Posting Removed',
+    message: `${payload} was successfully removed.`,
+  }));
+  yield put(getPostPrePosting());
 }
 
 /* ////////////////////////////////// */
 /* REQUEST POST FILE EDIT  */
 /* ////////////////////////////////// */
-export function* requestPostPrePostingFileEdit({ payload: id }) {
+export function* postPrePostingFileEdit(id) {
   const { getPost } = api.postPrePosting;
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'getPost',
-        loading: true,
-      },
-    });
-
-    const response = yield getPost(id);
-    const { status, data } = response;
-
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'getPost',
-        loading: false,
-      },
-    });
-
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No post data returned.',
-          message: `The server encountered an error processing the request (post ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
-        },
-      });
-      throw new Error();
-    }
-
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No post data returned.',
-          message: data.Message || `The server encountered an error processing the request (post ${id}). Please try again or contact your administrator to review error logs.`,
-        },
-      });
-      throw new Error();
-    }
-
-    yield put({
-      type: ACTIONS.RECEIVE_POST_PRE_POSTING_FILE_EDIT,
-      data,
-    });
-
-    yield put({
-      type: ACTIONS.TOGGLE_MODAL,
-      modal: {
-        modal: 'postFileEditModal',
-        active: true,
-      },
-    });
-  } catch (e) {
-    if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No post data returned.',
-          message: 'The server encountered an error processing the request (post). Please try again or contact your administrator to review error logs.',
-          exception: e.response.data.ExceptionMessage || '',
-        },
-      });
-    }
-    if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message,
-        },
-      });
-    }
+    yield put(setOverlayLoading({ id: 'getPost', loading: true }));
+    return yield getPost(id);
+  } finally {
+    yield put(setOverlayLoading({ id: 'getPost', loading: false }));
   }
+}
+
+export function* postPrePostingFileEditSuccess() {
+  yield put(toggleModal({ modal: 'postFileEditModal', active: true }));
 }
 
 /* ////////////////////////////////// */
 /* SAVE POST PRE POSTING FILE EDIT */
 /* ////////////////////////////////// */
-export function* savePostPrePostingFileEdit({ payload: params }) {
+export function* postPrePostingFileSave(params) {
   const { savePost } = api.postPrePosting;
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
-        id: 'savePostEdit',
-        processing: true,
-      },
-    });
-    const response = yield savePost(params);
-    const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
-        id: 'savePostEdit',
-        processing: false,
-      },
-    });
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'Post not saved.',
-          message: `The server encountered an error processing the request (save post ${params.FileId}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
-        },
-      });
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'Post not saved.',
-          message: data.Message || `The server encountered an error processing the request (save post ${params.FileId}). Please try again or contact your administrator to review error logs.`,
-        },
-      });
-      throw new Error();
-    }
-    yield put({
-      type: ACTIONS.RECEIVE_POST_PRE_POSTING_FILE_EDIT_SAVE,
-      data,
-    });
-    yield put({
-      type: ACTIONS.TOGGLE_MODAL,
-      modal: {
-        modal: 'postFileEditModal',
-        active: false,
-      },
-    });
-    yield put({
-      type: ACTIONS.CREATE_ALERT,
-      alert: {
-        type: 'success',
-        headline: 'Post File Updated',
-      },
-    });
-    yield put({
-      type: ACTIONS.REQUEST_POST_PRE_POSTING,
-    });
-  } catch (e) {
-    if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'Post not saved.',
-          message: 'The server encountered an error processing the request (save post). Please try again or contact your administrator to review error logs.',
-          exception: e.response.data.ExceptionMessage || '',
-        },
-      });
-    }
-    if (e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message,
-        },
-      });
-    }
+    yield put(setOverlayProcessing({ id: 'savePostEdit', processing: true }));
+    return yield savePost(params);
+  } finally {
+    yield put(setOverlayProcessing({ id: 'savePostEdit', processing: false }));
   }
+}
+
+export function* postPrePostingFileSaveSuccess() {
+  yield put(toggleModal({ modal: 'postFileEditModal', active: false }));
+  yield put(createAlert({ type: 'success', headline: 'Post File Updated' }));
+  yield put(getPostPrePosting());
 }
 
 /* ////////////////////////////////// */
 /* UPLOAD POST PRE POSTING FILE */
 /* ////////////////////////////////// */
-export function* uploadPostPrePostingFile({ payload: params }) {
+export function* uploadPostPrePostingFile(params) {
   const { uploadPost } = api.postPrePosting;
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
-        id: 'uploadPost',
-        processing: true,
-      },
-    });
-    const response = yield uploadPost(params);
-    const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
-        id: 'uploadPost',
-        processing: false,
-      },
-    });
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'Post file not created.',
-          message: `The server encountered an error processing the request (create post ${params.FileId}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
-        },
-      });
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'Post file not created.',
-          message: data.Message || `The server encountered an error processing the request (create post ${params.FileId}). Please try again or contact your administrator to review error logs.`,
-        },
-      });
-      throw new Error();
-    }
-    // yield put({
-    //   type: ACTIONS.RECEIVE_POST_FILE,
-    //   data,
-    // });
-    yield put({
-      type: ACTIONS.TOGGLE_MODAL,
-      modal: {
-        modal: 'postFileUploadModal',
-        active: false,
-      },
-    });
-    yield put({
-      type: ACTIONS.CREATE_ALERT,
-      alert: {
-        type: 'success',
-        headline: 'Post File Uploaded',
-      },
-    });
-    yield put({
-      type: ACTIONS.CLEAR_FILE,
-    });
-    yield put({
-      type: ACTIONS.CLEAR_FILE_UPLOAD_FORM,
-    });
-    yield put({
-      type: ACTIONS.REQUEST_POST_PRE_POSTING,
-    });
-  } catch (e) {
-    if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'Post file not created.',
-          message: 'The server encountered an error processing the request (create post). Please try again or contact your administrator to review error logs.',
-          exception: e.response.data.ExceptionMessage || '',
-        },
-      });
-    }
-    if (e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message,
-        },
-      });
-    }
+    yield put(setOverlayProcessing({ id: 'uploadPost', processing: true }));
+    return yield uploadPost(params);
+  } finally {
+    yield put(setOverlayProcessing({ id: 'uploadPost', processing: false }));
   }
+}
+
+export function* uploadPostPrePostingFileSuccess() {
+  yield put(toggleModal({ modal: 'postFileUploadModal', active: false }));
+  yield put(createAlert({ type: 'success', headline: 'Post File Updated' }));
+  yield put(clearFile());
+  yield put(clearFileUploadForm());
+  yield put(getPostPrePosting());
 }
 
 
@@ -551,35 +168,67 @@ export function* uploadPostPrePostingFile({ payload: params }) {
 /* WATCHERS */
 /* ////////////////////////////////// */
 export function* watchRequestPostPrePostingInitialData() {
-  yield takeEvery(ACTIONS.REQUEST_POST_PRE_POSTING_INITIALDATA, requestPostPrePostingInitialData);
+  yield takeEvery(
+    ACTIONS.POST_PRE_POSTING_INITIALDATA.request,
+    sagaWrapper(requestPostPrePostingInitialData, ACTIONS.POST_PRE_POSTING_INITIALDATA),
+  );
 }
 
 export function* watchRequestPostPrePosting() {
-  yield takeEvery(ACTIONS.REQUEST_POST_PRE_POSTING, requestPostPrePosting);
-}
-
-export function* watchRequestAssignPostPrePostingDisplay() {
-  yield takeEvery(ACTIONS.REQUEST_ASSIGN_POST_PRE_POSTING_DISPLAY, assignPostPrePostingDisplay);
+  yield takeEvery(
+    ACTIONS.POST_PRE_POSTING.request,
+    sagaWrapper(requestPostPrePosting, ACTIONS.POST_PRE_POSTING),
+  );
 }
 
 export function* watchRequestPostPrePostingFiltered() {
-  yield takeEvery(ACTIONS.REQUEST_FILTERED_POST_PRE_POSTING, requestPostPrePostingFiltered);
+  yield takeEvery(
+    ACTIONS.FILTERED_POST_PRE_POSTING.request, requestPostPrePostingFiltered,
+  );
 }
 
 export function* watchDeletePostPrePostingById() {
-  yield takeEvery(ACTIONS.DELETE_POST_PRE_POSTING, deletePostPrePostingById);
+  yield takeEvery(
+    ACTIONS.DELETE_POST_PRE_POSTING.request,
+    sagaWrapper(deletePostPrePostingById, ACTIONS.DELETE_POST_PRE_POSTING),
+  );
+}
+
+export function* watchDeletePostPrePostingByIdSuccess() {
+  yield takeEvery(ACTIONS.DELETE_POST_PRE_POSTING.success, deletePostPrePostingByIdSuccess);
 }
 
 export function* watchRequestPostPrePostingFileEdit() {
-  yield takeEvery(ACTIONS.REQUEST_POST_PRE_POSTING_FILE_EDIT, requestPostPrePostingFileEdit);
+  yield takeEvery(
+    ACTIONS.POST_PRE_POSTING_FILE_EDIT.request,
+    sagaWrapper(postPrePostingFileEdit, ACTIONS.POST_PRE_POSTING_FILE_EDIT),
+  );
 }
 
-export function* watchSavePostPrePostingFileEdit() {
-  yield takeEvery(ACTIONS.REQUEST_POST_PRE_POSTING_FILE_EDIT_SAVE, savePostPrePostingFileEdit);
+export function* watchPostPrePostingFileEditSuccess() {
+  yield takeEvery(ACTIONS.POST_PRE_POSTING_FILE_EDIT.success, postPrePostingFileEditSuccess);
+}
+
+export function* watchPostPrePostingFileSave() {
+  yield takeEvery(
+    ACTIONS.POST_PRE_POSTING_FILE_SAVE.request,
+    sagaWrapper(postPrePostingFileSave, ACTIONS.POST_PRE_POSTING_FILE_SAVE),
+  );
+}
+
+export function* watchPostPrePostingFileSaveSuccess() {
+  yield takeEvery(ACTIONS.POST_PRE_POSTING_FILE_SAVE.success, postPrePostingFileSaveSuccess);
 }
 
 export function* watchUploadPostPrePostingFile() {
-  yield takeEvery(ACTIONS.REQUEST_POST_PRE_POSTING_FILE_UPLOAD, uploadPostPrePostingFile);
+  yield takeEvery(
+    ACTIONS.POST_PRE_POSTING_FILE_UPLOAD.request,
+    sagaWrapper(uploadPostPrePostingFile, ACTIONS.POST_PRE_POSTING_FILE_UPLOAD),
+  );
+}
+
+export function* watchUploadPostPrePostingFileSuccess() {
+  yield takeEvery(ACTIONS.POST_PRE_POSTING_FILE_UPLOAD.success, uploadPostPrePostingFileSuccess);
 }
 
 // if assign watcher > assign in sagas/index rootSaga also

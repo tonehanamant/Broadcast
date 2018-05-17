@@ -1,23 +1,15 @@
-/* eslint-disable */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, ControlLabel, FormGroup, FormControl, Badge, Button, Glyphicon, Panel, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { Grid } from 'react-redux-grid';
-import Select from 'react-select';
-import styles from './index.scss';
 import CSSModules from 'react-css-modules';
-
-import { getDateInFormat } from '../../../../utils/dateFormatter';
+import Select from 'react-select';
 import DateMDYYYY from 'Components/shared/TextFormatters/DateMDYYYY';
 
-export class PostScrubbingHeader extends Component {
-  constructor(props) {
-    super(props);
-   /*  this.state = {
-      dates: [],
-    }; */
-  }
+import styles from './index.scss';
+import { getDateInFormat } from '../../../../utils/dateFormatter';
 
+export class PostScrubbingHeader extends Component {
   componentDidMount() {
     // const { date } = this.props;
     // const dateInProperFormat = getDateForDisplay(date);
@@ -25,17 +17,17 @@ export class PostScrubbingHeader extends Component {
     // this.setState({ dates: dateInProperFormat });
   }
   render() {
-    const { advertiser, guaranteedDemo, Id, isReadOnly, marketId, name, notes, secondaryDemo } = this.props;
+    const { advertiser, guaranteedDemo, Id, marketId, name, notes, secondaryDemo } = this.props;
     const isCustomMarket = this.props.marketId === 255;
-    let secondaryDemoOptions = [];
+    const secondaryDemoOptions = [];
     let marketLabel;
     if (isCustomMarket) {
       marketLabel = 'Custom';
     } else {
-      marketLabel = marketId === 0 ? 'All' : `Top ${marketId}`
+      marketLabel = marketId === 0 ? 'All' : `Top ${marketId}`;
     }
 
-    secondaryDemo.map((item) => {
+    secondaryDemo.forEach((item) => {
       const option = {};
       option.Display = item;
       option.Id = item;
@@ -84,7 +76,7 @@ export class PostScrubbingHeader extends Component {
               </OverlayTrigger>
               }
             </div>
-          )
+          );
         },
       },
       {
@@ -146,8 +138,11 @@ export class PostScrubbingHeader extends Component {
                         display: isCustomMarket ? 'block' : 'none',
                         position: 'absolute',
                         left: '50%',
-                        top: '45%'
-                      }}>i</Badge>
+                        top: '45%',
+                        }}
+                      >
+                      i
+                      </Badge>
                     </span>
                   </div>
                 </FormGroup>
@@ -156,7 +151,7 @@ export class PostScrubbingHeader extends Component {
             <Row>
               <Col md={12}>
                 <Panel defaultExpanded>
-                  <Panel.Heading style={{padding: '0'}}>
+                  <Panel.Heading style={{ padding: '0' }}>
                     <Panel.Title>
                     <Panel.Toggle>
                       <Button bsStyle="link" bsSize="xsmall">
@@ -166,8 +161,8 @@ export class PostScrubbingHeader extends Component {
                     </Panel.Title>
                   </Panel.Heading>
                   <Panel.Collapse>
-                    <Panel.Body style={{padding: '10px'}}>
-                      <Grid {...grid} data={this.props.details} store={this.context.store} height={false}/>
+                    <Panel.Body style={{ padding: '10px' }}>
+                      <Grid {...grid} data={this.props.details} store={this.context.store} height={false} />
                     </Panel.Body>
                   </Panel.Collapse>
                 </Panel>
@@ -208,7 +203,7 @@ export class PostScrubbingHeader extends Component {
       </div>
     );
   }
-};
+}
 
 PostScrubbingHeader.defaultProps = {
   isReadOnly: true,
@@ -216,16 +211,16 @@ PostScrubbingHeader.defaultProps = {
 };
 
 PostScrubbingHeader.propTypes = {
-  advertiser: PropTypes.string,
-  details: PropTypes.array,
-  guaranteedDemo: PropTypes.string,
-  Id: PropTypes.number,
+  advertiser: PropTypes.string.isRequired,
+  details: PropTypes.array.isRequired,
+  guaranteedDemo: PropTypes.string.isRequired,
+  Id: PropTypes.number.isRequired,
   isReadOnly: PropTypes.bool,
-  market: PropTypes.array,
-  marketId: PropTypes.number,
-  name: PropTypes.string,
-  notes: PropTypes.string,
-  secondaryDemo: PropTypes.array,
+  market: PropTypes.array.isRequired,
+  marketId: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  notes: PropTypes.string.isRequired,
+  secondaryDemo: PropTypes.array.isRequired,
   // getProposalDetail: PropTypes.func.isRequired,
 };
 

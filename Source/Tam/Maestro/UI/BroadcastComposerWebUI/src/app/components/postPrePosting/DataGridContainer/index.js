@@ -8,9 +8,6 @@ import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
 import Sorter from 'Utils/react-redux-grid-sorter';
 
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
-
 /* ////////////////////////////////// */
 /* // REACT-REDUX-GRID ACTIONS
 /* ////////////////////////////////// */
@@ -67,11 +64,6 @@ export class DataGridContainer extends Component {
   /* ////////////////////////////////// */
   /* LIFE-CYCLE METHODS */
   /* ////////////////////////////////// */
-  componentWillMount() {
-    console.warn('!!!!!!!!!!!!!!!!!!!!!!!!!!!!M PPP GRID');
-    // this.props.getPostPrePostingInitialData();
-    // this.props.getPostPrePosting();
-  }
 
   componentDidUpdate(prevProps) {
     if (prevProps.post !== this.props.post) {
@@ -179,7 +171,7 @@ export class DataGridContainer extends Component {
           dataIndex: 'UploadDate',
           defaultSortDirection: 'ASC',
           width: '20%',
-          renderer: ({ value, row }) => (
+          renderer: ({ row }) => (
             <span>{row.DisplayUploadDate}</span>
           ),
       },
@@ -187,7 +179,7 @@ export class DataGridContainer extends Component {
           name: 'Last Modified',
           dataIndex: 'ModifiedDate',
           width: '20%',
-          renderer: ({ value, row }) => (
+          renderer: ({ row }) => (
             <span>{row.DisplayModifiedDate}</span>
           ),
       },
@@ -252,7 +244,7 @@ export class DataGridContainer extends Component {
       },
       ROW: {
         enabled: true,
-        renderer: ({ rowProps, cells, row }) => {
+        renderer: ({ rowProps, cells }) => {
           const stateKey = cells[0].props.stateKey;
           const rowId = cells[0].props.rowId;
           const updatedRowProps = { ...rowProps,

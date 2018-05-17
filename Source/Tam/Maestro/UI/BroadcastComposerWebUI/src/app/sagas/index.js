@@ -20,12 +20,15 @@ export default function* rootSaga() {
 
     postPrePostingSaga.watchRequestPostPrePostingInitialData(),
     postPrePostingSaga.watchRequestPostPrePosting(),
-    postPrePostingSaga.watchRequestAssignPostPrePostingDisplay(),
     postPrePostingSaga.watchRequestPostPrePostingFiltered(),
     postPrePostingSaga.watchDeletePostPrePostingById(),
+    postPrePostingSaga.watchDeletePostPrePostingByIdSuccess(),
     postPrePostingSaga.watchRequestPostPrePostingFileEdit(),
-    postPrePostingSaga.watchSavePostPrePostingFileEdit(),
+    postPrePostingSaga.watchPostPrePostingFileEditSuccess(),
+    postPrePostingSaga.watchPostPrePostingFileSave(),
+    postPrePostingSaga.watchPostPrePostingFileSaveSuccess(),
     postPrePostingSaga.watchUploadPostPrePostingFile(),
+    postPrePostingSaga.watchUploadPostPrePostingFileSuccess(),
 
     planningSaga.watchRequestProposalInitialData(),
     planningSaga.watchRequestProposals(),
