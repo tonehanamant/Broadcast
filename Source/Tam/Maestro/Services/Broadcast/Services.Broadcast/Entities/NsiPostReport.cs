@@ -156,8 +156,7 @@ namespace Services.Broadcast.Entities
                                             .Select(y => y.AudienceImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value))
                                             .Sum(),
                                      ProposalWeekTotalCost = items.Select(y => y.ProposalWeekTotalCost).Sum(),
-                                     ProposalWeekTotalImpressionsGoal = items.Select(y => y.ProposalWeekTotalImpressionsGoal).Sum(),
-                                     ProposalWeekCPM = items.Select(y => y.ProposalWeekCPM).Sum()
+                                     ProposalWeekTotalImpressionsGoal = items.Select(y => y.ProposalWeekTotalImpressionsGoal).Sum()
                                  };
                              }).ToList()
                     });
@@ -168,6 +167,7 @@ namespace Services.Broadcast.Entities
                 y.DeliveredImpressionsPercentage = y.ActualImpressions / y.ProposalWeekTotalImpressionsGoal;
                 y.ProposalWeekCost = y.ProposalWeekTotalCost / y.Spots;
                 y.ProposalWeekImpressionsGoal = y.ProposalWeekTotalImpressionsGoal / y.Spots;
+                y.ProposalWeekCPM = y.ProposalWeekCost / (decimal)y.ProposalWeekImpressionsGoal * 1000;
             }));
             SpotLengthsDisplay = string.Join(",", QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
         }

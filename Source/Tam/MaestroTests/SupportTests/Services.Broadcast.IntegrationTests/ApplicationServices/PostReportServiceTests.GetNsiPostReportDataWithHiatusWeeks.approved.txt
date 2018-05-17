@@ -28,7 +28,7 @@
           "DeliveredImpressionsPercentage": 0.0,
           "HHRating": 0,
           "ProposalWeekCost": 2.5000,
-          "ProposalWeekCPM": 0.50000,
+          "ProposalWeekCPM": 0.25000,
           "ProposalWeekImpressionsGoal": 10000.0,
           "ProposalWeekTotalCost": 50.0000,
           "ProposalWeekTotalImpressionsGoal": 200000.0,

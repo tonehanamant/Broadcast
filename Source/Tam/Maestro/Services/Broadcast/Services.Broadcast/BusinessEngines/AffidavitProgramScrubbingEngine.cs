@@ -27,24 +27,24 @@ namespace Services.Broadcast.BusinessEngines
         {
             var actualStartTime = affidavitDetail.LeadInEndTime;
             var actualEndTime = affidavitDetail.LeadOutStartTime;
-            var adjustedStartTime = actualStartTime - _BroadcastMatchingBuffer < 0 ? 86400 + actualStartTime - _BroadcastMatchingBuffer : actualStartTime - _BroadcastMatchingBuffer;
-            var adjustedEndTime = actualEndTime + _BroadcastMatchingBuffer >= 86400 ? actualEndTime + _BroadcastMatchingBuffer - 86400 : actualEndTime + _BroadcastMatchingBuffer;
+            var adjustedStartTime = actualStartTime + _BroadcastMatchingBuffer >= 86400 ? actualStartTime + _BroadcastMatchingBuffer - 86400 : actualStartTime + _BroadcastMatchingBuffer;
+            var adjustedEndTime = actualEndTime - _BroadcastMatchingBuffer < 0  ? actualEndTime - _BroadcastMatchingBuffer + 86400 : actualEndTime - _BroadcastMatchingBuffer;
 
-            var isLeadIn = adjustedStartTime < actualStartTime &&
-                affidavitDetail.AirTime < actualStartTime &&
-                affidavitDetail.AirTime >= adjustedStartTime;
+            var isLeadIn = adjustedStartTime > actualStartTime &&
+                affidavitDetail.AirTime >= actualStartTime &&
+                affidavitDetail.AirTime <= adjustedStartTime;
 
-            var isOvernightLeadIn = adjustedStartTime > actualStartTime &&
-                (affidavitDetail.AirTime < actualStartTime ||
-                affidavitDetail.AirTime >= adjustedStartTime);
+            var isOvernightLeadIn = adjustedStartTime < actualStartTime &&
+                (affidavitDetail.AirTime >= actualStartTime ||
+                affidavitDetail.AirTime <= adjustedStartTime);
 
-            var isLeadOut = actualEndTime < adjustedEndTime &&
-                affidavitDetail.AirTime > actualEndTime &&
-                affidavitDetail.AirTime <= adjustedEndTime;
+            var isLeadOut = actualEndTime > adjustedEndTime &&
+                affidavitDetail.AirTime <= actualEndTime &&
+                affidavitDetail.AirTime >= adjustedEndTime;
 
-            var isOvernightLeadOut = actualEndTime > adjustedEndTime &&
-                (affidavitDetail.AirTime > actualEndTime ||
-                affidavitDetail.AirTime <= adjustedEndTime);
+            var isOvernightLeadOut = actualEndTime < adjustedEndTime &&
+                (affidavitDetail.AirTime <= actualEndTime ||
+                affidavitDetail.AirTime >= adjustedEndTime);
 
             if (_ProposalDetailMatchesProgram(proposalDetail, affidavitDetail.ProgramName) &&
                 _ProposalDetailMatchesGenre(proposalDetail, affidavitDetail.Genre) &&

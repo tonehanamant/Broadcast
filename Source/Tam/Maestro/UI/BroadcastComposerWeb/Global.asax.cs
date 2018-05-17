@@ -3,6 +3,7 @@ using Common.Services.WebComponents;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using Microsoft.Practices.Unity;
 using System;
+using System.Configuration;
 using System.Diagnostics.Tracing;
 using System.Web.Configuration;
 using System.Web.Http;
@@ -49,9 +50,16 @@ namespace BroadcastComposerWeb
 
             _logListener = new ObservableEventListener();
             _logListener.LogToConsole();
-            _logListener.LogToRollingFlatFile(config.LogFilePath, 102400, "yyyyMMdd", Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollFileExistsBehavior.Increment, Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollInterval.Day);
-            //_logListener.LogToFlatFile(config.LogFilePath);
-            _logListener.EnableEvents(Tam.Maestro.Common.Logging.TamMaestroEventSource.Log, EventLevel.Error);
+            var disableSlabInProcess = (ConfigurationManager.AppSettings["DisableSlabInProcess"] == "true");
+            if (!disableSlabInProcess)
+            {
+                _logListener.LogToRollingFlatFile(config.LogFilePath, 102400, "yyyyMMdd",
+                    Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollFileExistsBehavior.Increment,
+                    Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollInterval.Day);
+                //_logListener.LogToFlatFile(config.LogFilePath);
+                _logListener.EnableEvents(Tam.Maestro.Common.Logging.TamMaestroEventSource.Log, EventLevel.Error);
+            }
+
             _logger.LogEventInformation("Broadcast Web Application Initialized.", "BroadcastController");
 
             //var listener = new ObservableEventListener();
