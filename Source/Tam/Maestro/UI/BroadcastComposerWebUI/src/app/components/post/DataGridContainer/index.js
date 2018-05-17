@@ -198,6 +198,23 @@ export class DataGridContainer extends Component {
             },
           },
           {
+            text: 'NSI Post Report with Overnights',
+            key: 'menu-post-nsi-report-overnight',
+            EVENT_HANDLER: ({ metaData }) => {
+              const inSpec = metaData.rowData.SpotsInSpec !== 0;
+              // console.log('nsi overnight menu', metaData, inSpec);
+              if (inSpec) {
+                window.open(`${window.location.origin}/broadcast/api/Post/DownloadNSIPostReportWithOvernight/${metaData.rowData.ContractId}`, '_blank');
+              } else {
+                this.props.createAlert({
+                  type: 'warning',
+                  headline: 'NSI Report with Overnights Unavailable',
+                  message: 'There are no in-spec spots for this proposal.',
+                });
+              }
+            },
+          },
+          {
             text: 'MYEvents Report',
             key: 'menu-post-myevents-report',
             EVENT_HANDLER: ({ metaData }) => {
