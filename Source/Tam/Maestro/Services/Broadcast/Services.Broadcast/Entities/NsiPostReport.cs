@@ -77,7 +77,7 @@ namespace Services.Broadcast.Entities
                             LookupDto advertiser, List<LookupDto> proposalAudiences,
                             Dictionary<int, List<int>> audienceMappings,
                             Dictionary<int, int> spotLengthMappings,
-                            Dictionary<int, double> spotLengthMutipliers,
+                            Dictionary<int, double> spotLengthMultipliers,
                             Dictionary<DateTime, MediaWeek> mediaWeekMappings,
                             Dictionary<string, DisplayBroadcastStation> stationMappings,
                             Dictionary<int, int> nsiMarketRankings, string guaranteedDemo, int guaranteedDemoId,
@@ -110,7 +110,7 @@ namespace Services.Broadcast.Entities
                         }
                         if (Equivalized)
                         {
-                            _EquivalizeImpressions(spotLengthMutipliers[spotLengthMappings[r.SpotLengthId]], ref audienceImpressions);
+                            _EquivalizeImpressions(spotLengthMultipliers[spotLengthMappings[r.SpotLengthId]], ref audienceImpressions);
                         }
                         return new NsiPostReportQuarterTabRow()
                         {
@@ -157,9 +157,7 @@ namespace Services.Broadcast.Entities
                                      SpotLength = x.Key.SpotLength,
                                      WeekStartDate = x.Key.WeekStart,
                                      Spots = items.Select(y => y.ProposalWeekUnits).Sum(),
-                                     ActualImpressions = items
-                                            .Select(y => y.AudienceImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value))
-                                            .Sum() * spotLengthMutipliers[x.Key.SpotLength],
+                                     ActualImpressions = items.Select(y => y.AudienceImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value)).Sum(),
                                      ProposalWeekTotalCost = items.Select(y => y.ProposalWeekTotalCost).Sum(),
                                      ProposalWeekTotalImpressionsGoal = items.Select(y => y.ProposalWeekTotalImpressionsGoal).Sum()
                                  };

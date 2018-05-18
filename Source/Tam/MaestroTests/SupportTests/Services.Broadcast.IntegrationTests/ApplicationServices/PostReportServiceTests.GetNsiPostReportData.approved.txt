@@ -37,6 +37,20 @@
           "SpotLength": 30,
           "Spots": 40,
           "WeekStartDate": "2016-05-30T00:00:00"
+        },
+        {
+          "ActualImpressions": 250.0,
+          "Contract": "NAV",
+          "DeliveredImpressionsPercentage": 0.0025,
+          "HHRating": 0,
+          "ProposalWeekCost": 2.5000,
+          "ProposalWeekCPM": 0.25000,
+          "ProposalWeekImpressionsGoal": 10000.0,
+          "ProposalWeekTotalCost": 25.0000,
+          "ProposalWeekTotalImpressionsGoal": 100000.0,
+          "SpotLength": 15,
+          "Spots": 10,
+          "WeekStartDate": "2016-05-30T00:00:00"
         }
       ]
     }
@@ -123,6 +137,31 @@
         {
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
+            "31": 250.0,
+            "5": 250.0,
+            "6": 250.0
+          },
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NAV",
+          "Isci": "CCCCCCC",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalWeekCost": 2.5000,
+          "ProposalWeekCPM": 0.25000,
+          "ProposalWeekImpressionsGoal": 10000.0,
+          "ProposalWeekTotalCost": 25.0000,
+          "ProposalWeekTotalImpressionsGoal": 100000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 15,
+          "Station": "WNBC",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        },
+        {
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
             "31": 157433.4,
             "5": 1802.85,
             "6": 833.3
@@ -149,6 +188,6 @@
       "Title": "Test Advertiser 9 2Q16 Post Spot Detail"
     }
   ],
-  "SpotLengthsDisplay": ":30s (Equivalized)",
+  "SpotLengthsDisplay": ":15s & :30s (Equivalized)",
   "WithOvernightImpressions": false
 }
