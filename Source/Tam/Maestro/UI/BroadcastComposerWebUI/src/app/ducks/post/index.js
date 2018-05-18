@@ -133,7 +133,7 @@ const initialState = {
         filterOptions: [],
       },
       SpotLength: {
-        filterDisplay: 'Ad Lengths',
+        filterDisplay: 'Spot Lengths',
         filterKey: 'SpotLength',
         type: 'filterList',
         hasMatchSpec: false, // NA

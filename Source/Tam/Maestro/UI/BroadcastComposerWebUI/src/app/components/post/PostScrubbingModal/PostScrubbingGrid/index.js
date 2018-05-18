@@ -101,7 +101,7 @@ export class PostScrubbingGrid extends Component {
                 },
             },
             {
-                name: 'Ad Length',
+                name: 'Spot Length',
                 dataIndex: 'SpotLength',
                 width: 80,
                 renderer: ({ row }) => (
