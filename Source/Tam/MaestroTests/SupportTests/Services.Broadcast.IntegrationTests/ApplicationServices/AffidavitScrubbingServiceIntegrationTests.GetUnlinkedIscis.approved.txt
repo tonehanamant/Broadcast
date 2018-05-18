@@ -22,5 +22,17 @@
     "SpotLength": 30,
     "Station": "WNBC",
     "TimeAired": 32400
+  },
+  {
+    "Affiliate": null,
+    "DateAired": "2016-06-03T00:00:00",
+    "FileDetailId": 3655,
+    "Genre": "Do It Yourself",
+    "ISCI": "CCCCCCC",
+    "Market": null,
+    "ProgramName": "Program Names R us",
+    "SpotLength": 15,
+    "Station": "WNBC",
+    "TimeAired": 32400
   }
 ]
