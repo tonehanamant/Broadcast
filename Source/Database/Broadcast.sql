@@ -115,11 +115,11 @@ BEGIN
 		CONSTRAINT DF_affidavit_client_scrubs_status_override DEFAULT 0
 END
 
-if exists(SELECT 1 FROM affidavit_client_scrubs WHERE [status] = 0)
+if exists(SELECT [status] FROM affidavit_client_scrubs WHERE [status] = 0)
 BEGIN
 	-- get rid of 0 based status value
-	UPDATE affidavit_client_scrubs SET [status] =  1 where [status] = 0
 	UPDATE affidavit_client_scrubs SET [status] =  2 where [status] = 1
+	UPDATE affidavit_client_scrubs SET [status] =  1 where [status] = 0
 END
 
 
