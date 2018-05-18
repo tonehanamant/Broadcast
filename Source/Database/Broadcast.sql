@@ -105,6 +105,36 @@ END
 GO
 /*************************************** END BCOP-2910 ***************************************************************/
 
+
+
+
+IF NOT EXISTS(SELECT 1 FROM sys.Columns where name = 'status_override' and object_id = OBJECT_ID('affidavit_client_scrubs'))
+BEGIN
+	ALTER TABLE [dbo].[affidavit_client_scrubs] 
+		ADD status_override bit NOT NULL
+		CONSTRAINT DF_affidavit_client_scrubs_status_override DEFAULT 0
+END
+
+if exists(SELECT 1 FROM affidavit_client_scrubs WHERE [status] = 0)
+BEGIN
+	-- get rid of 0 based status value
+	UPDATE affidavit_client_scrubs SET [status] =  1 where [status] = 0
+	UPDATE affidavit_client_scrubs SET [status] =  2 where [status] = 1
+END
+
+
+/*************************************** START BCOP-2376 ***************************************************************/
+
+
+
+
+/*************************************** END BCOP-2376 ***************************************************************/
+
+
+
+
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------

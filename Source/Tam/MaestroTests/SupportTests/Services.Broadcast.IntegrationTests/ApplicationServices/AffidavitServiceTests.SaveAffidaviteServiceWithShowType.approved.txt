@@ -19,7 +19,7 @@
           "MatchTime": false,
           "ModifiedBy": "test user",
           "ProposalVersionDetailQuarterWeekId": 18,
-          "Status": 0
+          "Status": 1
         }
       ],
       "AffidavitFileDetailAudiences": [

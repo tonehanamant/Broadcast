@@ -6,7 +6,7 @@ import { Well, Row, Col, Nav, NavItem } from 'react-bootstrap';
 import PostScrubbingGrid from '../PostScrubbingGrid';
 import PostScrubbingFilters from '../PostScrubbingFilters';
 
-/* eslint-disable */
+
 export class PostScrubbingDetail extends Component {
   constructor(props) {
     super(props);
@@ -19,14 +19,13 @@ export class PostScrubbingDetail extends Component {
   handleTabSelect(eventKey) {
     event.preventDefault();
     if (this.state.activeTabKey === eventKey) return;
-    this.setState({activeTabKey: eventKey});
+    this.setState({ activeTabKey: eventKey });
     // console.log(`selected ${eventKey}`);
     const Id = this.props.activeScrubbingData.Id;
     this.props.getPostClientScrubbing({ proposalId: Id, showModal: false, filterKey: eventKey });
   }
 
   render() {
-    const { isReadOnly } = this.props;
     const { activeScrubbingData, scrubbingFiltersList, grid, dataSource } = this.props;
     const { selectRow, deselectAll, doLocalSort, setOverlayLoading } = this.props;
     const hasData = activeScrubbingData.ClientScrubs.length > 0;
@@ -44,7 +43,7 @@ export class PostScrubbingDetail extends Component {
             </NavItem>
         </Nav>
 
-        <Well bsSize="small"  style={{ width: '1600px', marginBottom: 0 }}>
+        <Well bsSize="small" style={{ width: '1600px', marginBottom: 0 }}>
           <Row style={{ marginTop: 4 }}>
             <Col md={12}>
               { hasData &&
@@ -74,7 +73,6 @@ PostScrubbingDetail.defaultProps = {
 };
 
 PostScrubbingDetail.propTypes = {
-  isReadOnly: PropTypes.bool.isRequired,
   grid: PropTypes.object.isRequired,
   dataSource: PropTypes.object.isRequired,
   activeScrubbingData: PropTypes.object.isRequired,

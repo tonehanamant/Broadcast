@@ -105,7 +105,7 @@ namespace Services.Broadcast.ApplicationServices
         public NsiPostReport GetNsiPostReportData(int proposalId, bool withOvernightImpressions)
         {
             var proposal = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProposalById(proposalId);
-
+            
             var flights = _GetFlightsRange(proposal.Details);
             var inspecSpots = _AffidavitRepository.GetInSpecSpotsForProposal(proposalId);
 
@@ -123,6 +123,7 @@ namespace Services.Broadcast.ApplicationServices
                 .OrderBy(a => proposalAudienceIds.IndexOf(a.Id)).ToList(); //This ordering by the original audience id order. Primary audience first.
             var audiencesMappings = _BroadcastAudienceRepository.GetRatingAudiencesGroupedByMaestroAudience(proposalAudiences.Select(a => a.Id).ToList());
             var spotLengthMappings = _SpotLengthRepository.GetSpotLengthsById();
+            var spotLengthMultipliers = _SpotLengthRepository.GetSpotLengthMultipliers();
             var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksByContainingDate(inspecSpots.Select(s => s.AirDate).Distinct().ToList());
             var stationMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
                 .GetBroadcastStationListByLegacyCallLetters(inspecSpots.Select(s => s.Station).Distinct().ToList())
@@ -131,9 +132,9 @@ namespace Services.Broadcast.ApplicationServices
             var nsiMarketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(latestPostingBooks.DefaultShareBook.PostingBookId.Value);
             var guaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
 
-            return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences, audiencesMappings, spotLengthMappings,
+            return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences, audiencesMappings, spotLengthMappings, spotLengthMultipliers,
                                                 mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, proposal.GuaranteedDemoId, flights,
-                                                withOvernightImpressions);
+                                                withOvernightImpressions, proposal.Equivalized);
         }
 
         private List<Tuple<DateTime, DateTime>> _GetFlightsRange(List<ProposalDetailDto> details)
@@ -187,7 +188,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return flightRanges;
         }
-
+        
         /// <summary>
         /// Generates My Events report
         /// </summary>
@@ -257,20 +258,25 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _UpdateSpotTimesForThreeMinuteWindow(List<MyEventsReportDataLine> myEventsReportDataList)
         {
-            var sorted = myEventsReportDataList.OrderBy(x => x.AirDate).ToArray();
+            var grouped = myEventsReportDataList.GroupBy(x => x.CallLetter);
 
-            for (var i = 0; i < sorted.Length; i++)
+            foreach(var group in grouped)
             {
-                for (var j = i + 1; j < sorted.Length; j++)
+                var sorted = group.OrderBy(x => x.AirDate).ToArray();
+
+                for (var i = 0; i < sorted.Length; i++)
                 {
-                    var timeDifference = _GetDateWithoutSeconds(sorted[j].AirDate) - _GetDateWithoutSeconds(sorted[i].AirDate);
-
-                    if (timeDifference.TotalMinutes >= 0 && timeDifference.TotalMinutes < 3)
+                    for (var j = i + 1; j < sorted.Length; j++)
                     {
-                        var adjustmentTimeDifference = 3 - timeDifference.TotalMinutes;
+                        var timeDifference = _GetDateWithoutSeconds(sorted[j].AirDate) - _GetDateWithoutSeconds(sorted[i].AirDate);
 
-                        sorted[j].AirDate = sorted[j].AirDate.AddMinutes(adjustmentTimeDifference);
-                        sorted[j].LineupStartTime = sorted[j].LineupStartTime.AddMinutes(adjustmentTimeDifference);
+                        if (timeDifference.TotalMinutes >= 0 && timeDifference.TotalMinutes < 3)
+                        {
+                            var adjustmentTimeDifference = 3 - timeDifference.TotalMinutes;
+
+                            sorted[j].AirDate = sorted[j].AirDate.AddMinutes(adjustmentTimeDifference);
+                            sorted[j].LineupStartTime = sorted[j].LineupStartTime.AddMinutes(adjustmentTimeDifference);
+                        }
                     }
                 }
             }

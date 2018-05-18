@@ -8,6 +8,7 @@ namespace Services.Broadcast.Entities
 {
     public class NsiPostReport
     {
+        public bool Equivalized { get; set; }
         public bool WithOvernightImpressions { get; set; } = false;
         public List<NsiPostReportQuarterSummaryTable> QuarterTables { get; set; } = new List<NsiPostReportQuarterSummaryTable>();
         public List<NsiPostReportQuarterTab> QuarterTabs { get; set; } = new List<NsiPostReportQuarterTab>();
@@ -16,7 +17,7 @@ namespace Services.Broadcast.Entities
         public string Advertiser { get; set; }
         public string GuaranteedDemo { get; set; }
         public string Daypart { get; set; }
-        public List<Tuple<DateTime, DateTime>> FlightDates { get; set; }
+        public List<string> FlightDates { get; set; }
         public string SpotLengthsDisplay { get; set; }
 
         public class NsiPostReportQuarterTab
@@ -76,17 +77,18 @@ namespace Services.Broadcast.Entities
                             LookupDto advertiser, List<LookupDto> proposalAudiences,
                             Dictionary<int, List<int>> audienceMappings,
                             Dictionary<int, int> spotLengthMappings,
+                            Dictionary<int, double> spotLengthMultipliers,
                             Dictionary<DateTime, MediaWeek> mediaWeekMappings,
                             Dictionary<string, DisplayBroadcastStation> stationMappings,
                             Dictionary<int, int> nsiMarketRankings, string guaranteedDemo, int guaranteedDemoId,
-                            List<Tuple<DateTime, DateTime>> flightDates, bool withOvernightImpressions)
+                            List<Tuple<DateTime, DateTime>> flights, bool withOvernightImpressions, bool equivalized)
         {
-            ProposalId = proposalId;
-            ProposalAudiences = proposalAudiences;
             Advertiser = advertiser.Display;
-            GuaranteedDemo = guaranteedDemo;
-            FlightDates = flightDates;
+            ProposalId = proposalId;
             WithOvernightImpressions = withOvernightImpressions;
+            Equivalized = equivalized;
+            GuaranteedDemo = guaranteedDemo;
+            ProposalAudiences = proposalAudiences;
 
             var quartersGroup = inSpecAffidavitFileDetails.GroupBy(d => new { d.Year, d.Quarter }).OrderBy(x => x.Key.Year).ThenBy(x => x.Key.Quarter);
 
@@ -98,15 +100,18 @@ namespace Services.Broadcast.Entities
                     Title = String.Format("{0} {1}Q{2} Post Spot Detail", advertiser, group.Key.Quarter, group.Key.Year.ToString().Substring(2)),
                     TabRows = group.Select(r =>
                     {
-                        var audienceImpressions = proposalAudiences
+                        var audienceImpressions = ProposalAudiences
                         .ToDictionary(proposalAudience => proposalAudience.Id, proposalAudience => r.AudienceImpressions
                             .Where(i => audienceMappings.Where(m => m.Key == proposalAudience.Id).SelectMany(m => m.Value).Contains(i.Key))
                             .Select(i => i.Value).Sum());
-                        if (withOvernightImpressions)
+                        if (WithOvernightImpressions)
                         {
-                            ApplyOvernightImpressions(audienceImpressions, r.OvernightImpressions);
+                            _ApplyOvernightImpressions(audienceImpressions, r.OvernightImpressions);
                         }
-
+                        if (Equivalized)
+                        {
+                            _EquivalizeImpressions(spotLengthMultipliers[spotLengthMappings[r.SpotLengthId]], ref audienceImpressions);
+                        }
                         return new NsiPostReportQuarterTabRow()
                         {
                             Rank = stationMappings.TryGetValue(r.Station, out DisplayBroadcastStation currentStation) ? nsiMarketRankings[currentStation.MarketCode] : 0,
@@ -152,9 +157,7 @@ namespace Services.Broadcast.Entities
                                      SpotLength = x.Key.SpotLength,
                                      WeekStartDate = x.Key.WeekStart,
                                      Spots = items.Select(y => y.ProposalWeekUnits).Sum(),
-                                     ActualImpressions = items
-                                            .Select(y => y.AudienceImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value))
-                                            .Sum(),
+                                     ActualImpressions = items.Select(y => y.AudienceImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value)).Sum(),
                                      ProposalWeekTotalCost = items.Select(y => y.ProposalWeekTotalCost).Sum(),
                                      ProposalWeekTotalImpressionsGoal = items.Select(y => y.ProposalWeekTotalImpressionsGoal).Sum()
                                  };
@@ -162,17 +165,31 @@ namespace Services.Broadcast.Entities
                     });
             }
 
-            QuarterTables.ForEach(x => x.TableRows.ForEach(y =>
+            QuarterTables.ForEach(x => x.TableRows.OrderBy(y => y.WeekStartDate).ThenBy(y => y.SpotLength).ToList().ForEach(y =>
+                {
+                    y.DeliveredImpressionsPercentage = y.ActualImpressions / y.ProposalWeekTotalImpressionsGoal;
+                    y.ProposalWeekCost = y.ProposalWeekTotalCost / y.Spots;
+                    y.ProposalWeekImpressionsGoal = y.ProposalWeekTotalImpressionsGoal / y.Spots;
+                    y.ProposalWeekCPM = y.ProposalWeekCost / (decimal)y.ProposalWeekImpressionsGoal * 1000;
+                }));
+
+            FlightDates = _GetFormattedFlights(flights, QuarterTables, Equivalized);
+            SpotLengthsDisplay = string.Join(" & ", QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
+            if (Equivalized)
             {
-                y.DeliveredImpressionsPercentage = y.ActualImpressions / y.ProposalWeekTotalImpressionsGoal;
-                y.ProposalWeekCost = y.ProposalWeekTotalCost / y.Spots;
-                y.ProposalWeekImpressionsGoal = y.ProposalWeekTotalImpressionsGoal / y.Spots;
-                y.ProposalWeekCPM = y.ProposalWeekCost / (decimal)y.ProposalWeekImpressionsGoal * 1000;
-            }));
-            SpotLengthsDisplay = string.Join(",", QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
+                SpotLengthsDisplay += " (Equivalized)";
+            }
+        }
+        
+        private void _EquivalizeImpressions(double spotLengthMutiplier, ref Dictionary<int, double> audienceImpressions)
+        {
+            foreach (var key in audienceImpressions.Keys.ToArray())
+            {
+                audienceImpressions[key] = audienceImpressions[key] * spotLengthMutiplier;
+            }
         }
 
-        private void ApplyOvernightImpressions(Dictionary<int, double> audienceImpressions, Dictionary<int, double> overnightImpressions)
+        private void _ApplyOvernightImpressions(Dictionary<int, double> audienceImpressions, Dictionary<int, double> overnightImpressions)
         {
             if (audienceImpressions.Any())
             {
@@ -187,6 +204,31 @@ namespace Services.Broadcast.Entities
             else
             {
                 audienceImpressions = overnightImpressions;
+            }
+        }
+
+        private List<string> _GetFormattedFlights(List<Tuple<DateTime, DateTime>> flightDates, List<NsiPostReportQuarterSummaryTable> quarterTables, bool isEquivalized)
+        {
+            if (isEquivalized)
+            {
+                List<string> flights = new List<string>();
+                if (quarterTables.Count() > 1)
+                {
+                    flights.Add($@"{quarterTables.Select(x => x.TableName).First()}-{quarterTables.Select(x => x.TableName).Last()} - {quarterTables.SelectMany(x => x.TableRows.Select(y => y.WeekStartDate)).Distinct().Count()} weeks");
+                }
+                quarterTables.ForEach(x =>
+                {
+                    var distinctWeeks = x.TableRows.Select(y => y.WeekStartDate.ToString(@"M\/d")).Distinct().ToList();
+                    flights.Add($@"{x.TableName}: {distinctWeeks.Count()} {(distinctWeeks.Count() > 1 ? "weeks" : "week")} - {string.Join(", ", distinctWeeks)}");
+                });
+                return flights;
+            }
+            else
+            {
+                return new List<string>()
+                {
+                    string.Join(" & ", flightDates.Select(x => $"{x.Item1.ToString(@"M\/d\/yyyy")}-{x.Item2.ToString(@"M\/d\/yyyy")}").ToList())
+                };
             }
         }
     }

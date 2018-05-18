@@ -2,8 +2,8 @@
   "Posts": [
     {
       "ContractName": "Proposal Test",
-      "PrimaryAudienceImpressions": 314866.80000000005,
-      "SpotsInSpec": 4,
+      "PrimaryAudienceImpressions": 315366.80000000005,
+      "SpotsInSpec": 5,
       "SpotsOutOfSpec": 0,
       "UploadDate": "2018-02-08T12:57:39.693"
     },
@@ -23,6 +23,13 @@
     },
     {
       "ContractName": "MYEvents Test Proposal 2",
+      "PrimaryAudienceImpressions": 0.0,
+      "SpotsInSpec": 8,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-02-08T12:57:39.693"
+    },
+    {
+      "ContractName": "MYEvents Test Proposal 3",
       "PrimaryAudienceImpressions": 0.0,
       "SpotsInSpec": 8,
       "SpotsOutOfSpec": 0,
