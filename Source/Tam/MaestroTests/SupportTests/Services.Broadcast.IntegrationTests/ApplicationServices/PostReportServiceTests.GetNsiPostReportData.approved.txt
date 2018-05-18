@@ -1,11 +1,9 @@
 ﻿{
   "Advertiser": "Test Advertiser 9",
   "Daypart": null,
+  "Equivalized": true,
   "FlightDates": [
-    {
-      "Item1": "2016-05-30T00:00:00",
-      "Item2": "2016-06-14T00:00:00"
-    }
+    "2Q'16: 1 week - 5/30"
   ],
   "GuaranteedDemo": "House Holds",
   "ProposalAudiences": [
@@ -151,6 +149,6 @@
       "Title": "Test Advertiser 9 2Q16 Post Spot Detail"
     }
   ],
-  "SpotLengthsDisplay": ":30s",
+  "SpotLengthsDisplay": ":30s (Equivalized)",
   "WithOvernightImpressions": false
 }

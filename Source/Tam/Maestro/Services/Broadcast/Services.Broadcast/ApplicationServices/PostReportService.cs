@@ -105,7 +105,7 @@ namespace Services.Broadcast.ApplicationServices
         public NsiPostReport GetNsiPostReportData(int proposalId, bool withOvernightImpressions)
         {
             var proposal = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProposalById(proposalId);
-
+            
             var flights = _GetFlightsRange(proposal.Details);
             var inspecSpots = _AffidavitRepository.GetInSpecSpotsForProposal(proposalId);
 
@@ -123,6 +123,7 @@ namespace Services.Broadcast.ApplicationServices
                 .OrderBy(a => proposalAudienceIds.IndexOf(a.Id)).ToList(); //This ordering by the original audience id order. Primary audience first.
             var audiencesMappings = _BroadcastAudienceRepository.GetRatingAudiencesGroupedByMaestroAudience(proposalAudiences.Select(a => a.Id).ToList());
             var spotLengthMappings = _SpotLengthRepository.GetSpotLengthsById();
+            var spotLengthMultipliers = _SpotLengthRepository.GetSpotLengthMultipliers();
             var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksByContainingDate(inspecSpots.Select(s => s.AirDate).Distinct().ToList());
             var stationMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
                 .GetBroadcastStationListByLegacyCallLetters(inspecSpots.Select(s => s.Station).Distinct().ToList())
@@ -131,9 +132,9 @@ namespace Services.Broadcast.ApplicationServices
             var nsiMarketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(latestPostingBooks.DefaultShareBook.PostingBookId.Value);
             var guaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
 
-            return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences, audiencesMappings, spotLengthMappings,
+            return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences, audiencesMappings, spotLengthMappings, spotLengthMultipliers,
                                                 mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, proposal.GuaranteedDemoId, flights,
-                                                withOvernightImpressions);
+                                                withOvernightImpressions, proposal.Equivalized);
         }
 
         private List<Tuple<DateTime, DateTime>> _GetFlightsRange(List<ProposalDetailDto> details)
@@ -187,7 +188,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return flightRanges;
         }
-
+        
         /// <summary>
         /// Generates My Events report
         /// </summary>

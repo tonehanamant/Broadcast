@@ -187,14 +187,12 @@ namespace Services.Broadcast.ReportGenerators
             wsSummary.View.ShowGridLines = false;
             wsSummary.Cells.Style.Font.Size = FONT_SIZE_SUMMARY_TAB;
             wsSummary.Cells.Style.Font.Name = FONT_SUMMARY_TAB;
-            _AddSummaryTabHeader(wsSummary, reportData);
-            _AddSummaryTabQuartersTable(wsSummary, reportData);
+            int rowOffset = _AddSummaryTabHeader(wsSummary, reportData);
+            _AddSummaryTabQuartersTable(wsSummary, reportData, rowOffset);
         }
 
-        private void _AddSummaryTabQuartersTable(ExcelWorksheet wsSummary, NsiPostReport reportData)
+        private void _AddSummaryTabQuartersTable(ExcelWorksheet wsSummary, NsiPostReport reportData, int rowOffset)
         {
-            int rowOffset = 21;
-
             foreach (var quarterTable in reportData.QuarterTables)
             {
                 int columnOffset = 2;
@@ -281,11 +279,12 @@ namespace Services.Broadcast.ReportGenerators
             wsSummary.Cells[$"B{tableHeaderRowIndex}:N{rowOffset}"].AutoFitColumns();
         }
 
-        private void _AddSummaryTabHeader(ExcelWorksheet wsSummary, NsiPostReport reportData)
+        private int _AddSummaryTabHeader(ExcelWorksheet wsSummary, NsiPostReport reportData)
         {
             var excelPicture1 = wsSummary.Drawings.AddPicture("logo", _Logo);
             excelPicture1.SetPosition(1, 0, 1, 0);
             excelPicture1.SetSize(75);
+
             Dictionary<string, string> values = new Dictionary<string, string>() {
                 { "B9", "Client:"},
                 { "B10", "Contact:"},
@@ -294,7 +293,6 @@ namespace Services.Broadcast.ReportGenerators
                 { "B16", "Daypart:"},
                 { "B17", "Flight:" },
                 { "C9", reportData.Advertiser},
-                { "C17", string.Join(" & ", reportData.FlightDates.Select(x=> $"{x.Item1.ToString(@"M\/d\/yyyy")}-{x.Item2.ToString(@"M\/d\/yyyy")}").ToList())},
                 { "I9", "Guaranteed Demo:"},
                 { "I10", "Post Type:"},
                 { "I11", "Unit Length:" },
@@ -308,12 +306,21 @@ namespace Services.Broadcast.ReportGenerators
 
             foreach (var item in values)
             {
-                wsSummary.Cells[item.Key].Value = item.Value;
-                if (item.Key.Equals("C17"))
+                wsSummary.Cells[item.Key].Value = item.Value;                
+            }
+            int rowOffset = 17;
+            if (reportData.Equivalized)
+            {
+                foreach (var item in reportData.FlightDates)
                 {
-                    wsSummary.Cells[item.Key].Style.Font.Bold = true;
-                    wsSummary.Cells[item.Key].Style.Font.Size = 16;
+                    wsSummary.Cells[$"C{rowOffset++}"].Value = item;
                 }
+            }
+            else
+            {
+                wsSummary.Cells[$"C{rowOffset}"].Value = reportData.FlightDates.First();
+                wsSummary.Cells[$"C{rowOffset}"].Style.Font.Bold = true;
+                wsSummary.Cells[$"C{rowOffset}"].Style.Font.Size = 16;
             }
 
             wsSummary.Cells["B9:B17"].Style.Font.Bold = true;
@@ -323,6 +330,8 @@ namespace Services.Broadcast.ReportGenerators
             wsSummary.Cells["I9:I13"].Style.Font.Bold = true;
             wsSummary.Cells["I9:I13"].Style.Font.Size = 10;
             wsSummary.Cells["I9:I13"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+            return ++rowOffset;
         }
 
         private void _BuildCommonHeader(ExcelWorksheet ws, NsiPostReport reportData)
