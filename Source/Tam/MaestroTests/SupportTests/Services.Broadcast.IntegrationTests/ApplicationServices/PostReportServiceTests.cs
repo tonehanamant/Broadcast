@@ -201,5 +201,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GenerateMyEventsReportWithMultipleStationsTest()
+        {
+            var result = _PostReportService.GetMyEventsReportData(26003);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+        }
     }
 }

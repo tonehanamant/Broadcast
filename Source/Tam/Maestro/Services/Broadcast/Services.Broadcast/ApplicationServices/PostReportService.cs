@@ -258,20 +258,25 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _UpdateSpotTimesForThreeMinuteWindow(List<MyEventsReportDataLine> myEventsReportDataList)
         {
-            var sorted = myEventsReportDataList.OrderBy(x => x.AirDate).ToArray();
+            var grouped = myEventsReportDataList.GroupBy(x => x.CallLetter);
 
-            for (var i = 0; i < sorted.Length; i++)
+            foreach(var group in grouped)
             {
-                for (var j = i + 1; j < sorted.Length; j++)
+                var sorted = group.OrderBy(x => x.AirDate).ToArray();
+
+                for (var i = 0; i < sorted.Length; i++)
                 {
-                    var timeDifference = _GetDateWithoutSeconds(sorted[j].AirDate) - _GetDateWithoutSeconds(sorted[i].AirDate);
-
-                    if (timeDifference.TotalMinutes >= 0 && timeDifference.TotalMinutes < 3)
+                    for (var j = i + 1; j < sorted.Length; j++)
                     {
-                        var adjustmentTimeDifference = 3 - timeDifference.TotalMinutes;
+                        var timeDifference = _GetDateWithoutSeconds(sorted[j].AirDate) - _GetDateWithoutSeconds(sorted[i].AirDate);
 
-                        sorted[j].AirDate = sorted[j].AirDate.AddMinutes(adjustmentTimeDifference);
-                        sorted[j].LineupStartTime = sorted[j].LineupStartTime.AddMinutes(adjustmentTimeDifference);
+                        if (timeDifference.TotalMinutes >= 0 && timeDifference.TotalMinutes < 3)
+                        {
+                            var adjustmentTimeDifference = 3 - timeDifference.TotalMinutes;
+
+                            sorted[j].AirDate = sorted[j].AirDate.AddMinutes(adjustmentTimeDifference);
+                            sorted[j].LineupStartTime = sorted[j].LineupStartTime.AddMinutes(adjustmentTimeDifference);
+                        }
                     }
                 }
             }
