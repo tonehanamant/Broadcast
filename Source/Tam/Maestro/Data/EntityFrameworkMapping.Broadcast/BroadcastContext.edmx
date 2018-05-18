@@ -28,6 +28,7 @@
           <Property Name="effective_genre" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="effective_show_type" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="match_show_type" Type="bit" Nullable="false" />
+          <Property Name="status_override" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="affidavit_file_detail_audiences">
           <Key>
@@ -5025,6 +5026,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="match_show_type" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="affidavit_file_details" Relationship="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" FromRole="affidavit_client_scrubs" ToRole="affidavit_file_details" />
           <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" FromRole="affidavit_client_scrubs" ToRole="proposal_version_detail_quarter_weeks" />
+          <Property Name="status_override" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_affidavit_file_details_affidavit_client_scrubs">
           <End Type="BroadcastModel.affidavit_file_details" Role="affidavit_file_details" Multiplicity="1">
@@ -6159,6 +6161,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="affidavit_client_scrubs">
             <EntityTypeMapping TypeName="BroadcastModel.affidavit_client_scrubs">
               <MappingFragment StoreEntitySet="affidavit_client_scrubs">
+                <ScalarProperty Name="status_override" ColumnName="status_override" />
                 <ScalarProperty Name="match_show_type" ColumnName="match_show_type" />
                 <ScalarProperty Name="effective_show_type" ColumnName="effective_show_type" />
                 <ScalarProperty Name="effective_genre" ColumnName="effective_genre" />
