@@ -269,7 +269,7 @@ export class DataGridContainer extends Component {
         this.deselectAll({ stateKey });
         this.hideContextMenu({ stateKey });
       },
-      HANDLE_ROW_CLICK: (row) => {
+      HANDLE_ROW_DOUBLE_CLICK: (row) => {
           const Id = row.row.ContractId;
           this.showscrubbingModal(Id);
       },
