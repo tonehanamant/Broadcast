@@ -117,6 +117,21 @@ const initialState = {
         exclusions: [],
         filterOptions: [],
       },
+      Sequence: {
+        filterDisplay: 'Sequences',
+        filterKey: 'Sequence',
+        type: 'filterList',
+        hasMatchSpec: false, // NA
+        activeMatch: false,
+        active: false,
+        matchOptions: {
+          matchKey: null, // NA
+          inSpec: true,
+          outOfSpec: true,
+        },
+        exclusions: [],
+        filterOptions: [],
+      },
       ShowTypeName: {
         filterDisplay: 'Show Types',
         filterKey: 'ShowTypeName',
@@ -210,6 +225,7 @@ export default function reducer(state = initialState, action) {
         const houseIsciOptions = [];
         const marketOptions = [];
         const programOptions = [];
+        const sequences = [];
         const spotLengthOptions = [];
         const showTypeOptions = [];
         const stationOptions = [];
@@ -243,6 +259,10 @@ export default function reducer(state = initialState, action) {
           const ret = { Value: item, Selected: true, Display: item };
           programOptions.push(ret);
         });
+        filtersData.DistinctSequences.forEach((item) => {
+          const ret = { Value: item, Selected: true, Display: item };
+          sequences.push(ret);
+        });
         filtersData.DistinctShowTypes.forEach((item) => {
           const ret = { Value: item, Selected: true, Display: item };
           showTypeOptions.push(ret);
@@ -269,6 +289,7 @@ export default function reducer(state = initialState, action) {
         activeFilters.Market.filterOptions = marketOptions;
         activeFilters.ProgramName.filterOptions = programOptions;
         activeFilters.ShowTypeName.filterOptions = showTypeOptions;
+        activeFilters.Sequence.filterOptions = sequences;
         activeFilters.SpotLength.filterOptions = spotLengthOptions;
         activeFilters.Station.filterOptions = stationOptions;
         activeFilters.WeekStart.filterOptions = weekStartOptions;

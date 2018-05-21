@@ -56,6 +56,14 @@ export class PostScrubbingGrid extends Component {
                 },
             },
             {
+              name: 'Detail ID',
+              dataIndex: 'Sequence',
+              width: 60,
+              renderer: ({ row }) => (
+                <span>{row.Sequence || '-'}</span>
+              ),
+            },
+            {
                 name: 'Week Start',
                 dataIndex: 'WeekStart',
                 width: 100,

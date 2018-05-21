@@ -69,6 +69,23 @@ export class PostScrubbingFilters extends Component {
         ),
       },
       {
+        name: 'Sequence',
+        dataIndex: 'Sequence',
+        width: 60,
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+          filterDisplay={value.filterDisplay}
+          filterKey={value.filterKey}
+          hasTextSearch={false}
+          hasMatchSpec={value.hasMatchSpec}
+          matchOptions={value.matchOptions}
+          filterOptions={value.filterOptions}
+          filterActive={value.active}
+          applyFilter={this.applyFilter}
+          />
+        ),
+      },
+      {
         name: 'Week Start',
         dataIndex: 'WeekStart',
         width: 100,
