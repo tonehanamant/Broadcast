@@ -49,7 +49,7 @@ export class PostScrubbingGrid extends Component {
                 // test specific width
                 width: 44,
                 renderer: ({ row }) => {
-                    const iconClassName = row.Status ? 'fa-check-circle' : 'fa-times-circle';
+                    const iconClassName = (row.Status === 2) ? 'fa-check-circle' : 'fa-times-circle';
                     return (
                         <i className={`status-icon fa ${iconClassName}`} />
                     );
@@ -101,7 +101,7 @@ export class PostScrubbingGrid extends Component {
                 },
             },
             {
-                name: 'Ad Length',
+                name: 'Spot Length',
                 dataIndex: 'SpotLength',
                 width: 80,
                 renderer: ({ row }) => (
