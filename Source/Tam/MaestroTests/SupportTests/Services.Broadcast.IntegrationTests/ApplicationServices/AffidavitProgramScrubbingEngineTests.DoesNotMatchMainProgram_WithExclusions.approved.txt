@@ -1,4 +1,5 @@
 ﻿{
+  "AffidavitClientScrubAudiences": [],
   "AffidavitFileDetailId": 0,
   "Comment": null,
   "EffectiveGenre": "Action",
@@ -16,6 +17,8 @@
   "MatchTime": false,
   "ModifiedBy": null,
   "ModifiedDate": null,
+  "PostingBookId": null,
+  "ProposalVersionDetailId": 0,
   "ProposalVersionDetailQuarterWeekId": 0,
   "Status": 0
 }

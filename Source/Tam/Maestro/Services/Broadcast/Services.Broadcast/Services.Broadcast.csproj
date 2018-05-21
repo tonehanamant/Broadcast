@@ -231,6 +231,7 @@
     <Compile Include="ApplicationServices\BaseProposalInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\CNNStationInventoryGroupService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryManifestService.cs" />
+    <Compile Include="ApplicationServices\NsiPostingBookService.cs" />
     <Compile Include="ApplicationServices\ProjectionBooksService.cs" />
     <Compile Include="ApplicationServices\AffidavitScrubbingService.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />

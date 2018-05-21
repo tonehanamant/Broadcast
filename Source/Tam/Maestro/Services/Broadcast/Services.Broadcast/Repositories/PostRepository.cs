@@ -68,10 +68,10 @@ namespace Services.Broadcast.Repositories
                                                           from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
                                                           from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
                                                           from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
-                                                          from affidavitFileDetailAudience in affidavitFileScrub.affidavit_file_details.affidavit_file_detail_audiences
+                                                          from affidavitFileScrubAudience in affidavitFileScrub.affidavit_client_scrub_audiences
                                                           where (ScrubbingStatus)affidavitFileScrub.status == ScrubbingStatus.InSpec &&
-                                                                affidavitFileDetailAudience.audience_id == proposal.guaranteed_audience_id
-                                                          select affidavitFileDetailAudience.impressions).Sum()
+                                                                affidavitFileScrubAudience.audience_id == proposal.guaranteed_audience_id
+                                                          select affidavitFileScrubAudience.impressions).Sum()
                         });
                     }
 

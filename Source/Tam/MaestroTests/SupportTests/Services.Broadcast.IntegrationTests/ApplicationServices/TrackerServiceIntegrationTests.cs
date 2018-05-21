@@ -183,7 +183,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             displaySchedule.PostType, displaySchedule.PostingBookId, true)).Returns(9999);
                 engine.Setup(e => e.AdjustImpression(displaySchedule.PrimaryDemoDelivered, displaySchedule.PostType, displaySchedule.PostingBookId, false)).Returns(99999);
 
-                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, engine.Object);
+                var nsiPostingBookService = IntegrationTestApplicationServiceFactory.GetApplicationService<INsiPostingBookService>();
+                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, engine.Object, nsiPostingBookService);
                 
                 var actual = sut.GetDisplaySchedulesWithAdjustedImpressions(startDate, dateTime);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
@@ -219,7 +220,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var engine = new Mock<IImpressionAdjustmentEngine>();
                 engine.Setup(e => e.AdjustImpression(bvsTrackingDetail.Impressions.Value, dto.Equivalized, bvsTrackingDetail.SpotLength, dto.PostType, dto.PostingBookId, true)).Returns(9999);
 
-                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, engine.Object);
+                var nsiPostingBookService = IntegrationTestApplicationServiceFactory.GetApplicationService<INsiPostingBookService>();
+                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, engine.Object, nsiPostingBookService);
                 var actual = sut.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
 
@@ -252,7 +254,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var oldRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(repo.Object);
 
-                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>());
+                var nsiPostingBookService = IntegrationTestApplicationServiceFactory.GetApplicationService<INsiPostingBookService>();
+                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>(), nsiPostingBookService);
                 var actual = sut.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
 
@@ -287,8 +290,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-
-                var months = _Sut.GetNsiPostingBookMonths();
+                var nsiPostingBookService = IntegrationTestApplicationServiceFactory.GetApplicationService<INsiPostingBookService>();
+                var months = nsiPostingBookService.GetNsiPostingBookMonths();
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(months));
             }

@@ -8,6 +8,7 @@
     "MarriedHouseIsci": false,
     "ProposalVersionDetailDaypartId": 5,
     "ProposalVersionDetailId": 5,
+    "ProposalVersionDetailPostingBookId": null,
     "ProposalVersionDetailQuarterWeekId": 1,
     "ProposalVersionDetailWeekEnd": "2018-01-07T00:00:00",
     "ProposalVersionDetailWeekStart": "2018-01-01T00:00:00",

@@ -48,6 +48,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly ISMSClient _SmsClient;
         private readonly IProposalService _ProposalService;
+        private readonly IProjectionBooksService _ProjectionBooksService;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISMSClient smsClient,
@@ -62,6 +63,7 @@ namespace Services.Broadcast.ApplicationServices
             _AudiencesCache = audiencesCache;
             _SmsClient = smsClient;
             _ProposalService = proposalService;
+            _ProjectionBooksService = postingBooksService;
         }
 
         /// <summary>

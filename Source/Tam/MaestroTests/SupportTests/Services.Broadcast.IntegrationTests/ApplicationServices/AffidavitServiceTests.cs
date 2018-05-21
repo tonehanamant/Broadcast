@@ -45,8 +45,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var request = _SetupBigAffidavit();
-
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var postingDate = new DateTime(2016, 4, 20);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
                 VerifyAffidavit(result);
             }
@@ -65,7 +65,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 det.AirTime = DateTime.MinValue;
                 det.InventorySource = 0;
 
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var postingDate = new DateTime(2016, 4, 20);
+
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
                 VerifyAffidavit(result);
             }
@@ -78,8 +80,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                var postingDate = new DateTime(2016, 4, 20);
                 var request = _SetupAffidavit_WithEscaped_Doublequotes();
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
                 VerifyAffidavit(result);
             }
@@ -92,8 +95,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var request = _SetupAffidavit();
+                var postingDate = new DateTime(2016, 4, 20);
 
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
                 VerifyAffidavit(result);
             }
@@ -106,12 +110,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var request = _SetupAffidavit();
+                var postingDate = new DateTime(2016, 4, 20);
 
                 request.Details.First().ShowType = "Drama1";
                 request.Details.First().LeadInShowType = "Drama2";
                 request.Details.First().LeadOutShowType = "Drama3";
 
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
                 VerifyAffidavit(result);
             }
@@ -124,10 +129,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var request = _SetupAffidavit();
+                var postingDate = new DateTime(2016, 4, 20);
 
                 request.Details.First().LeadInEndTime = DateTime.Parse("06/29/2017 10:00 AM");
 
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
                 VerifyAffidavit(result);
             }
@@ -140,10 +146,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var request = _SetupAffidavit();
+                var postingDate = new DateTime(2016, 4, 20);
 
                 request.Details.First().LeadOutStartTime = DateTime.Parse("06/29/2017 12:12 AM");
 
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
                 VerifyAffidavit(result);
             }
@@ -156,10 +163,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var request = _SetupAffidavit();
+                var postingDate = new DateTime(2016, 4, 20);
 
                 request.Details.First().ShowType = "Drama";
 
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
                 VerifyAffidavit(result);
             }
@@ -172,8 +180,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var request = _SetupAffidavitMultipleIscis();
+                var postingDate = new DateTime(2016, 4, 20);
 
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
                 VerifyAffidavit(result);
             }
@@ -192,7 +201,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(AffidavitFileDetail), "Id");
             jsonResolver.Ignore(typeof(AffidavitFileDetail), "AffidavitFileId");
             jsonResolver.Ignore(typeof(AffidavitClientScrub), "Id");
-            jsonResolver.Ignore(typeof(AffidavitFileDetailAudience), "AffidavitFileDetailId");
+            jsonResolver.Ignore(typeof(AffidavitClientScrubAudience), "AffidavitClientScrubId");
             jsonResolver.Ignore(typeof(AffidavitClientScrub), "AffidavitFileDetailId");
             jsonResolver.Ignore(typeof(AffidavitClientScrub), "ModifiedDate");
             jsonResolver.Ignore(typeof(AffidavitFile), "MediaMonthId");
@@ -402,14 +411,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+                var postingDate = new DateTime(2016, 4, 20);
 
                 var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
-                proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
+                proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 413, 416);
 
                 //????var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA", Days = "M|T|W|TH|F|SA|SU" } };
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
-                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+                _ProposalService.SaveProposal(proposal, "test user", postingDate);
 
                 //????var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
 
@@ -417,7 +427,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = _SetupAffidavit();
                 request.Details.First().Isci = "WAWA";
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
                 VerifyAffidavit(result);
             }
         }
@@ -429,16 +439,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+                var postingDate = new DateTime(2016, 4, 20);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA" } };
                 proposal.Details.First().GenreCriteria.Add(new GenreCriteria() { Contain = ContainTypeEnum.Include, Genre = new LookupDto() { Id = Genre1.Id, Display = Genre1.Display } });
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
-                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+                _ProposalService.SaveProposal(proposal, "test user", postingDate);
 
                 var request = _SetupAffidavit();
                 request.Details.First().Isci = "WAWA";
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
                 VerifyAffidavit(result);
             }
         }
@@ -448,26 +459,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                    var proposal = new ProposalDto();
-                    var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+                var proposal = new ProposalDto();
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+                var postingDate = new DateTime(2016, 4, 20);
 
-                    var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
-                    proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA" } };
-                    proposal.Details.First().GenreCriteria.Add(new GenreCriteria() { Contain = ContainTypeEnum.Exclude, Genre = new LookupDto() { Id = Genre1.Id, Display = Genre1.Display } });
-                    proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
-                    _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+                proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA" } };
+                proposal.Details.First().GenreCriteria.Add(new GenreCriteria() { Contain = ContainTypeEnum.Exclude, Genre = new LookupDto() { Id = Genre1.Id, Display = Genre1.Display } });
+                proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
+                _ProposalService.SaveProposal(proposal, "test user", postingDate);
 
-                    var request = _SetupAffidavit();
-                    var detail = request.Details.First();
-                    detail.Isci = "WAWA";
-                    detail.LeadOutGenre = detail.Genre;
-                    detail.LeadOutProgramName = detail.ProgramName;
-                    var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
-                    VerifyAffidavit(result);
+                var request = _SetupAffidavit();
+                var detail = request.Details.First();
+                detail.Isci = "WAWA";
+                detail.LeadOutGenre = detail.Genre;
+                detail.LeadOutProgramName = detail.ProgramName;
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
+                VerifyAffidavit(result);
             }
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void Ensure_Correct_Scrubbing_Records_Following_Unmatched_Record()
         {
@@ -476,8 +489,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
 
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 413, 416);
+
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
-                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+                var postingDate = new DateTime(2016, 4, 20);
+                _ProposalService.SaveProposal(proposal, "test user", postingDate);
 
                 var request = _SetupAffidavit();
                 request.Details.Add(new AffidavitSaveRequestDetail
@@ -499,7 +516,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Affiliate = "Affiate"
                 });
                 request.Details.First().Isci = "Uknown_Unmatched_ISCI";
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
                 VerifyAffidavit(result);
             }
         }
@@ -513,16 +530,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+                var postingDate = new DateTime(2016, 4, 20);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA" } };
                 proposal.Details.First().ProgramCriteria.Add(new ProgramCriteria() { Contain = ContainTypeEnum.Include, Program = new LookupDto { Display = ProgramName1, Id = 1 } });
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
-                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+                _ProposalService.SaveProposal(proposal, "test user", postingDate);
 
                 var request = _SetupAffidavit();
                 request.Details.First().Isci = "WAWA";
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
                 VerifyAffidavit(result);
             }
         }
@@ -535,16 +553,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+                var postingDate = new DateTime(2016, 4, 20);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA" } };
                 proposal.Details.First().ProgramCriteria.Add(new ProgramCriteria() { Contain = ContainTypeEnum.Exclude, Program = new LookupDto { Display = ProgramName1, Id = 100 } });
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
-                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+                _ProposalService.SaveProposal(proposal, "test user", postingDate);
 
                 var request = _SetupAffidavit();
                 request.Details.First().Isci = "WAWA";
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
                 VerifyAffidavit(result);
             }
         }
@@ -557,6 +576,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+                var postingDate = new DateTime(2016, 4, 20);
 
                 var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
@@ -564,7 +584,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA", Days = "M" } };
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
-                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+                _ProposalService.SaveProposal(proposal, "test user", postingDate);
 
                 var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
 
@@ -572,7 +592,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = _SetupAffidavit();
                 request.Details.First().Isci = "WAWA";
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
                 VerifyAffidavit(result);
             }
         }
@@ -583,6 +603,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                var postingDate = new DateTime(2016, 4, 20);
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
                 var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
@@ -593,7 +614,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>() { new ProposalWeekIsciDto() { Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA", Days = "TH" } };
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
-                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+                _ProposalService.SaveProposal(proposal, "test user", postingDate);
 
                 var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
 
@@ -603,7 +624,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 request.Details.First().Isci = "WAWA";
 
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
                 VerifyAffidavit(result);
             }
@@ -618,7 +639,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
                 var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
-
+                var postingDate = new DateTime(2016, 4, 20);
                 proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
@@ -630,7 +651,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // Daypart that does not include thurday (the airtime for the affidavit).
                 proposal.Details.First().DaypartId = 88;
 
-                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+                _ProposalService.SaveProposal(proposal, "test user", postingDate);
 
                 var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
 
@@ -640,7 +661,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 request.Details.First().Isci = "WAWA";
 
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
                 VerifyAffidavit(result);
             }
@@ -655,7 +676,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
                 var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
-
+                var postingDate = new DateTime(2016, 4, 20);
                 proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
@@ -667,7 +688,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // Daypart that does not include thurday (the airtime for the affidavit).
                 proposal.Details.First().DaypartId = 88;
 
-                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+                _ProposalService.SaveProposal(proposal, "test user", postingDate);
 
                 var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
 
@@ -677,7 +698,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 request.Details.First().Isci = "WAWA";
 
-                var result = _Sut.SaveAffidavit(request, "test user", DateTime.Now);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
                 VerifyAffidavit(result);
             }

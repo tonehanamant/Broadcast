@@ -80,8 +80,13 @@ namespace Services.Broadcast.Entities
                             Dictionary<int, double> spotLengthMultipliers,
                             Dictionary<DateTime, MediaWeek> mediaWeekMappings,
                             Dictionary<string, DisplayBroadcastStation> stationMappings,
+<<<<<<< HEAD
                             Dictionary<int ,Dictionary<int, int>> nsiMarketRankings, string guaranteedDemo, int guaranteedDemoId,
+                            List<Tuple<DateTime, DateTime>> flightDates, bool withOvernightImpressions)
+=======
+                            Dictionary<int, int> nsiMarketRankings, string guaranteedDemo, int guaranteedDemoId,
                             List<Tuple<DateTime, DateTime>> flights, bool withOvernightImpressions, bool equivalized)
+>>>>>>> develop
         {
             Advertiser = advertiser.Display;
             ProposalId = proposalId;

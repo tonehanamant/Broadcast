@@ -103,10 +103,41 @@ BEGIN
 
 END
 GO
+
+
+IF OBJECT_ID('affidavit_client_scrub_audiences', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[affidavit_client_scrub_audiences](
+		[affidavit_client_scrub_id] [INT] NOT NULL,
+		[audience_id] [INT] NOT NULL,
+		[impressions] [FLOAT] NOT NULL,
+	 CONSTRAINT [PK_affidavit_client_scrub_audiences] PRIMARY KEY CLUSTERED 
+	(
+		[affidavit_client_scrub_id] ASC,
+		[audience_id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+	
+ALTER TABLE [dbo].[affidavit_client_scrub_audiences]  WITH CHECK ADD  CONSTRAINT [FK_affidavit_client_scrub_audiences_affidavit_client_scrubs] FOREIGN KEY([affidavit_client_scrub_id])
+REFERENCES [dbo].[affidavit_client_scrubs] ([id])
+ON DELETE CASCADE
+
+ALTER TABLE [dbo].[affidavit_client_scrub_audiences] CHECK CONSTRAINT [FK_affidavit_client_scrub_audiences_affidavit_client_scrubs]
+
+ALTER TABLE [dbo].[affidavit_client_scrub_audiences]  WITH CHECK ADD  CONSTRAINT [FK_affidavit_client_scrub_audiences_audiences] FOREIGN KEY([audience_id])
+REFERENCES [dbo].[audiences] ([id])
+
+ALTER TABLE [dbo].[affidavit_client_scrub_audiences] CHECK CONSTRAINT [FK_affidavit_client_scrub_audiences_audiences]
+
+INSERT INTO affidavit_client_scrub_audiences 
+SELECT acs.id, afda.audience_id, afda.impressions FROM affidavit_file_detail_audiences afda
+INNER JOIN affidavit_client_scrubs acs ON afda.affidavit_file_detail_id = acs.affidavit_file_detail_id
+END
+GO
+
 /*************************************** END BCOP-2910 ***************************************************************/
 
-
-
+/*************************************** START BCOP-2376 ***************************************************************/
 
 IF NOT EXISTS(SELECT 1 FROM sys.Columns where name = 'status_override' and object_id = OBJECT_ID('affidavit_client_scrubs'))
 BEGIN
@@ -122,18 +153,7 @@ BEGIN
 	UPDATE affidavit_client_scrubs SET [status] =  1 where [status] = 0
 END
 
-
-/*************************************** START BCOP-2376 ***************************************************************/
-
-
-
-
 /*************************************** END BCOP-2376 ***************************************************************/
-
-
-
-
-
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
