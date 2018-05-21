@@ -22,6 +22,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         public void DefaultShareBookNotAvailable()
         {
             var dateTime = new DateTime(2017, 01, 1);
